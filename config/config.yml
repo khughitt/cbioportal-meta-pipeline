@@ -1,0 +1,3 @@
+# cbioportal genie data directory
+data_dir: "/data/raw/cbioportal/genie/17"
+out_dir: "/data/packages/cbioportal/genie"

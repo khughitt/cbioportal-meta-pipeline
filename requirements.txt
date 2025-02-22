@@ -1,0 +1,4 @@
+snakemake-minimal
+pandas
+seaborn
+pyarrow

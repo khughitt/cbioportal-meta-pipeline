@@ -4,7 +4,9 @@
 # Creates filtered versions of input dataset with the fields of interest, using simpler names and
 # and proper column encodings.
 #
+import numpy as np
 import pandas as pd
+from pandas.api.types import CategoricalDtype
 
 snek = snakemake
 
@@ -58,26 +60,10 @@ mut = mut.astype({
 
 mut.to_feather(snek.output[0])
 
-# chromo
-
 #
 # 2. sample metadata
 #
 mdat = pd.read_csv(snek.input[1], sep='\t', skiprows=4)
-
-# "AGE_AT_SEQ_REPORT" includes non-integer values: 
-#
-# "<18"
-# ">89"
-# "Unknown"
-
-# SAMPLE_CLASS.value_counts()
-# Tumor    229015
-# cfDNA       438
-#
-
-# drop columns not planned for use
-#mdat = mdat.drop([""], axis=1)
 
 mdat = mdat.rename(columns={
     "PATIENT_ID": "patient_id",
@@ -103,5 +89,17 @@ mdat = mdat.astype({
     "sample_class": "category",
 })
 
-mdat.to_feather(snek.output[1])
+# convert age to ordinal
 
+# feb25: there are 6 records where age=17; for simplicity, these are added to the "<18" group
+mdat.loc[mdat.age.values == '17', "age"] = '<18'
+
+# "Unknown" -> np.nan
+mdat.loc[mdat.age.values == 'Unknown', "age"] = np.nan
+
+age_levels = ["<18"] + [str(x) for x in range(18, 90)] + [">89"]
+age_cat = CategoricalDtype(categories=age_levels, ordered=True)
+mdat.age = mdat.age.astype(age_cat)
+
+# save result
+mdat.to_feather(snek.output[1])

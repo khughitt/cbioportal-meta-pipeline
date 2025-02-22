@@ -19,8 +19,8 @@ rule create_correlation_matrices:
 
 rule create_disease_mutation_count_matrix:
   input:
-    out_dir.joinpath("mut.feather"),
-    out_dir.joinpath("mdat.feather")
+    out_dir.joinpath("mut/data.feather"),
+    out_dir.joinpath("metadata/sample.feather")
   output:
     out_dir.joinpath("disease_mutation_count_matrix.feather")
   script:
@@ -28,8 +28,8 @@ rule create_disease_mutation_count_matrix:
 
 rule create_freq_tables:
   input:
-    out_dir.joinpath("mut.feather"),
-    out_dir.joinpath("mdat.feather")
+    out_dir.joinpath("mut/data.feather"),
+    out_dir.joinpath("metadata/sample.feather")
   output:
     out_dir.joinpath("freq/cancer.feather"),
     out_dir.joinpath("freq/cancer_detailed.feather"),
@@ -43,8 +43,8 @@ rule convert_to_feather:
     data_dir.joinpath("data_mutations_extended.txt"),
     data_dir.joinpath("data_clinical_sample.txt"),
   output:
-    out_dir.joinpath("mut.feather"),
-    out_dir.joinpath("mdat.feather")
+    out_dir.joinpath("mut/data.feather"),
+    out_dir.joinpath("metadata/sample.feather")
   script:
     "scripts/convert_to_feather.py"
 

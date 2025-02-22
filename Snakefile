@@ -8,14 +8,14 @@ configfile: "config/config.yml"
 data_dir = pathlib.Path(config['data_dir'])
 out_dir = pathlib.Path(config['out_dir'])
 
-rule create_cooccurrence_matrices:
+rule create_correlation_matrices:
   input:
     out_dir.joinpath("disease_mutation_count_matrix.feather")
   output:
-    out_dir.joinpath("co-occurrence/disease.feather"),
-    out_dir.joinpath("co-occurrence/gene.feather")
+    out_dir.joinpath("cor/disease.feather"),
+    out_dir.joinpath("cor/gene.feather")
   script:
-    "scripts/create_cooccurrence_matrices.py"
+    "scripts/create_correlation_matrices.py"
 
 rule create_disease_mutation_count_matrix:
   input:

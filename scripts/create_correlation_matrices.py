@@ -1,5 +1,5 @@
 #
-# create_cooccurrence_matrices.py
+# create_correlation_matrices.py
 #
 import pandas as pd
 
@@ -14,11 +14,11 @@ df = df.loc[:, mask]
 mask = df.var(axis=1) > 0
 df = df.loc[mask, :]
 
-# disease co-occurrence matrix
-cor1 = df.T.dot(df)
+# disease correlation matrix
+cor1 = df.corr()
 
-# feature (gene) co-occurrence matrix
-cor2 = df.dot(df.T)
+# feature (gene) correlation matrix
+cor2 = df.T.corr()
 
 cor1.reset_index().to_feather(snek.output[0])
 cor2.reset_index().to_feather(snek.output[1])

@@ -8,6 +8,15 @@ configfile: "config/config.yml"
 data_dir = pathlib.Path(config['data_dir'])
 out_dir = pathlib.Path(config['out_dir'])
 
+rule all:
+  input:
+    out_dir.joinpath("freq/cancer.feather"),
+    out_dir.joinpath("freq/cancer_detailed.feather"),
+    out_dir.joinpath("freq/gene.feather"),
+    out_dir.joinpath("freq/sample_type.feather"),
+    out_dir.joinpath("cor/disease.feather"),
+    out_dir.joinpath("cor/gene.feather")
+
 rule create_correlation_matrices:
   input:
     out_dir.joinpath("disease_mutation_count_matrix.feather")

@@ -43,7 +43,12 @@ sample_type_df = sample_type_df.merge(sample_type_freq, left_index=True, right_i
 sample_type_df.columns = ['num', 'ratio']
 
 # save results
-cancer_df.reset_index().sort_values('ratio', ascending=False).to_feather(snek.output[0])
-cancer_detailed_df.reset_index().sort_values('ratio', ascending=False).to_feather(snek.output[1])
-gene_df.reset_index().sort_values('ratio', ascending=False).to_feather(snek.output[2])
-sample_type_df.reset_index().sort_values('ratio', ascending=False).to_feather(snek.output[3])
+cancer_df = cancer_df.reset_index().sort_values('ratio', ascending=False)
+cancer_detailed_df = cancer_detailed_df.reset_index().sort_values('ratio', ascending=False)
+gene_df = gene_df.reset_index().sort_values('ratio', ascending=False)
+sample_type_df = sample_type_df.reset_index().sort_values('ratio', ascending=False)
+
+cancer_df.reset_index(drop=True).to_feather(snek.output[0])
+cancer_detailed_df.reset_index(drop=True).to_feather(snek.output[1])
+gene_df.reset_index(drop=True).to_feather(snek.output[2])
+sample_type_df.reset_index(drop=True).to_feather(snek.output[3])

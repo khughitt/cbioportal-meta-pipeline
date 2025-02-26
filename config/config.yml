@@ -1,3 +1,23 @@
-# cbioportal genie data directory
-data_dir: "/data/raw/cbioportal/genie/17"
-out_dir: "/data/packages/cbioportal/genie"
+# input / output directories
+data_dir: "/data/raw/cbioportal"
+out_dir: "/data/packages/cbioportal"
+
+# datasets to include; this is a subset of the "curated" dataset list + genie
+datasets: [
+ 'aml_target_gdc',
+ 'ccle_broad_2019',
+ 'hcc_msk_2024',
+ 'heme_msk_impact_2022',
+ 'genie',
+ 'mel_tsam_liang_2017',
+ 'metastatic_solid_tumors_mich_2017',
+ 'mixed_allen_2018',
+ 'msk_chord_2024',
+ 'msk_impact_2017',
+ 'msk_met_2021',
+ 'pan_origimed_2020',
+ 'pancan_pcawg_2020',
+ 'prostate_msk_2024',
+ 'summit_2018'
+]
+

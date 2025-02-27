@@ -17,16 +17,18 @@ rule all:
     expand(out_dir.joinpath("_summary/freq/{entity}/num.feather"), entity=entities),
     expand(out_dir.joinpath("_summary/freq/{entity}/ratio.feather"), entity=entities),
     expand(out_dir.joinpath("{id}/cor/disease.feather"), id=ids),
-    expand(out_dir.joinpath("{id}/cor/gene.feather"), id=ids)
+    expand(out_dir.joinpath("{id}/cor/gene.feather"), id=ids),
+    out_dir.joinpath("_summary/freq/gene_cancer/num.feather"),
+    out_dir.joinpath("_summary/freq/gene_cancer/ratio.feather")
 
-# rule create_combined_gene_cancer_freq_table:
-#   input:
-#     expand(out_dir.joinpath("{id}/freq/gene_cancer.feather"), id=ids)
-#   output:
-#     out_dir.joinpath("_summary/freq/gene_cancer/num.feather"),
-#     out_dir.joinpath("_summary/freq/gene_cancer/ratio.feather")
-#   script:
-#     "scripts/create_combined_gene_cancer_freq_table.py"
+rule create_combined_gene_cancer_freq_table:
+  input:
+    expand(out_dir.joinpath("{id}/freq/gene_cancer.feather"), id=ids)
+  output:
+    out_dir.joinpath("_summary/freq/gene_cancer/num.feather"),
+    out_dir.joinpath("_summary/freq/gene_cancer/ratio.feather")
+  script:
+    "scripts/create_combined_gene_cancer_freq_table.py"
 
 rule create_combined_freq_tables:
   input:

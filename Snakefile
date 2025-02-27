@@ -10,13 +10,23 @@ out_dir = pathlib.Path(config['out_dir'])
 
 ids = config["datasets"]
 
+entities = ['cancer', 'cancer_detailed', 'gene']
+
 rule all:
   input:
-    expand(out_dir.joinpath("{id}/freq/cancer.feather"), id=ids),
-    expand(out_dir.joinpath("{id}/freq/cancer_detailed.feather"), id=ids),
-    expand(out_dir.joinpath("{id}/freq/gene.feather"), id=ids),
+    expand(out_dir.joinpath("_summary/freq/{entity}/num.feather"), entity=entities),
+    expand(out_dir.joinpath("_summary/freq/{entity}/ratio.feather"), entity=entities),
     expand(out_dir.joinpath("{id}/cor/disease.feather"), id=ids),
     expand(out_dir.joinpath("{id}/cor/gene.feather"), id=ids)
+
+rule create_combined_freq_tables:
+  input:
+    expand(out_dir.joinpath("{id}/freq/{{entity}}.feather"), id=ids)
+  output:
+    out_dir.joinpath("_summary/freq/{entity}/num.feather"),
+    out_dir.joinpath("_summary/freq/{entity}/ratio.feather")
+  script:
+    "scripts/create_combined_freq_tables.py"
 
 rule create_correlation_matrices:
   input:

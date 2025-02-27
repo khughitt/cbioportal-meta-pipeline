@@ -3,8 +3,6 @@
 #
 import pandas as pd
 
-# TODO: counts by (cancer type)
-
 snek = snakemake
 
 mut = pd.read_feather(snek.input[0])
@@ -14,6 +12,7 @@ mut = mut[['symbol', 'sample_id_tumor']].rename(columns={
 })
 
 mdat = pd.read_feather(snek.input[1])
+mdat = mdat[['sample_id', 'cancer_type', 'cancer_type_detailed']]
 
 mut = mut.merge(mdat, on="sample_id")
 
@@ -21,6 +20,11 @@ mut = mut.merge(mdat, on="sample_id")
 cancer_df = mut['cancer_type'].value_counts().sort_values(ascending=False).to_frame()
 cancer_detailed_df = mut['cancer_type_detailed'].value_counts().sort_values(ascending=False).to_frame()
 gene_df = mut['symbol'].value_counts().sort_values(ascending=False).to_frame()
+
+# total mutation counts (gene by cancer type)
+gene_cancer_df = mut.groupby(['cancer_type', 'symbol']).count().loc[:, 'sample_id']
+gene_cancer_df = gene_cancer_df.to_frame()
+gene_cancer_df = gene_cancer_df.rename(columns={'sample_id': 'num'})
 
 # ratio of samples with mutation
 num_samples = len(mut.sample_id.unique())
@@ -37,6 +41,16 @@ gene_freq = mut.groupby('symbol').sample_id.nunique().to_frame() / num_samples
 gene_df = gene_df.merge(gene_freq, left_index=True, right_index=True)
 gene_df.columns = ['num', 'ratio']
 
+# ratio of samples with mutation (by cancer type)
+num_samples_by_cancer = mut.groupby('cancer_type').sample_id.nunique()
+gene_cancer_freq = mut.groupby(['cancer_type', 'symbol']).sample_id.nunique()
+gene_cancer_freq = (gene_cancer_freq / num_samples_by_cancer).to_frame()
+gene_cancer_freq = gene_cancer_freq.rename(columns={'sample_id': 'ratio'})
+
+gene_cancer_df = gene_cancer_df.merge(gene_cancer_freq, left_index=True, right_index=True)
+gene_cancer_df = gene_cancer_df.reset_index()
+gene_cancer_df = gene_cancer_df.sort_values(['cancer_type', 'ratio'], ascending=[True, False])
+
 # save results
 cancer_df = cancer_df.reset_index().sort_values('ratio', ascending=False)
 cancer_detailed_df = cancer_detailed_df.reset_index().sort_values('ratio', ascending=False)
@@ -45,3 +59,4 @@ gene_df = gene_df.reset_index().sort_values('ratio', ascending=False)
 cancer_df.reset_index(drop=True).to_feather(snek.output[0])
 cancer_detailed_df.reset_index(drop=True).to_feather(snek.output[1])
 gene_df.reset_index(drop=True).to_feather(snek.output[2])
+gene_cancer_df.reset_index(drop=True).to_feather(snek.output[3])

@@ -19,6 +19,15 @@ rule all:
     expand(out_dir.joinpath("{id}/cor/disease.feather"), id=ids),
     expand(out_dir.joinpath("{id}/cor/gene.feather"), id=ids)
 
+# rule create_combined_gene_cancer_freq_table:
+#   input:
+#     expand(out_dir.joinpath("{id}/freq/gene_cancer.feather"), id=ids)
+#   output:
+#     out_dir.joinpath("_summary/freq/gene_cancer/num.feather"),
+#     out_dir.joinpath("_summary/freq/gene_cancer/ratio.feather")
+#   script:
+#     "scripts/create_combined_gene_cancer_freq_table.py"
+
 rule create_combined_freq_tables:
   input:
     expand(out_dir.joinpath("{id}/freq/{{entity}}.feather"), id=ids)
@@ -53,7 +62,8 @@ rule create_freq_tables:
   output:
     out_dir.joinpath("{id}/freq/cancer.feather"),
     out_dir.joinpath("{id}/freq/cancer_detailed.feather"),
-    out_dir.joinpath("{id}/freq/gene.feather")
+    out_dir.joinpath("{id}/freq/gene.feather"),
+    out_dir.joinpath("{id}/freq/gene_cancer.feather")
   script:
     "scripts/create_freq_tables.py"
 

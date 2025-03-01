@@ -98,4 +98,11 @@ rule convert_to_feather:
   script:
     "scripts/convert_to_feather.py"
 
+rule download_dataset:
+  output:
+    data_dir.joinpath("{id}/data_mutations.txt"),
+    data_dir.joinpath("{id}/data_clinical_sample.txt"),
+  script:
+    "scripts/download_dataset.py"
+
 # vi:ft=snakemake

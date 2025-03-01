@@ -19,7 +19,16 @@ rule all:
     expand(out_dir.joinpath("studies/{id}/cor/disease.feather"), id=ids),
     expand(out_dir.joinpath("studies/{id}/cor/gene.feather"), id=ids),
     out_dir.joinpath("summary/freq/gene_cancer/num.feather"),
-    out_dir.joinpath("summary/freq/gene_cancer/ratio.feather")
+    out_dir.joinpath("summary/freq/gene_cancer/ratio.feather"),
+    out_dir.joinpath("summary/datasets.feather")
+
+rule create_dataset_summary_table:
+  input:
+    expand(out_dir.joinpath("studies/{id}/metadata/dataset.feather"), id=ids)
+  output:
+    out_dir.joinpath("summary/datasets.feather")
+  script:
+    "scripts/create_dataset_summary_table.py"
 
 rule create_combined_gene_cancer_freq_table:
   input:
@@ -80,11 +89,12 @@ rule create_protein_length_mapping:
 
 rule convert_to_feather:
   input:
-    data_dir.joinpath("studies/{id}/data_mutations.txt"),
-    data_dir.joinpath("studies/{id}/data_clinical_sample.txt"),
+    data_dir.joinpath("{id}/data_mutations.txt"),
+    data_dir.joinpath("{id}/data_clinical_sample.txt"),
   output:
     out_dir.joinpath("studies/{id}/data/mut.feather"),
-    out_dir.joinpath("studies/{id}/metadata/samples.feather")
+    out_dir.joinpath("studies/{id}/metadata/samples.feather"),
+    out_dir.joinpath("studies/{id}/metadata/dataset.feather")
   script:
     "scripts/convert_to_feather.py"
 

@@ -107,3 +107,19 @@ if "age" in mdat.columns:
 
 # save result
 mdat.to_feather(snek.output[1])
+
+# create dataset metadata
+dataset_mdat = {
+    "genes": len(set(mut.symbol)),
+    "mutations": mut.shape[0],
+    "cancer_types": len(set(mdat.cancer_type)),
+    "patients": len(set(mdat.patient_id)),
+    "samples": len(set(mdat.sample_id))
+}
+
+df = pd.DataFrame.from_dict(dataset_mdat, orient='index')
+df = df.reset_index()
+
+df.columns = ['entity', 'num']
+
+df.to_feather(snek.output[2])

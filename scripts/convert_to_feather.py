@@ -18,19 +18,55 @@ cat_fields = [
 ]
 
 # fields to encode as integers
-int_types = [
-    'Entrez_Gene_Id', 'Start_Position', 'End_Position', 'Protein_position'
-]
+int_types = []
+
+# fallback to strings
+str_types = []
+
+# 1. work-around: non-numeric values in Start_Position 
+if snek.wildcards["id"] not in ['hcc_meric_2021', 'lusc_cptac_2021', 'prostate_pcbm_swiss_2019', 'prostate_dkfz_2018']:
+    int_types.append('Start_Position')
+
+# 2. work-around: non-numeric value encountered in sclc_ucologne_2015
+if snek.wildcards["id"] not in ["sclc_ucologne_2015"]:
+    int_types.append('End_Position')
+
+# 3. work-around: non-numeric values in Entrez_Gene_Id
+if snek.wildcards["id"] in ["hnsc_mdanderson_2013", "stmyec_wcm_2022", "mixed_pipseq_2017", 
+                            "lihc_amc_prv", "stad_pfizer_uhongkong", "cscc_dfarber_2015",
+                            "nhl_bcgsc_2011"]:
+    str_types.append('Entrez_Gene_Id')
+else:
+    int_types.append('Entrez_Gene_Id')
+
+# 4. work-around: non-numeric values for Protein_position
+if snek.wildcards["id"] in ["prostate_dkfz_2018"]:
+    str_types.append('Protein_position')
 
 dtypes = { x: 'category' for x in cat_fields }
 
 for itype in int_types:
     dtypes[itype] = "Int64"
 
+for stype in str_types:
+    dtypes[stype] = "str"
+
 #
 # 1. mutation data
 #
-mut = pd.read_csv(snek.input[0], sep='\t', comment='#', dtype=dtypes)
+
+# work-around: problematic lines
+if snek.wildcards["id"] in ["angs_painter_2020", "ccrcc_utokyo_2013"]:
+    mut = pd.read_csv(snek.input[0], sep='\t', comment='#', dtype=dtypes, 
+                      engine='python', on_bad_lines='warn')
+else:
+    mut = pd.read_csv(snek.input[0], sep='\t', comment='#', dtype=dtypes)
+
+# work-around: duplicated fields with differing case ("Codons" / "codons")
+if snek.wildcards["id"] == "aml_ohsu_2018":
+    mut = mut.drop(columns=["codons"])
+elif snek.wildcards["id"] == "coad_cptac_2019":
+    mut = mut.drop(columns=["transcript_id"])
 
 # use simplified field names
 col_mapping = {
@@ -58,7 +94,10 @@ col_mapping = {
 }
 
 mut = mut.rename(columns=col_mapping)
-mut = mut[col_mapping.values()]
+
+# some fields (e.g. HGVSp_Short) are missing in some of the datasets
+cols = [x for x in col_mapping.values() if x in mut]
+mut = mut[cols]
 
 mut.to_feather(snek.output[0])
 

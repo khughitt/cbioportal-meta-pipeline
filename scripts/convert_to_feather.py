@@ -10,6 +10,10 @@ from pandas.api.types import CategoricalDtype
 
 snek = snakemake
 
+# load GRCh37 / GRCh38 gene metadata
+grch37 = pd.read_csv("data/grch37.tsv", sep='\t')
+grch38 = pd.read_csv("data/grch38.tsv", sep='\t')
+
 # fields to encode as categoricals
 cat_fields = [
     'Hugo_Symbol', 'Center', 'Chromosome', 'Consequence', 'Variant_Classification',
@@ -24,17 +28,22 @@ int_types = []
 str_types = []
 
 # 1. work-around: non-numeric values in Start_Position 
-if snek.wildcards["id"] not in ['hcc_meric_2021', 'lusc_cptac_2021', 'prostate_pcbm_swiss_2019', 'prostate_dkfz_2018']:
+if snek.wildcards["id"] in ['hcc_meric_2021', 'lusc_cptac_2021', 'prostate_pcbm_swiss_2019',
+                            'prostate_dkfz_2018', 'sclc_ucologne_2015']:
+    str_types.append('Start_Position')
+else:
     int_types.append('Start_Position')
 
 # 2. work-around: non-numeric value encountered in sclc_ucologne_2015
-if snek.wildcards["id"] not in ["sclc_ucologne_2015"]:
+if snek.wildcards["id"] in ["sclc_ucologne_2015"]:
+    str_types.append('End_Position')
+else:
     int_types.append('End_Position')
 
 # 3. work-around: non-numeric values in Entrez_Gene_Id
-if snek.wildcards["id"] in ["hnsc_mdanderson_2013", "stmyec_wcm_2022", "mixed_pipseq_2017", 
-                            "lihc_amc_prv", "stad_pfizer_uhongkong", "cscc_dfarber_2015",
-                            "nhl_bcgsc_2011"]:
+if snek.wildcards["id"] in ["hnsc_mdanderson_2013", "stmyec_wcm_2022", "mixed_pipseq_2017",
+                            "lihc_amc_prv", "skcm_dfci_2015", "stad_pfizer_uhongkong",
+                            "cscc_dfarber_2015", "nhl_bcgsc_2011"]:
     str_types.append('Entrez_Gene_Id')
 else:
     int_types.append('Entrez_Gene_Id')
@@ -42,6 +51,10 @@ else:
 # 4. work-around: non-numeric values for Protein_position
 if snek.wildcards["id"] in ["prostate_dkfz_2018"]:
     str_types.append('Protein_position')
+
+# 5. work-around: non-numeric values for dbSNP_RS
+if snek.wildcards["id"] in ["cscc_ucsf_2021"]:
+    str_types.append('dbSNP_RS')
 
 dtypes = { x: 'category' for x in cat_fields }
 
@@ -62,9 +75,11 @@ if snek.wildcards["id"] in ["angs_painter_2020", "ccrcc_utokyo_2013"]:
 else:
     mut = pd.read_csv(snek.input[0], sep='\t', comment='#', dtype=dtypes)
 
-# work-around: duplicated fields with differing case ("Codons" / "codons")
+# work-around: duplicated fields with differing case (e.g. "Codons" / "codons")
 if snek.wildcards["id"] == "aml_ohsu_2018":
     mut = mut.drop(columns=["codons"])
+elif snek.wildcards["id"] == "aml_ohsu_2022":
+    mut = mut.drop(columns=["codons", "protein_position", "refseq"])
 elif snek.wildcards["id"] == "coad_cptac_2019":
     mut = mut.drop(columns=["transcript_id"])
 
@@ -95,10 +110,17 @@ col_mapping = {
 
 mut = mut.rename(columns=col_mapping)
 
-# some fields (e.g. HGVSp_Short) are missing in some of the datasets
+# select fields of interest, excluding any missing in dataset
 cols = [x for x in col_mapping.values() if x in mut]
 mut = mut[cols]
 
+# filter out any entries with gene symbols that cannot be mapped to GRCh37 or GRCh38
+mut = mut[mut.symbol.isin(grch37.symbol) | mut.symbol.isin(grch38.symbol)]
+
+print("FILTERED:")
+print(len(set(mut.symbol.values)))
+
+# save result
 mut.to_feather(snek.output[0])
 
 #

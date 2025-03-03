@@ -17,7 +17,12 @@ out_dir: "/data/packages/cbioportal"
 # prostate_pcbm_swiss_2019
 # ucec_ccr_msk_2022
 # ucec_ccr_cfdna_msk_2022
+# cscc_ucsf_2021
 #
+# exluding due to other formating issues:
+# 
+# ccrcc_utokyo_2013
+# 
  
 # datasets to include; this is a subset of the "curated" dataset list + genie
 datasets: [
@@ -107,7 +112,6 @@ datasets: [
   "kirc_bgi",
   "ccrcc_irc_2014",
   "kirc_tcga_pan_can_atlas_2018",
-  "ccrcc_utokyo_2013",
   "kich_tcga_pan_can_atlas_2018",
   "kirp_tcga_pan_can_atlas_2018",
   "nccrcc_genentech_2014",
@@ -206,7 +210,6 @@ datasets: [
   "bcc_unige_2016",
   "cscc_dfarber_2015",
   "cscc_hgsc_bcm_2014",
-  "cscc_ucsf_2021",
   "mel_tsam_liang_2017",
   "mel_dfci_2019",
   "mel_ucla_2016",

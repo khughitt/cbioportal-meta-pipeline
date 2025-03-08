@@ -3,8 +3,6 @@
 #
 import pathlib
 
-configfile: "config/config.yml"
-
 data_dir = pathlib.Path(config['data_dir'])
 out_dir = pathlib.Path(config['out_dir'])
 
@@ -42,7 +40,7 @@ rule create_combined_gene_cancer_freq_table:
 rule create_combined_freq_tables:
   input:
     expand(out_dir.joinpath("studies/{id}/freq/{{entity}}.feather"), id=ids),
-    out_dir.joinpath("_metadata/protein_lengths.feather")
+    out_dir.joinpath("metadata/protein_lengths.feather")
   output:
     out_dir.joinpath("summary/freq/{entity}/num.feather"),
     out_dir.joinpath("summary/freq/{entity}/ratio.feather")
@@ -83,7 +81,7 @@ rule create_protein_length_mapping:
   input:
     "data/uniprotkb_hsapiens_protein_lengths.tsv.gz"
   output:
-    out_dir.joinpath("_metadata/protein_lengths.feather")
+    out_dir.joinpath("metadata/protein_lengths.feather")
   script:
     "scripts/create_protein_length_mapping.py"
 

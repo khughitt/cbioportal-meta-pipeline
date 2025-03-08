@@ -27,7 +27,12 @@ for infile in snek.input[:-1]:
 num_df = pd.concat(num_dfs, axis=1)
 ratio_df = pd.concat(ratio_dfs, axis=1)
 
-num_df.loc[:, 'mean'] = num_df.mean(axis=1)
+num_total = num_df.sum(axis=1)
+num_mean = num_df.mean(axis=1)
+
+num_df.loc[:, 'sum'] = num_total
+num_df.loc[:, 'mean'] = num_mean
+
 ratio_df.loc[:, 'mean'] = ratio_df.mean(axis=1)
 
 # for gene-level data, add protein length-adjusted versions of the 
@@ -39,6 +44,11 @@ if snek.wildcards['entity'] == "gene":
 
     num_mean = num_df.loc[:, 'mean']
     num_mean = pd.merge(num_mean, protein_lengths, left_index=True, right_index=True, how='left')
+
+    # for genes with no associated protein length information, default to median protein length
+    median_length = protein_lengths.length.median() 
+    num_mean.loc[num_mean.length.isna(), "length"] = median_length
+
     num_df['mean_adj'] = num_mean['mean'] / num_mean['length']
 
     ratio_mean = ratio_df.loc[:, 'mean']

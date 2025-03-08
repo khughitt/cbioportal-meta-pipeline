@@ -1,0 +1,132 @@
+---
+title: "cBioPortal Meta-Analysis Pipeline Summary"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+params:
+   rmd: "summary"
+output:
+  html_document:
+    df_print: kable
+    toc: true
+    toc_depth: 2
+---
+
+# Setup
+
+```{r, message=FALSE}
+library(tidyverse)
+library(arrow)
+
+snek <- snakemake
+
+# Minimum ratio of studies mutation must be observed in to be included
+MIN_OBS_RATIO <- snek@config$summary$min_gene_ratio
+```
+
+# Datasets
+
+```{r datasets}
+datasets <- read_feather(snek@input[[1]])
+
+datasets %>%
+  arrange(-num_mutations)
+```
+
+# Cancer types
+
+## Most common cancer types across datasets
+
+```{r cancer_types}
+cancers <- read_feather(snek@input[[2]]) %>%
+  column_to_rownames("cancer_type") %>%
+  select(-mean, -sum)
+
+dataset_counts <- apply(cancers, 1, function(x) {
+  sum(!is.na(x))
+})
+
+dataset_counts <- dataset_counts %>%
+  enframe() %>%
+  rename(cancer=name, num_datasets=value) %>%
+  arrange(-num_datasets)
+
+dataset_counts %>%
+  head(50)
+```
+
+## Cancers with the largest number of mutations across all datasets
+
+```{r}
+mutation_counts <- rowSums(cancers, na.rm=TRUE)
+
+mutation_counts <- mutation_counts %>%
+  enframe() %>%
+  rename(cancer=name, num_mutations=value) %>%
+  arrange(-num_mutations)
+
+mutation_counts %>%
+  inner_join(dataset_counts) %>%
+  head(50)
+```
+
+# Genes
+
+```{r genes}
+df <- read_feather(snek@input[[3]]) %>%
+  column_to_rownames("symbol")
+
+protein_lengths <- read_feather(snek@input[[4]])
+
+num_datasets <- ncol(df) - 2
+
+df$num_nonna <- apply(df[, 1:num_datasets], 1, function(x) {
+  sum(!is.na(x))
+})
+
+df$ratio_nonna <- df$num_nonna / num_datasets
+
+num_total <- nrow(df)
+num_filtered <- sum(df$ratio_nonna < MIN_OBS_RATIO)
+
+df <- df %>%
+  filter(ratio_nonna >= MIN_OBS_RATIO)
+```
+
+```{r results='asis'}
+cat(sprintf("Excluded %d / %d genes with mutations observed in fewer than %d / %d studies.\n",
+            num_filtered, num_total, ceiling(MIN_OBS_RATIO * num_datasets), num_datasets))
+```
+
+# Gene mutations
+
+## Genes with the highest mutation rates (overall)
+
+```{r gene_mutations}
+# add rankings for all genes passing
+df$rank <- seq_len(nrow(df))
+
+# add protein lengths
+df$protein_length <- round(protein_lengths$length[match(rownames(df), protein_lengths$symbol)])
+
+df %>%
+  select(rank,  mean, mean_adj, ratio_nonna, num_nonna, protein_length) %>%
+  head(100)
+```
+
+## Genes with the highest mutation rates (controlling for protein length)
+
+```{r gene_mutations_adj}
+df <- df %>%
+  arrange(-mean_adj)
+
+df$rank_adj <- seq_len(nrow(df))
+
+df %>%
+  select(rank_adj, rank, mean, mean_adj, ratio_nonna, num_nonna, protein_length) %>%
+  head(100)
+```
+
+# Session Info
+
+```{r}
+sessionInfo()
+```

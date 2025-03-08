@@ -18,7 +18,19 @@ rule all:
     expand(out_dir.joinpath("studies/{id}/cor/gene.feather"), id=ids),
     out_dir.joinpath("summary/freq/gene_cancer/num.feather"),
     out_dir.joinpath("summary/freq/gene_cancer/ratio.feather"),
-    out_dir.joinpath("summary/datasets.feather")
+    out_dir.joinpath("summary/datasets.feather"),
+    out_dir.joinpath("summary/summary.html")
+
+rule create_summary_report:
+  input:
+    out_dir.joinpath("summary/datasets.feather"),
+    out_dir.joinpath("summary/freq/cancer/num.feather"),
+    out_dir.joinpath("summary/freq/gene/ratio.feather"),
+    out_dir.joinpath("metadata/protein_lengths.feather")
+  output:
+    out_dir.joinpath("summary/summary.html")
+  script:
+    "scripts/summary.Rmd"
 
 rule create_dataset_summary_table:
   input:

@@ -104,6 +104,7 @@ rule convert_to_feather:
   output:
     out_dir.joinpath("studies/{id}/data/mut.feather"),
     out_dir.joinpath("studies/{id}/metadata/samples.feather"),
+    out_dir.joinpath("studies/{id}/metadata/patients.feather"),
     out_dir.joinpath("studies/{id}/metadata/dataset.feather")
   script:
     "scripts/convert_to_feather.py"

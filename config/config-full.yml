@@ -2,6 +2,11 @@
 data_dir: "/data/raw/cbioportal"
 out_dir: "/data/packages/cbioportal"
 
+# minimum ratio of datasets gene must be measured in to be included in
+# summary report tables
+summary:
+  min_gene_ratio: 0.2
+
 #
 # excluding pre-cancer / other datasets without a specified cancer type field for now:
 # 

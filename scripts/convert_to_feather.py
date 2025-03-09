@@ -117,9 +117,6 @@ mut = mut[cols]
 # filter out any entries with gene symbols that cannot be mapped to GRCh37 or GRCh38
 mut = mut[mut.symbol.isin(grch37.symbol) | mut.symbol.isin(grch38.symbol)]
 
-print("FILTERED:")
-print(len(set(mut.symbol.values)))
-
 # save result
 mut.to_feather(snek.output[0])
 
@@ -137,9 +134,9 @@ dtypes = {
     "SEQ_ASSAY_ID": "category"
 }
 
-mdat = pd.read_csv(snek.input[1], sep='\t', comment='#', dtype=dtypes)
+sample_mdat = pd.read_csv(snek.input[1], sep='\t', comment='#', dtype=dtypes)
 
-mdat = mdat.rename(columns={
+sample_mdat = sample_mdat.rename(columns={
     "AGE_AT_SEQ_REPORT": "age",
     "CANCER_TYPE": "cancer_type",
     "CANCER_TYPE_DETAILED": "cancer_type_detailed",
@@ -154,28 +151,90 @@ mdat = mdat.rename(columns={
 })
 
 # convert age to ordinal (genie)
-if "age" in mdat.columns:
+if "age" in sample_mdat.columns:
     # there are 6 records where age=17;
     # for simplicity, these are added to the "<18" group
-    mdat.loc[mdat.age.values == '17', "age"] = '<18'
+    sample_mdat.loc[sample_mdat.age.values == '17', "age"] = '<18'
 
     # "Unknown" -> np.nan
-    mdat.loc[mdat.age.values == 'Unknown', "age"] = np.nan
+    sample_mdat.loc[sample_mdat.age.values == 'Unknown', "age"] = np.nan
 
     age_levels = ["<18"] + [str(x) for x in range(18, 90)] + [">89"]
     age_cat = CategoricalDtype(categories=age_levels, ordered=True)
-    mdat.age = mdat.age.astype(age_cat)
+    sample_mdat.age = sample_mdat.age.astype(age_cat)
 
 # save result
-mdat.to_feather(snek.output[1])
+sample_mdat.to_feather(snek.output[1])
+
+#
+# 3. patient metadata
+#
+
+dtypes = {
+    "SEX": "category",
+    "RACE": "category",
+    "AGE": "string",
+    "ETHNICITY": "category",
+    "OS_STATUS": "category",
+    "DFS_STATUS": "category",
+    "DSS_STATUS": "category",
+    "PFS_STATUS": "category",
+    "SUBTYPE": "category",
+    "HISTOLOGY": "category",
+    "DRUG_TYPE": "category",
+    "PATH_M_STAGE": "category",
+    "PATH_N_STAGE": "category",
+    "RADIATION_THERAPY": "category"
+}
+
+patient_mdat = pd.read_csv(snek.input[2], sep='\t', comment='#', dtype=dtypes)
+
+patient_mdat = patient_mdat.rename(columns={
+    "PATIENT_ID": "patient_id",
+    "AGE": "age",
+    "SEX": "sex",
+    "RACE": "race",
+    "ETHNICITY": "ethnicity",
+    "OS_STATUS": "os_status",
+    "OS_MONTHS": "os_months",
+    "DFS_STATUS": "dfs_status",
+    "DFS_MONTHS": "dfs_months",
+    "DSS_STATUS": "dss_status",
+    "DSS_MONTHS": "dss_months",
+    "PFS_STATUS": "pfs_status",
+    "PFS_MONTHS": "pfs_months",
+    "SUBTYPE": "subtype",
+    "PATH_M_STAGE": "path_m_stage",
+    "PATH_N_STAGE": "path_n_stage",
+    "HISTOLOGY": "histology",
+    "DRUG_TYPE": "drug_type",
+    "RADIATION_THERAPY": "radiation_therapy",
+    "WEIGHT": "weight"
+})
+
+# convert age to ordinal (genie)
+if "age" in patient_mdat.columns:
+    # there are 6 records where age=17;
+    # for simplicity, these are added to the "<18" group
+    patient_mdat.loc[patient_mdat.age.values == '17', "age"] = '<18'
+
+    # "Unknown" -> np.nan
+    patient_mdat.loc[patient_mdat.age.values == 'Unknown', "age"] = np.nan
+
+    age_levels = ["<18"] + [str(x) for x in range(18, 90)] + [">89"]
+    age_cat = CategoricalDtype(categories=age_levels, ordered=True)
+    patient_mdat.age = patient_mdat.age.astype(age_cat)
+
+# save result
+patient_mdat.to_feather(snek.output[2])
 
 # create dataset metadata
 dataset_mdat = {
     "genes": len(set(mut.symbol)),
     "mutations": mut.shape[0],
-    "cancer_types": len(set(mdat.cancer_type)),
-    "patients": len(set(mdat.patient_id)),
-    "samples": len(set(mdat.sample_id))
+    "cancer_types": len(set(sample_mdat.cancer_type)),
+    "patients": len(set(sample_mdat.patient_id)),
+    "samples": len(set(sample_mdat.sample_id))
 }
 
 df = pd.DataFrame.from_dict(dataset_mdat, orient='index')
@@ -183,4 +242,4 @@ df = df.reset_index()
 
 df.columns = ['entity', 'num']
 
-df.to_feather(snek.output[2])
+df.to_feather(snek.output[3])

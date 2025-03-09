@@ -61,12 +61,22 @@ rule create_combined_freq_tables:
 
 rule create_correlation_matrices:
   input:
-    out_dir.joinpath("studies/{id}/data/disease_mut.feather")
+    out_dir.joinpath("studies/{id}/data/disease_mut.feather"),
+    out_dir.joinpath("studies/{id}/data/patient_mut.feather")
   output:
     out_dir.joinpath("studies/{id}/cor/disease.feather"),
     out_dir.joinpath("studies/{id}/cor/gene.feather")
   script:
     "scripts/create_correlation_matrices.py"
+
+rule create_patient_mutation_count_matrix:
+  input:
+    out_dir.joinpath("studies/{id}/data/mut.feather"),
+    out_dir.joinpath("studies/{id}/metadata/samples.feather")
+  output:
+    out_dir.joinpath("studies/{id}/data/patient_mut.feather")
+  script:
+    "scripts/create_patient_mutation_count_matrix.py"
 
 rule create_disease_mutation_count_matrix:
   input:
@@ -101,6 +111,7 @@ rule convert_to_feather:
   input:
     data_dir.joinpath("{id}/data_mutations.txt"),
     data_dir.joinpath("{id}/data_clinical_sample.txt"),
+    data_dir.joinpath("{id}/data_clinical_patient.txt")
   output:
     out_dir.joinpath("studies/{id}/data/mut.feather"),
     out_dir.joinpath("studies/{id}/metadata/samples.feather"),

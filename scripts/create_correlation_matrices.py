@@ -5,20 +5,27 @@ import pandas as pd
 
 snek = snakemake
 
-df = pd.read_feather(snek.input[0]).set_index("symbol")
+disease_mut = pd.read_feather(snek.input[0]).set_index("symbol")
+patient_mut = pd.read_feather(snek.input[1]).set_index("symbol")
 
 # filter diseases with zero variance
-mask = df.var() > 0
-df = df.loc[:, mask]
+mask = disease_mut.var() > 0
+disease_mut = disease_mut.loc[:, mask]
 
-mask = df.var(axis=1) > 0
-df = df.loc[mask, :]
+mask = disease_mut.var(axis=1) > 0
+disease_mut = disease_mut.loc[mask, :]
+
+mask = patient_mut.var() > 0
+patient_mut = patient_mut.loc[:, mask]
+
+mask = patient_mut.var(axis=1) > 0
+patient_mut = patient_mut.loc[mask, :]
 
 # disease correlation matrix
-cor1 = df.corr()
+disease_cor = disease_mut.corr()
 
-# feature (gene) correlation matrix
-cor2 = df.T.corr()
+# gene correlation matrix
+gene_cor = patient_mut.T.corr()
 
-cor1.reset_index().to_feather(snek.output[0])
-cor2.reset_index().to_feather(snek.output[1])
+disease_cor.reset_index().to_feather(snek.output[0])
+gene_cor.reset_index().to_feather(snek.output[1])

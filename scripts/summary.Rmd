@@ -71,23 +71,23 @@ mutation_counts %>%
 # Genes
 
 ```{r genes}
-df <- read_feather(snek@input[[3]]) %>%
+gene_ratios <- read_feather(snek@input[[3]]) %>%
   column_to_rownames("symbol")
 
-protein_lengths <- read_feather(snek@input[[4]])
+protein_lengths <- read_feather(snek@input[[5]])
 
-num_datasets <- ncol(df) - 2
+num_datasets <- ncol(gene_ratios) - 2
 
-df$num_nonna <- apply(df[, 1:num_datasets], 1, function(x) {
+gene_ratios$num_nonna <- apply(gene_ratios[, 1:num_datasets], 1, function(x) {
   sum(!is.na(x))
 })
 
-df$ratio_nonna <- df$num_nonna / num_datasets
+gene_ratios$ratio_nonna <- gene_ratios$num_nonna / num_datasets
 
-num_total <- nrow(df)
-num_filtered <- sum(df$ratio_nonna < MIN_OBS_RATIO)
+num_total <- nrow(gene_ratios)
+num_filtered <- sum(gene_ratios$ratio_nonna < MIN_OBS_RATIO)
 
-df <- df %>%
+gene_ratios <- gene_ratios %>%
   filter(ratio_nonna >= MIN_OBS_RATIO)
 ```
 
@@ -102,12 +102,12 @@ cat(sprintf("Excluded %d / %d genes with mutations observed in fewer than %d / %
 
 ```{r gene_mutations}
 # add rankings for all genes passing
-df$rank <- seq_len(nrow(df))
+gene_ratios$rank <- seq_len(nrow(gene_ratios))
 
 # add protein lengths
-df$protein_length <- round(protein_lengths$length[match(rownames(df), protein_lengths$symbol)])
+gene_ratios$protein_length <- round(protein_lengths$length[match(rownames(gene_ratios), protein_lengths$symbol)])
 
-df %>%
+gene_ratios %>%
   select(rank,  mean, mean_adj, ratio_nonna, num_nonna, protein_length) %>%
   head(100)
 ```
@@ -115,14 +115,45 @@ df %>%
 ## Genes with the highest mutation rates (controlling for protein length)
 
 ```{r gene_mutations_adj}
-df <- df %>%
+gene_ratios <- gene_ratios %>%
   arrange(-mean_adj)
 
-df$rank_adj <- seq_len(nrow(df))
+gene_ratios$rank_adj <- seq_len(nrow(gene_ratios))
 
-df %>%
+gene_ratios %>%
   select(rank_adj, rank, mean, mean_adj, ratio_nonna, num_nonna, protein_length) %>%
   head(100)
+```
+
+# Gene mutations (by cancer type)
+
+## Genes with the highest mutation rates (cancer-specific / overall)
+
+```{r gene_mutations_by_cancer_type}
+gene_cancer_ratios <- read_feather(snek@input[[4]])
+
+gene_cancer_ratios$num_nonna <- apply(gene_cancer_ratios[, 3:ncol(gene_cancer_ratios)], 1, function(x) {
+  sum(!is.na(x))
+})
+
+gene_cancer_ratios$ratio_nonna <- gene_cancer_ratios$num_nonna / num_datasets
+
+# add rankings for all genes passing
+common_cancers <- head(mutation_counts$cancer, 5)
+
+for (cancer in common_cancers) {
+  df <- gene_cancer_ratios %>%
+    filter(cancer_type == cancer)
+
+  df$rank <- seq_len(nrow(df))
+
+  # add protein lengths
+  df$protein_length <- round(protein_lengths$length[match(rownames(df), protein_lengths$symbol)])
+
+  df %>%
+    select(rank,  mean, mean_adj, ratio_nonna, num_nonna, protein_length) %>%
+    head(100)
+}
 ```
 
 # Session Info

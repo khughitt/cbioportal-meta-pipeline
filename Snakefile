@@ -26,6 +26,7 @@ rule create_summary_report:
     out_dir.joinpath("summary/datasets.feather"),
     out_dir.joinpath("summary/freq/cancer/num.feather"),
     out_dir.joinpath("summary/freq/gene/ratio.feather"),
+    out_dir.joinpath("summary/freq/gene_cancer/ratio.feather"),
     out_dir.joinpath("metadata/protein_lengths.feather")
   output:
     out_dir.joinpath("summary/summary.html")
@@ -42,10 +43,11 @@ rule create_dataset_summary_table:
 
 rule create_combined_gene_cancer_freq_table:
   input:
-    expand(out_dir.joinpath("studies/{id}/freq/gene_cancer.feather"), id=ids)
+    expand(out_dir.joinpath("studies/{id}/freq/gene_cancer.feather"), id=ids),
+    out_dir.joinpath("metadata/protein_lengths.feather")
   output:
     out_dir.joinpath("summary/freq/gene_cancer/num.feather"),
-    out_dir.joinpath("summary/freq/gene_cancer/ratio.feather")
+    out_dir.joinpath("summary/freq/gene_cancer/ratio.feather"),
   script:
     "scripts/create_combined_gene_cancer_freq_table.py"
 

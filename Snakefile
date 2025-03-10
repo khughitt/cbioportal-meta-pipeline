@@ -12,21 +12,21 @@ entities = ['cancer', 'cancer_detailed', 'gene']
 
 rule all:
   input:
-    expand(out_dir.joinpath("summary/freq/{entity}/num.feather"), entity=entities),
-    expand(out_dir.joinpath("summary/freq/{entity}/ratio.feather"), entity=entities),
-    expand(out_dir.joinpath("studies/{id}/cor/disease.feather"), id=ids),
+    expand(out_dir.joinpath("summary/freq/num/{entity}_dataset.feather"), entity=entities),
+    expand(out_dir.joinpath("summary/freq/ratio/{entity}_dataset.feather"), entity=entities),
+    expand(out_dir.joinpath("studies/{id}/cor/cancer.feather"), id=ids),
     expand(out_dir.joinpath("studies/{id}/cor/gene.feather"), id=ids),
-    out_dir.joinpath("summary/freq/gene_cancer/num.feather"),
-    out_dir.joinpath("summary/freq/gene_cancer/ratio.feather"),
+    out_dir.joinpath("summary/freq/num/gene_cancer_dataset.feather"),
+    out_dir.joinpath("summary/freq/ratio/gene_cancer_dataset.feather"),
     out_dir.joinpath("summary/datasets.feather"),
     out_dir.joinpath("summary/summary.html")
 
 rule create_summary_report:
   input:
     out_dir.joinpath("summary/datasets.feather"),
-    out_dir.joinpath("summary/freq/cancer/num.feather"),
-    out_dir.joinpath("summary/freq/gene/ratio.feather"),
-    out_dir.joinpath("summary/freq/gene_cancer/ratio.feather"),
+    out_dir.joinpath("summary/freq/num/cancer_dataset.feather"),
+    out_dir.joinpath("summary/freq/ratio/gene_dataset.feather"),
+    out_dir.joinpath("summary/freq/ratio/gene_cancer_dataset.feather"),
     out_dir.joinpath("metadata/protein_lengths.feather")
   output:
     out_dir.joinpath("summary/summary.html")
@@ -46,8 +46,8 @@ rule create_combined_gene_cancer_freq_table:
     expand(out_dir.joinpath("studies/{id}/freq/gene_cancer.feather"), id=ids),
     out_dir.joinpath("metadata/protein_lengths.feather")
   output:
-    out_dir.joinpath("summary/freq/gene_cancer/num.feather"),
-    out_dir.joinpath("summary/freq/gene_cancer/ratio.feather"),
+    out_dir.joinpath("summary/freq/num/gene_cancer_dataset.feather"),
+    out_dir.joinpath("summary/freq/ratio/gene_cancer_dataset.feather"),
   script:
     "scripts/create_combined_gene_cancer_freq_table.py"
 
@@ -56,42 +56,42 @@ rule create_combined_freq_tables:
     expand(out_dir.joinpath("studies/{id}/freq/{{entity}}.feather"), id=ids),
     out_dir.joinpath("metadata/protein_lengths.feather")
   output:
-    out_dir.joinpath("summary/freq/{entity}/num.feather"),
-    out_dir.joinpath("summary/freq/{entity}/ratio.feather")
+    out_dir.joinpath("summary/freq/num/{entity}_dataset.feather"),
+    out_dir.joinpath("summary/freq/ratio/{entity}_dataset.feather")
   script:
     "scripts/create_combined_freq_tables.py"
 
 rule create_correlation_matrices:
   input:
-    out_dir.joinpath("studies/{id}/data/disease_mut.feather"),
-    out_dir.joinpath("studies/{id}/data/patient_mut.feather")
+    out_dir.joinpath("studies/{id}/mut/gene_cancer.feather"),
+    out_dir.joinpath("studies/{id}/mut/gene_patient.feather")
   output:
-    out_dir.joinpath("studies/{id}/cor/disease.feather"),
+    out_dir.joinpath("studies/{id}/cor/cancer.feather"),
     out_dir.joinpath("studies/{id}/cor/gene.feather")
   script:
     "scripts/create_correlation_matrices.py"
 
-rule create_patient_mutation_count_matrix:
+rule create_gene_patient_mutation_count_matrix:
   input:
-    out_dir.joinpath("studies/{id}/data/mut.feather"),
+    out_dir.joinpath("studies/{id}/mut/mut.feather"),
     out_dir.joinpath("studies/{id}/metadata/samples.feather")
   output:
-    out_dir.joinpath("studies/{id}/data/patient_mut.feather")
+    out_dir.joinpath("studies/{id}/mut/gene_patient.feather")
   script:
-    "scripts/create_patient_mutation_count_matrix.py"
+    "scripts/create_gene_patient_mutation_count_matrix.py"
 
-rule create_disease_mutation_count_matrix:
+rule create_gene_cancer_mutation_count_matrix:
   input:
-    out_dir.joinpath("studies/{id}/data/mut.feather"),
+    out_dir.joinpath("studies/{id}/mut/mut.feather"),
     out_dir.joinpath("studies/{id}/metadata/samples.feather")
   output:
-    out_dir.joinpath("studies/{id}/data/disease_mut.feather")
+    out_dir.joinpath("studies/{id}/mut/gene_cancer.feather")
   script:
-    "scripts/create_disease_mutation_count_matrix.py"
+    "scripts/create_gene_cancer_mutation_count_matrix.py"
 
 rule create_freq_tables:
   input:
-    out_dir.joinpath("studies/{id}/data/mut.feather"),
+    out_dir.joinpath("studies/{id}/mut/mut.feather"),
     out_dir.joinpath("studies/{id}/metadata/samples.feather")
   output:
     out_dir.joinpath("studies/{id}/freq/cancer.feather"),
@@ -115,7 +115,7 @@ rule convert_to_feather:
     data_dir.joinpath("{id}/data_clinical_sample.txt"),
     data_dir.joinpath("{id}/data_clinical_patient.txt")
   output:
-    out_dir.joinpath("studies/{id}/data/mut.feather"),
+    out_dir.joinpath("studies/{id}/mut/mut.feather"),
     out_dir.joinpath("studies/{id}/metadata/samples.feather"),
     out_dir.joinpath("studies/{id}/metadata/patients.feather"),
     out_dir.joinpath("studies/{id}/metadata/dataset.feather")

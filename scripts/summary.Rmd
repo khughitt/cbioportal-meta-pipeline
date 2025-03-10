@@ -129,7 +129,7 @@ gene_ratios %>%
 
 ## Genes with the highest mutation rates (cancer-specific / overall)
 
-```{r gene_mutations_by_cancer_type}
+```{r gene_mutations_by_cancer_type, results='asis'}
 gene_cancer_ratios <- read_feather(snek@input[[4]])
 
 gene_cancer_ratios$num_nonna <- apply(gene_cancer_ratios[, 3:ncol(gene_cancer_ratios)], 1, function(x) {
@@ -142,8 +142,11 @@ gene_cancer_ratios$ratio_nonna <- gene_cancer_ratios$num_nonna / num_datasets
 common_cancers <- head(mutation_counts$cancer, 5)
 
 for (cancer in common_cancers) {
+  cat(sprintf("### %s\n\n", cancer))
+
   df <- gene_cancer_ratios %>%
-    filter(cancer_type == cancer)
+    filter(cancer_type == cancer) %>%
+    column_to_rownames("symbol")
 
   df$rank <- seq_len(nrow(df))
 
@@ -152,7 +155,11 @@ for (cancer in common_cancers) {
 
   df %>%
     select(rank,  mean, mean_adj, ratio_nonna, num_nonna, protein_length) %>%
-    head(100)
+    head(100) %>%
+    knitr::kable() %>%
+    print()
+
+  cat("\n")
 }
 ```
 

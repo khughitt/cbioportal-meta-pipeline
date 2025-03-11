@@ -18,8 +18,10 @@ library(arrow)
 
 snek <- snakemake
 
-# Minimum ratio of studies mutation must be observed in to be included
-MIN_OBS_RATIO <- snek@config$summary$min_gene_ratio
+# settings
+MIN_OBS_RATIO <- snek@config$summary$min_gene_coverage_ratio
+NUM_CANCER_SPECIFIC_RESULTS <- snek@config$summary$num_cancer_specific_results
+PREVIEW_NUM_ROWS <- snek@config$summary$table_max_rows
 ```
 
 # Datasets
@@ -50,7 +52,7 @@ dataset_counts <- dataset_counts %>%
   arrange(-num_datasets)
 
 dataset_counts %>%
-  head(50)
+  head(PREVIEW_NUM_ROWS)
 ```
 
 ## Cancers with the largest number of mutations across all datasets
@@ -61,11 +63,11 @@ mutation_counts <- rowSums(cancers, na.rm=TRUE)
 mutation_counts <- mutation_counts %>%
   enframe() %>%
   rename(cancer=name, num_mutations=value) %>%
-  arrange(-num_mutations)
+  arrange(-num_mutations) %>%
+  inner_join(dataset_counts)
 
 mutation_counts %>%
-  inner_join(dataset_counts) %>%
-  head(50)
+  head(PREVIEW_NUM_ROWS)
 ```
 
 # Genes
@@ -107,9 +109,12 @@ gene_ratios$rank <- seq_len(nrow(gene_ratios))
 # add protein lengths
 gene_ratios$protein_length <- round(protein_lengths$length[match(rownames(gene_ratios), protein_lengths$symbol)])
 
+median_length <- median(gene_ratios$protein_length, na.rm=TRUE)
+gene_ratios$protein_length[is.na(gene_ratios$protein_length)] <- median_length
+
 gene_ratios %>%
   select(rank,  mean, mean_adj, ratio_nonna, num_nonna, protein_length) %>%
-  head(100)
+  head(PREVIEW_NUM_ROWS)
 ```
 
 ## Genes with the highest mutation rates (controlling for protein length)
@@ -122,12 +127,12 @@ gene_ratios$rank_adj <- seq_len(nrow(gene_ratios))
 
 gene_ratios %>%
   select(rank_adj, rank, mean, mean_adj, ratio_nonna, num_nonna, protein_length) %>%
-  head(100)
+  head(PREVIEW_NUM_ROWS)
 ```
 
 # Gene mutations (by cancer type)
 
-## Genes with the highest mutation rates (cancer-specific / overall)
+## Genes with the highest mutation rates (cancer-specific)
 
 ```{r gene_mutations_by_cancer_type, results='asis'}
 gene_cancer_ratios <- read_feather(snek@input[[4]])
@@ -138,24 +143,54 @@ gene_cancer_ratios$num_nonna <- apply(gene_cancer_ratios[, 3:ncol(gene_cancer_ra
 
 gene_cancer_ratios$ratio_nonna <- gene_cancer_ratios$num_nonna / num_datasets
 
+gene_cancer_ratios <- gene_cancer_ratios %>%
+  filter(ratio_nonna >= MIN_OBS_RATIO)
+
 # add rankings for all genes passing
-common_cancers <- head(mutation_counts$cancer, 5)
+common_cancers <- head(dataset_counts$cancer, NUM_CANCER_SPECIFIC_RESULTS)
 
 for (cancer in common_cancers) {
-  cat(sprintf("### %s\n\n", cancer))
+  # 1. unadjusted
+  cat(sprintf("### %s (overall)\n\n", cancer))
 
   df <- gene_cancer_ratios %>%
     filter(cancer_type == cancer) %>%
     column_to_rownames("symbol")
 
+  # exclude datasets which don't include cancer
+  num_nas <- apply(df, 2, function(x) {
+    sum(is.na(x))
+  })
+  mask <- num_nas < nrow(df)
+
+  df <- df[, mask]
+
   df$rank <- seq_len(nrow(df))
 
   # add protein lengths
   df$protein_length <- round(protein_lengths$length[match(rownames(df), protein_lengths$symbol)])
+  df$protein_length[is.na(df$protein_length)] <- median_length
+
+  df <- df %>%
+    select(rank,  mean, mean_adj, ratio_nonna, num_nonna, protein_length)
 
   df %>%
-    select(rank,  mean, mean_adj, ratio_nonna, num_nonna, protein_length) %>%
-    head(100) %>%
+    head(PREVIEW_NUM_ROWS) %>%
+    knitr::kable() %>%
+    print()
+
+  cat("\n")
+
+  # 2. length-adjusted
+  cat(sprintf("### %s (length-adjusted)\n\n", cancer))
+
+  df <- df %>%
+    arrange(-mean_adj)
+
+  df$rank <- seq_len(nrow(df))
+
+  df %>%
+    head(PREVIEW_NUM_ROWS) %>%
     knitr::kable() %>%
     print()
 

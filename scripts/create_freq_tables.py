@@ -21,11 +21,6 @@ cancer_df = mut['cancer_type'].value_counts().sort_values(ascending=False).to_fr
 cancer_detailed_df = mut['cancer_type_detailed'].value_counts().sort_values(ascending=False).to_frame()
 gene_df = mut['symbol'].value_counts().sort_values(ascending=False).to_frame()
 
-# total mutation counts (gene by cancer type)
-gene_cancer_df = mut.groupby(['cancer_type', 'symbol']).count().loc[:, 'sample_id']
-gene_cancer_df = gene_cancer_df.to_frame()
-gene_cancer_df = gene_cancer_df.rename(columns={'sample_id': 'num'})
-
 # ratio of samples with mutation
 num_samples = len(mut.sample_id.unique())
 
@@ -43,11 +38,16 @@ gene_df.columns = ['num', 'ratio']
 
 # ratio of samples with mutation (by cancer type)
 num_samples_by_cancer = mut.groupby('cancer_type').sample_id.nunique()
-gene_cancer_freq = mut.groupby(['cancer_type', 'symbol']).sample_id.nunique()
-gene_cancer_freq = (gene_cancer_freq / num_samples_by_cancer).to_frame()
-gene_cancer_freq = gene_cancer_freq.rename(columns={'sample_id': 'ratio'})
+gene_cancer_ratio = mut.groupby(['cancer_type', 'symbol']).sample_id.nunique()
+gene_cancer_ratio = (gene_cancer_ratio / num_samples_by_cancer).to_frame()
+gene_cancer_ratio = gene_cancer_ratio.rename(columns={'sample_id': 'ratio'})
 
-gene_cancer_df = gene_cancer_df.merge(gene_cancer_freq, left_index=True, right_index=True)
+# total mutation counts (gene by cancer type)
+gene_cancer_df = mut.groupby(['cancer_type', 'symbol']).count().loc[:, 'sample_id']
+gene_cancer_df = gene_cancer_df.to_frame()
+gene_cancer_df = gene_cancer_df.rename(columns={'sample_id': 'num'})
+
+gene_cancer_df = gene_cancer_df.merge(gene_cancer_ratio, left_index=True, right_index=True)
 gene_cancer_df = gene_cancer_df.reset_index()
 gene_cancer_df = gene_cancer_df.sort_values(['cancer_type', 'ratio'], ascending=[True, False])
 

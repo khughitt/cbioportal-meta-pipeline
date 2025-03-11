@@ -6,10 +6,19 @@
 data_dir: "/data/raw/cbioportal"
 out_dir: "/data/packages/cbioportal/10k"
 
-# minimum ratio of datasets gene must be measured in to be included in
-# summary report tables
+# options for summary report generation
 summary:
-  min_gene_ratio: 0.2
+  # number of entries to show in summary tables
+  table_max_rows: 50
+
+  # minimum ratio of datasets gene must be measured in to be included in
+  # summary report tables
+  min_gene_coverage_ratio: 0.4
+
+  # number of cancer-specific result sections to include; cancer types are ranked according to the
+  # number of datasets they are present in, and cancer-specfic gene rankings are shown for the top
+  # "N" cancer types
+  num_cancer_specific_results: 5
 
 # datasets to include; this is a subset of the "curated" dataset list + genie
 datasets: [

@@ -63,6 +63,8 @@ rule create_combined_freq_tables:
   script:
     "scripts/create_combined_freq_tables.py"
 
+rule create_cancer_specific_gene_patient_matrices:
+
 rule create_combined_gene_patient_matrix:
   input:
     expand(out_dir.joinpath("studies/{id}/mut/matrix/gene_patient.feather"), id=ids)

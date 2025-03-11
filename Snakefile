@@ -16,6 +16,7 @@ rule all:
     expand(out_dir.joinpath("summary/mut/{entity}_dataset_ratio.feather"), entity=entities),
     expand(out_dir.joinpath("studies/{id}/mut/cor/cancer.feather"), id=ids),
     expand(out_dir.joinpath("studies/{id}/mut/cor/gene.feather"), id=ids),
+    out_dir.joinpath("summary/metadata/samples.feather"),
     out_dir.joinpath("summary/mut/gene_cancer_dataset.feather"),
     out_dir.joinpath("summary/mut/gene_cancer_dataset_ratio.feather"),
     out_dir.joinpath("summary/mut/matrix/gene_patient.feather"),
@@ -69,6 +70,14 @@ rule create_combined_gene_patient_matrix:
     out_dir.joinpath("summary/mut/matrix/gene_patient.feather"),
   script:
     "scripts/create_combined_gene_patient_matrix.py"
+
+rule create_combined_sample_table:
+  input:
+    expand(out_dir.joinpath("studies/{id}/metadata/samples.feather"), id=ids)
+  output:
+    out_dir.joinpath("summary/metadata/samples.feather"),
+  script:
+    "scripts/create_combined_sample_table.py"
 
 rule create_correlation_matrices:
   input:

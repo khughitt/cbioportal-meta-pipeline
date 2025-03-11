@@ -13,7 +13,7 @@ for infile in snek.input[:-1]:
     df = pd.read_feather(infile)
     df = df.set_index(list(df.columns[:2]))
 
-    dataset = os.path.basename(os.path.dirname(os.path.dirname(infile)))
+    dataset = os.path.basename(os.path.dirname(os.path.dirname(os.path.dirname(infile))))
 
     df1 = df['num']
     df2 = df['ratio']

@@ -1,5 +1,5 @@
 """
-check_gene_coverage.py - creates a table indicating how many datasets each gene appears in.
+check_gene_coverage.py - creates a table indicating how many studies each gene appears in.
 """
 import pandas as pd
 

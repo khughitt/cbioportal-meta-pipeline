@@ -1,15 +1,15 @@
 #
-# multi-cancer datasets with ~10k+ genes
+# multi-cancer studies with ~10k+ genes
 #
 
 # input / output directories
 data_dir: "/data/raw/cbioportal"
 out_dir: "/data/packages/cbioportal/10k"
 
-# minimum number of datasets a gene must be present in to be included?
+# minimum number of studies a gene must be present in to be included?
 filtering:
   genes:
-    min_datasets: 2
+    min_studies: 2
 
 subsampling:
   patients: 1.0  # combined gene-patient matrix
@@ -19,17 +19,17 @@ summary:
   # number of entries to show in summary tables
   table_max_rows: 50
 
-  # minimum ratio of datasets gene must be measured in to be included in
+  # minimum ratio of studies gene must be measured in to be included in
   # summary report tables
   min_gene_coverage_ratio: 0.4
 
   # number of cancer-specific result sections to include; cancer types are ranked according to the
-  # number of datasets they are present in, and cancer-specfic gene rankings are shown for the top
+  # number of studies they are present in, and cancer-specfic gene rankings are shown for the top
   # "N" cancer types
   num_cancer_specific_results: 10
 
-# datasets to include; this is a subset of the "curated" dataset list + genie
-datasets: [
+# studies to include; this is a subset of the "curated" study list + genie
+studies: [
   "metastatic_solid_tumors_mich_2017",
   "mixed_allen_2018",
   "mixed_pipseq_2017",

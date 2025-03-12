@@ -1,5 +1,5 @@
 """
-create_dataset_summary_table.py
+create_study_summary_table.py
 """
 import os
 import pandas as pd
@@ -14,6 +14,6 @@ df.columns = [os.path.basename(os.path.dirname(os.path.dirname(x))) for x in sne
 df.insert(0, "stat", ['num_genes', 'num_mutations', 'num_cancer_types', 'num_patients', 'num_samples'])
 df = df.set_index('stat').T.reset_index()
 
-df = df.rename(columns={'index': 'dataset'})
+df = df.rename(columns={'index': 'study'})
 
 df.to_feather(snek.output[0])

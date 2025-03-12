@@ -2,10 +2,10 @@
 data_dir: "/data/raw/cbioportal"
 out_dir: "/data/packages/cbioportal"
 
-# minimum number of datasets a gene must be present in to be included?
+# minimum number of studies a gene must be present in to be included?
 filtering:
   genes:
-    min_datasets: 2
+    min_studies: 2
 
 subsampling:
   patients: 0.25  # combined gene-patient matrix
@@ -15,17 +15,17 @@ summary:
   # number of entries to show in summary tables
   table_max_rows: 50
 
-  # minimum ratio of datasets gene must be measured in to be included in
+  # minimum ratio of studies gene must be measured in to be included in
   # summary report tables
   min_gene_coverage_ratio: 0.4
 
   # number of cancer-specific result sections to include; cancer types are ranked according to the
-  # number of datasets they are present in, and cancer-specfic gene rankings are shown for the top
+  # number of studies they are present in, and cancer-specfic gene rankings are shown for the top
   # "N" cancer types
   num_cancer_specific_results: 10
 
 #
-# excluding pre-cancer / other datasets without a specified cancer type field for now:
+# excluding pre-cancer / other studies without a specified cancer type field for now:
 # 
 # blca_bcan_hcrn_2022
 # brca_hta9_htan_2022
@@ -74,8 +74,8 @@ summary:
 # utuc_mskcc_2015
 #
  
-# datasets to include; this is a subset of the "curated" dataset list + genie
-datasets: [
+# studies to include; this is a subset of the "curated" study list + genie
+studies: [
   "genie",
   "acc_tcga_pan_can_atlas_2018",
   "ampca_bcm_2016",

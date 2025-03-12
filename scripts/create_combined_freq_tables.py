@@ -13,13 +13,13 @@ for infile in snek.input[:-1]:
     df = pd.read_feather(infile)
     df = df.set_index(df.columns[0])
 
-    dataset = os.path.basename(os.path.dirname(os.path.dirname(os.path.dirname(infile))))
+    study = os.path.basename(os.path.dirname(os.path.dirname(os.path.dirname(infile))))
 
     df1 = df['num']
     df2 = df['ratio']
 
-    df1.name = dataset
-    df2.name = dataset
+    df1.name = study
+    df2.name = study
 
     num_dfs.append(df1)
     ratio_dfs.append(df2)

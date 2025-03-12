@@ -40,9 +40,9 @@ For example, to launch Snakemake with a single thread:
 snakemake -j1 --configfile config/config-10k-genes.yml
 ```
 
-_Note_: whereas most of the datasets can be downloaded directly by the pipeline, the AACR GENIE
-dataset requires users to have an account on synapse.org, and the data must be downloaded and added
-to the pipeline input directory manually. For more information, see the [AACR GENIE project page on
+_Note_: whereas data for most of the studies can be downloaded directly by the pipeline, AACR GENIE
+requires users to have an account on synapse.org, and the data must be downloaded and added to the
+pipeline input directory manually. For more information, see the [AACR GENIE project page on
 synapse.org](https://www.synapse.org/Synapse:syn21683345).
 
 # Pipeline output
@@ -56,18 +56,26 @@ Example of study-level data outputs:
 
 ```
 ├── mut
-│   ├── gene_cancer.feather
-│   ├── gene_patient.feather
-│   └── mut.feather
+│   ├── gene_cancer
+│   │   └── gene_cancer_dataset.feather
+│   ├── gene
+│   │   └── gene_dataset.feather
+│   ├── matrix
+│   │   ├── gene_cancer.feather
+│   │   └── gene_patient.feather
+│   ├── cancer
+│   │   └── cancer_dataset.feather
+│   ├── mut_filtered.feather
+│   ├── cor
+│   │   ├── gene.feather
+│   │   └── cancer.feather
+│   ├── mut.feather
+│   └── cancer_detailed
+│       └── cancer_detailed_dataset.feather
 ├── metadata
 │   ├── dataset.feather
 │   ├── samples.feather
 │   └── patients.feather
-├── freq
-│   ├── gene_cancer.feather
-│   ├── gene.feather
-│   ├── cancer.feather
-│   └── cancer_detailed.feather
 └── cor
     ├── gene.feather
     └── cancer.feather
@@ -76,17 +84,41 @@ Example of study-level data outputs:
 Structure of combined / "summary" output:
 
 ```
-├── freq
-│   ├── num
-│   │   ├── gene_cancer_dataset.feather
-│   │   ├── gene_dataset.feather
-│   │   ├── cancer_detailed_dataset.feather
-│   │   └── cancer_dataset.feather
-│   └── ratio
-│       ├── gene_cancer_dataset.feather
-│       ├── gene_dataset.feather
-│       ├── cancer_detailed_dataset.feather
-│       └── cancer_dataset.feather
+├── mut
+│   ├── gene_cancer_dataset.feather
+│   ├── gene_dataset_ratio.feather
+│   ├── gene_dataset.feather
+│   ├── cancer_detailed_dataset.feather
+│   ├── cancer_dataset.feather
+│   ├── gene_cancer_dataset_ratio.feather
+│   ├── cancer_detailed_dataset_ratio.feather
+│   └── cancer_dataset_ratio.feather
+├── metadata
+│   └── samples.feather
 ├── datasets.feather
 └── summary.html
 ```
+
+For the individual study outputs, most of the output datasets (except for those in "matrix/" and
+"cor/" subdirectories) are "long" format tables:
+
+- `mut/mut.feather` and `mut/mut_filtered.feather` are structured similarly to the source
+  `data_mutations.txt` file
+- others have columns for the entity/entities (e.g. "gene") + "num" and "ratio" fields describing
+  the mutation counts and ratios for those entities.
+
+For the combined "summary" outputs, the most common format is a matrix of mutation counts or ratios.
+
+The convention used is to first list the entity used to index the rows and then the entity used to
+index the columns.
+
+If more than two entities are included, the first ones correspond to alternative row indices.
+
+So, for example:
+
+- `gene_dataset.feather` has genes along rows and datasets along columns, and,
+- `gene_cancer_dataset` has (gene, cancer) pairs along rows and datasets along columns
+
+Files with  "ratio" in their filenames report the ratio of samples within a study that have at
+least one mutation for a particular gene. Note that this will likely be modified in the future to
+report the ratio of _patients_ with a mutation instead.

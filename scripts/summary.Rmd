@@ -24,38 +24,38 @@ NUM_CANCER_SPECIFIC_RESULTS <- snek@config$summary$num_cancer_specific_results
 PREVIEW_NUM_ROWS <- snek@config$summary$table_max_rows
 ```
 
-# Datasets
+# Studies
 
-```{r datasets}
-datasets <- read_feather(snek@input[[1]])
+```{r studies}
+studies <- read_feather(snek@input[[1]])
 
-datasets %>%
+studies %>%
   arrange(-num_mutations)
 ```
 
 # Cancer types
 
-## Most common cancer types across datasets
+## Most common cancer types across studies
 
 ```{r cancer_types}
 cancers <- read_feather(snek@input[[2]]) %>%
   column_to_rownames("cancer_type") %>%
   select(-mean, -sum)
 
-dataset_counts <- apply(cancers, 1, function(x) {
+study_counts <- apply(cancers, 1, function(x) {
   sum(!is.na(x))
 })
 
-dataset_counts <- dataset_counts %>%
+study_counts <- study_counts %>%
   enframe() %>%
-  rename(cancer=name, num_datasets=value) %>%
-  arrange(-num_datasets)
+  rename(cancer=name, num_studies=value) %>%
+  arrange(-num_studies)
 
-dataset_counts %>%
+study_counts %>%
   head(PREVIEW_NUM_ROWS)
 ```
 
-## Cancers with the largest number of mutations across all datasets
+## Cancers with the largest number of mutations across all studies
 
 ```{r}
 mutation_counts <- rowSums(cancers, na.rm=TRUE)
@@ -64,7 +64,7 @@ mutation_counts <- mutation_counts %>%
   enframe() %>%
   rename(cancer=name, num_mutations=value) %>%
   arrange(-num_mutations) %>%
-  inner_join(dataset_counts)
+  inner_join(study_counts)
 
 mutation_counts %>%
   head(PREVIEW_NUM_ROWS)
@@ -78,13 +78,13 @@ gene_ratios <- read_feather(snek@input[[3]]) %>%
 
 protein_lengths <- read_feather(snek@input[[5]])
 
-num_datasets <- ncol(gene_ratios) - 2
+num_studies <- ncol(gene_ratios) - 2
 
-gene_ratios$num_nonna <- apply(gene_ratios[, 1:num_datasets], 1, function(x) {
+gene_ratios$num_nonna <- apply(gene_ratios[, 1:num_studies], 1, function(x) {
   sum(!is.na(x))
 })
 
-gene_ratios$ratio_nonna <- gene_ratios$num_nonna / num_datasets
+gene_ratios$ratio_nonna <- gene_ratios$num_nonna / num_studies
 
 num_total <- nrow(gene_ratios)
 num_filtered <- sum(gene_ratios$ratio_nonna < MIN_OBS_RATIO)
@@ -95,7 +95,7 @@ gene_ratios <- gene_ratios %>%
 
 ```{r results='asis'}
 cat(sprintf("Excluded %d / %d genes with mutations observed in fewer than %d / %d studies.\n",
-            num_filtered, num_total, ceiling(MIN_OBS_RATIO * num_datasets), num_datasets))
+            num_filtered, num_total, ceiling(MIN_OBS_RATIO * num_studies), num_studies))
 ```
 
 # Gene mutations
@@ -141,13 +141,13 @@ gene_cancer_ratios$num_nonna <- apply(gene_cancer_ratios[, 3:ncol(gene_cancer_ra
   sum(!is.na(x))
 })
 
-gene_cancer_ratios$ratio_nonna <- gene_cancer_ratios$num_nonna / num_datasets
+gene_cancer_ratios$ratio_nonna <- gene_cancer_ratios$num_nonna / num_studies
 
 gene_cancer_ratios <- gene_cancer_ratios %>%
   filter(ratio_nonna >= MIN_OBS_RATIO)
 
 # add rankings for all genes passing
-common_cancers <- head(dataset_counts$cancer, NUM_CANCER_SPECIFIC_RESULTS)
+common_cancers <- head(study_counts$cancer, NUM_CANCER_SPECIFIC_RESULTS)
 
 for (cancer in common_cancers) {
   # 1. unadjusted
@@ -157,7 +157,7 @@ for (cancer in common_cancers) {
     filter(cancer_type == cancer) %>%
     column_to_rownames("symbol")
 
-  # exclude datasets which don't include cancer
+  # exclude studies which don't include cancer
   num_nas <- apply(df, 2, function(x) {
     sum(is.na(x))
   })

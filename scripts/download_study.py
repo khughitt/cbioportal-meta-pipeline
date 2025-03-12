@@ -1,5 +1,5 @@
 """
-download_dataset.py
+download_study.py
 """
 import time
 import tarfile 

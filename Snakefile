@@ -63,8 +63,6 @@ rule create_combined_freq_tables:
   script:
     "scripts/create_combined_freq_tables.py"
 
-rule create_cancer_specific_gene_patient_matrices:
-
 rule create_combined_gene_patient_matrix:
   input:
     expand(out_dir.joinpath("studies/{id}/mut/matrix/gene_patient.feather"), id=ids)
@@ -93,7 +91,7 @@ rule create_correlation_matrices:
 
 rule create_gene_patient_mutation_count_matrix:
   input:
-    out_dir.joinpath("studies/{id}/mut/mut.feather"),
+    out_dir.joinpath("studies/{id}/mut/mut_filtered.feather"),
     out_dir.joinpath("studies/{id}/metadata/samples.feather")
   output:
     out_dir.joinpath("studies/{id}/mut/matrix/gene_patient.feather")
@@ -102,7 +100,7 @@ rule create_gene_patient_mutation_count_matrix:
 
 rule create_gene_cancer_mutation_count_matrix:
   input:
-    out_dir.joinpath("studies/{id}/mut/mut.feather"),
+    out_dir.joinpath("studies/{id}/mut/mut_filtered.feather"),
     out_dir.joinpath("studies/{id}/metadata/samples.feather")
   output:
     out_dir.joinpath("studies/{id}/mut/matrix/gene_cancer.feather")
@@ -111,7 +109,7 @@ rule create_gene_cancer_mutation_count_matrix:
 
 rule create_freq_tables:
   input:
-    out_dir.joinpath("studies/{id}/mut/mut.feather"),
+    out_dir.joinpath("studies/{id}/mut/mut_filtered.feather"),
     out_dir.joinpath("studies/{id}/metadata/samples.feather")
   output:
     out_dir.joinpath("studies/{id}/mut/cancer/cancer_dataset.feather"),
@@ -128,6 +126,23 @@ rule create_protein_length_mapping:
     out_dir.joinpath("metadata/protein_lengths.feather")
   script:
     "scripts/create_protein_length_mapping.py"
+
+rule filter_genes:
+  input:
+    out_dir.joinpath("studies/{id}/mut/mut.feather"),
+    out_dir.joinpath("metadata/gene_counts.feather")
+  output:
+    out_dir.joinpath("studies/{id}/mut/mut_filtered.feather"),
+  script:
+    "scripts/filter_genes.py"
+
+rule check_gene_coverage:
+  input:
+    expand(out_dir.joinpath("studies/{id}/mut/mut.feather"), id=ids),
+  output:
+    out_dir.joinpath("metadata/gene_counts.feather")
+  script:
+    "scripts/check_gene_coverage.py"
 
 rule convert_to_feather:
   input:
@@ -146,6 +161,7 @@ rule download_dataset:
   output:
     data_dir.joinpath("{id}/data_mutations.txt"),
     data_dir.joinpath("{id}/data_clinical_sample.txt"),
+    data_dir.joinpath("{id}/data_clinical_patient.txt"),
   script:
     "scripts/download_dataset.py"
 

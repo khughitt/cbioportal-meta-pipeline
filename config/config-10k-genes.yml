@@ -6,6 +6,14 @@
 data_dir: "/data/raw/cbioportal"
 out_dir: "/data/packages/cbioportal/10k"
 
+# minimum number of datasets a gene must be present in to be included?
+filtering:
+  genes:
+    min_datasets: 2
+
+subsampling:
+  patients: 1.0  # combined gene-patient matrix
+
 # options for summary report generation
 summary:
   # number of entries to show in summary tables
@@ -18,7 +26,7 @@ summary:
   # number of cancer-specific result sections to include; cancer types are ranked according to the
   # number of datasets they are present in, and cancer-specfic gene rankings are shown for the top
   # "N" cancer types
-  num_cancer_specific_results: 5
+  num_cancer_specific_results: 10
 
 # datasets to include; this is a subset of the "curated" dataset list + genie
 datasets: [

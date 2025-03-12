@@ -2,6 +2,14 @@
 data_dir: "/data/raw/cbioportal"
 out_dir: "/data/packages/cbioportal"
 
+# minimum number of datasets a gene must be present in to be included?
+filtering:
+  genes:
+    min_datasets: 2
+
+subsampling:
+  patients: 0.25  # combined gene-patient matrix
+
 # options for summary report generation
 summary:
   # number of entries to show in summary tables
@@ -14,7 +22,7 @@ summary:
   # number of cancer-specific result sections to include; cancer types are ranked according to the
   # number of datasets they are present in, and cancer-specfic gene rankings are shown for the top
   # "N" cancer types
-  num_cancer_specific_results: 5
+  num_cancer_specific_results: 10
 
 #
 # excluding pre-cancer / other datasets without a specified cancer type field for now:
@@ -33,10 +41,38 @@ summary:
 # ucec_ccr_cfdna_msk_2022
 # cscc_ucsf_2021
 #
+
+#
 # exluding due to other formating issues:
 # 
 # ccrcc_utokyo_2013
 # 
+
+# 
+# excluding due to lack of patient-level data:
+# 
+# bcc_unige_2016
+# chol_jhu_2013
+# chol_tcga_pan_can_atlas_2018
+# cllsll_icgc_2011
+# ctcl_columbia_2015
+# ccrcc_irc_2014
+# ccrcc_utokyo_2013
+# hcc_msk_venturaa_2018
+# lcll_broad_2013
+# lgsoc_mapk_msk_2022
+# luad_tsp
+# mbl_broad_2012
+# mcl_idibips_2013
+# mng_utoronto_2021
+# mpn_cimr_2013
+# nsclc_unito_2016
+# sarc_mskcc
+# ucec_ccr_cfdna_msk_2022
+# ucec_ccr_msk_2022
+# utuc_igbmc_2021
+# utuc_mskcc_2015
+#
  
 # datasets to include; this is a subset of the "curated" dataset list + genie
 datasets: [
@@ -48,8 +84,6 @@ datasets: [
   "chol_icgc_2017",
   "chol_nccs_2013",
   "chol_nus_2012",
-  "chol_tcga_pan_can_atlas_2018",
-  "chol_jhu_2013",
   "ihch_ismms_2015",
   "ihch_smmu_2014",
   "bladder_columbia_msk_2018",
@@ -59,9 +93,7 @@ datasets: [
   "blca_dfarber_mskcc_2014",
   "blca_tcga_pan_can_atlas_2018",
   "blca_cornell_2016",
-  "utuc_mskcc_2015",
   "utuc_cornell_baylor_mdacc_2019",
-  "utuc_igbmc_2021",
   "utuc_msk_2019",
   "es_iocurie_2014",
   "es_dfarber_broad_2014",
@@ -95,7 +127,6 @@ datasets: [
   "gbm_cptac_2021",
   "gbm_columbia_2019",
   "gbm_tcga_pan_can_atlas_2018",
-  "mbl_broad_2012",
   "mbl_dkfz_2017",
   "mbl_pcgp",
   "mbl_sickkids_2016",
@@ -124,7 +155,6 @@ datasets: [
   "acc_2019",
   "ccrcc_dfci_2019",
   "kirc_bgi",
-  "ccrcc_irc_2014",
   "kirc_tcga_pan_can_atlas_2018",
   "kich_tcga_pan_can_atlas_2018",
   "kirp_tcga_pan_can_atlas_2018",
@@ -136,7 +166,6 @@ datasets: [
   "liad_inserm_fr_2014",
   "hcc_clca_2024",
   "hcc_inserm_fr_2015",
-  "hcc_msk_venturaa_2018",
   "lihc_amc_prv",
   "lihc_riken",
   "lihc_tcga_pan_can_atlas_2018",
@@ -147,28 +176,22 @@ datasets: [
   "sclc_cancercell_gardner_2017",
   "nsclc_mskcc_2018",
   "nsclc_tracerx_2017",
-  "nsclc_unito_2016",
   "luad_broad",
   "luad_cptac_2020",
   "luad_oncosg_2020",
   "luad_tcga_pan_can_atlas_2018",
-  "luad_tsp",
   "lung_nci_2022",
   "lusc_cptac_2021",
   "lusc_tcga_pan_can_atlas_2018",
   "all_stjude_2016",
   "all_phase2_target_2018_pub",
-  "lcll_broad_2013",
   "cll_broad_2015",
   "cll_broad_2022",
   "cll_iuopa_2015",
-  "cllsll_icgc_2011",
-  "ctcl_columbia_2015",
   "dlbcl_dfci_2018",
   "dlbcl_duke_2017",
   "dlbc_tcga_pan_can_atlas_2018",
   "nhl_bcgsc_2013",
-  "mcl_idibips_2013",
   "mm_broad",
   "nhl_bcgsc_2011",
   "pcnsl_mayo_2015",
@@ -179,7 +202,6 @@ datasets: [
   "aml_target_2018_pub",
   "histiocytosis_cobi_msk_2019",
   "mds_tokyo_2011",
-  "mpn_cimr_2013",
   "pan_origimed_2020",
   "msk_chord_2024",
   "msk_impact_2017",
@@ -191,7 +213,6 @@ datasets: [
   "mixed_pipseq_2017",
   "pptc_2019",
   "summit_2018",
-  "lgsoc_mapk_msk_2022",
   "ov_tcga_pan_can_atlas_2018",
   "scco_mskcc",
   "paac_jhu_2014",
@@ -221,7 +242,6 @@ datasets: [
   "prad_eururol_2017",
   "prad_tcga_pan_can_atlas_2018",
   "prad_mskcc_cheny1_organoids_2014",
-  "bcc_unige_2016",
   "cscc_dfarber_2015",
   "cscc_hgsc_bcm_2014",
   "mel_tsam_liang_2017",
@@ -236,7 +256,6 @@ datasets: [
   "skcm_broad_brafresist_2012",
   "desm_broad_2015",
   "pcpg_tcga_pan_can_atlas_2018",
-  "sarc_mskcc",
   "sarc_tcga_pan_can_atlas_2018",
   "sarcoma_msk_2022",
   "angs_painter_2020",

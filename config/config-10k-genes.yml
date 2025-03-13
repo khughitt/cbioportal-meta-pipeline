@@ -6,10 +6,10 @@
 data_dir: "/data/raw/cbioportal"
 out_dir: "/data/packages/cbioportal/10k"
 
-# minimum number of studies a gene must be present in to be included?
+# minimum ratio of studies a gene must be present in to be included
 filtering:
   genes:
-    min_studies: 2
+    min_studies_ratio: 0.2
 
 subsampling:
   patients: 1.0  # combined gene-patient matrix

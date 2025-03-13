@@ -1,6 +1,7 @@
 #
 # filter_genes.py - filters genes which don't appear in a sufficient number of studies
 #
+import math
 import pandas as pd
 
 snek = snakemake
@@ -8,11 +9,15 @@ snek = snakemake
 mut = pd.read_feather(snek.input[0])
 gene_counts = pd.read_feather(snek.input[1])
 
-# determine which genes to keep
-MIN_COUNT = snek.config['filtering']['genes']['min_studies']
-gene_counts[gene_counts['count'] >= MIN_COUNT]
+studies = pd.read_feather(snek.input[2])
 
-genes_to_keep = gene_counts[gene_counts['count'] >= MIN_COUNT].symbol
+# determine which genes to keep
+MIN_RATIO = snek.config['filtering']['genes']['min_studies_ratio']
+
+num_studies = studies.shape[0]
+min_count = math.ceil(MIN_RATIO * num_studies)
+
+genes_to_keep = gene_counts[gene_counts['count'] >= min_count].symbol
 
 # filter & save
 mut = mut[mut.symbol.isin(genes_to_keep)]

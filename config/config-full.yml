@@ -1,14 +1,14 @@
 # input / output directories
 data_dir: "/data/raw/cbioportal"
-out_dir: "/data/packages/cbioportal"
+out_dir: "/data/packages/cbioportal/full"
 
-# minimum number of studies a gene must be present in to be included?
+# minimum ratio of studies a gene must be present in to be included
 filtering:
   genes:
-    min_studies: 2
+    min_studies_ratio: 0.05
 
 subsampling:
-  patients: 0.25  # combined gene-patient matrix
+  patients: 0.15  # combined gene-patient matrix
 
 # options for summary report generation
 summary:

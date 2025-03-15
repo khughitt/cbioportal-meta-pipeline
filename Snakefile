@@ -16,16 +16,16 @@ rule all:
     expand(out_dir.joinpath("summary/mut/{entity}_study_ratio.feather"), entity=entities),
     expand(out_dir.joinpath("studies/{id}/mut/cor/cancer.feather"), id=ids),
     expand(out_dir.joinpath("studies/{id}/mut/cor/gene.feather"), id=ids),
-    out_dir.joinpath("summary/metadata/samples.feather"),
+    out_dir.joinpath("metadata/samples.feather"),
     out_dir.joinpath("summary/mut/gene_cancer_study.feather"),
     out_dir.joinpath("summary/mut/gene_cancer_study_ratio.feather"),
     out_dir.joinpath("summary/mut/matrix/gene_patient.feather"),
-    out_dir.joinpath("summary/metadata/studies.feather"),
+    out_dir.joinpath("metadata/studies.feather"),
     out_dir.joinpath("summary/summary.html")
 
 rule create_summary_report:
   input:
-    out_dir.joinpath("summary/metadata/studies.feather"),
+    out_dir.joinpath("metadata/studies.feather"),
     out_dir.joinpath("summary/mut/cancer_study.feather"),
     out_dir.joinpath("summary/mut/gene_study_ratio.feather"),
     out_dir.joinpath("summary/mut/gene_cancer_study_ratio.feather"),
@@ -67,7 +67,7 @@ rule create_combined_sample_table:
   input:
     expand(out_dir.joinpath("studies/{id}/metadata/samples.feather"), id=ids)
   output:
-    out_dir.joinpath("summary/metadata/samples.feather"),
+    out_dir.joinpath("metadata/samples.feather"),
   script:
     "scripts/create_combined_sample_table.py"
 
@@ -123,7 +123,7 @@ rule filter_genes:
   input:
     out_dir.joinpath("studies/{id}/mut/mut.feather"),
     out_dir.joinpath("metadata/gene_counts.feather"),
-    out_dir.joinpath("summary/metadata/studies.feather")
+    out_dir.joinpath("metadata/studies.feather")
   output:
     out_dir.joinpath("studies/{id}/mut/mut_filtered.feather"),
   script:
@@ -141,7 +141,7 @@ rule create_study_summary_table:
   input:
     expand(out_dir.joinpath("studies/{id}/metadata/study.feather"), id=ids)
   output:
-    out_dir.joinpath("summary/metadata/studies.feather")
+    out_dir.joinpath("metadata/studies.feather")
   script:
     "scripts/create_study_summary_table.py"
 

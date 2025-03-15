@@ -122,3 +122,19 @@ So, for example:
 Files with  "ratio" in their filenames report the ratio of samples within a study that have at
 least one mutation for a particular gene. Note that this will likely be modified in the future to
 report the ratio of _patients_ with a mutation instead.
+
+# Limitations
+
+The pipeline aggregates evidence across multiple datasets, in order to understand mutation structure
+within and across multiple cancer types.
+
+There are a couple of useful types of context that would help with interpreting the results that are
+currently missing / is worth keeping in mind:
+
+1. What does the "background" mutation distribution look like for "healthy" individuals?
+2. How representative are the datasets in terms of population and cancer diversity, compared to the
+   larger population?
+
+Another limitations is that, at present, the pipeline is focused soley on mutation data, even though
+cBioPortal provided other types of data.
+

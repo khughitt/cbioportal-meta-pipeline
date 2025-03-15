@@ -50,5 +50,18 @@ ratio_mean = ratio_df.loc[:, 'mean']
 ratio_mean = pd.merge(ratio_mean, protein_lengths, left_index=True, right_index=True, how='left')
 ratio_df['mean_adj'] = ratio_mean['mean'] / ratio_mean['length']
 
-num_df.reset_index().to_feather(snek.output[0])
-ratio_df.reset_index().to_feather(snek.output[1])
+num_df = num_df.reset_index()
+ratio_df = ratio_df.reset_index()
+
+num_df = num_df.astype({
+    'cancer_type': 'category',
+    'symbol': 'category'
+})
+
+ratio_df = ratio_df.astype({
+    'cancer_type': 'category',
+    'symbol': 'category'
+})
+
+num_df.to_feather(snek.output[0])
+ratio_df.to_feather(snek.output[1])

@@ -17,7 +17,7 @@ summary:
 
   # minimum ratio of studies gene must be measured in to be included in
   # summary report tables
-  min_gene_coverage_ratio: 0.4
+  min_gene_coverage_ratio: 0.05
 
   # number of cancer-specific result sections to include; cancer types are ranked according to the
   # number of studies they are present in, and cancer-specfic gene rankings are shown for the top

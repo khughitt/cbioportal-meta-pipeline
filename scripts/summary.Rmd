@@ -137,14 +137,9 @@ gene_ratios %>%
 ```{r gene_mutations_by_cancer_type, results='asis'}
 gene_cancer_ratios <- read_feather(snek@input[[4]])
 
-gene_cancer_ratios$num_nonna <- apply(gene_cancer_ratios[, 3:ncol(gene_cancer_ratios)], 1, function(x) {
-  sum(!is.na(x))
-})
-
-gene_cancer_ratios$ratio_nonna <- gene_cancer_ratios$num_nonna / num_studies
-
+# drop filtered genes
 gene_cancer_ratios <- gene_cancer_ratios %>%
-  filter(ratio_nonna >= MIN_OBS_RATIO)
+  filter(symbol %in% rownames(gene_ratios))
 
 # add rankings for all genes passing
 common_cancers <- head(study_counts$cancer, NUM_CANCER_SPECIFIC_RESULTS)
@@ -166,6 +161,16 @@ for (cancer in common_cancers) {
   df <- df[, mask]
 
   df$rank <- seq_len(nrow(df))
+
+  # add missing ratios
+  study_cols <- colnames(df) %in% studies$dataset
+  num_studies <- sum(study_cols)
+
+  df$num_nonna <- apply(df[, study_cols], 1, function(x) {
+    sum(!is.na(x))
+  })
+
+  df$ratio_nonna <- df$num_nonna / num_studies
 
   # add protein lengths
   df$protein_length <- round(protein_lengths$length[match(rownames(df), protein_lengths$symbol)])

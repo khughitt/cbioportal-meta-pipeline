@@ -19,6 +19,8 @@ rule all:
     out_dir.joinpath("metadata/samples.feather"),
     out_dir.joinpath("summary/mut/table/gene_cancer_study.feather"),
     out_dir.joinpath("summary/mut/table/gene_cancer_study_ratio.feather"),
+    out_dir.joinpath("summary/mut/matrix/gene_cancer.feather"),
+    out_dir.joinpath("summary/mut/matrix/gene_cancer_ratio.feather"),
     out_dir.joinpath("summary/mut/matrix/gene_patient.feather"),
     out_dir.joinpath("metadata/studies.feather"),
     out_dir.joinpath("summary/summary.html")
@@ -27,13 +29,25 @@ rule create_summary_report:
   input:
     out_dir.joinpath("metadata/studies.feather"),
     out_dir.joinpath("summary/mut/table/cancer_study.feather"),
+    out_dir.joinpath("summary/mut/table/gene_study.feather"),
     out_dir.joinpath("summary/mut/table/gene_study_ratio.feather"),
-    out_dir.joinpath("summary/mut/table/gene_cancer_study_ratio.feather"),
+    out_dir.joinpath("summary/mut/table/gene_cancer_study.feather"),
+    out_dir.joinpath("summary/mut/matrix/gene_cancer.feather"),
     out_dir.joinpath("metadata/protein_lengths.feather")
   output:
     out_dir.joinpath("summary/summary.html")
   script:
     "scripts/summary.Rmd"
+
+rule create_combined_gene_cancer_mutation_matrices:
+  input:
+    out_dir.joinpath("summary/mut/table/gene_cancer_study.feather"),
+    out_dir.joinpath("summary/mut/table/gene_cancer_study_ratio.feather"),
+  output:
+    out_dir.joinpath("summary/mut/matrix/gene_cancer.feather"),
+    out_dir.joinpath("summary/mut/matrix/gene_cancer_ratio.feather")
+  script:
+    "scripts/create_combined_gene_cancer_mutation_matrices.py"
 
 rule create_combined_gene_cancer_freq_table:
   input:

@@ -10,6 +10,17 @@ filtering:
 subsampling:
   patients: 0.15  # combined gene-patient matrix
 
+# clustering options
+clustering:
+  cancer:
+    min_gene_mutations: 1000  # minimum number of mutations for a gene to be included in clustering
+    random_seed: 42
+    k: 2
+  gene:
+    min_gene_mutations: 1000  # minimum number of mutations for a gene to be included in clustering
+    random_seed: 42
+    k: 2
+
 # options for summary report generation
 summary:
   # number of entries to show in summary tables

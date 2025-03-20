@@ -17,12 +17,14 @@ rule all:
     expand(out_dir.joinpath("studies/{id}/mut/matrix/cancer_cor.feather"), id=ids),
     expand(out_dir.joinpath("studies/{id}/mut/matrix/gene_cor.feather"), id=ids),
     out_dir.joinpath("metadata/samples.feather"),
+    out_dir.joinpath("metadata/studies.feather"),
     out_dir.joinpath("summary/mut/table/gene_cancer_study.feather"),
     out_dir.joinpath("summary/mut/table/gene_cancer_study_ratio.feather"),
     out_dir.joinpath("summary/mut/matrix/gene_cancer.feather"),
     out_dir.joinpath("summary/mut/matrix/gene_cancer_ratio.feather"),
     out_dir.joinpath("summary/mut/matrix/gene_patient.feather"),
-    out_dir.joinpath("metadata/studies.feather"),
+    out_dir.joinpath("summary/mut/clusters/cancer.feather"),
+    out_dir.joinpath("summary/mut/clusters/gene.feather"),
     out_dir.joinpath("summary/summary.html")
 
 rule create_summary_report:
@@ -38,6 +40,22 @@ rule create_summary_report:
     out_dir.joinpath("summary/summary.html")
   script:
     "scripts/summary.Rmd"
+
+rule cluster_genes:
+  input:
+    out_dir.joinpath("summary/mut/matrix/gene_cancer.feather")
+  output:
+    out_dir.joinpath("summary/mut/clusters/gene.feather")
+  script:
+    "scripts/cluster_genes.py"
+
+rule cluster_cancer_types:
+  input:
+    out_dir.joinpath("summary/mut/matrix/gene_cancer.feather")
+  output:
+    out_dir.joinpath("summary/mut/clusters/cancer.feather")
+  script:
+    "scripts/cluster_cancer_types.py"
 
 rule create_combined_gene_cancer_mutation_matrices:
   input:

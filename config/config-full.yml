@@ -13,13 +13,15 @@ subsampling:
 # clustering options
 clustering:
   cancer:
-    min_gene_mutations: 1000  # minimum number of mutations for a gene to be included in clustering
-    random_seed: 42
+    gene_min_mutations: 1000
+    cancer_min_mutations: 10000
+    random_seed: 0
     k: 2
   gene:
-    min_gene_mutations: 1000  # minimum number of mutations for a gene to be included in clustering
-    random_seed: 42
-    k: 2
+    gene_min_mutations: 1000
+    cancer_min_mutations: 10000
+    random_seed: 0
+    k: 10
 
 # options for summary report generation
 summary:

@@ -9,9 +9,12 @@ snek = snakemake # type: ignore
 
 df = pd.read_feather(snek.input[0]).set_index("symbol")
 
-# Filter genes with fewer than min_gene_mutations mutations
-min_mutations = snek.config["clustering"]["cancer"]["min_gene_mutations"]
-df = df[df.sum(axis=1) >= min_mutations]
+# Filter genes/cancers by mutation count
+gene_min = snek.config["clustering"]["cancer"]["gene_min_mutations"]
+cancer_min = snek.config["clustering"]["cancer"]["cancer_min_mutations"]
+
+df = df.loc[df.sum(axis=1) >= gene_min, :]
+df = df.loc[:, df.sum() >= cancer_min]
 
 # Compute cosine similarity between cancer types (columns)
 similarity_matrix = cosine_similarity(df.T)

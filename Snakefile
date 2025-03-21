@@ -30,12 +30,14 @@ rule all:
 rule create_summary_report:
   input:
     out_dir.joinpath("metadata/studies.feather"),
+    out_dir.joinpath("metadata/protein_lengths.feather"),
     out_dir.joinpath("summary/mut/table/cancer_study.feather"),
     out_dir.joinpath("summary/mut/table/gene_study.feather"),
     out_dir.joinpath("summary/mut/table/gene_study_ratio.feather"),
-    out_dir.joinpath("summary/mut/table/gene_cancer_study.feather"),
     out_dir.joinpath("summary/mut/matrix/gene_cancer.feather"),
-    out_dir.joinpath("metadata/protein_lengths.feather")
+    out_dir.joinpath("summary/mut/table/gene_cancer_study.feather"),
+    out_dir.joinpath("summary/mut/clusters/cancer.feather"),
+    out_dir.joinpath("summary/mut/clusters/gene.feather")
   output:
     out_dir.joinpath("summary/summary.html")
   script:

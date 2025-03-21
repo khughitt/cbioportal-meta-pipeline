@@ -35,12 +35,16 @@ studies %>%
   arrange(-num_mutations)
 ```
 
+```{r}
+protein_lengths <- read_feather(snek@input[[2]])
+```
+
 # Cancer types
 
 ## Most common cancer types across studies
 
 ```{r cancer_types}
-cancers <- read_feather(snek@input[[2]]) %>%
+cancers <- read_feather(snek@input[[3]]) %>%
   column_to_rownames("cancer_type") %>%
   select(-mean, -sum)
 
@@ -77,14 +81,12 @@ mutation_counts %>%
 Which genes have the largest number of mutations across all datasets and patients?
 
 ```{r genes}
-gene_counts <- read_feather(snek@input[[3]]) %>%
+gene_counts <- read_feather(snek@input[[4]]) %>%
   select(symbol, sum) %>%
   arrange(-sum)
 
-gene_ratios <- read_feather(snek@input[[4]]) %>%
+gene_ratios <- read_feather(snek@input[[5]]) %>%
   column_to_rownames("symbol")
-
-protein_lengths <- read_feather(snek@input[[7]])
 
 num_studies <- ncol(gene_ratios) - 2
 
@@ -241,16 +243,12 @@ pan_cancer_genes3 %>%
 # Genes with the largest total number of mutations (cancer-specific)
 
 ```{r gene_mutations_by_cancer_type, results='asis'}
-gene_cancer_counts <- read_feather(snek@input[[5]])
+gene_cancer_counts <- read_feather(snek@input[[7]])
 
 # add rankings for all genes passing
 common_cancers <- head(study_counts$cancer, NUM_CANCER_SPECIFIC_RESULTS)
 
 for (cancer_ in common_cancers) {
-  num_datasets <- study_counts %>%
-    filter(cancer == cancer_) %>%
-    pull(num_studies)
-
   mask <- as.vector(!is.na(cancers[cancer_, ]))
   studies_with_cancer <- colnames(cancers)[mask]
 
@@ -300,7 +298,7 @@ for (cancer_ in common_cancers) {
   cat("\n")
 
   # 2. length-adjusted
-  cat("### Adjusting for protein length\n\n")
+  cat("### Adjusted\n\n")
 
   df <- df %>%
     arrange(-mean_adj)
@@ -309,6 +307,120 @@ for (cancer_ in common_cancers) {
 
   df %>%
     head(SPECIFIC_PREVIEW_NUM_ROWS) %>%
+    knitr::kable() %>%
+    print()
+
+  cat("\n")
+}
+```
+
+# Clustering
+
+## Cancers
+
+```{r cancer_clusters_overview}
+cancer_clusters <- read_feather(snek@input[[8]])
+
+cancer_clusters %>%
+  count(cluster) %>%
+  arrange(-n)
+```
+
+```{r cancer_clusters, results='asis'}
+for (clust_num in sort(unique(cancer_clusters$cluster))) {
+  cat(sprintf("## Cancer Cluster %d\n\n", clust_num))
+
+  cat("### Cancers\n\n")
+
+  # print cluster members
+  cancer_clusters %>%
+    filter(cluster == clust_num) %>%
+    select(-cluster) %>%
+    knitr::kable() %>%
+    print()
+
+  cat("\n")
+
+  # print genes most commonly mutated in this cancer cluster
+  cluster_cancers <- cancer_clusters %>%
+    filter(cluster == clust_num) %>%
+    pull(cancer_type)
+
+  mat <- gene_cancer_mat[, cluster_cancers]
+
+  # drop any cancers with all 0's / zero row variance
+  mask <- apply(mat, 2, var) != 0
+  mat <- mat[, mask]
+
+  # normalize contribution from each cancer type
+  mat <- sweep(mat, 2, colSums(mat), "/")
+
+  # create a dataframe of mutation scaled totals, limited to cancers in cluster
+  df <- data.frame(
+    symbol = rownames(mat),
+    total = rowSums(mat)
+  )
+
+  # add protein lengths
+  df$protein_length <- round(protein_lengths$length[match(df$symbol, protein_lengths$symbol)])
+  df$protein_length[is.na(df$protein_length)] <- median_length
+
+  # add adjusted version of mutation total
+  df$adj_total <- df$total / df$protein_length
+
+  df <- df %>%
+    arrange(-total) %>%
+    mutate(
+      rank=dense_rank(desc(total)),
+      rank_adj=dense_rank(desc(adj_total))
+    ) %>%
+    select(rank, rank_adj, total, adj_total, protein_length)
+
+  # 1. unadjusted
+  cat("### Genes (unadjusted)\n\n")
+
+  df %>%
+    head(PREVIEW_NUM_ROWS) %>%
+    knitr::kable() %>%
+    print()
+
+  cat("\n")
+
+  # 2. length-adjusted
+  cat("### Genes (adjusted)\n\n")
+
+  df <- df %>%
+    arrange(-adj_total)
+
+  df %>%
+    head(PREVIEW_NUM_ROWS) %>%
+    knitr::kable() %>%
+    print()
+
+  cat("\n")
+}
+```
+
+## Genes
+
+```{r gene_clusters_overview}
+gene_clusters <- read_feather(snek@input[[9]])
+
+gene_clusters %>%
+  count(cluster) %>%
+  arrange(-n)
+```
+
+```{r gene_clusters, results='asis'}
+for (clust_num in sort(unique(gene_clusters$cluster))) {
+  cat(sprintf("## Gene Cluster %d\n\n", clust_num))
+
+  cat("### Genes\n\n")
+
+  gene_clusters %>%
+    filter(cluster == clust_num) %>%
+    select(-cluster) %>%
+    head(PREVIEW_NUM_ROWS) %>%
     knitr::kable() %>%
     print()
 

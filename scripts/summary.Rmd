@@ -15,6 +15,14 @@ output:
 ```{r, message=FALSE}
 library(tidyverse)
 library(arrow)
+library(heatmaply)
+
+knitr::opts_chunk$set(
+  fig.width = 3.6,
+  fig.height = 3.6,
+  fig.retina = 1,
+  dpi = 384
+)
 
 snek <- snakemake
 
@@ -326,9 +334,32 @@ cancer_clusters %>%
   arrange(-n)
 ```
 
+```{r gene_cancer_heatmap}
+# Filter genes/cancers by mutation count in a similar manner to what was used for clustering
+gene_min <- snek@config$clustering$cancer$gene_min_mutations
+cancer_min <- snek@config$clustering$cancer$cancer_min_mutations
+
+mat <- gene_cancer_mat[rowSums(gene_cancer_mat) >= gene_min, ]
+
+mask <- colSums(mat) >= cancer_min
+mat <- mat[, mask]
+
+# limit to top 100 most mutated genes, adjusted for protein length
+top100 <- gene_counts %>%
+  arrange(-num_mutations_adj) %>%
+  head(100) %>%
+  pull(symbol)
+
+mat <- log1p(mat[rownames(mat) %in% top100, ])
+
+heatmaply(mat,
+          col_side_colors=cancer_clusters$cluster,
+          main="Gene x Cancer (log-scale)")
+```
+
 ```{r cancer_clusters, results='asis'}
 for (clust_num in sort(unique(cancer_clusters$cluster))) {
-  cat(sprintf("## Cancer Cluster %d\n\n", clust_num))
+  cat(sprintf("## Cancer Cluster %s\n\n", clust_num))
 
   cat("### Cancers\n\n")
 
@@ -352,74 +383,36 @@ for (clust_num in sort(unique(cancer_clusters$cluster))) {
   mask <- apply(mat, 2, var) != 0
   mat <- mat[, mask]
 
+  # count mutations prior to scaling
+  mutation_counts <- rowSums(mat)
+
   # normalize contribution from each cancer type
   mat <- sweep(mat, 2, colSums(mat), "/")
 
   # create a dataframe of mutation scaled totals, limited to cancers in cluster
   df <- data.frame(
     symbol = rownames(mat),
-    total = rowSums(mat)
+    total = mutation_counts
   )
 
   # add protein lengths
   df$protein_length <- round(protein_lengths$length[match(df$symbol, protein_lengths$symbol)])
   df$protein_length[is.na(df$protein_length)] <- median_length
 
-  # add adjusted version of mutation total
-  df$adj_total <- df$total / df$protein_length
+  # total mutation count adjusted for protein length and cancer type contribution
+  df$adj_total <- rowSums(mat) / df$protein_length
 
   df <- df %>%
-    arrange(-total) %>%
+    arrange(-adj_total) %>%
     mutate(
       rank=dense_rank(desc(total)),
       rank_adj=dense_rank(desc(adj_total))
     ) %>%
     select(rank, rank_adj, total, adj_total, protein_length)
 
-  # 1. unadjusted
-  cat("### Genes (unadjusted)\n\n")
-
-  df %>%
-    head(PREVIEW_NUM_ROWS) %>%
-    knitr::kable() %>%
-    print()
-
-  cat("\n")
-
-  # 2. length-adjusted
-  cat("### Genes (adjusted)\n\n")
-
-  df <- df %>%
-    arrange(-adj_total)
-
-  df %>%
-    head(PREVIEW_NUM_ROWS) %>%
-    knitr::kable() %>%
-    print()
-
-  cat("\n")
-}
-```
-
-## Genes
-
-```{r gene_clusters_overview}
-gene_clusters <- read_feather(snek@input[[9]])
-
-gene_clusters %>%
-  count(cluster) %>%
-  arrange(-n)
-```
-
-```{r gene_clusters, results='asis'}
-for (clust_num in sort(unique(gene_clusters$cluster))) {
-  cat(sprintf("## Gene Cluster %d\n\n", clust_num))
-
   cat("### Genes\n\n")
 
-  gene_clusters %>%
-    filter(cluster == clust_num) %>%
-    select(-cluster) %>%
+  df %>%
     head(PREVIEW_NUM_ROWS) %>%
     knitr::kable() %>%
     print()

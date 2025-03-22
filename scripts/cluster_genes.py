@@ -27,7 +27,9 @@ clusters = kmeans.fit_predict(similarity_matrix)
 # Create DataFrame with clustering results
 cluster_df = pd.DataFrame({
     'gene': df.index,
-    'cluster': clusters
+    'cluster': clusters + 1
 })
+
+cluster_df.cluster = cluster_df.cluster.astype("category")
 
 cluster_df.to_feather(snek.output[0])

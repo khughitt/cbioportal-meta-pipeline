@@ -12,8 +12,7 @@ to include other data modalities.
 To run the pipeline, start by cloning the pipeline repo, and creating a conda environment with
 the required dependencies.
 
-E.g., using [micromamba](https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html
-):
+E.g., using [micromamba](https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html):
 
 ```
 git clone https://github.com/khughitt/cbioportal-meta-pipeline
@@ -136,5 +135,5 @@ currently missing / is worth keeping in mind:
    larger population?
 
 Another limitations is that, at present, the pipeline is focused soley on mutation data, even though
-cBioPortal provided other types of data.
+cBioPortal provides other types of data.
 

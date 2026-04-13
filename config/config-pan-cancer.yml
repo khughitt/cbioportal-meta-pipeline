@@ -1,0 +1,50 @@
+#
+# multi-cancer studies with ~10k+ genes
+#
+
+# input / output directories
+data_dir: "/data/raw/cbioportal"
+out_dir: "/data/packages/cbioportal/pan-cancer"
+
+# minimum ratio of studies a gene must be present in to be included
+filtering:
+  genes:
+    min_studies_ratio: 0.2
+
+subsampling:
+  patients: 0.25  # combined gene-patient matrix
+
+# options for summary report generation
+summary:
+  # number of entries to show in summary tables
+  table_max_rows: 50
+
+  # minimum ratio of studies gene must be measured in to be included in
+  # summary report tables
+  min_gene_coverage_ratio: 0.4
+
+  # minimum ratio of studies including a specific cancer that a gene must be measured in to be
+  # included in cancer-specific summary report tables
+  min_gene_coverage_ratio_specific: 0.1
+
+  # number of cancer-specific result sections to include; cancer types are ranked according to the
+  # number of studies they are present in, and cancer-specfic gene rankings are shown for the top
+  # "N" cancer types
+  num_cancer_specific_results: 10
+
+# studies with 3+ cancer types and >1000 genes measured
+studies: [
+  "acc_2019", 
+  "aml_ohsu_2018", 
+  "aml_ohsu_2022", 
+  "brain_cptac_2020", 
+  "genie", 
+  "msk_met_2021",
+  "metastatic_solid_tumors_mich_2017", 
+  "mixed_allen_2018", 
+  "mixed_pipseq_2017", 
+  "pancan_pcawg_2020", 
+  "pediatric_dkfz_2017", 
+  "pog570_bcgsc_2020", 
+  "pptc_2019"
+]

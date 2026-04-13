@@ -1,0 +1,187 @@
+Prostate Cancer, NOS
+Glioma
+Colorectal Cancer
+Melanoma
+Non-Small Cell Lung Cancer
+Endometrial Cancer
+Skin Cancer, Non-Melanoma
+Esophagogastric Cancer
+Breast Cancer
+Lung cancer
+Ovarian Epithelial Tumor
+Endometrial Carcinoma
+Ovarian Cancer
+Lung Adenocarcinoma
+Sarcoma
+Renal Clear Cell Carcinoma
+Soft Tissue Sarcoma
+Cervical Cancer
+Colorectal Carcinoma
+Pancreatic Cancer
+Appendiceal Cancer
+Hepatobiliary Cancer
+Glioblastoma
+Bladder Cancer
+Small Cell Lung Cancer
+Ependymomal Tumor
+Head and Neck Cancer
+Renal Non-Clear Cell Carcinoma
+Non Small Cell Lung Cancer
+Prostate Cancer
+Anal Cancer
+Cancer of Unknown Primary
+Mature B-Cell Neoplasms
+UNKNOWN
+Vaginal Cancer
+Mature B-cell lymphoma
+Acute Myeloid Leukemia
+Salivary Cancer
+Ampullary Cancer
+Gastric Cancer
+Liver Hepatocellular Carcinoma
+Thyroid Cancer
+Bone Cancer
+Mesothelioma
+Adrenocortical Carcinoma
+Lymphoid Neoplasm
+Small Bowel Cancer
+Uterine Endometrioid Carcinoma
+Leukemia
+CNS Cancer
+Renal Cell Carcinoma
+Esophageal Carcinoma
+Thymic Epithelial Tumor
+B-Lymphoblastic Leukemia/Lymphoma
+Cholangiocarcinoma
+Salivary Gland Cancer
+Gastrointestinal Stromal Tumor
+Pleural Mesothelioma
+Intrahepatic Cholangiocarcinoma
+Uterine Sarcoma
+Low-grade glioma/astrocytoma
+Mature T and NK Neoplasms
+Nerve Sheath Tumor
+Embryonal Tumor
+Lung Cancer
+Germ Cell Tumor
+Gastrointestinal Neuroendocrine Tumor
+Extrahepatic Cholangiocarcinoma
+Myeloproliferative Neoplasms
+Myelodysplastic Syndromes
+Melanocytoma
+Breast Carcinoma
+Gallbladder Carcinoma
+Liver Tumor
+Sex Cord Stromal Tumor
+Ocular Melanoma
+Thymic Tumor
+Brain Cancer
+T-Lymphoblastic Leukemia/Lymphoma
+Ovarian Carcinoma
+Peripheral Nervous System
+Miscellaneous Brain Tumor
+Urothelial Carcinoma
+High-grade glioma/astrocytoma
+Kidney Renal Cell Carcinoma
+Non-Seminomatous Germ Cell Tumor
+Uterine Corpus Endometrial Carcinoma
+Blood Cancer, NOS
+Seminoma
+Breast Sarcoma
+Renal cancer
+Lymphatic Cancer, NOS
+Penile Cancer
+Peritoneal Cancer, NOS
+Myelodysplastic/Myeloproliferative Neoplasms
+Head and Neck Carcinoma
+Pheochromocytoma
+Miscellaneous Neuroepithelial Tumor
+Carcinoma of Uterine Cervix
+Histiocytosis
+Wilms Tumor
+Tubular Adenoma of the Colon
+Other
+Medulloblastoma
+Small Bowel Carcinoma
+Intraductal Papillary Mucinous Neoplasm
+Parathyroid Cancer
+Sellar Tumor
+Non-Germinomatous Germ Cell Tumor
+Bone Sarcoma
+Other Cancer
+Head and Neck Cancer, NOS
+Invasive Breast Carcinoma
+Rhabdoid Cancer
+Non-Hodgkin Lymphoma
+Hodgkin Lymphoma
+Choroid Plexus Tumor
+Essential Thrombocythemia
+Acute myeloid leukemia
+Mucinous Adenocarcinoma Lymph Node
+Soft Tissue Tumor
+Pineal Tumor
+Soft Tissue Cancer
+Adrenocortical carcinoma
+Encapsulated Glioma
+Desmoplastic/Nodular Medulloblastoma
+Adrenal Tumor
+Retinoblastoma
+Soft Tissue Myoepithelial Carcinoma
+Diffuse Glioma
+Gastrointestinal Neuroendocrine Tumors of the Esophagus/Stomach
+Blastic Plasmacytoid Dendritic Cell Neoplasm
+Biliary Tract
+Renal Neuroendocrine Tumor
+Salivary Gland-Type Tumor of the Lung
+Mastocytosis
+Gestational Trophoblastic Disease
+Nested stromal epithelial tumor of the liver
+CNS/Brain Cancer
+Uterine Cancer
+Posttransplant Lymphoproliferative Disorders
+Ovarian Germ Cell Tumor
+Liver Cancer
+Adrenocortical Adenoma
+Ovarian/Fallopian Tube Cancer
+Skin Cancer
+Esophageal/Stomach Cancer
+Vulvar Carcinoma
+Thyroid Carcinoma
+Bladder/Urinary Tract Cancer
+Biliary Tract Cancer
+Lymphatic Cancer
+Acute Leukemias of Ambiguous Lineage
+Primary CNS Melanocytic Tumors
+Angiomatoid Fibrous Histiocytoma
+Hodgkin Lymphoma-like PTLD
+Eye Cancer
+Cutaneous malignancy of hair matrix cells
+Undifferentiated Embryonal Sarcoma of the Liver
+Adenosarcoma
+Malignant Glomus Tumor
+Ovarian/Fallopian Tube Cancer, NOS
+Large Cell/Anaplastic Medulloblastoma
+Kidney Cancer
+Lung Cancer, NOS
+Clear Cell Sarcoma of Kidney
+Teratoma with Malignant Transformation
+Blood Cancer
+Bowel Cancer, NOS
+Infantile Fibrosarcoma
+Peritoneal Cancer
+Bladder/Urinary Tract Cancer, NOS
+Vulvar/Vaginal Cancer
+Malignant Tumor
+Ampullary Carcinoma
+Adrenal Gland Cancer
+Bowel Cancer
+Myofibromatosis
+Adenocarcinoma In Situ
+Sialoblastoma
+Lacrimal Gland Tumor
+Myeloid Neoplasms with Germ Line Predisposition
+Malignant Rhabdoid Tumor of the Liver
+Biliary Tract Cancer, NOS
+Testicular Cancer
+Peripheral Nervous System Cancer
+Fibrosarcoma

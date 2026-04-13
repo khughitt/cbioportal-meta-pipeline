@@ -9,34 +9,26 @@ to include other data modalities.
 
 # Usage
 
-To run the pipeline, start by cloning the pipeline repo, and creating a conda environment with
-the required dependencies.
-
-E.g., using [micromamba](https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html):
+To run the pipeline, start by cloning the pipeline repo, use `uv sync` to initial the environment
+and install the required dependencies.
 
 ```
 git clone https://github.com/khughitt/cbioportal-meta-pipeline
 cd cbioportal-meta-pipeline
 
-micromamba create -n cbioportal --file requirements.txt
+uv sync
 ```
 
-Activate the environment:
-
-```
-micromamba activate cbioportal
-```
-
-Use one of the example config files in the "config" dir, or create your own config file with the
+Use one of the example config files in `code/config/`, or create your own config file with the
 same structure.
 
 Finally, use [Snakemake](https://snakemake.readthedocs.io/en/stable/) to run the pipeline,
-specififying the config file you wish to use.
+specifying the Snakefile and config file you wish to use.
 
 For example, to launch Snakemake with a single thread:
 
 ```
-snakemake -j1 --configfile config/config-10k-genes.yml
+uv run snakemake -s code/workflows/Snakefile -j1 --configfile code/config/config-10k-genes.yml
 ```
 
 _Note_: whereas data for most of the studies can be downloaded directly by the pipeline, AACR GENIE

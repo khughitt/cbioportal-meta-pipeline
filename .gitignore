@@ -1,2 +1,18 @@
 archive/
-extra/
+
+# Science framework
+.env
+.worktrees/
+papers/pdfs/
+
+# Pipeline outputs / caches (not committed)
+results/
+models/
+.snakemake/
+.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+.ruff_cache/
+.pytest_cache/

@@ -1,5 +1,0 @@
-snakemake-minimal
-pandas
-seaborn
-pyarrow
-scikit-learn

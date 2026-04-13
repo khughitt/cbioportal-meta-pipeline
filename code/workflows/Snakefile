@@ -27,21 +27,22 @@ rule all:
     out_dir.joinpath("summary/mut/clusters/gene.feather"),
     out_dir.joinpath("summary/summary.html")
 
-rule create_summary_report:
-  input:
-    out_dir.joinpath("metadata/studies.feather"),
-    out_dir.joinpath("metadata/protein_lengths.feather"),
-    out_dir.joinpath("summary/mut/table/cancer_study.feather"),
-    out_dir.joinpath("summary/mut/table/gene_study.feather"),
-    out_dir.joinpath("summary/mut/table/gene_study_ratio.feather"),
-    out_dir.joinpath("summary/mut/matrix/gene_cancer.feather"),
-    out_dir.joinpath("summary/mut/table/gene_cancer_study.feather"),
-    out_dir.joinpath("summary/mut/clusters/cancer.feather"),
-    out_dir.joinpath("summary/mut/clusters/gene.feather")
-  output:
-    out_dir.joinpath("summary/summary.html")
-  script:
-    "scripts/summary.Rmd"
+# todo: switch to python
+# rule create_summary_report:
+#   input:
+#     out_dir.joinpath("metadata/studies.feather"),
+#     out_dir.joinpath("metadata/protein_lengths.feather"),
+#     out_dir.joinpath("summary/mut/table/cancer_study.feather"),
+#     out_dir.joinpath("summary/mut/table/gene_study.feather"),
+#     out_dir.joinpath("summary/mut/table/gene_study_ratio.feather"),
+#     out_dir.joinpath("summary/mut/matrix/gene_cancer.feather"),
+#     out_dir.joinpath("summary/mut/table/gene_cancer_study.feather"),
+#     out_dir.joinpath("summary/mut/clusters/cancer.feather"),
+#     out_dir.joinpath("summary/mut/clusters/gene.feather")
+#   output:
+#     out_dir.joinpath("summary/summary.html")
+#   script:
+#     "../scripts/summary.Rmd"
 
 rule cluster_genes:
   input:
@@ -49,7 +50,7 @@ rule cluster_genes:
   output:
     out_dir.joinpath("summary/mut/clusters/gene.feather")
   script:
-    "scripts/cluster_genes.py"
+    "../scripts/cluster_genes.py"
 
 rule cluster_cancer_types:
   input:
@@ -57,7 +58,7 @@ rule cluster_cancer_types:
   output:
     out_dir.joinpath("summary/mut/clusters/cancer.feather")
   script:
-    "scripts/cluster_cancer_types.py"
+    "../scripts/cluster_cancer_types.py"
 
 rule create_combined_gene_cancer_mutation_matrices:
   input:
@@ -67,7 +68,7 @@ rule create_combined_gene_cancer_mutation_matrices:
     out_dir.joinpath("summary/mut/matrix/gene_cancer.feather"),
     out_dir.joinpath("summary/mut/matrix/gene_cancer_ratio.feather")
   script:
-    "scripts/create_combined_gene_cancer_mutation_matrices.py"
+    "../scripts/create_combined_gene_cancer_mutation_matrices.py"
 
 rule create_combined_gene_cancer_freq_table:
   input:
@@ -77,7 +78,7 @@ rule create_combined_gene_cancer_freq_table:
     out_dir.joinpath("summary/mut/table/gene_cancer_study.feather"),
     out_dir.joinpath("summary/mut/table/gene_cancer_study_ratio.feather"),
   script:
-    "scripts/create_combined_gene_cancer_freq_table.py"
+    "../scripts/create_combined_gene_cancer_freq_table.py"
 
 rule create_combined_freq_tables:
   input:
@@ -87,7 +88,7 @@ rule create_combined_freq_tables:
     out_dir.joinpath("summary/mut/table/{entity}_study.feather"),
     out_dir.joinpath("summary/mut/table/{entity}_study_ratio.feather")
   script:
-    "scripts/create_combined_freq_tables.py"
+    "../scripts/create_combined_freq_tables.py"
 
 rule create_combined_gene_patient_matrix:
   input:
@@ -95,7 +96,7 @@ rule create_combined_gene_patient_matrix:
   output:
     out_dir.joinpath("summary/mut/matrix/gene_patient.feather"),
   script:
-    "scripts/create_combined_gene_patient_matrix.py"
+    "../scripts/create_combined_gene_patient_matrix.py"
 
 rule create_combined_sample_table:
   input:
@@ -103,7 +104,7 @@ rule create_combined_sample_table:
   output:
     out_dir.joinpath("metadata/samples.feather"),
   script:
-    "scripts/create_combined_sample_table.py"
+    "../scripts/create_combined_sample_table.py"
 
 rule create_correlation_matrices:
   input:
@@ -113,7 +114,7 @@ rule create_correlation_matrices:
     out_dir.joinpath("studies/{id}/mut/matrix/cancer_cor.feather"),
     out_dir.joinpath("studies/{id}/mut/matrix/gene_cor.feather")
   script:
-    "scripts/create_correlation_matrices.py"
+    "../scripts/create_correlation_matrices.py"
 
 rule create_gene_patient_mutation_count_matrix:
   input:
@@ -122,7 +123,7 @@ rule create_gene_patient_mutation_count_matrix:
   output:
     out_dir.joinpath("studies/{id}/mut/matrix/gene_patient.feather")
   script:
-    "scripts/create_gene_patient_mutation_count_matrix.py"
+    "../scripts/create_gene_patient_mutation_count_matrix.py"
 
 rule create_gene_cancer_mutation_count_matrix:
   input:
@@ -131,7 +132,7 @@ rule create_gene_cancer_mutation_count_matrix:
   output:
     out_dir.joinpath("studies/{id}/mut/matrix/gene_cancer.feather")
   script:
-    "scripts/create_gene_cancer_mutation_count_matrix.py"
+    "../scripts/create_gene_cancer_mutation_count_matrix.py"
 
 rule create_freq_tables:
   input:
@@ -143,7 +144,7 @@ rule create_freq_tables:
     out_dir.joinpath("studies/{id}/mut/table/gene_study.feather"),
     out_dir.joinpath("studies/{id}/mut/table/gene_cancer_study.feather")
   script:
-    "scripts/create_freq_tables.py"
+    "../scripts/create_freq_tables.py"
 
 rule create_protein_length_mapping:
   input:
@@ -151,7 +152,7 @@ rule create_protein_length_mapping:
   output:
     out_dir.joinpath("metadata/protein_lengths.feather")
   script:
-    "scripts/create_protein_length_mapping.py"
+    "../scripts/create_protein_length_mapping.py"
 
 rule filter_genes:
   input:
@@ -161,7 +162,7 @@ rule filter_genes:
   output:
     out_dir.joinpath("studies/{id}/mut/table/mut_filtered.feather"),
   script:
-    "scripts/filter_genes.py"
+    "../scripts/filter_genes.py"
 
 rule check_gene_coverage:
   input:
@@ -169,7 +170,7 @@ rule check_gene_coverage:
   output:
     out_dir.joinpath("metadata/gene_counts.feather")
   script:
-    "scripts/check_gene_coverage.py"
+    "../scripts/check_gene_coverage.py"
 
 rule create_study_summary_table:
   input:
@@ -177,7 +178,7 @@ rule create_study_summary_table:
   output:
     out_dir.joinpath("metadata/studies.feather")
   script:
-    "scripts/create_study_summary_table.py"
+    "../scripts/create_study_summary_table.py"
 
 rule convert_to_feather:
   input:
@@ -190,7 +191,7 @@ rule convert_to_feather:
     out_dir.joinpath("studies/{id}/metadata/patients.feather"),
     out_dir.joinpath("studies/{id}/metadata/study.feather")
   script:
-    "scripts/convert_to_feather.py"
+    "../scripts/convert_to_feather.py"
 
 rule download_study:
   output:
@@ -198,6 +199,6 @@ rule download_study:
     data_dir.joinpath("{id}/data_clinical_sample.txt"),
     data_dir.joinpath("{id}/data_clinical_patient.txt"),
   script:
-    "scripts/download_study.py"
+    "../scripts/download_study.py"
 
 # vi:ft=snakemake

@@ -1,0 +1,268 @@
+{
+  "id": "search:2026-04-13-cooccurrence-mutual-exclusivity-methods",
+  "type": "search",
+  "focus": "Co-occurrence and mutual exclusivity detection methods in cancer somatic mutation data",
+  "run_metadata": {
+    "retrieved": "2026-04-13",
+    "sources_used": ["openalex", "pubmed"],
+    "shared_runtime_available": false,
+    "shared_runtime_note": "science-tool has no 'literature' subcommand; went direct to OpenAlex + PubMed E-utilities.",
+    "web_search_fallback": false,
+    "openalex_contact": "mailto=khughitt@umd.edu",
+    "pubmed_api_key_used": false,
+    "candidates_retrieved": 52,
+    "shortlisted": 20,
+    "dedupe_order": ["doi", "pmid", "title_year"]
+  },
+  "query_variants": [
+    {"id": "broad-conceptual", "source": "openalex", "query": "mutual exclusivity cancer somatic mutation detection"},
+    {"id": "broad-conceptual-pubmed", "source": "pubmed", "query": "\"mutual exclusivity\"[TI] AND cancer"},
+    {"id": "co-occurrence-driver", "source": "openalex", "query": "co-occurrence mutually exclusive driver mutations pan-cancer"},
+    {"id": "anchor-discover", "source": "openalex", "query": "DISCOVER novel somatic alterations cancer mutual exclusivity"},
+    {"id": "anchor-select", "source": "pubmed", "query": "Mina Ciriello evolutionary dependencies cancer"},
+    {"id": "anchor-wesme", "source": "pubmed", "query": "\"WeSME\""},
+    {"id": "anchor-fishhook", "source": "websearch", "query": "FishHook R package Imielinski cancer driver discovery github PMID"},
+    {"id": "anchor-comet", "source": "pubmed", "query": "\"CoMEt\" Leiserson mutually exclusive"},
+    {"id": "anchor-memo", "source": "pubmed", "query": "Ciriello \"mutual exclusivity modules\" MEMo"},
+    {"id": "anchor-dendrix", "source": "pubmed", "query": "Vandin Upfal Raphael \"de novo\" pathways cancer"},
+    {"id": "anchor-megsa", "source": "pubmed", "query": "\"MEGSA\" mutually exclusive tumor Shi"},
+    {"id": "anchor-timex", "source": "pubmed", "query": "\"TiMEx\" cancer exclusivity"},
+    {"id": "anchor-wext", "source": "pubmed", "query": "\"WExT\" mutually exclusive cancer"},
+    {"id": "anchor-mutex", "source": "pubmed", "query": "\"Mutex\" Babur Sander mutual exclusivity"},
+    {"id": "benchmark", "source": "pubmed", "query": "\"benchmark\"[TIAB] \"mutual exclusivity\"[TIAB] cancer"},
+    {"id": "review", "source": "pubmed", "query": "review \"mutual exclusivity\" cancer \"driver\" methods"},
+    {"id": "recent-2022-2026", "source": "pubmed", "query": "\"mutual exclusivity\"[TI] cancer (sorted by date)"}
+  ],
+  "ranked_results": [
+    {
+      "rank": 1, "tier": "core-now", "citekey": "Canisius2016",
+      "title": "A novel independence test for somatic alterations in cancer shows that biology drives mutual exclusivity but chance explains most co-occurrence",
+      "first_author": "Canisius S", "last_author": "Wessels LFA",
+      "year": 2016, "venue": "Genome Biology",
+      "ids": {"pmid": "27986087", "doi": "10.1186/s13059-016-1114-x", "openalex_id": "W2949363897"},
+      "method_name": "DISCOVER",
+      "cited_by_count": 192,
+      "source_queries": ["broad-conceptual", "anchor-discover"],
+      "rationale": "Canonical sample-specific-background-rate independence test (Poisson binomial). Directly applicable as null model for cross-study frequency aggregation."
+    },
+    {
+      "rank": 2, "tier": "core-now", "citekey": "Mina2020",
+      "title": "Discovering functional evolutionary dependencies in human cancers",
+      "first_author": "Mina M", "last_author": "Ciriello G",
+      "year": 2020, "venue": "Nature Genetics",
+      "ids": {"pmid": "32989323", "doi": "10.1038/s41588-020-0703-5", "openalex_id": "W3090808618"},
+      "method_name": "SELECT",
+      "cited_by_count": 37,
+      "source_queries": ["anchor-select"],
+      "rationale": "Covariate-aware (lineage, TMB) functional-interaction detection. Correct SELECT citation (Nat Genet 2020, not Cell).",
+      "notes": "Task brief cited 'Cell 2020'. Method paper is Nat Genet 2020; Mina 2017 Cancer Cell (PMID 28756993) is the conceptual precursor."
+    },
+    {
+      "rank": 3, "tier": "core-now", "citekey": "Imielinski2017",
+      "title": "Insertions and Deletions Target Lineage-Defining Genes in Human Cancers",
+      "first_author": "Imielinski M", "last_author": "Meyerson M",
+      "year": 2017, "venue": "Cell",
+      "ids": {"pmid": "28089356", "doi": "10.1016/j.cell.2016.12.025", "openalex_id": "W2573077199"},
+      "method_name": "FishHook",
+      "cited_by_count": 138,
+      "source_queries": ["anchor-fishhook"],
+      "rationale": "Introduces Gamma-Poisson regression framework (FishHook R package) for covariate-aware background-rate-corrected mutation recurrence detection.",
+      "software": "https://github.com/mskilab-org/fishHook"
+    },
+    {
+      "rank": 4, "tier": "core-now", "citekey": "Kim2017",
+      "title": "WeSME: uncovering mutual exclusivity of cancer drivers and beyond",
+      "first_author": "Kim YA", "last_author": "Przytycka TM",
+      "year": 2017, "venue": "Bioinformatics",
+      "ids": {"pmid": "27153670", "doi": "10.1093/bioinformatics/btw242", "openalex_id": "W2963382551"},
+      "method_name": "WeSME",
+      "cited_by_count": 94,
+      "source_queries": ["anchor-wesme"],
+      "rationale": "Weighted-sampling permutation null that preserves per-sample mutation rates; tractable alternative to DISCOVER."
+    },
+    {
+      "rank": 5, "tier": "core-now", "citekey": "Leiserson2015",
+      "title": "CoMEt: a statistical approach to identify combinations of mutually exclusive alterations in cancer",
+      "first_author": "Leiserson MDM", "last_author": "Raphael BJ",
+      "year": 2015, "venue": "Genome Biology",
+      "ids": {"pmid": "26253137", "doi": "10.1186/s13059-015-0700-7", "openalex_id": "W1911343030"},
+      "method_name": "CoMEt",
+      "cited_by_count": 222,
+      "source_queries": ["anchor-comet"],
+      "rationale": "Exact tail-enumeration test for sets (not just pairs) of mutually exclusive alterations; supports subtype-specific testing."
+    },
+    {
+      "rank": 6, "tier": "core-now", "citekey": "Ciriello2012",
+      "title": "Mutual exclusivity analysis identifies oncogenic network modules",
+      "first_author": "Ciriello G", "last_author": "Schultz N",
+      "year": 2012, "venue": "Genome Research",
+      "ids": {"pmid": "21908773", "doi": "10.1101/gr.125567.111", "openalex_id": "W2144940507"},
+      "method_name": "MEMo",
+      "cited_by_count": 743,
+      "source_queries": ["anchor-memo"],
+      "rationale": "Seminal statistical + network-module approach; field benchmark (743 citations)."
+    },
+    {
+      "rank": 7, "tier": "core-now", "citekey": "Vandin2012",
+      "title": "De novo discovery of mutated driver pathways in cancer",
+      "first_author": "Vandin F", "last_author": "Raphael BJ",
+      "year": 2012, "venue": "Genome Research",
+      "ids": {"pmid": "21653252", "doi": "10.1101/gr.120477.111", "openalex_id": "W2121443461"},
+      "method_name": "Dendrix",
+      "cited_by_count": 455,
+      "source_queries": ["anchor-dendrix"],
+      "rationale": "Coverage-exclusivity weight function + MCMC / greedy pathway discovery without prior pathway database."
+    },
+    {
+      "rank": 8, "tier": "relevant-next", "citekey": "Leiserson2013",
+      "title": "Simultaneous Identification of Multiple Driver Pathways in Cancer",
+      "first_author": "Leiserson MDM", "last_author": "Raphael BJ",
+      "year": 2013, "venue": "PLoS Computational Biology",
+      "ids": {"pmid": "[UNVERIFIED]", "doi": "10.1371/journal.pcbi.1003054", "openalex_id": "W2042851051"},
+      "method_name": "Multi-Dendrix",
+      "cited_by_count": 254,
+      "source_queries": ["anchor-dendrix"],
+      "rationale": "Extends Dendrix to joint discovery of multiple driver pathways."
+    },
+    {
+      "rank": 9, "tier": "relevant-next", "citekey": "Babur2015",
+      "title": "Systematic identification of cancer driving signaling pathways based on mutual exclusivity of genomic alterations",
+      "first_author": "Babur O", "last_author": "Demir E",
+      "year": 2015, "venue": "Genome Biology",
+      "ids": {"pmid": "25887147", "doi": "10.1186/s13059-015-0612-6", "openalex_id": "W2141811925"},
+      "method_name": "Mutex",
+      "cited_by_count": 181,
+      "source_queries": ["anchor-mutex"],
+      "rationale": "Pathway-aware mutual-exclusivity detection with curated signaling-network prior."
+    },
+    {
+      "rank": 10, "tier": "relevant-next", "citekey": "Hua2016",
+      "title": "MEGSA: A Powerful and Flexible Framework for Analyzing Mutual Exclusivity of Tumor Mutations",
+      "first_author": "Hua X", "last_author": "Shi J",
+      "year": 2016, "venue": "American Journal of Human Genetics",
+      "ids": {"pmid": "26899600", "doi": "10.1016/j.ajhg.2015.12.021", "openalex_id": "W2287386959"},
+      "method_name": "MEGSA",
+      "cited_by_count": 50,
+      "source_queries": ["anchor-megsa"],
+      "rationale": "Likelihood-ratio framework with explicit power comparisons against CoMEt/MEMo/muex; useful design reference for benchmark."
+    },
+    {
+      "rank": 11, "tier": "relevant-next", "citekey": "Constantinescu2016",
+      "title": "TiMEx: a waiting time model for mutually exclusive cancer alterations",
+      "first_author": "Constantinescu S", "last_author": "Beerenwinkel N",
+      "year": 2016, "venue": "Bioinformatics",
+      "ids": {"pmid": "26163509", "doi": "10.1093/bioinformatics/btv400", "openalex_id": "W2154444902"},
+      "method_name": "TiMEx",
+      "cited_by_count": 69,
+      "source_queries": ["anchor-timex"],
+      "rationale": "Generative waiting-time (evolutionary) model interpretation of exclusivity."
+    },
+    {
+      "rank": 12, "tier": "relevant-next", "citekey": "Leiserson2016",
+      "title": "A weighted exact test for mutually exclusive mutations in cancer",
+      "first_author": "Leiserson MDM", "last_author": "Raphael BJ",
+      "year": 2016, "venue": "Bioinformatics",
+      "ids": {"pmid": "27587696", "doi": "10.1093/bioinformatics/btw462", "openalex_id": "W2592761229"},
+      "method_name": "WExT",
+      "cited_by_count": 53,
+      "source_queries": ["anchor-wext"],
+      "rationale": "Weighted-exact-test extension bridging WeSME-style weighting with CoMEt-style exact testing."
+    },
+    {
+      "rank": 13, "tier": "relevant-next", "citekey": "Kim2015",
+      "title": "MEMCover: integrated analysis of mutual exclusivity and functional network reveals dysregulated pathways across multiple cancer types",
+      "first_author": "Kim YA", "last_author": "Przytycka TM",
+      "year": 2015, "venue": "Bioinformatics",
+      "ids": {"pmid": "26072494", "doi": "10.1093/bioinformatics/btv247", "openalex_id": "[UNVERIFIED]"},
+      "method_name": "MEMCover",
+      "cited_by_count": null,
+      "source_queries": ["anchor-wesme"],
+      "rationale": "Cross-cancer-type integration of mutual-exclusivity modules — closest prior art to cbioportal's cross-study aggregation goal."
+    },
+    {
+      "rank": 14, "tier": "relevant-next", "citekey": "Mina2017",
+      "title": "Conditional Selection of Genomic Alterations Dictates Cancer Evolution and Oncogenic Dependencies",
+      "first_author": "Mina M", "last_author": "Ciriello G",
+      "year": 2017, "venue": "Cancer Cell",
+      "ids": {"pmid": "28756993", "doi": "10.1016/j.ccell.2017.06.010", "openalex_id": "[UNVERIFIED]"},
+      "method_name": "Conditional Selection (SELECT precursor)",
+      "cited_by_count": null,
+      "source_queries": ["anchor-select"],
+      "rationale": "Conceptual precursor to SELECT; introduces conditional-selection framing."
+    },
+    {
+      "rank": 15, "tier": "core-now", "citekey": "VanDeHaar2019",
+      "title": "Identifying Epistasis in Cancer Genomes: A Delicate Affair",
+      "first_author": "van de Haar J", "last_author": "Ideker T",
+      "year": 2019, "venue": "Cell",
+      "ids": {"pmid": "31150618", "doi": "10.1016/j.cell.2019.05.005", "openalex_id": "W2947209894"},
+      "cited_by_count": 106,
+      "source_queries": ["review"],
+      "rationale": "Perspective / methodological critique documenting failure modes of pan-cancer co-occurrence methods. Required reading before claiming any cross-study co-occurrence result."
+    },
+    {
+      "rank": 16, "tier": "relevant-next", "citekey": "Mina2022",
+      "title": "Epistasis and evolutionary dependencies in human cancers",
+      "first_author": "Mina M", "last_author": "Ciriello G",
+      "year": 2022, "venue": "Current Opinion in Genetics & Development",
+      "ids": {"pmid": "36182742", "doi": "10.1016/j.gde.2022.101989", "openalex_id": "W4297464117"},
+      "cited_by_count": 13,
+      "source_queries": ["recent-2022-2026"],
+      "rationale": "2022 topical review — compact current framing of the problem."
+    },
+    {
+      "rank": 17, "tier": "peripheral-monitor", "citekey": "VanDaele2022",
+      "title": "OMEN: network-based driver gene identification using mutual exclusivity",
+      "first_author": "Van Daele D", "last_author": "Marchal K",
+      "year": 2022, "venue": "Bioinformatics",
+      "ids": {"pmid": "35552634", "doi": "10.1093/bioinformatics/btac312", "openalex_id": "W4280544300"},
+      "cited_by_count": 6,
+      "source_queries": ["benchmark"],
+      "rationale": "2022 network-based method; low citation count; monitor."
+    },
+    {
+      "rank": 18, "tier": "relevant-next", "citekey": "Wang2024",
+      "title": "Adaptation of a mutual exclusivity framework to identify driver mutations within oncogenic pathways",
+      "first_author": "Wang X", "last_author": "Begg CB",
+      "year": 2024, "venue": "American Journal of Human Genetics",
+      "ids": {"pmid": "38232729", "doi": "10.1016/j.ajhg.2023.12.009", "openalex_id": "[UNVERIFIED]"},
+      "cited_by_count": null,
+      "source_queries": ["recent-2022-2026"],
+      "rationale": "2024 adaptation layered on DISCOVER/MEGSA-style frameworks; relevant for oncogenic-pathway prior integration."
+    },
+    {
+      "rank": 19, "tier": "peripheral-monitor", "citekey": "Shuaibi2024",
+      "title": "A latent variable model for evaluating mutual exclusivity and co-occurrence between driver mutations in cancer",
+      "first_author": "Shuaibi A", "last_author": "Raphael BJ",
+      "year": 2024, "venue": "bioRxiv (preprint)",
+      "ids": {"pmid": "38712136", "doi": "10.1101/2024.04.24.590995", "openalex_id": "[UNVERIFIED]"},
+      "cited_by_count": null,
+      "source_queries": ["recent-2022-2026"],
+      "rationale": "2024 preprint — latent-variable model; monitor for peer-reviewed version."
+    },
+    {
+      "rank": 20, "tier": "peripheral-monitor", "citekey": "Spinou2025",
+      "title": "A pathway-informed mutual exclusivity framework to detect genetic interactions in pediatric cancer",
+      "first_author": "Spinou A", "last_author": "Kemmeren P",
+      "year": 2025, "venue": "BMC Medical Genomics",
+      "ids": {"pmid": "41388546", "doi": "10.1186/s12920-025-02289-z", "openalex_id": "[UNVERIFIED]"},
+      "cited_by_count": null,
+      "source_queries": ["recent-2022-2026"],
+      "rationale": "2025 pathway-prior design pattern on small cohorts (relevant for cbioportal's rarer cancer types)."
+    }
+  ],
+  "coverage_gaps": [
+    "No recent (2022-2026) comprehensive benchmark of mutual-exclusivity methods on a standardized test set.",
+    "Cross-study (not cross-cancer-type) aggregation of co-occurrence p-values is essentially absent from the literature — potential contribution target.",
+    "Clonal-hematopoiesis confounding not systematically addressed in DISCOVER/SELECT/WeSME/CoMEt.",
+    "Panel-heterogeneity (GENIE vs MSK-IMPACT vs WES) not explicitly handled in most methods; only FishHook-style covariate regression + WExT/WeSME weighting address this.",
+    "Copy-number / structural-variant co-occurrence methods not reviewed (explicit out-of-scope for this project phase)."
+  ],
+  "recommended_next_actions": [
+    "Create paper stubs under doc/background/papers/ for the 6 Core-now anchors (done in this pass).",
+    "Add BibTeX entries to papers/references.bib for all 20 records (done in this pass).",
+    "Create doc/background/topics/co-occurrence-mutual-exclusivity-methods.md consolidating method taxonomy.",
+    "Pre-register choice between DISCOVER and WeSME as primary null model before implementing create_cooccurrence_matrices.py.",
+    "Run follow-up search: 'cross-study / cross-cohort meta-analysis statistics for gene-pair mutation frequencies'."
+  ]
+}

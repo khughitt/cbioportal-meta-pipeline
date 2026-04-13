@@ -95,6 +95,7 @@ summary:
 studies: [
   "genie",
   "acc_tcga_pan_can_atlas_2018",
+  "aml_stjude_2024",
   "ampca_bcm_2016",
   "biliary_tract_summit_2022",
   "gbc_shanghai_2014",
@@ -221,6 +222,7 @@ studies: [
   "mds_tokyo_2011",
   "pan_origimed_2020",
   "msk_chord_2024",
+  "msk_impact_50k_2026",
   "msk_impact_2017",
   "mixed_allen_2018",
   "metastatic_solid_tumors_mich_2017",

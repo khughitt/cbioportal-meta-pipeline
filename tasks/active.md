@@ -133,16 +133,6 @@ Follow-on to t074 annotation-only pass. Currently per-study NaN conflates three 
 
 
 
-## [t079] Pre-register pooling-method choice (GLMM-logit) before running on full dataset
-- type: research
-- priority: P1
-- status: proposed
-- related: [task:bias-audit-cross-study-aggregation-pipeline]
-- group: meta-analysis
-- created: 2026-04-13
-
-
-
 ## [t081] Pipeline addition: hypermutator / TMB-aware sample exclusion or covariate
 - type: dev
 - priority: P1
@@ -247,7 +237,7 @@ Surfaced as a real gap in t043: no pan-cancer benchmark at the pathway rollup le
 - type: research
 - priority: P3
 - status: proposed
-- related: [search:2026-04-14-asxl1-tet2-ch-disambiguation,topic:clonal-hematopoiesis-contamination,task:t059]
+- related: [search:2026-04-14-asxl1-tet2-ch-disambiguation, topic:clonal-hematopoiesis-contamination, task:t059]
 - group: searches
 - created: 2026-04-14
 

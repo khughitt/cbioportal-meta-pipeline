@@ -245,17 +245,6 @@ Surfaced as a real gap in t043: no pan-cancer benchmark at the pathway rollup le
 
 Gap surfaced in t059: TET2 solid-tumor biology literature is thinner than ASXL1. ASXL1 has clear MSI-CRC polyG-indel + CRPC / HNSCC / breast evidence (Katoh 2013). TET2 solid-tumor papers cluster around melanoma (catalytic-domain mutations), glioma (IDH-pathway interaction — TET2 is the IDH-pathway target, so IDH-mutant gliomas carry functional TET2 loss without TET2 mutation), and breast. Focused OpenAlex + PubMed search. Produces doc/searches/YYYY-MM-DD-tet2-solid-tumor-biology.md.
 
-## [t097] t081.6: Composite hypermutation score + final flag (annotate_hypermutators)
-- type: dev
-- priority: P1
-- status: blocked
-- related: [task:t081, task:t093, task:t094, task:t095, task:t096, plan:2026-04-13-t081-hypermutator-annotation-pipeline-plan, task:t089]
-- blocked-by: [t093, t094, t095, t096]
-- group: pipeline
-- created: 2026-04-14
-
-Subtask 6 of 8 for t081. Blocked by t093 (TMB) + t094 (POLE/POLD1) + t095 (MSI) + t096 (GMM) — using block command post-creation to add the other three.\n\nImplements: multi-source combination. Emits hypermutation_score (continuous 0-1), is_hypermutator (bool), hypermutator_reason (audit trail). Canonical decision table (F4 fix, see plan): priority 1-8:\n  1. POLE hotspot -> score=1.0, flag=True, reason=pole_hotspot\n  2. POLD1 hotspot -> 1.0 True pold1_hotspot\n  3. MSI-H -> 1.0 True msi_h\n  4. GMM bimodal + upper posterior>0.5 -> posterior True gmm_upper_mode\n  5. GMM bimodal + posterior<=0.5 -> posterior False gmm_lower_mode\n  6. GMM unavailable + z>=1.5 -> piecewise score True zscore_fallback_high\n  7. GMM unavailable + z<1.5 -> piecewise score False zscore_fallback_low\n  8. TMB NaN -> NaN False tmb_unavailable\n\nRows 1-3 deterministic (clinical diagnostic categories override TMB). score_threshold config only affects rows 4/5.\n\nRelated to t089 (dual hypermutator flags) — this rule emits is_hypermutator_absolute (Campbell 2017 10/100 cutoff) and is_hypermutator_relative (Samstein 2019 per-histology top-20%%) as additional columns per t089.
-
 ## [t098] t081.7: Per-study inclusive/exclusive ratios + combined passthrough (F1 fix)
 - type: dev
 - priority: P1

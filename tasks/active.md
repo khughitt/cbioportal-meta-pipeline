@@ -106,16 +106,6 @@ Expand checklist with sources from focused-search t026 (panel comparability). Ad
 
 Add MC3 + per-cancer baseline detail. Cross-link to MC3 ingestion task t048. Add hypermutator handling specifics from Lawrence/Bailey/Kandoth methodology.
 
-## [t062] Flesh out modality guide: cross-study-aggregation
-- type: research
-- priority: P1
-- status: active
-- related: [search:2026-04-13-cross-study-meta-analysis-stats, search:2026-04-13-cooccurrence-mutual-exclusivity-methods]
-- group: guides
-- created: 2026-04-13
-
-Highest-priority guide. Add meta-analytic stats sources (DerSimonian-Laird, REML, Bayesian hierarchical, dmetar) once focused search t027 runs. Tie checklist items directly to pipeline addition tasks t048-t056.
-
 ## [t063] Flesh out modality guide: driver-detection
 - type: research
 - priority: P2
@@ -190,3 +180,33 @@ Severity: Minor. From audit F11. Trivial: count of non-null per-study columns pe
 - created: 2026-04-13
 
 Follow-on to t074 annotation-only pass. Currently per-study NaN conflates three cases: (a) gene not on panel, (b) gene on panel but unmutated, (c) cancer-type not in study cohort. Case (c) disambiguation requires per-(study, cancer_type) sample counts (not currently ingested). With that ingested: fill NaN with 0 where gene-is-on-panel AND cancer-type-is-in-study; keep NaN otherwise. Replaces current .mean(skipna=True) bias where 'on panel, unmutated' studies are dropped.
+
+## [t077] Pipeline addition: random-effects pooled gene×cancer table (GLMM-logit)
+- type: dev
+- priority: P1
+- status: proposed
+- related: [topic:cross-study-meta-analysis-cancer-genomics, search:2026-04-13-cross-study-meta-analysis-stats, guide:cross-study-aggregation]
+- group: pipeline
+- created: 2026-04-13
+
+
+
+## [t078] Pipeline addition: cross-study co-occurrence / mutual-exclusivity statistic (DISCOVER/WeSME + Stouffer)
+- type: dev
+- priority: P2
+- status: proposed
+- related: [topic:co-occurrence-and-mutual-exclusivity, search:2026-04-13-cooccurrence-mutual-exclusivity-methods, guide:cross-study-aggregation]
+- group: pipeline
+- created: 2026-04-13
+
+
+
+## [t079] Pre-register pooling-method choice (GLMM-logit) before running on full dataset
+- type: research
+- priority: P2
+- status: proposed
+- related: [topic:cross-study-meta-analysis-cancer-genomics, guide:cross-study-aggregation]
+- group: pipeline
+- created: 2026-04-13
+
+

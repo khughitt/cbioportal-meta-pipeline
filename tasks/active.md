@@ -25,50 +25,25 @@ MSK-IMPACT vs FoundationOne vs GENIE panel intersection / callability-denominato
 
 Beyond Sanchez-Vega 2018 seed. Cover pan-cancer pathway enrichment methods and pathway-centric interpretation of mutation data. OpenAlex + PubMed.
 
-## [t049] Pipeline addition: Sanchez-Vega2018 pathway overlay
-- type: dev
-- priority: P2
-- status: proposed
-- group: pipeline
-- created: 2026-04-13
-
-Add per-(sample, pathway) collapse using Sanchez-Vega 2018 Tables S2/S3 (10 canonical signaling pathways). Analogous to the Bailey driver overlay. Outputs: per-(cancer, pathway) alteration-rate table + per-tumor pathway-burden table.
-
 ## [t052] Pipeline addition: per-study cohort-stage descriptor
 - type: dev
-- priority: P2
+- priority: P1
 - status: proposed
 - group: pipeline
 - created: 2026-04-13
 
 Ingest per-study primary/metastatic/pre-treated annotation from cBioPortal clinical sample tables. Concrete bias to address: AR 18% in MSK metastatic prostate vs 1% in TCGA primary; ESR1 11% vs 4%. From cohort-selection-bias synthesis.
 
-## [t053] Pipeline addition: catalog version stamping for annotated outputs
-- type: dev
-- priority: P2
-- status: proposed
-- group: pipeline
-- created: 2026-04-13
-
-Every Bailey/CGC/OncoKB annotation in our outputs should carry the catalog version (date, release tag) used. Critical given OncoKB Level 1/2 actionability rose 8.9%->31.6% in 5 years on the same cohort (Suehnholz2024). Avoid silent version-drift in downstream comparisons.
-
-## [t054] Pipeline addition: tissue-conditional driver flag
-- type: dev
-- priority: P2
-- status: proposed
-- group: pipeline
-- created: 2026-04-13
-
-Per-(gene, cancer-type) annotation distinguishing 'Bailey driver in this specific cancer' vs 'pan-cancer driver only'. Surfaces the 19% tissue-borrowed (Bailey2018) / ~1/3 non-canonical-context (Bandlamudi2026) phenomenon in our outputs.
-
 ## [t055] Pipeline addition: M/C-class descriptor (mutation-vs-CNA hyperbola)
 - type: dev
 - priority: P3
-- status: proposed
+- status: deferred
 - group: pipeline
 - created: 2026-04-13
 
 Compute per-tumor and per-cancer mutation-count vs SCNA-burden axis (Ciriello2013 cancer genome hyperbola). Cheap secondary descriptor. Blocked: requires CNA data ingestion which our pipeline does not currently have.
+
+Blocked on CNA ingestion — no CNA scripts in code/scripts/, no rule in Snakefile, and CNA is outside current specs/research-question.md scope. Revisit when / if CNA modality is added.
 
 ## [t056] Pipeline addition: cluster comparison report (mutation-only vs Hoadley integrated)
 - type: research
@@ -97,54 +72,9 @@ Open question from CH topic: ASXL1 and TET2 are bona fide tumor suppressors in s
 
 Expand checklist with sources from focused-search t026 (panel comparability). Add evidence-expected detail. Cross-link to per-(study, gene) callability rule once ingested.
 
-## [t061] Flesh out modality guide: wes-mutation-data
-- type: research
-- priority: P2
-- status: proposed
-- group: guides
-- created: 2026-04-13
-
-Add MC3 + per-cancer baseline detail. Cross-link to MC3 ingestion task t048. Add hypermutator handling specifics from Lawrence/Bailey/Kandoth methodology.
-
-## [t063] Flesh out modality guide: driver-detection
-- type: research
-- priority: P2
-- status: proposed
-- group: guides
-- created: 2026-04-13
-
-Already substantively covered by existing reads. Add tool-disagreement evidence from Bailey 2018 Table S2; refine criteria for novel-driver claims.
-
-## [t064] Flesh out modality guide: variant-annotation
-- type: research
-- priority: P2
-- status: proposed
-- group: guides
-- created: 2026-04-13
-
-Add Genome Nexus reference (no paper read yet). Add OncoKB API rate-limit / batch-annotation detail. Cross-link to catalog-version-stamping pipeline addition t053.
-
-## [t065] Add modality guide: clinical-cancer-genomics (cohort study design)
-- type: research
-- priority: P3
-- status: proposed
-- group: guides
-- created: 2026-04-13
-
-New modality guide. Covers clinical-sequencing cohort selection, prospective design, biopsy-source biases. Sources: Zehir2017, Pugh2022, ChakravartySolit2021. Lower priority — bias coverage already in topic stubs and other modality guides.
-
-## [t066] Add modality guide: mutational-signatures (when in-scope)
-- type: research
-- priority: P3
-- status: proposed
-- group: guides
-- created: 2026-04-13
-
-New modality guide if/when signature decomposition added to pipeline. Sources: Alexandrov2020, Tate2019, SigProfiler/SigMA tooling. Out-of-scope today.
-
 ## [t070] F6 [Significant] MSK-IMPACT panel-version drift handling per sample
 - type: dev
-- priority: P2
+- priority: P1
 - status: proposed
 - related: [task:t067]
 - group: audit-fixes
@@ -174,7 +104,7 @@ Severity: Minor. From audit F11. Trivial: count of non-null per-study columns pe
 
 ## [t076] Pipeline addition: tighten NaN-vs-0 handling for panel-aware aggregation (F2 full close)
 - type: dev
-- priority: P2
+- priority: P1
 - status: proposed
 - group: pipeline
 - created: 2026-04-13
@@ -186,7 +116,7 @@ Follow-on to t074 annotation-only pass. Currently per-study NaN conflates three 
 - priority: P1
 - status: proposed
 - related: [topic:cross-study-meta-analysis-cancer-genomics, search:2026-04-13-cross-study-meta-analysis-stats, guide:cross-study-aggregation]
-- group: pipeline
+- group: meta-analysis
 - created: 2026-04-13
 
 
@@ -196,16 +126,26 @@ Follow-on to t074 annotation-only pass. Currently per-study NaN conflates three 
 - priority: P2
 - status: proposed
 - related: [topic:co-occurrence-and-mutual-exclusivity, search:2026-04-13-cooccurrence-mutual-exclusivity-methods, guide:cross-study-aggregation]
-- group: pipeline
+- group: meta-analysis
 - created: 2026-04-13
 
 
 
 ## [t079] Pre-register pooling-method choice (GLMM-logit) before running on full dataset
 - type: research
-- priority: P2
+- priority: P1
 - status: proposed
 - related: [topic:cross-study-meta-analysis-cancer-genomics, guide:cross-study-aggregation]
+- group: meta-analysis
+- created: 2026-04-13
+
+
+
+## [t080] Commit in-flight pipeline work (annotate scripts, process_* scripts, Snakefile rules, AGENTS.md updates)
+- type: dev
+- priority: P1
+- status: proposed
+- related: [guide:cross-study-aggregation]
 - group: pipeline
 - created: 2026-04-13
 

@@ -134,17 +134,6 @@ Follow-on to t074 annotation-only pass. Currently per-study NaN conflates three 
 
 
 
-## [t081] Pipeline addition: hypermutator / TMB-aware sample exclusion or covariate
-- type: dev
-- priority: P1
-- status: blocked
-- related: [topic:tumor-mutational-burden, task:bias-audit-cross-study-aggregation-pipeline, guide:cross-study-aggregation]
-- blocked-by: [t092, t093, t094, t095, t096, t097, t098, t099]
-- group: pipeline
-- created: 2026-04-13
-
-
-
 ## [t082] Pipeline addition: HGNC gene-symbol alias mapping in convert_to_feather.py
 - type: dev
 - priority: P2
@@ -244,14 +233,3 @@ Surfaced as a real gap in t043: no pan-cancer benchmark at the pathway rollup le
 - created: 2026-04-14
 
 Gap surfaced in t059: TET2 solid-tumor biology literature is thinner than ASXL1. ASXL1 has clear MSI-CRC polyG-indel + CRPC / HNSCC / breast evidence (Katoh 2013). TET2 solid-tumor papers cluster around melanoma (catalytic-domain mutations), glioma (IDH-pathway interaction — TET2 is the IDH-pathway target, so IDH-mutant gliomas carry functional TET2 loss without TET2 mutation), and breast. Focused OpenAlex + PubMed search. Produces doc/searches/YYYY-MM-DD-tet2-solid-tumor-biology.md.
-
-## [t099] t081.8: Documentation + AGENTS.md updates for hypermutator annotation
-- type: dev
-- priority: P2
-- status: proposed
-- related: [task:t081, task:t098, plan:2026-04-13-t081-hypermutator-annotation-pipeline-plan, topic:tumor-mutational-burden, guide:cross-study-aggregation]
-- blocked-by: [t098]
-- group: pipeline
-- created: 2026-04-14
-
-Subtask 8 of 8 for t081. Blocked by t098 (full pipeline lands first).\n\nImplements: future-collaborator onboarding + audit-trail hygiene. No tests.\n\n1. AGENTS.md 'Annotations applied in the pipeline' section: new subsection 'Hypermutator / TMB annotation' (continuous cols, boolean flag, composite score, data sources, threshold policy, audit trail).\n2. doc/guides/modalities/cross-study-aggregation.md: link is_hypermutator to new audit-checklist item agg.15 (hypermutator-exclusion applied to cross-study pooled ratios), paralleling agg.07 for CH.\n3. doc/background/topics/tumor-mutational-burden.md 'Relevance to this project' section: point to samples_annotated.feather schema.\n4. Close t081 with note pointing to plan + implementing commits.

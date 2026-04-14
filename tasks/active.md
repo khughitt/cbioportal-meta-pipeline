@@ -202,3 +202,53 @@ Follow-on to t074 annotation-only pass. Currently per-study NaN conflates three 
 - created: 2026-04-13
 
 
+
+## [t087] Graded ch_contamination_prob column replacing uniform ch_priority_gene boolean
+- type: dev
+- priority: P2
+- status: proposed
+- related: [search:2026-04-14-asxl1-tet2-ch-disambiguation, topic:clonal-hematopoiesis-contamination, article:Coombs2018, task:t059]
+- group: pipeline
+- created: 2026-04-14
+
+Replace the uniform ch_priority_gene boolean emitted by annotate_ch.py with a graded ch_contamination_prob column sourced from Coombs 2018 Table 2 (per-gene variant-level CH confirmation rate in paired-tumor/blood cohort). Anchor values: DNMT3A ~64%, TP53 ~4%, overall across the 9-gene CH panel ~8%. ASXL1 and TET2 intermediate — read Coombs 2018 Table 2 for the precise numbers. Keep the boolean as a backward-compatible column (computed by thresholding the graded prob at 0.5) until downstream consumers migrate. Closes the open question surfaced in t059: uniform CH flagging over-masks bona fide solid-tumor ASXL1 biology (MSI-CRC polyG-indel, CRPC, HNSCC per Katoh 2013).
+
+## [t088] Age-adjusted TMB alongside raw TMB (covariate support for t081)
+- type: dev
+- priority: P3
+- status: proposed
+- related: [search:2026-04-14-tmb-hypermutator-followup, topic:tumor-mutational-burden, article:Chalmers2017, task:t081, task:t025]
+- group: pipeline
+- created: 2026-04-14
+
+Chalmers 2017 documents a 2.4x TMB increase between age 10 and age 90 in 100000-case FoundationOne cohort. Once per-sample TMB is computed in t081, emit a parallel age_adjusted_tmb column that regresses TMB on patient age (when available from cBioPortal clinical tables) and reports the residual. Two columns: raw tmb_mut_per_Mb and age_adjusted_tmb_residual. No surveyed TMB tool (Vega 2021 FoCR, jasonwong-lab/TMB, pyTMB) does this adjustment — cheap pipeline contribution.
+
+## [t089] Per-histology relative + absolute dual hypermutator flags in t081
+- type: dev
+- priority: P1
+- status: proposed
+- related: [search:2026-04-14-tmb-hypermutator-followup, article:Campbell2017Hypermutation, article:Samstein2019, task:t081, task:t025]
+- group: pipeline
+- created: 2026-04-14
+
+Refines t081 design based on the rescoped t025 evidence. Emit THREE flags per sample, not one:\n1. is_hypermutator_absolute (Campbell 2017): tmb >= 10 mut/Mb\n2. is_ultramutator_absolute (Campbell 2017): tmb >= 100 mut/Mb\n3. is_hypermutator_relative (Samstein 2019): top-20% TMB within the sample's histology\n\nSamstein 2019 explicitly argues that per-histology cutpoints vary markedly, so a single universal cutoff under-serves real biology. Keep all three flags; downstream consumers pick. Also emit (when available) an msi_status column — Fabrizio 2018 shows MSI-H / TMB-H intersection is non-1:1.
+
+## [t090] Pathway-layer benchmark on cross-study cBioPortal data (t043 gap)
+- type: research
+- priority: P2
+- status: proposed
+- related: [search:2026-04-14-pathway-level-pan-cancer-methods, article:Reyna2020Pathway, article:Iorio2018SLAPenrich, article:Paczkowska2020, task:t043, task:t077, task:t079]
+- group: meta-analysis
+- created: 2026-04-14
+
+Surfaced as a real gap in t043: no pan-cancer benchmark at the pathway rollup level currently exists (Wu 2022 Brief Bioinform benchmark is gene-level only). Run SLAPenrich vs ActivePathways vs HotNet2 on the pipeline's gene_cancer_study output using a shared pathway database (start with Reactome + Sanchez-Vega-10; KEGG and MSigDB Hallmarks as comparators) across multiple cBioPortal cohorts and report method concordance. Natural methodological contribution. Pre-register pathway database + primary method choice before running (ties to t079 pooling pre-registration).
+
+## [t091] Companion search: TET2 in solid tumors (melanoma, glioma, breast) — disambiguate CH vs biology
+- type: research
+- priority: P3
+- status: proposed
+- related: [search:2026-04-14-asxl1-tet2-ch-disambiguation,topic:clonal-hematopoiesis-contamination,task:t059]
+- group: searches
+- created: 2026-04-14
+
+Gap surfaced in t059: TET2 solid-tumor biology literature is thinner than ASXL1. ASXL1 has clear MSI-CRC polyG-indel + CRPC / HNSCC / breast evidence (Katoh 2013). TET2 solid-tumor papers cluster around melanoma (catalytic-domain mutations), glioma (IDH-pathway interaction — TET2 is the IDH-pathway target, so IDH-mutant gliomas carry functional TET2 loss without TET2 mutation), and breast. Focused OpenAlex + PubMed search. Produces doc/searches/YYYY-MM-DD-tet2-solid-tumor-biology.md.

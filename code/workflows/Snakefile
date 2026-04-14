@@ -403,6 +403,23 @@ rule fit_per_cancer_tmb_gmm:
   script:
     "../scripts/fit_per_cancer_tmb_gmm.py"
 
+#
+# Composite hypermutation score + final is_hypermutator flag (t097 / t081.6 /
+# plan task 6). Applies the canonical 8-row decision table (F4 fix) and emits
+# the three parallel t089 dual flags (absolute >=10 mut/Mb, ultra >=100 mut/Mb,
+# relative top-20% per histology). This is the load-bearing output for the
+# hypermutator-aware cross-study aggregation step (t098).
+#
+rule annotate_hypermutators:
+  input:
+    samples_tmb_combined = out_dir.joinpath("metadata/samples_tmb_combined.feather"),
+    per_cancer_fits = out_dir.joinpath("metadata/per_cancer_gmm_fits.feather"),
+    samples_flagged = out_dir.joinpath("metadata/samples_gmm_flagged.feather")
+  output:
+    out_dir.joinpath("metadata/samples_annotated.feather")
+  script:
+    "../scripts/annotate_hypermutators.py"
+
 rule check_gene_coverage:
   input:
     expand(out_dir.joinpath("studies/{id}/mut/table/mut.feather"), id=ids),

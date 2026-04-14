@@ -245,16 +245,6 @@ Surfaced as a real gap in t043: no pan-cancer benchmark at the pathway rollup le
 
 Gap surfaced in t059: TET2 solid-tumor biology literature is thinner than ASXL1. ASXL1 has clear MSI-CRC polyG-indel + CRPC / HNSCC / breast evidence (Katoh 2013). TET2 solid-tumor papers cluster around melanoma (catalytic-domain mutations), glioma (IDH-pathway interaction — TET2 is the IDH-pathway target, so IDH-mutant gliomas carry functional TET2 loss without TET2 mutation), and breast. Focused OpenAlex + PubMed search. Produces doc/searches/YYYY-MM-DD-tet2-solid-tumor-biology.md.
 
-## [t094] t081.3: POLE/POLD1 hotspot detector (detect_polymerase_hotspots)
-- type: dev
-- priority: P1
-- status: proposed
-- related: [task:t081, plan:2026-04-13-t081-hypermutator-annotation-pipeline-plan, article:Campbell2017Hypermutation]
-- group: pipeline
-- created: 2026-04-14
-
-Subtask 3 of 8 for t081. No predecessor dependency (independent biological signal input).\n\nImplements: Assumption 4 of t081 plan — independent biological signal for ultra-hypermutation. Per-sample boolean flags pole_hotspot_detected, pold1_hotspot_detected. Canonical hotspot sets:\n  POLE = {P286R, V411L, S297F, S459F, A456P, L424V, M295V, F367L}\n  POLD1 = {P327L, R689W, S478N, L474P, D316H, D316N}\nCitations: Campbell 2017, Rayner 2016, Ma 2018. Per-study output sample_polymerase_hotspots.feather.\n\nIntegration validation: TCGA-UCEC POLE hotspot rate ~7%% (TCGA 2013); assert 4-12%%. Sanity: every POLE-hotspot+ sample should have tmb_log10 > population_median + 1.
-
 ## [t095] t081.4: MSI status ingestion (convert_to_feather.py extension)
 - type: dev
 - priority: P1

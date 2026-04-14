@@ -29,6 +29,7 @@ Beyond Sanchez-Vega 2018 seed. Cover pan-cancer pathway enrichment methods and p
 - type: dev
 - priority: P1
 - status: proposed
+- related: [task:bias-audit-cross-study-aggregation-pipeline]
 - group: pipeline
 - created: 2026-04-13
 
@@ -76,7 +77,7 @@ Expand checklist with sources from focused-search t026 (panel comparability). Ad
 - type: dev
 - priority: P1
 - status: proposed
-- related: [task:t067]
+- related: [task:bias-audit-cross-study-aggregation-pipeline]
 - group: audit-fixes
 - created: 2026-04-13
 
@@ -106,6 +107,7 @@ Severity: Minor. From audit F11. Trivial: count of non-null per-study columns pe
 - type: dev
 - priority: P1
 - status: proposed
+- related: [task:bias-audit-cross-study-aggregation-pipeline]
 - group: pipeline
 - created: 2026-04-13
 
@@ -115,7 +117,7 @@ Follow-on to t074 annotation-only pass. Currently per-study NaN conflates three 
 - type: dev
 - priority: P1
 - status: proposed
-- related: [topic:cross-study-meta-analysis-cancer-genomics, search:2026-04-13-cross-study-meta-analysis-stats, guide:cross-study-aggregation]
+- related: [task:bias-audit-cross-study-aggregation-pipeline]
 - group: meta-analysis
 - created: 2026-04-13
 
@@ -135,7 +137,7 @@ Follow-on to t074 annotation-only pass. Currently per-study NaN conflates three 
 - type: research
 - priority: P1
 - status: proposed
-- related: [topic:cross-study-meta-analysis-cancer-genomics, guide:cross-study-aggregation]
+- related: [task:bias-audit-cross-study-aggregation-pipeline]
 - group: meta-analysis
 - created: 2026-04-13
 
@@ -146,6 +148,66 @@ Follow-on to t074 annotation-only pass. Currently per-study NaN conflates three 
 - priority: P1
 - status: proposed
 - related: [guide:cross-study-aggregation]
+- group: pipeline
+- created: 2026-04-13
+
+
+
+## [t081] Pipeline addition: hypermutator / TMB-aware sample exclusion or covariate
+- type: dev
+- priority: P1
+- status: proposed
+- related: [topic:tumor-mutational-burden, task:bias-audit-cross-study-aggregation-pipeline, guide:cross-study-aggregation]
+- group: pipeline
+- created: 2026-04-13
+
+
+
+## [t082] Pipeline addition: HGNC gene-symbol alias mapping in convert_to_feather.py
+- type: dev
+- priority: P2
+- status: proposed
+- related: [task:bias-audit-cross-study-aggregation-pipeline]
+- group: pipeline
+- created: 2026-04-13
+
+
+
+## [t083] Pipeline addition: cancer-type label canonicalization (strip+case; optional OncoTree mapping)
+- type: dev
+- priority: P2
+- status: proposed
+- related: [task:bias-audit-cross-study-aggregation-pipeline]
+- group: pipeline
+- created: 2026-04-13
+
+
+
+## [t084] Pipeline addition: study-prefix patient_id in combined sample table to prevent cross-study collisions
+- type: dev
+- priority: P3
+- status: proposed
+- related: [task:bias-audit-cross-study-aggregation-pipeline]
+- group: pipeline
+- created: 2026-04-13
+
+
+
+## [t085] Pipeline addition: silhouette/gap-statistic k-selection + stability check for gene/cancer clustering
+- type: dev
+- priority: P3
+- status: proposed
+- related: [task:bias-audit-cross-study-aggregation-pipeline]
+- group: pipeline
+- created: 2026-04-13
+
+
+
+## [t086] Pipeline addition: length_is_fallback indicator column + per-run excluded_studies.tsv audit trail
+- type: dev
+- priority: P3
+- status: proposed
+- related: [task:bias-audit-cross-study-aggregation-pipeline]
 - group: pipeline
 - created: 2026-04-13
 

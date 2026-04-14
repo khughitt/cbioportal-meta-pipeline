@@ -8,7 +8,9 @@ import numpy as np
 import pandas as pd
 from pandas.api.types import CategoricalDtype
 
-snek = snakemake
+from msi_normalization import log_msi_type_counts, normalize_msi_columns
+
+snek = snakemake  # type: ignore[name-defined]  # noqa: F821
 
 # load GRCh37 / GRCh38 gene metadata
 grch37 = pd.read_csv("data/grch37.tsv", sep='\t')
@@ -162,6 +164,21 @@ if "age" in sample_mdat.columns:
     age_levels = ["<18"] + [str(x) for x in range(18, 90)] + [">89"]
     age_cat = CategoricalDtype(categories=age_levels, ordered=True)
     sample_mdat.age = sample_mdat.age.astype(age_cat)
+
+# MSI status ingestion (t095 / t081.4). Adds normalized `msi_type` (one of
+# {MSI-H, MSI-L, MSS, Indeterminate, NaN}) and numeric `msi_score` columns.
+# Source columns (MSI_TYPE / MSI_STATUS / MSI_SCORE / MSI_SENSOR_SCORE) are
+# detected case-sensitively in the pre-rename schema — read from the raw
+# file a second time so the original uppercase column names survive.
+msi_source_df = pd.read_csv(snek.input[1], sep='\t', comment='#')
+msi_cols = msi_source_df[[c for c in msi_source_df.columns if c.upper() in (
+    "MSI_TYPE", "MSI_STATUS", "MSI_SCORE", "MSI_SENSOR_SCORE"
+)]]
+msi_cols.columns = [c.upper() for c in msi_cols.columns]
+msi_annotated = normalize_msi_columns(msi_cols)
+sample_mdat["msi_type"] = msi_annotated["msi_type"].to_numpy()
+sample_mdat["msi_score"] = msi_annotated["msi_score"].to_numpy()
+log_msi_type_counts(sample_mdat, study_id=snek.wildcards["id"])
 
 # save result
 sample_mdat.to_feather(snek.output[1])

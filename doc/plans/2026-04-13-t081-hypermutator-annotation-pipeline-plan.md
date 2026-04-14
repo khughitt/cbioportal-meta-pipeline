@@ -56,7 +56,11 @@ pivots already-computed per-study ratios into a wide table and takes their mean 
 level data and cannot recompute exclusive ratios. So the hypermutator-exclusion filter MUST live in
 `create_freq_tables.py` (or a new per-study rule that runs before it), not in the combined scripts.
 
-**New dependencies:** `diptest>=0.9` (Hartigan's dip test of unimodality — small, C-backed, one function). `sklearn.mixture.GaussianMixture` is already present via scikit-learn. No other new libraries.
+**New dependencies:**
+- **Runtime** (added to `[project.dependencies]` in `pyproject.toml`): `diptest>=0.9` (Hartigan's dip test of unimodality — small, C-backed, one function; used by Task 5).
+- **Dev** (added to `[project.optional-dependencies].dev` or equivalent in `pyproject.toml`): `pytest>=8.0` (new — project doesn't currently declare a test framework).
+
+`sklearn.mixture.GaussianMixture` is already present via scikit-learn. No other new libraries.
 
 **Task IDs in the backlog:** this plan implements **t081 (P1)**. It creates the machinery that **t077 (GLMM-logit pooling, P1)** will later consume as a sample-level covariate OR as an inclusion gate. It intersects with **t083 (cancer-type canonicalization, P2)** — the per-cancer-type GMM fit quality depends on clean labels; do t083 first if scheduling allows, otherwise document the dependency.
 
@@ -98,12 +102,29 @@ Three levels of validation, applied throughout:
 - Edge cases: sample with 0 mutations, sample with 10,000 mutations, sample with POLE hotspot but low TMB, sample with high TMB but no POLE/MSI signal.
 
 **Integration level (real data, known ground truth):**
-- Run on a subset of studies with published hypermutator rates and check agreement within tolerance:
-  - **TCGA-UCEC (endometrial):** ~25% hypermutator expected (Cancer Genome Atlas 2013); POLE-ultramutated subset ~7%.
-  - **TCGA-COAD/READ:** MSI-H rate ~15%; hypermutator rate matches.
-  - **TCGA-SKCM:** UV-hypermutator rate ~5% of the upper TMB tail.
-  - **msk_impact_2017 (Zehir 2017 10k cohort):** overall hypermutator rate ~3–5%; CRC-hypermutator ~10–15%.
-- Acceptance: flagged rate within ±20% relative of the literature rate per cancer type with ≥ 50 samples.
+
+Integration tests require at least one study with a documented hypermutator rate in the active
+config. The current `config-10k-genes.yml` contains **no TCGA cohorts** (only 7 pan-cancer /
+metastatic / pediatric studies), so straight TCGA-per-cancer-type validation is unrunnable as
+originally specified. **Resolution (review finding #2):** use `tcga_mc3` as the single TCGA
+surrogate (already documented in `AGENTS.md` "Alternate data sources" — it bundles 32 TCGA
+cancer types, 9,104 samples, in one pseudo-study). Add `tcga_mc3` to the studies list for
+validation runs only; it does NOT need to be in the main analysis config.
+
+- **`tcga_mc3` with `cancer_type == "UCEC"` subset:** ~25% hypermutator expected (Cancer Genome
+  Atlas 2013 TCGA-UCEC analysis; POLE-ultramutated subset ~7%).
+- **`tcga_mc3` with `cancer_type == "COAD"` or `"READ"`:** MSI-H rate ~15%; hypermutator rate
+  matches (Kandoth 2013, Ellrott 2018).
+- **`tcga_mc3` with `cancer_type == "SKCM"`:** UV-hypermutator tail ~5% (Hayward 2017).
+- **`msk_impact_2017`** (if added to the validation config): overall hypermutator rate ~3–5%
+  (Zehir 2017); CRC-hypermutator ~10–15%.
+- **Acceptance:** flagged rate within ±20% relative of the literature rate per cancer type with
+  ≥ 50 samples.
+
+**If `tcga_mc3` is not in the active study list:** integration tests are skipped with a clear
+warning log; unit tests must still pass. Validation runs require explicitly appending
+`tcga_mc3` to the config. This is documented in the Task 5 / 7 validation sections and in the
+implementer's README.
 
 **Cross-source agreement (sanity):**
 - All samples with POLE hotspot should have `tmb_zscore_within_cancer > 1.5` (POLE causes ultra-hypermutation). Flag any violations as QA failures.
@@ -123,12 +144,16 @@ Three levels of validation, applied throughout:
 |---|---|---|
 | `code/scripts/convert_to_feather.py` | (a) Ingest `MSI_TYPE` / `MSI_STATUS` / `MSI_SCORE` from `data_clinical_sample.txt` when present; write `msi_type` (normalized categorical) + `msi_score` (float) into `samples.feather`. Zero-impact when columns absent. (b) **Add `study_id` column** to `samples.feather` (currently absent — F3 fix). | Tasks 2, 4 |
 | `code/scripts/convert_to_feather.py` | Retain `variant_class` and `hgvsp_short` (already done — verified at `convert_to_feather.py:95,104`). No change. | — |
-| `code/config/config-10k-genes.yml` | Add top-level `hypermutator:` block with `gmm_min_samples: 100`, `gmm_min_delta_bic: 10`, `gmm_min_dip_pvalue: 0.1`, `zscore_fallback_threshold: 1.5`, `score_threshold: 0.5`, `exclude_from_aggregation: false` (default False — flips to True only if t079 pre-registration decides so; see Open-questions resolution below). Also `wes_default_callable_mb: 30`. | Task 1 |
+| `code/config/config-10k-genes.yml` | Add top-level `hypermutator:` block with `gmm_min_samples: 100`, `gmm_min_delta_bic: 10`, `gmm_min_dip_pvalue: 0.1`, `zscore_fallback_threshold: 1.5`, `score_threshold: 0.5`, `exclude_from_aggregation: false` (default False — flips to True only if t079 pre-registration decides so). Also `wes_default_callable_mb: 30`. **GMM random seed reuses the existing top-level `random_seed` config key** (already used by `cluster_genes.py` / `cluster_cancer_types.py`); no new seed key needed. | Task 1 |
 | `code/config/config-10k-genes.yml` | Add `panel_callable_mb_override:` map for published panel sizes (MSK-IMPACT-341: 1.014 Mb, IMPACT-410: 1.162 Mb, IMPACT-468: 1.446 Mb — Cheng 2015, Zehir 2017, Bandlamudi 2026). | Task 1 |
 | `code/workflows/Snakefile` | New rules: `build_panel_callable_sizes`, `compute_per_sample_tmb`, `detect_polymerase_hotspots`, `combine_samples_tmb`, `fit_per_cancer_tmb_gmm`, `annotate_hypermutators`. See Snakemake-specific appendix for exact targets. | Tasks 1–6 |
-| `code/scripts/create_freq_tables.py` | **Major change (F1 fix):** accept optional `samples_annotated.feather` input; when present, emit per-entity tables with paired `num_inclusive` / `num_exclusive` / `ratio_inclusive` / `ratio_exclusive` / `n_samples_inclusive` / `n_samples_exclusive` columns. Backward-compatible `num` / `ratio` continue to exist as aliases for the inclusive pair. | Task 7 |
+| `code/scripts/create_freq_tables.py` | **Major change (F1 fix):** accept optional `samples_annotated.feather` input; when present, emit per-entity tables with paired `num_inclusive` / `num_exclusive` / `ratio_inclusive` / `ratio_exclusive` / `n_samples_inclusive` / `n_samples_exclusive` columns. `num` / `ratio` aliases to the inclusive pair are safe here (consumers — `create_combined_freq_tables.py:19`, `create_combined_gene_cancer_freq_table.py:78`, `create_combined_gene_cancer_mutation_matrices.py:22` — all pivot per-study `ratio` values, so aliasing is transparent). | Task 7 |
 | `code/scripts/create_combined_sample_table.py` | Add `study_id`, `is_hypermutator`, `hypermutation_score`, `hypermutator_reason`, `tmb`, `tmb_log10`, `tmb_zscore_within_cancer`, `pole_hotspot_detected`, `pold1_hotspot_detected`, `msi_type` columns to combined output. **Canonical join key becomes (`study_id`, `sample_id`)** — documented in the file docstring. | Task 7 |
-| `code/scripts/create_combined_gene_cancer_freq_table.py` | Carry the new `num_inclusive` / `num_exclusive` / `ratio_inclusive` / `ratio_exclusive` per-study columns through the pivot; compute `mean_inclusive` / `mean_exclusive` instead of a single `mean`. **No per-sample logic in this file** (it has no access to sample IDs). | Task 7 |
+| `code/scripts/create_combined_gene_cancer_freq_table.py` | Carry the new `num_inclusive` / `num_exclusive` / `ratio_inclusive` / `ratio_exclusive` per-study columns through the pivot; compute `mean_inclusive` / `mean_exclusive`. **Drop the single `mean` column — do NOT alias.** Downstream Rmd consumer (see below) gets updated to select explicitly. Rationale: `summary.Rmd:175` actively displays `mean` in the final report; aliasing to either inclusive or exclusive creates silent semantic drift at the t079 default-flip (review finding #3). Internal sort uses `mean_inclusive` as the stable default. **No per-sample logic in this file** (it has no access to sample IDs). | Task 7 |
+| `code/scripts/create_combined_freq_tables.py` | Same change — write `mean_inclusive` / `mean_exclusive`; drop the unqualified `mean`. Sort internally by `mean_inclusive`. Update `mean_adj` computation to use `mean_inclusive` as the numerator (document this choice; consider whether a `mean_adj_exclusive` variant is also needed — add only if the downstream consumer asks). | Task 7 |
+| `code/scripts/create_combined_gene_cancer_mutation_matrices.py` | Exclusion list at lines 11 and 20 (currently `['cancer_type', 'symbol', 'mean', 'mean_adj']`) updates to `['cancer_type', 'symbol', 'mean_inclusive', 'mean_exclusive', 'mean_adj_inclusive']` (plus `_exclusive` if added). Functionality unchanged — this consumer only skips these columns when aggregating per-study values. | Task 7 |
+| `code/scripts/annotate_ch.py` | Exclusion list at line 58 updates analogously: `"mean"` → `"mean_inclusive", "mean_exclusive"`. | Task 7 |
+| `code/scripts/summary.Rmd` | **Consumer update (review finding #3 fix):** the report's gene-ratio table (line 175) currently selects `mean, mean_adj, ratio_nonna, num_nonna, protein_length`. Replace with explicit handling: if `mean_exclusive` is present, display BOTH `mean_inclusive` and `mean_exclusive` side-by-side with a column labelled "hypermutator-excluded"; otherwise fall back to `mean_inclusive`-only. Sorting (line 184) switches from `mean_adj` to `mean_adj_inclusive`. Document in the Rmd header that downstream rankings use inclusive-default until t079 flips the policy. | Task 7 |
 | `AGENTS.md` | Add "Hypermutator / TMB annotation" subsection to "Annotations applied in the pipeline". | Task 8 |
 | `doc/guides/modalities/cross-study-aggregation.md` | Add new audit checklist item **agg.15** tying `is_hypermutator`-aware ratio pairs to t081. | Task 8 |
 
@@ -163,7 +188,12 @@ and the GENIE coverage feather (itself a build product of `process_genie_panel_c
    - Emit `out_dir/metadata/panel_callable_mb.tsv` with columns `[panel_id, callable_mb, source]`
      where `source ∈ {"bed_sum", "config_override", "wes_default"}`.
 3. Add Snakemake rule `build_panel_callable_sizes` consuming the GENIE coverage feather +
-   config, producing `out_dir/metadata/panel_callable_mb.tsv`.
+   config, producing `out_dir/metadata/panel_callable_mb.tsv`. **Caching semantics (review
+   finding #6):** declare `localrules: build_panel_callable_sizes` in the Snakefile so the
+   rule runs locally (not scheduled on a cluster) and its output persists via Snakemake's
+   normal file-timestamp / DAG-invalidation logic. That means the tsv is regenerated whenever
+   the GENIE coverage feather or the config-derived override map changes — which is exactly the
+   desired behavior. No `temp()` wrapping — the file is part of the audit trail.
 
 **Validation criteria:**
 - Unit tests pass (see "Test layout" section below for `pytest` invocation).
@@ -287,13 +317,22 @@ F3 fix for `study_id` as a first-class column on every sample-level artifact.
    - Cohort with N < config threshold (e.g., < 100) → `fit_quality = "insufficient_data"`; fallback to `10 × median` rule.
    - Hartigan's dip test p > 0.1 → `fit_quality = "not_bimodal"`; fallback.
 2. Write `code/scripts/fit_per_cancer_tmb_gmm.py`:
-   - Input: cross-study samples table (concat of per-study `samples_tmb.feather`).
-   - Per `cancer_type` group, fit `sklearn.mixture.GaussianMixture(n_components=2)` to `tmb_log10`.
+   - Input: cross-study samples table (output of `combine_samples_tmb`).
+   - **Pin `random_state = snek.config["random_seed"]` (reuses existing project-wide seed).** Every call to
+     `sklearn.mixture.GaussianMixture(n_components=N, random_state=...)` must pass this seed.
+     Rationale in file docstring: "Reproducibility covenant — flags flip on borderline samples if
+     seed drifts; see review doc/plans/2026-04-13-t081-hypermutator-annotation-plan-review.md
+     finding #1."
+   - Per `cancer_type` group, fit `sklearn.mixture.GaussianMixture(n_components=1)` and `n_components=2`
+     with the pinned seed.
    - Compute Hartigan's dip test via `diptest.diptest(tmb_log10)` (new dependency, declared above).
-   - Compare BIC(1) vs BIC(2); select 2-component when ΔBIC > 10.
+   - Compare BIC(1) vs BIC(2); select 2-component when ΔBIC > 10 AND dip p-value < 0.1 AND
+     `n_samples >= gmm_min_samples`.
    - Classify samples: upper component → `is_hypermutator_gmm = True`; else False.
-   - Compute `tmb_zscore_within_cancer = (tmb_log10 - group_mean) / group_std`.
-   - Output: `per_cancer_gmm_fits.feather` (per-cancer diagnostics) + `samples_gmm_flagged.feather` (sample-level flags).
+   - Compute `tmb_zscore_within_cancer = (tmb_log10 - group_mean) / group_std` regardless of
+     fit quality — this is the fallback signal for row 6/7.
+   - Output: `per_cancer_gmm_fits.feather` (per-cancer diagnostics) + `samples_gmm_flagged.feather`
+     (sample-level flags with `gmm_posterior_upper` column for continuous score in Task 6).
 3. Snakemake rule: consumes all per-study `samples_tmb.feather` + the per-cancer-type canonicalization (t083 when ready, raw labels otherwise).
 
 **Validation criteria:**
@@ -343,7 +382,7 @@ in the config docstring.
 
 **TDD steps:**
 
-1. Write `test_annotate_hypermutators.py` parametrized by the 8 decision-table rows:
+1. Write `test_annotate_hypermutators.py` parametrized by the 8 decision-table rows + edge cases:
    - Row 1: POLE hotspot + low TMB → `is_hypermutator == True`, `score == 1.0`, reason `"pole_hotspot"`.
    - Row 2: POLD1 hotspot + no other signal → True, reason `"pold1_hotspot"`.
    - Row 3: MSI-H, normal TMB → True, reason `"msi_h"`.
@@ -353,7 +392,14 @@ in the config docstring.
    - Row 6: GMM unavailable, tmb_zscore = 2.5 → True, reason `"zscore_fallback_high"`.
    - Row 7: GMM unavailable, tmb_zscore = 0.5 → False, reason `"zscore_fallback_low"`.
    - Row 8: tmb is NaN → False, reason `"tmb_unavailable"`.
-   - Priority ordering: POLE hotspot AND GMM-lower-mode → POLE wins (deterministic signal overrides GMM).
+   - **Edge cases (review finding #4):**
+     - **Row 1 priority over NaN-TMB:** POLE hotspot AND tmb is NaN → `is_hypermutator == True`,
+       reason `"pole_hotspot"`. Strong signals override missing TMB.
+     - **Priority ordering — POLE hotspot AND GMM-lower-mode:** POLE wins (deterministic signal
+       overrides GMM posterior).
+     - **MSI-H AND tmb_zscore = -1 (low TMB):** row 3 wins; deterministic flag.
+     - **Row 8 no-signal:** `pole = pold1 = False`, `msi_type != "MSI-H"`, `tmb is NaN` →
+       `is_hypermutator == False`, reason `"tmb_unavailable"`.
 2. Write `code/scripts/annotate_hypermutators.py`:
    - Input: `out_dir/metadata/samples_tmb_combined.feather` (contains all per-sample signals after
      Task 3's hotspot detection merge) + `out_dir/metadata/per_cancer_gmm_fits.feather` (Task 5
@@ -408,8 +454,16 @@ recompute exclusive ratios. This task splits into two parts:
      `num` / `ratio` aliases.
    - Emit `n_samples_inclusive` / `n_samples_exclusive` per cancer-type as explicit denominators so
      the combined script can compute weighted averages later if desired.
-3. Update `code/workflows/Snakefile` `create_freq_tables` rule inputs to include
-   `out_dir/metadata/samples_annotated.feather` when the hypermutator rules are in the DAG.
+3. Update `code/workflows/Snakefile` `create_freq_tables` rule (review finding #5):
+   - **Option chosen: always require `samples_annotated.feather` as an input.** Simpler than
+     conditional optional-input plumbing; forces the hypermutator rules into the DAG, which is
+     what we want once t081 lands. No legacy-run escape hatch — if you run the Snakefile after
+     t081 lands, you must run through the new rules. This is acceptable because the pipeline
+     is not yet published and there are no external reruns to support.
+   - The rule gains a named input `samples_annotated = out_dir.joinpath("metadata/samples_annotated.feather")`.
+   - The script reads it unconditionally. If the column `is_hypermutator` isn't present (e.g.,
+     because all samples had `row = 8` reasons), emit a warning; all samples become "not
+     hypermutators" → `ratio_inclusive == ratio_exclusive` automatically. No special-case code.
 
 **Task 7b — combined-script passthrough (`create_combined_gene_cancer_freq_table.py`):**
 
@@ -423,18 +477,20 @@ recompute exclusive ratios. This task splits into two parts:
 2. Modify `code/scripts/create_combined_gene_cancer_freq_table.py`:
    - Treat paired columns as a single pivot operation that produces two wide matrices.
    - Compute `mean_inclusive` / `mean_exclusive` via existing `mean(axis=1, skipna=True)`.
-   - Retain `mean` as an alias for `mean_inclusive` for downstream backward-compat.
+   - **Drop the single `mean` column** (review finding #3) — consumers explicitly select
+     `mean_inclusive` or `mean_exclusive`. Internal sort uses `mean_inclusive` for ranking
+     stability.
 3. Similarly extend `create_combined_gene_cancer_mutation_matrices.py` — the count matrix gets
    inclusive + exclusive variants.
 
 **Config default — Open-question-1 resolution:**
 `hypermutator.exclude_from_aggregation: false` is the default **shipped in t081**. This means
-downstream published outputs continue to use the inclusive ratio as the primary value until t079
-(pre-registration) explicitly decides otherwise. Both inclusive and exclusive columns are
-**always emitted** regardless of this flag — the flag only affects which column is aliased to
-the unqualified `mean` / `ratio` column for legacy consumers. The flip to `true` (or a more
-nuanced policy like "exclusive for pan-cancer drivers, inclusive for cancer-type-specific drivers")
-is made in t079 based on the pre-registration review and the Task 7b diagnostic report.
+downstream published outputs and the summary.Rmd report surface `mean_inclusive` as the primary
+displayed column until t079 (pre-registration) explicitly decides otherwise. Both inclusive and
+exclusive columns are **always emitted** regardless of this flag. **Per review finding #3, there
+is no `mean` alias** — consumers explicitly select `mean_inclusive` or `mean_exclusive`. The flip
+at t079 time becomes a Rmd / consumer-side change ("switch the primary displayed column") rather
+than a silent schema-aliasing change.
 
 **Validation criteria:**
 - Unit tests pass, including the strict regression check when no hypermutators are present

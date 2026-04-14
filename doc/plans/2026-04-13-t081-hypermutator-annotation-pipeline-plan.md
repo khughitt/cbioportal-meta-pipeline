@@ -4,39 +4,57 @@
 
 **Goal:** Add data-driven, multi-source, continuous hypermutation annotation to every sample in every study, exposing both continuous diagnostic columns and a derived boolean flag. Provide a config-controlled hypermutator-exclusion hook for cross-study aggregation, preserving auditability of included-vs-excluded comparisons.
 
-**Architecture:**
+**Architecture** (paths are the ACTUAL Snakefile `out_dir/` layout, verified against `code/workflows/Snakefile`):
 
 ```
 data_clinical_sample.txt  ─┐
-  (per study)               │
-                            ├─> convert_to_feather.py  ───> samples.feather (+MSI cols)
-data_mutations.txt ─────────┘                                     │
-  (per study)                                                     │
-                                                                  ▼
-genie_panel_coverage.feather ─┐                        ┌──> mutation_counts.feather
-                              │                        │  (per-sample totals)
-study_panel_map (config) ─────┼─> panel_callable_mb ───┤
-                              │    (new rule)          │
-published panel sizes ────────┘                        ▼
-                                          samples_with_tmb.feather
-                                          (tmb, tmb_log10,
-                                           pole_hotspot, pold1_hotspot)
-                                                       │
-              ┌────────────────────────────────────────┤
-              │                                        │
-              ▼                                        ▼
-per-cancer GMM fit                            per-study summaries
-  (samples_all_studies.feather)               (rolled up)
-              │
-              ▼
-samples_annotated.feather
-  (+ tmb_zscore, is_hypermutator_gmm,
-     hypermutation_score, is_hypermutator)
-              │
-              ▼
-(downstream: create_combined_* consume
-  is_hypermutator via config flag)
+  (per study, raw)          │
+                            ├─> convert_to_feather.py ──> out_dir/studies/{id}/metadata/samples.feather
+data_mutations.txt ─────────┘                              (adds msi_type, msi_score cols;
+  (per study, raw)                                          ADDS study_id col — F3 fix)
+                                                                   │
+                                                                   ▼
+out_dir/metadata/genie_panel_coverage.feather ─┐   ┌──> out_dir/studies/{id}/metadata/samples_tmb.feather
+                                               │   │  (per-sample: mutation_count, tmb, tmb_log10,
+  study_panel_map (config) ────────────────────┼─> │   pole_hotspot_detected, pold1_hotspot_detected,
+                                               │   │   msi_type, study_id, sample_id)
+  published panel sizes (config) ──────────────┘   │
+                   │                               │
+                   ▼                               │
+  out_dir/metadata/panel_callable_mb.tsv           │
+  (generated artifact, NOT version-controlled)     │
+                                                   ▼
+                                    out_dir/metadata/samples_tmb_combined.feather
+                                    (concat across studies; study_id-prefixed keys)
+                                                   │
+                                                   ▼
+                                    out_dir/metadata/per_cancer_gmm_fits.feather
+                                    out_dir/metadata/samples_annotated.feather
+                                    (+ tmb_zscore_within_cancer, is_hypermutator_gmm,
+                                       hypermutation_score, is_hypermutator,
+                                       hypermutator_reason)
+                                                   │
+                                                   ▼
+                          (per-study create_freq_tables.py consumes samples_annotated
+                           to emit BOTH inclusive + exclusive per-study num/ratio cols
+                           — F1 fix: filter lives at per-study layer)
+                                                   │
+                                                   ▼
+                          out_dir/studies/{id}/mut/table/{entity}_study{,_ratio}.feather
+                          with _inclusive / _exclusive column pairs
+                                                   │
+                                                   ▼
+                          out_dir/summary/mut/table/{entity}_study{,_ratio}.feather
+                          (combined script concatenates both columns — no ratio
+                           recomputation needed)
 ```
+
+**Note on dataflow correction (F1):** the pipeline's ratio computation happens **per-study** in
+`create_freq_tables.py:36–46`, where `groupby('cancer_type').sample_id.nunique() / num_samples` has
+access to sample-level `sample_id`. The combined script (`create_combined_gene_cancer_freq_table.py`)
+pivots already-computed per-study ratios into a wide table and takes their mean — it has no sample-
+level data and cannot recompute exclusive ratios. So the hypermutator-exclusion filter MUST live in
+`create_freq_tables.py` (or a new per-study rule that runs before it), not in the combined scripts.
 
 **New dependencies:** `diptest>=0.9` (Hartigan's dip test of unimodality — small, C-backed, one function). `sklearn.mixture.GaussianMixture` is already present via scikit-learn. No other new libraries.
 
@@ -103,14 +121,16 @@ Three levels of validation, applied throughout:
 
 | File | Change | Task |
 |---|---|---|
-| `code/scripts/convert_to_feather.py` | Ingest `MSI_TYPE` / `MSI_STATUS` / `MSI_SCORE` from `data_clinical_sample.txt` when present; add to `samples.feather`. Zero-impact when columns absent. | Task 2 |
-| `code/scripts/convert_to_feather.py` | Retain `variant_class` and `hgvsp_short` (already done — verified). No change. | — |
-| `code/config/config-10k-genes.yml` | Add `hypermutator` section with `gmm_min_samples`, `zscore_fallback_threshold`, `exclude_from_aggregation` keys. Add WES default callable-Mb (30). | Task 1 |
-| `code/config/config-10k-genes.yml` | Add `panel_callable_mb` override map for MSK-IMPACT variants (341, 410, 468 panels have published sizes: 1.014 Mb, 1.162 Mb, 1.446 Mb — Cheng 2015, Zehir 2017). | Task 1 |
-| `code/workflows/Snakefile` | New rules: `build_panel_callable_sizes`, `compute_per_sample_tmb`, `detect_polymerase_hotspots`, `fit_per_cancer_tmb_gmm`, `annotate_hypermutators`. Wire between per-study outputs and `create_combined_*`. | Tasks 1–6 |
-| `code/scripts/create_combined_sample_table.py` | Add `is_hypermutator`, `hypermutation_score`, `tmb`, `tmb_log10`, `tmb_zscore_within_cancer`, `pole_hotspot_detected`, `pold1_hotspot_detected`, `msi_type` columns to combined output. | Task 7 |
-| `code/scripts/create_combined_gene_cancer_freq_table.py` | Add optional hypermutator-exclusion path controlled by `config["hypermutator"]["exclude_from_aggregation"]`. Compute both inclusive and exclusive pooled ratios; mark exclusive as default for consumer-facing outputs. | Task 7 |
+| `code/scripts/convert_to_feather.py` | (a) Ingest `MSI_TYPE` / `MSI_STATUS` / `MSI_SCORE` from `data_clinical_sample.txt` when present; write `msi_type` (normalized categorical) + `msi_score` (float) into `samples.feather`. Zero-impact when columns absent. (b) **Add `study_id` column** to `samples.feather` (currently absent — F3 fix). | Tasks 2, 4 |
+| `code/scripts/convert_to_feather.py` | Retain `variant_class` and `hgvsp_short` (already done — verified at `convert_to_feather.py:95,104`). No change. | — |
+| `code/config/config-10k-genes.yml` | Add top-level `hypermutator:` block with `gmm_min_samples: 100`, `gmm_min_delta_bic: 10`, `gmm_min_dip_pvalue: 0.1`, `zscore_fallback_threshold: 1.5`, `score_threshold: 0.5`, `exclude_from_aggregation: false` (default False — flips to True only if t079 pre-registration decides so; see Open-questions resolution below). Also `wes_default_callable_mb: 30`. | Task 1 |
+| `code/config/config-10k-genes.yml` | Add `panel_callable_mb_override:` map for published panel sizes (MSK-IMPACT-341: 1.014 Mb, IMPACT-410: 1.162 Mb, IMPACT-468: 1.446 Mb — Cheng 2015, Zehir 2017, Bandlamudi 2026). | Task 1 |
+| `code/workflows/Snakefile` | New rules: `build_panel_callable_sizes`, `compute_per_sample_tmb`, `detect_polymerase_hotspots`, `combine_samples_tmb`, `fit_per_cancer_tmb_gmm`, `annotate_hypermutators`. See Snakemake-specific appendix for exact targets. | Tasks 1–6 |
+| `code/scripts/create_freq_tables.py` | **Major change (F1 fix):** accept optional `samples_annotated.feather` input; when present, emit per-entity tables with paired `num_inclusive` / `num_exclusive` / `ratio_inclusive` / `ratio_exclusive` / `n_samples_inclusive` / `n_samples_exclusive` columns. Backward-compatible `num` / `ratio` continue to exist as aliases for the inclusive pair. | Task 7 |
+| `code/scripts/create_combined_sample_table.py` | Add `study_id`, `is_hypermutator`, `hypermutation_score`, `hypermutator_reason`, `tmb`, `tmb_log10`, `tmb_zscore_within_cancer`, `pole_hotspot_detected`, `pold1_hotspot_detected`, `msi_type` columns to combined output. **Canonical join key becomes (`study_id`, `sample_id`)** — documented in the file docstring. | Task 7 |
+| `code/scripts/create_combined_gene_cancer_freq_table.py` | Carry the new `num_inclusive` / `num_exclusive` / `ratio_inclusive` / `ratio_exclusive` per-study columns through the pivot; compute `mean_inclusive` / `mean_exclusive` instead of a single `mean`. **No per-sample logic in this file** (it has no access to sample IDs). | Task 7 |
 | `AGENTS.md` | Add "Hypermutator / TMB annotation" subsection to "Annotations applied in the pipeline". | Task 8 |
+| `doc/guides/modalities/cross-study-aggregation.md` | Add new audit checklist item **agg.15** tying `is_hypermutator`-aware ratio pairs to t081. | Task 8 |
 
 ---
 
@@ -120,56 +140,82 @@ Three levels of validation, applied throughout:
 
 **Inquiry-node equivalent:** input-side normalization. Computes the denominator for TMB.
 
-**Implements:** Assumption 2 (panel-callable-Mb approximation). Produces `data/panel_callable_mb.tsv` (version-controlled).
+**Implements:** Assumption 2 (panel-callable-Mb approximation). Produces
+`out_dir/metadata/panel_callable_mb.tsv` — a **generated build artifact**, NOT version-controlled
+(Open-question-2 resolution). The version-controlled inputs are the config-defined overrides
+and the GENIE coverage feather (itself a build product of `process_genie_panel_coverage`).
 
 **TDD steps:**
 
-1. Write a test `test_panel_callable_sizes.py` asserting:
-   - Given a GENIE panel BED with 3 records (each 1000 bp exonic), output is 0.003 Mb.
-   - Given MSK-IMPACT-468 in the override map, output is 1.446 Mb regardless of BED.
-   - Unknown panel ID → config default (30 Mb, WES assumption) with a warning logged.
+1. Write `code/scripts/tests/test_build_panel_callable_sizes.py` asserting:
+   - Given a GENIE panel BED with 3 exonic records (each 1000 bp), output is 0.003 Mb.
+   - Given MSK-IMPACT-468 in the `panel_callable_mb_override` config map, output is 1.446 Mb
+     regardless of BED; `source == "config_override"`.
+   - Unknown panel ID → `wes_default_callable_mb` from config (30 Mb); `source == "wes_default"`.
+   - BED-derived size for MSK-IMPACT-468 should be within ±5% of 1.446 Mb, else warning logged
+     and override is used.
 2. Write `code/scripts/build_panel_callable_sizes.py`:
-   - Read `genie_panel_coverage.feather` (from existing `process_genie_panel_coverage`).
+   - Input: `out_dir/metadata/genie_panel_coverage.feather` (from existing
+     `process_genie_panel_coverage` rule — verify path at `Snakefile:157`), config
+     `panel_callable_mb_override` map, config `wes_default_callable_mb`.
    - Sum `end - start` per panel across `Feature_Type == "exon"` records, convert to Mb.
-   - Apply override map from config (MSK-IMPACT variants + any other panels with published sizes).
-   - Emit `panel_callable_mb.tsv` with columns `[panel_id, callable_mb, source]` where `source ∈ {"bed_sum", "config_override", "wes_default"}`.
-3. Add Snakemake rule `build_panel_callable_sizes` consuming the GENIE coverage feather + config, producing `data/panel_callable_mb.tsv`.
-4. Sanity check: MSK-IMPACT-468 sum from the BED should be within ±5% of 1.446 Mb. Log the ratio.
+   - Apply override map where present.
+   - Emit `out_dir/metadata/panel_callable_mb.tsv` with columns `[panel_id, callable_mb, source]`
+     where `source ∈ {"bed_sum", "config_override", "wes_default"}`.
+3. Add Snakemake rule `build_panel_callable_sizes` consuming the GENIE coverage feather +
+   config, producing `out_dir/metadata/panel_callable_mb.tsv`.
 
 **Validation criteria:**
-- Unit tests pass.
-- MSK-IMPACT panels: bed-derived size within 5% of published. If not, note in `source` column (we'll prefer the config-override in that case).
-- Manual inspection: rule output covers every `panel_id` in `study_panel_map` config keys.
+- Unit tests pass (see "Test layout" section below for `pytest` invocation).
+- MSK-IMPACT panels: bed-derived size within 5% of published.
+- Manual inspection: rule output covers every `panel_id` referenced in `study_panel_map`.
 
-**Reusable:** `reusable: true`. A versioned panel-callable registry has value beyond this task — it's reused by t070 (panel-version drift), t076 (NaN-vs-0 panel-aware), and t077 (GLMM-logit) as a study-level covariate. Flag in output.
+**Reusable:** `reusable: true`. The panel-callable registry has value beyond this task — reused by
+t070 (panel-version drift), t076 (NaN-vs-0 panel-aware), and eventually t077 (GLMM-logit) as a
+study-level covariate. Flag in the rule's output docstring.
 
 ---
 
-### Task 2: Per-sample TMB calculation (`compute_per_sample_tmb`)
+### Task 2: Per-sample TMB calculation + `study_id` propagation (`compute_per_sample_tmb`)
 
-**Implements:** core continuous-TMB signal. Respects Assumption 3 (protein-altering numerator).
+**Implements:** core continuous-TMB signal (Assumption 3, protein-altering numerator) AND the
+F3 fix for `study_id` as a first-class column on every sample-level artifact.
 
 **TDD steps:**
 
-1. Write `test_compute_per_sample_tmb.py` asserting:
-   - 100 synthetic samples, each with N mutations in `variant_class` ∈ protein-altering set → `mutation_count == N`.
-   - Silent / intron mutations are excluded from the count.
+1. Write `code/scripts/tests/test_compute_per_sample_tmb.py` asserting:
+   - 100 synthetic samples, each with N mutations in `variant_class` ∈ protein-altering set →
+     `mutation_count == N`.
+   - Silent / intron / 3'UTR / 5'UTR / RNA / IGR mutations are excluded from the count.
    - `tmb = mutation_count / panel_callable_mb` (exact arithmetic).
    - `tmb_log10 = log10(tmb + 1)` (log-transform for zero-safety).
-   - A sample in a study with unknown panel → uses WES default (30 Mb) and gets a `tmb_source = "wes_default"` annotation.
+   - A sample in a study with unknown panel → uses WES default (30 Mb); `tmb_source == "wes_default"`.
+   - Output carries `study_id` column (from the `{id}` wildcard) — test asserts every row has it.
 2. Write `code/scripts/compute_per_sample_tmb.py`:
-   - Input: `mut.feather` (per study), `samples.feather` (per study), `panel_callable_mb.tsv`, `study_panel_map` (from config).
-   - Filter `mut.feather` to protein-altering variant classes (constant list in the script, cross-referenced to Assumption 3).
-   - Group by `sample_id_tumor`, count rows → `mutation_count`.
-   - Join to `samples.feather` (left join on `sample_id_tumor`). Samples with zero mutations get `mutation_count = 0` (preserve row).
-   - Look up panel → callable Mb → compute `tmb`, `tmb_log10`.
-   - Emit augmented `samples.feather` (overwrites the study's `samples.feather`? OR writes a new `samples_tmb.feather`? → new file for auditability; existing downstream consumers unaffected).
-3. Snakemake rule `compute_per_sample_tmb` per study: `samples_tmb.feather` wildcarded on `{id}`.
+   - Input: `out_dir/studies/{id}/mut/mut_filtered.feather` (existing output of `filter_genes`
+     rule), `out_dir/studies/{id}/metadata/samples.feather`, `out_dir/metadata/panel_callable_mb.tsv`,
+     config `study_panel_map`, wildcard `{id}` for the study.
+   - Filter mutations to protein-altering `variant_class` values (constant list in script; see
+     Assumption 3).
+   - Group by `sample_id_tumor`, count rows → `mutation_count`. Preserve zero-mutation samples via
+     a left join back to `samples.feather`.
+   - Look up panel via `study_panel_map[id]` → callable Mb from panel table → compute `tmb`,
+     `tmb_log10`, `tmb_source`.
+   - Write `study_id = {id}` column to every row (F3 fix).
+   - Emit **new file** `out_dir/studies/{id}/metadata/samples_tmb.feather` — does NOT overwrite
+     `samples.feather` (preserves existing downstream consumers until they opt in to the new
+     schema).
+3. Snakemake rule `compute_per_sample_tmb` wildcarded on `{id}`; output at
+   `out_dir/studies/{id}/metadata/samples_tmb.feather`.
 
 **Validation criteria:**
 - Unit tests pass.
-- Integration: on msk_impact_2017, median `tmb` across the cohort should be ~3–6 mut/Mb (Chalmers 2017); zero samples with `mutation_count == 0` (MSK-IMPACT requires ≥1 call to be in the cohort). Log and assert.
-- Spot-check: sample with 5000 mutations in a panel study → flag immediately as obvious data issue (likely CH-contaminated tumor-only or corrupted count).
+- Integration: on `msk_impact_2017`, median `tmb` across the cohort should be ~3–6 mut/Mb
+  (Chalmers 2017, Zehir 2017); zero samples with `mutation_count == 0` (MSK-IMPACT requires ≥1
+  call to be in the cohort). Assert.
+- Spot-check: sample with >5000 mutations in a panel study → log warning (likely CH-contaminated
+  tumor-only or corrupted count; not a test failure, but surface for investigation).
+- Every row of the output has a non-null `study_id`.
 
 ---
 
@@ -260,65 +306,144 @@ Three levels of validation, applied throughout:
 
 ### Task 6: Composite hypermutation score + final flag (`annotate_hypermutators`)
 
-**Implements:** the multi-source combination. Emits both continuous score and boolean.
+**Implements:** the multi-source combination. Emits both a continuous score, a boolean flag, and an
+audit trail (`hypermutator_reason`).
+
+**Decision table — the ONE canonical policy (F4 fix):**
+
+The composite score and final flag follow this exhaustive decision table applied per sample.
+Evaluated top-to-bottom; first matching row wins; `hypermutator_reason` records which row fired.
+
+| Priority | Condition | `hypermutation_score` | `is_hypermutator` | `hypermutator_reason` |
+|---|---|---|---|---|
+| 1 | `pole_hotspot_detected == True` | 1.0 | True | `"pole_hotspot"` |
+| 2 | `pold1_hotspot_detected == True` | 1.0 | True | `"pold1_hotspot"` |
+| 3 | `msi_type == "MSI-H"` | 1.0 | True | `"msi_h"` |
+| 4 | GMM fit is **bimodal** for this cancer type AND GMM posterior in upper component > 0.5 | `gmm_posterior_upper` (continuous 0–1) | True | `"gmm_upper_mode"` |
+| 5 | GMM fit is **bimodal**, upper posterior ≤ 0.5 | `gmm_posterior_upper` | False | `"gmm_lower_mode"` |
+| 6 | GMM fit **unavailable** (single-mode, dip test p ≥ 0.1, or insufficient N) AND `tmb_zscore_within_cancer ≥ 1.5` | `min(1.0, (tmb_zscore - 1.5) / 1.5 + 0.5)` | True | `"zscore_fallback_high"` |
+| 7 | GMM fit unavailable AND `tmb_zscore_within_cancer < 1.5` | `max(0.0, tmb_zscore / 3.0)` | False | `"zscore_fallback_low"` |
+| 8 | `tmb` is NaN (panel unknown, all-WES-default with no mutations, etc.) | NaN | False | `"tmb_unavailable"` |
+
+Rows 1–3 are **deterministic**: any strong biological signal forces `is_hypermutator = True`
+regardless of TMB. This fixes the F4 inconsistency — validation expectations in Task 5/6 are updated
+accordingly (100%, not ≥95%, for POLE/POLD1/MSI-H concordance).
+
+**Rationale for row ordering:**
+- POLE/POLD1 hotspots force True because these are **diagnostic categories** (clinical pathology
+  uses "POLE-hypermutated" as an endometrial-cancer molecular subtype).
+- MSI-H is the same (clinical diagnosis, not correlate).
+- GMM comes next because it's data-driven and self-calibrating.
+- z-score fallback only activates when GMM fails.
+- NaN-TMB row is last and is NOT flagged — conservative default for unknown inputs.
+
+**Score threshold note:** `config.hypermutator.score_threshold = 0.5` still exists but in this
+policy it only affects rows 4/5 (GMM posterior threshold). Rows 1/2/3 ignore it. Document this
+in the config docstring.
 
 **TDD steps:**
 
-1. Write `test_annotate_hypermutators.py`:
-   - Sample with POLE hotspot + high tmb_zscore + MSI-H → `hypermutation_score` near 1.0; `is_hypermutator = True`.
-   - Sample with all three signals absent → score near 0.0; False.
-   - Sample with conflicting signals (high tmb_zscore but no MSI/POLE) → score ≈ 0.5; flag based on score threshold.
-   - Sample with missing MSI → score computed from TMB+POLE only; scale preserved.
+1. Write `test_annotate_hypermutators.py` parametrized by the 8 decision-table rows:
+   - Row 1: POLE hotspot + low TMB → `is_hypermutator == True`, `score == 1.0`, reason `"pole_hotspot"`.
+   - Row 2: POLD1 hotspot + no other signal → True, reason `"pold1_hotspot"`.
+   - Row 3: MSI-H, normal TMB → True, reason `"msi_h"`.
+   - Row 3 edge case: MSI-L → does NOT fire row 3; falls through to rows 4–7.
+   - Row 4: bimodal GMM, sample in upper mode with posterior 0.8 → True, score 0.8, reason `"gmm_upper_mode"`.
+   - Row 5: bimodal GMM, sample in lower mode with posterior 0.3 → False, score 0.3, reason `"gmm_lower_mode"`.
+   - Row 6: GMM unavailable, tmb_zscore = 2.5 → True, reason `"zscore_fallback_high"`.
+   - Row 7: GMM unavailable, tmb_zscore = 0.5 → False, reason `"zscore_fallback_low"`.
+   - Row 8: tmb is NaN → False, reason `"tmb_unavailable"`.
+   - Priority ordering: POLE hotspot AND GMM-lower-mode → POLE wins (deterministic signal overrides GMM).
 2. Write `code/scripts/annotate_hypermutators.py`:
-   - Input: `samples_gmm_flagged.feather` + `samples_tmb.feather` + `sample_polymerase_hotspots.feather` + MSI columns (already in combined samples).
-   - Composite score (discussed in design):
-     ```
-     # Base: GMM-derived membership probability (continuous) if fit_quality=="bimodal"
-     # else Tukey-style distance from per-cancer median.
-     score_tmb = gmm_upper_component_posterior if bimodal else
-                 max(0, min(1, (tmb_zscore - 1.5) / 1.5))
-
-     # Strong boolean boosts
-     score_pole = 1.0 if pole_hotspot or pold1_hotspot else 0.0
-     score_msi  = 1.0 if msi_type == "MSI-H" else 0.0
-
-     # Combination (weighted max — any strong signal dominates)
-     hypermutation_score = max(score_tmb, score_pole, score_msi)
-
-     # Derived boolean (configurable threshold; default 0.5)
-     is_hypermutator = hypermutation_score >= config["hypermutator"]["score_threshold"]
-     ```
-   - Output: `samples_annotated.feather` with full column set.
-3. Snakemake rule `annotate_hypermutators` consuming all upstream per-study + GMM outputs.
+   - Input: `out_dir/metadata/samples_tmb_combined.feather` (contains all per-sample signals after
+     Task 3's hotspot detection merge) + `out_dir/metadata/per_cancer_gmm_fits.feather` (Task 5
+     output) + `out_dir/metadata/samples_gmm_flagged.feather` (Task 5 output).
+   - Apply decision table in priority order via a function `classify_sample(row, gmm_fit) ->
+     (score, flag, reason)`.
+   - Output: `out_dir/metadata/samples_annotated.feather` with columns `[study_id, sample_id,
+     cancer_type, tmb, tmb_log10, tmb_zscore_within_cancer, pole_hotspot_detected,
+     pold1_hotspot_detected, msi_type, gmm_posterior_upper, gmm_fit_quality,
+     hypermutation_score, is_hypermutator, hypermutator_reason]`.
+3. Snakemake rule `annotate_hypermutators` consuming Task 5's outputs.
 
 **Validation criteria:**
-- Unit tests pass.
+- Unit tests cover every row of the decision table (not just the common cases).
 - Integration: final `is_hypermutator` rate by cancer type matches Task 5 acceptance ranges.
-- Cross-source agreement: ≥ 95% of `pole_hotspot_detected == True` samples also have `is_hypermutator == True`. Flag any violations. Expect ≥ 80% of `msi_type == "MSI-H"` also flagged (MSI samples have more variance in TMB due to called-indel differences).
+- Cross-source agreement (now strict, since policy is deterministic): **100%** of
+  `pole_hotspot_detected == True` → `is_hypermutator == True`; **100%** of
+  `pold1_hotspot_detected == True` → `is_hypermutator == True`; **100%** of `msi_type == "MSI-H"`
+  → `is_hypermutator == True`. Any violation is a test failure, not a soft warning.
+- `hypermutator_reason` distribution across a realistic study set should be dominated by
+  `"gmm_upper_mode"` / `"gmm_lower_mode"` (primary signal), with `"pole_hotspot"`, `"pold1_hotspot"`,
+  and `"msi_h"` being minority firings. If rows 6/7 (zscore_fallback) dominate, GMM fits are
+  failing broadly — investigate.
 
 ---
 
-### Task 7: Cross-study aggregation filter wire-in (`create_combined_*` extensions)
+### Task 7: Per-study inclusive/exclusive ratios + combined passthrough (`create_freq_tables.py` + `create_combined_*`)
 
-**Implements:** the actual user-facing behavior change. This is where the audit's HIGH-severity confound finally gets mitigated in published outputs.
+**Implements (F1 fix):** the hypermutator-exclusion filter lives at the **per-study** layer where
+sample IDs are still available (`create_freq_tables.py:36-46` — `groupby('cancer_type').sample_id
+.nunique()`). The combined scripts only pivot already-computed per-study values and cannot
+recompute exclusive ratios. This task splits into two parts:
 
-**TDD steps:**
+**Task 7a — per-study ratio computation (`create_freq_tables.py`):**
 
-1. Write `test_create_combined_gene_cancer_freq_table.py` (extend existing):
-   - With `config.hypermutator.exclude_from_aggregation = True`: pooled ratio excludes samples where `is_hypermutator == True`.
-   - With `False`: pooled ratio matches previous behavior (regression check — must not alter current numbers).
-   - Both paths always emit two ratio columns: `mean_inclusive` and `mean_exclusive` (plus per-study counts contributing to each).
+1. Write `test_create_freq_tables.py`:
+   - Input: toy per-study `mut.feather` + `samples.feather` + `samples_annotated.feather` (subset of
+     samples flagged `is_hypermutator=True`).
+   - With no `samples_annotated.feather` input (backward-compat): output matches current
+     single-column `num` / `ratio` schema exactly. This is a hard regression check.
+   - With `samples_annotated.feather` provided: output gains `num_inclusive` / `num_exclusive` /
+     `ratio_inclusive` / `ratio_exclusive` / `n_samples_inclusive` / `n_samples_exclusive` columns.
+     `num` / `ratio` remain as aliases for the inclusive pair.
+   - Numeric correctness: for a gene present in 10 samples (3 hypermutator, 7 not) within a
+     100-sample cohort (20 hypermutators, 80 not): `ratio_inclusive = 10/100 = 0.10`;
+     `ratio_exclusive = 7/80 = 0.0875`.
+2. Modify `code/scripts/create_freq_tables.py`:
+   - Accept optional second input `samples_annotated.feather` path; if provided, left-join its
+     `(study_id, sample_id, is_hypermutator)` columns onto the mutation table.
+   - Compute each existing `groupby().sample_id.nunique()` ratio twice: once with the full sample
+     set (inclusive), once with `is_hypermutator == False` (exclusive). Preserve backward-compat
+     `num` / `ratio` aliases.
+   - Emit `n_samples_inclusive` / `n_samples_exclusive` per cancer-type as explicit denominators so
+     the combined script can compute weighted averages later if desired.
+3. Update `code/workflows/Snakefile` `create_freq_tables` rule inputs to include
+   `out_dir/metadata/samples_annotated.feather` when the hypermutator rules are in the DAG.
+
+**Task 7b — combined-script passthrough (`create_combined_gene_cancer_freq_table.py`):**
+
+1. Extend `test_create_combined_gene_cancer_freq_table.py` (if one exists; otherwise create):
+   - Input: multiple per-study tables each with paired columns (`ratio_inclusive`, `ratio_exclusive`).
+   - Output: the wide per-study columns now pivot in pairs (study_A_ratio_inclusive,
+     study_A_ratio_exclusive, study_B_...) and two pooled-mean columns (`mean_inclusive`,
+     `mean_exclusive`) are emitted.
+   - Regression check: when all per-study inputs have `ratio_inclusive == ratio_exclusive`
+     (no hypermutators), `mean_inclusive == mean_exclusive` bitwise.
 2. Modify `code/scripts/create_combined_gene_cancer_freq_table.py`:
-   - Load `samples_annotated.feather` as hypermutator lookup.
-   - For each per-study ratio calculation, compute the hypermutator-excluded numerator / denominator as a second parallel pathway.
-   - Emit both pooled-mean columns + `n_hypermutator_excluded` diagnostic.
-3. Similarly extend `create_combined_gene_cancer_mutation_matrices.py` for the wide count matrix.
-4. Config default: `exclude_from_aggregation = True` (aligned with audit recommendation) but keep inclusive ratios for audit trail.
+   - Treat paired columns as a single pivot operation that produces two wide matrices.
+   - Compute `mean_inclusive` / `mean_exclusive` via existing `mean(axis=1, skipna=True)`.
+   - Retain `mean` as an alias for `mean_inclusive` for downstream backward-compat.
+3. Similarly extend `create_combined_gene_cancer_mutation_matrices.py` — the count matrix gets
+   inclusive + exclusive variants.
+
+**Config default — Open-question-1 resolution:**
+`hypermutator.exclude_from_aggregation: false` is the default **shipped in t081**. This means
+downstream published outputs continue to use the inclusive ratio as the primary value until t079
+(pre-registration) explicitly decides otherwise. Both inclusive and exclusive columns are
+**always emitted** regardless of this flag — the flag only affects which column is aliased to
+the unqualified `mean` / `ratio` column for legacy consumers. The flip to `true` (or a more
+nuanced policy like "exclusive for pan-cancer drivers, inclusive for cancer-type-specific drivers")
+is made in t079 based on the pre-registration review and the Task 7b diagnostic report.
 
 **Validation criteria:**
-- Unit tests pass, including the regression check on inclusive ratios (must be bitwise-identical to current behavior when recomputed).
-- Integration: for TCGA-UCEC, POLE-driver genes (e.g., POLE itself, PTEN, TP53) should show *lower* `mean_exclusive` than `mean_inclusive` because their frequencies are inflated by hypermutators.
-- Produce a diagnostic report `doc/reports/hypermutator-impact-<date>.md` showing top 20 gene × cancer cells with the largest |mean_inclusive - mean_exclusive| gap.
+- Unit tests pass, including the strict regression check when no hypermutators are present
+  (bitwise equality of `mean_inclusive` with the legacy `mean`).
+- Integration: for TCGA-UCEC, POLE-driver genes should show noticeably *lower* `mean_exclusive`
+  than `mean_inclusive` (hypermutator-inflated rates collapse once excluded).
+- Diagnostic report at `doc/reports/hypermutator-impact-<date>.md` showing top 20 gene × cancer
+  cells with the largest `|mean_inclusive - mean_exclusive|` gap. This report feeds t079's
+  pre-registration decision.
 
 ---
 
@@ -339,52 +464,89 @@ Three levels of validation, applied throughout:
 
 ## Snakemake-specific appendix
 
-The project is Snakemake-based (`code/workflows/Snakefile`), so here are the rule sketches for reference. These sit between the existing `convert_to_feather` output (per-study `samples.feather`) and the `create_combined_*` consumers.
+Verified against `code/workflows/Snakefile` — uses `out_dir` (not `data_dir`) for produced
+artifacts; `{id}` wildcard from the `studies` list in config. `data_dir` is only used for raw
+inputs.
 
 ```python
 rule build_panel_callable_sizes:
     input:
-        genie_coverage=f"{data_dir}/genie_panel_coverage.feather",
+        genie_coverage = out_dir.joinpath("metadata/genie_panel_coverage.feather"),
     output:
-        f"{data_dir}/panel_callable_mb.tsv"
+        out_dir.joinpath("metadata/panel_callable_mb.tsv")
     script: "../scripts/build_panel_callable_sizes.py"
 
 rule compute_per_sample_tmb:
     input:
-        mut=f"{data_dir}/studies/{{id}}/mut/mut_filtered.feather",
-        samples=f"{data_dir}/studies/{{id}}/samples.feather",
-        panel_sizes=f"{data_dir}/panel_callable_mb.tsv",
+        mut         = out_dir.joinpath("studies/{id}/mut/mut_filtered.feather"),
+        samples     = out_dir.joinpath("studies/{id}/metadata/samples.feather"),
+        panel_sizes = out_dir.joinpath("metadata/panel_callable_mb.tsv"),
     output:
-        f"{data_dir}/studies/{{id}}/samples_tmb.feather"
+        out_dir.joinpath("studies/{id}/metadata/samples_tmb.feather")
     script: "../scripts/compute_per_sample_tmb.py"
 
 rule detect_polymerase_hotspots:
     input:
-        mut=f"{data_dir}/studies/{{id}}/mut/mut_filtered.feather",
+        mut = out_dir.joinpath("studies/{id}/mut/mut_filtered.feather"),
     output:
-        f"{data_dir}/studies/{{id}}/sample_polymerase_hotspots.feather"
+        out_dir.joinpath("studies/{id}/metadata/sample_polymerase_hotspots.feather")
     script: "../scripts/detect_polymerase_hotspots.py"
+
+rule combine_samples_tmb:
+    input:
+        samples_tmb   = expand(out_dir.joinpath("studies/{id}/metadata/samples_tmb.feather"), id=ids),
+        pole_hotspots = expand(out_dir.joinpath("studies/{id}/metadata/sample_polymerase_hotspots.feather"), id=ids),
+    output:
+        out_dir.joinpath("metadata/samples_tmb_combined.feather")
+    script: "../scripts/combine_samples_tmb.py"
 
 rule fit_per_cancer_tmb_gmm:
     input:
-        samples_tmb=expand(f"{data_dir}/studies/{{id}}/samples_tmb.feather",
-                           id=studies),
+        samples_tmb_combined = out_dir.joinpath("metadata/samples_tmb_combined.feather"),
     output:
-        per_cancer_fits=f"{data_dir}/combined/per_cancer_gmm_fits.feather",
-        samples_flagged=f"{data_dir}/combined/samples_gmm_flagged.feather",
+        per_cancer_fits      = out_dir.joinpath("metadata/per_cancer_gmm_fits.feather"),
+        samples_flagged      = out_dir.joinpath("metadata/samples_gmm_flagged.feather"),
     script: "../scripts/fit_per_cancer_tmb_gmm.py"
 
 rule annotate_hypermutators:
     input:
-        samples_gmm=f"{data_dir}/combined/samples_gmm_flagged.feather",
-        samples_tmb=expand(f"{data_dir}/studies/{{id}}/samples_tmb.feather",
-                           id=studies),
-        pole_hotspots=expand(f"{data_dir}/studies/{{id}}/sample_polymerase_hotspots.feather",
-                             id=studies),
+        samples_tmb_combined = out_dir.joinpath("metadata/samples_tmb_combined.feather"),
+        per_cancer_fits      = out_dir.joinpath("metadata/per_cancer_gmm_fits.feather"),
+        samples_flagged      = out_dir.joinpath("metadata/samples_gmm_flagged.feather"),
     output:
-        f"{data_dir}/combined/samples_annotated.feather"
+        out_dir.joinpath("metadata/samples_annotated.feather")
     script: "../scripts/annotate_hypermutators.py"
 ```
+
+The existing `create_freq_tables` rule (see `Snakefile` current block producing per-entity study
+tables) gains `samples_annotated.feather` as a new optional input and emits the new paired-column
+schema. The existing `create_combined_gene_cancer_freq_table` rule needs no structural change
+beyond carrying the new columns through its pivot.
+
+## Test layout + verification commands
+
+The repo does not currently carry a `pyproject.toml`-declared tests tree (confirmed by grepping
+`pyproject.toml` — no `[tool.pytest.ini_options]` or `tool.hatch.envs.test` sections). For this
+task, establish a convention:
+
+- New tests live at `code/scripts/tests/test_<module>.py`, importable as plain modules (no
+  package `__init__.py` needed — `pytest` auto-discovers via `rootdir` inference).
+- Add `pytest>=8.0` to `[project.optional-dependencies].dev` in `pyproject.toml` (new dep;
+  complements the already-listed `diptest`).
+- Verification commands to append to this task's docstring:
+  ```bash
+  uv run --frozen pytest code/scripts/tests/ -v
+  uv run --frozen ruff check code/scripts/
+  uv run --frozen pyright code/scripts/  # if configured; optional
+  uv run snakemake --lint -s code/workflows/Snakefile --configfile code/config/config-10k-genes.yml
+  ```
+- Integration tests that require real study inputs (MSK-IMPACT, TCGA-UCEC) go in
+  `code/scripts/tests/integration/` with a `pytest.mark.slow` marker and a pytest option
+  `--run-slow` (configured in `conftest.py`) to opt in. Skipped by default in local / CI loops.
+
+Test-infrastructure setup itself is a one-time subtask of Task 8 (documentation): land the
+`pyproject.toml` dev-deps update + an empty `code/scripts/tests/conftest.py` as part of the
+same commit that adds the first unit test.
 
 ---
 

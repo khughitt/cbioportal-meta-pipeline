@@ -245,17 +245,6 @@ Surfaced as a real gap in t043: no pan-cancer benchmark at the pathway rollup le
 
 Gap surfaced in t059: TET2 solid-tumor biology literature is thinner than ASXL1. ASXL1 has clear MSI-CRC polyG-indel + CRPC / HNSCC / breast evidence (Katoh 2013). TET2 solid-tumor papers cluster around melanoma (catalytic-domain mutations), glioma (IDH-pathway interaction — TET2 is the IDH-pathway target, so IDH-mutant gliomas carry functional TET2 loss without TET2 mutation), and breast. Focused OpenAlex + PubMed search. Produces doc/searches/YYYY-MM-DD-tet2-solid-tumor-biology.md.
 
-## [t096] t081.5: Per-cancer-type TMB GMM fit (fit_per_cancer_tmb_gmm)
-- type: dev
-- priority: P1
-- status: proposed
-- related: [task:t081, task:t093, plan:2026-04-13-t081-hypermutator-annotation-pipeline-plan, article:Campbell2017Hypermutation, article:Samstein2019]
-- blocked-by: [t093]
-- group: pipeline
-- created: 2026-04-14
-
-Subtask 5 of 8 for t081. Blocked by t093 (needs per-sample TMB values).\n\nImplements: data-driven threshold (Assumption 6). Per-cancer-type 2-component GaussianMixture vs 1-component; select 2 when delta-BIC>10 AND Hartigan dip p<0.1 AND n_samples>=gmm_min_samples. Pin random_state to snek.config['random_seed'] (reproducibility covenant — see review doc finding #1). Always compute tmb_zscore_within_cancer as fallback. Outputs per_cancer_gmm_fits.feather (diagnostics) + samples_gmm_flagged.feather (per-sample flags + gmm_posterior_upper).\n\nIntegration validation: TCGA-UCEC exclusion rate ~20-25%%; TCGA-COAD ~10-15%%; TCGA-SKCM ~5-10%% (all within +-20%% relative). Diagnostic GMM-overlay PNGs per cancer type in results/diagnostics/.
-
 ## [t097] t081.6: Composite hypermutation score + final flag (annotate_hypermutators)
 - type: dev
 - priority: P1

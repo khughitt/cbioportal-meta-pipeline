@@ -39,6 +39,11 @@ panel_callable_mb_override: {}
 wes_default_callable_mb: 30.0
 panel_callable_mb_tolerance: 0.05
 
+# GMM-fit config (t096). random_seed is pinned for reproducibility (plan review
+# finding #1). gmm_min_samples gates the 2-component fit vs the 10*median fallback.
+random_seed: 0
+gmm_min_samples: 100
+
 # studies with 3+ cancer types and >1000 genes measured
 studies: [
   "acc_2019", 

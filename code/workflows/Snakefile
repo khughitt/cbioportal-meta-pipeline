@@ -365,6 +365,44 @@ rule detect_polymerase_hotspots:
   script:
     "../scripts/detect_polymerase_hotspots.py"
 
+#
+# Combine per-study samples_tmb + polymerase hotspot flags (t096 / plan task 5
+# prereq). Produces the single cross-study table consumed by the GMM fit and by
+# the composite hypermutator flag (t097).
+#
+rule combine_samples_tmb:
+  input:
+    samples_tmb = expand(out_dir.joinpath("studies/{id}/metadata/samples_tmb.feather"), id=ids),
+    pole_hotspots = expand(out_dir.joinpath("studies/{id}/metadata/sample_polymerase_hotspots.feather"), id=ids)
+  output:
+    out_dir.joinpath("metadata/samples_tmb_combined.feather")
+  script:
+    "../scripts/combine_samples_tmb.py"
+
+#
+# Per-cancer-type TMB GMM fit (t096 / t081.5 / plan task 5).
+#
+# Fits a 2-component GaussianMixture on log10 TMB per cancer type; selects
+# 2-component only when delta-BIC > 10 AND Hartigan dip p < 0.1 AND
+# n_samples >= gmm_min_samples. Otherwise falls through to single_mode /
+# not_bimodal / insufficient_data. The insufficient_data branch applies a
+# 10 * median TMB fallback. Always emits tmb_zscore_within_cancer as a
+# fallback signal for the composite flag (t097 rows 6 / 7).
+#
+# Reproducibility covenant: random_state is pinned to config['random_seed']
+# (default 0) for every sklearn.mixture.GaussianMixture call. See the file
+# docstring and doc/plans/2026-04-13-t081-hypermutator-annotation-plan-review.md
+# finding #1.
+#
+rule fit_per_cancer_tmb_gmm:
+  input:
+    samples_tmb_combined = out_dir.joinpath("metadata/samples_tmb_combined.feather")
+  output:
+    per_cancer_fits = out_dir.joinpath("metadata/per_cancer_gmm_fits.feather"),
+    samples_flagged = out_dir.joinpath("metadata/samples_gmm_flagged.feather")
+  script:
+    "../scripts/fit_per_cancer_tmb_gmm.py"
+
 rule check_gene_coverage:
   input:
     expand(out_dir.joinpath("studies/{id}/mut/table/mut.feather"), id=ids),

@@ -70,6 +70,17 @@ panel_callable_mb_override: {}
 wes_default_callable_mb: 30.0
 panel_callable_mb_tolerance: 0.05
 
+# Project-wide random seed for reproducibility. Currently consumed by the
+# fit_per_cancer_tmb_gmm rule (t096) which passes it to every
+# sklearn.mixture.GaussianMixture call. See the plan-review finding #1
+# reproducibility covenant: flags flip on borderline samples if seed drifts.
+random_seed: 0
+
+# Minimum per-cancer-type sample count before fit_per_cancer_tmb_gmm attempts a
+# 2-component GaussianMixture fit. Below this, the rule falls back to a simple
+# "tmb > 10 * median(tmb)" hypermutator rule (fit_quality = "insufficient_data").
+gmm_min_samples: 100
+
 studies: [
   "metastatic_solid_tumors_mich_2017",
   "mixed_allen_2018",

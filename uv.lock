@@ -73,6 +73,7 @@ dependencies = [
 
 [package.dev-dependencies]
 dev = [
+    { name = "diptest" },
     { name = "pytest" },
     { name = "science-tool" },
 ]
@@ -89,6 +90,7 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dev = [
+    { name = "diptest", specifier = ">=0.10.0" },
     { name = "pytest", specifier = ">=9.0.3" },
     { name = "science-tool", editable = "../../science/science-tool" },
 ]
@@ -269,6 +271,22 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/a9/95/a3dbbb5028f35eafb79008e7522a75244477d2838f38cbb722248dabc2a8/cycler-0.12.1.tar.gz", hash = "sha256:88bb128f02ba341da8ef447245a9e138fae777f6a23943da4540077d3601eb1c", size = 7615, upload-time = "2023-10-07T05:32:18.335Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/e7/05/c19819d5e3d95294a6f5947fb9b9629efb316b96de511b418c53d245aae6/cycler-0.12.1-py3-none-any.whl", hash = "sha256:85cef7cff222d8644161529808465972e51340599459b8ac3ccbac5a854e0d30", size = 8321, upload-time = "2023-10-07T05:32:16.783Z" },
+]
+
+[[package]]
+name = "diptest"
+version = "0.10.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "numpy" },
+    { name = "psutil" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/19/9f/c348b6975108852c4b843d66dfc935419c5321472e11f47b06b60e5c0ac7/diptest-0.10.0.tar.gz", hash = "sha256:c1384cd2ba67d97024cc964a86e5b083a33ca9e25d60f79f30ae2676460e4c3d", size = 87934, upload-time = "2025-07-10T13:12:03.545Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/22/30/0d5e1b2f73cf8c89830b0771f87f8d689c6fd98549b251fa979c4bcb8634/diptest-0.10.0-cp313-cp313-macosx_12_0_arm64.whl", hash = "sha256:7b60d0b564c6238e4400ed7e88b9aeaf4517419f6024bb9d0c42891647226a9b", size = 370849, upload-time = "2025-07-10T13:11:48Z" },
+    { url = "https://files.pythonhosted.org/packages/e5/1c/1e843eed31d6aa1675e81d18cb22c70f2005b1aa12d29982127883f4ac3d/diptest-0.10.0-cp313-cp313-macosx_12_0_x86_64.whl", hash = "sha256:6e83a6543c681a3abfa87ecd72265f989ad79b45d6c3ee0dfa64c558c69b8453", size = 412407, upload-time = "2025-07-10T13:11:49.173Z" },
+    { url = "https://files.pythonhosted.org/packages/7f/31/3c3d31981c8c252056b353de7a39b0bf65f41779f4834c66ecb08a25752e/diptest-0.10.0-cp313-cp313-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:d7ab3748791aed0f73b244748a54bea6ef4887ab2c75820e9e9c0a9585dbfa0f", size = 222597, upload-time = "2025-07-10T13:11:50.313Z" },
+    { url = "https://files.pythonhosted.org/packages/65/e0/1364ba4e9696d76219490dc12eb72a684eef1b909cc27dc59c92c6189203/diptest-0.10.0-cp313-cp313-win_amd64.whl", hash = "sha256:845c0059c0b412033f0891bebd97b55c8f86aa7fb86fb4147261bc8714896902", size = 392800, upload-time = "2025-07-10T13:11:51.83Z" },
 ]
 
 [[package]]

@@ -15,6 +15,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "diptest>=0.10.0",
     "pytest>=9.0.3",
     "science-tool",
 ]

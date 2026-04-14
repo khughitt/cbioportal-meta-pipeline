@@ -5,6 +5,7 @@ description = "Project-local tooling for the cBioPortal meta-analysis pipeline (
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "openpyxl>=3.1.5",
     "pandas>=3.0.2",
     "pyarrow>=23.0.1",
     "scikit-learn>=1.8.0",

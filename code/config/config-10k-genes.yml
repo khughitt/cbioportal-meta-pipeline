@@ -33,6 +33,26 @@ summary:
   num_cancer_specific_results: 10
 
 # studies to include; this is a subset of the "curated" study list + genie
+#
+# `matched_normal_studies`: subset of `studies` known to use patient-matched buffy-coat /
+# normal sequencing. Consumed by `annotate_ch.py` to produce matched-vs-unmatched stratified
+# mutation ratios for the 7 Bolton 2020 CH-priority genes. Studies not in this list are
+# treated as tumor-only; populate conservatively based on per-study documentation.
+matched_normal_studies: []
+
+# COSMIC Cancer Gene Census (CGC) input — consumed by `rule process_cgc`.
+# Defaults to `data/cancer_gene_census.csv` if unset; override per-run to pin a specific
+# CGC snapshot (e.g., the v100 file below). The processor output is version-stamped via
+# the `cgc_source` column on the canonical annotated feathers.
+cosmic_cgc_path: "/data/raw/cosmic/v100/Cosmic_CancerGeneCensus_v100_GRCh38.tsv"
+
+# Optional per-study panel mapping: {study_id: SEQ_ASSAY_ID from genie_panel_coverage}.
+# Studies listed here are treated as panel-restricted for the callability-annotation pass
+# in create_combined_gene_cancer_freq_table.py. Studies not in this map are treated as WES
+# (all genes callable). Used to compute `n_panel_covered_studies` / `callable_fraction` on
+# the canonical outputs. Populate per-run based on the actual cBioPortal studies ingested.
+study_panel_map: {}
+
 studies: [
   "metastatic_solid_tumors_mich_2017",
   "mixed_allen_2018",

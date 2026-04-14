@@ -1,7 +1,6 @@
 #
 # create_gene_patient_mutation_count_matrix.py
 #
-import numpy as np
 import pandas as pd
 
 snek = snakemake

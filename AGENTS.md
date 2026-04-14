@@ -63,6 +63,57 @@ Notes:
 - Use `rich` for CLI output, `click` for multi-argument CLIs
 - For ad-hoc analysis, prefer marimo notebooks with altair over Jupyter
 
+## Annotations applied in the pipeline
+
+The canonical outputs of the cross-study aggregation are the **annotated** feathers — see
+`doc/guides/canonical-outputs.md` for the full DAG and which outputs are intermediate vs
+consumer-facing.
+
+- **Bailey 2018 driver overlay** (`code/scripts/annotate_drivers.py`) — adds
+  `bailey2018_driver` boolean + `bailey2018_source` version stamp to both the count table
+  (`gene_cancer_study_annotated.feather`) and ratio table (chained into the CH annotation
+  output below). Manual prereq: `data/bailey2018_table_s1.xlsx`.
+- **CH-aware annotation** (`code/scripts/annotate_ch.py`, closes audit F3 / F7) — adds
+  `ch_priority_gene` flag (7-gene Bolton 2020 list: DNMT3A, PPM1D, TET2, TP53, ASXL1, CHEK2,
+  PRPF8) plus `mean_matched` / `mean_unmatched` stratified pooled ratios. Consumes the
+  `matched_normal_studies` config list — populate per-run with study IDs known to use
+  patient-matched normal sequencing. See `topic:clonal-hematopoiesis-contamination`.
+
+The final ratio output `gene_cancer_study_ratio_annotated.feather` carries **both** overlays.
+Consumers should prefer the `_annotated` versions; the unannotated `gene_cancer_study.feather`
+and `gene_cancer_study_ratio.feather` are intermediates.
+
+## Alternate data sources
+
+- **MC3 TCGA pan-cancer unified MAF** (`code/scripts/process_mc3.py`, closes audit F2 for the
+  TCGA portion) — ingests the Ellrott 2018 unified 7-caller-consensus MAF as a single
+  pseudo-study `tcga_mc3`. 2.9M PASS variants / 9,104 samples / 32 TCGA cancer types in one
+  file, replacing heterogeneous per-study cBioPortal TCGA MAFs. **To enable**: add
+  `"tcga_mc3"` to the `studies` list in your run config, and add it to
+  `matched_normal_studies` as well (MC3 is matched-normal by design). Requires:
+    - `data/mc3.v0.2.8.PUBLIC.maf.gz` (GDC PASS release, ~720 MB).
+    - `data/tcga_case_to_project.tsv` (submitter_id -> TCGA project_id; fetched once from
+      the GDC API).
+
+## External Reference Datasets (manual prerequisites)
+
+Some pipeline rules depend on external datasets that cannot be auto-fetched:
+
+- **`data/bailey2018_table_s1.xlsx`** — Bailey et al. 2018 (Cell) Table S1; PanCanAtlas
+  299-driver consensus + per-cancer rosters. Manual download from the Cell article supplement
+  (PMID 30096302). Consumed by `rule process_bailey2018_drivers` and
+  `rule annotate_drivers_in_gene_cancer_table`.
+- **`data/genie_v9.1-public/`** — AACR Project GENIE per-assay BED files. Requires a Synapse
+  account + Data Use Agreement (https://www.synapse.org/Synapse:syn7222066,
+  release v9.1 at syn24179663). Consumed by `rule process_genie_panel_coverage`.
+
+Optional (R-dependent):
+
+- **`code/scripts/run_dndscv.R`** runs Martincorena 2017's selection-based driver detection
+  per study. Requires R + Bioconductor + `devtools::install_github("im3sanger/dndscv")`.
+  Output `studies/{id}/mut/dndscv/genes.feather` is not in `rule all` by default — opt in
+  by adding to your config or the `all` target list.
+
 ## Validation
 
 ```bash

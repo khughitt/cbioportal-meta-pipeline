@@ -26,7 +26,7 @@ data_sources:
   - name: "Ensembl GRCh37/GRCh38"
     description: "Genome coordinate / gene annotation TSVs (grch37.tsv, grch38.tsv) used for gene mapping."
     url: "https://www.ensembl.org"
-ontologies: []
+ontologies: [biology]
 knowledge_profiles:
   local: local
 aspects:

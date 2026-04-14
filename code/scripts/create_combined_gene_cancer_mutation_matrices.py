@@ -1,7 +1,6 @@
 #
 # create_combined_gene_cancer_mutation_matrices.py
 #
-import numpy as np
 import pandas as pd
 
 snek = snakemake

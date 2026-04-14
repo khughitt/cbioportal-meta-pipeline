@@ -25,7 +25,142 @@ rule all:
     out_dir.joinpath("summary/mut/matrix/gene_patient.feather"),
     out_dir.joinpath("summary/mut/clusters/cancer.feather"),
     out_dir.joinpath("summary/mut/clusters/gene.feather"),
+    out_dir.joinpath("summary/mut/table/gene_cancer_study_annotated.feather"),
+    out_dir.joinpath("summary/mut/table/gene_cancer_study_ratio_annotated.feather"),
     out_dir.joinpath("summary/summary.html")
+
+#
+# Bailey 2018 driver-annotation overlay.
+#
+# Manual prerequisite: download Bailey et al. 2018 (Cell) supplementary Table S1 from
+# the Cell article page (PMID 30096302 / DOI 10.1016/j.cell.2018.02.060) and place at
+# data/bailey2018_table_s1.xlsx. Direct fetch is blocked by Cell's CDN; this is a one-time
+# manual step.
+#
+rule process_bailey2018_drivers:
+  input:
+    "data/bailey2018_table_s1.tsv"
+  output:
+    out_dir.joinpath("metadata/bailey2018_drivers.feather")
+  script:
+    "../scripts/process_bailey2018_drivers.py"
+
+#
+# Sanchez-Vega 2018 curated oncogenic-pathway templates (10 canonical pathways).
+# Source: Cell article S0092-8674(18)30359-3 supplementary Table S3.
+# Manual prereq: `data/sanchez_vega_2018_tables_s3.xlsx`.
+#
+rule process_sanchez_vega_pathways:
+  input:
+    "data/sanchez_vega_2018_tables_s3.xlsx"
+  output:
+    out_dir.joinpath("metadata/sanchez_vega_pathways.feather")
+  script:
+    "../scripts/process_sanchez_vega_pathways.py"
+
+#
+# COSMIC Cancer Gene Census (CGC). Gene-level curated reference list (~750 genes at
+# v100), Tier 1 + Tier 2 + role-in-cancer annotation.
+#
+# Manual prereq: CGC TSV from cancer.sanger.ac.uk/cosmic/download (free academic account).
+# Config key `cosmic_cgc_path` defaults to `data/cancer_gene_census.csv` but can be pointed
+# at any CGC snapshot (e.g., `/data/raw/cosmic/v100/Cosmic_CancerGeneCensus_v100_GRCh38.tsv`).
+#
+rule process_cgc:
+  input:
+    config.get("cosmic_cgc_path", "data/cancer_gene_census.csv")
+  output:
+    out_dir.joinpath("metadata/cgc_drivers.feather")
+  script:
+    "../scripts/process_cgc.py"
+
+#
+# Unified annotation overlay. Applies Bailey 2018 + COSMIC CGC + Sanchez-Vega 2018 pathway
+# overlays in one pass to the raw cross-study feathers. Replaces the earlier chained
+# annotate_drivers.py pattern (one rule per overlay per table).
+#
+# Canonical count-table output: `gene_cancer_study_annotated.feather`.
+# Canonical ratio-table output: `gene_cancer_study_ratio_annotated.feather` (then chained
+#                                 into annotate_ch for CH-aware stratification).
+#
+rule annotate_gene_cancer_table:
+  input:
+    out_dir.joinpath("summary/mut/table/gene_cancer_study.feather"),
+    out_dir.joinpath("metadata/bailey2018_drivers.feather"),
+    out_dir.joinpath("metadata/cgc_drivers.feather"),
+    out_dir.joinpath("metadata/sanchez_vega_pathways.feather")
+  output:
+    out_dir.joinpath("summary/mut/table/gene_cancer_study_annotated.feather")
+  script:
+    "../scripts/annotate.py"
+
+rule annotate_gene_cancer_ratio_table:
+  input:
+    out_dir.joinpath("summary/mut/table/gene_cancer_study_ratio.feather"),
+    out_dir.joinpath("metadata/bailey2018_drivers.feather"),
+    out_dir.joinpath("metadata/cgc_drivers.feather"),
+    out_dir.joinpath("metadata/sanchez_vega_pathways.feather")
+  output:
+    out_dir.joinpath("summary/mut/table/gene_cancer_study_ratio_overlay_annotated.feather")
+  script:
+    "../scripts/annotate.py"
+
+#
+# Clonal-hematopoiesis-aware annotation. Final canonical ratio output:
+# `gene_cancer_study_ratio_annotated.feather` — carries Bailey + CGC + pathway overlays (from
+# the upstream unified rule) AND the CH annotations. Closes audit findings F3 + F7; completes
+# F4 canonical-output redirect for the ratio table.
+#
+# Adds `ch_priority_gene` flag (Bolton 2020 7-gene list) plus `mean_matched` / `mean_unmatched`
+# stratified ratios computed over per-study columns partitioned by the `matched_normal_studies`
+# config list.
+#
+# Config: populate `matched_normal_studies` in the run config with an explicit list of study IDs
+# known to use patient-matched buffy-coat / normal sequencing. Studies omitted are treated as
+# tumor-only. If the key is missing, all studies default to tumor-only and `mean_matched` is NaN.
+#
+rule annotate_ch_in_gene_cancer_ratio_table:
+  input:
+    out_dir.joinpath("summary/mut/table/gene_cancer_study_ratio_overlay_annotated.feather")
+  output:
+    out_dir.joinpath("summary/mut/table/gene_cancer_study_ratio_annotated.feather")
+  script:
+    "../scripts/annotate_ch.py"
+
+#
+# dNdScv per-study selection-based driver detection (Martincorena 2017).
+#
+# Requires R + dndscv (devtools::install_github("im3sanger/dndscv")). Optional rule —
+# include explicit dndscv outputs in `rule all` only on configurations where R+dndscv are
+# available. Uses GRCh37 RefCDS by default; for GRCh38 cohorts swap the refdb argument
+# in the script.
+#
+rule run_dndscv:
+  input:
+    out_dir.joinpath("studies/{id}/mut/table/mut_filtered.feather")
+  output:
+    out_dir.joinpath("studies/{id}/mut/dndscv/genes.feather")
+  script:
+    "../scripts/run_dndscv.R"
+
+#
+# AACR Project GENIE per-panel coverage mask.
+#
+# Manual prerequisite: download a GENIE release from Synapse (Synapse account + GENIE Data
+# Use Agreement required; v19.0-public release is at syn72382128). Place the release's
+# `genomic_information.txt` at `data/genie/genomic_information.txt`.
+#
+# GENIE does NOT ship per-assay .bed files — coverage info is consolidated into a single
+# `genomic_information.txt` per release (see code/scripts/process_genie_panel_coverage.py
+# for the schema).
+#
+rule process_genie_panel_coverage:
+  input:
+    "data/genie/genomic_information.txt"
+  output:
+    out_dir.joinpath("metadata/genie_panel_coverage.feather")
+  script:
+    "../scripts/process_genie_panel_coverage.py"
 
 # todo: switch to python
 # rule create_summary_report:
@@ -72,8 +207,9 @@ rule create_combined_gene_cancer_mutation_matrices:
 
 rule create_combined_gene_cancer_freq_table:
   input:
-    expand(out_dir.joinpath("studies/{id}/mut/table/gene_cancer_study.feather"), id=ids),
-    out_dir.joinpath("metadata/protein_lengths.feather")
+    per_study = expand(out_dir.joinpath("studies/{id}/mut/table/gene_cancer_study.feather"), id=ids),
+    protein_lengths = out_dir.joinpath("metadata/protein_lengths.feather"),
+    panel_coverage = out_dir.joinpath("metadata/genie_panel_coverage.feather")
   output:
     out_dir.joinpath("summary/mut/table/gene_cancer_study.feather"),
     out_dir.joinpath("summary/mut/table/gene_cancer_study_ratio.feather"),
@@ -200,5 +336,32 @@ rule download_study:
     data_dir.joinpath("{id}/data_clinical_patient.txt"),
   script:
     "../scripts/download_study.py"
+
+#
+# MC3 TCGA pan-cancer unified-MAF ingestion (Ellrott 2018). Produces a `tcga_mc3`
+# pseudo-study that matches the existing per-study feather schema, so downstream rules
+# consume it identically to cBioPortal studies.
+#
+# Manual prereqs:
+#   - data/mc3.v0.2.8.PUBLIC.maf.gz       (GDC PASS release)
+#   - data/tcga_case_to_project.tsv       (submitter_id -> TCGA project_id; fetched once
+#                                           from the GDC API)
+#
+# Rule-order directive ensures this rule preempts the more-general convert_to_feather rule
+# for the tcga_mc3 wildcard.
+#
+ruleorder: process_mc3 > convert_to_feather
+
+rule process_mc3:
+  input:
+    mc3_maf = "data/mc3.v0.2.8.PUBLIC.maf.gz",
+    case_to_project = "data/tcga_case_to_project.tsv"
+  output:
+    out_dir.joinpath("studies/tcga_mc3/mut/table/mut.feather"),
+    out_dir.joinpath("studies/tcga_mc3/metadata/samples.feather"),
+    out_dir.joinpath("studies/tcga_mc3/metadata/patients.feather"),
+    out_dir.joinpath("studies/tcga_mc3/metadata/study.feather")
+  script:
+    "../scripts/process_mc3.py"
 
 # vi:ft=snakemake

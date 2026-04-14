@@ -245,17 +245,6 @@ Surfaced as a real gap in t043: no pan-cancer benchmark at the pathway rollup le
 
 Gap surfaced in t059: TET2 solid-tumor biology literature is thinner than ASXL1. ASXL1 has clear MSI-CRC polyG-indel + CRPC / HNSCC / breast evidence (Katoh 2013). TET2 solid-tumor papers cluster around melanoma (catalytic-domain mutations), glioma (IDH-pathway interaction — TET2 is the IDH-pathway target, so IDH-mutant gliomas carry functional TET2 loss without TET2 mutation), and breast. Focused OpenAlex + PubMed search. Produces doc/searches/YYYY-MM-DD-tet2-solid-tumor-biology.md.
 
-## [t098] t081.7: Per-study inclusive/exclusive ratios + combined passthrough (F1 fix)
-- type: dev
-- priority: P1
-- status: proposed
-- related: [task:t081, task:t097, plan:2026-04-13-t081-hypermutator-annotation-pipeline-plan, task:t076]
-- blocked-by: [t097]
-- group: pipeline
-- created: 2026-04-14
-
-Subtask 7 of 8 for t081. Blocked by t097 (needs is_hypermutator flag).\n\nImplements F1 fix: hypermutator-exclusion filter lives at per-study layer (create_freq_tables.py:36-46) where sample IDs are still available; combined scripts only pivot pre-computed values. Two parts:\n\n7a — create_freq_tables.py: accept optional samples_annotated.feather; compute num_inclusive/num_exclusive/ratio_inclusive/ratio_exclusive/n_samples_inclusive/n_samples_exclusive. Preserve num/ratio as aliases for inclusive. Option chosen: always require samples_annotated as input (no legacy escape hatch — pipeline not yet published).\n\n7b — combined-script passthrough in create_combined_gene_cancer_freq_table.py: pivot new columns through to combined output.\n\nDovetails with t076 (NaN-vs-0 at per-(study, gene) layer).
-
 ## [t099] t081.8: Documentation + AGENTS.md updates for hypermutator annotation
 - type: dev
 - priority: P2

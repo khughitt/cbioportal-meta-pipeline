@@ -327,6 +327,24 @@ rule filter_genes:
   script:
     "../scripts/filter_genes.py"
 
+#
+# Per-sample TMB computation (t093 / t081.2 / plan task 2).
+#
+# Computes per-sample mutation_count (protein-altering only), tmb, tmb_log10,
+# panel_callable_mb, tmb_source, and propagates study_id as a first-class column
+# (F3 fix). Emits a NEW file (samples_tmb.feather) so that existing consumers of
+# samples.feather continue to see the original schema until they opt in.
+#
+rule compute_per_sample_tmb:
+  input:
+    muts = out_dir.joinpath("studies/{id}/mut/table/mut_filtered.feather"),
+    samples = out_dir.joinpath("studies/{id}/metadata/samples.feather"),
+    panels = out_dir.joinpath("metadata/panel_callable_mb.tsv")
+  output:
+    out_dir.joinpath("studies/{id}/metadata/samples_tmb.feather")
+  script:
+    "../scripts/compute_per_sample_tmb.py"
+
 rule check_gene_coverage:
   input:
     expand(out_dir.joinpath("studies/{id}/mut/table/mut.feather"), id=ids),

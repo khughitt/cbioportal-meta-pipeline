@@ -245,16 +245,6 @@ Surfaced as a real gap in t043: no pan-cancer benchmark at the pathway rollup le
 
 Gap surfaced in t059: TET2 solid-tumor biology literature is thinner than ASXL1. ASXL1 has clear MSI-CRC polyG-indel + CRPC / HNSCC / breast evidence (Katoh 2013). TET2 solid-tumor papers cluster around melanoma (catalytic-domain mutations), glioma (IDH-pathway interaction — TET2 is the IDH-pathway target, so IDH-mutant gliomas carry functional TET2 loss without TET2 mutation), and breast. Focused OpenAlex + PubMed search. Produces doc/searches/YYYY-MM-DD-tet2-solid-tumor-biology.md.
 
-## [t095] t081.4: MSI status ingestion (convert_to_feather.py extension)
-- type: dev
-- priority: P1
-- status: proposed
-- related: [task:t081, plan:2026-04-13-t081-hypermutator-annotation-pipeline-plan]
-- group: pipeline
-- created: 2026-04-14
-
-Subtask 4 of 8 for t081. No predecessor dependency (extends existing convert_to_feather.py).\n\nImplements: Assumption 5 — third biological signal when available. Parses MSI columns from data_clinical_sample.txt; normalizes to {MSI-H, MSI-L, MSS, Indeterminate, NaN}. Also parses MSI_SCORE numeric as separate msi_score col. Normalization map documented + exported for testability (Instable/MSI/High -> MSI-H; Stable/Microsatellite stable -> MSS).\n\nIntegration validation: any study with MSI_TYPE in clinical file -> non-null proportion >50%% expected; MSK-IMPACT should have msi_sensor_score equivalents. Log study-by-study availability to audit-trail output.
-
 ## [t096] t081.5: Per-cancer-type TMB GMM fit (fit_per_cancer_tmb_gmm)
 - type: dev
 - priority: P1

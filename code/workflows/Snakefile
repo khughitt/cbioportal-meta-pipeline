@@ -345,6 +345,26 @@ rule compute_per_sample_tmb:
   script:
     "../scripts/compute_per_sample_tmb.py"
 
+#
+# POLE / POLD1 hotspot detector (t094 / t081.3 / plan task 3).
+#
+# Independent biological signal for ultra-hypermutation: per-sample boolean flags
+# pole_hotspot_detected and pold1_hotspot_detected, based on exact uppercase amino-
+# acid matching against the canonical 8-entry POLE and 6-entry POLD1 hotspot lists
+# (Campbell 2017, Rayner 2016, Ma 2018). Consumes raw mut.feather (not the gene-
+# coverage-filtered version) so that POLE/POLD1 mutations are not accidentally
+# filtered out before detection. Output only lists samples with at least one
+# mutation in POLE or POLD1; the composite step (t097) left-joins this onto the
+# per-study samples table and treats NaN as False.
+#
+rule detect_polymerase_hotspots:
+  input:
+    out_dir.joinpath("studies/{id}/mut/table/mut.feather")
+  output:
+    out_dir.joinpath("studies/{id}/metadata/sample_polymerase_hotspots.feather")
+  script:
+    "../scripts/detect_polymerase_hotspots.py"
+
 rule check_gene_coverage:
   input:
     expand(out_dir.joinpath("studies/{id}/mut/table/mut.feather"), id=ids),

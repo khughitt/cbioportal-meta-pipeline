@@ -78,6 +78,27 @@ consumer-facing.
   PRPF8) plus `mean_matched` / `mean_unmatched` stratified pooled ratios. Consumes the
   `matched_normal_studies` config list — populate per-run with study IDs known to use
   patient-matched normal sequencing. See `topic:clonal-hematopoiesis-contamination`.
+- **Hypermutator / TMB annotation** (plan `doc/plans/2026-04-13-t081-hypermutator-annotation-
+  pipeline-plan.md`; closes audit F1 / F4 / F6; tasks `t081` / `t092`–`t099`) — a staged
+  pipeline that computes per-sample TMB (`compute_per_sample_tmb`), detects POLE/POLD1 hotspots
+  (`detect_polymerase_hotspots`), ingests MSI status (`convert_to_feather.py` extension via
+  `msi_normalization.py`), fits per-cancer-type GMM on log10 TMB (`fit_per_cancer_tmb_gmm`),
+  and writes a canonical composite annotation at `metadata/samples_annotated.feather`
+  (`annotate_hypermutators`). Columns: `hypermutation_score` (0-1), `is_hypermutator` (bool),
+  `hypermutator_reason` (8-category audit trail: `pole_hotspot` / `pold1_hotspot` / `msi_h` /
+  `gmm_upper_mode` / `gmm_lower_mode` / `zscore_fallback_high` / `zscore_fallback_low` /
+  `tmb_unavailable`), plus three parallel views (`is_hypermutator_absolute` ≥10 mut/Mb
+  Campbell 2017, `is_hypermutator_ultra` ≥100 mut/Mb, `is_hypermutator_relative` per-histology
+  top-20% Samstein 2019). The rule ordering inside the composite is fixed by plan finding #4:
+  POLE > POLD1 > MSI-H > GMM > z-score > NaN, so that clinical diagnostic categories win over
+  TMB. `create_freq_tables.py` and `create_combined_gene_cancer_freq_table.py` emit paired
+  `_inclusive` / `_exclusive` columns keyed on this flag (see
+  `modality-guide:cross-study-aggregation` row `agg.15`). Threshold / filter configuration:
+  `random_seed` (default 0 — reproducibility covenant, plan review finding #1),
+  `gmm_min_samples` (default 100 — below this the rule falls back to a 10×median rule),
+  `panel_callable_mb_override` + `wes_default_callable_mb` + `panel_callable_mb_tolerance`
+  drive the TMB denominator via `build_panel_callable_sizes`. See
+  `topic:tumor-mutational-burden`.
 
 The final ratio output `gene_cancer_study_ratio_annotated.feather` carries **both** overlays.
 Consumers should prefer the `_annotated` versions; the unannotated `gene_cancer_study.feather`

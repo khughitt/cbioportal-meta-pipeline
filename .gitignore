@@ -16,3 +16,7 @@ __pycache__/
 *.py[cod]
 .ruff_cache/
 .pytest_cache/
+
+# data
+data/genie/
+data/mc3.v0.2.8.PUBLIC.maf.gz

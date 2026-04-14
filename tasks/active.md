@@ -143,16 +143,6 @@ Follow-on to t074 annotation-only pass. Currently per-study NaN conflates three 
 
 
 
-## [t080] Commit in-flight pipeline work (annotate scripts, process_* scripts, Snakefile rules, AGENTS.md updates)
-- type: dev
-- priority: P1
-- status: proposed
-- related: [guide:cross-study-aggregation]
-- group: pipeline
-- created: 2026-04-13
-
-
-
 ## [t081] Pipeline addition: hypermutator / TMB-aware sample exclusion or covariate
 - type: dev
 - priority: P1

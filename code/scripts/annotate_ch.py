@@ -45,7 +45,7 @@ References
 """
 import pandas as pd
 
-snek = snakemake  # type: ignore[name-defined]
+snek = snakemake  # type: ignore[name-defined]  # noqa: F821
 
 CH_PRIORITY_GENES: frozenset[str] = frozenset({
     "DNMT3A", "PPM1D", "TET2", "TP53", "ASXL1", "CHEK2", "PRPF8",
@@ -56,6 +56,10 @@ ratio = pd.read_feather(snek.input[0])
 # Identify per-study columns (everything that isn't a key, summary, or pre-existing annotation).
 reserved = {
     "cancer_type", "symbol", "mean", "mean_adj",
+    # t098 part B: paired pooled columns + callability metadata.
+    "mean_inclusive", "mean_exclusive",
+    "n_total_studies", "n_contributing_studies", "n_panel_covered_studies",
+    "callable_fraction",
     "ch_priority_gene", "mean_matched", "mean_unmatched",
     "n_matched_studies", "n_unmatched_studies",
     # Inherited from upstream annotate.py (unified overlay) rule:
@@ -63,7 +67,15 @@ reserved = {
     "cgc_tier_1", "cgc_tier_2", "cgc_role_in_cancer", "cgc_source",
     "sanchez_vega_pathway", "sanchez_vega_og_tsg", "sanchez_vega_source",
 }
-study_cols: list[str] = [c for c in ratio.columns if c not in reserved]
+# Per-study columns: legacy-named slot per study (= inclusive view). The paired
+# ``{study}_exclusive`` columns emitted by t098 part B are skipped here so
+# matched-normal / tumor-only stratification operates on the full-cohort rates
+# (the interpretive frame CH aligns to). Exclusive-variant stratification, if
+# ever needed, can be added as a separate pass.
+study_cols: list[str] = [
+    c for c in ratio.columns
+    if c not in reserved and not c.endswith("_exclusive")
+]
 
 matched_studies: set[str] = set(snek.config.get("matched_normal_studies", []))
 matched_cols: list[str] = [c for c in study_cols if c in matched_studies]

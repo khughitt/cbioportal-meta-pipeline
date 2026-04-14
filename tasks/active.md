@@ -245,17 +245,6 @@ Surfaced as a real gap in t043: no pan-cancer benchmark at the pathway rollup le
 
 Gap surfaced in t059: TET2 solid-tumor biology literature is thinner than ASXL1. ASXL1 has clear MSI-CRC polyG-indel + CRPC / HNSCC / breast evidence (Katoh 2013). TET2 solid-tumor papers cluster around melanoma (catalytic-domain mutations), glioma (IDH-pathway interaction — TET2 is the IDH-pathway target, so IDH-mutant gliomas carry functional TET2 loss without TET2 mutation), and breast. Focused OpenAlex + PubMed search. Produces doc/searches/YYYY-MM-DD-tet2-solid-tumor-biology.md.
 
-## [t093] t081.2: Per-sample TMB calculation + study_id propagation (compute_per_sample_tmb)
-- type: dev
-- priority: P1
-- status: proposed
-- related: [task:t081, task:t092, plan:2026-04-13-t081-hypermutator-annotation-pipeline-plan, article:Chalmers2017, article:Zehir2017]
-- blocked-by: [t092]
-- group: pipeline
-- created: 2026-04-14
-
-Subtask 2 of 8 for t081. Blocked by t092 (panel callable-Mb registry).\n\nImplements: core continuous-TMB signal + F3 fix (study_id first-class on every sample-level artifact). Protein-altering variant_class filter. Emits new out_dir/studies/{id}/metadata/samples_tmb.feather (does NOT overwrite samples.feather; preserves downstream consumers). Cols: sample_id_tumor, mutation_count, tmb, tmb_log10, tmb_source, study_id.\n\nIntegration validation: on msk_impact_2017 median tmb should be ~3-6 mut/Mb (Chalmers 2017, Zehir 2017); every row has non-null study_id.
-
 ## [t094] t081.3: POLE/POLD1 hotspot detector (detect_polymerase_hotspots)
 - type: dev
 - priority: P1

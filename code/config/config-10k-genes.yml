@@ -53,6 +53,23 @@ cosmic_cgc_path: "/data/raw/cosmic/v100/Cosmic_CancerGeneCensus_v100_GRCh38.tsv"
 # the canonical outputs. Populate per-run based on the actual cBioPortal studies ingested.
 study_panel_map: {}
 
+# Panel callable-Mb registry (t092 / t081 plan task 1). Consumed by `rule
+# build_panel_callable_sizes` to compute the per-panel TMB denominator.
+#
+# `panel_callable_mb_override` — authoritative Mb value per panel_id. Published values:
+#   MSK-IMPACT-341  ≈ 0.89, MSK-IMPACT-410 ≈ 1.01, MSK-IMPACT-468 ≈ 1.22, MSK-IMPACT-505 ≈ 1.45
+#   FoundationOne CDx ≈ 0.80, FoundationOne Heme ≈ 1.20, Tempus xT ≈ 2.40, Caris MI ≈ 1.50
+# (Update per literature / vendor release notes. Values populated per-run.)
+#
+# `wes_default_callable_mb` — fallback for panels with neither BED coverage nor override;
+# typical WES exome coding region is ~30 Mb.
+#
+# `panel_callable_mb_tolerance` — warn if a BED-derived panel size disagrees with its
+# config override by more than this relative tolerance (0.05 = 5%). Override still wins.
+panel_callable_mb_override: {}
+wes_default_callable_mb: 30.0
+panel_callable_mb_tolerance: 0.05
+
 studies: [
   "metastatic_solid_tumors_mich_2017",
   "mixed_allen_2018",

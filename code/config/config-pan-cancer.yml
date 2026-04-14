@@ -32,6 +32,13 @@ summary:
   # "N" cancer types
   num_cancer_specific_results: 10
 
+# Panel callable-Mb registry defaults (t092 / t081 plan task 1). Populate
+# `panel_callable_mb_override` with per-panel published Mb values when those studies
+# are in the run.
+panel_callable_mb_override: {}
+wes_default_callable_mb: 30.0
+panel_callable_mb_tolerance: 0.05
+
 # studies with 3+ cancer types and >1000 genes measured
 studies: [
   "acc_2019", 

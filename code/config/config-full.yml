@@ -91,6 +91,13 @@ summary:
 # utuc_mskcc_2015
 #
  
+# Panel callable-Mb registry defaults (t092 / t081 plan task 1). Populate
+# `panel_callable_mb_override` with per-panel published Mb values (MSK-IMPACT-341/410/468/
+# 505, FoundationOne variants, Tempus xT, Caris MI) when those studies are in the run.
+panel_callable_mb_override: {}
+wes_default_callable_mb: 30.0
+panel_callable_mb_tolerance: 0.05
+
 # studies to include; this is a subset of the "curated" study list + genie
 studies: [
   "genie",

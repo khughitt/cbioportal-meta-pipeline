@@ -162,6 +162,33 @@ rule process_genie_panel_coverage:
   script:
     "../scripts/process_genie_panel_coverage.py"
 
+#
+# Panel callable-Mb registry (t081 subtask t092 / plan task 1).
+#
+# Aggregates per-panel callable coding length in Mb, with three provenance sources:
+# bed_sum (from the GENIE coverage feather), config_override (from the
+# `panel_callable_mb_override` config map — authoritative for MSK-IMPACT / FoundationOne
+# / Tempus / Caris panel variants), and wes_default (for panels with neither BED coverage
+# nor an override — used by e.g. WES / MC3 studies).
+#
+# Declared `localrules` so the rule runs locally (not cluster-scheduled) and its output
+# persists via Snakemake's normal file-timestamp / DAG-invalidation logic; regenerated
+# when the GENIE feather or the config override map changes. The tsv is a generated
+# build artifact — not version-controlled.
+#
+# Reusable: also consumed by t070 (panel-version drift), t076 (NaN-vs-0 aware pooling),
+# and t077 (GLMM-logit random-effects pooling as a study-level covariate / offset).
+#
+localrules: build_panel_callable_sizes
+
+rule build_panel_callable_sizes:
+  input:
+    out_dir.joinpath("metadata/genie_panel_coverage.feather")
+  output:
+    out_dir.joinpath("metadata/panel_callable_mb.tsv")
+  script:
+    "../scripts/build_panel_callable_sizes.py"
+
 # todo: switch to python
 # rule create_summary_report:
 #   input:

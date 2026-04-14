@@ -1,0 +1,1088 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix schema: <https://schema.org/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sci: <http://example.org/science/vocab/> .
+@prefix scic: <http://example.org/science/vocab/causal/> .
+@prefix biolink: <https://w3id.org/biolink/vocab/> .
+@prefix cito: <http://purl.org/spar/cito/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<http://example.org/project/graph/knowledge> {
+    <http://example.org/project/article/aacrgenieconsortium2017> sci:profile "biology" ;
+        sci:projectStatus "read" ;
+        a sci:Article ;
+        skos:prefLabel "AACR Project GENIE: Powering Precision Medicine through an International Consortium" ;
+        skos:related <http://example.org/project/article/chakravartysolit2021>,
+            <http://example.org/project/article/pugh2022>,
+            <http://example.org/project/article/zehir2017>,
+            <http://example.org/project/topic/pan-cancer-mutation-landscape>,
+            <http://example.org/project/topic/targeted-panel-sequencing-bias> ;
+        schema:identifier "article:AACRGENIEConsortium2017" .
+    <http://example.org/project/article/alexandrov2020> sci:profile "biology" ;
+        sci:projectStatus "read" ;
+        a sci:Article ;
+        skos:prefLabel "The repertoire of mutational signatures in human cancer" ;
+        skos:related <http://example.org/project/article/pcawg2020>,
+            <http://example.org/project/article/tate2019>,
+            <http://example.org/project/topic/mutational-signatures> ;
+        schema:identifier "article:Alexandrov2020" .
+    <http://example.org/project/article/bailey2018> sci:profile "biology" ;
+        sci:projectStatus "read" ;
+        a sci:Article ;
+        skos:prefLabel "Comprehensive Characterization of Cancer Driver Genes and Mutations" ;
+        skos:related <http://example.org/project/article/ellrott2018>,
+            <http://example.org/project/topic/cancer-driver-genes>,
+            <http://example.org/project/topic/pan-cancer-mutation-landscape> ;
+        schema:identifier "article:Bailey2018" .
+    <http://example.org/project/article/bandlamudi2026> sci:profile "biology" ;
+        sci:projectStatus "abstract-read" ;
+        a sci:Article ;
+        skos:prefLabel "Cancer type-specific variation in patterns of driver alterations across 50,000 tumors" ;
+        skos:related <http://example.org/project/article/bailey2018>,
+            <http://example.org/project/article/chakravarty2017>,
+            <http://example.org/project/article/zehir2017>,
+            <http://example.org/project/topic/cancer-driver-genes>,
+            <http://example.org/project/topic/pan-cancer-mutation-landscape> ;
+        schema:identifier "article:Bandlamudi2026" .
+    <http://example.org/project/article/bolton2020> sci:profile "biology" ;
+        sci:projectStatus "read" ;
+        a sci:Article ;
+        skos:prefLabel "Cancer therapy shapes the fitness landscape of clonal hematopoiesis" ;
+        skos:related <http://example.org/project/topic/clonal-hematopoiesis-contamination>,
+            <http://example.org/project/topic/targeted-panel-sequencing-bias> ;
+        schema:identifier "article:Bolton2020" .
+    <http://example.org/project/article/cerami2012> sci:profile "biology" ;
+        sci:projectStatus "read" ;
+        a sci:Article ;
+        skos:prefLabel "The cBio cancer genomics portal: an open platform for exploring multidimensional cancer genomics data" ;
+        skos:related <http://example.org/project/article/gao2013> ;
+        schema:identifier "article:Cerami2012" .
+    <http://example.org/project/article/chakravarty2017> sci:profile "biology" ;
+        sci:projectStatus "read" ;
+        a sci:Article ;
+        skos:prefLabel "OncoKB: A Precision Oncology Knowledge Base" ;
+        skos:related <http://example.org/project/article/cerami2012>,
+            <http://example.org/project/topic/cancer-driver-genes>,
+            <http://example.org/project/topic/variant-interpretation-oncokb-vus> ;
+        schema:identifier "article:Chakravarty2017" .
+    <http://example.org/project/article/chakravartysolit2021> sci:profile "biology" ;
+        sci:projectStatus "abstract-read" ;
+        a sci:Article ;
+        skos:prefLabel "Clinical cancer genomic profiling" ;
+        skos:related <http://example.org/project/article/aacrgenieconsortium2017>,
+            <http://example.org/project/article/pugh2022>,
+            <http://example.org/project/article/zehir2017>,
+            <http://example.org/project/topic/cohort-selection-bias-representativeness>,
+            <http://example.org/project/topic/targeted-panel-sequencing-bias> ;
+        schema:identifier "article:ChakravartySolit2021" .
+    <http://example.org/project/article/chang2016> sci:profile "biology" ;
+        sci:projectStatus "read" ;
+        a sci:Article ;
+        skos:prefLabel "Identifying recurrent mutations in cancer reveals widespread lineage diversity and mutational specificity" ;
+        skos:related <http://example.org/project/article/cerami2012>,
+            <http://example.org/project/article/chakravarty2017>,
+            <http://example.org/project/topic/cancer-driver-genes>,
+            <http://example.org/project/topic/hotspot-based-driver-detection>,
+            <http://example.org/project/topic/mutation-rate-normalization> ;
+        schema:identifier "article:Chang2016" .
+    <http://example.org/project/article/cheng2015> sci:profile "biology" ;
+        sci:projectStatus "read" ;
+        a sci:Article ;
+        skos:prefLabel "Memorial Sloan Kettering-Integrated Mutation Profiling of Actionable Cancer Targets (MSK-IMPACT): A Hybridization Capture-Based Next-Generation Sequencing Clinical Assay for Solid Tumor Molecular Oncology" ;
+        skos:related <http://example.org/project/article/zehir2017>,
+            <http://example.org/project/topic/targeted-panel-sequencing-bias> ;
+        schema:identifier "article:Cheng2015" .
+    <http://example.org/project/article/ciriello2013> sci:profile "biology" ;
+        sci:projectStatus "read" ;
+        a sci:Article ;
+        skos:prefLabel "Emerging landscape of oncogenic signatures across human cancers" ;
+        skos:related <http://example.org/project/article/kandoth2013>,
+            <http://example.org/project/article/sanchezvega2018>,
+            <http://example.org/project/topic/pan-cancer-mutation-landscape> ;
+        schema:identifier "article:Ciriello2013" .
+    <http://example.org/project/article/ellrott2018> sci:profile "biology" ;
+        sci:projectStatus "summarized" ;
+        a sci:Article ;
+        skos:prefLabel "Scalable Open Science Approach for Mutation Calling of Tumor Exomes Using Multiple Genomic Pipelines" ;
+        skos:related <http://example.org/project/article/bailey2018>,
+            <http://example.org/project/topic/targeted-panel-sequencing-bias> ;
+        schema:identifier "article:Ellrott2018" .
+    <http://example.org/project/article/gao2013> sci:profile "biology" ;
+        sci:projectStatus "read" ;
+        a sci:Article ;
+        skos:prefLabel "Integrative analysis of complex cancer genomics and clinical profiles using the cBioPortal" ;
+        skos:related <http://example.org/project/article/cerami2012> ;
+        schema:identifier "article:Gao2013" .
+    <http://example.org/project/article/gao2017> sci:profile "biology" ;
+        sci:projectStatus "read" ;
+        a sci:Article ;
+        skos:prefLabel "3D clusters of somatic mutations in cancer reveal numerous rare mutations as functional targets" ;
+        skos:related <http://example.org/project/article/chang2016>,
+            <http://example.org/project/topic/cancer-driver-genes>,
+            <http://example.org/project/topic/hotspot-based-driver-detection> ;
+        schema:identifier "article:Gao2017" .
+    <http://example.org/project/article/hoadley2018> sci:profile "biology" ;
+        sci:projectStatus "read" ;
+        a sci:Article ;
+        skos:prefLabel "Cell-of-Origin Patterns Dominate the Molecular Classification of 10,000 Tumors from 33 Types of Cancer" ;
+        skos:related <http://example.org/project/article/bailey2018>,
+            <http://example.org/project/article/ciriello2013>,
+            <http://example.org/project/article/ellrott2018>,
+            <http://example.org/project/topic/pan-cancer-mutation-landscape> ;
+        schema:identifier "article:Hoadley2018" .
+    <http://example.org/project/article/jee2024> sci:profile "biology" ;
+        sci:projectStatus "unread" ;
+        a sci:Article ;
+        skos:prefLabel "Automated real-world data integration improves cancer outcome prediction" ;
+        skos:related <http://example.org/project/article/zehir2017>,
+            <http://example.org/project/topic/multi-omics-cancer-analysis> ;
+        schema:identifier "article:Jee2024" .
+    <http://example.org/project/article/kandoth2013> sci:profile "biology" ;
+        sci:projectStatus "read" ;
+        a sci:Article ;
+        skos:prefLabel "Mutational landscape and significance across 12 major cancer types" ;
+        skos:related <http://example.org/project/article/bailey2018>,
+            <http://example.org/project/article/lawrence2014>,
+            <http://example.org/project/topic/pan-cancer-mutation-landscape> ;
+        schema:identifier "article:Kandoth2013" .
+    <http://example.org/project/article/lawrence2014> sci:profile "biology" ;
+        sci:projectStatus "read" ;
+        a sci:Article ;
+        skos:prefLabel "Discovery and saturation analysis of cancer genes across 21 tumour types" ;
+        skos:related <http://example.org/project/article/bailey2018>,
+            <http://example.org/project/article/kandoth2013>,
+            <http://example.org/project/topic/cancer-driver-genes>,
+            <http://example.org/project/topic/mutation-rate-normalization> ;
+        schema:identifier "article:Lawrence2014" .
+    <http://example.org/project/article/martincorena2017> sci:profile "biology" ;
+        sci:projectStatus "read" ;
+        a sci:Article ;
+        skos:prefLabel "Universal Patterns of Selection in Cancer and Somatic Tissues" ;
+        skos:related <http://example.org/project/article/bailey2018>,
+            <http://example.org/project/article/lawrence2014>,
+            <http://example.org/project/topic/cancer-driver-genes> ;
+        schema:identifier "article:Martincorena2017" .
+    <http://example.org/project/article/nguyen2022> sci:profile "biology" ;
+        sci:projectStatus "read" ;
+        a sci:Article ;
+        skos:prefLabel "Genomic characterization of metastatic patterns from prospective clinical sequencing of 25,000 patients" ;
+        skos:related <http://example.org/project/article/zehir2017>,
+            <http://example.org/project/topic/pan-cancer-mutation-landscape> ;
+        schema:identifier "article:Nguyen2022" .
+    <http://example.org/project/article/pcawg2020> sci:profile "biology" ;
+        sci:projectStatus "unread" ;
+        a sci:Article ;
+        skos:prefLabel "Pan-cancer analysis of whole genomes" ;
+        skos:related <http://example.org/project/article/ellrott2018>,
+            <http://example.org/project/topic/pan-cancer-mutation-landscape> ;
+        schema:identifier "article:PCAWG2020" .
+    <http://example.org/project/article/pugh2022> sci:profile "biology" ;
+        sci:projectStatus "read" ;
+        a sci:Article ;
+        skos:prefLabel "AACR Project GENIE: 100,000 Cases and Beyond" ;
+        skos:related <http://example.org/project/article/aacrgenieconsortium2017>,
+            <http://example.org/project/article/chakravartysolit2021>,
+            <http://example.org/project/article/zehir2017>,
+            <http://example.org/project/topic/cohort-selection-bias-representativeness>,
+            <http://example.org/project/topic/targeted-panel-sequencing-bias> ;
+        schema:identifier "article:Pugh2022" .
+    <http://example.org/project/article/sanchezvega2018> sci:profile "biology" ;
+        sci:projectStatus "read" ;
+        a sci:Article ;
+        skos:prefLabel "Oncogenic Signaling Pathways in The Cancer Genome Atlas" ;
+        skos:related <http://example.org/project/article/bailey2018>,
+            <http://example.org/project/article/ciriello2013>,
+            <http://example.org/project/article/hoadley2018>,
+            <http://example.org/project/topic/pan-cancer-mutation-landscape> ;
+        schema:identifier "article:SanchezVega2018" .
+    <http://example.org/project/article/suehnholz2024> sci:profile "biology" ;
+        sci:projectStatus "read" ;
+        a sci:Article ;
+        skos:prefLabel "Quantifying the Expanding Landscape of Clinical Actionability for Patients with Cancer" ;
+        skos:related <http://example.org/project/article/chakravarty2017>,
+            <http://example.org/project/article/zehir2017>,
+            <http://example.org/project/topic/cross-study-harmonization>,
+            <http://example.org/project/topic/variant-interpretation-oncokb-vus> ;
+        schema:identifier "article:Suehnholz2024" .
+    <http://example.org/project/article/tate2019> sci:profile "biology" ;
+        sci:projectStatus "read" ;
+        a sci:Article ;
+        skos:prefLabel "COSMIC: the Catalogue Of Somatic Mutations In Cancer" ;
+        skos:related <http://example.org/project/article/alexandrov2020>,
+            <http://example.org/project/article/bailey2018>,
+            <http://example.org/project/topic/cancer-driver-genes>,
+            <http://example.org/project/topic/mutational-signatures> ;
+        schema:identifier "article:Tate2019" .
+    <http://example.org/project/article/zehir2017> sci:profile "biology" ;
+        sci:projectStatus "read" ;
+        a sci:Article ;
+        skos:prefLabel "Mutational landscape of metastatic cancer revealed from prospective clinical sequencing of 10,000 patients" ;
+        skos:related <http://example.org/project/article/chakravarty2017>,
+            <http://example.org/project/topic/pan-cancer-mutation-landscape>,
+            <http://example.org/project/topic/targeted-panel-sequencing-bias> ;
+        schema:identifier "article:Zehir2017" .
+    <http://example.org/project/meta/pipeline-roadmap-2026-04-13> sci:profile "local" ;
+        sci:projectStatus "active" ;
+        a sci:Unknown ;
+        skos:prefLabel "Pipeline roadmap and task-synthesis (2026-04-13)" ;
+        schema:identifier "meta:pipeline-roadmap-2026-04-13" .
+    <http://example.org/project/meta/search-literature-feedback-2026-04-13> sci:profile "local" ;
+        sci:projectStatus "active" ;
+        a sci:Unknown ;
+        skos:prefLabel "Feedback to upstream science project: /science:search-literature (2026-04-13)" ;
+        schema:identifier "meta:search-literature-feedback-2026-04-13" .
+    <http://example.org/project/search/2026-04-13-foundational-cbioportal-literature> sci:profile "local" ;
+        sci:projectStatus "active" ;
+        a sci:Search ;
+        skos:prefLabel "Foundational literature for cBioPortal meta-analysis: dataset papers + cross-cutting topics" ;
+        schema:identifier "search:2026-04-13-foundational-cbioportal-literature" .
+    <http://example.org/project/task/t001> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Read Pugh2022 — AACR GENIE 100,000 cases" ;
+        skos:related <http://example.org/project/article/pugh2022> ;
+        schema:identifier "task:t001" .
+    <http://example.org/project/task/t002> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Read Bandlamudi2026 — MSK-IMPACT 50k driver alterations" ;
+        skos:related <http://example.org/project/article/bandlamudi2026> ;
+        schema:identifier "task:t002" .
+    <http://example.org/project/task/t003> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Read Zehir2017 — MSK-IMPACT 10k mutational landscape" ;
+        skos:related <http://example.org/project/article/zehir2017> ;
+        schema:identifier "task:t003" .
+    <http://example.org/project/task/t004> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Read Bolton2020 — Clonal hematopoiesis in solid tumors" ;
+        skos:related <http://example.org/project/article/bolton2020> ;
+        schema:identifier "task:t004" .
+    <http://example.org/project/task/t005> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Read Bailey2018 — PanCanAtlas cancer driver characterization" ;
+        skos:related <http://example.org/project/article/bailey2018> ;
+        schema:identifier "task:t005" .
+    <http://example.org/project/task/t006> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Read AACRGENIEConsortium2017 — GENIE original paper" ;
+        skos:related <http://example.org/project/article/aacrgenieconsortium2017> ;
+        schema:identifier "task:t006" .
+    <http://example.org/project/task/t007> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Read Nguyen2022 — MSK-MET metastatic cohort" ;
+        skos:related <http://example.org/project/article/nguyen2022> ;
+        schema:identifier "task:t007" .
+    <http://example.org/project/task/t008> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Read Cerami2012 — cBioPortal platform paper" ;
+        skos:related <http://example.org/project/article/cerami2012> ;
+        schema:identifier "task:t008" .
+    <http://example.org/project/task/t009> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Read Tate2019 — COSMIC catalog + Cancer Gene Census" ;
+        skos:related <http://example.org/project/article/tate2019> ;
+        schema:identifier "task:t009" .
+    <http://example.org/project/task/t010> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Read Jee2024 — MSK-CHORD outcome integration" ;
+        skos:related <http://example.org/project/article/jee2024> ;
+        schema:identifier "task:t010" .
+    <http://example.org/project/task/t011> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Read Ellrott2018 — MC3 pan-cancer mutation call-set" ;
+        skos:related <http://example.org/project/article/ellrott2018> ;
+        schema:identifier "task:t011" .
+    <http://example.org/project/task/t012> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Read Gao2013 — cBioPortal integrative analysis / API" ;
+        skos:related <http://example.org/project/article/gao2013> ;
+        schema:identifier "task:t012" .
+    <http://example.org/project/task/t013> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Read PCAWG2020 — ICGC/TCGA whole-genomes analysis" ;
+        skos:related <http://example.org/project/article/pcawg2020> ;
+        schema:identifier "task:t013" .
+    <http://example.org/project/task/t014> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Develop topic note: targeted-panel sequencing bias" ;
+        skos:related <http://example.org/project/topic/targeted-panel-sequencing-bias> ;
+        schema:identifier "task:t014" .
+    <http://example.org/project/task/t015> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Develop topic note: clonal-hematopoiesis contamination" ;
+        skos:related <http://example.org/project/topic/clonal-hematopoiesis-contamination> ;
+        schema:identifier "task:t015" .
+    <http://example.org/project/task/t016> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Develop topic note: pan-cancer mutation landscape" ;
+        skos:related <http://example.org/project/topic/pan-cancer-mutation-landscape> ;
+        schema:identifier "task:t016" .
+    <http://example.org/project/task/t017> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Develop topic note: cancer driver genes / SMG methods" ;
+        skos:related <http://example.org/project/topic/cancer-driver-genes> ;
+        schema:identifier "task:t017" .
+    <http://example.org/project/task/t018> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Develop topic note: mutation-rate normalization" ;
+        skos:related <http://example.org/project/topic/mutation-rate-normalization> ;
+        schema:identifier "task:t018" .
+    <http://example.org/project/task/t019> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Develop topic note: cohort selection bias & representativeness" ;
+        skos:related <http://example.org/project/topic/cohort-selection-bias-representativeness> ;
+        schema:identifier "task:t019" .
+    <http://example.org/project/task/t020> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Develop topic note: cross-study meta-analysis methods (cancer genomics)" ;
+        skos:related <http://example.org/project/topic/cross-study-meta-analysis-cancer-genomics> ;
+        schema:identifier "task:t020" .
+    <http://example.org/project/task/t021> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Develop topic note: mutational signatures (COSMIC SBS/DBS/ID)" ;
+        skos:related <http://example.org/project/topic/mutational-signatures> ;
+        schema:identifier "task:t021" .
+    <http://example.org/project/task/t022> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Develop topic note: tumor mutational burden (TMB)" ;
+        skos:related <http://example.org/project/topic/tumor-mutational-burden> ;
+        schema:identifier "task:t022" .
+    <http://example.org/project/task/t023> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Develop topic note: multi-omics cancer analysis" ;
+        skos:related <http://example.org/project/topic/multi-omics-cancer-analysis> ;
+        schema:identifier "task:t023" .
+    <http://example.org/project/task/t024> sci:profile "core" ;
+        sci:projectStatus "retired" ;
+        a sci:Task ;
+        skos:prefLabel "Follow-up search: mutational signatures (Alexandrov 2020 + pipeline tools)" ;
+        schema:identifier "task:t024" .
+    <http://example.org/project/task/t025> sci:profile "core" ;
+        sci:projectStatus "proposed" ;
+        a sci:Task ;
+        skos:prefLabel "Follow-up search: TMB harmonization (Friends-of-Cancer-Research / Buchhalter)" ;
+        schema:identifier "task:t025" .
+    <http://example.org/project/task/t026> sci:profile "core" ;
+        sci:projectStatus "proposed" ;
+        a sci:Task ;
+        skos:prefLabel "Follow-up search: panel comparability / cross-panel normalization" ;
+        schema:identifier "task:t026" .
+    <http://example.org/project/task/t027> sci:profile "core" ;
+        sci:projectStatus "proposed" ;
+        a sci:Task ;
+        skos:prefLabel "Follow-up search: cross-study meta-analysis stats in cancer genomics" ;
+        schema:identifier "task:t027" .
+    <http://example.org/project/task/t028> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Add paper stub + bib: Alexandrov2020 — COSMIC signature v3 catalog" ;
+        schema:identifier "task:t028" .
+    <http://example.org/project/task/t029> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Add paper stub + bib + read: Lawrence2014 — MutSigCV / saturation analysis" ;
+        skos:related <http://example.org/project/topic/cancer-driver-genes> ;
+        schema:identifier "task:t029" .
+    <http://example.org/project/task/t030> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Add paper stub + bib + read: Martincorena2017 — dNdScv selection-based drivers" ;
+        skos:related <http://example.org/project/topic/cancer-driver-genes> ;
+        schema:identifier "task:t030" .
+    <http://example.org/project/task/t031> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Add paper stub + bib + read: Kandoth2013 — TCGA pan-cancer mutational landscape" ;
+        skos:related <http://example.org/project/topic/pan-cancer-mutation-landscape> ;
+        schema:identifier "task:t031" .
+    <http://example.org/project/task/t032> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Add paper stub + bib + read: Chakravarty2017 — OncoKB" ;
+        schema:identifier "task:t032" .
+    <http://example.org/project/task/t033> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Add paper stub + bib + read: Chang2016 — 3D protein hotspots" ;
+        schema:identifier "task:t033" .
+    <http://example.org/project/task/t034> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Add paper stub + bib + read: SanchezVega2018 — oncogenic signaling pathways TCGA" ;
+        schema:identifier "task:t034" .
+    <http://example.org/project/task/t035> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Add paper stub + bib + read: Hoadley2018 — cell-of-origin dominates 10k tumor classification" ;
+        schema:identifier "task:t035" .
+    <http://example.org/project/task/t036> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Add paper stub + bib + read: Ciriello2013 — emerging oncogenic signature landscape" ;
+        schema:identifier "task:t036" .
+    <http://example.org/project/task/t037> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Add paper stub + bib + read: ChakravartySolit2021 — clinical cancer genomic profiling" ;
+        schema:identifier "task:t037" .
+    <http://example.org/project/task/t038> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Develop topic note: co-occurrence & mutual exclusivity of mutations (SELECT, DISCOVER, WeSME)" ;
+        schema:identifier "task:t038" .
+    <http://example.org/project/task/t039> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Develop topic note: hotspot-based driver detection (3D / sequence-context)" ;
+        schema:identifier "task:t039" .
+    <http://example.org/project/task/t040> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Develop topic note: variant interpretation, OncoKB, VUS handling" ;
+        schema:identifier "task:t040" .
+    <http://example.org/project/task/t041> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Expand topic note cancer-driver-genes: add dNdScv / MutSigCV / OncodriveFML / 20-20 methodology cross-refs" ;
+        skos:related <http://example.org/project/topic/cancer-driver-genes> ;
+        schema:identifier "task:t041" .
+    <http://example.org/project/task/t042> sci:profile "core" ;
+        sci:projectStatus "proposed" ;
+        a sci:Task ;
+        skos:prefLabel "Focused discovery search: co-occurrence & mutual exclusivity methods" ;
+        schema:identifier "task:t042" .
+    <http://example.org/project/task/t043> sci:profile "core" ;
+        sci:projectStatus "proposed" ;
+        a sci:Task ;
+        skos:prefLabel "Focused discovery search: pathway-level pan-cancer analysis methods" ;
+        schema:identifier "task:t043" .
+    <http://example.org/project/task/t044> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Methodology feedback to upstream science project about /science:search-literature" ;
+        schema:identifier "task:t044" .
+    <http://example.org/project/task/t045> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Add paper stub + bib + read: Suehnholz2024 — OncoKB actionability evolution 2017–2022" ;
+        skos:related <http://example.org/project/topic/variant-interpretation-oncokb-vus> ;
+        schema:identifier "task:t045" .
+    <http://example.org/project/task/t046> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Add paper stub + bib + read: Gao2017 — 3D hotspot detection" ;
+        skos:related <http://example.org/project/topic/hotspot-based-driver-detection> ;
+        schema:identifier "task:t046" .
+    <http://example.org/project/task/t047> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Add paper stub + bib + read: Cheng2015 — MSK-IMPACT 341-gene analytical validation" ;
+        schema:identifier "task:t047" .
+    <http://example.org/project/task/t048> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Pipeline addition: MC3 ingestion for TCGA portion of cohort" ;
+        schema:identifier "task:t048" .
+    <http://example.org/project/task/t049> sci:profile "core" ;
+        sci:projectStatus "proposed" ;
+        a sci:Task ;
+        skos:prefLabel "Pipeline addition: Sanchez-Vega2018 pathway overlay" ;
+        schema:identifier "task:t049" .
+    <http://example.org/project/task/t050> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Pipeline addition: CH-aware filter (7-gene priority + matched-normal flag)" ;
+        schema:identifier "task:t050" .
+    <http://example.org/project/task/t051> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Pipeline addition: CGC (COSMIC) driver overlay" ;
+        schema:identifier "task:t051" .
+    <http://example.org/project/task/t052> sci:profile "core" ;
+        sci:projectStatus "proposed" ;
+        a sci:Task ;
+        skos:prefLabel "Pipeline addition: per-study cohort-stage descriptor" ;
+        schema:identifier "task:t052" .
+    <http://example.org/project/task/t053> sci:profile "core" ;
+        sci:projectStatus "proposed" ;
+        a sci:Task ;
+        skos:prefLabel "Pipeline addition: catalog version stamping for annotated outputs" ;
+        schema:identifier "task:t053" .
+    <http://example.org/project/task/t054> sci:profile "core" ;
+        sci:projectStatus "proposed" ;
+        a sci:Task ;
+        skos:prefLabel "Pipeline addition: tissue-conditional driver flag" ;
+        schema:identifier "task:t054" .
+    <http://example.org/project/task/t055> sci:profile "core" ;
+        sci:projectStatus "proposed" ;
+        a sci:Task ;
+        skos:prefLabel "Pipeline addition: M/C-class descriptor (mutation-vs-CNA hyperbola)" ;
+        schema:identifier "task:t055" .
+    <http://example.org/project/task/t056> sci:profile "core" ;
+        sci:projectStatus "proposed" ;
+        a sci:Task ;
+        skos:prefLabel "Pipeline addition: cluster comparison report (mutation-only vs Hoadley integrated)" ;
+        schema:identifier "task:t056" .
+    <http://example.org/project/task/t057> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Develop topic note: meta-analytic statistical methods for cross-study cancer effect sizes" ;
+        schema:identifier "task:t057" .
+    <http://example.org/project/task/t058> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Develop topic note: cell-of-origin vs alteration-type clustering frames" ;
+        schema:identifier "task:t058" .
+    <http://example.org/project/task/t059> sci:profile "core" ;
+        sci:projectStatus "proposed" ;
+        a sci:Task ;
+        skos:prefLabel "Focused search: ASXL1 / TET2 disambiguation in solid tumors (CH leakage vs real biology)" ;
+        schema:identifier "task:t059" .
+    <http://example.org/project/task/t060> sci:profile "core" ;
+        sci:projectStatus "proposed" ;
+        a sci:Task ;
+        skos:prefLabel "Flesh out modality guide: panel-mutation-data" ;
+        schema:identifier "task:t060" .
+    <http://example.org/project/task/t061> sci:profile "core" ;
+        sci:projectStatus "proposed" ;
+        a sci:Task ;
+        skos:prefLabel "Flesh out modality guide: wes-mutation-data" ;
+        schema:identifier "task:t061" .
+    <http://example.org/project/task/t062> sci:profile "core" ;
+        sci:projectStatus "proposed" ;
+        a sci:Task ;
+        skos:prefLabel "Flesh out modality guide: cross-study-aggregation" ;
+        schema:identifier "task:t062" .
+    <http://example.org/project/task/t063> sci:profile "core" ;
+        sci:projectStatus "proposed" ;
+        a sci:Task ;
+        skos:prefLabel "Flesh out modality guide: driver-detection" ;
+        schema:identifier "task:t063" .
+    <http://example.org/project/task/t064> sci:profile "core" ;
+        sci:projectStatus "proposed" ;
+        a sci:Task ;
+        skos:prefLabel "Flesh out modality guide: variant-annotation" ;
+        schema:identifier "task:t064" .
+    <http://example.org/project/task/t065> sci:profile "core" ;
+        sci:projectStatus "proposed" ;
+        a sci:Task ;
+        skos:prefLabel "Add modality guide: clinical-cancer-genomics (cohort study design)" ;
+        schema:identifier "task:t065" .
+    <http://example.org/project/task/t066> sci:profile "core" ;
+        sci:projectStatus "proposed" ;
+        a sci:Task ;
+        skos:prefLabel "Add modality guide: mutational-signatures (when in-scope)" ;
+        schema:identifier "task:t066" .
+    <http://example.org/project/task/t067> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Run first audit: code/scripts/create_combined_gene_cancer_freq_table.py" ;
+        schema:identifier "task:t067" .
+    <http://example.org/project/task/t068> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "F1 [Critical] Replace unweighted mean(num) with sample-size-weighted aggregate in create_combined_gene_cancer_freq_table.py" ;
+        skos:related <http://example.org/project/task/t067> ;
+        schema:identifier "task:t068" .
+    <http://example.org/project/task/t069> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "F4 [Critical] Promote annotated gene_cancer_study feather as canonical; flag unannotated" ;
+        skos:related <http://example.org/project/task/t067> ;
+        schema:identifier "task:t069" .
+    <http://example.org/project/task/t070> sci:profile "core" ;
+        sci:projectStatus "proposed" ;
+        a sci:Task ;
+        skos:prefLabel "F6 [Significant] MSK-IMPACT panel-version drift handling per sample" ;
+        skos:related <http://example.org/project/task/t067> ;
+        schema:identifier "task:t070" .
+    <http://example.org/project/task/t071> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "F9 [Significant] Document or replace unweighted-ratio-mean aggregation choice" ;
+        skos:related <http://example.org/project/task/t067> ;
+        schema:identifier "task:t071" .
+    <http://example.org/project/task/t072> sci:profile "core" ;
+        sci:projectStatus "proposed" ;
+        a sci:Task ;
+        skos:prefLabel "F10 [Significant] Saturation-aware per-cancer interpretation context column" ;
+        skos:related <http://example.org/project/task/t067> ;
+        schema:identifier "task:t072" .
+    <http://example.org/project/task/t073> sci:profile "core" ;
+        sci:projectStatus "proposed" ;
+        a sci:Task ;
+        skos:prefLabel "F11 [Minor] Add n_studies_contributing column to gene_cancer_study output" ;
+        skos:related <http://example.org/project/task/t067> ;
+        schema:identifier "task:t073" .
+    <http://example.org/project/task/t074> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Pipeline addition: apply GENIE callability mask to cross-study aggregation" ;
+        schema:identifier "task:t074" .
+    <http://example.org/project/task/t075> sci:profile "core" ;
+        sci:projectStatus "done" ;
+        a sci:Task ;
+        skos:prefLabel "Pipeline addition: apply Sanchez-Vega pathway overlay to annotated gene_cancer output" ;
+        schema:identifier "task:t075" .
+    <http://example.org/project/task/t076> sci:profile "core" ;
+        sci:projectStatus "proposed" ;
+        a sci:Task ;
+        skos:prefLabel "Pipeline addition: tighten NaN-vs-0 handling for panel-aware aggregation (F2 full close)" ;
+        schema:identifier "task:t076" .
+    <http://example.org/project/topic/cancer-driver-genes> sci:profile "local" ;
+        sci:projectStatus "active" ;
+        a sci:Topic ;
+        skos:prefLabel "Cancer driver genes: methods, reference catalogs, and recommendations" ;
+        skos:related <http://example.org/project/article/bailey2018>,
+            <http://example.org/project/article/bandlamudi2026>,
+            <http://example.org/project/article/chakravarty2017>,
+            <http://example.org/project/article/chang2016>,
+            <http://example.org/project/article/kandoth2013>,
+            <http://example.org/project/article/lawrence2014>,
+            <http://example.org/project/article/martincorena2017>,
+            <http://example.org/project/article/tate2019>,
+            <http://example.org/project/topic/hotspot-based-driver-detection>,
+            <http://example.org/project/topic/mutation-rate-normalization>,
+            <http://example.org/project/topic/variant-interpretation-oncokb-vus> ;
+        schema:identifier "topic:cancer-driver-genes" .
+    <http://example.org/project/topic/clonal-hematopoiesis-contamination> sci:profile "local" ;
+        sci:projectStatus "active" ;
+        a sci:Topic ;
+        skos:prefLabel "Clonal hematopoiesis contamination in panel-based tumor mutation calls" ;
+        skos:related <http://example.org/project/article/bolton2020>,
+            <http://example.org/project/article/martincorena2017>,
+            <http://example.org/project/article/pugh2022>,
+            <http://example.org/project/article/zehir2017>,
+            <http://example.org/project/topic/cross-study-harmonization>,
+            <http://example.org/project/topic/targeted-panel-sequencing-bias> ;
+        schema:identifier "topic:clonal-hematopoiesis-contamination" .
+    <http://example.org/project/topic/co-occurrence-and-mutual-exclusivity> sci:profile "local" ;
+        sci:projectStatus "active" ;
+        a sci:Topic ;
+        skos:prefLabel "Co-occurrence and mutual exclusivity of cancer alterations" ;
+        skos:related <http://example.org/project/article/bailey2018>,
+            <http://example.org/project/article/cerami2012>,
+            <http://example.org/project/article/ciriello2013>,
+            <http://example.org/project/article/gao2013>,
+            <http://example.org/project/article/sanchezvega2018>,
+            <http://example.org/project/topic/cancer-driver-genes> ;
+        schema:identifier "topic:co-occurrence-and-mutual-exclusivity" .
+    <http://example.org/project/topic/cohort-selection-bias-representativeness> sci:profile "local" ;
+        sci:projectStatus "active" ;
+        a sci:Topic ;
+        skos:prefLabel "Cohort selection bias and population representativeness" ;
+        skos:related <http://example.org/project/article/aacrgenieconsortium2017>,
+            <http://example.org/project/article/bandlamudi2026>,
+            <http://example.org/project/article/nguyen2022>,
+            <http://example.org/project/article/pugh2022>,
+            <http://example.org/project/article/zehir2017>,
+            <http://example.org/project/topic/cross-study-harmonization>,
+            <http://example.org/project/topic/targeted-panel-sequencing-bias> ;
+        schema:identifier "topic:cohort-selection-bias-representativeness" .
+    <http://example.org/project/topic/cross-study-harmonization> sci:profile "local" ;
+        sci:projectStatus "active" ;
+        a sci:Topic ;
+        skos:prefLabel "Cross-study harmonization in panel-based cancer genomics (synthesis)" ;
+        skos:related <http://example.org/project/article/bandlamudi2026>,
+            <http://example.org/project/article/bolton2020>,
+            <http://example.org/project/article/chakravarty2017>,
+            <http://example.org/project/article/ellrott2018>,
+            <http://example.org/project/article/pugh2022>,
+            <http://example.org/project/topic/clonal-hematopoiesis-contamination>,
+            <http://example.org/project/topic/cohort-selection-bias-representativeness>,
+            <http://example.org/project/topic/mutation-rate-normalization>,
+            <http://example.org/project/topic/targeted-panel-sequencing-bias>,
+            <http://example.org/project/topic/variant-interpretation-oncokb-vus> ;
+        schema:identifier "topic:cross-study-harmonization" .
+    <http://example.org/project/topic/cross-study-meta-analysis-cancer-genomics> sci:profile "local" ;
+        sci:projectStatus "active" ;
+        a sci:Topic ;
+        skos:prefLabel "Cross-study meta-analysis methods (cancer genomics)" ;
+        skos:related <http://example.org/project/article/bailey2018>,
+            <http://example.org/project/article/pugh2022>,
+            <http://example.org/project/topic/cohort-selection-bias-representativeness>,
+            <http://example.org/project/topic/cross-study-harmonization>,
+            <http://example.org/project/topic/targeted-panel-sequencing-bias> ;
+        schema:identifier "topic:cross-study-meta-analysis-cancer-genomics" .
+    <http://example.org/project/topic/hotspot-based-driver-detection> sci:profile "local" ;
+        sci:projectStatus "active" ;
+        a sci:Topic ;
+        skos:prefLabel "Hotspot-based driver detection (1D residue-level and 3D spatial)" ;
+        skos:related <http://example.org/project/article/chakravarty2017>,
+            <http://example.org/project/article/chang2016>,
+            <http://example.org/project/article/gao2017>,
+            <http://example.org/project/topic/cancer-driver-genes> ;
+        schema:identifier "topic:hotspot-based-driver-detection" .
+    <http://example.org/project/topic/multi-omics-cancer-analysis> sci:profile "local" ;
+        sci:projectStatus "active" ;
+        a sci:Topic ;
+        skos:prefLabel "Multi-omics cancer analysis" ;
+        skos:related <http://example.org/project/article/hoadley2018>,
+            <http://example.org/project/article/jee2024>,
+            <http://example.org/project/article/pcawg2020>,
+            <http://example.org/project/article/sanchezvega2018>,
+            <http://example.org/project/topic/pan-cancer-interpretive-frames> ;
+        schema:identifier "topic:multi-omics-cancer-analysis" .
+    <http://example.org/project/topic/mutation-rate-normalization> sci:profile "local" ;
+        sci:projectStatus "active" ;
+        a sci:Topic ;
+        skos:prefLabel "Mutation-rate normalization (gene length, context, covariates)" ;
+        skos:related <http://example.org/project/article/bailey2018>,
+            <http://example.org/project/article/chang2016>,
+            <http://example.org/project/article/lawrence2014>,
+            <http://example.org/project/article/martincorena2017>,
+            <http://example.org/project/topic/cancer-driver-genes>,
+            <http://example.org/project/topic/targeted-panel-sequencing-bias> ;
+        schema:identifier "topic:mutation-rate-normalization" .
+    <http://example.org/project/topic/mutational-signatures> sci:profile "local" ;
+        sci:projectStatus "active" ;
+        a sci:Topic ;
+        skos:prefLabel "Mutational signatures (COSMIC SBS/DBS/ID)" ;
+        skos:related <http://example.org/project/article/alexandrov2020>,
+            <http://example.org/project/article/pcawg2020>,
+            <http://example.org/project/article/tate2019>,
+            <http://example.org/project/article/zehir2017> ;
+        schema:identifier "topic:mutational-signatures" .
+    <http://example.org/project/topic/pan-cancer-interpretive-frames> sci:profile "local" ;
+        sci:projectStatus "active" ;
+        a sci:Topic ;
+        skos:prefLabel "Pan-cancer interpretive frames (cell-of-origin vs alterations vs pathways) — synthesis" ;
+        skos:related <http://example.org/project/article/bailey2018>,
+            <http://example.org/project/article/bandlamudi2026>,
+            <http://example.org/project/article/ciriello2013>,
+            <http://example.org/project/article/hoadley2018>,
+            <http://example.org/project/article/sanchezvega2018>,
+            <http://example.org/project/topic/cancer-driver-genes>,
+            <http://example.org/project/topic/pan-cancer-mutation-landscape> ;
+        schema:identifier "topic:pan-cancer-interpretive-frames" .
+    <http://example.org/project/topic/pan-cancer-mutation-landscape> sci:profile "local" ;
+        sci:projectStatus "active" ;
+        a sci:Topic ;
+        skos:prefLabel "Pan-cancer mutation landscape" ;
+        skos:related <http://example.org/project/article/bailey2018>,
+            <http://example.org/project/article/bandlamudi2026>,
+            <http://example.org/project/article/ellrott2018>,
+            <http://example.org/project/article/hoadley2018>,
+            <http://example.org/project/article/kandoth2013>,
+            <http://example.org/project/article/lawrence2014>,
+            <http://example.org/project/article/pcawg2020>,
+            <http://example.org/project/article/zehir2017>,
+            <http://example.org/project/topic/cancer-driver-genes>,
+            <http://example.org/project/topic/pan-cancer-interpretive-frames> ;
+        schema:identifier "topic:pan-cancer-mutation-landscape" .
+    <http://example.org/project/topic/targeted-panel-sequencing-bias> sci:profile "local" ;
+        sci:projectStatus "active" ;
+        a sci:Topic ;
+        skos:prefLabel "Targeted-panel sequencing bias in cross-study cancer genomics" ;
+        skos:related <http://example.org/project/article/aacrgenieconsortium2017>,
+            <http://example.org/project/article/bandlamudi2026>,
+            <http://example.org/project/article/bolton2020>,
+            <http://example.org/project/article/chakravartysolit2021>,
+            <http://example.org/project/article/ellrott2018>,
+            <http://example.org/project/article/pugh2022>,
+            <http://example.org/project/article/zehir2017>,
+            <http://example.org/project/topic/clonal-hematopoiesis-contamination>,
+            <http://example.org/project/topic/cross-study-harmonization> ;
+        schema:identifier "topic:targeted-panel-sequencing-bias" .
+    <http://example.org/project/topic/tumor-mutational-burden> sci:profile "local" ;
+        sci:projectStatus "active" ;
+        a sci:Topic ;
+        skos:prefLabel "Tumor mutational burden (TMB) — definition, measurement, harmonization" ;
+        skos:related <http://example.org/project/article/bandlamudi2026>,
+            <http://example.org/project/article/pugh2022>,
+            <http://example.org/project/article/suehnholz2024>,
+            <http://example.org/project/article/zehir2017>,
+            <http://example.org/project/topic/targeted-panel-sequencing-bias> ;
+        schema:identifier "topic:tumor-mutational-burden" .
+    <http://example.org/project/topic/variant-interpretation-oncokb-vus> sci:profile "local" ;
+        sci:projectStatus "active" ;
+        a sci:Topic ;
+        skos:prefLabel "Variant interpretation, OncoKB, and VUS handling" ;
+        skos:related <http://example.org/project/article/chakravarty2017>,
+            <http://example.org/project/article/chang2016>,
+            <http://example.org/project/article/gao2017>,
+            <http://example.org/project/article/suehnholz2024>,
+            <http://example.org/project/article/tate2019>,
+            <http://example.org/project/topic/cancer-driver-genes>,
+            <http://example.org/project/topic/cross-study-harmonization> ;
+        schema:identifier "topic:variant-interpretation-oncokb-vus" .
+}
+
+<http://example.org/project/graph/bridge> {
+}
+
+<http://example.org/project/graph/causal> {
+}
+
+<http://example.org/project/graph/provenance> {
+    <http://example.org/project/article/aacrgenieconsortium2017> prov:wasDerivedFrom <http://example.org/project/article/aacrgenieconsortium2017>,
+            <http://example.org/project/source/doc_background_papers_aacrgenieconsortium2017.md> .
+    <http://example.org/project/article/alexandrov2020> prov:wasDerivedFrom <http://example.org/project/article/alexandrov2020>,
+            <http://example.org/project/source/doc_background_papers_alexandrov2020.md> .
+    <http://example.org/project/article/bailey2018> prov:wasDerivedFrom <http://example.org/project/article/bailey2018>,
+            <http://example.org/project/source/doc_background_papers_bailey2018.md> .
+    <http://example.org/project/article/bandlamudi2026> prov:wasDerivedFrom <http://example.org/project/article/bandlamudi2026>,
+            <http://example.org/project/source/doc_background_papers_bandlamudi2026.md> .
+    <http://example.org/project/article/bolton2020> prov:wasDerivedFrom <http://example.org/project/article/bolton2020>,
+            <http://example.org/project/source/doc_background_papers_bolton2020.md> .
+    <http://example.org/project/article/cerami2012> prov:wasDerivedFrom <http://example.org/project/article/cerami2012>,
+            <http://example.org/project/source/doc_background_papers_cerami2012.md> .
+    <http://example.org/project/article/chakravarty2017> prov:wasDerivedFrom <http://example.org/project/article/chakravarty2017>,
+            <http://example.org/project/source/doc_background_papers_chakravarty2017.md> .
+    <http://example.org/project/article/chakravartysolit2021> prov:wasDerivedFrom <http://example.org/project/article/chakravartysolit2021>,
+            <http://example.org/project/source/doc_background_papers_chakravartysolit2021.md> .
+    <http://example.org/project/article/chang2016> prov:wasDerivedFrom <http://example.org/project/article/chang2016>,
+            <http://example.org/project/source/doc_background_papers_chang2016.md> .
+    <http://example.org/project/article/cheng2015> prov:wasDerivedFrom <http://example.org/project/article/cheng2015>,
+            <http://example.org/project/source/doc_background_papers_cheng2015.md> .
+    <http://example.org/project/article/ciriello2013> prov:wasDerivedFrom <http://example.org/project/article/ciriello2013>,
+            <http://example.org/project/source/doc_background_papers_ciriello2013.md> .
+    <http://example.org/project/article/ellrott2018> prov:wasDerivedFrom <http://example.org/project/article/ellrott2018>,
+            <http://example.org/project/source/doc_background_papers_ellrott2018.md> .
+    <http://example.org/project/article/gao2013> prov:wasDerivedFrom <http://example.org/project/article/gao2013>,
+            <http://example.org/project/source/doc_background_papers_gao2013.md> .
+    <http://example.org/project/article/gao2017> prov:wasDerivedFrom <http://example.org/project/article/gao2017>,
+            <http://example.org/project/source/doc_background_papers_gao2017.md> .
+    <http://example.org/project/article/hoadley2018> prov:wasDerivedFrom <http://example.org/project/article/hoadley2018>,
+            <http://example.org/project/source/doc_background_papers_hoadley2018.md> .
+    <http://example.org/project/article/jee2024> prov:wasDerivedFrom <http://example.org/project/article/jee2024>,
+            <http://example.org/project/source/doc_background_papers_jee2024.md> .
+    <http://example.org/project/article/kandoth2013> prov:wasDerivedFrom <http://example.org/project/article/kandoth2013>,
+            <http://example.org/project/source/doc_background_papers_kandoth2013.md> .
+    <http://example.org/project/article/lawrence2014> prov:wasDerivedFrom <http://example.org/project/article/lawrence2014>,
+            <http://example.org/project/source/doc_background_papers_lawrence2014.md> .
+    <http://example.org/project/article/martincorena2017> prov:wasDerivedFrom <http://example.org/project/article/martincorena2017>,
+            <http://example.org/project/source/doc_background_papers_martincorena2017.md> .
+    <http://example.org/project/article/nguyen2022> prov:wasDerivedFrom <http://example.org/project/article/nguyen2022>,
+            <http://example.org/project/source/doc_background_papers_nguyen2022.md> .
+    <http://example.org/project/article/pcawg2020> prov:wasDerivedFrom <http://example.org/project/article/pcawg2020>,
+            <http://example.org/project/source/doc_background_papers_pcawg2020.md> .
+    <http://example.org/project/article/pugh2022> prov:wasDerivedFrom <http://example.org/project/article/pugh2022>,
+            <http://example.org/project/source/doc_background_papers_pugh2022.md> .
+    <http://example.org/project/article/sanchezvega2018> prov:wasDerivedFrom <http://example.org/project/article/sanchezvega2018>,
+            <http://example.org/project/source/doc_background_papers_sanchezvega2018.md> .
+    <http://example.org/project/article/suehnholz2024> prov:wasDerivedFrom <http://example.org/project/article/suehnholz2024>,
+            <http://example.org/project/source/doc_background_papers_suehnholz2024.md> .
+    <http://example.org/project/article/tate2019> prov:wasDerivedFrom <http://example.org/project/article/tate2019>,
+            <http://example.org/project/source/doc_background_papers_tate2019.md> .
+    <http://example.org/project/article/zehir2017> prov:wasDerivedFrom <http://example.org/project/article/zehir2017>,
+            <http://example.org/project/source/doc_background_papers_zehir2017.md> .
+    <http://example.org/project/graph_revision> a prov:Entity ;
+        schema:dateModified "2026-04-13T22:46:49+00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+        schema:name "graph-revision" ;
+        schema:sha256 "ffbee3e6fa53e9c3c0bf990ff5621d0b94665a095cada2e4c14e46d0a424e5fa" ;
+        schema:text "{\"AGENTS.md\":{\"mtime_ns\":1776120398148632224,\"sha256\":\"67c7d97e8c1ca4f7824d38b6f58d556457070fbc30f54059821ccf07607f2b19\"},\"CLAUDE.md\":{\"mtime_ns\":1776052316404093445,\"sha256\":\"336cc4fbf19beaada7ccf9986414fa91851a8d7a07dfb3ccbe800a69eed0ab49\"},\"code/config/config-10k-genes.yml\":{\"mtime_ns\":1776118916172576961,\"sha256\":\"7da82eef87d57494c575385d660c3fbe3d5f0a0b9147b5e1c45538d9af1c8382\"},\"code/config/config-full.yml\":{\"mtime_ns\":1776051374605058325,\"sha256\":\"a9fe2cc2da7680b8033cd78ce19ffda182aeb72866abacd0710989c982db944b\"},\"code/config/config-pan-cancer.yml\":{\"mtime_ns\":1742388495824980527,\"sha256\":\"04ed4ea2e87987b7074ee372424e34cad66d18204bfb97ca290b23bfe65bc354\"},\"code/notebooks/pyproject.toml\":{\"mtime_ns\":1776053999358110192,\"sha256\":\"2b42c8d904796817391a5bb60258cd5452a93af6de07cca8c15eab3f0e2453bf\"},\"code/notebooks/uv.lock\":{\"mtime_ns\":1776054010838156631,\"sha256\":\"6aa45e9bb5f634f5a47a55535ebbbab5a111c2a036287ed53118d70c82aa37ae\"},\"code/notebooks/viz.py\":{\"mtime_ns\":1776053999357993162,\"sha256\":\"b4c5b19f9b6c80b3a26ea4a54f846358dc0db5fd720cf0a7ac673ed14ebf9f9d\"},\"code/scripts/annotate.py\":{\"mtime_ns\":1776118530381562575,\"sha256\":\"5abdc3e579759106d0aacc7020e240e772673538c50542377fb21455ac846b6e\"},\"code/scripts/annotate_ch.py\":{\"mtime_ns\":1776118624209566074,\"sha256\":\"0c78b7ea464bdf2351a4174cb6a89afb76fecd3e2fb3b52b5bcec109d1412f2c\"},\"code/scripts/check_gene_coverage.py\":{\"mtime_ns\":1741859882904248198,\"sha256\":\"9ecbfe5b30581d55d96b0d683b82abf2fd64619c241484a6bcc76bef74bb2949\"},\"code/scripts/cluster_cancer_types.py\":{\"mtime_ns\":1742655555279782799,\"sha256\":\"90a5124807e33e085e35cdb5eaf69ef99ac4212c7b897498fea897f5576d9513\"},\"code/scripts/cluster_genes.py\":{\"mtime_ns\":1742641003974984237,\"sha256\":\"e899b63d8fc511a97e73023747c2b6a3a0d458c1235d43914cb8a8e8d90b4a10\"},\"code/scripts/convert_to_feather.py\":{\"mtime_ns\":1741800512712907035,\"sha256\":\"12e6367848081c6e957179f695591590c395b70a326f105c5098f857fdf6be7b\"},\"code/scripts/create_combined_freq_tables.py\":{\"mtime_ns\":1741800388971332743,\"sha256\":\"dfd005b89b763caee389a27212df02e225310bfe033c04c2967a340e7c40aba8\"},\"code/scripts/create_combined_gene_cancer_freq_table.py\":{\"mtime_ns\":1776119099880583811,\"sha256\":\"3d31952cf1af8421a99d8ffdf1dfa7050150af919b0c1552a39236ef8218df67\"},\"code/scripts/create_combined_gene_cancer_mutation_matrices.py\":{\"mtime_ns\":1742055578735149888,\"sha256\":\"5266db3c344d0d77904431a53bc1f08419160a4f648167918b0e954b1ad1c6fd\"},\"code/scripts/create_combined_gene_patient_matrix.py\":{\"mtime_ns\":1741898618018254649,\"sha256\":\"8949b4ccb664fafee60cb3396ea5aa6eedb3218a5c6e940d0068ea0cc70e4ce7\"},\"code/scripts/create_combined_sample_table.py\":{\"mtime_ns\":1741664903511121374,\"sha256\":\"60d6fa5d132a87df19f89115af37f1d1b80bea03e9978c2fd119461685b780e8\"},\"code/scripts/create_correlation_matrices.py\":{\"mtime_ns\":1741546337988785271,\"sha256\":\"bf0ce0ffad3f976d4caf130b2a53e3efad742386d04dfa0dee747246007e6c1c\"},\"code/scripts/create_freq_tables.py\":{\"mtime_ns\":1741667264096032390,\"sha256\":\"1bd56d1a639cbf1d2ddc08e5c9e419abfa8c39d0dc90eaf4cc86f733a0497356\"},\"code/scripts/create_gene_cancer_mutation_count_matrix.py\":{\"mtime_ns\":1741605399993474225,\"sha256\":\"003ca759e3fb403b1c250b7af906cb62561853af585f16df49f6dc617980feab\"},\"code/scripts/create_gene_patient_mutation_count_matrix.py\":{\"mtime_ns\":1741605698306373335,\"sha256\":\"2d159aaa2cf70e0215f07810d8e0bd16dc556374c128822ed5281f340cb14671\"},\"code/scripts/create_protein_length_mapping.py\":{\"mtime_ns\":1740676107574905951,\"sha256\":\"7227b98028a3025a5539d30ac479e22e030326045198fb97ff288cd374ca1de5\"},\"code/scripts/create_study_summary_table.py\":{\"mtime_ns\":1741800394265170792,\"sha256\":\"cc02087d9d0308df62633c5f10f0ce52970b6c606c1439dfdc63cffa75572436\"},\"code/scripts/download_study.py\":{\"mtime_ns\":1741800517393727001,\"sha256\":\"5c6d3ff1a06e8cbcf05fc402d70ac490832c1bfeab1c2b37115a6b09a804bc2d\"},\"code/scripts/filter_genes.py\":{\"mtime_ns\":1741875072773266401,\"sha256\":\"c529679de3445c7217fb86d4ca5c995b4891ca2ae7aab2e331aab673175630f6\"},\"code/scripts/process_bailey2018_drivers.py\":{\"mtime_ns\":1776090250926508029,\"sha256\":\"fbc1ebca677f5495331091dbb8db142e3145f3632348c63bbedf3c7b8da46563\"},\"code/scripts/process_cgc.py\":{\"mtime_ns\":1776118507301561714,\"sha256\":\"870cd2a8d0ac08bfff16e7c4640c48caa5b40ac1496865c626cc6f7cf2b53cfb\"},\"code/scripts/process_genie_panel_coverage.py\":{\"mtime_ns\":1776087041777388360,\"sha256\":\"92488500b02690b4432388e5a8d6fc028bf4300fcca76636c098edd6330c69d1\"},\"code/scripts/process_mc3.py\":{\"mtime_ns\":1776120209057625173,\"sha256\":\"08abf0b04cb556ce5ed6d353c1ad7d9cb1cc779f6d8eeabb61b601e0ddadc470\"},\"code/scripts/process_sanchez_vega_pathways.py\":{\"mtime_ns\":1776090290064509489,\"sha256\":\"7c9b8f14ba5f8020214517e6b174aa06ba286ac0a87dd2c43baf7c10aff205db\"},\"code/scripts/run_dndscv.R\":{\"mtime_ns\":1776077352274027037,\"sha256\":\"4c29cf9ab617c4f9481e6c1ab73e500155851a118167e89e62db377e2095700c\"},\"code/scripts/summary.Rmd\":{\"mtime_ns\":1742664769200974993,\"sha256\":\"b2bdcc59142f806110deceb0d75f1ee86fdb5650d553e70d1c7905b4659d2028\"},\"code/workflows/Snakefile\":{\"mtime_ns\":1776120265953627294,\"sha256\":\"804fcbcc659bea1cb31849815a794bec8d5294f9676cd64cfe029c8b5ca21e9d\"},\"doc/audits/2026-04-13-create-combined-gene-cancer-freq-table-audit.md\":{\"mtime_ns\":1776080279332136187,\"sha256\":\"e5133ddfa037bb76a580613ac7b11ae615e2752e7ee1555d1a30a807b68e8729\"},\"doc/background/papers/AACRGENIEConsortium2017.md\":{\"mtime_ns\":1776075858280971325,\"sha256\":\"3c7d79561a7ff0bf2cc41dd7f6febedc68dbd7100d9f3e8c5b324e5640bddb67\"},\"doc/background/papers/Alexandrov2020.md\":{\"mtime_ns\":1776077295015024901,\"sha256\":\"6d4f6ad12709d07e9d8be160685d06e8d38d0374e740e9ecf85c64a7839f47de\"},\"doc/background/papers/Bailey2018.md\":{\"mtime_ns\":1776076411702991963,\"sha256\":\"02493060b2fca8dd2d89bbcd117da34e9924aa50840decc8436d1be0f6c7e196\"},\"doc/background/papers/Bandlamudi2026.md\":{\"mtime_ns\":1776075166176945517,\"sha256\":\"be1ff110e91f9ca2aad11c44275081ff2f3066e5905f8c3951a4cc768b61dbda\"},\"doc/background/papers/Bolton2020.md\":{\"mtime_ns\":1776077369888027694,\"sha256\":\"f8da6f6dbb098c182db1aebf1c1eb63055eb25f328d965d2d67b90c02d05f418\"},\"doc/background/papers/Cerami2012.md\":{\"mtime_ns\":1776055615092216454,\"sha256\":\"7809689608eb0606ad9a4ed8dbba2f51a381869fa6ae50dbe23a3c0f3e33e15f\"},\"doc/background/papers/Chakravarty2017.md\":{\"mtime_ns\":1776055876433226199,\"sha256\":\"93460958bf9776fefc67d9bae625015489e9cec47388a4dad0656a2b092a6776\"},\"doc/background/papers/ChakravartySolit2021.md\":{\"mtime_ns\":1776075929426973978,\"sha256\":\"db6f005e294ebcd1c17cea23bd6821e57b001490d6da4d11711cac04b73ff250\"},\"doc/background/papers/Chang2016.md\":{\"mtime_ns\":1776055876549226204,\"sha256\":\"ecba158fcf01f203746ebe9176609d8498ad89e2503829c79a02da40de10c719\"},\"doc/background/papers/Cheng2015.md\":{\"mtime_ns\":1776079199180095908,\"sha256\":\"c5d1e7a963c26f5a1e965d064019ac5223126e19ad1be6c9c17b91834763741d\"},\"doc/background/papers/Ciriello2013.md\":{\"mtime_ns\":1776077297144024981,\"sha256\":\"dc276a6dc52dc78e92df2516af1f6f4c5341f4d25e74539eef0fdf2d315800c2\"},\"doc/background/papers/Ellrott2018.md\":{\"mtime_ns\":1776077308296025397,\"sha256\":\"42aec7b5b6e813a687d478ae51b4240029df36c02ead9b28967c88beaa0defa2\"},\"doc/background/papers/Gao2013.md\":{\"mtime_ns\":1776055637102217275,\"sha256\":\"85aa45a62b2088f331628bb7dbcee1e04fbf3bed5ca434c8c89d21584d619e42\"},\"doc/background/papers/Gao2017.md\":{\"mtime_ns\":1776079157496094354,\"sha256\":\"79cdb4fb1bedba18f87acefc0c8c63e956e1b5a7d375379d76682cefd1eb8d4f\"},\"doc/background/papers/Hoadley2018.md\":{\"mtime_ns\":1776077474247031585,\"sha256\":\"8a58ae387c43d05fcf4cf1474ceb2410ac61c844e224abe1125d58c5b681262f\"},\"doc/background/papers/Jee2024.md\":{\"mtime_ns\":1776053675935144142,\"sha256\":\"1738c119084965072651f3af72e9f0d4782f1d119af35f722aff1b45416a60d9\"},\"doc/background/papers/Kandoth2013.md\":{\"mtime_ns\":1776076444241993176,\"sha256\":\"5ce5e95a8db92dc07bebe14def6b6b0188d1814ec3be6035b0dd1b29cd5d208b\"},\"doc/background/papers/Lawrence2014.md\":{\"mtime_ns\":1776076419324992247,\"sha256\":\"0e36720a4e994ae8681e5815220b5cd846b709fbab3cbf7666e8a5adf8bd8872\"},\"doc/background/papers/Martincorena2017.md\":{\"mtime_ns\":1776076413621992034,\"sha256\":\"7e104d769ab569d27463f17d980677b70fc063da27b4dd93fb0093fd099ee08e\"},\"doc/background/papers/Nguyen2022.md\":{\"mtime_ns\":1776075117396943698,\"sha256\":\"e977e661890d629a4d85725465e79f2f917153261bc85aed4f5ae07f4c2674fa\"},\"doc/background/papers/PCAWG2020.md\":{\"mtime_ns\":1776053713903145558,\"sha256\":\"d60cedbe065708aa286690f8523d0c9324a1d1f9aa02dac3cc16a1b2be0dbadf\"},\"doc/background/papers/Pugh2022.md\":{\"mtime_ns\":1776075866505971632,\"sha256\":\"ef2ba3ea5b9752f190204d42cd9e44c1233d195ece6e3fa9d005389c5ccd6b1d\"},\"doc/background/papers/SanchezVega2018.md\":{\"mtime_ns\":1776077278563024288,\"sha256\":\"86f446e21f79f0021dfad1986c939085276c2a65b1b108584940ece1e9f5751c\"},\"doc/background/papers/Suehnholz2024.md\":{\"mtime_ns\":1776079121153092998,\"sha256\":\"20be9cea6fdc5771ea1d44ed2958f97348016d2a0206604bf389a21f40582470\"},\"doc/background/papers/Tate2019.md\":{\"mtime_ns\":1776077313108025576,\"sha256\":\"a44676795ce0ed01d8299f7f0daffdb46b0f00618c1a0bf7f8e00a867f7b7ddc\"},\"doc/background/papers/Zehir2017.md\":{\"mtime_ns\":1776075259531948998,\"sha256\":\"465079beb55b1fd798d146ab62d9360f6d56ffa7771846f576c35f8fbdf0b1c7\"},\"doc/background/topics/cancer-driver-genes.md\":{\"mtime_ns\":1776078062685053528,\"sha256\":\"aa63a5010cb6d67e4fdedf6dee4acb58fc39122382222fc0c422f6c3fbb17ad2\"},\"doc/background/topics/clonal-hematopoiesis-contamination.md\":{\"mtime_ns\":1776078002332051277,\"sha256\":\"414019f59523c152fb62b7abad346ff7fe77b8004247fd053616cd2d99e21674\"},\"doc/background/topics/co-occurrence-and-mutual-exclusivity.md\":{\"mtime_ns\":1776079365129102096,\"sha256\":\"c82e7cfc3317f951a888c9311b080bdf44948ca83279430d3143e996c81ed470\"},\"doc/background/topics/cohort-selection-bias-representativeness.md\":{\"mtime_ns\":1776079204012096088,\"sha256\":\"5ea65940c1dbfb61444179dc47630e8d6cdb31dc51b9fc141b3bfdfb08ebb483\"},\"doc/background/topics/cross-study-harmonization.md\":{\"mtime_ns\":1776078293374062130,\"sha256\":\"ed6deb91867a59c1368d524d05d4dba9456b44391b910bb92dfd4438e4c927f6\"},\"doc/background/topics/cross-study-meta-analysis-cancer-genomics.md\":{\"mtime_ns\":1776079228700097009,\"sha256\":\"500f6714c293fbff21ab30711feba64357092810a1e2fe47213f92de9779356d\"},\"doc/background/topics/hotspot-based-driver-detection.md\":{\"mtime_ns\":1776079395812103241,\"sha256\":\"9fcc473c8271d8a4fadb060c65ff0ca233dffc0b880d7d4b173ac8e49f478205\"},\"doc/background/topics/multi-omics-cancer-analysis.md\":{\"mtime_ns\":1776079335706100999,\"sha256\":\"b44c3f1fc439816c79a3024268322447dd8ab7d35e1bd02c733bb6964cd35819\"},\"doc/background/topics/mutation-rate-normalization.md\":{\"mtime_ns\":1776079177664095106,\"sha256\":\"1e7758943e24dbc8646557dcef8a90b15a1b74f65a093d7e322e35338dc32d70\"},\"doc/background/topics/mutational-signatures.md\":{\"mtime_ns\":1776079284045099073,\"sha256\":\"8e7b05c241e482ee248a920aca6056625d8c130348aaf7508d8636e3c7d3e994\"},\"doc/background/topics/pan-cancer-interpretive-frames.md\":{\"mtime_ns\":1776078296844062260,\"sha256\":\"112fb313d7cfca6ea7a8beb79b0079106f1c4dd11320e898a9cfd2e767367d32\"},\"doc/background/topics/pan-cancer-mutation-landscape.md\":{\"mtime_ns\":1776079148925094034,\"sha256\":\"1598542ffddfc491b79025b8015cca06cd73680754b670ab60322b9c7b5d5893\"},\"doc/background/topics/targeted-panel-sequencing-bias.md\":{\"mtime_ns\":1776077951218049371,\"sha256\":\"6fd1df0bd28dcf90a137e1b1c49fabe63b1ceaeb9880d1086cbd3d4673f463b8\"},\"doc/background/topics/tumor-mutational-burden.md\":{\"mtime_ns\":1776079312569100136,\"sha256\":\"e0397b2227a2061b5df4a8cd5c1040a523834e3960164b5571d513814fa4ddd6\"},\"doc/background/topics/variant-interpretation-oncokb-vus.md\":{\"mtime_ns\":1776079427788104433,\"sha256\":\"3f902733fff3fe8ed3b7b0b7123d08b084b24d663aa40e16ba664a2d9ba6457c\"},\"doc/guides/audit-process.md\":{\"mtime_ns\":1776079563390109490,\"sha256\":\"6318f81a513923282c22dd7de7b7ae820bab751d36f8f17313a7d6f301e54dfd\"},\"doc/guides/canonical-outputs.md\":{\"mtime_ns\":1776118653272567157,\"sha256\":\"58a5d868311ea4239d167fe4ab1926d37faf2276e60966ea678a5d2c52ed1903\"},\"doc/guides/modalities/cross-study-aggregation.md\":{\"mtime_ns\":1776079675046113653,\"sha256\":\"c79b1f1f98795e9ef741b6e80199e4483afe1187701411f39ec731d83c724f49\"},\"doc/guides/modalities/driver-detection.md\":{\"mtime_ns\":1776079712942115066,\"sha256\":\"90b851f0e606fae779fbb72d56391269a0eb2a76360edf885957fb4de02b5f12\"},\"doc/guides/modalities/panel-mutation-data.md\":{\"mtime_ns\":1776079605542111061,\"sha256\":\"384bac98d23bcf162ca48a278c15a7651dc28912b11643eb86a9018565ec109a\"},\"doc/guides/modalities/variant-annotation.md\":{\"mtime_ns\":1776079746324116311,\"sha256\":\"213104041668d2bf74c5bb3173dad5e00746c3b6a894c971d25785421a8efefe\"},\"doc/guides/modalities/wes-mutation-data.md\":{\"mtime_ns\":1776079638665112297,\"sha256\":\"a24b6ead1ad6f35794f3a9c6ec0ae2a169014f756a896f9b8bc61b39b2a50d7c\"},\"doc/meta/pipeline-roadmap-2026-04-13.md\":{\"mtime_ns\":1776082358689213727,\"sha256\":\"7b313848f5f7bcb91ba4044008955d96a90cc0297b27659ba6c2a64e26155df1\"},\"doc/meta/search-literature-feedback-2026-04-13.md\":{\"mtime_ns\":1776054854850188104,\"sha256\":\"366fb144071483ffa1d82d41999bad437828858374b92ab6d811a776dd9dec9f\"},\"doc/searches/2026-04-13-foundational-cbioportal-literature.json\":{\"mtime_ns\":1776053603138141428,\"sha256\":\"69abdf3e17e2e7197653e8c14928a19d99f8366f5f125193f631e28ac7c6bfcb\"},\"doc/searches/2026-04-13-foundational-cbioportal-literature.md\":{\"mtime_ns\":1776053562915139928,\"sha256\":\"43b39758739fece501711abfa30688c97c4c77097aa6e957de16c7d7e988e8d5\"},\"knowledge/sources/local/mappings.yaml\":{\"mtime_ns\":1776079025269089423,\"sha256\":\"f07b37e746a6d09b22dc7847c58b7861fc34bc310e658c898d8899a006d5b8fd\"},\"science.yaml\":{\"mtime_ns\":1776054037910157640,\"sha256\":\"1403bd16dbec2d562cac00810e4c877704795b92c3d7cfbd2e9d9fc59d61fef8\"},\"specs/research-question.md\":{\"mtime_ns\":1776052370342095457,\"sha256\":\"b6bab6f59f3d28b2626cb51a8c20ea8b7d0fa2b29301dd371231ff78cb82df63\"},\"tasks/active.md\":{\"mtime_ns\":1776120409779173236,\"sha256\":\"d6c72a6ea4ab6a0e2d0c0b1254d1184d8ea1a58cd3921c6f7f9317b597417c59\"},\"tasks/done/2026-04.md\":{\"mtime_ns\":1776120409781468600,\"sha256\":\"2551c9ed9c0e29b4cda8aaeb74a70714f9e985aafd95e2bf9be58b97654cd1cc\"}}" .
+    <http://example.org/project/meta/pipeline-roadmap-2026-04-13> prov:wasDerivedFrom <http://example.org/project/source/doc_meta_pipeline-roadmap-2026-04-13.md> .
+    <http://example.org/project/meta/search-literature-feedback-2026-04-13> prov:wasDerivedFrom <http://example.org/project/source/doc_meta_search-literature-feedback-2026-04-13.md> .
+    <http://example.org/project/search/2026-04-13-foundational-cbioportal-literature> prov:wasDerivedFrom <http://example.org/project/source/doc_searches_2026-04-13-foundational-cbioportal-literature.md> .
+    <http://example.org/project/source/doc_background_papers_aacrgenieconsortium2017.md> a prov:Entity ;
+        schema:identifier "doc/background/papers/AACRGENIEConsortium2017.md" .
+    <http://example.org/project/source/doc_background_papers_alexandrov2020.md> a prov:Entity ;
+        schema:identifier "doc/background/papers/Alexandrov2020.md" .
+    <http://example.org/project/source/doc_background_papers_bailey2018.md> a prov:Entity ;
+        schema:identifier "doc/background/papers/Bailey2018.md" .
+    <http://example.org/project/source/doc_background_papers_bandlamudi2026.md> a prov:Entity ;
+        schema:identifier "doc/background/papers/Bandlamudi2026.md" .
+    <http://example.org/project/source/doc_background_papers_bolton2020.md> a prov:Entity ;
+        schema:identifier "doc/background/papers/Bolton2020.md" .
+    <http://example.org/project/source/doc_background_papers_cerami2012.md> a prov:Entity ;
+        schema:identifier "doc/background/papers/Cerami2012.md" .
+    <http://example.org/project/source/doc_background_papers_chakravarty2017.md> a prov:Entity ;
+        schema:identifier "doc/background/papers/Chakravarty2017.md" .
+    <http://example.org/project/source/doc_background_papers_chakravartysolit2021.md> a prov:Entity ;
+        schema:identifier "doc/background/papers/ChakravartySolit2021.md" .
+    <http://example.org/project/source/doc_background_papers_chang2016.md> a prov:Entity ;
+        schema:identifier "doc/background/papers/Chang2016.md" .
+    <http://example.org/project/source/doc_background_papers_cheng2015.md> a prov:Entity ;
+        schema:identifier "doc/background/papers/Cheng2015.md" .
+    <http://example.org/project/source/doc_background_papers_ciriello2013.md> a prov:Entity ;
+        schema:identifier "doc/background/papers/Ciriello2013.md" .
+    <http://example.org/project/source/doc_background_papers_ellrott2018.md> a prov:Entity ;
+        schema:identifier "doc/background/papers/Ellrott2018.md" .
+    <http://example.org/project/source/doc_background_papers_gao2013.md> a prov:Entity ;
+        schema:identifier "doc/background/papers/Gao2013.md" .
+    <http://example.org/project/source/doc_background_papers_gao2017.md> a prov:Entity ;
+        schema:identifier "doc/background/papers/Gao2017.md" .
+    <http://example.org/project/source/doc_background_papers_hoadley2018.md> a prov:Entity ;
+        schema:identifier "doc/background/papers/Hoadley2018.md" .
+    <http://example.org/project/source/doc_background_papers_jee2024.md> a prov:Entity ;
+        schema:identifier "doc/background/papers/Jee2024.md" .
+    <http://example.org/project/source/doc_background_papers_kandoth2013.md> a prov:Entity ;
+        schema:identifier "doc/background/papers/Kandoth2013.md" .
+    <http://example.org/project/source/doc_background_papers_lawrence2014.md> a prov:Entity ;
+        schema:identifier "doc/background/papers/Lawrence2014.md" .
+    <http://example.org/project/source/doc_background_papers_martincorena2017.md> a prov:Entity ;
+        schema:identifier "doc/background/papers/Martincorena2017.md" .
+    <http://example.org/project/source/doc_background_papers_nguyen2022.md> a prov:Entity ;
+        schema:identifier "doc/background/papers/Nguyen2022.md" .
+    <http://example.org/project/source/doc_background_papers_pcawg2020.md> a prov:Entity ;
+        schema:identifier "doc/background/papers/PCAWG2020.md" .
+    <http://example.org/project/source/doc_background_papers_pugh2022.md> a prov:Entity ;
+        schema:identifier "doc/background/papers/Pugh2022.md" .
+    <http://example.org/project/source/doc_background_papers_sanchezvega2018.md> a prov:Entity ;
+        schema:identifier "doc/background/papers/SanchezVega2018.md" .
+    <http://example.org/project/source/doc_background_papers_suehnholz2024.md> a prov:Entity ;
+        schema:identifier "doc/background/papers/Suehnholz2024.md" .
+    <http://example.org/project/source/doc_background_papers_tate2019.md> a prov:Entity ;
+        schema:identifier "doc/background/papers/Tate2019.md" .
+    <http://example.org/project/source/doc_background_papers_zehir2017.md> a prov:Entity ;
+        schema:identifier "doc/background/papers/Zehir2017.md" .
+    <http://example.org/project/source/doc_background_topics_cancer-driver-genes.md> a prov:Entity ;
+        schema:identifier "doc/background/topics/cancer-driver-genes.md" .
+    <http://example.org/project/source/doc_background_topics_clonal-hematopoiesis-contamination.md> a prov:Entity ;
+        schema:identifier "doc/background/topics/clonal-hematopoiesis-contamination.md" .
+    <http://example.org/project/source/doc_background_topics_co-occurrence-and-mutual-exclusivity.md> a prov:Entity ;
+        schema:identifier "doc/background/topics/co-occurrence-and-mutual-exclusivity.md" .
+    <http://example.org/project/source/doc_background_topics_cohort-selection-bias-representativeness.md> a prov:Entity ;
+        schema:identifier "doc/background/topics/cohort-selection-bias-representativeness.md" .
+    <http://example.org/project/source/doc_background_topics_cross-study-harmonization.md> a prov:Entity ;
+        schema:identifier "doc/background/topics/cross-study-harmonization.md" .
+    <http://example.org/project/source/doc_background_topics_cross-study-meta-analysis-cancer-genomics.md> a prov:Entity ;
+        schema:identifier "doc/background/topics/cross-study-meta-analysis-cancer-genomics.md" .
+    <http://example.org/project/source/doc_background_topics_hotspot-based-driver-detection.md> a prov:Entity ;
+        schema:identifier "doc/background/topics/hotspot-based-driver-detection.md" .
+    <http://example.org/project/source/doc_background_topics_multi-omics-cancer-analysis.md> a prov:Entity ;
+        schema:identifier "doc/background/topics/multi-omics-cancer-analysis.md" .
+    <http://example.org/project/source/doc_background_topics_mutation-rate-normalization.md> a prov:Entity ;
+        schema:identifier "doc/background/topics/mutation-rate-normalization.md" .
+    <http://example.org/project/source/doc_background_topics_mutational-signatures.md> a prov:Entity ;
+        schema:identifier "doc/background/topics/mutational-signatures.md" .
+    <http://example.org/project/source/doc_background_topics_pan-cancer-interpretive-frames.md> a prov:Entity ;
+        schema:identifier "doc/background/topics/pan-cancer-interpretive-frames.md" .
+    <http://example.org/project/source/doc_background_topics_pan-cancer-mutation-landscape.md> a prov:Entity ;
+        schema:identifier "doc/background/topics/pan-cancer-mutation-landscape.md" .
+    <http://example.org/project/source/doc_background_topics_targeted-panel-sequencing-bias.md> a prov:Entity ;
+        schema:identifier "doc/background/topics/targeted-panel-sequencing-bias.md" .
+    <http://example.org/project/source/doc_background_topics_tumor-mutational-burden.md> a prov:Entity ;
+        schema:identifier "doc/background/topics/tumor-mutational-burden.md" .
+    <http://example.org/project/source/doc_background_topics_variant-interpretation-oncokb-vus.md> a prov:Entity ;
+        schema:identifier "doc/background/topics/variant-interpretation-oncokb-vus.md" .
+    <http://example.org/project/source/doc_meta_pipeline-roadmap-2026-04-13.md> a prov:Entity ;
+        schema:identifier "doc/meta/pipeline-roadmap-2026-04-13.md" .
+    <http://example.org/project/source/doc_meta_search-literature-feedback-2026-04-13.md> a prov:Entity ;
+        schema:identifier "doc/meta/search-literature-feedback-2026-04-13.md" .
+    <http://example.org/project/source/doc_searches_2026-04-13-foundational-cbioportal-literature.md> a prov:Entity ;
+        schema:identifier "doc/searches/2026-04-13-foundational-cbioportal-literature.md" .
+    <http://example.org/project/source/tasks_active.md> a prov:Entity ;
+        schema:identifier "tasks/active.md" .
+    <http://example.org/project/source/tasks_done_2026-04.md> a prov:Entity ;
+        schema:identifier "tasks/done/2026-04.md" .
+    <http://example.org/project/task/t001> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t002> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t003> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t004> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t005> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t006> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t007> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t008> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t009> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t010> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t011> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t012> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t013> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t014> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t015> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t016> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t017> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t018> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t019> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t020> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t021> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t022> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t023> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t024> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t025> prov:wasDerivedFrom <http://example.org/project/source/tasks_active.md> .
+    <http://example.org/project/task/t026> prov:wasDerivedFrom <http://example.org/project/source/tasks_active.md> .
+    <http://example.org/project/task/t027> prov:wasDerivedFrom <http://example.org/project/source/tasks_active.md> .
+    <http://example.org/project/task/t028> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t029> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t030> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t031> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t032> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t033> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t034> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t035> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t036> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t037> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t038> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t039> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t040> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t041> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t042> prov:wasDerivedFrom <http://example.org/project/source/tasks_active.md> .
+    <http://example.org/project/task/t043> prov:wasDerivedFrom <http://example.org/project/source/tasks_active.md> .
+    <http://example.org/project/task/t044> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t045> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t046> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t047> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t048> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t049> prov:wasDerivedFrom <http://example.org/project/source/tasks_active.md> .
+    <http://example.org/project/task/t050> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t051> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t052> prov:wasDerivedFrom <http://example.org/project/source/tasks_active.md> .
+    <http://example.org/project/task/t053> prov:wasDerivedFrom <http://example.org/project/source/tasks_active.md> .
+    <http://example.org/project/task/t054> prov:wasDerivedFrom <http://example.org/project/source/tasks_active.md> .
+    <http://example.org/project/task/t055> prov:wasDerivedFrom <http://example.org/project/source/tasks_active.md> .
+    <http://example.org/project/task/t056> prov:wasDerivedFrom <http://example.org/project/source/tasks_active.md> .
+    <http://example.org/project/task/t057> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t058> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t059> prov:wasDerivedFrom <http://example.org/project/source/tasks_active.md> .
+    <http://example.org/project/task/t060> prov:wasDerivedFrom <http://example.org/project/source/tasks_active.md> .
+    <http://example.org/project/task/t061> prov:wasDerivedFrom <http://example.org/project/source/tasks_active.md> .
+    <http://example.org/project/task/t062> prov:wasDerivedFrom <http://example.org/project/source/tasks_active.md> .
+    <http://example.org/project/task/t063> prov:wasDerivedFrom <http://example.org/project/source/tasks_active.md> .
+    <http://example.org/project/task/t064> prov:wasDerivedFrom <http://example.org/project/source/tasks_active.md> .
+    <http://example.org/project/task/t065> prov:wasDerivedFrom <http://example.org/project/source/tasks_active.md> .
+    <http://example.org/project/task/t066> prov:wasDerivedFrom <http://example.org/project/source/tasks_active.md> .
+    <http://example.org/project/task/t067> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t068> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t069> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t070> prov:wasDerivedFrom <http://example.org/project/source/tasks_active.md> .
+    <http://example.org/project/task/t071> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t072> prov:wasDerivedFrom <http://example.org/project/source/tasks_active.md> .
+    <http://example.org/project/task/t073> prov:wasDerivedFrom <http://example.org/project/source/tasks_active.md> .
+    <http://example.org/project/task/t074> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t075> prov:wasDerivedFrom <http://example.org/project/source/tasks_done_2026-04.md> .
+    <http://example.org/project/task/t076> prov:wasDerivedFrom <http://example.org/project/source/tasks_active.md> .
+    <http://example.org/project/topic/cancer-driver-genes> prov:wasDerivedFrom <http://example.org/project/source/doc_background_topics_cancer-driver-genes.md> .
+    <http://example.org/project/topic/clonal-hematopoiesis-contamination> prov:wasDerivedFrom <http://example.org/project/source/doc_background_topics_clonal-hematopoiesis-contamination.md> .
+    <http://example.org/project/topic/co-occurrence-and-mutual-exclusivity> prov:wasDerivedFrom <http://example.org/project/source/doc_background_topics_co-occurrence-and-mutual-exclusivity.md> .
+    <http://example.org/project/topic/cohort-selection-bias-representativeness> prov:wasDerivedFrom <http://example.org/project/source/doc_background_topics_cohort-selection-bias-representativeness.md> .
+    <http://example.org/project/topic/cross-study-harmonization> prov:wasDerivedFrom <http://example.org/project/source/doc_background_topics_cross-study-harmonization.md> .
+    <http://example.org/project/topic/cross-study-meta-analysis-cancer-genomics> prov:wasDerivedFrom <http://example.org/project/source/doc_background_topics_cross-study-meta-analysis-cancer-genomics.md> .
+    <http://example.org/project/topic/hotspot-based-driver-detection> prov:wasDerivedFrom <http://example.org/project/source/doc_background_topics_hotspot-based-driver-detection.md> .
+    <http://example.org/project/topic/multi-omics-cancer-analysis> prov:wasDerivedFrom <http://example.org/project/source/doc_background_topics_multi-omics-cancer-analysis.md> .
+    <http://example.org/project/topic/mutation-rate-normalization> prov:wasDerivedFrom <http://example.org/project/source/doc_background_topics_mutation-rate-normalization.md> .
+    <http://example.org/project/topic/mutational-signatures> prov:wasDerivedFrom <http://example.org/project/source/doc_background_topics_mutational-signatures.md> .
+    <http://example.org/project/topic/pan-cancer-interpretive-frames> prov:wasDerivedFrom <http://example.org/project/source/doc_background_topics_pan-cancer-interpretive-frames.md> .
+    <http://example.org/project/topic/pan-cancer-mutation-landscape> prov:wasDerivedFrom <http://example.org/project/source/doc_background_topics_pan-cancer-mutation-landscape.md> .
+    <http://example.org/project/topic/targeted-panel-sequencing-bias> prov:wasDerivedFrom <http://example.org/project/source/doc_background_topics_targeted-panel-sequencing-bias.md> .
+    <http://example.org/project/topic/tumor-mutational-burden> prov:wasDerivedFrom <http://example.org/project/source/doc_background_topics_tumor-mutational-burden.md> .
+    <http://example.org/project/topic/variant-interpretation-oncokb-vus> prov:wasDerivedFrom <http://example.org/project/source/doc_background_topics_variant-interpretation-oncokb-vus.md> .
+}
+
+<http://example.org/project/graph/datasets> {
+}

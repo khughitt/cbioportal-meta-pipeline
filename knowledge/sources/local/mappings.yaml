@@ -1,0 +1,35 @@
+# Explicit ID aliases for shorthand references used in document frontmatter.
+# Format: alias → canonical_id (flat dict under `aliases` key).
+
+aliases:
+  # Citation aliases → article entities (one entry per paper stub in doc/background/papers/)
+  "cite:AACRGENIEConsortium2017": "article:AACRGENIEConsortium2017"
+  "cite:Pugh2022": "article:Pugh2022"
+  "cite:Zehir2017": "article:Zehir2017"
+  "cite:Bandlamudi2026": "article:Bandlamudi2026"
+  "cite:Nguyen2022": "article:Nguyen2022"
+  "cite:Jee2024": "article:Jee2024"
+  "cite:Bolton2020": "article:Bolton2020"
+  "cite:Cerami2012": "article:Cerami2012"
+  "cite:Gao2013": "article:Gao2013"
+  "cite:Bailey2018": "article:Bailey2018"
+  "cite:Ellrott2018": "article:Ellrott2018"
+  "cite:Tate2019": "article:Tate2019"
+  "cite:PCAWG2020": "article:PCAWG2020"
+  "cite:Chakravarty2017": "article:Chakravarty2017"
+  "cite:Chang2016": "article:Chang2016"
+  "cite:ChakravartySolit2021": "article:ChakravartySolit2021"
+  "cite:Lawrence2014": "article:Lawrence2014"
+  "cite:Martincorena2017": "article:Martincorena2017"
+  "cite:Kandoth2013": "article:Kandoth2013"
+  "cite:Hoadley2018": "article:Hoadley2018"
+  "cite:SanchezVega2018": "article:SanchezVega2018"
+  "cite:Ciriello2013": "article:Ciriello2013"
+  "cite:Alexandrov2020": "article:Alexandrov2020"
+  "cite:Suehnholz2024": "article:Suehnholz2024"
+  "cite:Gao2017": "article:Gao2017"
+  "cite:Cheng2015": "article:Cheng2015"
+
+  # Topic-id aliases for synthesis topics (used in cross-references)
+  "topic:cross-study-harmonization": "topic:cross-study-harmonization"
+  "topic:pan-cancer-interpretive-frames": "topic:pan-cancer-interpretive-frames"

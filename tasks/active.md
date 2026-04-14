@@ -245,16 +245,6 @@ Surfaced as a real gap in t043: no pan-cancer benchmark at the pathway rollup le
 
 Gap surfaced in t059: TET2 solid-tumor biology literature is thinner than ASXL1. ASXL1 has clear MSI-CRC polyG-indel + CRPC / HNSCC / breast evidence (Katoh 2013). TET2 solid-tumor papers cluster around melanoma (catalytic-domain mutations), glioma (IDH-pathway interaction — TET2 is the IDH-pathway target, so IDH-mutant gliomas carry functional TET2 loss without TET2 mutation), and breast. Focused OpenAlex + PubMed search. Produces doc/searches/YYYY-MM-DD-tet2-solid-tumor-biology.md.
 
-## [t092] t081.1: Panel callable-Mb registry (build_panel_callable_sizes)
-- type: dev
-- priority: P1
-- status: proposed
-- related: [task:t081, plan:2026-04-13-t081-hypermutator-annotation-pipeline-plan, topic:cross-panel-normalization-methods]
-- group: pipeline
-- created: 2026-04-14
-
-First of 8 subtasks for t081 (hypermutator / TMB annotation pipeline).\n\nImplements: input-side normalization — the TMB denominator. Produces out_dir/metadata/panel_callable_mb.tsv (generated build artifact, NOT version-controlled). Consumes: GENIE coverage feather (existing process_genie_panel_coverage output), config panel_callable_mb_override map, config wes_default_callable_mb. Declares localrules so it runs locally and its output persists via normal Snakemake DAG invalidation. Output cols: [panel_id, callable_mb, source in {bed_sum, config_override, wes_default}].\n\nReusable=true: also consumed by t070 (panel-version drift), t076 (NaN-vs-0), t077 (GLMM-logit covariate).\n\nTDD asserts in the plan doc task 1 section. Validation: MSK-IMPACT panels bed-derived size within 5%% of published; every panel_id in study_panel_map covered.
-
 ## [t093] t081.2: Per-sample TMB calculation + study_id propagation (compute_per_sample_tmb)
 - type: dev
 - priority: P1

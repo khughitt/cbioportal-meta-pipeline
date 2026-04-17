@@ -6,22 +6,38 @@ Composite hypermutation score + final flag for the t081 annotation pipeline
 task 6). Closes the F4 inconsistency by applying a single canonical decision
 table with documented priority.
 
-Canonical decision table (first matching row wins, per plan):
+Canonical decision table (first matching row wins, per plan; row 4 split into
+4a/4b by t105 to avoid GMM-upper-mode false positives in cohorts where the
+upper mode is itself below the absolute hypermutator threshold):
 
-| # | Condition | hypermutation_score                         | is_hypermutator | reason                |
-|---|-----------|---------------------------------------------|-----------------|-----------------------|
-| 1 | POLE hotspot                              | 1.0                                  | True            | ``pole_hotspot``       |
-| 2 | POLD1 hotspot                             | 1.0                                  | True            | ``pold1_hotspot``      |
-| 3 | msi_type == "MSI-H"                        | 1.0                                  | True            | ``msi_h``              |
-| 4 | GMM bimodal & posterior > 0.5              | posterior                            | True            | ``gmm_upper_mode``     |
-| 5 | GMM bimodal & posterior ≤ 0.5              | posterior                            | False           | ``gmm_lower_mode``     |
-| 6 | GMM unavailable & zscore ≥ 1.5             | min(1.0, (z - 1.5)/1.5 + 0.5)        | True            | ``zscore_fallback_high`` |
-| 7 | GMM unavailable & zscore < 1.5             | max(0.0, z/3.0)                      | False           | ``zscore_fallback_low`` |
-| 8 | tmb is NaN                                 | NaN                                  | False           | ``tmb_unavailable``    |
+| #  | Condition                                                      | hypermutation_score                | is_hypermutator | reason                          |
+|----|----------------------------------------------------------------|------------------------------------|-----------------|---------------------------------|
+| 1  | POLE hotspot                                                   | 1.0                                | True            | ``pole_hotspot``                |
+| 2  | POLD1 hotspot                                                  | 1.0                                | True            | ``pold1_hotspot``               |
+| 3  | msi_type == "MSI-H"                                            | 1.0                                | True            | ``msi_h``                       |
+| 4a | GMM bimodal & posterior > 0.5 & upper_mode≥floor & sample≥floor | posterior                          | True            | ``gmm_upper_mode``              |
+| 4b | GMM bimodal & posterior > 0.5 & either gate fails              | posterior                          | False           | ``gmm_upper_mode_below_floor``  |
+| 5  | GMM bimodal & posterior ≤ 0.5                                  | posterior                          | False           | ``gmm_lower_mode``              |
+| 6  | GMM unavailable & zscore ≥ 1.5                                 | min(1.0, (z - 1.5)/1.5 + 0.5)      | True            | ``zscore_fallback_high``        |
+| 7  | GMM unavailable & zscore < 1.5                                 | max(0.0, z/3.0)                    | False           | ``zscore_fallback_low``         |
+| 8  | tmb is NaN                                                     | NaN                                | False           | ``tmb_unavailable``             |
 
-Rows 1-3 are deterministic (clinical diagnostic categories override TMB). Row 8
-is the NaN-safe default. "GMM unavailable" is any ``fit_quality`` other than
-``"bimodal"`` (i.e., single_mode / not_bimodal / insufficient_data).
+Rows 1-3 are deterministic (clinical diagnostic categories override TMB and
+the row-4 gates entirely). Row 8 is the NaN-safe default. "GMM unavailable"
+is any ``fit_quality`` other than ``"bimodal"`` (i.e., single_mode /
+not_bimodal / insufficient_data).
+
+Row 4 floor (t105 / closes the BRCA-92%, SKCM-96% over-firing surfaced by
+the t100 PoC run, see doc/interpretations/2026-04-17-poc-run.md Finding 4):
+``composite_min_absolute_tmb`` (default 10 mut/Mb, Campbell 2017). A sample
+is promoted as a GMM-driven hypermutator only when **both** of:
+
+- the upper component mean of its cancer type's GMM fit is ≥ floor (filters
+  out cohorts whose "upper mode" is below biological hypermutator territory,
+  e.g. BRCA upper_mean ≈ 2.4 mut/Mb).
+- the sample's own TMB is ≥ floor (filters out individual samples sitting
+  in the upper-posterior bucket of a high-TMB cohort but with low absolute
+  TMB themselves, e.g. SKCM samples with TMB 1.8-9 mut/Mb).
 
 Dual flags (introduced by task t089):
 
@@ -59,6 +75,7 @@ REASON_POLE_HOTSPOT = "pole_hotspot"
 REASON_POLD1_HOTSPOT = "pold1_hotspot"
 REASON_MSI_H = "msi_h"
 REASON_GMM_UPPER = "gmm_upper_mode"
+REASON_GMM_UPPER_BELOW_FLOOR = "gmm_upper_mode_below_floor"
 REASON_GMM_LOWER = "gmm_lower_mode"
 REASON_ZSCORE_HIGH = "zscore_fallback_high"
 REASON_ZSCORE_LOW = "zscore_fallback_low"
@@ -71,14 +88,23 @@ _ZSCORE_HIGH_THRESHOLD = 1.5
 _ABSOLUTE_HYPERMUTATOR_TMB = 10.0  # Campbell 2017
 _ULTRA_HYPERMUTATOR_TMB = 100.0  # Campbell 2017
 _RELATIVE_TOP_QUANTILE = 0.8  # Samstein 2019 top-20% per histology
+_DEFAULT_COMPOSITE_MIN_ABSOLUTE_TMB = 10.0  # t105 row-4 floor (Campbell 2017)
 
 
 def annotate_hypermutators(
     samples_tmb_combined: pd.DataFrame,
     samples_gmm_flagged: pd.DataFrame,
     per_cancer_gmm_fits: pd.DataFrame,
+    composite_min_absolute_tmb: float = _DEFAULT_COMPOSITE_MIN_ABSOLUTE_TMB,
 ) -> pd.DataFrame:
-    """Apply the canonical decision table + dual flags; return annotated samples."""
+    """Apply the canonical decision table + dual flags; return annotated samples.
+
+    ``composite_min_absolute_tmb`` is the row-4 floor (mut/Mb) applied to BOTH
+    the cancer type's GMM upper-component mean AND the sample's own TMB. A
+    GMM-driven hypermutator promotion (``gmm_upper_mode``) requires both
+    quantities to be at or above this floor. See module docstring for the
+    motivating BRCA / SKCM cases (t105).
+    """
     samples = samples_tmb_combined.merge(
         samples_gmm_flagged[
             [
@@ -91,12 +117,14 @@ def annotate_hypermutators(
         how="left",
     )
     samples = samples.merge(
-        per_cancer_gmm_fits[["cancer_type", "fit_quality"]],
+        per_cancer_gmm_fits[["cancer_type", "fit_quality", "upper_component_mean"]],
         on="cancer_type",
         how="left",
     )
 
-    scores, flags, reasons = _apply_decision_table(samples)
+    scores, flags, reasons = _apply_decision_table(
+        samples, composite_min_absolute_tmb=composite_min_absolute_tmb
+    )
     samples["hypermutation_score"] = scores
     samples["is_hypermutator"] = flags
     samples["hypermutator_reason"] = reasons
@@ -114,6 +142,7 @@ def annotate_hypermutators(
 
 def _apply_decision_table(
     samples: pd.DataFrame,
+    composite_min_absolute_tmb: float = _DEFAULT_COMPOSITE_MIN_ABSOLUTE_TMB,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     n = len(samples)
     scores = np.full(n, np.nan, dtype=float)
@@ -130,18 +159,40 @@ def _apply_decision_table(
     )
     posterior = samples["gmm_posterior_upper"].to_numpy(dtype=float)
     zscore = samples["tmb_zscore_within_cancer"].to_numpy(dtype=float)
+    upper_mode_mean = samples["upper_component_mean"].to_numpy(dtype=float)
 
     _assign_rule(scores, flags, reasons, assigned, pole, 1.0, True, REASON_POLE_HOTSPOT)
     _assign_rule(
         scores, flags, reasons, assigned, pold1, 1.0, True, REASON_POLD1_HOTSPOT
     )
     _assign_rule(scores, flags, reasons, assigned, msi_h, 1.0, True, REASON_MSI_H)
-    gmm_upper = is_bimodal & (posterior > _GMM_POSTERIOR_FLAG_THRESHOLD) & (~assigned)
+
+    # Row 4 split (t105):
+    # - 4a (gmm_upper_mode): posterior says upper AND upper_mode_mean >= floor
+    #   AND sample tmb >= floor → True
+    # - 4b (gmm_upper_mode_below_floor): posterior says upper but at least one
+    #   floor gate fails → False (composite reflects "GMM voted yes but absolute
+    #   says no, so don't count as hypermutator")
+    # NaN-safe: numpy comparisons with NaN return False, so missing
+    # upper_mode_mean or missing sample tmb cannot promote to row 4a.
+    floor_log10 = np.log10(composite_min_absolute_tmb)
+    upper_mode_passes = upper_mode_mean >= floor_log10
+    sample_tmb_passes = tmb >= composite_min_absolute_tmb
+    posterior_says_upper = is_bimodal & (posterior > _GMM_POSTERIOR_FLAG_THRESHOLD)
+    gmm_upper_pass = posterior_says_upper & upper_mode_passes & sample_tmb_passes & (~assigned)
+    gmm_upper_fail = posterior_says_upper & ~(upper_mode_passes & sample_tmb_passes) & (~assigned)
     gmm_lower = is_bimodal & (posterior <= _GMM_POSTERIOR_FLAG_THRESHOLD) & (~assigned)
-    scores[gmm_upper] = posterior[gmm_upper]
-    flags[gmm_upper] = True
-    reasons[gmm_upper] = REASON_GMM_UPPER
-    assigned[gmm_upper] = True
+
+    scores[gmm_upper_pass] = posterior[gmm_upper_pass]
+    flags[gmm_upper_pass] = True
+    reasons[gmm_upper_pass] = REASON_GMM_UPPER
+    assigned[gmm_upper_pass] = True
+
+    scores[gmm_upper_fail] = posterior[gmm_upper_fail]
+    flags[gmm_upper_fail] = False
+    reasons[gmm_upper_fail] = REASON_GMM_UPPER_BELOW_FLOOR
+    assigned[gmm_upper_fail] = True
+
     scores[gmm_lower] = posterior[gmm_lower]
     flags[gmm_lower] = False
     reasons[gmm_lower] = REASON_GMM_LOWER
@@ -214,8 +265,16 @@ def _run_via_snakemake() -> None:
     samples_tmb_combined = pd.read_feather(snek.input.samples_tmb_combined)
     samples_gmm_flagged = pd.read_feather(snek.input.samples_flagged)
     per_cancer_gmm_fits = pd.read_feather(snek.input.per_cancer_fits)
+    floor = float(
+        snek.config.get(
+            "composite_min_absolute_tmb", _DEFAULT_COMPOSITE_MIN_ABSOLUTE_TMB
+        )
+    )
     out = annotate_hypermutators(
-        samples_tmb_combined, samples_gmm_flagged, per_cancer_gmm_fits
+        samples_tmb_combined,
+        samples_gmm_flagged,
+        per_cancer_gmm_fits,
+        composite_min_absolute_tmb=floor,
     )
     out.to_feather(snek.output[0])
     logger.info(

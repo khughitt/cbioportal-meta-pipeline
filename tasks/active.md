@@ -263,16 +263,6 @@ doc/questions/ is still empty; science-tool project index returns rows: []. Five
 
 Surfaced by t100 PoC run 2026-04-17: create_correlation_matrices for brca_tcga_pan_can_atlas_2018 (~1090 samples x ~20k genes) took ~55 min; same expected for ucec_tcga and skcm_tcga. Panel studies (MSK-IMPACT ~341 genes) are fast. Script computes patient_mut.T.corr() which is O(n_genes^2) in both time and memory. Options: (a) use numpy.corrcoef on float32 matrix (typically 5-10x faster than pandas corr), (b) restrict to the top-K variance genes before correlation (add config key max_genes_for_corr default 5000), (c) sparse-aware correlation via sklearn.metrics.pairwise when count matrix is sparse (>95% zeros typical for mutation count matrices). Recommend starting with (a)+(b) and only falling back to (c) if still too slow. Ref: code/scripts/create_correlation_matrices.py:27 (patient_mut.T.corr()).
 
-## [t105] Recalibrate composite is_hypermutator: GMM upper-mode rule overfires on homogeneous-high-TMB cohorts (BRCA 92%, SKCM 96% per PoC)
-- type: dev
-- priority: P1
-- status: proposed
-- related: [task:t097, task:t100, interpretation:2026-04-17-poc-run]
-- group: pipeline
-- created: 2026-04-17
-
-Surfaced by t100 PoC 2026-04-17: the composite is_hypermutator flag emitted by annotate_hypermutators.py reports 92% hypermutator for brca_tcga_pan_can_atlas_2018 and 96% for skcm_tcga_pan_can_atlas_2018 — biologically implausible. Root cause: t097 decision table row 4 marks gmm_upper_mode=True as is_hypermutator regardless of the absolute TMB of that mode. For cohorts where the whole TMB distribution is above the canonical hypermutator threshold (SKCM UV) or where GMM overfits noise into two components on a unimodal-log distribution (BRCA), the upper mode is the whole cohort or near-whole cohort. Fix options: (a) require gmm_upper_mode AND upper_mode_mean > absolute_floor (e.g. log10(10)=1.0) before setting True, (b) demote composite to a derived column and promote is_hypermutator_absolute as the primary flag in downstream consumers (create_freq_tables.py inclusive/exclusive pivot), (c) both. Option (c) is safest: keep composite for cases where it agrees with absolute, but have downstream scripts prefer the absolute flag. Evidence: doc/interpretations/2026-04-17-poc-run.md Finding 4.
-
 ## [t106] Replace output-path provenance with version stamps in annotate_* scripts (bailey2018_source, cgc_source, sanchez_vega_source)
 - type: dev
 - priority: P2

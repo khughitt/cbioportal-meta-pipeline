@@ -49,8 +49,11 @@ def _per_cancer(rows: list[dict]) -> pd.DataFrame:
         "delta_bic": 0.0,
         "dip_pvalue": 0.5,
         "fit_quality": "single_mode",
-        "upper_component_mean": np.nan,
-        "lower_component_mean": np.nan,
+        # log10(20) = 1.30 — well above the default composite floor of log10(10) = 1.0,
+        # so any test that wants its bimodal cancer-type to pass the upper-mode gate can
+        # rely on this default. Tests that want the gate to fail set this explicitly.
+        "upper_component_mean": math.log10(20.0),
+        "lower_component_mean": math.log10(1.0),
     }
     return pd.DataFrame([{**defaults, **r} for r in rows])
 
@@ -101,8 +104,10 @@ def test_row3_msi_h_forces_true() -> None:
 
 
 def test_row4_gmm_bimodal_upper_posterior_flags_true() -> None:
+    # Sample tmb 15 mut/Mb (>= floor) and the default upper_component_mean log10(20)
+    # (>= floor); both gates pass.
     out = annotate_hypermutators(
-        samples_tmb_combined=_samples_tmb([{"sample_id": "S1"}]),
+        samples_tmb_combined=_samples_tmb([{"sample_id": "S1", "tmb": 15.0}]),
         samples_gmm_flagged=_samples_gmm(
             [{"sample_id": "S1", "gmm_posterior_upper": 0.92}]
         ),
@@ -211,6 +216,153 @@ def test_row8_tmb_nan_flags_false_with_nan_score() -> None:
     assert not row["is_hypermutator"]
     assert pd.isna(row["hypermutation_score"])
     assert row["hypermutator_reason"] == "tmb_unavailable"
+
+
+# --- t105: composite-min-absolute-tmb gates on row 4 ------------------------
+
+
+def test_row4_demoted_when_upper_component_mean_below_floor() -> None:
+    """BRCA-like case: GMM finds bimodality but the upper mode mean is well below
+    the absolute hypermutator floor. Row 4 must demote to ``gmm_upper_mode_below_floor``
+    (False) regardless of how high the per-sample TMB is.
+    """
+    out = annotate_hypermutators(
+        samples_tmb_combined=_samples_tmb([{"sample_id": "S1", "tmb": 50.0}]),
+        samples_gmm_flagged=_samples_gmm(
+            [{"sample_id": "S1", "gmm_posterior_upper": 0.95}]
+        ),
+        per_cancer_gmm_fits=_per_cancer(
+            [
+                {
+                    "cancer_type": "Test Cancer",
+                    "fit_quality": "bimodal",
+                    # log10(2.5) = 0.40, below default floor of log10(10) = 1.0
+                    "upper_component_mean": math.log10(2.5),
+                }
+            ]
+        ),
+    )
+    row = out.loc[out["sample_id"] == "S1"].iloc[0]
+    assert not row["is_hypermutator"]
+    assert row["hypermutator_reason"] == "gmm_upper_mode_below_floor"
+    # Score still reports the GMM posterior so downstream consumers can see why.
+    assert row["hypermutation_score"] == 0.95
+
+
+def test_row4_demoted_when_sample_tmb_below_floor_even_if_mode_passes() -> None:
+    """SKCM-like case: the cohort's upper-mode mean is high enough to pass the
+    per-mode gate, but THIS sample's own TMB is below the absolute floor — so
+    even though it sits in the upper-posterior bucket, it isn't biologically
+    a hypermutator. Demote.
+    """
+    out = annotate_hypermutators(
+        samples_tmb_combined=_samples_tmb([{"sample_id": "S1", "tmb": 4.0}]),
+        samples_gmm_flagged=_samples_gmm(
+            [{"sample_id": "S1", "gmm_posterior_upper": 0.85}]
+        ),
+        per_cancer_gmm_fits=_per_cancer(
+            [
+                {
+                    "cancer_type": "Test Cancer",
+                    "fit_quality": "bimodal",
+                    "upper_component_mean": math.log10(15.0),
+                }
+            ]
+        ),
+    )
+    row = out.loc[out["sample_id"] == "S1"].iloc[0]
+    assert not row["is_hypermutator"]
+    assert row["hypermutator_reason"] == "gmm_upper_mode_below_floor"
+
+
+def test_row4_promoted_when_both_gates_pass() -> None:
+    """UCEC-like case: upper-mode mean high (24 mut/Mb) AND sample TMB high
+    (50 mut/Mb). Both gates pass; sample is composite-True.
+    """
+    out = annotate_hypermutators(
+        samples_tmb_combined=_samples_tmb([{"sample_id": "S1", "tmb": 50.0}]),
+        samples_gmm_flagged=_samples_gmm(
+            [{"sample_id": "S1", "gmm_posterior_upper": 0.92}]
+        ),
+        per_cancer_gmm_fits=_per_cancer(
+            [
+                {
+                    "cancer_type": "Test Cancer",
+                    "fit_quality": "bimodal",
+                    "upper_component_mean": math.log10(24.0),
+                }
+            ]
+        ),
+    )
+    row = out.loc[out["sample_id"] == "S1"].iloc[0]
+    assert row["is_hypermutator"]
+    assert row["hypermutator_reason"] == "gmm_upper_mode"
+
+
+def test_composite_min_absolute_tmb_is_configurable() -> None:
+    """A run with a stricter floor (50 mut/Mb) demotes a sample at 15 mut/Mb
+    that the default floor (10 mut/Mb) would have promoted.
+    """
+    out_default = annotate_hypermutators(
+        samples_tmb_combined=_samples_tmb([{"sample_id": "S1", "tmb": 15.0}]),
+        samples_gmm_flagged=_samples_gmm(
+            [{"sample_id": "S1", "gmm_posterior_upper": 0.92}]
+        ),
+        per_cancer_gmm_fits=_per_cancer(
+            [
+                {
+                    "cancer_type": "Test Cancer",
+                    "fit_quality": "bimodal",
+                    "upper_component_mean": math.log10(20.0),
+                }
+            ]
+        ),
+    )
+    out_strict = annotate_hypermutators(
+        samples_tmb_combined=_samples_tmb([{"sample_id": "S1", "tmb": 15.0}]),
+        samples_gmm_flagged=_samples_gmm(
+            [{"sample_id": "S1", "gmm_posterior_upper": 0.92}]
+        ),
+        per_cancer_gmm_fits=_per_cancer(
+            [
+                {
+                    "cancer_type": "Test Cancer",
+                    "fit_quality": "bimodal",
+                    "upper_component_mean": math.log10(20.0),
+                }
+            ]
+        ),
+        composite_min_absolute_tmb=50.0,
+    )
+    assert out_default.iloc[0]["is_hypermutator"]
+    assert out_default.iloc[0]["hypermutator_reason"] == "gmm_upper_mode"
+    assert not out_strict.iloc[0]["is_hypermutator"]
+    assert out_strict.iloc[0]["hypermutator_reason"] == "gmm_upper_mode_below_floor"
+
+
+def test_clinical_rules_pole_pold1_msi_unaffected_by_floor() -> None:
+    """Rows 1-3 (POLE / POLD1 / MSI-H) take precedence regardless of TMB floor."""
+    out = annotate_hypermutators(
+        samples_tmb_combined=_samples_tmb(
+            [
+                {"sample_id": "POLE", "tmb": 1.0, "pole_hotspot_detected": True},
+                {"sample_id": "POLD1", "tmb": 1.0, "pold1_hotspot_detected": True},
+                {"sample_id": "MSI", "tmb": 1.0, "msi_type": "MSI-H"},
+            ]
+        ),
+        samples_gmm_flagged=_samples_gmm(
+            [{"sample_id": "POLE"}, {"sample_id": "POLD1"}, {"sample_id": "MSI"}]
+        ),
+        per_cancer_gmm_fits=_per_cancer([{"cancer_type": "Test Cancer"}]),
+        composite_min_absolute_tmb=1000.0,
+    )
+    by_id = out.set_index("sample_id")
+    assert bool(by_id.loc["POLE", "is_hypermutator"])
+    assert by_id.loc["POLE", "hypermutator_reason"] == "pole_hotspot"
+    assert bool(by_id.loc["POLD1", "is_hypermutator"])
+    assert by_id.loc["POLD1", "hypermutator_reason"] == "pold1_hotspot"
+    assert bool(by_id.loc["MSI", "is_hypermutator"])
+    assert by_id.loc["MSI", "hypermutator_reason"] == "msi_h"
 
 
 # --- priority enforcement ---------------------------------------------------

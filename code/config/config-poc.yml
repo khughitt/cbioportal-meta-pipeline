@@ -67,6 +67,14 @@ panel_callable_mb_tolerance: 0.05
 random_seed: 0
 gmm_min_samples: 100
 
+# Composite hypermutator floor (t105). Applied to BOTH the cancer type's GMM
+# upper-component mean AND the sample's own TMB before promoting via row 4
+# of the annotate_hypermutators decision table. Default 10 mut/Mb (Campbell
+# 2017 hypermutator threshold). Lower values let the GMM signal dominate
+# more (useful for low-TMB cancers where the upper mode is biologically real
+# below 10); higher values make composite stricter / closer to Campbell-ultra.
+composite_min_absolute_tmb: 10.0
+
 # Clustering hyperparameters — consumed by cluster_genes.py and
 # cluster_cancer_types.py. Required by both scripts; not present in any
 # shipped config prior to this PoC, so the rules never previously ran

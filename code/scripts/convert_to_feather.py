@@ -72,10 +72,15 @@ for stype in str_types:
 
 # work-around: problematic lines
 if snek.wildcards["id"] in ["angs_painter_2020", "ccrcc_utokyo_2013"]:
-    mut = pd.read_csv(snek.input[0], sep='\t', comment='#', dtype=dtypes, 
+    mut = pd.read_csv(snek.input[0], sep='\t', comment='#', dtype=dtypes,
                       engine='python', on_bad_lines='warn')
 else:
-    mut = pd.read_csv(snek.input[0], sep='\t', comment='#', dtype=dtypes)
+    # low_memory=False: disable the C parser's chunked-read path. With dtype=category on
+    # large MAFs (e.g. skcm_tcga_pan_can_atlas_2018 with ~4e5 rows) different chunks can
+    # produce categoricals whose category arrays have different dtypes, and the internal
+    # union_categoricals then raises "dtype of categories must be the same". Reading the
+    # whole file in one pass avoids the union and costs only peak memory.
+    mut = pd.read_csv(snek.input[0], sep='\t', comment='#', dtype=dtypes, low_memory=False)
 
 # work-around: duplicated fields with differing case (e.g. "Codons" / "codons")
 if snek.wildcards["id"] == "aml_ohsu_2018":

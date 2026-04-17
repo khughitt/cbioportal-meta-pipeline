@@ -48,7 +48,6 @@ Output
   NEW FILE; does NOT overwrite ``samples.feather`` so downstream consumers opt in.
 """
 
-from __future__ import annotations
 
 import logging
 import math

@@ -26,7 +26,6 @@ The canonical target vocabulary ``{"MSI-H", "MSI-L", "MSS", "Indeterminate"}``
 matches cBioPortal convention and Campbell 2017 / Bonneville 2017 reporting.
 """
 
-from __future__ import annotations
 
 import logging
 from typing import Mapping

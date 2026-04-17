@@ -35,7 +35,6 @@ Output
   absence as ``False`` via a left join).
 """
 
-from __future__ import annotations
 
 import pandas as pd
 

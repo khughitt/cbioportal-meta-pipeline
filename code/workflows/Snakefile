@@ -26,8 +26,9 @@ rule all:
     out_dir.joinpath("summary/mut/clusters/cancer.feather"),
     out_dir.joinpath("summary/mut/clusters/gene.feather"),
     out_dir.joinpath("summary/mut/table/gene_cancer_study_annotated.feather"),
-    out_dir.joinpath("summary/mut/table/gene_cancer_study_ratio_annotated.feather"),
-    out_dir.joinpath("summary/summary.html")
+    out_dir.joinpath("summary/mut/table/gene_cancer_study_ratio_annotated.feather")
+    # summary/summary.html target removed — producing rule (R Rmd) is commented
+    # out pending Python/marimo port. Reinstate once the port lands.
 
 #
 # Bailey 2018 driver-annotation overlay.
@@ -290,7 +291,7 @@ rule create_gene_patient_mutation_count_matrix:
 
 rule create_gene_cancer_mutation_count_matrix:
   input:
-    out_dir.joinpath("studies/{id}/mut/mut_filtered.feather"),
+    out_dir.joinpath("studies/{id}/mut/table/mut_filtered.feather"),
     out_dir.joinpath("studies/{id}/metadata/samples.feather")
   output:
     out_dir.joinpath("studies/{id}/mut/matrix/gene_cancer.feather")

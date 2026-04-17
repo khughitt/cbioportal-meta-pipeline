@@ -40,7 +40,6 @@ data should use the controlled-access MC3 MAF + a custom processor.
 Symbol filtering: only mutations whose Hugo_Symbol is in the project's GRCh37/GRCh38 gene
 reference are kept (mirroring `convert_to_feather.py`'s filter).
 """
-from __future__ import annotations
 
 import sys
 

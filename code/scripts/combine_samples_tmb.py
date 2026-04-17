@@ -21,7 +21,6 @@ Output
 - ``snakemake.output[0]`` : ``out_dir/metadata/samples_tmb_combined.feather``
 """
 
-from __future__ import annotations
 
 import pandas as pd
 

@@ -45,7 +45,6 @@ Output
   with the three composite columns + three dual-flag columns added.
 """
 
-from __future__ import annotations
 
 import logging
 

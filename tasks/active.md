@@ -224,16 +224,6 @@ Surfaced as a real gap in t043: no pan-cancer benchmark at the pathway rollup le
 
 Gap surfaced in t059: TET2 solid-tumor biology literature is thinner than ASXL1. ASXL1 has clear MSI-CRC polyG-indel + CRPC / HNSCC / breast evidence (Katoh 2013). TET2 solid-tumor papers cluster around melanoma (catalytic-domain mutations), glioma (IDH-pathway interaction — TET2 is the IDH-pathway target, so IDH-mutant gliomas carry functional TET2 loss without TET2 mutation), and breast. Focused OpenAlex + PubMed search. Produces doc/searches/YYYY-MM-DD-tet2-solid-tumor-biology.md.
 
-## [t100] Small-cohort end-to-end PoC pipeline run (first results/ artifact)
-- type: dev
-- priority: P1
-- status: proposed
-- related: [task:t081, task:t098, task:t077, guide:canonical-outputs]
-- group: pipeline
-- created: 2026-04-17
-
-Produce the first publishable-as-preliminary results/ artifact by running the full Snakemake pipeline end-to-end on a reduced config (3-5 MSK-IMPACT + 3 TCGA studies). Stress-tests the hypermutator annotation arc (t092-t099) in integration. Surfaces which of the remaining P1 pipeline fixes (t070 panel-version drift, t076 NaN-vs-0, t052 cohort-stage) are load-bearing vs theoretical. Writes a datapackage.json manifest in results/. Intended to precede t077 GLMM-logit so that the pooling runs against an observed cohort rather than a specified one. Deliverables: (a) one gene_cancer_study_ratio_annotated.feather on reduced cohort, (b) diagnostic GMM-overlay PNGs from t096, (c) audit trail of which studies dropped and why, (d) 1-page doc/interpretations/ note on what the PoC surfaced.
-
 ## [t101] Decompose t077 (GLMM-logit pooled gene x cancer) into a plan + tracked subtasks before execution
 - type: dev
 - priority: P1
@@ -257,8 +247,58 @@ Two recent main-branch commits have single-word messages ('save', 'data'). Terse
 - type: research
 - priority: P2
 - status: proposed
-- related: [topic:tumor-mutational-burden,topic:clonal-hematopoiesis-contamination,topic:targeted-panel-sequencing-bias,topic:pan-cancer-interpretive-frames,task:t095,task:t097]
+- related: [topic:tumor-mutational-burden, topic:clonal-hematopoiesis-contamination, topic:targeted-panel-sequencing-bias, topic:pan-cancer-interpretive-frames, task:t095, task:t097]
 - group: questions
 - created: 2026-04-17
 
 doc/questions/ is still empty; science-tool project index returns rows: []. Five open methodological questions identified in the 2026-04-14 analysis live inside topic files only and are invisible to the project index. At least two are now answered by landed work: (a) 'per-histology vs universal hypermutator cutoff' — resolved by t097 emitting both Campbell-absolute and Samstein-relative flags; (b) 'MSI-status ingestion policy' — resolved by t095's msi_normalization.py. Others (cross-panel intersection vs callability; CH filter granularity; pathway-database choice) remain open. For each: write a doc/questions/*.md entry using the science template with (question, evidence, status: open|resolved, resolving-task-or-commit). Makes the resolution history discoverable via science-tool project index.
+
+## [t104] Optimize create_correlation_matrices.py: gene x gene corr scales O(n_genes^2) and stalls on whole-exome studies
+- type: dev
+- priority: P2
+- status: proposed
+- related: [task:t100]
+- group: pipeline
+- created: 2026-04-17
+
+Surfaced by t100 PoC run 2026-04-17: create_correlation_matrices for brca_tcga_pan_can_atlas_2018 (~1090 samples x ~20k genes) took ~55 min; same expected for ucec_tcga and skcm_tcga. Panel studies (MSK-IMPACT ~341 genes) are fast. Script computes patient_mut.T.corr() which is O(n_genes^2) in both time and memory. Options: (a) use numpy.corrcoef on float32 matrix (typically 5-10x faster than pandas corr), (b) restrict to the top-K variance genes before correlation (add config key max_genes_for_corr default 5000), (c) sparse-aware correlation via sklearn.metrics.pairwise when count matrix is sparse (>95% zeros typical for mutation count matrices). Recommend starting with (a)+(b) and only falling back to (c) if still too slow. Ref: code/scripts/create_correlation_matrices.py:27 (patient_mut.T.corr()).
+
+## [t105] Recalibrate composite is_hypermutator: GMM upper-mode rule overfires on homogeneous-high-TMB cohorts (BRCA 92%, SKCM 96% per PoC)
+- type: dev
+- priority: P1
+- status: proposed
+- related: [task:t097, task:t100, interpretation:2026-04-17-poc-run]
+- group: pipeline
+- created: 2026-04-17
+
+Surfaced by t100 PoC 2026-04-17: the composite is_hypermutator flag emitted by annotate_hypermutators.py reports 92% hypermutator for brca_tcga_pan_can_atlas_2018 and 96% for skcm_tcga_pan_can_atlas_2018 — biologically implausible. Root cause: t097 decision table row 4 marks gmm_upper_mode=True as is_hypermutator regardless of the absolute TMB of that mode. For cohorts where the whole TMB distribution is above the canonical hypermutator threshold (SKCM UV) or where GMM overfits noise into two components on a unimodal-log distribution (BRCA), the upper mode is the whole cohort or near-whole cohort. Fix options: (a) require gmm_upper_mode AND upper_mode_mean > absolute_floor (e.g. log10(10)=1.0) before setting True, (b) demote composite to a derived column and promote is_hypermutator_absolute as the primary flag in downstream consumers (create_freq_tables.py inclusive/exclusive pivot), (c) both. Option (c) is safest: keep composite for cases where it agrees with absolute, but have downstream scripts prefer the absolute flag. Evidence: doc/interpretations/2026-04-17-poc-run.md Finding 4.
+
+## [t106] Replace output-path provenance with version stamps in annotate_* scripts (bailey2018_source, cgc_source, sanchez_vega_source)
+- type: dev
+- priority: P2
+- status: proposed
+- related: [task:t100, interpretation:2026-04-17-poc-run]
+- group: pipeline
+- created: 2026-04-17
+
+Surfaced by t100 PoC 2026-04-17: the bailey2018_source / cgc_source / sanchez_vega_source columns in gene_cancer_study_annotated.feather and gene_cancer_study_ratio_annotated.feather contain values like 'results/poc-2026-04-17/metadata/bailey2018_drivers.feather' — i.e. the output file path from that specific run. They should be version stamps (e.g. 'bailey2018_v1_2018-08-13_cell' or the file's content hash). Per-run paths change every run, break reproducibility, and leak out_dir into a downstream data file. Fix: add module-level VERSION constants to code/scripts/process_bailey2018_drivers.py, process_cgc.py, process_sanchez_vega_pathways.py and have annotate.py / annotate_ch.py read those constants rather than writing snakemake.input[N] path strings. Evidence: doc/interpretations/2026-04-17-poc-run.md Finding 7, bug table row 7.
+
+## [t107] Backport clustering.* defaults to main configs (config-10k-genes.yml, config-full.yml, config-pan-cancer.yml) OR make cluster rules opt-out when missing
+- type: dev
+- priority: P2
+- status: proposed
+- related: [task:t100]
+- group: pipeline
+- created: 2026-04-17
+
+Surfaced by t100 PoC 2026-04-17: cluster_genes.py and cluster_cancer_types.py require config['clustering']['gene']['k'], ['gene_min_mutations'], ['cancer_min_mutations'], ['random_seed'] (and mirror keys under ['cancer']). No shipped config prior to config-poc.yml contained these keys. This means every run of the main pipeline prior to this PoC would have crashed at the cluster rules if rule all was fully evaluated — the pre-t081 runs presumably did not have cluster rules in their rule all target list. Fix: either (a) backport the default clustering sub-tree from config-poc.yml to the 3 main configs, or (b) make the cluster scripts fall back to sensible defaults when the key is absent (with a warning). Option (a) is more explicit; option (b) is more forgiving.
+
+## [t108] Investigate is_hypermutator_relative reporting ~45% for BRCA (Samstein top-20% should cap at ~20%)
+- type: dev
+- priority: P2
+- status: proposed
+- related: [task:t097, task:t100, article:Samstein2019, interpretation:2026-04-17-poc-run]
+- group: pipeline
+- created: 2026-04-17
+
+Surfaced by t100 PoC 2026-04-17: is_hypermutator_relative reports 45.5% for brca_tcga_pan_can_atlas_2018 and 36.4% for skcm_tcga_pan_can_atlas_2018 (from doc/interpretations/2026-04-17-poc-run.md Finding 4). The Samstein 2019 definition is 'top-20%% TMB within the sample's histology' — which should yield at most ~20%% hypermutators per cancer type (slightly more with ties at the boundary). 45%% / 36%% far exceed this. Likely causes: (a) tied-sample promotion at the 80th-percentile cut without explicit tiebreak policy, (b) the per-histology grouping key is cancer_type but the TCGA 'cancer_type' labels collapse many distinct histologies into one bucket (e.g. 'Breast Cancer'), so a large fraction of samples tie at a low TMB boundary, or (c) an off-by-one in the quantile cut logic. Inspect _relative_top_quintile_flag in code/scripts/annotate_hypermutators.py (line 200 area).

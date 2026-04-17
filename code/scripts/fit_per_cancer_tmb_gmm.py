@@ -28,7 +28,6 @@ computed regardless of fit quality — it is the fallback signal consumed by the
 composite flag.
 """
 
-from __future__ import annotations
 
 import logging
 

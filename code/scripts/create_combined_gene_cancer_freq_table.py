@@ -48,7 +48,6 @@ Config
   treated as panel-restricted; studies not in the map are treated as WES.
 """
 
-from __future__ import annotations
 
 import os
 import sys

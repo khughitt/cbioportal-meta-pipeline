@@ -1,0 +1,187 @@
+#
+# PoC end-to-end run (t100) — first `results/` artifact from the post-t081
+# annotated pipeline. Deliberately small + diverse to stress-test the
+# hypermutator-annotation arc (t092-t099):
+#
+#   - ucec_tcga  : POLE hypermutator (~7% expected) + GMM bimodality stress
+#   - skcm_tcga  : UV ultramutator stress (Campbell 100 mut/Mb)
+#   - brca_tcga  : low-TMB control
+#   - msk_impact_2017 : panel + tumor-only CH leakage stress
+#
+# Known limitations (carried forward from this PoC into interpretation):
+#   - msk_impact_2017 mixes MSK-IMPACT-341 / 410 / 468 per-sample; t070
+#     (panel-version drift per sample) is NOT yet applied. `study_panel_map`
+#     is left empty, so MSK samples fall through to wes_default_callable_mb,
+#     which inflates TMB denominators. Interpretation doc should flag this
+#     as the single largest known bias in these PoC numbers.
+#
+
+# input / output directories
+data_dir: "/data/raw/cbioportal"
+out_dir: "results/poc-2026-04-17"
+
+# minimum ratio of studies a gene must be present in to be included
+filtering:
+  genes:
+    min_studies_ratio: 0.2
+
+subsampling:
+  patients: 1.0
+
+summary:
+  table_max_rows: 50
+  min_gene_coverage_ratio: 0.4
+  min_gene_coverage_ratio_specific: 0.1
+  num_cancer_specific_results: 10
+
+# Matched-normal studies — consumed by annotate_ch.py to stratify the
+# Bolton 2020 7-gene CH-priority ratio into matched vs unmatched means.
+# All 3 TCGA studies here use paired buffy-coat normals by design; MSK-IMPACT
+# is tumor-only panel sequencing (Cheng 2015 + subsequent releases).
+matched_normal_studies:
+  - ucec_tcga_pan_can_atlas_2018
+  - skcm_tcga_pan_can_atlas_2018
+  - brca_tcga_pan_can_atlas_2018
+
+# COSMIC Cancer Gene Census snapshot.
+cosmic_cgc_path: "/data/raw/cosmic/v100/Cosmic_CancerGeneCensus_v100_GRCh38.tsv"
+
+# Panel mapping — intentionally empty for this PoC; see header note.
+# When t070 lands, this will be populated with per-sample panel versions
+# (not per-study), at which point the TMB denominator for msk_impact_2017
+# will shift downward.
+study_panel_map: {}
+
+# Published MSK-IMPACT callable-Mb values (AGENTS.md template; Cheng 2015 /
+# Zehir 2017 / subsequent IMPACT release notes). Included for forward-
+# compatibility: once `study_panel_map` is populated, these become active.
+panel_callable_mb_override:
+  MSK-IMPACT-341: 0.89
+  MSK-IMPACT-410: 1.01
+  MSK-IMPACT-468: 1.22
+  MSK-IMPACT-505: 1.45
+
+wes_default_callable_mb: 30.0
+panel_callable_mb_tolerance: 0.05
+
+random_seed: 0
+gmm_min_samples: 100
+
+# Clustering hyperparameters — consumed by cluster_genes.py and
+# cluster_cancer_types.py. Required by both scripts; not present in any
+# shipped config prior to this PoC, so the rules never previously ran
+# end-to-end. Defaults chosen for a first PoC run; tune once results
+# stabilize.
+clustering:
+  gene:
+    k: 10
+    gene_min_mutations: 10
+    cancer_min_mutations: 5
+    random_seed: 0
+  cancer:
+    k: 5
+    gene_min_mutations: 10
+    cancer_min_mutations: 5
+    random_seed: 0
+
+studies:
+  - ucec_tcga_pan_can_atlas_2018
+  - skcm_tcga_pan_can_atlas_2018
+  - brca_tcga_pan_can_atlas_2018
+  - msk_impact_2017
+
+# Inherit the full cancer-type whitelist from config-10k-genes.yml; the
+# per-study rules only match cancer types that appear in their own samples,
+# so an over-broad list is harmless.
+cancer_types:
+  - "Acute myeloid leukemia"
+  - "Adenosarcoma"
+  - "Adrenal Tumor"
+  - "Adrenocortical carcinoma"
+  - "Adrenocortical Carcinoma"
+  - "Ampullary Cancer"
+  - "Anal Cancer"
+  - "Appendiceal Cancer"
+  - "B-Lymphoblastic Leukemia/Lymphoma"
+  - "Bladder Cancer"
+  - "Bone Cancer"
+  - "Bowel Cancer, NOS"
+  - "Brain Cancer"
+  - "Breast Cancer"
+  - "Breast Sarcoma"
+  - "Cancer of Unknown Primary"
+  - "Cervical Cancer"
+  - "Choroid Plexus Tumor"
+  - "CNS Cancer"
+  - "Colorectal Cancer"
+  - "Cutaneous malignancy of hair matrix cells"
+  - "Diffuse Glioma"
+  - "Embryonal Tumor"
+  - "Encapsulated Glioma"
+  - "Endometrial Cancer"
+  - "Ependymomal Tumor"
+  - "Esophagogastric Cancer"
+  - "Essential Thrombocythemia"
+  - "Fibrosarcoma"
+  - "Gastrointestinal Neuroendocrine Tumor"
+  - "Gastrointestinal Stromal Tumor"
+  - "Germ Cell Tumor"
+  - "Glioblastoma"
+  - "Glioma"
+  - "Head and Neck Cancer"
+  - "Head and Neck Cancer, NOS"
+  - "Hepatobiliary Cancer"
+  - "Hodgkin Lymphoma-like PTLD"
+  - "Intraductal Papillary Mucinous Neoplasm"
+  - "Leukemia"
+  - "Liver Tumor"
+  - "Lung Cancer"
+  - "Lung Cancer, NOS"
+  - "Lymphoid Neoplasm"
+  - "Mastocytosis"
+  - "Mature B-cell lymphoma"
+  - "Mature B-Cell Neoplasms"
+  - "Mature T and NK Neoplasms"
+  - "Medulloblastoma"
+  - "Melanoma"
+  - "Mesothelioma"
+  - "Miscellaneous Neuroepithelial Tumor"
+  - "Mucinous Adenocarcinoma Lymph Node"
+  - "Myelodysplastic/Myeloproliferative Neoplasms"
+  - "Nerve Sheath Tumor"
+  - "Nested stromal epithelial tumor of the liver"
+  - "Non-Germinomatous Germ Cell Tumor"
+  - "Non-Hodgkin Lymphoma"
+  - "Non-Seminomatous Germ Cell Tumor"
+  - "Non-Small Cell Lung Cancer"
+  - "Other"
+  - "Ovarian Cancer"
+  - "Ovarian Germ Cell Tumor"
+  - "Ovarian/Fallopian Tube Cancer, NOS"
+  - "Pancreatic Cancer"
+  - "Penile Cancer"
+  - "Peripheral Nervous System"
+  - "Pineal Tumor"
+  - "Posttransplant Lymphoproliferative Disorders"
+  - "Prostate Cancer"
+  - "Prostate Cancer, NOS"
+  - "Renal cancer"
+  - "Renal Cell Carcinoma"
+  - "Retinoblastoma"
+  - "Salivary Gland Cancer"
+  - "Salivary Gland-Type Tumor of the Lung"
+  - "Sellar Tumor"
+  - "Sex Cord Stromal Tumor"
+  - "Skin Cancer, Non-Melanoma"
+  - "Small Bowel Cancer"
+  - "Small Cell Lung Cancer"
+  - "Soft Tissue Sarcoma"
+  - "Soft Tissue Tumor"
+  - "T-Lymphoblastic Leukemia/Lymphoma"
+  - "Teratoma with Malignant Transformation"
+  - "Thymic Tumor"
+  - "Thyroid Cancer"
+  - "Uterine Endometrioid Carcinoma"
+  - "Uterine Sarcoma"
+  - "Vaginal Cancer"
+  - "Wilms Tumor"

@@ -204,16 +204,6 @@ Replace the uniform ch_priority_gene boolean emitted by annotate_ch.py with a gr
 
 Chalmers 2017 documents a 2.4x TMB increase between age 10 and age 90 in 100000-case FoundationOne cohort. Once per-sample TMB is computed in t081, emit a parallel age_adjusted_tmb column that regresses TMB on patient age (when available from cBioPortal clinical tables) and reports the residual. Two columns: raw tmb_mut_per_Mb and age_adjusted_tmb_residual. No surveyed TMB tool (Vega 2021 FoCR, jasonwong-lab/TMB, pyTMB) does this adjustment — cheap pipeline contribution.
 
-## [t089] Per-histology relative + absolute dual hypermutator flags in t081
-- type: dev
-- priority: P1
-- status: proposed
-- related: [search:2026-04-14-tmb-hypermutator-followup, article:Campbell2017Hypermutation, article:Samstein2019, task:t081, task:t025]
-- group: pipeline
-- created: 2026-04-14
-
-Refines t081 design based on the rescoped t025 evidence. Emit THREE flags per sample, not one:\n1. is_hypermutator_absolute (Campbell 2017): tmb >= 10 mut/Mb\n2. is_ultramutator_absolute (Campbell 2017): tmb >= 100 mut/Mb\n3. is_hypermutator_relative (Samstein 2019): top-20% TMB within the sample's histology\n\nSamstein 2019 explicitly argues that per-histology cutpoints vary markedly, so a single universal cutoff under-serves real biology. Keep all three flags; downstream consumers pick. Also emit (when available) an msi_status column — Fabrizio 2018 shows MSI-H / TMB-H intersection is non-1:1.
-
 ## [t090] Pathway-layer benchmark on cross-study cBioPortal data (t043 gap)
 - type: research
 - priority: P2
@@ -233,3 +223,42 @@ Surfaced as a real gap in t043: no pan-cancer benchmark at the pathway rollup le
 - created: 2026-04-14
 
 Gap surfaced in t059: TET2 solid-tumor biology literature is thinner than ASXL1. ASXL1 has clear MSI-CRC polyG-indel + CRPC / HNSCC / breast evidence (Katoh 2013). TET2 solid-tumor papers cluster around melanoma (catalytic-domain mutations), glioma (IDH-pathway interaction — TET2 is the IDH-pathway target, so IDH-mutant gliomas carry functional TET2 loss without TET2 mutation), and breast. Focused OpenAlex + PubMed search. Produces doc/searches/YYYY-MM-DD-tet2-solid-tumor-biology.md.
+
+## [t100] Small-cohort end-to-end PoC pipeline run (first results/ artifact)
+- type: dev
+- priority: P1
+- status: proposed
+- related: [task:t081, task:t098, task:t077, guide:canonical-outputs]
+- group: pipeline
+- created: 2026-04-17
+
+Produce the first publishable-as-preliminary results/ artifact by running the full Snakemake pipeline end-to-end on a reduced config (3-5 MSK-IMPACT + 3 TCGA studies). Stress-tests the hypermutator annotation arc (t092-t099) in integration. Surfaces which of the remaining P1 pipeline fixes (t070 panel-version drift, t076 NaN-vs-0, t052 cohort-stage) are load-bearing vs theoretical. Writes a datapackage.json manifest in results/. Intended to precede t077 GLMM-logit so that the pooling runs against an observed cohort rather than a specified one. Deliverables: (a) one gene_cancer_study_ratio_annotated.feather on reduced cohort, (b) diagnostic GMM-overlay PNGs from t096, (c) audit trail of which studies dropped and why, (d) 1-page doc/interpretations/ note on what the PoC surfaced.
+
+## [t101] Decompose t077 (GLMM-logit pooled gene x cancer) into a plan + tracked subtasks before execution
+- type: dev
+- priority: P1
+- status: proposed
+- related: [task:t077, spec:pre-registration-t077-glmm-logit-pooling, plan:2026-04-13-t081-hypermutator-annotation-pipeline-plan]
+- group: meta-analysis
+- created: 2026-04-17
+
+Mirror the t081 pattern that just worked: write doc/plans/2026-04-17-t077-glmm-logit-plan.md decomposing t077 into tracked subtasks (e.g., input-schema adapter from gene_cancer_study_ratio_annotated feather, per-(gene, cancer) GLMM fit with study random effect, convergence + diagnostic rules, output schema for pooled effect + CI + heterogeneity statistic, per-study leave-one-out sensitivity, docs). Pre-registration (specs/pre-registration-t077-glmm-logit-pooling.md, t079) is already in hand and specifies expectations; this plan operationalizes it. Prereq: t100 PoC run so decisions are grounded in an observed cohort. Deliverable: plan document + 5-8 subtasks added via science-tool tasks add with blocked-by:t077 wiring.
+
+## [t102] Audit two single-word commits on main (a2ce3fc save, c0f48af data) and either amend or document
+- type: dev
+- priority: P2
+- status: proposed
+- group: meta
+- created: 2026-04-17
+
+Two recent main-branch commits have single-word messages ('save', 'data'). Terse messages risk losing context for future sessions and blur the t081 execution history. Run: git show a2ce3fc c0f48af (diffs + stats). If the content is meaningful (non-trivial file additions, config changes), write one short note in doc/meta/ describing what landed and why. If the content is trivially recoverable from the surrounding commits, document the rationale inline in this task's close note. Do NOT amend commits already on main unless explicitly approved — git history on main is shared state.
+
+## [t103] Promote closed or partially-closed open questions from topic files to doc/questions/
+- type: research
+- priority: P2
+- status: proposed
+- related: [topic:tumor-mutational-burden,topic:clonal-hematopoiesis-contamination,topic:targeted-panel-sequencing-bias,topic:pan-cancer-interpretive-frames,task:t095,task:t097]
+- group: questions
+- created: 2026-04-17
+
+doc/questions/ is still empty; science-tool project index returns rows: []. Five open methodological questions identified in the 2026-04-14 analysis live inside topic files only and are invisible to the project index. At least two are now answered by landed work: (a) 'per-histology vs universal hypermutator cutoff' — resolved by t097 emitting both Campbell-absolute and Samstein-relative flags; (b) 'MSI-status ingestion policy' — resolved by t095's msi_normalization.py. Others (cross-panel intersection vs callability; CH filter granularity; pathway-database choice) remain open. For each: write a doc/questions/*.md entry using the science template with (question, evidence, status: open|resolved, resolving-task-or-commit). Makes the resolution history discoverable via science-tool project index.

@@ -438,6 +438,10 @@ rule create_study_summary_table:
   script:
     "../scripts/create_study_summary_table.py"
 
+# Prefer the panel-aware rule when both rules could produce the same three base files.
+ruleorder: download_panel_study > download_study
+
+
 def _convert_to_feather_inputs(wildcards):
     """Conditional input dict: matrix file appended for panel-bearing studies.
 

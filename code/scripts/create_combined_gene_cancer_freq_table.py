@@ -48,7 +48,6 @@ Config
   treated as panel-restricted; studies not in the map are treated as WES.
 """
 
-
 import os
 import sys
 
@@ -57,22 +56,26 @@ import pandas as pd
 
 def combine_paired_pivot(
     per_study_frames: list[tuple[str, pd.DataFrame]],
-) -> tuple[pd.DataFrame, pd.DataFrame]:
+) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     """Pivot per-study paired columns into cross-study wide-format DataFrames.
 
     Input: list of ``(study_id, frame)`` pairs. Each ``frame`` must have
     ``cancer_type``, ``symbol``, ``num_inclusive``, ``num_exclusive``,
-    ``ratio_inclusive``, ``ratio_exclusive`` columns.
+    ``ratio_inclusive``, ``ratio_exclusive``, ``n_samples_inclusive``,
+    ``n_samples_exclusive`` columns.
 
-    Returns ``(num_df, ratio_df)``. Both are indexed on
-    ``(cancer_type, symbol)``. Per-study columns appear twice: ``{study_id}``
-    (= inclusive, legacy-compat) and ``{study_id}_exclusive``. ``ratio_df``
-    additionally carries ``mean_inclusive`` and ``mean_exclusive`` (row-wise
-    mean across per-study columns of the matching variant, NaN-skipping) plus
-    legacy ``mean`` (= ``mean_inclusive``).
+    Returns ``(num_df, ratio_df, n_inclusive_df, n_exclusive_df)``. All four are
+    indexed on ``(cancer_type, symbol)`` with one column per study (named by
+    ``study_id``). For ``num_df`` and ``ratio_df``, columns appear twice as in
+    the legacy contract (``{study_id}`` for inclusive, ``{study_id}_exclusive``
+    for exclusive). For ``n_inclusive_df`` and ``n_exclusive_df``, columns
+    appear once (study_id only) — they hold the per-study panel-restricted
+    denominators that downstream sample-weighted callability metrics consume.
     """
     num_frames: list[pd.DataFrame] = []
     ratio_frames: list[pd.DataFrame] = []
+    n_inclusive_frames: list[pd.DataFrame] = []
+    n_exclusive_frames: list[pd.DataFrame] = []
     for study_id, frame in per_study_frames:
         if frame.empty:
             continue
@@ -93,16 +96,26 @@ def combine_paired_pivot(
                 }
             )
         )
+        n_inclusive_frames.append(
+            pd.DataFrame({study_id: indexed["n_samples_inclusive"]})
+        )
+        n_exclusive_frames.append(
+            pd.DataFrame({study_id: indexed["n_samples_exclusive"]})
+        )
 
     if not num_frames:
         empty_index = pd.MultiIndex.from_tuples([], names=["cancer_type", "symbol"])
         return (
             pd.DataFrame(index=empty_index),
             pd.DataFrame(index=empty_index),
+            pd.DataFrame(index=empty_index),
+            pd.DataFrame(index=empty_index),
         )
 
     num_df = pd.concat(num_frames, axis=1)
     ratio_df = pd.concat(ratio_frames, axis=1)
+    n_inclusive_df = pd.concat(n_inclusive_frames, axis=1)
+    n_exclusive_df = pd.concat(n_exclusive_frames, axis=1)
 
     inclusive_ratio_cols = [c for c in ratio_df.columns if not c.endswith("_exclusive")]
     exclusive_ratio_cols = [c for c in ratio_df.columns if c.endswith("_exclusive")]
@@ -115,7 +128,7 @@ def combine_paired_pivot(
     # Legacy alias (deviation from plan review finding #3; see module docstring).
     ratio_df["mean"] = ratio_df["mean_inclusive"]
 
-    return num_df, ratio_df
+    return num_df, ratio_df, n_inclusive_df, n_exclusive_df
 
 
 def _annotate_callability(
@@ -124,9 +137,26 @@ def _annotate_callability(
     studies: list[str],
     panel_coverage: pd.DataFrame,
     study_panel_map: dict[str, str],
+    n_inclusive_df: pd.DataFrame,
+    n_exclusive_df: pd.DataFrame,
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Attach n_total_studies / n_contributing_studies / n_panel_covered_studies /
-    callable_fraction columns to both num_df and ratio_df."""
+    callable_fraction columns to both num_df and ratio_df.
+
+    Adds (t070):
+      - n_panel_covered_samples_inclusive : sum across studies of per-(study,
+        cancer, gene) panel-restricted inclusive denominators.
+      - n_panel_covered_samples_exclusive : same for exclusive.
+      - callable_sample_fraction_inclusive : n_panel_covered_samples_inclusive
+        / n_total_samples_in_cancer_inclusive.
+      - callable_sample_fraction_exclusive : same for exclusive.
+
+    n_total_samples_in_cancer_{inclusive,exclusive} is defined as the sum of
+    per-(study, cancer) cohort sizes across studies, computed as the
+    per-cancer max of the panel-restricted denominator (since cohort sizes
+    are per-cancer, not per-gene, before panel restriction; the max across
+    genes within a cancer recovers the cohort size).
+    """
     gene_to_panels: dict[str, set[str]] = (
         panel_coverage.groupby("gene")["panel_id"].apply(lambda s: set(s)).to_dict()
     )
@@ -159,6 +189,59 @@ def _annotate_callability(
         num_df[inclusive_cols].notna().sum(axis=1).astype(int).to_numpy()
     )
     ratio_df["n_contributing_studies"] = n_contributing_per_row.to_numpy()
+
+    # t070: sample-weighted callability columns.
+    # Per-(cancer, gene) sum across studies of panel-restricted denominator.
+    n_panel_covered_inclusive = n_inclusive_df.sum(axis=1, skipna=True).astype("int64")
+    n_panel_covered_exclusive = n_exclusive_df.sum(axis=1, skipna=True).astype("int64")
+
+    # Per-cancer total samples = sum across studies of per-(study, cancer) cohort
+    # size. Cohort size for a cancer in a study = max over genes of the
+    # panel-restricted denominator (genes-on-all-panels recover the cohort size;
+    # genes covered only by some panels report a smaller value, so taking the
+    # per-cancer max recovers the cohort total).
+    cancer_idx = ratio_df.index.get_level_values("cancer_type")
+
+    cohort_per_study_per_cancer_inclusive = n_inclusive_df.groupby(
+        level="cancer_type"
+    ).max()
+    cohort_per_study_per_cancer_exclusive = n_exclusive_df.groupby(
+        level="cancer_type"
+    ).max()
+    n_total_samples_inclusive = cohort_per_study_per_cancer_inclusive.sum(
+        axis=1, skipna=True
+    )
+    n_total_samples_exclusive = cohort_per_study_per_cancer_exclusive.sum(
+        axis=1, skipna=True
+    )
+    n_total_inclusive_per_row = pd.Series(
+        cancer_idx.map(n_total_samples_inclusive), index=ratio_df.index
+    )
+    n_total_exclusive_per_row = pd.Series(
+        cancer_idx.map(n_total_samples_exclusive), index=ratio_df.index
+    )
+
+    for df in (num_df, ratio_df):
+        df["n_panel_covered_samples_inclusive"] = (
+            n_panel_covered_inclusive.reindex(df.index)
+            .fillna(0)
+            .astype("int64")
+            .to_numpy()
+        )
+        df["n_panel_covered_samples_exclusive"] = (
+            n_panel_covered_exclusive.reindex(df.index)
+            .fillna(0)
+            .astype("int64")
+            .to_numpy()
+        )
+        df["callable_sample_fraction_inclusive"] = (
+            df["n_panel_covered_samples_inclusive"].astype(float)
+            / n_total_inclusive_per_row.astype(float).to_numpy()
+        )
+        df["callable_sample_fraction_exclusive"] = (
+            df["n_panel_covered_samples_exclusive"].astype(float)
+            / n_total_exclusive_per_row.astype(float).to_numpy()
+        )
 
     return num_df, ratio_df
 
@@ -195,18 +278,26 @@ def _run_via_snakemake() -> None:
         studies.append(study)
         frames.append((study, df))
 
-    num_df, ratio_df = combine_paired_pivot(frames)
+    num_df, ratio_df, n_inclusive_df, n_exclusive_df = combine_paired_pivot(frames)
 
     # Sort by mean_inclusive descending for stable ranking.
     ratio_df = ratio_df.sort_values("mean_inclusive", ascending=False)
     num_df = num_df.reindex(ratio_df.index)
+    n_inclusive_df = n_inclusive_df.reindex(ratio_df.index)
+    n_exclusive_df = n_exclusive_df.reindex(ratio_df.index)
 
     ratio_df = _protein_length_adjusted(ratio_df, pd.read_feather(protein_lengths_path))
 
     panel_coverage = pd.read_feather(panel_coverage_path)
     study_panel_map: dict[str, str] = snek.config.get("study_panel_map", {}) or {}
     num_df, ratio_df = _annotate_callability(
-        num_df, ratio_df, studies, panel_coverage, study_panel_map
+        num_df,
+        ratio_df,
+        studies,
+        panel_coverage,
+        study_panel_map,
+        n_inclusive_df,
+        n_exclusive_df,
     )
 
     num_df = num_df.reset_index()

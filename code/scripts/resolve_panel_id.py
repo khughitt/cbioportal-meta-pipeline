@@ -15,6 +15,8 @@ References:
 - Bandlamudi C et al. 2026. *Cancer Cell*. PMID 41895280. (IMPACT-505)
 """
 
+import pandas as pd
+
 PANEL_ALIASES: dict[str, str] = {
     # IMPACT-341
     "IMPACT341": "MSK-IMPACT-341",
@@ -74,3 +76,59 @@ def infer_panel_from_sample_id(sample_id: str) -> str | None:
         return None
     suffix = sample_id.rsplit("-", 1)[-1]
     return SAMPLE_ID_SUFFIX_MAP.get(suffix)
+
+
+def resolve_panel_ids(
+    samples: pd.DataFrame,
+    matrix: pd.DataFrame | None,
+    study_id: str,
+    study_panel_map: dict[str, str],
+    is_panel_study: bool,
+) -> pd.Series:
+    """Return a panel_id Series indexed like ``samples`` (positionally).
+
+    For non-panel studies (``is_panel_study=False``), returns all-NaN — downstream
+    consumers treat this as the "panel-aware path bypassed" signal.
+
+    For panel studies, the per-sample resolution chain is:
+      1. ``matrix['mutations']`` column normalized via :data:`PANEL_ALIASES`
+      2. :func:`infer_panel_from_sample_id` applied to ``sample_id``
+      3. ``study_panel_map[study_id]`` (single panel applied to all samples)
+
+    Anything unresolved raises ``ValueError`` carrying ``(study_id, sample_id)``.
+    """
+    if not is_panel_study:
+        return pd.Series([None] * len(samples), index=samples.index, dtype="object")
+
+    sample_ids = samples["sample_id"].astype(str)
+
+    matrix_lookup: dict[str, str] = {}
+    if matrix is not None and not matrix.empty:
+        sid_col = "SAMPLE_ID" if "SAMPLE_ID" in matrix.columns else matrix.columns[0]
+        mut_col = "mutations" if "mutations" in matrix.columns else matrix.columns[1]
+        matrix_lookup = {
+            str(s): normalize_panel_id(str(p))
+            for s, p in zip(matrix[sid_col], matrix[mut_col], strict=False)
+            if pd.notna(p) and str(p).strip()
+        }
+
+    study_default = study_panel_map.get(study_id)
+    if study_default is not None:
+        study_default = normalize_panel_id(study_default)
+
+    out: list[str] = []
+    for sid in sample_ids:
+        resolved = matrix_lookup.get(sid)
+        if resolved is None:
+            resolved = infer_panel_from_sample_id(sid)
+        if resolved is None:
+            resolved = study_default
+        if resolved is None:
+            raise ValueError(
+                f"Cannot resolve panel_id for sample {sid!r} in panel study "
+                f"{study_id!r}: not in matrix, no recognized sample-id suffix, "
+                "no study_panel_map fallback. Investigate upstream data."
+            )
+        out.append(resolved)
+
+    return pd.Series(out, index=samples.index, dtype="object")

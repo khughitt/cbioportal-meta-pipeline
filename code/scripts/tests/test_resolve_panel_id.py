@@ -1,8 +1,13 @@
 """Tests for resolve_panel_id (t070 spec)."""
 
+import pandas as pd
 import pytest
 
-from resolve_panel_id import infer_panel_from_sample_id, normalize_panel_id
+from resolve_panel_id import (
+    infer_panel_from_sample_id,
+    normalize_panel_id,
+    resolve_panel_ids,
+)
 
 
 @pytest.mark.parametrize(
@@ -70,3 +75,94 @@ def test_infer_panel_from_sample_id_known(sample_id: str, expected: str) -> None
 )
 def test_infer_panel_from_sample_id_returns_none(sample_id: str) -> None:
     assert infer_panel_from_sample_id(sample_id) is None
+
+
+# ---------------------------------------------------------------------------
+# resolve_panel_ids orchestrator
+# ---------------------------------------------------------------------------
+
+
+def _samples(ids: list[str]) -> pd.DataFrame:
+    return pd.DataFrame({"sample_id": ids})
+
+
+def _matrix(rows: list[tuple[str, str]]) -> pd.DataFrame:
+    return pd.DataFrame.from_records(rows, columns=["SAMPLE_ID", "mutations"])
+
+
+def test_resolve_via_matrix() -> None:
+    samples = _samples(["P-0000004-T01-IM3", "P-0029974-T02-IM6"])
+    matrix = _matrix(
+        [("P-0000004-T01-IM3", "IMPACT341"), ("P-0029974-T02-IM6", "IMPACT468")]
+    )
+    result = resolve_panel_ids(
+        samples,
+        matrix=matrix,
+        study_id="msk_impact_2017",
+        study_panel_map={},
+        is_panel_study=True,
+    )
+    assert list(result) == ["MSK-IMPACT-341", "MSK-IMPACT-468"]
+
+
+def test_resolve_via_suffix_when_matrix_missing() -> None:
+    samples = _samples(["P-0000012-N02-IM6", "P-0000023-N01-IM3"])
+    result = resolve_panel_ids(
+        samples,
+        matrix=None,
+        study_id="msk_ch_2023",
+        study_panel_map={},
+        is_panel_study=True,
+    )
+    assert list(result) == ["MSK-IMPACT-468", "MSK-IMPACT-341"]
+
+
+def test_resolve_via_study_fallback() -> None:
+    samples = _samples(["FOO-1", "FOO-2"])
+    result = resolve_panel_ids(
+        samples,
+        matrix=None,
+        study_id="custom_panel_2025",
+        study_panel_map={"custom_panel_2025": "MSK-IMPACT-410"},
+        is_panel_study=True,
+    )
+    assert list(result) == ["MSK-IMPACT-410", "MSK-IMPACT-410"]
+
+
+def test_non_panel_study_returns_all_none() -> None:
+    samples = _samples(["TCGA-AB-1234-01", "TCGA-CD-5678-01"])
+    result = resolve_panel_ids(
+        samples,
+        matrix=None,
+        study_id="brca_tcga",
+        study_panel_map={},
+        is_panel_study=False,
+    )
+    assert result.isna().all()
+
+
+def test_panel_study_with_unresolvable_sample_raises() -> None:
+    samples = _samples(["P-0000001-T01-IM3", "MYSTERY-SAMPLE"])
+    matrix = _matrix([("P-0000001-T01-IM3", "IMPACT341")])
+    with pytest.raises(ValueError, match="MYSTERY-SAMPLE"):
+        resolve_panel_ids(
+            samples,
+            matrix=matrix,
+            study_id="msk_impact_2017",
+            study_panel_map={},
+            is_panel_study=True,
+        )
+
+
+def test_matrix_takes_precedence_over_suffix() -> None:
+    # If matrix says IMPACT468 but suffix says IMPACT341, matrix wins
+    samples = _samples(["P-0000001-T01-IM3"])
+    matrix = _matrix([("P-0000001-T01-IM3", "IMPACT468")])
+    result = resolve_panel_ids(
+        samples,
+        matrix=matrix,
+        study_id="msk_impact_2017",
+        study_panel_map={},
+        is_panel_study=True,
+    )
+    assert list(result) == ["MSK-IMPACT-468"]

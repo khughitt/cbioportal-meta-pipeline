@@ -12,6 +12,7 @@ import pytest
 
 from compute_per_sample_tmb import (
     PROTEIN_ALTERING_VARIANT_CLASSES,
+    _check_no_duplicate_sample_ids,
     compute_tmb_for_study,
     resolve_panel_for_sample,
 )
@@ -281,3 +282,21 @@ def test_resolve_panel_for_sample_raises_for_unknown_panel_id() -> None:
             panel_registry=panel_registry,
             wes_default_callable_mb=30.0,
         )
+
+
+# ---------------------------------------------------------------------------
+# t070: duplicate sample_id guard
+# ---------------------------------------------------------------------------
+
+
+def test_check_no_duplicate_sample_ids_passes_when_unique() -> None:
+    """t070: unique sample_ids should not raise."""
+    samples = _make_samples(["S1", "S2", "S3"])
+    _check_no_duplicate_sample_ids(samples, "test_study")  # no raise
+
+
+def test_check_no_duplicate_sample_ids_raises_with_context() -> None:
+    """t070: duplicate sample_ids must fail loud with the study_id and offending ids."""
+    samples = _make_samples(["S1", "S1", "S2"])
+    with pytest.raises(ValueError, match="test_study.*duplicate sample_id.*S1"):
+        _check_no_duplicate_sample_ids(samples, "test_study")

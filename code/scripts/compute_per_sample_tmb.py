@@ -79,6 +79,24 @@ PROTEIN_ALTERING_VARIANT_CLASSES: frozenset[str] = frozenset(
 _HUGE_MUT_COUNT_WARN_THRESHOLD = 5_000
 
 
+def _check_no_duplicate_sample_ids(samples: pd.DataFrame, study_id: str) -> None:
+    """Pipeline invariant: samples.feather must have unique sample_id values.
+
+    Without this, ``Series.map()`` calls downstream raise ``InvalidIndexError``
+    with no diagnostic context. Fail-loud here with a useful error.
+    """
+    if samples["sample_id"].duplicated().any():
+        dups = (
+            samples.loc[samples["sample_id"].duplicated(keep=False), "sample_id"]
+            .unique()
+            .tolist()
+        )
+        raise ValueError(
+            f"Study {study_id!r}: samples table has duplicate sample_id values: "
+            f"{dups[:10]!r}. Deduplicate upstream."
+        )
+
+
 def compute_tmb_for_study(
     mutations: pd.DataFrame,
     samples: pd.DataFrame,
@@ -129,10 +147,6 @@ def compute_tmb_for_study(
         out["panel_callable_mb"] = mb_aligned
         out["tmb"] = out["mutation_count"].astype(float) / mb_aligned
     else:
-        if panel_callable_mb <= 0.0:
-            raise ValueError(
-                f"panel_callable_mb must be positive; got {panel_callable_mb!r}"
-            )
         out["panel_callable_mb"] = float(panel_callable_mb)
         out["tmb"] = out["mutation_count"].astype(float) / float(panel_callable_mb)
 
@@ -241,6 +255,9 @@ def _run_via_snakemake() -> None:
     panel_registry = pd.read_csv(snek.input.panels, sep="\t")
 
     study_id = str(snek.wildcards.id)
+    # t070: deduplication is a pipeline invariant; fail-loud with diagnostic if violated
+    # (otherwise downstream Series.map() raises InvalidIndexError with no context).
+    _check_no_duplicate_sample_ids(samples, study_id)
     study_panel_map: dict[str, str] = dict(snek.config.get("study_panel_map", {}))
     wes_default_mb = float(snek.config.get("wes_default_callable_mb", 30.0))
 

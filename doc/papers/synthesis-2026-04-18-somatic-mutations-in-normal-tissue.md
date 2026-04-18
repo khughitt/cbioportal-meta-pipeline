@@ -4,6 +4,7 @@ type: "synthesis"
 title: "Somatic mutations in morphologically normal human tissues — cross-paper synthesis"
 status: "active"
 source_refs:
+  - "article:Martincorena2018"
   - "article:Lin2024"
   - "article:Xu2025"
   - "article:Yaacov2023"
@@ -34,6 +35,7 @@ Six papers reviewed together on 2026-04-18, all characterizing somatic mutations
 
 | Citekey | Scope | Variant class | Key "normal-tissue" claim |
 |---------|-------|---------------|---------------------------|
+| `Martincorena2018` | 9 donors age 20–75, normal esophagus | SNV (74-gene panel, 870×) | NOTCH1 selected dN/dS>50; covers 30–80% of normal epithelium by middle age vs ~10% of ESCC; TP53 opposite pattern; ~2000 SNVs/cell by late life; no APOBEC in normal |
 | `Li2021` | 5 donors, ~29 organs | SNV + limited CNA | Every tissue sampled carries thousands of somatic SNVs; 32 cancer-driver genes show positive selection in normal tissue; esophagus/cardia contain macroscopic driver-clones |
 | `Xu2025` | 14 GTEx donors, 46 tissues, 265 samples | Protein-coding SNV | Pan-tissue landscape of 8,470 somatic SNVs; novel mSOMA caller handles tumor-free multi-tissue data; tissue-specific burden and spectra baseline |
 | `Lin2024` | 49 healthy women, 83k cells | CNA (single-cell DNA) | Median 3.19% of normal breast epithelial cells are aneuploid and carry cancer-like CNAs (incl. der(1;16)); 82% form detectable clonal expansions |
@@ -88,7 +90,8 @@ Ranked by severity against the current pipeline:
 
 ## Next reading
 
-- **Martincorena et al. 2018 (Science)** — normal esophagus clone-size distribution and NOTCH1 selection; primary data behind several of the claims above.
+- **Martincorena et al. 2018 (Science)** — now summarized as `article:Martincorena2018`; provides primary numbers behind multiple claims in this synthesis and in `question:q001`.
+- **Yokoyama et al. 2019 (Science)** — independent normal esophagus clone study; mechanistically addresses the NOTCH1 paradox (mouse model suggesting NOTCH1-mutant cells suppress adjacent cancer proliferation). Complements Martincorena2018.
 - **Lee-Six et al. 2018 (Nature)** — normal-blood clone phylogeny and DNMT3A dynamics, complementing `Poon2021` and the CH-gene list question.
 - **Yaacov et al. 2022** (cancer-tissue companion to `Yaacov2023`) — completes the signature-RT map for cancer contexts.
 - **Cancer-specific vs tissue-specific signature decomposition** in an unmatched-normal study context: open question worth a dedicated literature pass.

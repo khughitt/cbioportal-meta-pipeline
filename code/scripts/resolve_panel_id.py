@@ -49,7 +49,7 @@ def normalize_panel_id(raw: str) -> str:
     canonical = PANEL_ALIASES.get(key)
     if canonical is None:
         raise ValueError(
-            f"Unrecognized panel_id {raw!r}; add to PANEL_ALIASES if real, "
+            f"Unrecognized panel_id {key!r}; add to PANEL_ALIASES if real, "
             "or fix upstream data."
         )
     return canonical

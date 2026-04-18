@@ -8,14 +8,28 @@ from resolve_panel_id import normalize_panel_id
 @pytest.mark.parametrize(
     "raw,expected",
     [
+        # IMPACT-341
         ("IMPACT341", "MSK-IMPACT-341"),
         ("MSK-IMPACT341", "MSK-IMPACT-341"),
         ("MSK-IMPACT-341", "MSK-IMPACT-341"),
+        # IMPACT-410
         ("IMPACT410", "MSK-IMPACT-410"),
+        ("MSK-IMPACT410", "MSK-IMPACT-410"),
+        ("MSK-IMPACT-410", "MSK-IMPACT-410"),
+        # IMPACT-468
         ("IMPACT468", "MSK-IMPACT-468"),
+        ("MSK-IMPACT468", "MSK-IMPACT-468"),
+        ("MSK-IMPACT-468", "MSK-IMPACT-468"),
+        # IMPACT-505
         ("IMPACT505", "MSK-IMPACT-505"),
+        ("MSK-IMPACT505", "MSK-IMPACT-505"),
+        ("MSK-IMPACT-505", "MSK-IMPACT-505"),
+        # IMPACT-HEME-400
         ("IMPACT-HEME-400", "MSK-IMPACT-HEME-400"),
         ("MSK-IMPACT-HEME-400", "MSK-IMPACT-HEME-400"),
+        # IMPACT-HEME-468
+        ("IMPACT-HEME-468", "MSK-IMPACT-HEME-468"),
+        ("MSK-IMPACT-HEME-468", "MSK-IMPACT-HEME-468"),
     ],
 )
 def test_normalize_panel_id_known(raw: str, expected: str) -> None:

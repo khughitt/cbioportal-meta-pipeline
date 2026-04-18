@@ -41,6 +41,13 @@ pre-t098 pass):
   - ``n_panel_covered_studies``   : number of studies whose panel covers this
                                     gene (GENIE + ``study_panel_map``).
   - ``callable_fraction``         : ``n_panel_covered_studies / n_total_studies``.
+  - ``n_panel_covered_samples_inclusive``  : sum across studies of per-(study,
+                                    cancer, gene) panel-restricted
+                                    inclusive denominators (t070).
+  - ``n_panel_covered_samples_exclusive``  : same, restricted to non-hypermutators.
+  - ``callable_sample_fraction_inclusive`` : ``n_panel_covered_samples_inclusive
+                                    / n_total_samples_in_cancer``.
+  - ``callable_sample_fraction_exclusive`` : same, restricted to non-hypermutators.
 
 Config
 ------
@@ -156,6 +163,17 @@ def _annotate_callability(
     per-cancer max of the panel-restricted denominator (since cohort sizes
     are per-cancer, not per-gene, before panel restriction; the max across
     genes within a cancer recovers the cohort size).
+
+    Assumption: per-cancer cohort size is recovered as ``n_inclusive_df.groupby(
+    "cancer_type").max()`` over genes — this works only when each panel in use
+    within a study covers at least one common "backbone" gene present across
+    all panels (true for nested panel families like MSK-IMPACT-{341 ⊂ 410 ⊂
+    468 ⊂ 505} but NOT for non-nested mixes like IMPACT-HEME + solid-tumor).
+    A heuristic check raises ``ValueError`` if the recovered max for a (cancer,
+    study) cell is implausibly small relative to the maximum across all studies
+    for that cancer (currently 0.05 = 5% threshold). If your run hits this and
+    you're certain the panel mix is non-nested, supply per-(study, cancer)
+    cohort sizes via a future explicit-input refactor.
     """
     gene_to_panels: dict[str, set[str]] = (
         panel_coverage.groupby("gene")["panel_id"].apply(lambda s: set(s)).to_dict()
@@ -208,6 +226,33 @@ def _annotate_callability(
     cohort_per_study_per_cancer_exclusive = n_exclusive_df.groupby(
         level="cancer_type"
     ).max()
+    # C1 guard: detect non-nested panel mixes where groupby-max under-counts.
+    # If any (study, cancer) cell's recovered cohort size is implausibly small
+    # relative to the cancer's max across studies, the assumption is violated.
+    NESTING_THRESHOLD = 0.05
+    maxes = cohort_per_study_per_cancer_inclusive.max(axis=1)
+    ratios = cohort_per_study_per_cancer_inclusive.divide(maxes, axis=0)
+    suspicious = (
+        ratios < NESTING_THRESHOLD
+    ) & cohort_per_study_per_cancer_inclusive.notna()
+    if suspicious.any().any():
+        suspicious_rows = []
+        for cancer in suspicious.index:
+            for study in suspicious.columns:
+                if suspicious.loc[cancer, study]:
+                    suspicious_rows.append(
+                        f"({cancer!r}, study={study!r}): "
+                        f"cohort_max_over_genes={cohort_per_study_per_cancer_inclusive.loc[cancer, study]:.0f} "
+                        f"vs cancer_max_across_studies={maxes.loc[cancer]:.0f}"
+                    )
+        raise ValueError(
+            "Per-cancer cohort-size recovery assumption violated — at least one (study, "
+            "cancer) cell has a max-over-genes denominator < 5% of the cancer's max across "
+            "studies, suggesting non-nested panel mix (e.g., MSK-IMPACT solid-tumor + "
+            "IMPACT-HEME-400 share no genes). First 10:\n  "
+            + "\n  ".join(suspicious_rows[:10])
+        )
+
     n_total_samples_inclusive = cohort_per_study_per_cancer_inclusive.sum(
         axis=1, skipna=True
     )
@@ -220,6 +265,8 @@ def _annotate_callability(
     n_total_exclusive_per_row = pd.Series(
         cancer_idx.map(n_total_samples_exclusive), index=ratio_df.index
     )
+    n_total_inclusive_per_row = n_total_inclusive_per_row.replace(0, float("nan"))
+    n_total_exclusive_per_row = n_total_exclusive_per_row.replace(0, float("nan"))
 
     for df in (num_df, ratio_df):
         df["n_panel_covered_samples_inclusive"] = (

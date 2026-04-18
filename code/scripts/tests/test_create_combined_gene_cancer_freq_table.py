@@ -184,6 +184,12 @@ def test_paired_panel_covered_samples_columns() -> None:
     assert g2["n_panel_covered_samples_inclusive"] == 6
     assert g2["n_panel_covered_samples_exclusive"] == 6
 
+    # I2: num_out must also carry the new sample-callability columns.
+    assert "n_panel_covered_samples_inclusive" in num_out.columns
+    assert "callable_sample_fraction_inclusive" in num_out.columns
+    g1_num = num_out.loc[("Cancer X", "GENE1")]
+    assert g1_num["n_panel_covered_samples_inclusive"] == 18
+
 
 def test_callable_sample_fraction_uses_per_cancer_denominator() -> None:
     """t070: callable_sample_fraction is per-cancer (sum of cohort sizes for
@@ -230,5 +236,47 @@ def test_callable_sample_fraction_uses_per_cancer_denominator() -> None:
     # Cancer Y: total samples = 6 + 4 = 10; covered samples = 10 → fraction = 1.0
     cx = ratio_out.loc[("Cancer X", "GENE1")]
     cy = ratio_out.loc[("Cancer Y", "GENE1")]
+    assert cx["callable_sample_fraction_inclusive"] == pytest.approx(1.0)
+    assert cy["callable_sample_fraction_inclusive"] == pytest.approx(1.0)
+
+
+def test_callable_sample_fraction_distinguishes_per_cancer_partial_coverage() -> None:
+    """t070: when a gene has partial coverage in one cancer, the fraction must
+    use that cancer's total (not global)."""
+    study_a = _per_study_frame(
+        [
+            # Cancer X: gene fully covered (10 samples on panel that covers gene)
+            ("Cancer X", "GENE1", 5, 5, 0.5, 0.5, 10, 10),
+            # Cancer Y: gene only partially covered (4 of 8 samples on covering panel)
+            ("Cancer Y", "GENE1", 2, 2, 0.5, 0.5, 4, 4),
+        ]
+    )
+
+    from create_combined_gene_cancer_freq_table import (
+        _annotate_callability,
+        combine_paired_pivot,
+    )
+
+    num_df, ratio_df, n_incl_df, n_excl_df = combine_paired_pivot(
+        [("study_a", study_a)]
+    )
+    panel_coverage = pd.DataFrame({"panel_id": ["PANEL_A"], "gene": ["GENE1"]})
+    _, ratio_out = _annotate_callability(
+        num_df,
+        ratio_df,
+        studies=["study_a"],
+        panel_coverage=panel_coverage,
+        study_panel_map={"study_a": "PANEL_A"},
+        n_inclusive_df=n_incl_df,
+        n_exclusive_df=n_excl_df,
+    )
+
+    cx = ratio_out.loc[("Cancer X", "GENE1")]
+    cy = ratio_out.loc[("Cancer Y", "GENE1")]
+    # Per-cancer interpretation: each cancer's fraction is independent.
+    # Cancer X total = 10, covered = 10 → 1.0
+    # Cancer Y total = 4,  covered = 4  → 1.0
+    # If instead the implementation used a global denominator (10+4=14), Cancer X
+    # would report 10/14 = 0.71 — this assertion would catch that bug.
     assert cx["callable_sample_fraction_inclusive"] == pytest.approx(1.0)
     assert cy["callable_sample_fraction_inclusive"] == pytest.approx(1.0)

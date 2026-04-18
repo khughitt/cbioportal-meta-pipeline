@@ -91,6 +91,19 @@ summary:
 # utuc_mskcc_2015
 #
  
+# Studies whose per-sample panel id is resolved from data_gene_panel_matrix.txt
+# (t070 panel-version drift). All three MSK studies below ship per-sample panel matrices.
+panel_bearing_studies:
+  - msk_impact_2017
+  - msk_chord_2024
+  - msk_impact_50k_2026
+
+# After t070, study_panel_map is a fallback for studies WITHOUT a per-sample
+# data_gene_panel_matrix.txt (e.g., older pre-panel-matrix studies). Studies in
+# `panel_bearing_studies` use per-sample panel resolution via the matrix file
+# instead.
+study_panel_map: {}
+
 # Panel callable-Mb registry defaults (t092 / t081 plan task 1). Populate
 # `panel_callable_mb_override` with per-panel published Mb values (MSK-IMPACT-341/410/468/
 # 505, FoundationOne variants, Tempus xT, Caris MI) when those studies are in the run.

@@ -8,12 +8,11 @@
 #   - brca_tcga  : low-TMB control
 #   - msk_impact_2017 : panel + tumor-only CH leakage stress
 #
-# Known limitations (carried forward from this PoC into interpretation):
-#   - msk_impact_2017 mixes MSK-IMPACT-341 / 410 / 468 per-sample; t070
-#     (panel-version drift per sample) is NOT yet applied. `study_panel_map`
-#     is left empty, so MSK samples fall through to wes_default_callable_mb,
-#     which inflates TMB denominators. Interpretation doc should flag this
-#     as the single largest known bias in these PoC numbers.
+# Panel-version drift (t070):
+#   - msk_impact_2017 mixes MSK-IMPACT-341 / 410 per-sample; t070
+#     (panel-version drift per sample) IS APPLIED via `panel_bearing_studies`.
+#     Panel ids are resolved per-sample from data_gene_panel_matrix.txt;
+#     each sample's TMB denominator uses the correct panel-callable-Mb override.
 #
 
 # input / output directories
@@ -46,10 +45,16 @@ matched_normal_studies:
 # COSMIC Cancer Gene Census snapshot.
 cosmic_cgc_path: "/data/raw/cosmic/v100/Cosmic_CancerGeneCensus_v100_GRCh38.tsv"
 
-# Panel mapping — intentionally empty for this PoC; see header note.
-# When t070 lands, this will be populated with per-sample panel versions
-# (not per-study), at which point the TMB denominator for msk_impact_2017
-# will shift downward.
+# Studies whose per-sample panel id is resolved from data_gene_panel_matrix.txt
+# (t070 panel-version drift). These bypass the per-study `study_panel_map` lookup
+# and use the per-sample panel callable-Mb value from `panel_callable_mb_override`.
+panel_bearing_studies:
+  - msk_impact_2017
+
+# After t070, study_panel_map is a fallback for studies WITHOUT a per-sample
+# data_gene_panel_matrix.txt (e.g., older pre-panel-matrix studies). Studies in
+# `panel_bearing_studies` use per-sample panel resolution via the matrix file
+# instead.
 study_panel_map: {}
 
 # Published MSK-IMPACT callable-Mb values (AGENTS.md template; Cheng 2015 /

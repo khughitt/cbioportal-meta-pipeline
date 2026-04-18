@@ -507,7 +507,12 @@ rule download_panel_study:
     protected(data_dir.joinpath("{id}/data_clinical_patient.txt")),
     protected(data_dir.joinpath("{id}/data_gene_panel_matrix.txt")),
   wildcard_constraints:
-    id="|".join(re.escape(s) for s in config.get("panel_bearing_studies", ["__never__"]))
+    # Use `or` (not `.get(key, default)`) so an explicitly-empty list also
+    # falls back to the sentinel — otherwise joining [] with | produces an
+    # empty regex that matches ANY study id and silently captures WES studies.
+    id="|".join(
+      re.escape(s) for s in (config.get("panel_bearing_studies") or ["__never__"])
+    )
   script:
     "../scripts/download_study.py"
 

@@ -17,6 +17,9 @@ created: "2026-04-18"
 updated: "2026-04-18"
 ---
 
+<!-- 2026-04-18: revised against full-text PDF; [UNVERIFIED] tags resolved, per-tissue mutation rates now sourced from Table 1, several secondary-source numbers corrected or removed. -->
+
+
 # Somatic mutations and clonal evolution in normal tissues and cancer development
 
 - **Authors:** Kenichi Yoshida
@@ -25,7 +28,7 @@ updated: "2026-04-18"
 - **PMID:** 41331092
 - **DOI:** 10.1038/s12276-025-01592-0
 - **BibTeX key:** Yoshida2026
-- **Source:** web search + PubMed metadata + LLM knowledge (full text paywalled; key facts cross-checked via PubMed, related PMC articles, and the author's institutional profile)
+- **Source:** full-text PDF (verified 2026-04-18) + PubMed metadata. Initial draft built from web search / LLM knowledge while paywalled, subsequently verified and corrected against the full text.
 
 ## Key Contribution
 
@@ -33,56 +36,91 @@ A solo-authored review by Yoshida (Division of Cancer Evolution, National Cancer
 
 ## Methods
 
-This is a narrative review, not a primary research article. Yoshida synthesizes work from multiple large-scale sequencing projects — whole-genome sequencing of single-cell-derived colonies, micro-dissection WGS of tissue units (crypts, glands, bronchial cells), and population-scale cohort studies — spanning at least the following tissues: esophagus, bronchial epithelium, stomach, colon, skin, blood/hematopoietic system, liver, endometrium, mammary glands, bladder, prostate, kidney, and brain. The review draws on duplex sequencing, single-cell culture, and spatial approaches as complementary methodological strategies. [UNVERIFIED: exact section structure and section-level citations not accessible without full text]
+This is a narrative review, not a primary research article. Yoshida synthesizes work across three experimental paradigms explicitly introduced in the review's "Experimental techniques" section (Fig. 1):
+
+1. **Laser-capture microdissection + WGS** on 100–1000 cells — enables spatial analysis but suffers polyclonality when clones are small.
+2. **Single-cell-derived organoids / colonies** — enables single-cell genetic analysis but loses spatial context and is hard to establish for some organs.
+3. **Duplex / nanorate sequencing (NanoSeq)** — distinguishes true mutations from sequencing errors (<5×10⁻⁹ errors per bp) without clonal expansion; usable for non-dividing cells (muscle, nervous system).
+
+Tissues covered: blood, bladder, breast, bronchus, colon, endometrium, esophagus, heart, liver, muscle, neuron, prostate, small intestine, stomach (Table 1 of the paper).
 
 ## Key Findings
 
-### Somatic mutation accumulation rates
+### Somatic mutation accumulation rates (Table 1 of the paper)
 
-- Normal tissues accumulate somatic mutations at a roughly constant rate of **13–44 single-nucleotide variants per genome per year**, with variation across organ types. [UNVERIFIED: exact per-tissue rates in this review; range sourced from closely related PMC literature that this review likely cites]
-- **Gastric epithelium** (from Yoshida's own primary work, 2025 *Nature*): ~28 SNVs per year per gland; by age 60, driver-mutant clones occupy ~8% of the gastric epithelial lining; rate is accelerated by chronic inflammation (H. pylori).
-- **Bronchial epithelium**: tobacco smoking substantially increases mutational burden and driver mutation frequency; smoking cessation is followed by replenishment of the epithelium with near-normal clones (Yoshida et al. 2020, *Nature*).
-- **Esophageal epithelium**: despite a 10-fold lower mutation rate than sun-exposed skin, positive selection is exceptionally strong; clones bearing mutations in at least 14 cancer-associated genes colonize the majority of the esophagus by middle age.
-- **Skin**: UV-driven mutation burden is the highest; ~25% of cells in normal sun-exposed skin carry cancer driver mutations.
+Per-tissue SBSs per year accumulated in normal cells:
+
+| Tissue | SBSs/year | Clonal expansion frequency | Freq. driver genes (normal) |
+|---|---|---|---|
+| Blood (HSC) | 14.2–17 | High | DNMT3A, TET2, −Y |
+| Blood (B lymphocyte) | 15–17 | Low | — |
+| Blood (T lymphocyte) | 22–25 | Low | — |
+| Breast | 19.5 | High | PIK3CA, der(1;16), +1q, del(16q) |
+| Bronchus | 22 | High | NOTCH1, FAT1, TP53 |
+| Colon | 43.6 | Low | — |
+| Endometrium | 29 | High | PIK3CA, ARHGAP35, PIK3R1 |
+| Esophagus | 41.5 | High | NOTCH1, TP53, FAT1 |
+| Heart | 19 | Low | — |
+| Liver | 33 | Low | — |
+| Muscle | 20.7 | Low | — |
+| Neuron | 17.1 | Low | — |
+| Prostate | 16 | Low | — |
+| Small intestine | 42–51 | Low | — |
+| Stomach | 28 | High | ARID1A, CTNNB1, KDM6A |
+
+Notable modulators reported in the text:
+
+- **Breast**: 19.5 SNVs/year before menopause, **decreasing to 8.1/year after menopause**; a single pregnancy leads to a reduction of 54.8 mutations — attributed to reduced cell division and declined estrogen following menstrual cycle cessation.
+- **Esophagus**: NOTCH1 mutations are acquired **as early as infancy**; clones with NOTCH1/TP53 drivers are larger than those without driver mutations.
+- **Skin**: acquired NOTCH1 mutations found in **~20% of skin cells**; clones with driver mutations larger than clones without.
+- **Intestinal crypts in polymerase-proofreading polyposis**: ~7-fold more SBSs in *POLE* germline carriers and up to 3-fold higher in *POLD1* carriers than in normals.
+- **Colon**: clonal expansion is **rare (~1% driver-mutant frequency)** because the colon is composed of crypts, each derived from a single stem cell; acquired drivers rarely expand because they disrupt crypt structure.
+- **Liver / prostate**: clonal expansion frequency of acquired driver mutations is low (<5% liver; prostate stem cells are physically separated).
+- **BRCA1/2 normal breast**: aneuploidy frequency 3.63–3.65% vs. 2.45% in mutation-negative cases.
 
 ### Driver gene differences: normal tissue vs. tumor
 
-A striking theme across tissues is that the driver gene repertoire in positively-selected normal clones is often **discordant** with that of the corresponding tumor type:
+Yoshida explicitly identifies a set of driver mutations that occur **frequently in normal tissues but relatively infrequently in cancer**, and vice versa:
 
-| Tissue | Normal epithelium | Corresponding cancer |
-|--------|------------------|---------------------|
-| Esophagus | NOTCH1 ~66% of clones | NOTCH1 ~15% of tumors |
-| Esophagus | TP53 ~30% of clones | TP53 ~95% of tumors |
-| Stomach | ARID1A, ARID1B, ARID2, KDM6A, CTNNB1 | Different ranking |
+- **High in normal, lower in cancer**: NOTCH1 in skin, esophagus, and bronchial tissues. In a mouse model, *Notch1*-mutant clones in normal esophageal epithelium **inhibited the proliferation of cancer cells**, suggesting a tumorigenesis-suppressive role.
+- **Higher in cancer than normal**: TP53 across tissues, FGFR3 in bladder, PTEN in endometrium.
 
-NOTCH1-mutant clones in normal esophageal epithelium appear to competitively suppress early tumor cell expansion — a possible tissue-protective phenotype. The review frames this "antagonistic epistasis" between NOTCH1 and canonical tumor suppressors (TP53, RB1) as evidence that clonal remodeling of normal tissue does not straightforwardly predict malignancy.
+This normal-vs-cancer asymmetry is framed as evidence that clonal remodeling of normal tissue does not straightforwardly predict malignancy. (Specific quantitative normal-vs-cancer frequency ratios — e.g., "NOTCH1 ~66% of normal esophageal clones vs. ~15% of tumors" — are not stated in this review text; those figures belong to the cited primary literature such as Martincorena 2018 / Yokoyama 2019.)
 
 ### Clonal hematopoiesis (CHIP)
 
-- CH is reviewed as the hematopoietic exemplar of age-related clonal evolution: **DNMT3A, TET2, ASXL1** are the dominant age-driven drivers; DDR-pathway genes (PPM1D, TP53, CHEK2) are enriched by prior cytotoxic therapy and radiation.
-- Annual risk of progression to hematologic malignancy in CH carriers: ~**0.5–1.0%** per year. [UNVERIFIED: whether this exact figure appears in Yoshida2026 or is from cited Bolton/Jaiswal literature]
-- ~30–60% of older adults harbor clonal expansions; the majority of clones initiated expansion before age 40; only ~22% carry a canonical driver mutation — the remainder are "driver-negative" clones, possibly driven by epimutations or sub-threshold variants.
-- CH is **not** discussed solely as a hematology topic: the review contextualizes it alongside epithelial clonal evolution as part of a unified framework for pre-malignant tissue remodeling. [UNVERIFIED: exact framing in text]
-- VEXAS syndrome (somatic UBA1 mutations causing systemic autoimmune disease) is cited as an example of non-malignant disease arising from clonal hematopoiesis.
+- In the intro, ~**0.7–1%** nonrandom X-inactivation ratios in healthy females and **mCAs in 6–9% of healthy individuals** establish the baseline prevalence of age-related clonal abnormalities in blood.
+- Primary CH drivers named: **TET2, DNMT3A, ASXL1** (→ clonal hematopoiesis, associated with age-related diseases including cardiovascular and cerebrovascular disease, and — conversely — decreased risk of Alzheimer disease).
+- Annual progression risk: "It is estimated that **0.5–1%** of individuals with detectable clonal hematopoiesis develop hematologic malignancies each year" (verbatim).
+- Clone initiation timing: MPN analysis (JAK2 V617F) shows the **average time from the initial driver mutation to MPN onset is ~30 years**, implying several decades for a second driver mutation.
+- Gene-specific progression: mutations in RNA splicing factors (*U2AF1*, *SRSF2*, *SF3B1*) are mainly observed in older adults with MDS and have higher progression risk. DNMT3A and TET2 occur at younger ages and have comparatively lower leukemia progression risk.
+- **TCL1A promoter SNP** (rs2887399) suppresses expansion of *TET2*- and *ASXL1*-driven CH — a germline-by-somatic interaction mechanism.
+- Aplastic-anemia / inflammation-driven CH: CN-LOH of chromosome 6p (HLA region) in aplastic anemia and NFKBIZ / TRAF3IP3 / ZC3H12A selection in ulcerative colitis are cited as **tissue-context-specific** driver repertoires that differ from age-related CH.
 
 ### Epimutations and clonal expansion without genomic drivers
 
-The review explicitly flags epigenetic alterations (DNA methylation changes, chromatin accessibility shifts) — termed "epimutations" — as a likely partial explanation for the large fraction of clonal expansions that carry no recognizable genomic driver. This is presented as a significant open research frontier. [UNVERIFIED: depth of treatment; confirmed by secondary sources and bioengineer.org summary]
+The review flags epimutations (epigenetic alterations) in a single Summary-section paragraph: "changes in the epigenome (epimutations) in normal tissues, which represent one of the nongenomic abnormalities involved, require further clarification. Although the understanding of epi-mutations in normal cells is limited, these changes may partly explain the clonal evolution driven by abnormalities other than those in the genome." The treatment is high-level rather than quantitative — Yoshida flags this as an open research frontier, not a characterized phenomenon.
 
-### Environmental modulation
+### Environmental modulation (Table 2 of the paper)
 
-- Smoking: increases bronchial and esophageal driver mutation load; cessation reverses clonal composition.
-- UV: primary driver of skin mutational burden.
-- H. pylori infection + chronic gastric inflammation: accelerates driver mutation prevalence in gastric epithelium (confirmed in Yoshida 2025 *Nature* gastric paper).
-- Alcohol: associated with signature mutations in esophageal epithelium.
-- Postmenopausal estrogen decline: reduces mammary epithelial mutation rate (~19.5 → ~8.1 SNVs/year); associated with regression of proliferative pre-malignant lesions.
-- Prior cytotoxic therapy / radiation: specifically enriches DDR-pathway CH clones (PPM1D, TP53, CHEK2), not age-driven DNMT3A/TET2.
+Comprehensive signature-to-cause mapping (Table 2):
+
+- **Tobacco smoking**: SBS4 (lung, liver), SBS16 (esophagus, liver, lung), Sig-B (bronchus, ~nitrosamine), Sig-A (bladder, ~nitrosamine), SBS92 (bladder). Smoking cessation is followed by near-normal-clone epithelial replenishment in bronchi. *H. pylori* + germline *BRCA1/2* increases gastric cancer risk.
+- **Alcohol**: SBS16 in esophageal epithelium; **faster accumulation in carriers of inactive ALDH2 (rs671)** (acetaldehyde metabolism).
+- **UV**: SBS7(a/b/c/d); skin cancer incidence varies by ethnicity, with higher frequencies in Western populations. SBS7 also identified in ALL and normal B/T lymphocytes — suggesting the signature can be acquired via UV exposure while cells are in the skin.
+- **Chemotherapy/antivirals**: SBS11 (temozolomide), SBS17 (5-FU, capecitabine), SBS25 (procarbazine), SBS31 (platinum), SBS32 (azathioprine), SBS35 (platinum), SBS99 (melphalan), SBS90 (duocarmycin), and a **ganciclovir-induced C>A signature**.
+- **E. coli pks+ colibactin**: SBS88 in normal colorectal crypts — a potential colorectal cancer risk factor.
+- **Aristolochic acid**: SBS22(a/b) in hepatocytes and normal bladder epithelial cells.
+- **Ionizing radiation**: no characteristic SBS signature; causes ID-A (indel signature with microhomology), resembling IE8/NHEJ pattern. Also produces complex structural abnormalities (chromoplexy, chromothripsis).
+- **Prior cytotoxic therapy**: enriches DDR-pathway CH clones (in general), consistent with therapy-related mutagenesis signatures above.
 
 ### Natural history and multi-decade timelines
 
-- For breast cancer with der(1;16): average driver mutation acquired at age ~10.6; widespread clone expansion (~62 mm) precedes malignant transformation by decades.
-- Carcinogenic process from first driver mutation to overt cancer often spans **several decades**, with the first driver typically acquired in early life or early adulthood.
-- Critically, only a tiny fraction of driver-mutant clones progress: <1 in 375,000 driver-mutant colorectal crypts progress to adenoma; <1 in 3 million to carcinoma.
+- **Breast cancer with der(1;16)**: acquired "during early puberty to late adolescence, [followed by] over 10 years for the development of breast cancer through the acquisition of further driver mutations." Multiple independent cancer lesions arose from a common noncancerous der(1;16) clone — demonstrating departure from the single-founder model.
+- **Endometrium**: *KRAS* and *PIK3CA* mutations commonly acquired during childhood, **before age ~10 years**.
+- **Breast copy-number alterations**: der(1;16), +1q, del(16q) occur from early puberty to late adolescence.
+- **Carcinogenesis as a decades-long process**: fetal-origin or early-life driver acquisition is consistent with MPN phylogenetic data (JAK2 V617F acquired in fetal state, MPN onset ~30 years later) and with the 10+ year breast cancer timeline.
+- **Colon crypt structure protects against clonal expansion**: driver mutations occur but rarely expand because expansion disrupts the crypt.
 
 ## Relevance
 
@@ -111,10 +149,11 @@ The review frames mutation burden and clonal expansion as monotonically age-depe
 
 ## Limitations
 
-- Solo-authored narrative review without systematic search criteria; selection of cited studies may reflect the author's own primary work disproportionately. [UNVERIFIED: no methods section for literature selection]
-- Quantitative thresholds discussed (VAF, clone-size cutoffs, mutation rates per tissue) are aggregated from heterogeneous primary studies using different sequencing platforms, calling pipelines, and tissue-preparation methods — cross-tissue comparisons should be interpreted cautiously.
-- The review likely does not propose specific filter thresholds for computational pipelines distinguishing normal-tissue clonal mutations from tumor somatic mutations; it describes the biology but the operational translation is left to the reader.
-- Epimutation characterization remains largely pre-quantitative; the claim that epimutations explain driver-negative clonal expansion is mechanistically plausible but not yet numerically characterized in most tissue types.
+- Solo-authored narrative review without a systematic literature-search methods section; selection of cited studies reflects the author's own primary work (bronchial smoking 2020; gastric 2025) prominently.
+- Quantitative per-tissue rates in Table 1 are aggregated from heterogeneous primary studies using different sequencing platforms (LCM-WGS, organoid WGS, duplex/NanoSeq) and tissue-preparation methods — cross-tissue comparisons should be interpreted cautiously.
+- The review does **not** propose specific filter thresholds for computational pipelines distinguishing normal-tissue clonal mutations from tumor somatic mutations; it describes the biology but leaves the operational translation to the reader.
+- Epimutation characterization is treated briefly (one paragraph); the claim that epimutations explain driver-negative clonal expansion is mechanistically plausible but not yet numerically characterized.
+- Detailed primary-study VAF cutoffs, clone-size distributions, and dN/dS statistics are not recapitulated here — consult the cited Martincorena / Yokoyama / Coorens / Moore primary papers for those.
 
 ## Model / Tool Availability
 

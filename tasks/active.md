@@ -292,3 +292,34 @@ Surfaced by t100 PoC 2026-04-17: cluster_genes.py and cluster_cancer_types.py re
 - created: 2026-04-17
 
 Surfaced by t100 PoC 2026-04-17: is_hypermutator_relative reports 45.5% for brca_tcga_pan_can_atlas_2018 and 36.4% for skcm_tcga_pan_can_atlas_2018 (from doc/interpretations/2026-04-17-poc-run.md Finding 4). The Samstein 2019 definition is 'top-20%% TMB within the sample's histology' — which should yield at most ~20%% hypermutators per cancer type (slightly more with ties at the boundary). 45%% / 36%% far exceed this. Likely causes: (a) tied-sample promotion at the 80th-percentile cut without explicit tiebreak policy, (b) the per-histology grouping key is cancer_type but the TCGA 'cancer_type' labels collapse many distinct histologies into one bucket (e.g. 'Breast Cancer'), so a large fraction of samples tie at a low TMB boundary, or (c) an off-by-one in the quantile cut logic. Inspect _relative_top_quintile_flag in code/scripts/annotate_hypermutators.py (line 200 area).
+
+## [t109] Implement per-study cancer-type signature restriction for SigProfilerAssignment
+- type: dev
+- priority: P2
+- status: active
+- related: [topic:signature-decomposition-unmatched-normal, question:q008-signature-decomposition-tissue-background-subtraction, article:Yaacov2023]
+- group: pipeline
+- created: 2026-04-18
+
+Add a lookup table 'data/cosmic_cancer_type_signatures.tsv' derived from Alexandrov 2020 Extended Data Figure 5 (COSMIC v3 signature x cancer type matrix) and a Snakemake rule that restricts SigProfilerAssignment (or equivalent) to type-appropriate signatures before any per-study decomposition analysis is run. Rationale: unrestricted COSMIC v3 refit over-fits on tissue-nonspecific normal-tissue signatures (SBS1, SBS5, SBS18) in unmatched-normal cBioPortal studies; cancer-type-prior restriction is the cheapest intervention documented in topic:signature-decomposition-unmatched-normal. Blocked-by: none (Alexandrov2020 ED Fig 5 is public). Expected output: per-study signature exposure vector only over cancer-type-allowed signatures; downstream: feeds q008 background subtraction and q009 SBS1-bias QC.
+
+## [t110] Validate SBS1/SBS5 ratio as unmatched-normal contamination proxy (MC3 vs cBioPortal)
+- type: research
+- priority: P2
+- status: blocked
+- related: [topic:signature-decomposition-unmatched-normal, question:q009-sbs1-lrr-bias-as-normal-contamination-flag, article:Yaacov2023, article:Xu2025]
+- blocked-by: [t109]
+- group: pipeline
+- created: 2026-04-18
+
+For ≥1 cancer type present in both a matched-normal study (TCGA MC3 pseudo-study, 'tcga_mc3') and an unmatched-normal cBioPortal study, run mutational-signature decomposition on each cohort, extract per-sample SBS1 and SBS5 exposures, and test whether unmatched-normal studies show a statistically significant SBS1 excess (or SBS1/SBS5 ratio shift) vs matched-normal. Rationale: Yaacov2023 established that SBS1 retains strong LRR bias in normal tissue but loses it in cancer — the SBS1 exposure should therefore be systematically elevated in unmatched-normal cohorts if normal-tissue mutations are leaking through. This task quantifies the magnitude before investing in a per-study flag or background subtraction. Depends on: t109 (signature-restriction rule). Outputs: per-cancer-type SBS1 exposure distribution comparison; decision on whether a ratio threshold is operationally useful for q009.
+
+## [t111] Extract per-tissue 96-trinucleotide reference spectra from Li2021 + Xu2025 supplementals
+- type: dev
+- priority: P1
+- status: proposed
+- related: [topic:signature-decomposition-unmatched-normal, question:q007-cross-tissue-somatic-mutation-rate-variation-as-null-model, question:q008-signature-decomposition-tissue-background-subtraction, question:q010-cuplr-style-tof-classifier-for-suspect-normal-samples, article:Li2021, article:Xu2025]
+- group: pipeline
+- created: 2026-04-18
+
+Download Li 2021 Nature supplementary tables + Xu 2025 bioRxiv supplementary data, extract per-tissue 96-trinucleotide somatic-SNV spectra in normal tissue for the organs that overlap with cBioPortal primary sites, and write a normalized reference table to 'data/normal_tissue_spectra.tsv' (rows=tissue, columns=96 trinucleotide contexts, values=fraction). Rationale: this is a one-time data-preparation step that gates three downstream workstreams — q007 (tissue-specific null model), q008 (background-spectrum subtraction in signature decomposition), and q010 (cosine-similarity classifier for flagging samples whose spectrum matches a normal-tissue prior better than a cancer prior). Priority P1 because three questions depend on it. Outputs: 'data/normal_tissue_spectra.tsv' + a short 'doc/datasets/normal-tissue-spectra.md' with provenance (donor counts, source table/figure numbers, aggregation method) per tissue.

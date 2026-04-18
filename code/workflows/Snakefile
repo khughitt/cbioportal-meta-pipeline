@@ -2,6 +2,7 @@
 # cbioportal / pan-cancer meta-analysis
 #
 import pathlib
+import re
 
 data_dir = pathlib.Path(config['data_dir'])
 out_dir = pathlib.Path(config['out_dir'])
@@ -485,7 +486,7 @@ rule download_panel_study:
     data_dir.joinpath("{id}/data_clinical_patient.txt"),
     data_dir.joinpath("{id}/data_gene_panel_matrix.txt"),
   wildcard_constraints:
-    id="|".join(config.get("panel_bearing_studies", ["__never__"]))
+    id="|".join(re.escape(s) for s in config.get("panel_bearing_studies", ["__never__"]))
   script:
     "../scripts/download_study.py"
 

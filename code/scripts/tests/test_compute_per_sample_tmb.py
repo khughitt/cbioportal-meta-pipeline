@@ -13,6 +13,7 @@ import pytest
 from compute_per_sample_tmb import (
     PROTEIN_ALTERING_VARIANT_CLASSES,
     compute_tmb_for_study,
+    resolve_panel_for_sample,
 )
 
 
@@ -189,3 +190,94 @@ def test_huge_tmb_sample_still_computed_correctly() -> None:
     assert row["mutation_count"] == 5000
     assert row["tmb"] == pytest.approx(5000.0)
     assert row["tmb_log10"] == pytest.approx(math.log10(5001.0))
+
+
+# ---------------------------------------------------------------------------
+# t070: per-sample Series path tests
+# ---------------------------------------------------------------------------
+
+
+def test_per_sample_panel_mb_drives_per_sample_tmb() -> None:
+    """t070: when panel_callable_mb is a Series, each sample's TMB uses its own value."""
+    muts = _make_muts(
+        [
+            ("S1", "Missense_Mutation"),
+            ("S1", "Missense_Mutation"),
+            ("S2", "Missense_Mutation"),
+        ]
+    )
+    samples = _make_samples(["S1", "S2"])
+    panel_mb = pd.Series([0.89, 1.22], index=["S1", "S2"], name="panel_callable_mb")
+    panel_source = pd.Series(
+        ["config_override", "config_override"], index=["S1", "S2"], name="tmb_source"
+    )
+
+    out = compute_tmb_for_study(
+        muts,
+        samples,
+        study_id="msk_impact_2017",
+        panel_callable_mb=panel_mb,
+        panel_source=panel_source,
+    )
+
+    s1 = out.loc[out["sample_id"] == "S1"].iloc[0]
+    s2 = out.loc[out["sample_id"] == "S2"].iloc[0]
+    assert s1["panel_callable_mb"] == pytest.approx(0.89)
+    assert s2["panel_callable_mb"] == pytest.approx(1.22)
+    assert s1["tmb"] == pytest.approx(2 / 0.89)
+    assert s2["tmb"] == pytest.approx(1 / 1.22)
+
+
+def test_resolve_panel_for_sample_uses_panel_id_when_present() -> None:
+    panel_registry = pd.DataFrame(
+        {
+            "panel_id": ["MSK-IMPACT-341", "MSK-IMPACT-468"],
+            "callable_mb": [0.89, 1.22],
+            "source": ["config_override", "config_override"],
+        }
+    )
+    mb, source = resolve_panel_for_sample(
+        sample_panel_id="MSK-IMPACT-468",
+        study_id="msk_impact_2017",
+        study_panel_map={},
+        panel_registry=panel_registry,
+        wes_default_callable_mb=30.0,
+    )
+    assert mb == pytest.approx(1.22)
+    assert source == "config_override"
+
+
+def test_resolve_panel_for_sample_falls_back_to_study_when_panel_id_missing() -> None:
+    panel_registry = pd.DataFrame(
+        {
+            "panel_id": ["MSK-IMPACT-468"],
+            "callable_mb": [1.22],
+            "source": ["config_override"],
+        }
+    )
+    mb, source = resolve_panel_for_sample(
+        sample_panel_id=None,
+        study_id="msk_impact_2017",
+        study_panel_map={"msk_impact_2017": "MSK-IMPACT-468"},
+        panel_registry=panel_registry,
+        wes_default_callable_mb=30.0,
+    )
+    assert mb == pytest.approx(1.22)
+
+
+def test_resolve_panel_for_sample_raises_for_unknown_panel_id() -> None:
+    panel_registry = pd.DataFrame(
+        {
+            "panel_id": ["MSK-IMPACT-341"],
+            "callable_mb": [0.89],
+            "source": ["config_override"],
+        }
+    )
+    with pytest.raises(ValueError, match="MSK-IMPACT-505"):
+        resolve_panel_for_sample(
+            sample_panel_id="MSK-IMPACT-505",
+            study_id="msk_impact_2017",
+            study_panel_map={},
+            panel_registry=panel_registry,
+            wes_default_callable_mb=30.0,
+        )

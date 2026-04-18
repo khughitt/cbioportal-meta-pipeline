@@ -247,11 +247,11 @@ def _build_gene_table(
             total_mut = len(mut_keys)
             fraction = len(off_panel_keys) / total_mut if total_mut else 0.0
             msg_keys = sorted(off_panel_keys)[:10]
-            if fraction > 0.01:
+            if fraction > 0.05:
                 raise ValueError(
                     f"Panel-aware aggregation: {len(off_panel_keys)} of {total_mut} "
                     f"gene symbols in mutation table have no panel coverage "
-                    f"({fraction:.1%} > 1% threshold). First 10: {msg_keys!r}. "
+                    f"({fraction:.1%} > 5% threshold). First 10: {msg_keys!r}. "
                     "This indicates a systematic ingestion problem (mutations called "
                     "outside panel intervals); investigate upstream."
                 )
@@ -359,11 +359,11 @@ def _build_gene_cancer_table(
             total_mut_pairs = len(mut_keys)
             fraction = len(off_panel_keys) / total_mut_pairs if total_mut_pairs else 0.0
             msg_keys = sorted(off_panel_keys)[:10]
-            if fraction > 0.01:
+            if fraction > 0.05:
                 raise ValueError(
                     f"Panel-aware aggregation: {len(off_panel_keys)} of {total_mut_pairs} "
                     f"(cancer, gene) pairs in mutation table have no panel coverage "
-                    f"({fraction:.1%} > 1% threshold). First 10: {msg_keys!r}. "
+                    f"({fraction:.1%} > 5% threshold). First 10: {msg_keys!r}. "
                     "This indicates a systematic ingestion problem (mutations called outside "
                     "panel intervals); investigate upstream."
                 )

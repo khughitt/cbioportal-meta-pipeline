@@ -1,5 +1,5 @@
 ---
-id: "question:q002-gli1-normal-tissue-hotspot-inflation"
+id: "question:q005-gli1-normal-tissue-hotspot-inflation"
 type: "question"
 title: "Does the GLI1 exon 12 normal-tissue recurrent hotspot inflate GLI1 mutation frequencies in our cBioPortal cancer outputs?"
 status: "active"

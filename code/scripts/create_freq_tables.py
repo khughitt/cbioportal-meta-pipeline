@@ -19,6 +19,12 @@ The legacy ``num`` / ``ratio`` columns are preserved as aliases of the inclusive
 pair for backward-compatibility with downstream consumers that have not yet
 switched to the paired schema.
 
+t070: when ``panel_coverage`` is supplied and samples carry a ``panel_id``
+column, the gene-keyed and (cancer, gene)-keyed tables use per-gene
+denominators: only samples whose panel covers that gene count toward
+``n_samples_inclusive`` / ``n_samples_exclusive``. Cancer-only tables
+(``cancer.feather``, ``cancer_detailed.feather``) are unchanged.
+
 Inputs
 ------
 - ``snakemake.input[0]`` : per-study ``mut_filtered.feather``
@@ -26,8 +32,9 @@ Inputs
 - ``snakemake.input.samples_annotated`` : cross-study ``samples_annotated.feather``
   produced by ``annotate_hypermutators``. The per-study step filters this by
   matching ``sample_id``.
+- ``snakemake.input.panel_coverage`` : (optional) ``genie_panel_coverage.feather``
+  produced by ``process_genie_panel_coverage``; columns ``panel_id`` and ``gene``.
 """
-
 
 import pandas as pd
 
@@ -36,6 +43,7 @@ def compute_freq_tables(
     mutations: pd.DataFrame,
     samples: pd.DataFrame,
     hypermutator_flags: pd.DataFrame,
+    panel_coverage: pd.DataFrame | None = None,
 ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     """Compute (cancer, cancer_detailed, gene, gene_cancer) frequency tables.
 
@@ -49,6 +57,12 @@ def compute_freq_tables(
     hypermutator_flags : two columns ``sample_id`` and ``is_hypermutator``.
         Samples absent from this table are treated as non-hypermutators (the
         conservative default).
+    panel_coverage : optional DataFrame with columns ``panel_id`` and ``gene``.
+        When supplied alongside a ``panel_id`` column in ``samples``, the gene-
+        and (cancer, gene)-keyed tables switch to per-(cancer, gene) denominators:
+        only samples whose panel covers a given gene count toward that gene's
+        denominator. Cancer-only tables are unaffected. When None (WES studies),
+        the existing cohort-wide denominator path is used unchanged.
 
     Returns
     -------
@@ -58,8 +72,26 @@ def compute_freq_tables(
     mut = mutations[["symbol", "sample_id_tumor"]].rename(
         columns={"sample_id_tumor": "sample_id"}
     )
-    samples_meta = samples[["sample_id", "cancer_type", "cancer_type_detailed"]]
+
+    sample_cols = ["sample_id", "cancer_type", "cancer_type_detailed"]
+    if "panel_id" in samples.columns:
+        sample_cols.append("panel_id")
+    samples_meta = samples[sample_cols]
+
     flags = _prepare_flags(hypermutator_flags, samples_meta)
+
+    # Prerequisite check: every non-null panel_id in samples must have coverage rows.
+    if panel_coverage is not None and "panel_id" in samples_meta.columns:
+        panels_in_samples = set(samples_meta["panel_id"].dropna().unique())
+        panels_in_coverage = set(panel_coverage["panel_id"].unique())
+        missing = panels_in_samples - panels_in_coverage
+        if missing:
+            missing_str = ", ".join(sorted(missing))
+            raise ValueError(
+                f"panel_coverage is missing entries for panel(s): {missing_str}. "
+                "Ensure genie_panel_coverage.feather was built from all panels "
+                "present in this study's samples.feather."
+            )
 
     # Attach cancer type + hypermutator flag to each mutation row for grouping.
     mut = mut.merge(samples_meta, on="sample_id").merge(flags, on="sample_id")
@@ -70,9 +102,11 @@ def compute_freq_tables(
     cancer_detailed_df = _build_single_key(
         mut=mut, samples_meta=samples_meta, flags=flags, key="cancer_type_detailed"
     )
-    gene_df = _build_gene_table(mut=mut, samples_meta=samples_meta, flags=flags)
+    gene_df = _build_gene_table(
+        mut=mut, samples_meta=samples_meta, flags=flags, panel_coverage=panel_coverage
+    )
     gene_cancer_df = _build_gene_cancer_table(
-        mut=mut, samples_meta=samples_meta, flags=flags
+        mut=mut, samples_meta=samples_meta, flags=flags, panel_coverage=panel_coverage
     )
     return cancer_df, cancer_detailed_df, gene_df, gene_cancer_df
 
@@ -145,13 +179,24 @@ def _build_gene_table(
     mut: pd.DataFrame,
     samples_meta: pd.DataFrame,
     flags: pd.DataFrame,
+    panel_coverage: pd.DataFrame | None = None,
 ) -> pd.DataFrame:
-    """Build the gene-keyed frequency table (global denominator is the whole cohort)."""
+    """Build the gene-keyed frequency table.
+
+    When ``panel_coverage`` is None, or ``panel_id`` is absent / all-NaN in
+    ``samples_meta``, uses a cohort-wide scalar denominator (legacy path).
+
+    When ``panel_coverage`` is supplied and samples carry panel assignments, uses
+    a per-gene denominator: only samples whose panel covers that gene contribute
+    to ``n_samples_inclusive`` / ``n_samples_exclusive``.
+    """
     samples_with_flag = samples_meta.merge(flags, on="sample_id")
-    n_inclusive = samples_with_flag["sample_id"].nunique()
-    n_exclusive = samples_with_flag.loc[
-        ~samples_with_flag["is_hypermutator"], "sample_id"
-    ].nunique()
+
+    use_panel_path = (
+        panel_coverage is not None
+        and "panel_id" in samples_with_flag.columns
+        and not samples_with_flag["panel_id"].isna().all()
+    )
 
     num_inclusive = mut.groupby("symbol", observed=True)["sample_id"].nunique()
     num_exclusive = (
@@ -164,8 +209,32 @@ def _build_gene_table(
         {"num_inclusive": num_inclusive, "num_exclusive": num_exclusive}
     ).fillna(0)
     df = df.astype(int)
-    df["n_samples_inclusive"] = n_inclusive
-    df["n_samples_exclusive"] = n_exclusive
+
+    if use_panel_path:
+        callable_pairs = (
+            panel_coverage[["panel_id", "gene"]]
+            .drop_duplicates()
+            .rename(columns={"gene": "symbol"})
+        )
+        panel_gene_samples = samples_with_flag.merge(callable_pairs, on="panel_id")
+        n_inclusive = panel_gene_samples.groupby("symbol", observed=True)[
+            "sample_id"
+        ].nunique()
+        n_exclusive = (
+            panel_gene_samples.loc[~panel_gene_samples["is_hypermutator"]]
+            .groupby("symbol", observed=True)["sample_id"]
+            .nunique()
+        )
+        df["n_samples_inclusive"] = df.index.map(n_inclusive).fillna(0).astype(int)
+        df["n_samples_exclusive"] = df.index.map(n_exclusive).fillna(0).astype(int)
+    else:
+        n_inclusive = samples_with_flag["sample_id"].nunique()
+        n_exclusive = samples_with_flag.loc[
+            ~samples_with_flag["is_hypermutator"], "sample_id"
+        ].nunique()
+        df["n_samples_inclusive"] = n_inclusive
+        df["n_samples_exclusive"] = n_exclusive
+
     df["ratio_inclusive"] = _safe_ratio(df["num_inclusive"], df["n_samples_inclusive"])
     df["ratio_exclusive"] = _safe_ratio(df["num_exclusive"], df["n_samples_exclusive"])
     df["num"] = df["num_inclusive"]
@@ -182,17 +251,23 @@ def _build_gene_cancer_table(
     mut: pd.DataFrame,
     samples_meta: pd.DataFrame,
     flags: pd.DataFrame,
+    panel_coverage: pd.DataFrame | None = None,
 ) -> pd.DataFrame:
-    """Build the (cancer_type, symbol) frequency table."""
+    """Build the (cancer_type, symbol) frequency table.
+
+    When ``panel_coverage`` is None, or ``panel_id`` is absent / all-NaN in
+    ``samples_meta``, uses a per-cancer scalar denominator (legacy path).
+
+    When ``panel_coverage`` is supplied and samples carry panel assignments, uses
+    a per-(cancer, gene) denominator: only samples on a panel covering that gene
+    contribute to the denominator for each (cancer_type, symbol) pair.
+    """
     samples_with_flag = samples_meta.merge(flags, on="sample_id")
 
-    n_inclusive_by_cancer = samples_with_flag.groupby("cancer_type", observed=True)[
-        "sample_id"
-    ].nunique()
-    n_exclusive_by_cancer = (
-        samples_with_flag.loc[~samples_with_flag["is_hypermutator"]]
-        .groupby("cancer_type", observed=True)["sample_id"]
-        .nunique()
+    use_panel_path = (
+        panel_coverage is not None
+        and "panel_id" in samples_with_flag.columns
+        and not samples_with_flag["panel_id"].isna().all()
     )
 
     num_inclusive = mut.groupby(["cancer_type", "symbol"], observed=True)[
@@ -208,10 +283,52 @@ def _build_gene_cancer_table(
         {"num_inclusive": num_inclusive, "num_exclusive": num_exclusive}
     ).fillna(0)
     df = df.astype(int).reset_index()
-    df["n_samples_inclusive"] = df["cancer_type"].map(n_inclusive_by_cancer).astype(int)
-    df["n_samples_exclusive"] = (
-        df["cancer_type"].map(n_exclusive_by_cancer).fillna(0).astype(int)
-    )
+
+    if use_panel_path:
+        callable_pairs = (
+            panel_coverage[["panel_id", "gene"]]
+            .drop_duplicates()
+            .rename(columns={"gene": "symbol"})
+        )
+        panel_gene_samples = samples_with_flag.merge(callable_pairs, on="panel_id")
+        n_inclusive_by_cancer_gene = panel_gene_samples.groupby(
+            ["cancer_type", "symbol"], observed=True
+        )["sample_id"].nunique()
+        n_exclusive_by_cancer_gene = (
+            panel_gene_samples.loc[~panel_gene_samples["is_hypermutator"]]
+            .groupby(["cancer_type", "symbol"], observed=True)["sample_id"]
+            .nunique()
+        )
+        df["n_samples_inclusive"] = (
+            df.set_index(["cancer_type", "symbol"])
+            .index.map(n_inclusive_by_cancer_gene)
+            .fillna(0)
+            .astype(int)
+            .values
+        )
+        df["n_samples_exclusive"] = (
+            df.set_index(["cancer_type", "symbol"])
+            .index.map(n_exclusive_by_cancer_gene)
+            .fillna(0)
+            .astype(int)
+            .values
+        )
+    else:
+        n_inclusive_by_cancer = samples_with_flag.groupby("cancer_type", observed=True)[
+            "sample_id"
+        ].nunique()
+        n_exclusive_by_cancer = (
+            samples_with_flag.loc[~samples_with_flag["is_hypermutator"]]
+            .groupby("cancer_type", observed=True)["sample_id"]
+            .nunique()
+        )
+        df["n_samples_inclusive"] = (
+            df["cancer_type"].map(n_inclusive_by_cancer).astype(int)
+        )
+        df["n_samples_exclusive"] = (
+            df["cancer_type"].map(n_exclusive_by_cancer).fillna(0).astype(int)
+        )
+
     df["ratio_inclusive"] = _safe_ratio(df["num_inclusive"], df["n_samples_inclusive"])
     df["ratio_exclusive"] = _safe_ratio(df["num_exclusive"], df["n_samples_exclusive"])
     df["num"] = df["num_inclusive"]
@@ -242,8 +359,13 @@ def _run_via_snakemake() -> None:
         )
     flags = samples_annotated[["sample_id", "is_hypermutator"]]
 
+    panel_coverage_path = getattr(snek.input, "panel_coverage", None)
+    panel_coverage_df = (
+        pd.read_feather(panel_coverage_path) if panel_coverage_path else None
+    )
+
     cancer_df, cancer_detailed_df, gene_df, gene_cancer_df = compute_freq_tables(
-        mutations, samples, flags
+        mutations, samples, flags, panel_coverage=panel_coverage_df
     )
 
     cancer_df.to_feather(snek.output[0])

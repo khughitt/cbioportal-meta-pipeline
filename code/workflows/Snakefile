@@ -303,7 +303,8 @@ rule create_freq_tables:
   input:
     out_dir.joinpath("studies/{id}/mut/table/mut_filtered.feather"),
     out_dir.joinpath("studies/{id}/metadata/samples.feather"),
-    samples_annotated = out_dir.joinpath("metadata/samples_annotated.feather")
+    samples_annotated = out_dir.joinpath("metadata/samples_annotated.feather"),
+    panel_coverage = out_dir.joinpath("metadata/genie_panel_coverage.feather")
   output:
     out_dir.joinpath("studies/{id}/mut/table/cancer_study.feather"),
     out_dir.joinpath("studies/{id}/mut/table/cancer_detailed_study.feather"),

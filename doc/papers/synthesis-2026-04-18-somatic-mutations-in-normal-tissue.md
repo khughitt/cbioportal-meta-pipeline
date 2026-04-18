@@ -17,6 +17,7 @@ related:
   - "topic:clonal-hematopoiesis-contamination"
   - "topic:pan-cancer-mutation-landscape"
   - "topic:mutation-rate-normalization"
+  - "topic:signature-decomposition-unmatched-normal"
   - "question:q001-normal-epithelial-clone-contamination-in-esophageal-studies"
   - "question:q002-normal-breast-cna-background-chr1q-chr16q"
   - "question:q003-replication-timing-as-gene-level-mutation-rate-confounder"
@@ -24,6 +25,9 @@ related:
   - "question:q005-gli1-normal-tissue-hotspot-inflation"
   - "question:q006-ch-priority-gene-completeness"
   - "question:q007-cross-tissue-somatic-mutation-rate-variation-as-null-model"
+  - "question:q008-signature-decomposition-tissue-background-subtraction"
+  - "question:q009-sbs1-lrr-bias-as-normal-contamination-flag"
+  - "question:q010-cuplr-style-tof-classifier-for-suspect-normal-samples"
 created: "2026-04-18"
 updated: "2026-04-18"
 ---
@@ -43,6 +47,7 @@ Six papers reviewed together on 2026-04-18, all characterizing somatic mutations
 | `Gao2023` | 948 individuals across tissues | Mosaic chromosomal alterations (mCAs) | mCA prevalence varies ~10-fold across tissues; esophageal mucosa reaches ~10% prevalence |
 | `Poon2021` | Blood + esophagus | Synonymous-passenger VAF spectrum | Known drivers explain only ~10% of blood clonal expansions (20 top CH variants) or ~15% with full 468-gene MSK-IMPACT panel — ~90% remain unexplained; NOTCH1+TP53 alone account for ~60% of esophageal clonal expansions |
 | `Yaacov2023` | Normal vs matched cancer tissues | Mutational signatures x replication timing | Replication-timing bias is signature-dependent; SBS4 is LRR-only in lung, SBS88 is ERR-only in normal colon, SBS1 loses its LRR bias in cancer but retains it in normal |
+| `LeeSix2018` | Single 59-yr-old donor, 140 HSC colonies | WGS phylogeny | HSC effective population size ~50–200k; ~17 genome-wide SBS/year; phylogeny shows clonal drift alone cannot explain the large CH clones Poon2021 measures — forces the "90% unexplained" signal to be real selection, not drift |
 
 ## Shared themes
 
@@ -88,6 +93,8 @@ Ranked by severity against the current pipeline:
 5. **Lower priority (for now) — CNA/mCA contamination.** `Lin2024` and `Gao2023` flag contamination risks that do not affect current SNV outputs but do affect any future CNA aggregation. Tracked as `question:q002` (breast CNA specifically) and `question:q004` (mCA in esophagus). Keep these in mind before enabling CNA workflows.
 
 6. **Site-specific inflation flags.** `question:q001` (esophageal NOTCH1 from Yoshida2026) and `question:q005` (GLI1 exon 12 hotspot from Xu2025) are narrow, testable predictions — both can be checked directly against current pipeline outputs with a `gene_cancer_study_ratio_annotated.feather` query.
+
+7. **Signature-space contamination, not just gene-space.** See companion synthesis `topic:signature-decomposition-unmatched-normal`. The background tissue-of-origin signal these six papers describe does not only leak through as inflated gene-level frequencies — it also perturbs mutational-signature decomposition in any per-study analysis run on cBioPortal cohorts without matched normals. Tracked as `question:q008` (tissue-background subtraction feasibility), `question:q009` (SBS1 replication-timing bias as a contamination QC flag, per Yaacov2023), and `question:q010` (tissue-of-origin classifier to flag normal-like samples).
 
 ## Next reading
 

@@ -4,6 +4,9 @@ archive/
 .env
 .worktrees/
 papers/pdfs/
+# Local convenience symlink so pyproject.toml's `../../science/science-tool`
+# path resolves correctly from worktrees nested under .worktrees/.
+/science
 
 # Pipeline outputs / caches (not committed)
 results/

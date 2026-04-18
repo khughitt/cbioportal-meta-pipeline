@@ -12,6 +12,7 @@ source_refs:
   - "article:Poon2021"
   - "article:Li2021"
   - "article:Yoshida2026"
+  - "article:LeeSix2018"
 related:
   - "topic:clonal-hematopoiesis-contamination"
   - "topic:pan-cancer-mutation-landscape"
@@ -92,6 +93,6 @@ Ranked by severity against the current pipeline:
 
 - **Martincorena et al. 2018 (Science)** — now summarized as `article:Martincorena2018`; provides primary numbers behind multiple claims in this synthesis and in `question:q001`.
 - **Yokoyama et al. 2019 (Science)** — independent normal esophagus clone study; mechanistically addresses the NOTCH1 paradox (mouse model suggesting NOTCH1-mutant cells suppress adjacent cancer proliferation). Complements Martincorena2018.
-- **Lee-Six et al. 2018 (Nature)** — normal-blood clone phylogeny and DNMT3A dynamics, complementing `Poon2021` and the CH-gene list question.
+- **Lee-Six et al. 2018 (Nature)** — normal-blood clone phylogeny and DNMT3A dynamics, complementing `Poon2021` and the CH-gene list question. [DONE — see `article:LeeSix2018`; key addition: N_eff ~100k HSCs confirms Poon 2021's unexplained selection is genuine, not drift.]
 - **Yaacov et al. 2022** (cancer-tissue companion to `Yaacov2023`) — completes the signature-RT map for cancer contexts.
 - **Cancer-specific vs tissue-specific signature decomposition** in an unmatched-normal study context: open question worth a dedicated literature pass.

@@ -9,8 +9,10 @@ source_refs:
   - "cite:Poon2021"
   - "cite:Bolton2020"
   - "cite:Coombs2017"
+  - "cite:LeeSix2018"
 related:
   - "article:Poon2021"
+  - "article:LeeSix2018"
 created: "2026-04-18"
 updated: "2026-04-18"
 ---
@@ -29,14 +31,16 @@ The pipeline annotates seven CH-priority genes (DNMT3A, TET2, TP53, ASXL1, CHEK2
 
 ## Current Evidence
 
-- **Poon 2021:** ~30% of synonymous passenger excess in healthy blood is explained by known SNV drivers; ~70% is attributable to uncharacterized or non-SNV selection. (Source: abstract + web summaries; [UNVERIFIED from full text].)
+- **Poon 2021:** The 20 most common high-fitness CH variants explain only ~10% of the observed density of high-VAF synonymous passengers in blood; the full 468-gene MSK-IMPACT panel recovers only ~5% more; ~90% of positive selection in blood remains attributable to mutations outside standard cancer-associated gene panels. (Source: full-text PDF verified 2026-04-18.)
+- **Lee-Six 2018:** Whole-genome phylogenetic reconstruction of 140 single HSC/progenitor colonies from a single healthy 59-year-old shows effective HSC pool size 50,000–200,000 and dN/dS = 1.001 (neutral drift — no CH drivers in this subject). This population size means a clone must achieve a fitness advantage s >> 1/N_eff (~1/100,000 per division) to rise to detectable VAF; neutral drift alone cannot explain CH clones observable at >0.1% VAF in a 60-year-old. Therefore, the "unexplained ~90% of selection" in Poon 2021 represents genuine positive selection from genes not yet catalogued — not an artifact of drift. (Source: full-text XML via Europe PMC, verified 2026-04-18.)
 - **Bolton 2020:** The 7-gene list was selected for clinical CH relevance (therapy-associated CH, adverse cardiovascular outcomes) — not for completeness of somatic selection coverage.
 - **Coombs 2017/2018:** DNMT3A alone accounts for ~64% of identified CH driver hits in MSK-IMPACT solid tumor cohorts; TP53 ~4%. This suggests even within known CH drivers, concentration is high — but it also means many CH events in blood studies are DNMT3A-driven and are flagged.
 - **Ptashkin 2018:** ~5% patient-level CH misattribution without matched normals in MSK-IMPACT; this rate would be higher in studies using older, smaller panels.
 
 ## Thoughts
 
-- The ~70% "unexplained" figure likely includes indel-driven CH (e.g., SF3B1, U2AF1, SRSF2 splicing factor hotspots), CNV-driven CH (mosaic chromosomal alterations), and possibly very low-frequency coding drivers not yet catalogued. The actual gene list for SNV-driven unexplained CH may be smaller than "70%" implies.
+- Lee-Six 2018's N_eff ~ 100,000 HSCs makes drift-driven large clones essentially impossible (a clone must achieve s > ~0.05/year to reach 1% VAF within a human lifetime starting from a single cell). The "unexplained 90%" of selection in Poon 2021 therefore must arise from real positive selection in genes not yet in standard CH panels — not from drift noise.
+- The ~90% "unexplained" figure likely includes indel-driven CH (e.g., SF3B1, U2AF1, SRSF2 splicing factor hotspots), CNV-driven CH (mosaic chromosomal alterations), and possibly very low-frequency coding drivers not yet catalogued. The actual gene list for SNV-driven unexplained CH may be smaller than "90%" implies if non-SNV mechanisms account for a significant fraction.
 - For our pipeline's practical purposes, the most impactful gap is probably in hematologic studies. Solid tumor CH contamination is partially mitigated for studies in `matched_normal_studies`.
 - A pragmatic extension: add a broader "CH-candidate" tier (e.g., from large CH GWAS / Bick 2020 / Kessler 2022 results) and flag it separately with lower confidence than the 7-gene Bolton list.
 
@@ -49,5 +53,6 @@ The pipeline annotates seven CH-priority genes (DNMT3A, TET2, TP53, ASXL1, CHEK2
 ## Related
 
 - Topic notes: `topic:clonal-hematopoiesis-contamination`
-- Article notes: `article:Poon2021`, `article:Bolton2020 (cite:Bolton2020)`
+- Article notes: `article:Poon2021`, `article:LeeSix2018`, `article:Bolton2020 (cite:Bolton2020)`
 - Methods/Datasets: `code/scripts/annotate_ch.py`; `matched_normal_studies` config key
+- Key quantitative anchor: Lee-Six 2018 N_eff ~100,000 HSCs means drift cannot explain observable large CH clones — confirming Poon 2021's "unexplained selection" is genuine positive selection from uncharacterized drivers, not noise.

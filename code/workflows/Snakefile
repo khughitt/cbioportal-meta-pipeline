@@ -438,11 +438,27 @@ rule create_study_summary_table:
   script:
     "../scripts/create_study_summary_table.py"
 
+def _convert_to_feather_inputs(wildcards):
+    """Conditional input dict: matrix file appended for panel-bearing studies.
+
+    Matches the static classification in config['panel_bearing_studies']; do not
+    file-existence-test (would make the DAG non-deterministic).
+    """
+    base = {
+        "mutations": data_dir.joinpath(f"{wildcards.id}/data_mutations.txt"),
+        "samples":   data_dir.joinpath(f"{wildcards.id}/data_clinical_sample.txt"),
+        "patients":  data_dir.joinpath(f"{wildcards.id}/data_clinical_patient.txt"),
+    }
+    if wildcards.id in config.get("panel_bearing_studies", []):
+        base["panel_matrix"] = data_dir.joinpath(
+            f"{wildcards.id}/data_gene_panel_matrix.txt"
+        )
+    return base
+
+
 rule convert_to_feather:
   input:
-    data_dir.joinpath("{id}/data_mutations.txt"),
-    data_dir.joinpath("{id}/data_clinical_sample.txt"),
-    data_dir.joinpath("{id}/data_clinical_patient.txt")
+    unpack(_convert_to_feather_inputs)
   output:
     out_dir.joinpath("studies/{id}/mut/table/mut.feather"),
     out_dir.joinpath("studies/{id}/metadata/samples.feather"),
@@ -450,6 +466,24 @@ rule convert_to_feather:
     out_dir.joinpath("studies/{id}/metadata/study.feather")
   script:
     "../scripts/convert_to_feather.py"
+
+
+rule download_panel_study:
+  """Variant of download_study for panel-bearing studies.
+
+  The download script already extracts the full tarball, so data_gene_panel_matrix.txt
+  lands on disk automatically. This rule declares it as an output so the DAG is aware
+  of it and can wire it through _convert_to_feather_inputs.
+  """
+  output:
+    data_dir.joinpath("{id}/data_mutations.txt"),
+    data_dir.joinpath("{id}/data_clinical_sample.txt"),
+    data_dir.joinpath("{id}/data_clinical_patient.txt"),
+    data_dir.joinpath("{id}/data_gene_panel_matrix.txt"),
+  wildcard_constraints:
+    id="|".join(config.get("panel_bearing_studies", ["__never__"]))
+  script:
+    "../scripts/download_study.py"
 
 rule download_study:
   output:

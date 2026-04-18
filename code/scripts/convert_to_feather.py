@@ -9,18 +9,29 @@ import pandas as pd
 from pandas.api.types import CategoricalDtype
 
 from msi_normalization import log_msi_type_counts, normalize_msi_columns
+from resolve_panel_id import resolve_panel_ids  # type: ignore[import-not-found]
 
 snek = snakemake  # type: ignore[name-defined]  # noqa: F821
 
 # load GRCh37 / GRCh38 gene metadata
-grch37 = pd.read_csv("data/grch37.tsv", sep='\t')
-grch38 = pd.read_csv("data/grch38.tsv", sep='\t')
+grch37 = pd.read_csv("data/grch37.tsv", sep="\t")
+grch38 = pd.read_csv("data/grch38.tsv", sep="\t")
 
 # fields to encode as categoricals
 cat_fields = [
-    'Hugo_Symbol', 'Center', 'Chromosome', 'Consequence', 'Variant_Classification',
-    'Variant_Type', 'Reference_Allele', 'Tumor_Seq_Allele1', 'Tumor_Seq_Allele2', 'Mutation_Status',
-    'Transcript_ID', 'RefSeq', 'Codons'
+    "Hugo_Symbol",
+    "Center",
+    "Chromosome",
+    "Consequence",
+    "Variant_Classification",
+    "Variant_Type",
+    "Reference_Allele",
+    "Tumor_Seq_Allele1",
+    "Tumor_Seq_Allele2",
+    "Mutation_Status",
+    "Transcript_ID",
+    "RefSeq",
+    "Codons",
 ]
 
 # fields to encode as integers
@@ -29,36 +40,48 @@ int_types = []
 # fallback to strings
 str_types = []
 
-# 1. work-around: non-numeric values in Start_Position 
-if snek.wildcards["id"] in ['hcc_meric_2021', 'lusc_cptac_2021', 'prostate_pcbm_swiss_2019',
-                            'prostate_dkfz_2018', 'sclc_ucologne_2015']:
-    str_types.append('Start_Position')
+# 1. work-around: non-numeric values in Start_Position
+if snek.wildcards["id"] in [
+    "hcc_meric_2021",
+    "lusc_cptac_2021",
+    "prostate_pcbm_swiss_2019",
+    "prostate_dkfz_2018",
+    "sclc_ucologne_2015",
+]:
+    str_types.append("Start_Position")
 else:
-    int_types.append('Start_Position')
+    int_types.append("Start_Position")
 
 # 2. work-around: non-numeric value encountered in sclc_ucologne_2015
 if snek.wildcards["id"] in ["sclc_ucologne_2015"]:
-    str_types.append('End_Position')
+    str_types.append("End_Position")
 else:
-    int_types.append('End_Position')
+    int_types.append("End_Position")
 
 # 3. work-around: non-numeric values in Entrez_Gene_Id
-if snek.wildcards["id"] in ["hnsc_mdanderson_2013", "stmyec_wcm_2022", "mixed_pipseq_2017",
-                            "lihc_amc_prv", "skcm_dfci_2015", "stad_pfizer_uhongkong",
-                            "cscc_dfarber_2015", "nhl_bcgsc_2011"]:
-    str_types.append('Entrez_Gene_Id')
+if snek.wildcards["id"] in [
+    "hnsc_mdanderson_2013",
+    "stmyec_wcm_2022",
+    "mixed_pipseq_2017",
+    "lihc_amc_prv",
+    "skcm_dfci_2015",
+    "stad_pfizer_uhongkong",
+    "cscc_dfarber_2015",
+    "nhl_bcgsc_2011",
+]:
+    str_types.append("Entrez_Gene_Id")
 else:
-    int_types.append('Entrez_Gene_Id')
+    int_types.append("Entrez_Gene_Id")
 
 # 4. work-around: non-numeric values for Protein_position
 if snek.wildcards["id"] in ["prostate_dkfz_2018"]:
-    str_types.append('Protein_position')
+    str_types.append("Protein_position")
 
 # 5. work-around: non-numeric values for dbSNP_RS
 if snek.wildcards["id"] in ["cscc_ucsf_2021"]:
-    str_types.append('dbSNP_RS')
+    str_types.append("dbSNP_RS")
 
-dtypes = { x: 'category' for x in cat_fields }
+dtypes = {x: "category" for x in cat_fields}
 
 for itype in int_types:
     dtypes[itype] = "Int64"
@@ -72,15 +95,23 @@ for stype in str_types:
 
 # work-around: problematic lines
 if snek.wildcards["id"] in ["angs_painter_2020", "ccrcc_utokyo_2013"]:
-    mut = pd.read_csv(snek.input[0], sep='\t', comment='#', dtype=dtypes,
-                      engine='python', on_bad_lines='warn')
+    mut = pd.read_csv(
+        snek.input[0],
+        sep="\t",
+        comment="#",
+        dtype=dtypes,
+        engine="python",
+        on_bad_lines="warn",
+    )
 else:
     # low_memory=False: disable the C parser's chunked-read path. With dtype=category on
     # large MAFs (e.g. skcm_tcga_pan_can_atlas_2018 with ~4e5 rows) different chunks can
     # produce categoricals whose category arrays have different dtypes, and the internal
     # union_categoricals then raises "dtype of categories must be the same". Reading the
     # whole file in one pass avoids the union and costs only peak memory.
-    mut = pd.read_csv(snek.input[0], sep='\t', comment='#', dtype=dtypes, low_memory=False)
+    mut = pd.read_csv(
+        snek.input[0], sep="\t", comment="#", dtype=dtypes, low_memory=False
+    )
 
 # work-around: duplicated fields with differing case (e.g. "Codons" / "codons")
 if snek.wildcards["id"] == "aml_ohsu_2018":
@@ -112,7 +143,7 @@ col_mapping = {
     "Transcript_ID": "transcript_id",
     "RefSeq": "refseq",
     "Protein_position": "protein_pos",
-    "Codons": "codons"
+    "Codons": "codons",
 }
 
 mut = mut.rename(columns=col_mapping)
@@ -138,33 +169,35 @@ dtypes = {
     "SAMPLE_CLASS": "category",
     "SAMPLE_TYPE": "category",
     "SAMPLE_TYPE_DETAILED": "category",
-    "SEQ_ASSAY_ID": "category"
+    "SEQ_ASSAY_ID": "category",
 }
 
-sample_mdat = pd.read_csv(snek.input[1], sep='\t', comment='#', dtype=dtypes)
+sample_mdat = pd.read_csv(snek.input[1], sep="\t", comment="#", dtype=dtypes)
 
-sample_mdat = sample_mdat.rename(columns={
-    "AGE_AT_SEQ_REPORT": "age",
-    "CANCER_TYPE": "cancer_type",
-    "CANCER_TYPE_DETAILED": "cancer_type_detailed",
-    "ONCOTREE_CODE": "oncotree_code",
-    "PATIENT_ID": "patient_id",
-    "PRIMARY_SITE": "primary_site",
-    "SAMPLE_CLASS": "sample_class",
-    "SAMPLE_ID": "sample_id",
-    "SAMPLE_TYPE": "sample_type",
-    "SAMPLE_TYPE_DETAILED": "sample_type_detailed",
-    "SEQ_ASSAY_ID": "seq_assay_id"
-})
+sample_mdat = sample_mdat.rename(
+    columns={
+        "AGE_AT_SEQ_REPORT": "age",
+        "CANCER_TYPE": "cancer_type",
+        "CANCER_TYPE_DETAILED": "cancer_type_detailed",
+        "ONCOTREE_CODE": "oncotree_code",
+        "PATIENT_ID": "patient_id",
+        "PRIMARY_SITE": "primary_site",
+        "SAMPLE_CLASS": "sample_class",
+        "SAMPLE_ID": "sample_id",
+        "SAMPLE_TYPE": "sample_type",
+        "SAMPLE_TYPE_DETAILED": "sample_type_detailed",
+        "SEQ_ASSAY_ID": "seq_assay_id",
+    }
+)
 
 # convert age to ordinal (genie)
 if "age" in sample_mdat.columns:
     # there are 6 records where age=17;
     # for simplicity, these are added to the "<18" group
-    sample_mdat.loc[sample_mdat.age.values == '17', "age"] = '<18'
+    sample_mdat.loc[sample_mdat.age.values == "17", "age"] = "<18"
 
     # "Unknown" -> np.nan
-    sample_mdat.loc[sample_mdat.age.values == 'Unknown', "age"] = np.nan
+    sample_mdat.loc[sample_mdat.age.values == "Unknown", "age"] = np.nan
 
     age_levels = ["<18"] + [str(x) for x in range(18, 90)] + [">89"]
     age_cat = CategoricalDtype(categories=age_levels, ordered=True)
@@ -175,15 +208,33 @@ if "age" in sample_mdat.columns:
 # Source columns (MSI_TYPE / MSI_STATUS / MSI_SCORE / MSI_SENSOR_SCORE) are
 # detected case-sensitively in the pre-rename schema — read from the raw
 # file a second time so the original uppercase column names survive.
-msi_source_df = pd.read_csv(snek.input[1], sep='\t', comment='#')
-msi_cols = msi_source_df[[c for c in msi_source_df.columns if c.upper() in (
-    "MSI_TYPE", "MSI_STATUS", "MSI_SCORE", "MSI_SENSOR_SCORE"
-)]]
+msi_source_df = pd.read_csv(snek.input[1], sep="\t", comment="#")
+msi_cols = msi_source_df[
+    [
+        c
+        for c in msi_source_df.columns
+        if c.upper() in ("MSI_TYPE", "MSI_STATUS", "MSI_SCORE", "MSI_SENSOR_SCORE")
+    ]
+]
 msi_cols.columns = [c.upper() for c in msi_cols.columns]
 msi_annotated = normalize_msi_columns(msi_cols)
 sample_mdat["msi_type"] = msi_annotated["msi_type"].to_numpy()
 sample_mdat["msi_score"] = msi_annotated["msi_score"].to_numpy()
 log_msi_type_counts(sample_mdat, study_id=snek.wildcards["id"])
+
+# t070: per-sample panel_id resolution. Matrix file is a conditional input;
+# absence => non-panel study (resolve_panel_ids returns all-NaN).
+study_id = snek.wildcards["id"]
+is_panel_study = study_id in snek.config.get("panel_bearing_studies", [])
+matrix_path = getattr(snek.input, "panel_matrix", None)
+matrix_df = pd.read_csv(matrix_path, sep="\t", dtype=str) if matrix_path else None
+sample_mdat["panel_id"] = resolve_panel_ids(
+    sample_mdat,
+    matrix=matrix_df,
+    study_id=study_id,
+    study_panel_map=snek.config.get("study_panel_map", {}),
+    is_panel_study=is_panel_study,
+).to_numpy()
 
 # save result
 sample_mdat.to_feather(snek.output[1])
@@ -206,42 +257,44 @@ dtypes = {
     "DRUG_TYPE": "category",
     "PATH_M_STAGE": "category",
     "PATH_N_STAGE": "category",
-    "RADIATION_THERAPY": "category"
+    "RADIATION_THERAPY": "category",
 }
 
-patient_mdat = pd.read_csv(snek.input[2], sep='\t', comment='#', dtype=dtypes)
+patient_mdat = pd.read_csv(snek.input[2], sep="\t", comment="#", dtype=dtypes)
 
-patient_mdat = patient_mdat.rename(columns={
-    "PATIENT_ID": "patient_id",
-    "AGE": "age",
-    "SEX": "sex",
-    "RACE": "race",
-    "ETHNICITY": "ethnicity",
-    "OS_STATUS": "os_status",
-    "OS_MONTHS": "os_months",
-    "DFS_STATUS": "dfs_status",
-    "DFS_MONTHS": "dfs_months",
-    "DSS_STATUS": "dss_status",
-    "DSS_MONTHS": "dss_months",
-    "PFS_STATUS": "pfs_status",
-    "PFS_MONTHS": "pfs_months",
-    "SUBTYPE": "subtype",
-    "PATH_M_STAGE": "path_m_stage",
-    "PATH_N_STAGE": "path_n_stage",
-    "HISTOLOGY": "histology",
-    "DRUG_TYPE": "drug_type",
-    "RADIATION_THERAPY": "radiation_therapy",
-    "WEIGHT": "weight"
-})
+patient_mdat = patient_mdat.rename(
+    columns={
+        "PATIENT_ID": "patient_id",
+        "AGE": "age",
+        "SEX": "sex",
+        "RACE": "race",
+        "ETHNICITY": "ethnicity",
+        "OS_STATUS": "os_status",
+        "OS_MONTHS": "os_months",
+        "DFS_STATUS": "dfs_status",
+        "DFS_MONTHS": "dfs_months",
+        "DSS_STATUS": "dss_status",
+        "DSS_MONTHS": "dss_months",
+        "PFS_STATUS": "pfs_status",
+        "PFS_MONTHS": "pfs_months",
+        "SUBTYPE": "subtype",
+        "PATH_M_STAGE": "path_m_stage",
+        "PATH_N_STAGE": "path_n_stage",
+        "HISTOLOGY": "histology",
+        "DRUG_TYPE": "drug_type",
+        "RADIATION_THERAPY": "radiation_therapy",
+        "WEIGHT": "weight",
+    }
+)
 
 # convert age to ordinal (genie)
 if "age" in patient_mdat.columns:
     # there are 6 records where age=17;
     # for simplicity, these are added to the "<18" group
-    patient_mdat.loc[patient_mdat.age.values == '17', "age"] = '<18'
+    patient_mdat.loc[patient_mdat.age.values == "17", "age"] = "<18"
 
     # "Unknown" -> np.nan
-    patient_mdat.loc[patient_mdat.age.values == 'Unknown', "age"] = np.nan
+    patient_mdat.loc[patient_mdat.age.values == "Unknown", "age"] = np.nan
 
     age_levels = ["<18"] + [str(x) for x in range(18, 90)] + [">89"]
     age_cat = CategoricalDtype(categories=age_levels, ordered=True)
@@ -256,12 +309,12 @@ study_mdat = {
     "mutations": mut.shape[0],
     "cancer_types": len(set(sample_mdat.cancer_type)),
     "patients": len(set(sample_mdat.patient_id)),
-    "samples": len(set(sample_mdat.sample_id))
+    "samples": len(set(sample_mdat.sample_id)),
 }
 
-df = pd.DataFrame.from_dict(study_mdat, orient='index')
+df = pd.DataFrame.from_dict(study_mdat, orient="index")
 df = df.reset_index()
 
-df.columns = ['entity', 'num']
+df.columns = ["entity", "num"]
 
 df.to_feather(snek.output[3])

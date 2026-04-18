@@ -53,3 +53,24 @@ def normalize_panel_id(raw: str) -> str:
             "or fix upstream data."
         )
     return canonical
+
+
+SAMPLE_ID_SUFFIX_MAP: dict[str, str] = {
+    "IM3": "MSK-IMPACT-341",
+    "IM5": "MSK-IMPACT-410",
+    "IM6": "MSK-IMPACT-468",
+    "IM7": "MSK-IMPACT-505",
+    "IH3": "MSK-IMPACT-HEME-400",
+}
+
+
+def infer_panel_from_sample_id(sample_id: str) -> str | None:
+    """Parse the trailing ``-IM[3567]`` / ``-IH3`` suffix from an MSK sample id.
+
+    Returns ``None`` if the sample id has no recognized suffix (TCGA / GENIE /
+    other formats). Suffix convention: Cheng 2015 + IMPACT release notes.
+    """
+    if not sample_id:
+        return None
+    suffix = sample_id.rsplit("-", 1)[-1]
+    return SAMPLE_ID_SUFFIX_MAP.get(suffix)

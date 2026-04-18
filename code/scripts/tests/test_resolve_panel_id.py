@@ -62,9 +62,9 @@ def test_infer_panel_from_sample_id_known(sample_id: str, expected: str) -> None
 @pytest.mark.parametrize(
     "sample_id",
     [
-        "TCGA-AB-1234-01",            # TCGA — no IMPACT suffix
-        "P-0000001-T01",              # truncated
-        "P-0000001-T01-XYZ",          # unrecognized suffix
+        "TCGA-AB-1234-01",  # TCGA — no IMPACT suffix
+        "P-0000001-T01",  # truncated
+        "P-0000001-T01-XYZ",  # unrecognized suffix
         "",
     ],
 )

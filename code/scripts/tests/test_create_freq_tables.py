@@ -7,6 +7,7 @@ the cross-study samples_annotated feather carries ``is_hypermutator``.
 """
 
 import pandas as pd
+import pytest
 
 from create_freq_tables import compute_freq_tables
 
@@ -221,3 +222,170 @@ def test_output_feather_shapes_unchanged() -> None:
     assert "cancer_type_detailed" in cancer_detailed_df.columns
     assert "symbol" in gene_df.columns
     assert {"cancer_type", "symbol"} <= set(gene_cancer_df.columns)
+
+
+def test_panel_aware_gene_cancer_denominator() -> None:
+    """t070: when samples are panel-mixed and panel_coverage is supplied, the
+    denominator for a gene off the smaller panel must be reduced by the count
+    of samples on that smaller panel."""
+    muts = _muts(
+        [
+            ("GENE_A", "S1"),  # GENE_A on both panels, mutated in 1 sample
+            ("GENE_B", "S2"),  # GENE_B only on PANEL_BIG, mutated in 1 sample
+        ]
+    )
+    samples = pd.DataFrame(
+        {
+            "sample_id": ["S1", "S2", "S3", "S4"],
+            "cancer_type": ["Cancer A"] * 4,
+            "cancer_type_detailed": ["A detailed"] * 4,
+            "panel_id": ["PANEL_BIG", "PANEL_BIG", "PANEL_SMALL", "PANEL_SMALL"],
+        }
+    )
+    flags = _hypermutator_flags([(s, False) for s in ["S1", "S2", "S3", "S4"]])
+    panel_coverage = pd.DataFrame(
+        {
+            "panel_id": ["PANEL_BIG", "PANEL_BIG", "PANEL_SMALL"],
+            "gene": ["GENE_A", "GENE_B", "GENE_A"],
+        }
+    )
+
+    _, _, _, gene_cancer = compute_freq_tables(
+        muts, samples, flags, panel_coverage=panel_coverage
+    )
+    row_a = gene_cancer.loc[
+        (gene_cancer["cancer_type"] == "Cancer A") & (gene_cancer["symbol"] == "GENE_A")
+    ].iloc[0]
+    row_b = gene_cancer.loc[
+        (gene_cancer["cancer_type"] == "Cancer A") & (gene_cancer["symbol"] == "GENE_B")
+    ].iloc[0]
+    assert row_a["n_samples_inclusive"] == 4  # all panels cover GENE_A
+    assert row_b["n_samples_inclusive"] == 2  # only PANEL_BIG covers GENE_B
+    assert row_a["num_inclusive"] == 1
+    assert row_b["num_inclusive"] == 1
+    assert row_a["ratio_inclusive"] == pytest.approx(1 / 4)
+    assert row_b["ratio_inclusive"] == pytest.approx(1 / 2)
+
+
+def test_panel_coverage_none_preserves_cohort_denominator() -> None:
+    """t070: when panel_coverage=None (WES study), behavior is unchanged."""
+    muts = _muts([("GENE_A", "S1")])
+    samples = pd.DataFrame(
+        {
+            "sample_id": ["S1", "S2"],
+            "cancer_type": ["Cancer A", "Cancer A"],
+            "cancer_type_detailed": ["A detailed", "A detailed"],
+        }
+    )
+    flags = _hypermutator_flags([("S1", False), ("S2", False)])
+    _, _, _, gene_cancer = compute_freq_tables(
+        muts, samples, flags, panel_coverage=None
+    )
+    row = gene_cancer.iloc[0]
+    assert row["n_samples_inclusive"] == 2
+
+
+def test_panel_aware_gene_table_uses_per_gene_denominator() -> None:
+    """t070: gene-keyed table denominator for an off-panel gene is reduced.
+
+    PANEL_SMALL covers GENE_A but not GENE_B; PANEL_BIG covers both.
+    Only PANEL_BIG samples should count toward the GENE_B denominator.
+    """
+    muts = _muts([("GENE_B", "S2")])  # GENE_B only on PANEL_BIG
+    samples = pd.DataFrame(
+        {
+            "sample_id": ["S1", "S2", "S3", "S4"],
+            "cancer_type": ["Cancer A"] * 4,
+            "cancer_type_detailed": ["A detailed"] * 4,
+            "panel_id": ["PANEL_BIG", "PANEL_BIG", "PANEL_SMALL", "PANEL_SMALL"],
+        }
+    )
+    flags = _hypermutator_flags([(s, False) for s in ["S1", "S2", "S3", "S4"]])
+    # PANEL_SMALL appears in coverage (covers GENE_A), but not GENE_B.
+    panel_coverage = pd.DataFrame(
+        {"panel_id": ["PANEL_BIG", "PANEL_SMALL"], "gene": ["GENE_B", "GENE_A"]}
+    )
+
+    _, _, gene_df, _ = compute_freq_tables(
+        muts, samples, flags, panel_coverage=panel_coverage
+    )
+    row = gene_df.loc[gene_df["symbol"] == "GENE_B"].iloc[0]
+    assert row["n_samples_inclusive"] == 2  # only the 2 PANEL_BIG samples
+    assert row["num_inclusive"] == 1
+    assert row["ratio_inclusive"] == pytest.approx(1 / 2)
+
+
+def test_missing_panel_coverage_raises() -> None:
+    """t070 prereq check: a panel_id used in samples but absent from panel_coverage
+    must fail loud."""
+    muts = _muts([("GENE_A", "S1")])
+    samples = pd.DataFrame(
+        {
+            "sample_id": ["S1"],
+            "cancer_type": ["Cancer A"],
+            "cancer_type_detailed": ["A detailed"],
+            "panel_id": ["PANEL_UNKNOWN"],
+        }
+    )
+    flags = _hypermutator_flags([("S1", False)])
+    panel_coverage = pd.DataFrame({"panel_id": ["PANEL_BIG"], "gene": ["GENE_A"]})
+    with pytest.raises(ValueError, match="PANEL_UNKNOWN"):
+        compute_freq_tables(muts, samples, flags, panel_coverage=panel_coverage)
+
+
+def test_off_panel_gene_in_mut_dropped_with_warning(
+    caplog: pytest.LogCaptureFixture,
+) -> None:
+    """t070 spec error handling #6: gene in mut but on no panel → drop + WARNING.
+
+    Use 200 on-panel genes + 1 off-panel gene so the off-panel fraction (0.5%) is
+    below the 1% raise threshold, exercising the warn-and-drop path.
+    """
+    # 200 on-panel genes + 1 off-panel gene → 1/201 ≈ 0.5% < 1% threshold.
+    on_panel_muts = [(f"GENE_{i}", "S1") for i in range(200)]
+    muts = _muts(on_panel_muts + [("GENE_OFF_PANEL", "S2")])
+    samples = pd.DataFrame(
+        {
+            "sample_id": ["S1", "S2", "S3", "S4"],
+            "cancer_type": ["Cancer A"] * 4,
+            "cancer_type_detailed": ["A detailed"] * 4,
+            "panel_id": ["PANEL_BIG"] * 4,
+        }
+    )
+    flags = _hypermutator_flags([(s, False) for s in ["S1", "S2", "S3", "S4"]])
+    panel_coverage = pd.DataFrame(
+        {
+            "panel_id": ["PANEL_BIG"] * 200,
+            "gene": [f"GENE_{i}" for i in range(200)],
+        }
+    )
+
+    import logging
+
+    with caplog.at_level(logging.WARNING):
+        _, _, _, gene_cancer = compute_freq_tables(
+            muts, samples, flags, panel_coverage=panel_coverage
+        )
+
+    # Off-panel gene must be absent from output (not present with NaN ratio).
+    assert "GENE_OFF_PANEL" not in gene_cancer["symbol"].values
+    # Warning must mention the dropped pair.
+    assert any("GENE_OFF_PANEL" in msg for msg in caplog.text.splitlines())
+
+
+def test_off_panel_gene_above_threshold_raises() -> None:
+    """t070 spec: if >1% of mutated pairs have no panel coverage → ValueError."""
+    # 99 off-panel mutations + 1 on-panel = 99% off-panel, way above 1% threshold.
+    muts = _muts([("GENE_A", "S1")] + [(f"OFF_GENE_{i}", "S2") for i in range(99)])
+    samples = pd.DataFrame(
+        {
+            "sample_id": ["S1", "S2"],
+            "cancer_type": ["Cancer A", "Cancer A"],
+            "cancer_type_detailed": ["A detailed", "A detailed"],
+            "panel_id": ["PANEL_BIG", "PANEL_BIG"],
+        }
+    )
+    flags = _hypermutator_flags([("S1", False), ("S2", False)])
+    panel_coverage = pd.DataFrame({"panel_id": ["PANEL_BIG"], "gene": ["GENE_A"]})
+    with pytest.raises(ValueError, match="no panel coverage"):
+        compute_freq_tables(muts, samples, flags, panel_coverage=panel_coverage)

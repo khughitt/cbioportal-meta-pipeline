@@ -46,6 +46,14 @@ matched_normal_studies: []
 # the `cgc_source` column on the canonical annotated feathers.
 cosmic_cgc_path: "/data/raw/cosmic/v100/Cosmic_CancerGeneCensus_v100_GRCh38.tsv"
 
+# Studies whose per-sample panel id is resolved from data_gene_panel_matrix.txt
+# (t070 panel-version drift). No MSK studies in this config, so this is empty.
+panel_bearing_studies: []
+
+# After t070, study_panel_map is a fallback for studies WITHOUT a per-sample
+# data_gene_panel_matrix.txt (e.g., older pre-panel-matrix studies). Studies in
+# `panel_bearing_studies` use per-sample panel resolution via the matrix file
+# instead.
 # Optional per-study panel mapping: {study_id: SEQ_ASSAY_ID from genie_panel_coverage}.
 # Studies listed here are treated as panel-restricted for the callability-annotation pass
 # in create_combined_gene_cancer_freq_table.py. Studies not in this map are treated as WES

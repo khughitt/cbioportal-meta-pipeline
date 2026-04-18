@@ -1007,3 +1007,88 @@
   doi     = {10.1158/1078-0432.CCR-21-1323},
   note    = {Regulatory operationalization of TMB $\geq$10 mut/Mb tissue-agnostic},
 }
+
+% =============================================================================
+% Mutational signature decomposition — unmatched normal context
+% (search: 2026-04-18-signature-decomposition-unmatched-normal)
+% =============================================================================
+
+@article{Jin2024,
+  author  = {Jin, Hu and Gulhan, Doga C. and DRafael, Bernardo and others},
+  title   = {Accurate and sensitive mutational signature analysis with {MuSiCal}},
+  journal = {Nature Genetics},
+  year    = {2024},
+  pmid    = {38361034},
+  doi     = {10.1038/s41588-024-01659-0},
+  note    = {MuSiCal; minimum-volume NMF de novo discovery + NNLS refitting; resolves 9 novel indel signatures absent from prior COSMIC catalogue; disambiguates flat-signature cluster (SBS5/SBS40/SBS8); best performance at high mutation counts (>1000/sample)},
+}
+
+@article{DiazGay2023,
+  author  = {D{\'\i}az-Gay, Marcos and Alexandrov, Ludmil B.},
+  title   = {Assigning mutational signatures to individual samples and individual somatic mutations with {SigProfilerAssignment}},
+  journal = {Bioinformatics},
+  year    = {2023},
+  volume  = {39},
+  number  = {12},
+  pages   = {btad756},
+  pmid    = {38096571},
+  doi     = {10.1093/bioinformatics/btad756},
+  note    = {SigProfilerAssignment; forward stagewise + NNLS; first tool supporting CN signatures and per-mutation probabilistic assignment; outperforms 4 prior approaches on 2700 synthetic cancer genomes},
+}
+
+@article{Degasperi2022,
+  author  = {Degasperi, Andrea and Amarante, Tauanne D. and Czarnecki, Jan and others},
+  title   = {A practical framework and online tool for mutational signature analyses show intertissue variation and driver dependencies},
+  journal = {Nature Cancer},
+  year    = {2020},
+  volume  = {1},
+  pages   = {765--776},
+  pmid    = {32908195},
+  doi     = {10.1038/s43018-020-0027-5},
+  note    = {Signal/SIGNAL practical framework; tissue-stratified signature matrices; tissue-specific signature variation; incorporated into MutationalPatterns v3.x for tissue-prior refitting},
+}
+
+@article{Blokzijl2022,
+  author  = {Blokzijl, Francis and Janssen, Roel and van Boxtel, Ruben and Cuppen, Edwin},
+  title   = {{MutationalPatterns}: the one stop shop for the analysis of mutational processes},
+  journal = {Genome Medicine},
+  year    = {2022},
+  volume  = {14},
+  pages   = {1},
+  pmid    = {35168570},
+  doi     = {10.1186/s13073-021-01008-y},
+  note    = {MutationalPatterns v3 R/Bioconductor package; bootstrapped strict refitting; SIGNAL tissue-specific matrices; SNV + DBS + ID + MBS support},
+}
+
+@article{Nguyen2022CUPLR,
+  author  = {Nguyen, Luan and Van Hoeck, Arne and Cuppen, Edwin},
+  title   = {Machine learning-based tissue of origin classification for cancer of unknown primary diagnostics using genome-wide mutation features},
+  journal = {Nature Communications},
+  year    = {2022},
+  volume  = {13},
+  pages   = {4013},
+  pmid    = {35817764},
+  doi     = {10.1038/s41467-022-31666-w},
+  note    = {CUPLR random forest TOO classifier; 511 features (SBS signatures + RMD + SV); 35 cancer subtypes; 90\% precision/recall; 6756 WGS tumors; requires WGS; cosine-similarity heuristic applicable to panel studies},
+}
+
+@article{Rosenthal2016,
+  author  = {Rosenthal, Rachel and McGranahan, Nicholas and Herrero, Javier and Taylor, Barry S. and Swanton, Charles},
+  title   = {{deconstructSigs}: delineating mutational processes in single tumors distinguishes {DNA} repair deficiencies and patterns of carcinoma evolution},
+  journal = {Genome Biology},
+  year    = {2016},
+  volume  = {17},
+  pages   = {31},
+  pmid    = {26899170},
+  doi     = {10.1186/s13059-016-0893-4},
+  note    = {deconstructSigs threshold-based NNLS refitting; legacy tool; benchmarking shows lower-half performance vs SigProfilerAssignment/MuSiCal for low-mutation-count samples},
+}
+
+@article{Lochovsky2024,
+  author  = {Lochovsky, Lucas and others},
+  title   = {A comprehensive comparison of tools for fitting mutational signatures},
+  journal = {Nature Communications},
+  year    = {2024},
+  doi     = {10.1038/s41467-024-53711-6},
+  note    = {Benchmarking 12 signature fitting tools on empirically-driven synthetic catalogs; SigProfilerSingleSample best for $<$1000 mutations/sample; SigProfilerAssignment/MuSiCal best for $>$1000; deconstructSigs lower half across conditions},
+}

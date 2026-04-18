@@ -25,18 +25,29 @@ denominators: only samples whose panel covers that gene count toward
 ``n_samples_inclusive`` / ``n_samples_exclusive``. Cancer-only tables
 (``cancer.feather``, ``cancer_detailed.feather``) are unchanged.
 
+Per the t070 design spec (error handling item 6): when a gene appears in a
+study's mutation table but on zero of the study's per-sample panels (mutation
+called outside panel intervals — should be rare), the (cancer, gene) row is
+dropped from that study with a WARNING. If the dropped-row count exceeds 1% of
+the study's mutated (cancer, gene) pairs, a ValueError is raised instead.
+
 Inputs
 ------
-- ``snakemake.input[0]`` : per-study ``mut_filtered.feather``
-- ``snakemake.input[1]`` : per-study ``samples.feather``
+- ``snakemake.input.mutations`` : per-study ``mut_filtered.feather``
+- ``snakemake.input.samples`` : per-study ``samples.feather``
 - ``snakemake.input.samples_annotated`` : cross-study ``samples_annotated.feather``
   produced by ``annotate_hypermutators``. The per-study step filters this by
   matching ``sample_id``.
 - ``snakemake.input.panel_coverage`` : (optional) ``genie_panel_coverage.feather``
   produced by ``process_genie_panel_coverage``; columns ``panel_id`` and ``gene``.
+  Only present when ``panel_bearing_studies`` is non-empty in the run config.
 """
 
+import logging
+
 import pandas as pd
+
+logger = logging.getLogger("create_freq_tables")
 
 
 def compute_freq_tables(
@@ -225,8 +236,50 @@ def _build_gene_table(
             .groupby("symbol", observed=True)["sample_id"]
             .nunique()
         )
-        df["n_samples_inclusive"] = df.index.map(n_inclusive).fillna(0).astype(int)
-        df["n_samples_exclusive"] = df.index.map(n_exclusive).fillna(0).astype(int)
+
+        # t070 spec error handling #6: genes in mut but absent from the panel-coverage
+        # denominator (n_inclusive) have zero callable samples — drop them.
+        mut_keys = set(num_inclusive.index)
+        denom_keys = set(n_inclusive.index)
+        off_panel_keys = mut_keys - denom_keys
+
+        if off_panel_keys:
+            total_mut = len(mut_keys)
+            fraction = len(off_panel_keys) / total_mut if total_mut else 0.0
+            msg_keys = sorted(off_panel_keys)[:10]
+            if fraction > 0.01:
+                raise ValueError(
+                    f"Panel-aware aggregation: {len(off_panel_keys)} of {total_mut} "
+                    f"gene symbols in mutation table have no panel coverage "
+                    f"({fraction:.1%} > 1% threshold). First 10: {msg_keys!r}. "
+                    "This indicates a systematic ingestion problem (mutations called "
+                    "outside panel intervals); investigate upstream."
+                )
+            logger.warning(
+                "Panel-aware aggregation: dropping %d gene symbol(s) from mutation "
+                "table that have no panel coverage in this study (first 10: %s).",
+                len(off_panel_keys),
+                msg_keys,
+            )
+
+        # Build output by inner-joining num and denom on n_inclusive.index (denom pivot).
+        df = pd.DataFrame(
+            {
+                "num_inclusive": num_inclusive.reindex(n_inclusive.index, fill_value=0),
+                "num_exclusive": num_exclusive.reindex(n_inclusive.index, fill_value=0),
+                "n_samples_inclusive": n_inclusive,
+                "n_samples_exclusive": n_exclusive.reindex(
+                    n_inclusive.index, fill_value=0
+                ),
+            }
+        ).astype(
+            {
+                "num_inclusive": int,
+                "num_exclusive": int,
+                "n_samples_inclusive": int,
+                "n_samples_exclusive": int,
+            }
+        )
     else:
         n_inclusive = samples_with_flag["sample_id"].nunique()
         n_exclusive = samples_with_flag.loc[
@@ -279,11 +332,6 @@ def _build_gene_cancer_table(
         .nunique()
     )
 
-    df = pd.DataFrame(
-        {"num_inclusive": num_inclusive, "num_exclusive": num_exclusive}
-    ).fillna(0)
-    df = df.astype(int).reset_index()
-
     if use_panel_path:
         callable_pairs = (
             panel_coverage[["panel_id", "gene"]]
@@ -291,29 +339,72 @@ def _build_gene_cancer_table(
             .rename(columns={"gene": "symbol"})
         )
         panel_gene_samples = samples_with_flag.merge(callable_pairs, on="panel_id")
-        n_inclusive_by_cancer_gene = panel_gene_samples.groupby(
+        n_inclusive = panel_gene_samples.groupby(
             ["cancer_type", "symbol"], observed=True
         )["sample_id"].nunique()
-        n_exclusive_by_cancer_gene = (
+        n_exclusive = (
             panel_gene_samples.loc[~panel_gene_samples["is_hypermutator"]]
             .groupby(["cancer_type", "symbol"], observed=True)["sample_id"]
             .nunique()
         )
-        df["n_samples_inclusive"] = (
-            df.set_index(["cancer_type", "symbol"])
-            .index.map(n_inclusive_by_cancer_gene)
-            .fillna(0)
-            .astype(int)
-            .values
-        )
-        df["n_samples_exclusive"] = (
-            df.set_index(["cancer_type", "symbol"])
-            .index.map(n_exclusive_by_cancer_gene)
-            .fillna(0)
-            .astype(int)
-            .values
+
+        # t070 spec error handling #6: (cancer, gene) pairs in mut but absent from
+        # the panel-coverage denominator (n_inclusive) have zero callable samples —
+        # drop them per spec, warn, or raise if the fraction exceeds 1%.
+        mut_keys = set(num_inclusive.index)
+        denom_keys = set(n_inclusive.index)
+        off_panel_keys = mut_keys - denom_keys
+
+        if off_panel_keys:
+            total_mut_pairs = len(mut_keys)
+            fraction = len(off_panel_keys) / total_mut_pairs if total_mut_pairs else 0.0
+            msg_keys = sorted(off_panel_keys)[:10]
+            if fraction > 0.01:
+                raise ValueError(
+                    f"Panel-aware aggregation: {len(off_panel_keys)} of {total_mut_pairs} "
+                    f"(cancer, gene) pairs in mutation table have no panel coverage "
+                    f"({fraction:.1%} > 1% threshold). First 10: {msg_keys!r}. "
+                    "This indicates a systematic ingestion problem (mutations called outside "
+                    "panel intervals); investigate upstream."
+                )
+            logger.warning(
+                "Panel-aware aggregation: dropping %d (cancer, gene) pairs from mutation "
+                "table that have no panel coverage in this study (first 10: %s).",
+                len(off_panel_keys),
+                msg_keys,
+            )
+
+        # Build output by inner-joining num and denom on n_inclusive.index (denom pivot).
+        df = (
+            pd.DataFrame(
+                {
+                    "num_inclusive": num_inclusive.reindex(
+                        n_inclusive.index, fill_value=0
+                    ),
+                    "num_exclusive": num_exclusive.reindex(
+                        n_inclusive.index, fill_value=0
+                    ),
+                    "n_samples_inclusive": n_inclusive,
+                    "n_samples_exclusive": n_exclusive.reindex(
+                        n_inclusive.index, fill_value=0
+                    ),
+                }
+            )
+            .astype(
+                {
+                    "num_inclusive": int,
+                    "num_exclusive": int,
+                    "n_samples_inclusive": int,
+                    "n_samples_exclusive": int,
+                }
+            )
+            .reset_index()
         )
     else:
+        df = pd.DataFrame(
+            {"num_inclusive": num_inclusive, "num_exclusive": num_exclusive}
+        ).fillna(0)
+        df = df.astype(int).reset_index()
         n_inclusive_by_cancer = samples_with_flag.groupby("cancer_type", observed=True)[
             "sample_id"
         ].nunique()
@@ -348,8 +439,8 @@ def _safe_ratio(numerator: pd.Series, denominator: pd.Series) -> pd.Series:
 
 def _run_via_snakemake() -> None:
     snek = snakemake  # type: ignore[name-defined]  # noqa: F821
-    mutations = pd.read_feather(snek.input[0])
-    samples = pd.read_feather(snek.input[1])
+    mutations = pd.read_feather(snek.input.mutations)
+    samples = pd.read_feather(snek.input.samples)
     samples_annotated = pd.read_feather(snek.input.samples_annotated)
 
     if "is_hypermutator" not in samples_annotated.columns:

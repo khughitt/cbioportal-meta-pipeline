@@ -299,12 +299,27 @@ rule create_gene_cancer_mutation_count_matrix:
   script:
     "../scripts/create_gene_cancer_mutation_count_matrix.py"
 
+def _create_freq_tables_inputs(wildcards):
+    """Conditional: panel_coverage is required only when there are panel-bearing studies.
+
+    Mirrors _convert_to_feather_inputs (Task 4 pattern). Even though
+    genie_panel_coverage.feather is currently transitively required by the rest of the
+    DAG via build_panel_callable_sizes → samples_tmb → samples_annotated, declaring it
+    conditional here keeps the rule honest about what it actually consumes.
+    """
+    base = {
+        "mutations": out_dir.joinpath(f"studies/{wildcards.id}/mut/table/mut_filtered.feather"),
+        "samples": out_dir.joinpath(f"studies/{wildcards.id}/metadata/samples.feather"),
+        "samples_annotated": out_dir.joinpath("metadata/samples_annotated.feather"),
+    }
+    if config.get("panel_bearing_studies", []):
+        base["panel_coverage"] = out_dir.joinpath("metadata/genie_panel_coverage.feather")
+    return base
+
+
 rule create_freq_tables:
   input:
-    out_dir.joinpath("studies/{id}/mut/table/mut_filtered.feather"),
-    out_dir.joinpath("studies/{id}/metadata/samples.feather"),
-    samples_annotated = out_dir.joinpath("metadata/samples_annotated.feather"),
-    panel_coverage = out_dir.joinpath("metadata/genie_panel_coverage.feather")
+    unpack(_create_freq_tables_inputs)
   output:
     out_dir.joinpath("studies/{id}/mut/table/cancer_study.feather"),
     out_dir.joinpath("studies/{id}/mut/table/cancer_detailed_study.feather"),

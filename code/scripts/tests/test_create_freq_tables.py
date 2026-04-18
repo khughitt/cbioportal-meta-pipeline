@@ -331,3 +331,61 @@ def test_missing_panel_coverage_raises() -> None:
     panel_coverage = pd.DataFrame({"panel_id": ["PANEL_BIG"], "gene": ["GENE_A"]})
     with pytest.raises(ValueError, match="PANEL_UNKNOWN"):
         compute_freq_tables(muts, samples, flags, panel_coverage=panel_coverage)
+
+
+def test_off_panel_gene_in_mut_dropped_with_warning(
+    caplog: pytest.LogCaptureFixture,
+) -> None:
+    """t070 spec error handling #6: gene in mut but on no panel → drop + WARNING.
+
+    Use 200 on-panel genes + 1 off-panel gene so the off-panel fraction (0.5%) is
+    below the 1% raise threshold, exercising the warn-and-drop path.
+    """
+    # 200 on-panel genes + 1 off-panel gene → 1/201 ≈ 0.5% < 1% threshold.
+    on_panel_muts = [(f"GENE_{i}", "S1") for i in range(200)]
+    muts = _muts(on_panel_muts + [("GENE_OFF_PANEL", "S2")])
+    samples = pd.DataFrame(
+        {
+            "sample_id": ["S1", "S2", "S3", "S4"],
+            "cancer_type": ["Cancer A"] * 4,
+            "cancer_type_detailed": ["A detailed"] * 4,
+            "panel_id": ["PANEL_BIG"] * 4,
+        }
+    )
+    flags = _hypermutator_flags([(s, False) for s in ["S1", "S2", "S3", "S4"]])
+    panel_coverage = pd.DataFrame(
+        {
+            "panel_id": ["PANEL_BIG"] * 200,
+            "gene": [f"GENE_{i}" for i in range(200)],
+        }
+    )
+
+    import logging
+
+    with caplog.at_level(logging.WARNING):
+        _, _, _, gene_cancer = compute_freq_tables(
+            muts, samples, flags, panel_coverage=panel_coverage
+        )
+
+    # Off-panel gene must be absent from output (not present with NaN ratio).
+    assert "GENE_OFF_PANEL" not in gene_cancer["symbol"].values
+    # Warning must mention the dropped pair.
+    assert any("GENE_OFF_PANEL" in msg for msg in caplog.text.splitlines())
+
+
+def test_off_panel_gene_above_threshold_raises() -> None:
+    """t070 spec: if >1% of mutated pairs have no panel coverage → ValueError."""
+    # 99 off-panel mutations + 1 on-panel = 99% off-panel, way above 1% threshold.
+    muts = _muts([("GENE_A", "S1")] + [(f"OFF_GENE_{i}", "S2") for i in range(99)])
+    samples = pd.DataFrame(
+        {
+            "sample_id": ["S1", "S2"],
+            "cancer_type": ["Cancer A", "Cancer A"],
+            "cancer_type_detailed": ["A detailed", "A detailed"],
+            "panel_id": ["PANEL_BIG", "PANEL_BIG"],
+        }
+    )
+    flags = _hypermutator_flags([("S1", False), ("S2", False)])
+    panel_coverage = pd.DataFrame({"panel_id": ["PANEL_BIG"], "gene": ["GENE_A"]})
+    with pytest.raises(ValueError, match="no panel coverage"):
+        compute_freq_tables(muts, samples, flags, panel_coverage=panel_coverage)

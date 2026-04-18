@@ -102,13 +102,25 @@ def resolve_panel_ids(
 
     sample_ids = samples["sample_id"].astype(str)
 
+    def _normalize_with_context(raw: object, sample_id: str) -> str:
+        try:
+            return normalize_panel_id(str(raw))
+        except ValueError as exc:
+            raise ValueError(
+                f"matrix for study {study_id!r}: sample {sample_id!r} has "
+                f"unrecognized panel {raw!r}"
+            ) from exc
+
     matrix_lookup: dict[str, str] = {}
     if matrix is not None and not matrix.empty:
-        sid_col = "SAMPLE_ID" if "SAMPLE_ID" in matrix.columns else matrix.columns[0]
-        mut_col = "mutations" if "mutations" in matrix.columns else matrix.columns[1]
+        if "SAMPLE_ID" not in matrix.columns or "mutations" not in matrix.columns:
+            raise ValueError(
+                f"matrix must have 'SAMPLE_ID' and 'mutations' columns; "
+                f"got {list(matrix.columns)}"
+            )
         matrix_lookup = {
-            str(s): normalize_panel_id(str(p))
-            for s, p in zip(matrix[sid_col], matrix[mut_col], strict=False)
+            str(s): _normalize_with_context(p, str(s))
+            for s, p in zip(matrix["SAMPLE_ID"], matrix["mutations"], strict=True)
             if pd.notna(p) and str(p).strip()
         }
 

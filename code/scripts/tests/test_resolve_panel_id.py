@@ -166,3 +166,29 @@ def test_matrix_takes_precedence_over_suffix() -> None:
         is_panel_study=True,
     )
     assert list(result) == ["MSK-IMPACT-468"]
+
+
+def test_matrix_with_unrecognized_panel_raises_with_context() -> None:
+    samples = _samples(["P-X-T01-IM3"])
+    matrix = _matrix([("P-X-T01-IM3", "FOUNDATIONONE-CDX")])
+    with pytest.raises(ValueError, match="P-X-T01-IM3.*FOUNDATIONONE-CDX"):
+        resolve_panel_ids(
+            samples,
+            matrix=matrix,
+            study_id="msk_impact_2017",
+            study_panel_map={},
+            is_panel_study=True,
+        )
+
+
+def test_matrix_missing_required_columns_raises() -> None:
+    samples = _samples(["P-1-T01-IM3"])
+    bad_matrix = pd.DataFrame({"WRONG_COL": ["P-1-T01-IM3"], "OTHER": ["IMPACT341"]})
+    with pytest.raises(ValueError, match="must have 'SAMPLE_ID' and 'mutations'"):
+        resolve_panel_ids(
+            samples,
+            matrix=bad_matrix,
+            study_id="msk_impact_2017",
+            study_panel_map={},
+            is_panel_study=True,
+        )

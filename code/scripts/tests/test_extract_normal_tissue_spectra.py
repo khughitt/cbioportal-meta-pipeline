@@ -249,9 +249,9 @@ def _synthetic_context_df(donor_counts: dict[str, dict[str, int]]) -> pd.DataFra
     donor_counts: {donor_id: {context: count, ...}}
     Contexts not listed default to 0.
     """
-    rows = []
+    rows: list[dict[str, object]] = []
     for donor, ctx_counts in donor_counts.items():
-        row = {ctx: 0 for ctx in CONTEXT_96}
+        row: dict[str, object] = {ctx: 0 for ctx in CONTEXT_96}
         row.update(ctx_counts)
         row["donor_id"] = donor
         rows.append(row)

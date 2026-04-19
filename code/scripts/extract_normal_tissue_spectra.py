@@ -198,12 +198,12 @@ def aggregate_pooled_counts(per_donor_ctx: pd.DataFrame) -> dict[str, object]:
     Input: per-donor DataFrame with 96 context columns + 'donor_id'.
     Output: dict with 96 context columns (int), 'total_snvs' (int), 'n_donors' (int).
     """
-    totals: dict[str, object] = {
+    context_counts: dict[str, int] = {
         ctx: int(per_donor_ctx[ctx].sum()) for ctx in CONTEXT_96
     }
-    totals["total_snvs"] = sum(int(v) for v in (totals[ctx] for ctx in CONTEXT_96))
-    totals["n_donors"] = int(per_donor_ctx["donor_id"].nunique())
-    return totals
+    total_snvs: int = sum(context_counts.values())
+    n_donors: int = int(per_donor_ctx["donor_id"].nunique())
+    return {**context_counts, "total_snvs": total_snvs, "n_donors": n_donors}
 
 
 def _run_via_snakemake() -> None:

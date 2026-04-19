@@ -585,6 +585,41 @@ def test_write_burden_tsv_column_order(tmp_path: Path) -> None:
     assert list(df.columns) == BURDEN_COLUMNS
 
 
+FIXTURES_DIR = Path(__file__).resolve().parent / "fixtures"
+
+
+@pytest.mark.slow
+def test_end_to_end_with_real_sigprofiler_grch37() -> None:
+    """Full extraction on a tiny fixture using the real SigProfiler reference lookup.
+
+    Validates:
+    - 96 context columns actually computed (non-zero counts)
+    - pooled_counts total_snvs matches input variant count
+    - spectra / burden schemas round-trip
+    """
+    spectra_rows, burden_rows = extract_for_source(
+        source="li2021",
+        variants_tsv=FIXTURES_DIR / "li2021_fixture.tsv",
+        mapping_tsv=FIXTURES_DIR / "mapping_fixture.tsv",
+        low_snv_threshold=2,
+    )
+
+    # Two tissues × (1 pooled + 1 averaged + 2 per-donor) = 8 spectra rows
+    assert len(spectra_rows) == 8
+    # Two tissues × (1 pooled + 2 per-donor) = 6 burden rows
+    assert len(burden_rows) == 6
+
+    liver_pooled = next(
+        r
+        for r in spectra_rows
+        if r["tissue_label"] == "Liver" and r["aggregation"] == "pooled_counts"
+    )
+    assert liver_pooled["total_snvs"] == 6
+    # All 6 liver variants were C>A or T>C — expect non-zero in those context families
+    ctx_sum = sum(liver_pooled[ctx] for ctx in CONTEXT_96)
+    assert ctx_sum == 6
+
+
 def test_extract_for_source_emits_spectra_and_burden_rows(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:

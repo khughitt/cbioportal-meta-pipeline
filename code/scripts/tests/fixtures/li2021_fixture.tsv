@@ -1,0 +1,10 @@
+donor_id	tissue_label	sample_id	chrom	pos	ref	alt
+PN1	Liver	PN1-L-1	chr1	1000000	C	A
+PN1	Liver	PN1-L-1	chr1	2000000	C	A
+PN1	Liver	PN1-L-1	chr1	3000000	C	A
+PN2	Liver	PN2-L-1	chr1	4000000	T	C
+PN2	Liver	PN2-L-1	chr1	5000000	T	C
+PN2	Liver	PN2-L-1	chr1	6000000	T	C
+PN1	Esophagus	PN1-E-1	chr2	1000000	C	T
+PN2	Esophagus	PN2-E-1	chr2	2000000	C	T
+PN2	Esophagus	PN2-E-1	chr2	3000000	C	T

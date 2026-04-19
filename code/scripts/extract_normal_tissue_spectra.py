@@ -47,6 +47,11 @@ def validate_input_contract(
         raise ValueError(f"{source}: missing required columns {sorted(missing)}")
 
     df = df.copy()
+    # TODO(t111-followup): assert chrom/pos ranges match the declared assembly.
+    # Design spec §Input contract requires this check but defers encoding of
+    # per-chromosome lengths for GRCh37/GRCh38. For now, `assembly` is accepted
+    # and preserved on the stats object for audit, but no range check is applied.
+    _ = assembly  # noqa: ARG001 — preserved for stats + future assembly range-check
     df["chrom"] = df["chrom"].astype(str).apply(lambda c: c if c.startswith("chr") else f"chr{c}")
     df["ref"] = df["ref"].astype(str)
     df["alt"] = df["alt"].astype(str)

@@ -8,7 +8,7 @@ import pytest
 from extract_normal_tissue_spectra import validate_input_contract
 
 
-def _df(**cols: list) -> pd.DataFrame:
+def _df(**cols: list[object]) -> pd.DataFrame:
     return pd.DataFrame(cols)
 
 
@@ -68,6 +68,17 @@ def test_contract_dedups_exact_duplicates() -> None:
 def test_contract_keeps_cross_donor_duplicates() -> None:
     df = _df(
         donor_id=["D1", "D2"], tissue_label=["Liver", "Liver"],
+        chrom=["chr1", "chr1"], pos=[1000, 1000],
+        ref=["A", "A"], alt=["C", "C"],
+    )
+    cleaned, stats = validate_input_contract(df, source="li2021", assembly="GRCh37")
+    assert len(cleaned) == 2
+    assert stats["n_duplicates_collapsed"] == 0
+
+
+def test_contract_keeps_cross_tissue_duplicates() -> None:
+    df = _df(
+        donor_id=["D1", "D1"], tissue_label=["Liver", "Esophagus"],
         chrom=["chr1", "chr1"], pos=[1000, 1000],
         ref=["A", "A"], alt=["C", "C"],
     )

@@ -616,7 +616,7 @@ def test_end_to_end_with_real_sigprofiler_grch37() -> None:
     )
     assert liver_pooled["total_snvs"] == 6
     # All 6 liver variants were C>A or T>C — expect non-zero in those context families
-    ctx_sum = sum(liver_pooled[ctx] for ctx in CONTEXT_96)
+    ctx_sum = sum(int(liver_pooled[ctx]) for ctx in CONTEXT_96)  # type: ignore[arg-type]
     assert ctx_sum == 6
 
 

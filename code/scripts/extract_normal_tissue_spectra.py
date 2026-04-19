@@ -279,7 +279,11 @@ def aggregate_pooled_burden(variants_df: pd.DataFrame) -> dict[str, object]:
     snvs: int = int(len(variants_df))
     n_donors: int = int(variants_df["donor_id"].nunique())
     n_samples: int = int(variants_df["sample_id"].nunique())
-    snvs_per_mb: float = snvs / callable_mb / max(n_samples, 1)
+    if n_samples == 0:
+        raise ValueError(
+            "aggregate_pooled_burden: n_samples is 0 (empty or all-NaN sample_id)"
+        )
+    snvs_per_mb: float = snvs / callable_mb / n_samples
     return {
         "snvs": snvs,
         "n_donors": n_donors,
@@ -303,13 +307,17 @@ def aggregate_per_donor_burden_rows(
         callable_mb = float(callable_values[0])
         n_samples: int = int(grp["sample_id"].nunique())
         snvs: int = int(len(grp))
+        if n_samples == 0:
+            raise ValueError(
+                f"aggregate_per_donor_burden_rows: donor {donor_id} has n_samples=0"
+            )
         rows.append(
             {
                 "donor_id": str(donor_id),
                 "snvs": snvs,
                 "n_samples": n_samples,
                 "callable_mb": callable_mb,
-                "snvs_per_mb": float(snvs / callable_mb / max(n_samples, 1)),
+                "snvs_per_mb": float(snvs / callable_mb / n_samples),
             }
         )
     return rows

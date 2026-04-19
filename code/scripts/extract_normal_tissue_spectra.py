@@ -215,6 +215,43 @@ def aggregate_pooled_counts(per_donor_ctx: pd.DataFrame) -> dict[str, int]:
     return {**context_counts, "total_snvs": total_snvs, "n_donors": n_donors}
 
 
+def aggregate_donor_averaged_fraction(
+    per_donor_ctx: pd.DataFrame, threshold: int = 50
+) -> tuple[dict[str, float], dict[str, int]]:
+    """Normalise each donor's 96-vector to a fraction, then average across donors.
+
+    Donors with fewer than `threshold` SNVs are excluded from the average.
+
+    Returns (row_dict, audit_dict). audit_dict has n_donors_total,
+    n_donors_included, n_donors_excluded_low_snvs, low_snv_threshold.
+    """
+    n_total = int(per_donor_ctx["donor_id"].nunique())
+    totals = per_donor_ctx[list(CONTEXT_96)].sum(axis=1)
+    include_mask = totals >= threshold
+    n_incl = int(include_mask.sum())
+    n_excl = n_total - n_incl
+
+    audit: dict[str, int] = {
+        "n_donors_total": n_total,
+        "n_donors_included": n_incl,
+        "n_donors_excluded_low_snvs": n_excl,
+        "low_snv_threshold": threshold,
+    }
+
+    if n_incl == 0:
+        return {ctx: 0.0 for ctx in CONTEXT_96}, audit
+
+    included = per_donor_ctx.loc[include_mask, list(CONTEXT_96)]
+    totals_incl = included.sum(axis=1).to_numpy()
+    fractions = included.to_numpy() / totals_incl[:, None]
+    averaged = fractions.mean(axis=0)
+
+    # Re-normalize to guard against floating-point drift
+    averaged = averaged / averaged.sum()
+
+    return {ctx: float(averaged[i]) for i, ctx in enumerate(CONTEXT_96)}, audit
+
+
 def _run_via_snakemake() -> None:
     snek = snakemake  # type: ignore[name-defined]  # noqa: F821 F841
     # (Task 13 fills in the body)

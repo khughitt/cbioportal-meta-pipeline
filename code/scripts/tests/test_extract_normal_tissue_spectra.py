@@ -10,6 +10,7 @@ import pytest
 
 from extract_normal_tissue_spectra import (
     CONTEXT_96,
+    aggregate_donor_averaged_fraction,
     aggregate_pooled_counts,
     attach_assay_metadata,
     attach_uberon,
@@ -283,3 +284,47 @@ def test_pooled_counts_is_column_wise_sum_across_donors() -> None:
     assert row["T[T>G]T"] == 9
     assert row["total_snvs"] == 18
     assert row["n_donors"] == 3
+
+
+def test_donor_averaged_fraction_sums_to_one() -> None:
+    per_donor = _synthetic_context_df(
+        {
+            "D1": {"A[C>A]A": 4, "T[T>G]T": 6},  # 10 total
+            "D2": {"A[C>A]A": 8, "T[T>G]T": 2},  # 10 total
+        }
+    )
+    row, audit = aggregate_donor_averaged_fraction(per_donor, threshold=2)
+    total = sum(row[ctx] for ctx in CONTEXT_96)
+    assert total == pytest.approx(1.0, abs=1e-9)
+    # D1 fraction: 0.4/0.6; D2: 0.8/0.2 → averaged: 0.6/0.4
+    assert row["A[C>A]A"] == pytest.approx(0.6, abs=1e-9)
+    assert row["T[T>G]T"] == pytest.approx(0.4, abs=1e-9)
+    assert audit["n_donors_included"] == 2
+    assert audit["n_donors_excluded_low_snvs"] == 0
+
+
+def test_donor_averaged_fraction_excludes_low_snv_donors() -> None:
+    per_donor = _synthetic_context_df(
+        {
+            "D1": {"A[C>A]A": 50, "T[T>G]T": 50},  # 100 total — included
+            "D2": {"A[C>A]A": 49},  # 49 total — excluded at threshold=50
+        }
+    )
+    row, audit = aggregate_donor_averaged_fraction(per_donor, threshold=50)
+    assert audit["n_donors_included"] == 1
+    assert audit["n_donors_excluded_low_snvs"] == 1
+    assert row["A[C>A]A"] == pytest.approx(0.5, abs=1e-9)
+    assert row["T[T>G]T"] == pytest.approx(0.5, abs=1e-9)
+
+
+def test_donor_averaged_fraction_empty_when_all_excluded() -> None:
+    per_donor = _synthetic_context_df(
+        {
+            "D1": {"A[C>A]A": 10},
+            "D2": {"T[T>G]T": 5},
+        }
+    )
+    row, audit = aggregate_donor_averaged_fraction(per_donor, threshold=50)
+    assert audit["n_donors_included"] == 0
+    assert audit["n_donors_excluded_low_snvs"] == 2
+    assert sum(row[ctx] for ctx in CONTEXT_96) == 0.0

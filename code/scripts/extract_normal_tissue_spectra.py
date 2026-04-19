@@ -264,6 +264,57 @@ def aggregate_per_donor_rows(per_donor_ctx: pd.DataFrame) -> list[dict[str, obje
     return rows
 
 
+def aggregate_pooled_burden(variants_df: pd.DataFrame) -> dict[str, object]:
+    """Pooled per-tissue burden. Expects per-variant rows with donor_id, sample_id,
+    callable_mb (constant per tissue, enforced).
+
+    snvs_per_mb = snvs / callable_mb / n_samples (per-sample rate).
+    """
+    callable_values = variants_df["callable_mb"].unique()
+    if len(callable_values) != 1:
+        raise ValueError(
+            f"aggregate_pooled_burden: mixed callable_mb values {sorted(callable_values)}"
+        )
+    callable_mb = float(callable_values[0])
+    snvs: int = int(len(variants_df))
+    n_donors: int = int(variants_df["donor_id"].nunique())
+    n_samples: int = int(variants_df["sample_id"].nunique())
+    snvs_per_mb: float = snvs / callable_mb / max(n_samples, 1)
+    return {
+        "snvs": snvs,
+        "n_donors": n_donors,
+        "n_samples": n_samples,
+        "callable_mb": callable_mb,
+        "snvs_per_mb": float(snvs_per_mb),
+    }
+
+
+def aggregate_per_donor_burden_rows(
+    variants_df: pd.DataFrame,
+) -> list[dict[str, object]]:
+    """Per-donor burden rows. Assumes callable_mb constant per donor."""
+    rows: list[dict[str, object]] = []
+    for donor_id, grp in variants_df.groupby("donor_id"):
+        callable_values = grp["callable_mb"].unique()
+        if len(callable_values) != 1:
+            raise ValueError(
+                f"aggregate_per_donor_burden_rows: donor {donor_id} has mixed callable_mb"
+            )
+        callable_mb = float(callable_values[0])
+        n_samples: int = int(grp["sample_id"].nunique())
+        snvs: int = int(len(grp))
+        rows.append(
+            {
+                "donor_id": str(donor_id),
+                "snvs": snvs,
+                "n_samples": n_samples,
+                "callable_mb": callable_mb,
+                "snvs_per_mb": float(snvs / callable_mb / max(n_samples, 1)),
+            }
+        )
+    return rows
+
+
 def _run_via_snakemake() -> None:
     snek = snakemake  # type: ignore[name-defined]  # noqa: F821 F841
     # (Task 13 fills in the body)

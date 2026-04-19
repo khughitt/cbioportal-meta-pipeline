@@ -11,7 +11,9 @@ import pytest
 from extract_normal_tissue_spectra import (
     CONTEXT_96,
     aggregate_donor_averaged_fraction,
+    aggregate_per_donor_burden_rows,
     aggregate_per_donor_rows,
+    aggregate_pooled_burden,
     aggregate_pooled_counts,
     attach_assay_metadata,
     attach_uberon,
@@ -346,3 +348,50 @@ def test_per_donor_rows_one_row_per_donor_with_counts() -> None:
     assert by_donor["D1"]["total_snvs"] == 3
     assert by_donor["D2"]["T[T>G]T"] == 5
     assert by_donor["D3"]["total_snvs"] == 3
+
+
+def _burden_input_df(rows: list[tuple[str, int]]) -> pd.DataFrame:
+    """rows: list of (donor_id, n_snvs). Returns a per-variant-style df
+    with callable_mb=50.0, one sample_id per donor."""
+    data = []
+    for donor_id, n in rows:
+        for _ in range(n):
+            data.append(
+                {
+                    "donor_id": donor_id,
+                    "callable_mb": 50.0,
+                    "sample_id": f"{donor_id}-1",
+                }
+            )
+    return pd.DataFrame(data)
+
+
+def test_pooled_burden_snvs_per_mb_computation() -> None:
+    df = _burden_input_df([("D1", 100), ("D2", 200)])
+    row = aggregate_pooled_burden(df)
+    assert row["snvs"] == 300
+    assert row["n_donors"] == 2
+    assert row["n_samples"] == 2
+    assert row["callable_mb"] == 50.0
+    assert row["snvs_per_mb"] == pytest.approx(300.0 / 50.0 / 2, abs=1e-9)
+
+
+def test_per_donor_burden_one_row_per_donor() -> None:
+    df = _burden_input_df([("D1", 100), ("D2", 200)])
+    rows = aggregate_per_donor_burden_rows(df)
+    assert len(rows) == 2
+    by_donor = {r["donor_id"]: r for r in rows}
+    assert by_donor["D1"]["snvs"] == 100
+    assert by_donor["D1"]["snvs_per_mb"] == pytest.approx(100.0 / 50.0, abs=1e-9)
+    assert by_donor["D2"]["snvs"] == 200
+
+
+def test_pooled_burden_raises_on_mixed_callable_mb() -> None:
+    df = pd.DataFrame(
+        [
+            {"donor_id": "D1", "callable_mb": 50.0, "sample_id": "S1"},
+            {"donor_id": "D2", "callable_mb": 60.0, "sample_id": "S2"},
+        ]
+    )
+    with pytest.raises(ValueError, match="mixed callable_mb"):
+        aggregate_pooled_burden(df)

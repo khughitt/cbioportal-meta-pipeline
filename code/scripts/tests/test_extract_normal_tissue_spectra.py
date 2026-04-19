@@ -17,6 +17,7 @@ from extract_normal_tissue_spectra import (
     aggregate_pooled_counts,
     attach_assay_metadata,
     attach_uberon,
+    build_spectra_rows_for_tissue,
     compute_96_context_counts,
     validate_input_contract,
 )
@@ -434,3 +435,79 @@ def test_compute_96_context_counts_schema_from_fake_matrix(
     assert d1["A[C>A]A"] == 7
     d2 = out.loc[out["donor_id"] == "D2"].iloc[0]
     assert d2["T[T>G]T"] == 4
+
+
+def test_build_spectra_rows_has_three_aggregations() -> None:
+    per_donor_ctx = _synthetic_context_df(
+        {
+            "D1": {"A[C>A]A": 60, "T[T>G]T": 40},  # 100 SNVs
+            "D2": {"A[C>A]A": 80, "T[T>G]T": 20},  # 100 SNVs
+        }
+    )
+    rows = build_spectra_rows_for_tissue(
+        per_donor_ctx=per_donor_ctx,
+        source_id="li2021",
+        tissue_uberon="UBERON:0002107",
+        tissue_label="Liver",
+        uberon_label="liver",
+        assembly="GRCh37",
+        sequencing_modality="WES",
+        capture_kit_or_panel="SureSelectXT V7",
+        callable_mb=48.2,
+        n_samples=10,
+        low_snv_threshold=50,
+    )
+    aggregations = {r["aggregation"] for r in rows}
+    assert aggregations == {"pooled_counts", "donor_averaged_fraction", "per_donor"}
+    # 1 pooled + 1 averaged + 2 per-donor = 4 rows
+    assert len(rows) == 4
+
+
+def test_build_spectra_rows_value_type_matches_aggregation() -> None:
+    per_donor_ctx = _synthetic_context_df({"D1": {"A[C>A]A": 100}})
+    rows = build_spectra_rows_for_tissue(
+        per_donor_ctx=per_donor_ctx,
+        source_id="li2021",
+        tissue_uberon="UBERON:0002107",
+        tissue_label="Liver",
+        uberon_label="liver",
+        assembly="GRCh37",
+        sequencing_modality="WES",
+        capture_kit_or_panel="SureSelectXT V7",
+        callable_mb=48.2,
+        n_samples=1,
+        low_snv_threshold=50,
+    )
+    for r in rows:
+        if r["aggregation"] == "donor_averaged_fraction":
+            assert r["value_type"] == "fractions"
+        else:
+            assert r["value_type"] == "counts"
+
+
+def test_build_spectra_rows_audit_columns_present_on_all_rows() -> None:
+    per_donor_ctx = _synthetic_context_df(
+        {
+            "D1": {"A[C>A]A": 100},
+            "D2": {"A[C>A]A": 10},  # below default threshold 50
+        }
+    )
+    rows = build_spectra_rows_for_tissue(
+        per_donor_ctx=per_donor_ctx,
+        source_id="li2021",
+        tissue_uberon="UBERON:0002107",
+        tissue_label="Liver",
+        uberon_label="liver",
+        assembly="GRCh37",
+        sequencing_modality="WES",
+        capture_kit_or_panel="SureSelectXT V7",
+        callable_mb=48.2,
+        n_samples=2,
+        low_snv_threshold=50,
+    )
+    for r in rows:
+        assert r["n_donors_total"] == 2
+        assert r["low_snv_threshold"] == 50
+    avg_row = next(r for r in rows if r["aggregation"] == "donor_averaged_fraction")
+    assert avg_row["n_donors_included"] == 1
+    assert avg_row["n_donors_excluded_low_snvs"] == 1

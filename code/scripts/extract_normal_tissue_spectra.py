@@ -397,6 +397,97 @@ def compute_96_context_counts(variants_df: pd.DataFrame, assembly: str) -> pd.Da
     return wide
 
 
+def build_spectra_rows_for_tissue(  # noqa: PLR0913
+    *,
+    per_donor_ctx: pd.DataFrame,
+    source_id: str,
+    tissue_uberon: str,
+    tissue_label: str,
+    uberon_label: str,
+    assembly: str,
+    sequencing_modality: str,
+    capture_kit_or_panel: str,
+    callable_mb: float,
+    n_samples: int,
+    low_snv_threshold: int = 50,
+) -> list[dict[str, object]]:
+    """Produce all spectra rows (pooled + averaged + per-donor) for one tissue."""
+    n_donors_total = int(per_donor_ctx["donor_id"].nunique())
+
+    def _common(
+        aggregation: str, value_type: str, **audit: object
+    ) -> dict[str, object]:
+        return {
+            "source_id": source_id,
+            "tissue_uberon": tissue_uberon,
+            "tissue_label": tissue_label,
+            "uberon_label": uberon_label,
+            "aggregation": aggregation,
+            "value_type": value_type,
+            "assembly": assembly,
+            "sequencing_modality": sequencing_modality,
+            "capture_kit_or_panel": capture_kit_or_panel,
+            "callable_mb": callable_mb,
+            "n_donors_total": n_donors_total,
+            "n_samples": n_samples,
+            "low_snv_threshold": low_snv_threshold,
+            "donor_id": "",
+            **audit,
+        }
+
+    rows: list[dict[str, object]] = []
+
+    pooled = aggregate_pooled_counts(per_donor_ctx)
+    rows.append(
+        {
+            **_common(
+                "pooled_counts",
+                "counts",
+                n_donors_included=n_donors_total,
+                n_donors_excluded_low_snvs=0,
+            ),
+            **{ctx: pooled[ctx] for ctx in CONTEXT_96},
+            "total_snvs": pooled["total_snvs"],
+            "n_donors": n_donors_total,
+        }
+    )
+
+    averaged, audit = aggregate_donor_averaged_fraction(
+        per_donor_ctx, threshold=low_snv_threshold
+    )
+    rows.append(
+        {
+            **_common(
+                "donor_averaged_fraction",
+                "fractions",
+                n_donors_included=audit["n_donors_included"],
+                n_donors_excluded_low_snvs=audit["n_donors_excluded_low_snvs"],
+            ),
+            **averaged,
+            "total_snvs": 0,  # fractions — not a meaningful count
+            "n_donors": audit["n_donors_included"],
+        }
+    )
+
+    for donor_row in aggregate_per_donor_rows(per_donor_ctx):
+        rows.append(
+            {
+                **_common(
+                    "per_donor",
+                    "counts",
+                    n_donors_included=1,
+                    n_donors_excluded_low_snvs=0,
+                ),
+                **{ctx: donor_row[ctx] for ctx in CONTEXT_96},
+                "total_snvs": donor_row["total_snvs"],
+                "donor_id": donor_row["donor_id"],
+                "n_donors": 1,
+            }
+        )
+
+    return rows
+
+
 def _run_via_snakemake() -> None:
     snek = snakemake  # type: ignore[name-defined]  # noqa: F821 F841
     # (Task 13 fills in the body)

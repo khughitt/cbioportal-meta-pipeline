@@ -26,7 +26,12 @@ ASSAY_METADATA: dict[tuple[str, str | None], dict[str, object]] = {
 }
 
 
-_VALID_CHROMS = {f"chr{c}" for c in list(range(1, 23)) + ["X", "Y"]}
+# Tuples (not sets) so pandas .isin() accepts them cleanly; _VALID_CHROMS_SET is for
+# set-difference operations. Pandas accepts sets at runtime but its type stubs do not.
+_VALID_CHROMS: tuple[str, ...] = tuple(f"chr{c}" for c in list(range(1, 23)) + ["X", "Y"])
+_VALID_CHROMS_SET: frozenset[str] = frozenset(_VALID_CHROMS)
+_MITO_CHROMS: tuple[str, ...] = ("chrM", "chrMT")
+_VALID_BASES: tuple[str, ...] = ("A", "C", "G", "T")
 
 
 def validate_input_contract(
@@ -61,12 +66,12 @@ def validate_input_contract(
         raise ValueError(f"{source}: {bad} multi-allelic rows (alt contains ','); split upstream")
 
     # Mitochondrial drop
-    mito_mask = df["chrom"].isin({"chrM", "chrMT"})
+    mito_mask = df["chrom"].isin(_MITO_CHROMS)
     n_mito = int(mito_mask.sum())
     df = df.loc[~mito_mask].copy()
 
     # Unknown chromosomes
-    unknown = set(df["chrom"].unique()) - _VALID_CHROMS
+    unknown = set(df["chrom"].unique()) - _VALID_CHROMS_SET
     if unknown:
         raise ValueError(f"{source}: unknown chromosome values {sorted(unknown)}")
 
@@ -76,8 +81,7 @@ def validate_input_contract(
     df = df.loc[~indel_mask].copy()
 
     # Non-ACGT rejection
-    valid = {"A", "C", "G", "T"}
-    bad_alleles = ~(df["ref"].isin(valid) & df["alt"].isin(valid))
+    bad_alleles = ~(df["ref"].isin(_VALID_BASES) & df["alt"].isin(_VALID_BASES))
     if bad_alleles.any():
         raise ValueError(f"{source}: {int(bad_alleles.sum())} rows with non-ACGT alleles")
 

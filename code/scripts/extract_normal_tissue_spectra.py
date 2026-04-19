@@ -13,12 +13,10 @@ Rows are keyed on UBERON ontology IDs; source tissue labels are preserved for au
 Design: doc/plans/2026-04-18-t111-normal-tissue-spectra-design.md
 Plan:   doc/plans/2026-04-18-t111-normal-tissue-spectra-plan.md
 """
-from __future__ import annotations
+import sys  # noqa: F401
+from pathlib import Path  # noqa: F401
 
-import sys
-from pathlib import Path
-
-import pandas as pd
+import pandas as pd  # noqa: F401
 
 # Assay metadata constants. Sourced from Li 2021 Methods:
 # SureSelectXT Human All Exon V6 (esophagus) or V7 (other tissues), callable ~60 Mb / ~48.2 Mb.
@@ -28,12 +26,11 @@ ASSAY_METADATA: dict[tuple[str, str | None], dict[str, object]] = {
 }
 
 
-def main() -> None:
-    """Snakemake entry point. Not invoked directly — use `snakemake` CLI."""
-    snek = snakemake  # type: ignore[name-defined]
-    # Wired up in Task 13.
+def _run_via_snakemake() -> None:
+    snek = snakemake  # type: ignore[name-defined]  # noqa: F821 F841
+    # (Task 13 fills in the body)
     raise NotImplementedError("Wired up in Task 13")
 
 
-if __name__ == "__main__":
-    main()
+if "snakemake" in globals():
+    _run_via_snakemake()

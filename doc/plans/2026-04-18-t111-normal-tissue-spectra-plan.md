@@ -12,6 +12,23 @@
 
 ---
 
+## Scope amendment (post-Task 0, 2026-04-19)
+
+Task 0 resolved to Li2021 = Branch A, Xu2025 = Branch B (dbGaP controlled-access).
+User approved option (a): **reduce scope to Li2021 only**; Xu2025 and Lee-Six2018 deferred to follow-up task(s).
+
+**Effect on the rest of the plan:**
+- Task 2: UBERON mapping covers the 9 Li2021 organs only.
+- Task 5: `ASSAY_METADATA` holds Li2021 entries only; skip the Xu2025 confirmation step.
+- Task 13: `main()` processes one source (Li2021); `_SOURCE_ASSEMBLY` maps only `li2021 → GRCh37`; snakemake input lacks `xu2025`.
+- Task 14: fixtures and slow integration test cover Li2021 only.
+- Task 15: Snakemake rule has `li2021` as the single variant-data input.
+- Task 16: stages only `data/li2021_somatic_mutations.tsv`. **New staging step**: Li2021 supplement is an XLSX (`41586_2021_3836_MOESM5_ESM.xlsx`); convert XLSX → TSV with a sampleID → (donor_id, tissue_label, sample_id) parser — see Task 16 Step 1 notes below.
+
+The gate record is at `doc/plans/t111-data-gate-record.md` (commit `446f953`).
+
+---
+
 ## Task 0: Data-access gate (pre-implementation verification)
 
 This is the design's Branch-A/Branch-B gate. It MUST run before any code is written. If Branch B fires, STOP and raise to the user — scope changes materially.
@@ -2062,11 +2079,48 @@ EOF
 - Create/Stage: `data/xu2025_somatic_mutations.tsv` (from Task 0)
 - Create: `doc/datasets/normal-tissue-spectra.md`
 
-- [ ] **Step 1: Stage the real supplementary TSVs**
+- [ ] **Step 1: Stage the Li2021 supplementary data (XLSX → TSV conversion)**
 
-Using the retrieval URLs + hashes recorded in Task 0, download the Li2021 and Xu2025 per-variant tables to `data/li2021_somatic_mutations.tsv` and `data/xu2025_somatic_mutations.tsv`. Confirm SHA256 matches the Task 0 record before proceeding.
+Per the scope amendment, we only stage Li2021. The Task 0 gate record confirmed the supplementary file is an XLSX, not a TSV, so staging requires a conversion step:
 
-Verify columns match the input contract (`donor_id, tissue_label, chrom, pos, ref, alt`, plus optional `sample_id`). If the supplementary file uses different column names, add a thin per-source parsing layer to `extract_normal_tissue_spectra.py` that renames on load — extend Task 3's contract tests to cover the renamer.
+1. Download `41586_2021_3836_MOESM5_ESM.xlsx` from the URL in `doc/plans/t111-data-gate-record.md` (if not already downloaded). Verify SHA256 matches the gate record.
+2. Write a small one-off staging script at `code/scripts/stage_li2021_somatic_mutations.py` that:
+   - Reads the first sheet (Sheet1) of the XLSX, skipping the 2 title/blank header rows so row 3 becomes the data header.
+   - Parses the `sampleID` column of the form `PN{donor}{tissue_code}-{layer}-{biopsy}` into three columns: `donor_id` (e.g., `PN1`), `tissue_label` (looked up from the tissue_code — see below), `sample_id` (the original sampleID).
+   - Renames `chr → chrom`, `mut → alt`; keeps `pos`, `ref`.
+   - Emits the columns expected by the input contract: `donor_id, tissue_label, sample_id, chrom, pos, ref, alt`.
+   - Writes to `data/li2021_somatic_mutations.tsv`.
+
+   The tissue_code → tissue_label lookup (to be confirmed empirically by sampling a few sampleIDs of each tissue from the XLSX):
+   ```python
+   TISSUE_CODE_MAP = {
+       "B": "Bronchia",
+       "E": "Esophagus",
+       "Ca": "Cardia",     # two-letter code to disambiguate from Colon
+       "S": "Stomach",
+       "D": "Duodenum",
+       "C": "Colon",
+       "R": "Rectum",
+       "L": "Liver",
+       "P": "Pancreas",
+   }
+   ```
+   Match the longest-prefix code first (greedy) so `Ca` beats `C`. If any sampleID fails to match a known code, raise rather than silently drop.
+
+3. Run the staging script once:
+   ```bash
+   uv run python code/scripts/stage_li2021_somatic_mutations.py \
+       --xlsx data/41586_2021_3836_MOESM5_ESM.xlsx \
+       --out data/li2021_somatic_mutations.tsv
+   ```
+4. Spot-check the output:
+   ```bash
+   head -5 data/li2021_somatic_mutations.tsv
+   wc -l data/li2021_somatic_mutations.tsv  # expect ~66,188 + 1 header
+   uv run python -c "import pandas as pd; df = pd.read_csv('data/li2021_somatic_mutations.tsv', sep='\t'); print(df.tissue_label.value_counts()); print(df.donor_id.value_counts())"
+   ```
+
+The staging script is committed to git; the source XLSX and the staged TSV are gitignored (large files; the gate record plus the staging script are sufficient for reproducibility).
 
 - [ ] **Step 2: Run the full Snakemake rule against real data**
 
@@ -2074,7 +2128,7 @@ Verify columns match the input contract (`donor_id, tissue_label, chrom, pos, re
 uv run snakemake -s code/workflows/Snakefile --configfile code/config/config-10k-genes.yml -j1 data/normal_tissue_spectra.tsv data/normal_tissue_burden.tsv 2>&1 | tee /tmp/t111_run.log
 ```
 
-Expected: rule runs to completion. First run downloads GRCh37 and GRCh38 reference bundles. Stderr captures the contract summaries (indels/mito/duplicates dropped, tissues found, donors per tissue).
+Expected: rule runs to completion. First run downloads GRCh37 reference bundle (Xu2025 dropped from scope, so no GRCh38 download). Stderr captures the contract summaries (indels/mito/duplicates dropped, tissues found, donors per tissue).
 
 - [ ] **Step 3: Sanity-check the outputs**
 

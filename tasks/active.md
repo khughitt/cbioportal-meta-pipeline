@@ -323,3 +323,13 @@ For ≥1 cancer type present in both a matched-normal study (TCGA MC3 pseudo-stu
 - created: 2026-04-18
 
 Download Li 2021 Nature supplementary tables + Xu 2025 bioRxiv supplementary data, extract per-tissue 96-trinucleotide somatic-SNV spectra in normal tissue for the organs that overlap with cBioPortal primary sites, and write a normalized reference table to 'data/normal_tissue_spectra.tsv' (rows=tissue, columns=96 trinucleotide contexts, values=fraction). Rationale: this is a one-time data-preparation step that gates three downstream workstreams — q007 (tissue-specific null model), q008 (background-spectrum subtraction in signature decomposition), and q010 (cosine-similarity classifier for flagging samples whose spectrum matches a normal-tissue prior better than a cancer prior). Priority P1 because three questions depend on it. Outputs: 'data/normal_tissue_spectra.tsv' + a short 'doc/datasets/normal-tissue-spectra.md' with provenance (donor counts, source table/figure numbers, aggregation method) per tissue.
+
+## [t112] Integrate Lee-Six 2018 blood (or Xu 2025 dbGaP) as second normal-tissue source for t111 outputs
+- type: dev
+- priority: P2
+- status: proposed
+- related: [task:t111, topic:signature-decomposition-unmatched-normal, question:q006-ch-priority-gene-completeness, question:q008-signature-decomposition-tissue-background-subtraction, article:LeeSix2018, article:Xu2025]
+- group: pipeline
+- created: 2026-04-18
+
+Follow-up to t111 (which was reduced to Li2021-only by the 2026-04-19 data-access gate because Xu2025 per-variant data is dbGaP-controlled). Add a second open-access normal-tissue source to enrich data/normal_tissue_spectra.tsv and data/normal_tissue_burden.tsv. Preferred source: Lee-Six 2018 (Nature, DOI 10.1038/s41586-018-0497-0) — single-donor ~140 HSC WGS colonies — complements Li2021's solid-tissue bias with blood where CH matters for q006/q008. Second-choice source: Xu2025 via dbGaP DAR (weeks of calendar time; only worth pursuing if a user has existing GTEx access). This task refactors code/scripts/extract_normal_tissue_spectra.py into the plugin-style adapters/ pattern planned in t111's scope brainstorming (option C: 'start hard-coded to 2 sources, plugin-ize when 3rd arrives').

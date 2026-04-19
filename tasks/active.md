@@ -323,3 +323,23 @@ For ≥1 cancer type present in both a matched-normal study (TCGA MC3 pseudo-stu
 - created: 2026-04-18
 
 Follow-up to t111 (which was reduced to Li2021-only by the 2026-04-19 data-access gate because Xu2025 per-variant data is dbGaP-controlled). Add a second open-access normal-tissue source to enrich data/normal_tissue_spectra.tsv and data/normal_tissue_burden.tsv. Preferred source: Lee-Six 2018 (Nature, DOI 10.1038/s41586-018-0497-0) — single-donor ~140 HSC WGS colonies — complements Li2021's solid-tissue bias with blood where CH matters for q006/q008. Second-choice source: Xu2025 via dbGaP DAR (weeks of calendar time; only worth pursuing if a user has existing GTEx access). This task refactors code/scripts/extract_normal_tissue_spectra.py into the plugin-style adapters/ pattern planned in t111's scope brainstorming (option C: 'start hard-coded to 2 sources, plugin-ize when 3rd arrives').
+
+## [t113] Close t111 assembly range-check TODO — verify chrom/pos against declared assembly
+- type: dev
+- priority: P3
+- status: proposed
+- related: [task:t111, interpretation:2026-04-19-t111-normal-tissue-spectra-pipeline]
+- group: pipeline
+- created: 2026-04-19
+
+Current validate_input_contract accepts the assembly parameter but does not range-check chrom/pos against per-chromosome lengths (marked TODO(t111-followup) at code/scripts/extract_normal_tissue_spectra.py:96-100). A caller who declares wrong assembly gets silent acceptance. Fix: encode GRCh37/GRCh38 max-chromosome-lengths as module constants and validate df['pos'].max() <= length_dict[chrom] for each chromosome. Becomes load-bearing when t112 introduces GRCh38 sources. ~30 min + one test.
+
+## [t114] Pre-register q007 null-model correction impact before rolling into frequency pipeline
+- type: research
+- priority: P2
+- status: proposed
+- related: [task:t111, question:q007-cross-tissue-somatic-mutation-rate-variation-as-null-model, article:Li2021]
+- group: pipeline
+- created: 2026-04-19
+
+Before applying the t111 per-tissue snvs_per_mb correction to gene_cancer_study_ratio_annotated.feather frequencies, pre-register: (1) expected number of gene-cancer rankings that shift and by how many positions; (2) head-to-head comparison against a Martincorena 2017 dN/dS-based null as a simpler baseline. If the two approaches rank genes identically, t111's value-add collapses. Prevents ships-before-thinks bias on whether the empirical null is actually discriminating versus a uniform-rate-per-gene-length null. Deliverable: doc/meta/pre-registration-q007-null-model-correction.md.

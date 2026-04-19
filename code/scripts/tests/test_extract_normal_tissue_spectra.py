@@ -8,7 +8,11 @@ from pathlib import Path
 import pandas as pd
 import pytest
 
-from extract_normal_tissue_spectra import attach_uberon, validate_input_contract
+from extract_normal_tissue_spectra import (
+    attach_assay_metadata,
+    attach_uberon,
+    validate_input_contract,
+)
 
 
 def _df(**cols: list[object]) -> pd.DataFrame:
@@ -175,3 +179,47 @@ def test_attach_uberon_raises_on_unmapped_tissue(tmp_path: Path) -> None:
     )
     with pytest.raises(ValueError, match="unmapped"):
         attach_uberon(df, _mapping_tsv(tmp_path), source="li2021")
+
+
+def test_attach_assay_metadata_li2021_esophagus_gets_v6() -> None:
+    df = _df(
+        donor_id=["D1"],
+        tissue_label=["Esophagus"],
+        chrom=["chr1"],
+        pos=[1],
+        ref=["A"],
+        alt=["C"],
+    )
+    out = attach_assay_metadata(df, source="li2021")
+    row = out.iloc[0]
+    assert row["sequencing_modality"] == "WES"
+    assert row["capture_kit_or_panel"] == "SureSelectXT V6"
+    assert row["callable_mb"] == 60.0
+
+
+def test_attach_assay_metadata_li2021_nonesophagus_gets_v7() -> None:
+    df = _df(
+        donor_id=["D1"],
+        tissue_label=["Liver"],
+        chrom=["chr1"],
+        pos=[1],
+        ref=["A"],
+        alt=["C"],
+    )
+    out = attach_assay_metadata(df, source="li2021")
+    row = out.iloc[0]
+    assert row["capture_kit_or_panel"] == "SureSelectXT V7"
+    assert row["callable_mb"] == 48.2
+
+
+def test_attach_assay_metadata_missing_source_raises() -> None:
+    df = _df(
+        donor_id=["D1"],
+        tissue_label=["Liver"],
+        chrom=["chr1"],
+        pos=[1],
+        ref=["A"],
+        alt=["C"],
+    )
+    with pytest.raises(KeyError, match="nonexistent"):
+        attach_assay_metadata(df, source="nonexistent")

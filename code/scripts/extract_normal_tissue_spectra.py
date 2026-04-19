@@ -19,11 +19,24 @@ from pathlib import Path  # noqa: F401
 
 import pandas as pd  # noqa: F401
 
-# Assay metadata constants. Sourced from Li 2021 Methods:
-# SureSelectXT Human All Exon V6 (esophagus) or V7 (other tissues), callable ~60 Mb / ~48.2 Mb.
-# Populated concretely in Task 5.
+# Assay metadata constants. Sourced from Li 2021 Nature Methods section:
+# SureSelectXT Human All Exon V6 (esophagus biopsies only, all donors) or V7
+# (all other tissues, all donors). Agilent-published callable-target sizes:
+# V6 ≈ 60 Mb, V7 ≈ 48.2 Mb.
+#
+# Keyed by (source, tissue_label) with (source, None) as the per-source fallback.
+# Xu 2025 deferred to t112 per scope amendment.
 ASSAY_METADATA: dict[tuple[str, str | None], dict[str, object]] = {
-    # Populated in Task 5.
+    ("li2021", "Esophagus"): {
+        "sequencing_modality": "WES",
+        "capture_kit_or_panel": "SureSelectXT V6",
+        "callable_mb": 60.0,
+    },
+    ("li2021", None): {
+        "sequencing_modality": "WES",
+        "capture_kit_or_panel": "SureSelectXT V7",
+        "callable_mb": 48.2,
+    },
 }
 
 
@@ -125,6 +138,31 @@ def attach_uberon(df: pd.DataFrame, mapping_tsv: Path, source: str) -> pd.DataFr
             f"{source}: unmapped tissue_label values {sorted(unmapped)}. "
             f"Append to {mapping_tsv}."
         )
+    return out
+
+
+def attach_assay_metadata(df: pd.DataFrame, source: str) -> pd.DataFrame:
+    """Attach sequencing_modality / capture_kit_or_panel / callable_mb columns
+    keyed by (source, tissue_label), with (source, None) as the per-source fallback.
+
+    Raises KeyError if source is unknown to ASSAY_METADATA.
+    """
+    source_keys = [k for k in ASSAY_METADATA if k[0] == source]
+    if not source_keys:
+        raise KeyError(f"ASSAY_METADATA has no entry for source={source!r}")
+
+    def _lookup(tissue_label: str) -> dict[str, object]:
+        if (source, tissue_label) in ASSAY_METADATA:
+            return ASSAY_METADATA[(source, tissue_label)]
+        if (source, None) in ASSAY_METADATA:
+            return ASSAY_METADATA[(source, None)]
+        raise KeyError(f"ASSAY_METADATA: no entry for ({source!r}, {tissue_label!r})")
+
+    meta = df["tissue_label"].apply(_lookup).tolist()
+    out = df.copy()
+    out["sequencing_modality"] = [m["sequencing_modality"] for m in meta]
+    out["capture_kit_or_panel"] = [m["capture_kit_or_panel"] for m in meta]
+    out["callable_mb"] = [float(m["callable_mb"]) for m in meta]
     return out
 
 

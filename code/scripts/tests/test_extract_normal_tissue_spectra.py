@@ -22,6 +22,7 @@ from extract_normal_tissue_spectra import (
     build_burden_rows_for_tissue,
     build_spectra_rows_for_tissue,
     compute_96_context_counts,
+    extract_for_source,
     validate_input_contract,
     write_burden_tsv,
     write_spectra_tsv,
@@ -582,3 +583,57 @@ def test_write_burden_tsv_column_order(tmp_path: Path) -> None:
     write_burden_tsv(rows, out)
     df = pd.read_csv(out, sep="\t")
     assert list(df.columns) == BURDEN_COLUMNS
+
+
+def test_extract_for_source_emits_spectra_and_burden_rows(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    # 6 variants: 2 donors × 3 variants each, all liver, all SBS, all chr1.
+    variants_tsv = tmp_path / "variants.tsv"
+    variants_tsv.write_text(
+        "donor_id\ttissue_label\tsample_id\tchrom\tpos\tref\talt\n"
+        "D1\tLiver\tD1-s1\tchr1\t100\tC\tA\n"
+        "D1\tLiver\tD1-s1\tchr1\t200\tC\tA\n"
+        "D1\tLiver\tD1-s1\tchr1\t300\tC\tA\n"
+        "D2\tLiver\tD2-s1\tchr1\t400\tC\tA\n"
+        "D2\tLiver\tD2-s1\tchr1\t500\tC\tA\n"
+        "D2\tLiver\tD2-s1\tchr1\t600\tC\tA\n"
+    )
+    mapping_tsv = tmp_path / "map.tsv"
+    mapping_tsv.write_text(
+        "source\ttissue_label\ttissue_uberon\tuberon_label\tnotes\n"
+        "li2021\tLiver\tUBERON:0002107\tliver\t\n"
+    )
+
+    def _fake_sigprofiler(variants_df: pd.DataFrame, assembly: str) -> pd.DataFrame:  # noqa: ARG001
+        m = pd.DataFrame(
+            0,
+            index=list(CONTEXT_96),
+            columns=sorted(variants_df["donor_id"].unique()),
+        )
+        m.loc["A[C>A]A", :] = 3  # 3 SBS per donor
+        return m
+
+    monkeypatch.setattr(
+        "extract_normal_tissue_spectra._sigprofiler_matrix", _fake_sigprofiler
+    )
+
+    spectra_rows, burden_rows = extract_for_source(
+        source="li2021",
+        variants_tsv=variants_tsv,
+        mapping_tsv=mapping_tsv,
+        assembly="GRCh37",
+        low_snv_threshold=2,  # low so both donors are included
+    )
+
+    # 1 tissue × (1 pooled + 1 averaged + 2 per-donor) = 4 spectra rows
+    assert len(spectra_rows) == 4
+    # 1 tissue × (1 pooled + 2 per-donor) = 3 burden rows
+    assert len(burden_rows) == 3
+    pooled_spectra = next(
+        r for r in spectra_rows if r["aggregation"] == "pooled_counts"
+    )
+    assert pooled_spectra["tissue_uberon"] == "UBERON:0002107"
+    assert pooled_spectra["total_snvs"] == 6
+    pooled_burden = next(r for r in burden_rows if r["aggregation"] == "pooled")
+    assert pooled_burden["snvs"] == 6

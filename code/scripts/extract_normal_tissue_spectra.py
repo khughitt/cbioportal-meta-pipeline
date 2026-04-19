@@ -583,10 +583,120 @@ def write_burden_tsv(rows: list[dict[str, object]], path: Path) -> None:
     df.to_csv(path, sep="\t", index=False)
 
 
+_SOURCE_ASSEMBLY: dict[str, str] = {"li2021": "GRCh37"}
+
+
+def extract_for_source(  # noqa: PLR0913
+    *,
+    source: str,
+    variants_tsv: Path,
+    mapping_tsv: Path,
+    assembly: str | None = None,
+    low_snv_threshold: int = 50,
+) -> tuple[list[dict[str, object]], list[dict[str, object]]]:
+    """Run the full extraction for a single source. Returns (spectra_rows, burden_rows)."""
+    if assembly is None:
+        assembly = _SOURCE_ASSEMBLY[source]
+
+    raw = pd.read_csv(variants_tsv, sep="\t", dtype=str, na_filter=False)
+    raw["pos"] = raw["pos"].astype(int)
+
+    cleaned, contract_stats = validate_input_contract(
+        raw, source=source, assembly=assembly
+    )
+    print(
+        f"{source}: {contract_stats['n_indels_dropped']} indel rows dropped, "
+        f"{contract_stats['n_mito_dropped']} mitochondrial rows dropped, "
+        f"{contract_stats['n_duplicates_collapsed']} within-donor duplicates collapsed",
+        file=sys.stderr,
+    )
+
+    cleaned = attach_uberon(cleaned, mapping_tsv=mapping_tsv, source=source)
+    cleaned = attach_assay_metadata(cleaned, source=source)
+
+    spectra_rows: list[dict[str, object]] = []
+    burden_rows: list[dict[str, object]] = []
+
+    group_cols = [
+        "tissue_label",
+        "tissue_uberon",
+        "uberon_label",
+        "sequencing_modality",
+        "capture_kit_or_panel",
+        "callable_mb",
+    ]
+    for group_key, tissue_df in cleaned.groupby(group_cols):
+        tissue_label, tissue_uberon, uberon_label, modality, kit, callable_mb = (
+            group_key
+        )
+        # One SigProfiler invocation per tissue — emits per-donor 96-context rows.
+        per_donor_ctx = compute_96_context_counts(tissue_df, assembly=assembly)
+
+        n_samples = int(tissue_df.get("sample_id", tissue_df["donor_id"]).nunique())
+
+        spectra_rows.extend(
+            build_spectra_rows_for_tissue(
+                per_donor_ctx=per_donor_ctx,
+                source_id=source,
+                tissue_uberon=tissue_uberon,
+                tissue_label=tissue_label,
+                uberon_label=uberon_label,
+                assembly=assembly,
+                sequencing_modality=modality,
+                capture_kit_or_panel=kit,
+                callable_mb=float(callable_mb),
+                n_samples=n_samples,
+                low_snv_threshold=low_snv_threshold,
+            )
+        )
+
+        burden_df = tissue_df.assign(
+            sample_id=tissue_df.get("sample_id", tissue_df["donor_id"]),
+        )
+        burden_rows.extend(
+            build_burden_rows_for_tissue(
+                variants_df=burden_df,
+                source_id=source,
+                tissue_uberon=tissue_uberon,
+                tissue_label=tissue_label,
+                uberon_label=uberon_label,
+                assembly=assembly,
+                sequencing_modality=modality,
+                capture_kit_or_panel=kit,
+            )
+        )
+
+    return spectra_rows, burden_rows
+
+
 def _run_via_snakemake() -> None:
-    snek = snakemake  # type: ignore[name-defined]  # noqa: F821 F841
-    # (Task 13 fills in the body)
-    raise NotImplementedError("Wired up in Task 13")
+    snek = snakemake  # type: ignore[name-defined]  # noqa: F821
+    li2021_tsv = Path(snek.input.li2021)
+    mapping_tsv = Path(snek.input.mapping)
+
+    spectra_out = Path(snek.output.spectra)
+    burden_out = Path(snek.output.burden)
+
+    spectra_rows: list[dict[str, object]] = []
+    burden_rows: list[dict[str, object]] = []
+
+    for src, variants_tsv in [("li2021", li2021_tsv)]:
+        s, b = extract_for_source(
+            source=src,
+            variants_tsv=variants_tsv,
+            mapping_tsv=mapping_tsv,
+        )
+        spectra_rows.extend(s)
+        burden_rows.extend(b)
+
+    write_spectra_tsv(spectra_rows, spectra_out)
+    write_burden_tsv(burden_rows, burden_out)
+
+    print(
+        f"Wrote {len(spectra_rows)} spectra rows to {spectra_out}; "
+        f"{len(burden_rows)} burden rows to {burden_out}",
+        file=sys.stderr,
+    )
 
 
 if "snakemake" in globals():

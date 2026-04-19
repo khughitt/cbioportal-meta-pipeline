@@ -13,6 +13,7 @@ Rows are keyed on UBERON ontology IDs; source tissue labels are preserved for au
 Design: doc/plans/2026-04-18-t111-normal-tissue-spectra-design.md
 Plan:   doc/plans/2026-04-18-t111-normal-tissue-spectra-plan.md
 """
+
 import sys  # noqa: F401
 from pathlib import Path  # noqa: F401
 
@@ -28,7 +29,9 @@ ASSAY_METADATA: dict[tuple[str, str | None], dict[str, object]] = {
 
 # Tuples (not sets) so pandas .isin() accepts them cleanly; _VALID_CHROMS_SET is for
 # set-difference operations. Pandas accepts sets at runtime but its type stubs do not.
-_VALID_CHROMS: tuple[str, ...] = tuple(f"chr{c}" for c in list(range(1, 23)) + ["X", "Y"])
+_VALID_CHROMS: tuple[str, ...] = tuple(
+    f"chr{c}" for c in list(range(1, 23)) + ["X", "Y"]
+)
 _VALID_CHROMS_SET: frozenset[str] = frozenset(_VALID_CHROMS)
 _MITO_CHROMS: tuple[str, ...] = ("chrM", "chrMT")
 _VALID_BASES: tuple[str, ...] = ("A", "C", "G", "T")
@@ -57,13 +60,17 @@ def validate_input_contract(
     # per-chromosome lengths for GRCh37/GRCh38. For now, `assembly` is accepted
     # and preserved on the stats object for audit, but no range check is applied.
     _ = assembly  # noqa: ARG001 — preserved for stats + future assembly range-check
-    df["chrom"] = df["chrom"].astype(str).apply(lambda c: c if c.startswith("chr") else f"chr{c}")
+    df["chrom"] = (
+        df["chrom"].astype(str).apply(lambda c: c if c.startswith("chr") else f"chr{c}")
+    )
     df["ref"] = df["ref"].astype(str)
     df["alt"] = df["alt"].astype(str)
 
     if df["alt"].str.contains(",").any():
         bad = int(df["alt"].str.contains(",").sum())
-        raise ValueError(f"{source}: {bad} multi-allelic rows (alt contains ','); split upstream")
+        raise ValueError(
+            f"{source}: {bad} multi-allelic rows (alt contains ','); split upstream"
+        )
 
     # Mitochondrial drop
     mito_mask = df["chrom"].isin(_MITO_CHROMS)
@@ -83,11 +90,15 @@ def validate_input_contract(
     # Non-ACGT rejection
     bad_alleles = ~(df["ref"].isin(_VALID_BASES) & df["alt"].isin(_VALID_BASES))
     if bad_alleles.any():
-        raise ValueError(f"{source}: {int(bad_alleles.sum())} rows with non-ACGT alleles")
+        raise ValueError(
+            f"{source}: {int(bad_alleles.sum())} rows with non-ACGT alleles"
+        )
 
     # Exact-duplicate dedup (within donor + tissue)
     before = len(df)
-    df = df.drop_duplicates(subset=["donor_id", "tissue_label", "chrom", "pos", "ref", "alt"])
+    df = df.drop_duplicates(
+        subset=["donor_id", "tissue_label", "chrom", "pos", "ref", "alt"]
+    )
     n_dupes = before - len(df)
 
     return df.reset_index(drop=True), {
@@ -103,7 +114,9 @@ def attach_uberon(df: pd.DataFrame, mapping_tsv: Path, source: str) -> pd.DataFr
     Raises ValueError listing any unmapped (source, tissue_label) pairs — no silent drops.
     """
     mapping = pd.read_csv(mapping_tsv, sep="\t", dtype=str, na_filter=False)
-    mapping = mapping.loc[mapping["source"] == source, ["tissue_label", "tissue_uberon", "uberon_label"]]
+    mapping = mapping.loc[
+        mapping["source"] == source, ["tissue_label", "tissue_uberon", "uberon_label"]
+    ]
 
     out = df.merge(mapping, on="tissue_label", how="left", validate="many_to_one")
     unmapped = out.loc[out["tissue_uberon"].isna(), "tissue_label"].unique().tolist()

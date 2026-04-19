@@ -659,6 +659,9 @@ def extract_for_source(  # noqa: PLR0913
             )
         )
 
+        # When sample_id was absent, sample_col was derived from donor_id; assign
+        # materialises it as a real column. When sample_id was present this is a no-op.
+        # Index alignment is safe because validate_input_contract calls reset_index.
         burden_df = tissue_df.assign(sample_id=sample_col)
         burden_rows.extend(
             build_burden_rows_for_tissue(
@@ -684,17 +687,12 @@ def _run_via_snakemake() -> None:
     spectra_out = Path(snek.output.spectra)
     burden_out = Path(snek.output.burden)
 
-    spectra_rows: list[dict[str, object]] = []
-    burden_rows: list[dict[str, object]] = []
-
-    for src, variants_tsv in [("li2021", li2021_tsv)]:
-        s, b = extract_for_source(
-            source=src,
-            variants_tsv=variants_tsv,
-            mapping_tsv=mapping_tsv,
-        )
-        spectra_rows.extend(s)
-        burden_rows.extend(b)
+    # Li 2021 only; Xu 2025 and Lee-Six 2018 will be added in t112.
+    spectra_rows, burden_rows = extract_for_source(
+        source="li2021",
+        variants_tsv=li2021_tsv,
+        mapping_tsv=mapping_tsv,
+    )
 
     write_spectra_tsv(spectra_rows, spectra_out)
     write_burden_tsv(burden_rows, burden_out)

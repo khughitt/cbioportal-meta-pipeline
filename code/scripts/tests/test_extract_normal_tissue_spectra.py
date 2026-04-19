@@ -223,3 +223,19 @@ def test_attach_assay_metadata_missing_source_raises() -> None:
     )
     with pytest.raises(KeyError, match="nonexistent"):
         attach_assay_metadata(df, source="nonexistent")
+
+
+def test_attach_assay_metadata_li2021_mixed_tissues_dispatches_correctly() -> None:
+    df = _df(
+        donor_id=["D1", "D2"],
+        tissue_label=["Esophagus", "Liver"],
+        chrom=["chr1", "chr1"],
+        pos=[1, 2],
+        ref=["A", "A"],
+        alt=["C", "C"],
+    )
+    out = attach_assay_metadata(df, source="li2021")
+    assert out.iloc[0]["capture_kit_or_panel"] == "SureSelectXT V6"
+    assert out.iloc[1]["capture_kit_or_panel"] == "SureSelectXT V7"
+    assert out.iloc[0]["callable_mb"] == 60.0
+    assert out.iloc[1]["callable_mb"] == 48.2

@@ -19,10 +19,15 @@ from pathlib import Path  # noqa: F401
 
 import pandas as pd  # noqa: F401
 
-# Assay metadata constants. Sourced from Li 2021 Nature Methods section:
-# SureSelectXT Human All Exon V6 (esophagus biopsies only, all donors) or V7
-# (all other tissues, all donors). Agilent-published callable-target sizes:
-# V6 ≈ 60 Mb, V7 ≈ 48.2 Mb.
+# Assay metadata constants. Sourced from Li 2021 (Nature 597:398-403, DOI
+# 10.1038/s41586-021-03836-1, Methods): SureSelectXT Human All Exon V6
+# (esophagus biopsies only, all donors) or V7 (all other tissues, all donors).
+#
+# Agilent SureSelectXT Human All Exon target sizes from product data sheets:
+#   V6 ≈ 60 Mb (~58.4 Mb covered)
+#   V7 ≈ 48.2 Mb (~48.2 Mb covered)
+# Downstream burden calculations divide by these values — treat as
+# correctness-critical constants.
 #
 # Keyed by (source, tissue_label) with (source, None) as the per-source fallback.
 # Xu 2025 deferred to t112 per scope amendment.
@@ -151,12 +156,22 @@ def attach_assay_metadata(df: pd.DataFrame, source: str) -> pd.DataFrame:
     if not source_keys:
         raise KeyError(f"ASSAY_METADATA has no entry for source={source!r}")
 
+    has_fallback = (source, None) in ASSAY_METADATA
+    tissue_specific_keys = {k[1] for k in source_keys if k[1] is not None}
+
+    # If source has no fallback, every tissue_label in df must be explicitly keyed.
+    if not has_fallback:
+        missing = set(df["tissue_label"].unique()) - tissue_specific_keys
+        if missing:
+            raise KeyError(
+                f"ASSAY_METADATA: source={source!r} has no (None) fallback and no "
+                f"entry for tissues {sorted(missing)}"
+            )
+
     def _lookup(tissue_label: str) -> dict[str, object]:
         if (source, tissue_label) in ASSAY_METADATA:
             return ASSAY_METADATA[(source, tissue_label)]
-        if (source, None) in ASSAY_METADATA:
-            return ASSAY_METADATA[(source, None)]
-        raise KeyError(f"ASSAY_METADATA: no entry for ({source!r}, {tissue_label!r})")
+        return ASSAY_METADATA[(source, None)]
 
     meta = df["tissue_label"].apply(_lookup).tolist()
     out = df.copy()

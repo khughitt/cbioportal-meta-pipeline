@@ -626,13 +626,22 @@ def extract_for_source(  # noqa: PLR0913
         "callable_mb",
     ]
     for group_key, tissue_df in cleaned.groupby(group_cols):
+        # pandas types groupby's key as Hashable, but with a list of group_cols the
+        # runtime always emits a tuple; assert-narrow for the type checker.
+        assert isinstance(group_key, tuple)
         tissue_label, tissue_uberon, uberon_label, modality, kit, callable_mb = (
             group_key
         )
         # One SigProfiler invocation per tissue — emits per-donor 96-context rows.
         per_donor_ctx = compute_96_context_counts(tissue_df, assembly=assembly)
 
-        n_samples = int(tissue_df.get("sample_id", tissue_df["donor_id"]).nunique())
+        # sample_id is optional; fall back to donor_id when absent (assume one sample per donor).
+        sample_col = (
+            tissue_df["sample_id"]
+            if "sample_id" in tissue_df.columns
+            else tissue_df["donor_id"]
+        )
+        n_samples = int(sample_col.nunique())
 
         spectra_rows.extend(
             build_spectra_rows_for_tissue(
@@ -650,9 +659,7 @@ def extract_for_source(  # noqa: PLR0913
             )
         )
 
-        burden_df = tissue_df.assign(
-            sample_id=tissue_df.get("sample_id", tissue_df["donor_id"]),
-        )
+        burden_df = tissue_df.assign(sample_id=sample_col)
         burden_rows.extend(
             build_burden_rows_for_tissue(
                 variants_df=burden_df,

@@ -17,6 +17,7 @@ from extract_normal_tissue_spectra import (
     aggregate_pooled_counts,
     attach_assay_metadata,
     attach_uberon,
+    compute_96_context_counts,
     validate_input_contract,
 )
 
@@ -395,3 +396,41 @@ def test_pooled_burden_raises_on_mixed_callable_mb() -> None:
     )
     with pytest.raises(ValueError, match="mixed callable_mb"):
         aggregate_pooled_burden(df)
+
+
+def test_compute_96_context_counts_schema_from_fake_matrix(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Schema test: if SigProfiler returns a known 96-context matrix, our wrapper
+    re-shapes it into the expected per-donor DataFrame."""
+    fake_matrix = pd.DataFrame(
+        0,
+        index=CONTEXT_96,
+        columns=["D1", "D2", "D3"],
+    )
+    fake_matrix.loc["A[C>A]A", "D1"] = 7
+    fake_matrix.loc["T[T>G]T", "D2"] = 4
+
+    def _fake_sigprofiler(variants_df: pd.DataFrame, assembly: str) -> pd.DataFrame:  # noqa: ARG001
+        return fake_matrix
+
+    monkeypatch.setattr(
+        "extract_normal_tissue_spectra._sigprofiler_matrix",
+        _fake_sigprofiler,
+    )
+
+    variants = _df(
+        donor_id=["D1", "D2", "D3"],
+        tissue_label=["Liver"] * 3,
+        chrom=["chr1"] * 3,
+        pos=[1, 2, 3],
+        ref=["A", "T", "C"],
+        alt=["C", "G", "A"],
+    )
+    out = compute_96_context_counts(variants, assembly="GRCh37")
+    assert set(out.columns) >= set(CONTEXT_96) | {"donor_id"}
+    assert len(out) == 3
+    d1 = out.loc[out["donor_id"] == "D1"].iloc[0]
+    assert d1["A[C>A]A"] == 7
+    d2 = out.loc[out["donor_id"] == "D2"].iloc[0]
+    assert d2["T[T>G]T"] == 4

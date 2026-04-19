@@ -14,7 +14,7 @@ Design: doc/plans/2026-04-18-t111-normal-tissue-spectra-design.md
 Plan:   doc/plans/2026-04-18-t111-normal-tissue-spectra-plan.md
 """
 
-import sys  # noqa: F401
+import sys
 from pathlib import Path  # noqa: F401
 
 import pandas as pd  # noqa: F401
@@ -321,6 +321,80 @@ def aggregate_per_donor_burden_rows(
             }
         )
     return rows
+
+
+def _sigprofiler_matrix(variants_df: pd.DataFrame, assembly: str) -> pd.DataFrame:
+    """Run SigProfilerMatrixGenerator on an in-memory per-variant table.
+
+    Writes a temporary VCF-like MAF, invokes the matrix generator, reads the resulting
+    SBS96 matrix, returns it as a DataFrame with 96 rows (contexts) × N columns (donors).
+
+    This is the single SigProfiler touch-point. Mocked out by tests except in the slow
+    integration test (Task 14).
+
+    First call for a given assembly may fail with FileNotFoundError if the reference
+    bundle is not yet installed; we catch, install idempotently, and retry once.
+    """
+    import tempfile
+
+    from SigProfilerMatrixGenerator import install as sigprofiler_install
+    from SigProfilerMatrixGenerator.scripts import (
+        SigProfilerMatrixGeneratorFunc as matGen,
+    )
+
+    def _run(vcf_dir: Path) -> pd.DataFrame:
+        matrices = matGen.SigProfilerMatrixGeneratorFunc(
+            "normal_tissue",
+            assembly,
+            str(vcf_dir),
+            exome=False,
+            bed_file=None,
+            chrom_based=False,
+            plot=False,
+            tsb_stat=False,
+            seqInfo=False,
+        )
+        return matrices["96"]
+
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp_path = Path(tmp)
+        vcf_dir = tmp_path / "vcfs"
+        vcf_dir.mkdir()
+        for donor_id, grp in variants_df.groupby("donor_id"):
+            vcf_path = vcf_dir / f"{donor_id}.vcf"
+            with vcf_path.open("w") as fh:
+                fh.write("##fileformat=VCFv4.2\n")
+                fh.write("#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\n")
+                for _, r in grp.iterrows():
+                    fh.write(
+                        f"{r['chrom']}\t{r['pos']}\t.\t{r['ref']}\t{r['alt']}\t.\tPASS\t.\n"
+                    )
+
+        try:
+            sbs96 = _run(vcf_dir)
+        except FileNotFoundError as exc:
+            print(
+                f"SigProfiler reference bundle for {assembly} not found ({exc}); "
+                f"installing and retrying once.",
+                file=sys.stderr,
+            )
+            sigprofiler_install.install(assembly, bash=True)
+            sbs96 = _run(vcf_dir)
+    return sbs96
+
+
+def compute_96_context_counts(variants_df: pd.DataFrame, assembly: str) -> pd.DataFrame:
+    """Wrapper returning per-donor 96-context counts as a DataFrame with
+    columns: [CONTEXT_96..., donor_id, total_snvs].
+
+    Input: validated, SNV-only per-variant rows with `donor_id, chrom, pos, ref, alt`.
+    """
+    sbs96 = _sigprofiler_matrix(variants_df, assembly=assembly)
+    wide = sbs96.T
+    wide = wide.reindex(columns=CONTEXT_96, fill_value=0)
+    wide = wide.reset_index().rename(columns={"index": "donor_id"})
+    wide["total_snvs"] = wide[CONTEXT_96].sum(axis=1).astype(int)
+    return wide
 
 
 def _run_via_snakemake() -> None:

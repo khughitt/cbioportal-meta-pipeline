@@ -11,6 +11,7 @@ import pytest
 from extract_normal_tissue_spectra import (
     CONTEXT_96,
     aggregate_donor_averaged_fraction,
+    aggregate_per_donor_rows,
     aggregate_pooled_counts,
     attach_assay_metadata,
     attach_uberon,
@@ -328,3 +329,20 @@ def test_donor_averaged_fraction_empty_when_all_excluded() -> None:
     assert audit["n_donors_included"] == 0
     assert audit["n_donors_excluded_low_snvs"] == 2
     assert sum(row[ctx] for ctx in CONTEXT_96) == 0.0
+
+
+def test_per_donor_rows_one_row_per_donor_with_counts() -> None:
+    per_donor = _synthetic_context_df(
+        {
+            "D1": {"A[C>A]A": 3},
+            "D2": {"T[T>G]T": 5},
+            "D3": {"A[C>A]A": 1, "T[T>G]T": 2},
+        }
+    )
+    rows = aggregate_per_donor_rows(per_donor)
+    assert len(rows) == 3
+    by_donor = {r["donor_id"]: r for r in rows}
+    assert by_donor["D1"]["A[C>A]A"] == 3
+    assert by_donor["D1"]["total_snvs"] == 3
+    assert by_donor["D2"]["T[T>G]T"] == 5
+    assert by_donor["D3"]["total_snvs"] == 3

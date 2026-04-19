@@ -252,6 +252,18 @@ def aggregate_donor_averaged_fraction(
     return {ctx: float(averaged[i]) for i, ctx in enumerate(CONTEXT_96)}, audit
 
 
+def aggregate_per_donor_rows(per_donor_ctx: pd.DataFrame) -> list[dict[str, object]]:
+    """Emit one row per donor, carrying the donor's 96-context counts + total_snvs."""
+    rows: list[dict[str, object]] = []
+    for _, donor_row in per_donor_ctx.iterrows():
+        row: dict[str, object] = {ctx: int(donor_row[ctx]) for ctx in CONTEXT_96}
+        row["donor_id"] = str(donor_row["donor_id"])
+        total: int = sum(int(donor_row[ctx]) for ctx in CONTEXT_96)
+        row["total_snvs"] = total
+        rows.append(row)
+    return rows
+
+
 def _run_via_snakemake() -> None:
     snek = snakemake  # type: ignore[name-defined]  # noqa: F821 F841
     # (Task 13 fills in the body)

@@ -752,7 +752,7 @@ Add near the top of `code/scripts/extract_normal_tissue_spectra.py` (below `ASSA
 _SUBS = ["C>A", "C>G", "C>T", "T>A", "T>C", "T>G"]
 _BASES = ["A", "C", "G", "T"]
 CONTEXT_96: list[str] = [
-    f"{five}[{sub}]{three}" for sub in _SUBS for five in _BASES for three in _BASES
+    f"{five}[{sub}]{three}" for five in _BASES for sub in _SUBS for three in _BASES
 ]
 assert len(CONTEXT_96) == 96
 

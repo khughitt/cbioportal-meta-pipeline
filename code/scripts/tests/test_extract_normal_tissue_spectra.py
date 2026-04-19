@@ -243,6 +243,18 @@ def test_attach_assay_metadata_li2021_mixed_tissues_dispatches_correctly() -> No
     assert out.iloc[1]["callable_mb"] == 48.2
 
 
+def test_context_96_ordering_is_sigprofiler_canonical() -> None:
+    """CONTEXT_96 ordering is load-bearing: must match SigProfiler's SBS96
+    row order so the Task 10 transpose aligns columns correctly."""
+    assert CONTEXT_96[0] == "A[C>A]A"
+    assert CONTEXT_96[3] == "A[C>A]T"
+    assert CONTEXT_96[4] == "A[C>G]A"  # substitution changes within same 5' base
+    assert CONTEXT_96[23] == "A[T>G]T"  # last A[*]* entry (24 per 5' base)
+    assert CONTEXT_96[24] == "C[C>A]A"  # 5' base changes here
+    assert CONTEXT_96[-1] == "T[T>G]T"
+    assert len(CONTEXT_96) == 96
+
+
 def _synthetic_context_df(donor_counts: dict[str, dict[str, int]]) -> pd.DataFrame:
     """Build a per-donor 96-context count DataFrame from a nested dict.
 

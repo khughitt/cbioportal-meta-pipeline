@@ -45,15 +45,24 @@ ASSAY_METADATA: dict[tuple[str, str | None], dict[str, object]] = {
 }
 
 
-# SigProfiler's canonical 96-trinucleotide context ordering:
-# {5'-base}[{ref}>{alt}]{3'-base}, with {ref, alt} restricted to pyrimidine-centric changes
-# (C>A, C>G, C>T, T>A, T>C, T>G).
+# SigProfiler's canonical 96-trinucleotide context ordering (verified against
+# SigProfilerMatrixGenerator/scripts/Benchmark/GRCh37_bench_orig_96.txt):
+# {5'-base}[{ref}>{alt}]{3'-base}, with {ref, alt} restricted to pyrimidine-centric
+# changes (C>A, C>G, C>T, T>A, T>C, T>G).
+#
+# Loop nesting is LOAD-BEARING: outer=5'-base, middle=substitution, inner=3'-base.
+# The first 24 entries are all A[*]*; entries 25-48 are C[*]*; etc. This matches
+# the row order of SigProfiler's SBS96 matrix output — reordering here would
+# silently misalign columns when Task 10's wrapper transposes that matrix.
 _SUBS: tuple[str, ...] = ("C>A", "C>G", "C>T", "T>A", "T>C", "T>G")
 _BASES: tuple[str, ...] = ("A", "C", "G", "T")
 CONTEXT_96: list[str] = [
-    f"{five}[{sub}]{three}" for sub in _SUBS for five in _BASES for three in _BASES
+    f"{five}[{sub}]{three}" for five in _BASES for sub in _SUBS for three in _BASES
 ]
 assert len(CONTEXT_96) == 96
+assert CONTEXT_96[0] == "A[C>A]A"
+assert CONTEXT_96[4] == "A[C>G]A"  # substitution changes within same 5' base
+assert CONTEXT_96[-1] == "T[T>G]T"
 
 
 # Tuples (not sets) so pandas .isin() accepts them cleanly; _VALID_CHROMS_SET is for
@@ -192,7 +201,7 @@ def attach_assay_metadata(df: pd.DataFrame, source: str) -> pd.DataFrame:
     return out
 
 
-def aggregate_pooled_counts(per_donor_ctx: pd.DataFrame) -> dict[str, object]:
+def aggregate_pooled_counts(per_donor_ctx: pd.DataFrame) -> dict[str, int]:
     """Column-wise sum of per-donor 96-context counts → single pooled row.
 
     Input: per-donor DataFrame with 96 context columns + 'donor_id'.

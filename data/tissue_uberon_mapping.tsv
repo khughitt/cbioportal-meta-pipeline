@@ -1,5 +1,5 @@
 source	tissue_label	tissue_uberon	uberon_label	notes
-li2021	Bronchia	UBERON:0002185	bronchus	"Bronchia" is Chinese-English transliteration for bronchus; mapped to primary bronchus (large-airway epithelium)
+li2021	Bronchia	UBERON:0002185	bronchus	Bronchia is Chinese-English transliteration for bronchus; mapped to primary bronchus (large-airway epithelium)
 li2021	Esophagus	UBERON:0001043	esophagus
 li2021	Cardia	UBERON:0001162	cardia of stomach	Corrected from suggested UBERON:0007650 (esophagogastric junction); UBERON:0001162 is the stomach cardia region (gastric cardia; distinct from stomach body)
 li2021	Stomach	UBERON:0000945	stomach

@@ -9,6 +9,8 @@ import pandas as pd
 import pytest
 
 from extract_normal_tissue_spectra import (
+    CONTEXT_96,
+    aggregate_pooled_counts,
     attach_assay_metadata,
     attach_uberon,
     validate_input_contract,
@@ -239,3 +241,33 @@ def test_attach_assay_metadata_li2021_mixed_tissues_dispatches_correctly() -> No
     assert out.iloc[1]["capture_kit_or_panel"] == "SureSelectXT V7"
     assert out.iloc[0]["callable_mb"] == 60.0
     assert out.iloc[1]["callable_mb"] == 48.2
+
+
+def _synthetic_context_df(donor_counts: dict[str, dict[str, int]]) -> pd.DataFrame:
+    """Build a per-donor 96-context count DataFrame from a nested dict.
+
+    donor_counts: {donor_id: {context: count, ...}}
+    Contexts not listed default to 0.
+    """
+    rows = []
+    for donor, ctx_counts in donor_counts.items():
+        row = {ctx: 0 for ctx in CONTEXT_96}
+        row.update(ctx_counts)
+        row["donor_id"] = donor
+        rows.append(row)
+    return pd.DataFrame(rows)
+
+
+def test_pooled_counts_is_column_wise_sum_across_donors() -> None:
+    per_donor = _synthetic_context_df(
+        {
+            "D1": {"A[C>A]A": 3, "T[T>G]T": 2},
+            "D2": {"A[C>A]A": 1, "T[T>G]T": 7},
+            "D3": {"A[C>A]A": 5},
+        }
+    )
+    row = aggregate_pooled_counts(per_donor)
+    assert row["A[C>A]A"] == 9
+    assert row["T[T>G]T"] == 9
+    assert row["total_snvs"] == 18
+    assert row["n_donors"] == 3

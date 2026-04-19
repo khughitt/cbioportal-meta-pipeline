@@ -45,6 +45,17 @@ ASSAY_METADATA: dict[tuple[str, str | None], dict[str, object]] = {
 }
 
 
+# SigProfiler's canonical 96-trinucleotide context ordering:
+# {5'-base}[{ref}>{alt}]{3'-base}, with {ref, alt} restricted to pyrimidine-centric changes
+# (C>A, C>G, C>T, T>A, T>C, T>G).
+_SUBS: tuple[str, ...] = ("C>A", "C>G", "C>T", "T>A", "T>C", "T>G")
+_BASES: tuple[str, ...] = ("A", "C", "G", "T")
+CONTEXT_96: list[str] = [
+    f"{five}[{sub}]{three}" for sub in _SUBS for five in _BASES for three in _BASES
+]
+assert len(CONTEXT_96) == 96
+
+
 # Tuples (not sets) so pandas .isin() accepts them cleanly; _VALID_CHROMS_SET is for
 # set-difference operations. Pandas accepts sets at runtime but its type stubs do not.
 _VALID_CHROMS: tuple[str, ...] = tuple(
@@ -179,6 +190,20 @@ def attach_assay_metadata(df: pd.DataFrame, source: str) -> pd.DataFrame:
     out["capture_kit_or_panel"] = [m["capture_kit_or_panel"] for m in meta]
     out["callable_mb"] = [float(m["callable_mb"]) for m in meta]
     return out
+
+
+def aggregate_pooled_counts(per_donor_ctx: pd.DataFrame) -> dict[str, object]:
+    """Column-wise sum of per-donor 96-context counts → single pooled row.
+
+    Input: per-donor DataFrame with 96 context columns + 'donor_id'.
+    Output: dict with 96 context columns (int), 'total_snvs' (int), 'n_donors' (int).
+    """
+    totals: dict[str, object] = {
+        ctx: int(per_donor_ctx[ctx].sum()) for ctx in CONTEXT_96
+    }
+    totals["total_snvs"] = sum(int(v) for v in (totals[ctx] for ctx in CONTEXT_96))
+    totals["n_donors"] = int(per_donor_ctx["donor_id"].nunique())
+    return totals
 
 
 def _run_via_snakemake() -> None:

@@ -77,6 +77,35 @@ rule process_cgc:
     "../scripts/process_cgc.py"
 
 #
+# Normal-tissue reference spectra + burden. Builds two reference tables from per-variant
+# supplementary data from Li 2021 (Nature, hg19).
+#
+# Outputs:
+#   data/normal_tissue_spectra.tsv — 96-context SBS spectra per (tissue, aggregation)
+#   data/normal_tissue_burden.tsv  — per-tissue / per-donor burden (snvs_per_mb)
+#
+# Manual prerequisites (gated by Task 0 data-access gate at
+# doc/plans/t111-data-gate-record.md):
+#   data/li2021_somatic_mutations.tsv   (convert from 41586_2021_3836_MOESM5_ESM.xlsx)
+#   data/tissue_uberon_mapping.tsv      (committed to git)
+#
+# Xu 2025 deferred to follow-up task t112 — per-variant data is dbGaP-only
+# (controlled access), so scope was reduced to Li 2021 only.
+#
+# First run downloads SigProfilerMatrixGenerator reference bundle for GRCh37
+# (~1.5 GB) to the user cache.
+#
+rule extract_normal_tissue_spectra:
+  input:
+    li2021="data/li2021_somatic_mutations.tsv",
+    mapping="data/tissue_uberon_mapping.tsv"
+  output:
+    spectra="data/normal_tissue_spectra.tsv",
+    burden="data/normal_tissue_burden.tsv"
+  script:
+    "../scripts/extract_normal_tissue_spectra.py"
+
+#
 # Unified annotation overlay. Applies Bailey 2018 + COSMIC CGC + Sanchez-Vega 2018 pathway
 # overlays in one pass to the raw cross-study feathers. Replaces the earlier chained
 # annotate_drivers.py pattern (one rule per overlay per table).

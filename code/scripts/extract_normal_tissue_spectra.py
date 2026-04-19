@@ -488,6 +488,101 @@ def build_spectra_rows_for_tissue(  # noqa: PLR0913
     return rows
 
 
+SPECTRA_COLUMNS: list[str] = [
+    "source_id",
+    "tissue_uberon",
+    "tissue_label",
+    "uberon_label",
+    "aggregation",
+    "value_type",
+    "donor_id",
+    "assembly",
+    "sequencing_modality",
+    "capture_kit_or_panel",
+    "callable_mb",
+    "n_donors_total",
+    "n_donors_included",
+    "n_donors_excluded_low_snvs",
+    "low_snv_threshold",
+    "n_donors",
+    "n_samples",
+    "total_snvs",
+    *CONTEXT_96,
+]
+
+BURDEN_COLUMNS: list[str] = [
+    "source_id",
+    "tissue_uberon",
+    "tissue_label",
+    "uberon_label",
+    "aggregation",
+    "donor_id",
+    "assembly",
+    "sequencing_modality",
+    "capture_kit_or_panel",
+    "callable_mb",
+    "n_donors",
+    "n_samples",
+    "snvs",
+    "snvs_per_mb",
+]
+
+
+def build_burden_rows_for_tissue(  # noqa: PLR0913
+    *,
+    variants_df: pd.DataFrame,
+    source_id: str,
+    tissue_uberon: str,
+    tissue_label: str,
+    uberon_label: str,
+    assembly: str,
+    sequencing_modality: str,
+    capture_kit_or_panel: str,
+) -> list[dict[str, object]]:
+    """Produce pooled + per-donor burden rows for one tissue."""
+
+    def _common(aggregation: str) -> dict[str, object]:
+        return {
+            "source_id": source_id,
+            "tissue_uberon": tissue_uberon,
+            "tissue_label": tissue_label,
+            "uberon_label": uberon_label,
+            "aggregation": aggregation,
+            "assembly": assembly,
+            "sequencing_modality": sequencing_modality,
+            "capture_kit_or_panel": capture_kit_or_panel,
+            "donor_id": "",
+        }
+
+    rows: list[dict[str, object]] = []
+
+    pooled = aggregate_pooled_burden(variants_df)
+    rows.append({**_common("pooled"), **pooled})
+
+    for per_donor in aggregate_per_donor_burden_rows(variants_df):
+        rows.append({**_common("per_donor"), **per_donor, "n_donors": 1})
+
+    return rows
+
+
+def write_spectra_tsv(rows: list[dict[str, object]], path: Path) -> None:
+    df = pd.DataFrame(rows)
+    for col in SPECTRA_COLUMNS:
+        if col not in df.columns:
+            df[col] = 0
+    df = df[SPECTRA_COLUMNS]
+    df.to_csv(path, sep="\t", index=False)
+
+
+def write_burden_tsv(rows: list[dict[str, object]], path: Path) -> None:
+    df = pd.DataFrame(rows)
+    for col in BURDEN_COLUMNS:
+        if col not in df.columns:
+            df[col] = 0
+    df = df[BURDEN_COLUMNS]
+    df.to_csv(path, sep="\t", index=False)
+
+
 def _run_via_snakemake() -> None:
     snek = snakemake  # type: ignore[name-defined]  # noqa: F821 F841
     # (Task 13 fills in the body)

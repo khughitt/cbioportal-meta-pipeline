@@ -9,7 +9,9 @@ import pandas as pd
 import pytest
 
 from extract_normal_tissue_spectra import (
+    BURDEN_COLUMNS,
     CONTEXT_96,
+    SPECTRA_COLUMNS,
     aggregate_donor_averaged_fraction,
     aggregate_per_donor_burden_rows,
     aggregate_per_donor_rows,
@@ -17,9 +19,12 @@ from extract_normal_tissue_spectra import (
     aggregate_pooled_counts,
     attach_assay_metadata,
     attach_uberon,
+    build_burden_rows_for_tissue,
     build_spectra_rows_for_tissue,
     compute_96_context_counts,
     validate_input_contract,
+    write_burden_tsv,
+    write_spectra_tsv,
 )
 
 
@@ -511,3 +516,69 @@ def test_build_spectra_rows_audit_columns_present_on_all_rows() -> None:
     avg_row = next(r for r in rows if r["aggregation"] == "donor_averaged_fraction")
     assert avg_row["n_donors_included"] == 1
     assert avg_row["n_donors_excluded_low_snvs"] == 1
+
+
+def test_build_burden_rows_has_pooled_plus_per_donor() -> None:
+    variants = pd.DataFrame(
+        [
+            {"donor_id": "D1", "sample_id": "S1", "callable_mb": 50.0},
+            {"donor_id": "D1", "sample_id": "S1", "callable_mb": 50.0},
+            {"donor_id": "D2", "sample_id": "S2", "callable_mb": 50.0},
+        ]
+    )
+    rows = build_burden_rows_for_tissue(
+        variants_df=variants,
+        source_id="li2021",
+        tissue_uberon="UBERON:0002107",
+        tissue_label="Liver",
+        uberon_label="liver",
+        assembly="GRCh37",
+        sequencing_modality="WES",
+        capture_kit_or_panel="SureSelectXT V7",
+    )
+    aggregations = [r["aggregation"] for r in rows]
+    assert aggregations.count("pooled") == 1
+    assert aggregations.count("per_donor") == 2
+
+
+def test_write_spectra_tsv_column_order(tmp_path: Path) -> None:
+    per_donor_ctx = _synthetic_context_df({"D1": {"A[C>A]A": 100}})
+    rows = build_spectra_rows_for_tissue(
+        per_donor_ctx=per_donor_ctx,
+        source_id="li2021",
+        tissue_uberon="UBERON:0002107",
+        tissue_label="Liver",
+        uberon_label="liver",
+        assembly="GRCh37",
+        sequencing_modality="WES",
+        capture_kit_or_panel="SureSelectXT V7",
+        callable_mb=48.2,
+        n_samples=1,
+        low_snv_threshold=50,
+    )
+    out = tmp_path / "out.tsv"
+    write_spectra_tsv(rows, out)
+    df = pd.read_csv(out, sep="\t")
+    assert list(df.columns) == SPECTRA_COLUMNS
+
+
+def test_write_burden_tsv_column_order(tmp_path: Path) -> None:
+    variants = pd.DataFrame(
+        [
+            {"donor_id": "D1", "sample_id": "S1", "callable_mb": 50.0},
+        ]
+    )
+    rows = build_burden_rows_for_tissue(
+        variants_df=variants,
+        source_id="li2021",
+        tissue_uberon="UBERON:0002107",
+        tissue_label="Liver",
+        uberon_label="liver",
+        assembly="GRCh37",
+        sequencing_modality="WES",
+        capture_kit_or_panel="SureSelectXT V7",
+    )
+    out = tmp_path / "out.tsv"
+    write_burden_tsv(rows, out)
+    df = pd.read_csv(out, sep="\t")
+    assert list(df.columns) == BURDEN_COLUMNS

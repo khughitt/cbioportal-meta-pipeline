@@ -97,6 +97,24 @@ def validate_input_contract(
     }
 
 
+def attach_uberon(df: pd.DataFrame, mapping_tsv: Path, source: str) -> pd.DataFrame:
+    """Left-join `tissue_uberon` and `uberon_label` onto df keyed on (source, tissue_label).
+
+    Raises ValueError listing any unmapped (source, tissue_label) pairs — no silent drops.
+    """
+    mapping = pd.read_csv(mapping_tsv, sep="\t", dtype=str, na_filter=False)
+    mapping = mapping.loc[mapping["source"] == source, ["tissue_label", "tissue_uberon", "uberon_label"]]
+
+    out = df.merge(mapping, on="tissue_label", how="left", validate="many_to_one")
+    unmapped = out.loc[out["tissue_uberon"].isna(), "tissue_label"].unique().tolist()
+    if unmapped:
+        raise ValueError(
+            f"{source}: unmapped tissue_label values {sorted(unmapped)}. "
+            f"Append to {mapping_tsv}."
+        )
+    return out
+
+
 def _run_via_snakemake() -> None:
     snek = snakemake  # type: ignore[name-defined]  # noqa: F821 F841
     # (Task 13 fills in the body)

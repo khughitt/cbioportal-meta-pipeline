@@ -2,10 +2,12 @@
 
 See plan Task 3 onward for detailed test specifications.
 """
+from pathlib import Path
+
 import pandas as pd
 import pytest
 
-from extract_normal_tissue_spectra import validate_input_contract
+from extract_normal_tissue_spectra import attach_uberon, validate_input_contract
 
 
 def _df(**cols: list[object]) -> pd.DataFrame:
@@ -104,3 +106,32 @@ def test_contract_rejects_invalid_chromosome() -> None:
     )
     with pytest.raises(ValueError, match="unknown chromosome"):
         validate_input_contract(df, source="li2021", assembly="GRCh37")
+
+
+def _mapping_tsv(tmp_path: Path) -> Path:
+    p = tmp_path / "map.tsv"
+    p.write_text(
+        "source\ttissue_label\ttissue_uberon\tuberon_label\tnotes\n"
+        "li2021\tLiver\tUBERON:0002107\tliver\t\n"
+        "li2021\tEsophagus\tUBERON:0001043\tesophagus\t\n"
+    )
+    return p
+
+
+def test_attach_uberon_joins_on_source_and_tissue_label(tmp_path: Path) -> None:
+    df = _df(
+        donor_id=["D1", "D1"], tissue_label=["Liver", "Esophagus"],
+        chrom=["chr1", "chr1"], pos=[1, 2], ref=["A", "A"], alt=["C", "C"],
+    )
+    out = attach_uberon(df, _mapping_tsv(tmp_path), source="li2021")
+    assert list(out["tissue_uberon"]) == ["UBERON:0002107", "UBERON:0001043"]
+    assert list(out["uberon_label"]) == ["liver", "esophagus"]
+
+
+def test_attach_uberon_raises_on_unmapped_tissue(tmp_path: Path) -> None:
+    df = _df(
+        donor_id=["D1"], tissue_label=["Pancreas"],
+        chrom=["chr1"], pos=[1], ref=["A"], alt=["C"],
+    )
+    with pytest.raises(ValueError, match="unmapped"):
+        attach_uberon(df, _mapping_tsv(tmp_path), source="li2021")

@@ -26,6 +26,68 @@ ASSAY_METADATA: dict[tuple[str, str | None], dict[str, object]] = {
 }
 
 
+_VALID_CHROMS = {f"chr{c}" for c in list(range(1, 23)) + ["X", "Y"]}
+
+
+def validate_input_contract(
+    df: pd.DataFrame, source: str, assembly: str
+) -> tuple[pd.DataFrame, dict[str, int]]:
+    """Enforce the input contract defined in the design spec.
+
+    Drops (with counters): indels, mitochondrial rows, exact within-donor duplicates.
+    Raises ValueError for: multi-allelic rows, non-ACGT alleles, unknown chromosomes.
+    Normalises `chrom` to the `chrN` form.
+
+    Returns (cleaned_df, stats_dict) where stats_dict has keys:
+    n_indels_dropped, n_mito_dropped, n_duplicates_collapsed.
+    """
+    required = {"donor_id", "tissue_label", "chrom", "pos", "ref", "alt"}
+    missing = required - set(df.columns)
+    if missing:
+        raise ValueError(f"{source}: missing required columns {sorted(missing)}")
+
+    df = df.copy()
+    df["chrom"] = df["chrom"].astype(str).apply(lambda c: c if c.startswith("chr") else f"chr{c}")
+    df["ref"] = df["ref"].astype(str)
+    df["alt"] = df["alt"].astype(str)
+
+    if df["alt"].str.contains(",").any():
+        bad = int(df["alt"].str.contains(",").sum())
+        raise ValueError(f"{source}: {bad} multi-allelic rows (alt contains ','); split upstream")
+
+    # Mitochondrial drop
+    mito_mask = df["chrom"].isin({"chrM", "chrMT"})
+    n_mito = int(mito_mask.sum())
+    df = df.loc[~mito_mask].copy()
+
+    # Unknown chromosomes
+    unknown = set(df["chrom"].unique()) - _VALID_CHROMS
+    if unknown:
+        raise ValueError(f"{source}: unknown chromosome values {sorted(unknown)}")
+
+    # Indel drop (ref or alt not length-1)
+    indel_mask = (df["ref"].str.len() != 1) | (df["alt"].str.len() != 1)
+    n_indels = int(indel_mask.sum())
+    df = df.loc[~indel_mask].copy()
+
+    # Non-ACGT rejection
+    valid = {"A", "C", "G", "T"}
+    bad_alleles = ~(df["ref"].isin(valid) & df["alt"].isin(valid))
+    if bad_alleles.any():
+        raise ValueError(f"{source}: {int(bad_alleles.sum())} rows with non-ACGT alleles")
+
+    # Exact-duplicate dedup (within donor + tissue)
+    before = len(df)
+    df = df.drop_duplicates(subset=["donor_id", "tissue_label", "chrom", "pos", "ref", "alt"])
+    n_dupes = before - len(df)
+
+    return df.reset_index(drop=True), {
+        "n_indels_dropped": n_indels,
+        "n_mito_dropped": n_mito,
+        "n_duplicates_collapsed": n_dupes,
+    }
+
+
 def _run_via_snakemake() -> None:
     snek = snakemake  # type: ignore[name-defined]  # noqa: F821 F841
     # (Task 13 fills in the body)

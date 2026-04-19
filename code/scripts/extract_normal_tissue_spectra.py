@@ -120,8 +120,15 @@ def validate_input_contract(
     if unknown:
         raise ValueError(f"{source}: unknown chromosome values {sorted(unknown)}")
 
-    # Indel drop (ref or alt not length-1)
-    indel_mask = (df["ref"].str.len() != 1) | (df["alt"].str.len() != 1)
+    # Indel drop (ref or alt not length-1, OR equals '-' which encodes indels
+    # in some callers — e.g. Li 2021 uses '-' as the absent allele for
+    # insertions/deletions).
+    indel_mask = (
+        (df["ref"].str.len() != 1)
+        | (df["alt"].str.len() != 1)
+        | (df["ref"] == "-")
+        | (df["alt"] == "-")
+    )
     n_indels = int(indel_mask.sum())
     df = df.loc[~indel_mask].copy()
 
@@ -372,7 +379,16 @@ def _sigprofiler_matrix(variants_df: pd.DataFrame, assembly: str) -> pd.DataFram
 
         try:
             sbs96 = _run(vcf_dir)
-        except FileNotFoundError as exc:
+        except (FileNotFoundError, Exception) as exc:  # noqa: BLE001
+            # SigProfilerMatrixGenerator raises a bare Exception (not
+            # FileNotFoundError) with the message "The specified genome
+            # {assembly} has not been installed" when the reference bundle is
+            # absent. Catch both to handle both older and newer versions.
+            exc_str = str(exc)
+            if "has not been installed" not in exc_str and not isinstance(
+                exc, FileNotFoundError
+            ):
+                raise
             print(
                 f"SigProfiler reference bundle for {assembly} not found ({exc}); "
                 f"installing and retrying once.",

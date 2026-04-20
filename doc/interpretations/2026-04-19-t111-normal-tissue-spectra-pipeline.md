@@ -23,6 +23,12 @@ prior_interpretations: []
 
 # Interpretation (dev mode): t111 normal-tissue spectra extraction
 
+## Verdict
+
+**Verdict:** [?] Dev-mode infrastructure build: normal-tissue spectra extraction pipeline delivered with Li 2021 scope; no hypothesis tested, downstream consumers unblocked.
+
+<!-- Backfilled 2026-04-19 per discussion:2026-04-19-verdict-polarity-display -->
+
 ## Mode
 
 `dev` — t111 built the null-model-spectra extraction pipeline from scratch. The real-data execution did produce ~56 spectra rows and ~47 burden rows as empirical output, but those rows are **inputs to downstream analyses** (q007, q008, q010), not tests of a hypothesis. This document summarizes the infrastructure outcomes, the methodological lessons, and the narrow empirical observations that serve as sanity checks on the pipeline.

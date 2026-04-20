@@ -5,6 +5,12 @@
 **Design spec:** `doc/plans/2026-04-18-t070-msk-impact-panel-version-drift-design.md`
 **Implementation plan:** `doc/plans/2026-04-18-t070-msk-impact-panel-version-drift-implementation-plan.md`
 
+## Verdict
+
+**Verdict:** [+] t070 fix delivers predicted ~30× TMB correction and flips 401 MSK samples to correct hypermutator status; magnitudes match to 3 sig figs.
+
+<!-- Backfilled 2026-04-19 per discussion:2026-04-19-verdict-polarity-display -->
+
 ## Summary
 
 t070 eliminates two silent biases in `msk_impact_2017` outputs by keying

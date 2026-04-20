@@ -1,0 +1,4 @@
+path	polarity	clause	confidence	needs_review
+doc/interpretations/2026-04-17-poc-run.md	[~]	Pipeline runs end-to-end; POLE detector validates at canonical UCEC frequency, but composite hypermutator flag miscalibrated for BRCA/SKCM and MSK TMB deflated 30x.	0.85	false
+doc/interpretations/2026-04-18-t070-poc-comparison.md	[+]	t070 fix delivers predicted ~30x TMB correction and flips 401 MSK samples to correct hypermutator status; magnitudes match to 3 sig figs.	0.95	false
+doc/interpretations/2026-04-19-t111-normal-tissue-spectra-pipeline.md	[?]	Dev-mode infrastructure build: normal-tissue spectra extraction pipeline delivered with Li 2021 scope; no hypothesis tested, downstream consumers unblocked.	0.90	false

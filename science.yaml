@@ -6,13 +6,12 @@ status: "active"
 profile: "research"
 layout_version: 2
 tags:
-  - cancer
-  - mutations
-  - meta-analysis
-  - cbioportal
-  - pan-cancer
   - bioinformatics
-  - snakemake
+  - cancer
+  - cbioportal
+  - meta-analysis
+  - mutations
+  - pan-cancer
 data_sources:
   - name: "cBioPortal"
     description: "Public cancer genomics studies (mutations + clinical data) downloaded via study IDs."
@@ -30,9 +29,8 @@ ontologies: [biology]
 knowledge_profiles:
   local: local
 aspects:
-  - mutation-frequency
-  - gene-cancer-associations
-  - clustering
+  - computational-analysis
+  - software-development
 research_question: "What is the structure of somatic mutations within and across cancer types, and which gene-cancer associations recur across independent cBioPortal studies?"
 scope:
   in_scope:

@@ -1357,6 +1357,7 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dev = [
+    { name = "jsonschema", specifier = ">=4.26.0" },
     { name = "pytest", specifier = ">=9.0" },
     { name = "ruff", specifier = ">=0.15.7" },
 ]
@@ -1368,6 +1369,7 @@ source = { editable = "../../science/science-tool" }
 dependencies = [
     { name = "click" },
     { name = "httpx" },
+    { name = "jsonschema" },
     { name = "pyyaml" },
     { name = "rdflib" },
     { name = "rich" },
@@ -1382,6 +1384,7 @@ requires-dist = [
     { name = "httpx", specifier = ">=0.27" },
     { name = "httpx", marker = "extra == 'datasets'", specifier = ">=0.27" },
     { name = "httpx", marker = "extra == 'distill'" },
+    { name = "jsonschema", specifier = ">=4.0" },
     { name = "networkx", marker = "extra == 'distill'", specifier = ">=3.2" },
     { name = "pgmpy", marker = "extra == 'causal'", specifier = ">=0.1.25" },
     { name = "pooch", marker = "extra == 'datasets'", specifier = ">=1.8" },

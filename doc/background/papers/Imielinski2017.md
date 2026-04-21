@@ -1,6 +1,6 @@
 ---
-id: "article:Imielinski2017"
-type: "article"
+id: "paper:Imielinski2017"
+type: "paper"
 title: "Insertions and Deletions Target Lineage-Defining Genes in Human Cancers"
 status: "active"
 tags:
@@ -16,10 +16,10 @@ datasets:
 source_refs:
   - "cite:Imielinski2017"
 related:
-  - "article:Lawrence2014"
-  - "article:Martincorena2017"
-  - "article:Bailey2018"
-  - "article:Canisius2016"
+  - "paper:Lawrence2014"
+  - "paper:Martincorena2017"
+  - "paper:Bailey2018"
+  - "paper:Canisius2016"
 created: "2026-04-13"
 updated: "2026-04-13"
 ---

@@ -10,8 +10,8 @@ source_refs:
   - "cite:Yoshida2026"
 related:
   - "topic:clonal-hematopoiesis-contamination"
-  - "article:Gao2023"
-  - "article:Yoshida2026"
+  - "paper:Gao2023"
+  - "paper:Yoshida2026"
   - "question:q001-normal-epithelial-clone-contamination-in-esophageal-studies"
 created: "2026-04-18"
 updated: "2026-04-18"
@@ -54,6 +54,6 @@ Gao2023 finds that 10% of normal esophagus mucosa samples carry detectable mCAs,
 ## Related
 
 - Topic notes: `topic:clonal-hematopoiesis-contamination` (SNV-level CH; same family of problems)
-- Article notes: `article:Gao2023`, `article:Yoshida2026`
+- Article notes: `paper:Gao2023`, `paper:Yoshida2026`
 - Related question: `question:q001-normal-epithelial-clone-contamination-in-esophageal-studies` (NOTCH1 SNV analog)
 - Methods/Datasets: GTEx v8 (Gao2023); cBioPortal esophageal study list; matched-normal annotation from `matched_normal_studies` config key

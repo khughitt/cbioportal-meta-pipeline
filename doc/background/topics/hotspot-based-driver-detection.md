@@ -6,9 +6,9 @@ status: "active"
 ontology_terms: []
 source_refs: []
 related:
-  - "article:Chang2016"
-  - "article:Gao2017"
-  - "article:Chakravarty2017"
+  - "paper:Chang2016"
+  - "paper:Gao2017"
+  - "paper:Chakravarty2017"
   - "topic:cancer-driver-genes"
 created: "2026-04-13"
 updated: "2026-04-13"

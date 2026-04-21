@@ -1,12 +1,12 @@
 ---
-id: "article:Ellrott2018"
-type: "article"
+id: "paper:Ellrott2018"
+type: "paper"
 title: "Scalable Open Science Approach for Mutation Calling of Tumor Exomes Using Multiple Genomic Pipelines"
 status: "summarized"
 ontology_terms: []
 datasets: ["tcga-mc3"]
 source_refs: ["cite:Ellrott2018"]
-related: ["article:Bailey2018", "topic:targeted-panel-sequencing-bias"]
+related: ["paper:Bailey2018", "topic:targeted-panel-sequencing-bias"]
 created: "2026-04-13"
 updated: "2026-04-12"
 ---

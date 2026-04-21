@@ -1,6 +1,6 @@
 ---
-id: "article:Leiserson2015"
-type: "article"
+id: "paper:Leiserson2015"
+type: "paper"
 title: "CoMEt: a statistical approach to identify combinations of mutually exclusive alterations in cancer"
 status: "active"
 tags:
@@ -15,10 +15,10 @@ datasets:
 source_refs:
   - "cite:Leiserson2015"
 related:
-  - "article:Vandin2012"
-  - "article:Leiserson2013"
-  - "article:Leiserson2016"
-  - "article:Ciriello2012"
+  - "paper:Vandin2012"
+  - "paper:Leiserson2013"
+  - "paper:Leiserson2016"
+  - "paper:Ciriello2012"
 created: "2026-04-13"
 updated: "2026-04-13"
 ---

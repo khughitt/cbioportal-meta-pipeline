@@ -6,10 +6,10 @@ status: "active"
 ontology_terms: []
 source_refs: []
 related:
-  - "article:Hoadley2018"
-  - "article:Jee2024"
-  - "article:PCAWG2020"
-  - "article:SanchezVega2018"
+  - "paper:Hoadley2018"
+  - "paper:Jee2024"
+  - "paper:PCAWG2020"
+  - "paper:SanchezVega2018"
   - "topic:pan-cancer-interpretive-frames"
 created: "2026-04-13"
 updated: "2026-04-13"

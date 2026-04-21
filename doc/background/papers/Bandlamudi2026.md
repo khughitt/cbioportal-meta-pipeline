@@ -1,12 +1,12 @@
 ---
-id: "article:Bandlamudi2026"
-type: "article"
+id: "paper:Bandlamudi2026"
+type: "paper"
 title: "Cancer type-specific variation in patterns of driver alterations across 50,000 tumors"
 status: "abstract-read"
 ontology_terms: []
 datasets: ["msk-impact", "msk-impact-50k-2026"]
 source_refs: ["cite:Bandlamudi2026"]
-related: ["article:Zehir2017", "article:Bailey2018", "article:Chakravarty2017", "topic:cancer-driver-genes", "topic:pan-cancer-mutation-landscape"]
+related: ["paper:Zehir2017", "paper:Bailey2018", "paper:Chakravarty2017", "topic:cancer-driver-genes", "topic:pan-cancer-mutation-landscape"]
 created: "2026-04-13"
 updated: "2026-04-13"
 ---

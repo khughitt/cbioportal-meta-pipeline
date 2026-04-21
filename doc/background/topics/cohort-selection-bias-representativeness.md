@@ -6,11 +6,11 @@ status: "active"
 ontology_terms: []
 source_refs: []
 related:
-  - "article:Zehir2017"
-  - "article:Pugh2022"
-  - "article:Nguyen2022"
-  - "article:Bandlamudi2026"
-  - "article:AACRGENIEConsortium2017"
+  - "paper:Zehir2017"
+  - "paper:Pugh2022"
+  - "paper:Nguyen2022"
+  - "paper:Bandlamudi2026"
+  - "paper:AACRGENIEConsortium2017"
   - "topic:targeted-panel-sequencing-bias"
   - "topic:cross-study-harmonization"
 created: "2026-04-13"

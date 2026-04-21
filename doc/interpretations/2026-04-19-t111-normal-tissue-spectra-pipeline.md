@@ -7,8 +7,8 @@ status: "active"
 source_refs:
   - "cite:Li2021"
 related:
-  - "article:Li2021"
-  - "article:Yoshida2026"
+  - "paper:Li2021"
+  - "paper:Yoshida2026"
   - "topic:signature-decomposition-unmatched-normal"
   - "topic:mutation-rate-normalization"
   - "question:q007-cross-tissue-somatic-mutation-rate-variation-as-null-model"

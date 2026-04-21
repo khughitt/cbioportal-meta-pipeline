@@ -1,6 +1,6 @@
 ---
-id: "article:Ciriello2012"
-type: "article"
+id: "paper:Ciriello2012"
+type: "paper"
 title: "Mutual exclusivity analysis identifies oncogenic network modules"
 status: "active"
 tags:
@@ -15,10 +15,10 @@ datasets:
 source_refs:
   - "cite:Ciriello2012"
 related:
-  - "article:Ciriello2013"
-  - "article:Canisius2016"
-  - "article:Leiserson2015"
-  - "article:Babur2015"
+  - "paper:Ciriello2013"
+  - "paper:Canisius2016"
+  - "paper:Leiserson2015"
+  - "paper:Babur2015"
 created: "2026-04-13"
 updated: "2026-04-13"
 ---

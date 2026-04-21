@@ -1,12 +1,12 @@
 ---
-id: "article:AACRGENIEConsortium2017"
-type: "article"
+id: "paper:AACRGENIEConsortium2017"
+type: "paper"
 title: "AACR Project GENIE: Powering Precision Medicine through an International Consortium"
 status: "read"
 ontology_terms: []
 datasets: ["aacr-genie"]
 source_refs: ["cite:AACRGENIEConsortium2017"]
-related: ["topic:pan-cancer-mutation-landscape", "topic:targeted-panel-sequencing-bias", "article:Pugh2022", "article:Zehir2017", "article:ChakravartySolit2021"]
+related: ["topic:pan-cancer-mutation-landscape", "topic:targeted-panel-sequencing-bias", "paper:Pugh2022", "paper:Zehir2017", "paper:ChakravartySolit2021"]
 created: "2026-04-13"
 updated: "2026-04-13"
 ---

@@ -1,12 +1,12 @@
 ---
-id: "article:Chakravarty2017"
-type: "article"
+id: "paper:Chakravarty2017"
+type: "paper"
 title: "OncoKB: A Precision Oncology Knowledge Base"
 status: "read"
 ontology_terms: []
 datasets: ["oncokb"]
 source_refs: ["cite:Chakravarty2017"]
-related: ["article:Cerami2012", "topic:cancer-driver-genes", "topic:variant-interpretation-oncokb-vus"]
+related: ["paper:Cerami2012", "topic:cancer-driver-genes", "topic:variant-interpretation-oncokb-vus"]
 created: "2026-04-13"
 updated: "2026-04-13"
 ---

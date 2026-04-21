@@ -1,12 +1,12 @@
 ---
-id: "article:Lawrence2014"
-type: "article"
+id: "paper:Lawrence2014"
+type: "paper"
 title: "Discovery and saturation analysis of cancer genes across 21 tumour types"
 status: "read"
 ontology_terms: []
 datasets: []
 source_refs: ["cite:Lawrence2014"]
-related: ["article:Bailey2018", "article:Kandoth2013", "topic:cancer-driver-genes", "topic:mutation-rate-normalization"]
+related: ["paper:Bailey2018", "paper:Kandoth2013", "topic:cancer-driver-genes", "topic:mutation-rate-normalization"]
 created: "2026-04-13"
 updated: "2026-04-13"
 ---

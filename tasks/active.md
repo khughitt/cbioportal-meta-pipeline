@@ -188,7 +188,7 @@ Follow-on to t074 annotation-only pass. Currently per-study NaN conflates three 
 - priority: P2
 - status: proposed
 - aspects: [software-development]
-- related: [search:2026-04-14-asxl1-tet2-ch-disambiguation, topic:clonal-hematopoiesis-contamination, article:Coombs2018, task:t059]
+- related: [search:2026-04-14-asxl1-tet2-ch-disambiguation, topic:clonal-hematopoiesis-contamination, paper:Coombs2018, task:t059]
 - group: pipeline
 - created: 2026-04-14
 
@@ -198,7 +198,7 @@ Replace the uniform ch_priority_gene boolean emitted by annotate_ch.py with a gr
 - priority: P3
 - status: proposed
 - aspects: [software-development]
-- related: [search:2026-04-14-tmb-hypermutator-followup, topic:tumor-mutational-burden, article:Chalmers2017, task:t081, task:t025]
+- related: [search:2026-04-14-tmb-hypermutator-followup, topic:tumor-mutational-burden, paper:Chalmers2017, task:t081, task:t025]
 - group: pipeline
 - created: 2026-04-14
 
@@ -208,7 +208,7 @@ Chalmers 2017 documents a 2.4x TMB increase between age 10 and age 90 in 100000-
 - priority: P2
 - status: proposed
 - aspects: [computational-analysis]
-- related: [search:2026-04-14-pathway-level-pan-cancer-methods, article:Reyna2020Pathway, article:Iorio2018SLAPenrich, article:Paczkowska2020, task:t043, task:t077, task:t079]
+- related: [search:2026-04-14-pathway-level-pan-cancer-methods, paper:Reyna2020Pathway, paper:Iorio2018SLAPenrich, paper:Paczkowska2020, task:t043, task:t077, task:t079]
 - group: meta-analysis
 - created: 2026-04-14
 
@@ -287,7 +287,7 @@ Surfaced by t100 PoC 2026-04-17: cluster_genes.py and cluster_cancer_types.py re
 - priority: P2
 - status: proposed
 - aspects: [software-development]
-- related: [task:t097, task:t100, article:Samstein2019, interpretation:2026-04-17-poc-run]
+- related: [task:t097, task:t100, paper:Samstein2019, interpretation:2026-04-17-poc-run]
 - group: pipeline
 - created: 2026-04-17
 
@@ -297,7 +297,7 @@ Surfaced by t100 PoC 2026-04-17: is_hypermutator_relative reports 45.5% for brca
 - priority: P2
 - status: active
 - aspects: [software-development]
-- related: [topic:signature-decomposition-unmatched-normal, question:q008-signature-decomposition-tissue-background-subtraction, article:Yaacov2023]
+- related: [topic:signature-decomposition-unmatched-normal, question:q008-signature-decomposition-tissue-background-subtraction, paper:Yaacov2023]
 - group: pipeline
 - created: 2026-04-18
 
@@ -307,7 +307,7 @@ Add a lookup table 'data/cosmic_cancer_type_signatures.tsv' derived from Alexand
 - priority: P2
 - status: blocked
 - aspects: [computational-analysis]
-- related: [topic:signature-decomposition-unmatched-normal, question:q009-sbs1-lrr-bias-as-normal-contamination-flag, article:Yaacov2023, article:Xu2025]
+- related: [topic:signature-decomposition-unmatched-normal, question:q009-sbs1-lrr-bias-as-normal-contamination-flag, paper:Yaacov2023, paper:Xu2025]
 - blocked-by: [t109]
 - group: pipeline
 - created: 2026-04-18
@@ -318,7 +318,7 @@ For ≥1 cancer type present in both a matched-normal study (TCGA MC3 pseudo-stu
 - priority: P2
 - status: proposed
 - aspects: [software-development]
-- related: [task:t111, topic:signature-decomposition-unmatched-normal, question:q006-ch-priority-gene-completeness, question:q008-signature-decomposition-tissue-background-subtraction, article:LeeSix2018, article:Xu2025]
+- related: [task:t111, topic:signature-decomposition-unmatched-normal, question:q006-ch-priority-gene-completeness, question:q008-signature-decomposition-tissue-background-subtraction, paper:LeeSix2018, paper:Xu2025]
 - group: pipeline
 - created: 2026-04-18
 
@@ -338,7 +338,7 @@ Current validate_input_contract accepts the assembly parameter but does not rang
 - priority: P2
 - status: proposed
 - aspects: [computational-analysis]
-- related: [task:t111, question:q007-cross-tissue-somatic-mutation-rate-variation-as-null-model, article:Li2021]
+- related: [task:t111, question:q007-cross-tissue-somatic-mutation-rate-variation-as-null-model, paper:Li2021]
 - group: pipeline
 - created: 2026-04-19
 

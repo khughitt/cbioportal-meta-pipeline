@@ -9,8 +9,8 @@ datasets:
 source_refs:
   - "cite:Li2021"
 related:
-  - "article:Li2021"
-  - "article:Yoshida2026"
+  - "paper:Li2021"
+  - "paper:Yoshida2026"
   - "topic:mutation-rate-normalization"
   - "topic:pan-cancer-mutation-landscape"
   - "question:q001-normal-epithelial-clone-contamination-in-esophageal-studies"
@@ -52,6 +52,6 @@ Li et al. 2021 (Nature) established that somatic mutation accumulation in morpho
 ## Related
 
 - Topic notes: `topic:mutation-rate-normalization`, `topic:pan-cancer-mutation-landscape`
-- Article notes: `article:Li2021`, `article:Yoshida2026`, `article:Martincorena2017`
+- Article notes: `paper:Li2021`, `paper:Yoshida2026`, `paper:Martincorena2017`
 - Related question: `question:q001` (normal-tissue clone contamination in esophageal studies)
 - Methods/Datasets: EGA:EGAD00001007859 (raw WGS+WES from Li 2021); dN/dS framework from Martincorena 2017

@@ -1,6 +1,6 @@
 ---
-id: "article:VanDeHaar2019"
-type: "article"
+id: "paper:VanDeHaar2019"
+type: "paper"
 title: "Identifying Epistasis in Cancer Genomes: A Delicate Affair"
 status: "active"
 tags:
@@ -15,10 +15,10 @@ datasets: []
 source_refs:
   - "cite:VanDeHaar2019"
 related:
-  - "article:Canisius2016"
-  - "article:Mina2020"
-  - "article:Ciriello2012"
-  - "article:Leiserson2015"
+  - "paper:Canisius2016"
+  - "paper:Mina2020"
+  - "paper:Ciriello2012"
+  - "paper:Leiserson2015"
 created: "2026-04-13"
 updated: "2026-04-13"
 ---

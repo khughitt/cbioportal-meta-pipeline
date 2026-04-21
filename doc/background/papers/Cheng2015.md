@@ -1,12 +1,12 @@
 ---
-id: "article:Cheng2015"
-type: "article"
+id: "paper:Cheng2015"
+type: "paper"
 title: "Memorial Sloan Kettering-Integrated Mutation Profiling of Actionable Cancer Targets (MSK-IMPACT): A Hybridization Capture-Based Next-Generation Sequencing Clinical Assay for Solid Tumor Molecular Oncology"
 status: "read"
 ontology_terms: []
 datasets: ["msk-impact"]
 source_refs: ["cite:Cheng2015"]
-related: ["article:Zehir2017", "topic:targeted-panel-sequencing-bias"]
+related: ["paper:Zehir2017", "topic:targeted-panel-sequencing-bias"]
 created: "2026-04-13"
 updated: "2026-04-13"
 ---

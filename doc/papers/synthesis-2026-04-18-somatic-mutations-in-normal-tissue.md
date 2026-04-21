@@ -4,15 +4,15 @@ type: "synthesis"
 title: "Somatic mutations in morphologically normal human tissues — cross-paper synthesis"
 status: "active"
 source_refs:
-  - "article:Martincorena2018"
-  - "article:Lin2024"
-  - "article:Xu2025"
-  - "article:Yaacov2023"
-  - "article:Gao2023"
-  - "article:Poon2021"
-  - "article:Li2021"
-  - "article:Yoshida2026"
-  - "article:LeeSix2018"
+  - "paper:Martincorena2018"
+  - "paper:Lin2024"
+  - "paper:Xu2025"
+  - "paper:Yaacov2023"
+  - "paper:Gao2023"
+  - "paper:Poon2021"
+  - "paper:Li2021"
+  - "paper:Yoshida2026"
+  - "paper:LeeSix2018"
 related:
   - "topic:clonal-hematopoiesis-contamination"
   - "topic:pan-cancer-mutation-landscape"
@@ -34,7 +34,7 @@ updated: "2026-04-18"
 
 # Somatic mutations in morphologically normal human tissues — cross-paper synthesis
 
-Six papers reviewed together on 2026-04-18, all characterizing somatic mutations (SNVs, CNAs, and mCAs) in phenotypically normal human tissues. Each bears on the same project concern: how much of the gene x cancer signal emerging from the cBioPortal cross-study aggregation pipeline reflects tumor biology versus background mutagenesis in surrounding or contaminating normal cells. The companion review `article:Yoshida2026` provides the integrative frame.
+Six papers reviewed together on 2026-04-18, all characterizing somatic mutations (SNVs, CNAs, and mCAs) in phenotypically normal human tissues. Each bears on the same project concern: how much of the gene x cancer signal emerging from the cBioPortal cross-study aggregation pipeline reflects tumor biology versus background mutagenesis in surrounding or contaminating normal cells. The companion review `paper:Yoshida2026` provides the integrative frame.
 
 ## Papers covered
 
@@ -98,8 +98,8 @@ Ranked by severity against the current pipeline:
 
 ## Next reading
 
-- **Martincorena et al. 2018 (Science)** — now summarized as `article:Martincorena2018`; provides primary numbers behind multiple claims in this synthesis and in `question:q001`.
+- **Martincorena et al. 2018 (Science)** — now summarized as `paper:Martincorena2018`; provides primary numbers behind multiple claims in this synthesis and in `question:q001`.
 - **Yokoyama et al. 2019 (Science)** — independent normal esophagus clone study; mechanistically addresses the NOTCH1 paradox (mouse model suggesting NOTCH1-mutant cells suppress adjacent cancer proliferation). Complements Martincorena2018.
-- **Lee-Six et al. 2018 (Nature)** — normal-blood clone phylogeny and DNMT3A dynamics, complementing `Poon2021` and the CH-gene list question. [DONE — see `article:LeeSix2018`; key addition: N_eff ~100k HSCs confirms Poon 2021's unexplained selection is genuine, not drift.]
+- **Lee-Six et al. 2018 (Nature)** — normal-blood clone phylogeny and DNMT3A dynamics, complementing `Poon2021` and the CH-gene list question. [DONE — see `paper:LeeSix2018`; key addition: N_eff ~100k HSCs confirms Poon 2021's unexplained selection is genuine, not drift.]
 - **Yaacov et al. 2022** (cancer-tissue companion to `Yaacov2023`) — completes the signature-RT map for cancer contexts.
 - **Cancer-specific vs tissue-specific signature decomposition** in an unmatched-normal study context: open question worth a dedicated literature pass.

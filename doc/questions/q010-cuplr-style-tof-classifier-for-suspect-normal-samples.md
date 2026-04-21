@@ -18,8 +18,8 @@ source_refs:
   - "cite:Li2021"
 related:
   - "topic:signature-decomposition-unmatched-normal"
-  - "article:Li2021"
-  - "article:Xu2025"
+  - "paper:Li2021"
+  - "paper:Xu2025"
   - "question:q008-signature-decomposition-tissue-background-subtraction"
 created: "2026-04-18"
 updated: "2026-04-18"
@@ -64,6 +64,6 @@ Tissue-of-origin (TOO) classifiers trained to distinguish cancer types from each
 ## Related
 
 - Topic notes: `topic:signature-decomposition-unmatched-normal`
-- Article notes: `article:Li2021`, `article:Xu2025`
+- Article notes: `paper:Li2021`, `paper:Xu2025`
 - Related questions: `question:q008` (contamination magnitude), `question:q009` (SBS1 LRR flag)
 - Methods/Datasets: CUPLR (GitHub: UMCUGenetics/cuplr); SigProfilerAssignment; Li 2021 EGA data; Xu 2025 dbGaP data

@@ -1,12 +1,12 @@
 ---
-id: "article:PCAWG2020"
-type: "article"
+id: "paper:PCAWG2020"
+type: "paper"
 title: "Pan-cancer analysis of whole genomes"
 status: "unread"
 ontology_terms: []
 datasets: ["icgc-pcawg"]
 source_refs: ["cite:PCAWG2020"]
-related: ["article:Ellrott2018", "topic:pan-cancer-mutation-landscape"]
+related: ["paper:Ellrott2018", "topic:pan-cancer-mutation-landscape"]
 created: "2026-04-13"
 updated: "2026-04-13"
 ---

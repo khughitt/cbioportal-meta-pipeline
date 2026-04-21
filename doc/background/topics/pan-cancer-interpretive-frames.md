@@ -8,11 +8,11 @@ source_refs: []
 related:
   - "topic:pan-cancer-mutation-landscape"
   - "topic:cancer-driver-genes"
-  - "article:Hoadley2018"
-  - "article:SanchezVega2018"
-  - "article:Ciriello2013"
-  - "article:Bandlamudi2026"
-  - "article:Bailey2018"
+  - "paper:Hoadley2018"
+  - "paper:SanchezVega2018"
+  - "paper:Ciriello2013"
+  - "paper:Bandlamudi2026"
+  - "paper:Bailey2018"
 created: "2026-04-13"
 updated: "2026-04-13"
 ---

@@ -11,7 +11,7 @@ source_refs:
   - "cite:Yaacov2023"
   - "cite:Yoshida2026"
 related:
-  - "article:Yaacov2023"
+  - "paper:Yaacov2023"
   - "topic:mutation-rate-normalization"
 created: "2026-04-18"
 updated: "2026-04-18"
@@ -51,5 +51,5 @@ Late-replicating genomic regions (LRR) accumulate more somatic mutations than ea
 
 ## Related
 
-- Article notes: `article:Yaacov2023`, `article:Yoshida2026`
+- Article notes: `paper:Yaacov2023`, `paper:Yoshida2026`
 - Methods/Datasets: constitutive RT regions from Yaacov et al. 2022 (ENCODE 26-tissue RT profiles); SigProfilerExtractor for signature-level attribution; cBioPortal studies via existing pipeline

@@ -16,9 +16,9 @@ source_refs:
   - "cite:Xu2025"
 related:
   - "topic:signature-decomposition-unmatched-normal"
-  - "article:Li2021"
-  - "article:Xu2025"
-  - "article:Yaacov2023"
+  - "paper:Li2021"
+  - "paper:Xu2025"
+  - "paper:Yaacov2023"
   - "question:q001-normal-epithelial-clone-contamination-in-esophageal-studies"
   - "question:q007-cross-tissue-somatic-mutation-rate-variation-as-null-model"
 created: "2026-04-18"
@@ -62,6 +62,6 @@ When cBioPortal studies lack patient-matched germline sequencing, normal cells c
 ## Related
 
 - Topic notes: `topic:signature-decomposition-unmatched-normal`
-- Article notes: `article:Li2021`, `article:Xu2025`, `article:Yaacov2023`
+- Article notes: `paper:Li2021`, `paper:Xu2025`, `paper:Yaacov2023`
 - Related questions: `question:q001` (esophageal NOTCH1 contamination), `question:q007` (null model for normal-tissue background)
 - Methods/Datasets: SigProfilerAssignment (Alexandrov lab), MuSiCal (Park lab); Li 2021 EGA data; Xu 2025 dbGaP data

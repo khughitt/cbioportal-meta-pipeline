@@ -6,10 +6,10 @@ status: "active"
 ontology_terms: []
 source_refs: []
 related:
-  - "article:Zehir2017"
-  - "article:Pugh2022"
-  - "article:Bandlamudi2026"
-  - "article:Suehnholz2024"
+  - "paper:Zehir2017"
+  - "paper:Pugh2022"
+  - "paper:Bandlamudi2026"
+  - "paper:Suehnholz2024"
   - "topic:targeted-panel-sequencing-bias"
 created: "2026-04-13"
 updated: "2026-04-14"

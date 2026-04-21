@@ -1,6 +1,6 @@
 ---
-id: "article:LeeSix2018"
-type: "article"
+id: "paper:LeeSix2018"
+type: "paper"
 title: "Population dynamics of normal human blood inferred from somatic mutations"
 status: "active"
 ontology_terms: []
@@ -9,8 +9,8 @@ source_refs:
   - "cite:LeeSix2018"
 related:
   - "topic:clonal-hematopoiesis-contamination"
-  - "article:Poon2021"
-  - "article:Yoshida2026"
+  - "paper:Poon2021"
+  - "paper:Yoshida2026"
   - "question:q006-ch-priority-gene-completeness"
 created: "2026-04-18"
 updated: "2026-04-18"
@@ -87,7 +87,7 @@ The central finding — that 50,000–200,000 actively dividing HSCs underlie no
 The per-HSC mutation rate implied by the colony data (~17 SBS/year genome-wide) is widely used to date CH driver acquisition events. For example, DNMT3A mutations detected at 1% VAF in a 60-year-old were likely acquired ~20–40 years earlier and have been expanding under selection since. This timing context is important when interpreting whether DNMT3A-driven CH in a 65-year-old solid-tumor patient is likely to be a contaminating clone present in the blood draw or a genuinely tumor-intrinsic mutation.
 
 **3. Neutral drift as a context for "unexplained selection" (Poon 2021 sharpened).**
-Poon et al. 2021 (`article:Poon2021`) demonstrate that ~90% of positive selection in blood is unexplained by the 20 most common CH drivers and >85% unexplained even by the full 468-gene MSK-IMPACT panel. Lee-Six 2018 provides the population-genetic context: given N_eff ~ 100,000 HSCs, the expected neutral clone-size distribution makes it very unlikely for large clones to arise by chance. Therefore, the Poon 2021 "unexplained selection" cannot be primarily cryptic neutral drift — it must reflect genuine positive selection from drivers currently outside known CH gene lists. This sharpens the `question:q006-ch-priority-gene-completeness` framing: the Bolton 7-gene list is not capturing most of the actual selective events. The selection is real; the genes driving it are unknown.
+Poon et al. 2021 (`paper:Poon2021`) demonstrate that ~90% of positive selection in blood is unexplained by the 20 most common CH drivers and >85% unexplained even by the full 468-gene MSK-IMPACT panel. Lee-Six 2018 provides the population-genetic context: given N_eff ~ 100,000 HSCs, the expected neutral clone-size distribution makes it very unlikely for large clones to arise by chance. Therefore, the Poon 2021 "unexplained selection" cannot be primarily cryptic neutral drift — it must reflect genuine positive selection from drivers currently outside known CH gene lists. This sharpens the `question:q006-ch-priority-gene-completeness` framing: the Bolton 7-gene list is not capturing most of the actual selective events. The selection is real; the genes driving it are unknown.
 
 **4. Blood phylogeny predates cancer — single-individual depth.**
 The demonstration that blood phylogeny traces to the fertilised egg, with embryonic clones still measurable 59 years later, confirms that CH mutations detected in cancer patients can in principle have originated in the embryo and be completely irrelevant to tumor biology. This is an extreme example of why matched-normal sequencing matters: the "normal" blood sample may itself carry embryo-age clones.
@@ -124,6 +124,6 @@ No standalone software package described. The ABC framework code was developed b
 
 - **Watson et al. 2020 (Nature)** — direct extension from the same Campbell lab using >400 individuals to characterize DNMT3A fitness dynamics and clone age, using the Lee-Six 2018 methodology. Essential companion for CH driver quantification.
 - **Fabre et al. 2022 (Nature)** — phylogenetic reconstruction in multiple individuals with CH drivers, extending Lee-Six 2018 to driver-positive contexts; quantifies selection coefficients for DNMT3A, TET2, ASXL1.
-- **Poon 2021 (`article:Poon2021`)** — this paper's neutral-population estimate is the population-genetic substrate for Poon's argument that the "unexplained" selection in blood is genuinely selective (not drift), because N_eff ~ 100,000 makes drift-driven large clones extremely unlikely.
+- **Poon 2021 (`paper:Poon2021`)** — this paper's neutral-population estimate is the population-genetic substrate for Poon's argument that the "unexplained" selection in blood is genuinely selective (not drift), because N_eff ~ 100,000 makes drift-driven large clones extremely unlikely.
 - **Question for this project:** Given the Lee-Six population size estimate (N_eff ~ 100,000), what is the minimum per-year fitness advantage (s) needed for a clone to reach 5% VAF by age 60 starting from a single mutation at age 30? The rough answer is s ~0.1–0.3/year, consistent with estimates for DNMT3A (~10–20%/year) but much larger than typical neutral drift expectation. This grounds the Bolton 7-gene list concern (`question:q006-ch-priority-gene-completeness`): the genes driving the unexplained 90% of selection in Poon 2021 must each have s > ~0.05/year to be detectable; the question is whether there are many low-s genes or a few unidentified high-s genes.
 - **Approach implication:** For the cbioportal pipeline, the Lee-Six 2018 HSC pool size places a quantitative lower bound on required fitness advantage for any blood-study CH clone to be at detectable VAF. Studies with median patient age >55 should be treated with the highest caution for CH contamination; even without known driver mutations, neutral drift in this large pool cannot explain observable clonal expansions.

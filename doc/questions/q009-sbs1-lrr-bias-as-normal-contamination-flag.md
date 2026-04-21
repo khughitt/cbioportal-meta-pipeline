@@ -16,7 +16,7 @@ source_refs:
   - "cite:Yaacov2023"
 related:
   - "topic:signature-decomposition-unmatched-normal"
-  - "article:Yaacov2023"
+  - "paper:Yaacov2023"
   - "question:q003-replication-timing-as-gene-level-mutation-rate-confounder"
   - "question:q008-signature-decomposition-tissue-background-subtraction"
 created: "2026-04-18"
@@ -60,6 +60,6 @@ Yaacov et al. 2023 (Scientific Reports) demonstrated that SBS1 mutations accumul
 ## Related
 
 - Topic notes: `topic:signature-decomposition-unmatched-normal`
-- Article notes: `article:Yaacov2023`
+- Article notes: `paper:Yaacov2023`
 - Related questions: `question:q003` (RT as gene-level mutation-rate confounder), `question:q008` (SBS1/SBS5 contamination magnitude)
 - Methods/Datasets: SigProfilerTopography; ENCODE replication timing data (constitutive ERR/LRR regions); Yaacov 2023 code (see Yaacov et al. 2022, the companion cancer-RT paper for RT region construction)

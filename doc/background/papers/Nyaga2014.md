@@ -1,6 +1,6 @@
 ---
-id: "article:Nyaga2014"
-type: "article"
+id: "paper:Nyaga2014"
+type: "paper"
 title: "Metaprop: a Stata command to perform meta-analysis of binomial data"
 status: "active"
 ontology_terms: []
@@ -8,9 +8,9 @@ datasets: []
 source_refs:
   - "cite:Nyaga2014"
 related:
-  - "article:Stijnen2010"
-  - "article:LinXu2020"
-  - "article:Barendregt2013"
+  - "paper:Stijnen2010"
+  - "paper:LinXu2020"
+  - "paper:Barendregt2013"
   - "topic:cross-study-meta-analysis-cancer-genomics"
 created: "2026-04-13"
 updated: "2026-04-13"

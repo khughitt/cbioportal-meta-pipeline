@@ -12,11 +12,11 @@ source_refs:
   - "cite:Li2021"
 related:
   - "topic:clonal-hematopoiesis-contamination"
-  - "article:Yoshida2026"
-  - "article:Martincorena2018"
-  - "article:Poon2021"
-  - "article:Li2021"
-  - "article:Bolton2020"
+  - "paper:Yoshida2026"
+  - "paper:Martincorena2018"
+  - "paper:Poon2021"
+  - "paper:Li2021"
+  - "paper:Bolton2020"
   - "topic:cohort-selection-bias-representativeness"
 created: "2026-04-18"
 updated: "2026-04-18"
@@ -39,7 +39,7 @@ If cBioPortal esophageal studies include samples with variable tumor purity or n
 
 ## Current Evidence
 
-**Primary study (now summarized):** Martincorena et al. 2018 (*Science*, PMC6298579; `article:Martincorena2018`) — deep targeted sequencing of 844 normal esophageal biopsies from 9 donors (age 20–75). Key numbers:
+**Primary study (now summarized):** Martincorena et al. 2018 (*Science*, PMC6298579; `paper:Martincorena2018`) — deep targeted sequencing of 844 normal esophageal biopsies from 9 donors (age 20–75). Key numbers:
 - NOTCH1 selected with dN/dS truncating >50 (strongest signal in the panel).
 - NOTCH1 covers **30–80% of normal epithelium** in 5/6 donors aged 40+ years.
 - TP53 covers **5–37% of normal epithelium** (highest in oldest donor).
@@ -70,5 +70,5 @@ No pipeline-level analysis has been done in this project to detect or flag this 
 ## Related
 
 - Topic notes: `topic:clonal-hematopoiesis-contamination` (CH in blood, same conceptual family)
-- Article notes: `article:Yoshida2026`, `article:Bolton2020`, `article:Martincorena2017`
+- Article notes: `paper:Yoshida2026`, `paper:Bolton2020`, `paper:Martincorena2017`
 - Methods/Datasets: cBioPortal esophageal study list; MSK-IMPACT esophageal cohort (matched normal, should be clean)

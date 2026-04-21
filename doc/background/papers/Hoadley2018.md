@@ -1,12 +1,12 @@
 ---
-id: "article:Hoadley2018"
-type: "article"
+id: "paper:Hoadley2018"
+type: "paper"
 title: "Cell-of-Origin Patterns Dominate the Molecular Classification of 10,000 Tumors from 33 Types of Cancer"
 status: "read"
 ontology_terms: []
 datasets: ["tcga-pancanatlas"]
 source_refs: ["cite:Hoadley2018"]
-related: ["article:Bailey2018", "article:Ellrott2018", "article:Ciriello2013", "topic:pan-cancer-mutation-landscape"]
+related: ["paper:Bailey2018", "paper:Ellrott2018", "paper:Ciriello2013", "topic:pan-cancer-mutation-landscape"]
 created: "2026-04-13"
 updated: "2026-04-12"
 ---

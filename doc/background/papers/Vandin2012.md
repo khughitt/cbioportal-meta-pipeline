@@ -1,6 +1,6 @@
 ---
-id: "article:Vandin2012"
-type: "article"
+id: "paper:Vandin2012"
+type: "paper"
 title: "De novo discovery of mutated driver pathways in cancer"
 status: "active"
 tags:
@@ -15,9 +15,9 @@ datasets:
 source_refs:
   - "cite:Vandin2012"
 related:
-  - "article:Ciriello2012"
-  - "article:Leiserson2013"
-  - "article:Leiserson2015"
+  - "paper:Ciriello2012"
+  - "paper:Leiserson2013"
+  - "paper:Leiserson2015"
 created: "2026-04-13"
 updated: "2026-04-13"
 ---

@@ -9,8 +9,8 @@ source_refs:
   - "cite:Lin2024"
 related:
   - "question:q001-normal-epithelial-clone-contamination-in-esophageal-studies"
-  - "article:Lin2024"
-  - "article:Yoshida2026"
+  - "paper:Lin2024"
+  - "paper:Yoshida2026"
   - "topic:pan-cancer-mutation-landscape"
 created: "2026-04-18"
 updated: "2026-04-18"
@@ -51,6 +51,6 @@ Lin et al. 2024 (Nature) showed that histologically normal breast epithelium fro
 ## Related
 
 - Topic notes: `topic:pan-cancer-mutation-landscape`, `topic:mutation-rate-normalization`
-- Article notes: `article:Lin2024`, `article:Yoshida2026`
+- Article notes: `paper:Lin2024`, `paper:Yoshida2026`
 - Related question: `question:q001` (same conceptual issue for esophageal NOTCH1/TP53 inversion)
 - Methods/Datasets: cBioPortal breast cancer study list; MSK-IMPACT breast subset (matched normal); TCGA BRCA (matched normal via MC3); ABSOLUTE/FACETS purity estimates where available

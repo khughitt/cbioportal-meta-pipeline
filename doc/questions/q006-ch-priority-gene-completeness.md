@@ -11,8 +11,8 @@ source_refs:
   - "cite:Coombs2017"
   - "cite:LeeSix2018"
 related:
-  - "article:Poon2021"
-  - "article:LeeSix2018"
+  - "paper:Poon2021"
+  - "paper:LeeSix2018"
 created: "2026-04-18"
 updated: "2026-04-18"
 ---
@@ -53,6 +53,6 @@ The pipeline annotates seven CH-priority genes (DNMT3A, TET2, TP53, ASXL1, CHEK2
 ## Related
 
 - Topic notes: `topic:clonal-hematopoiesis-contamination`
-- Article notes: `article:Poon2021`, `article:LeeSix2018`, `article:Bolton2020 (cite:Bolton2020)`
+- Article notes: `paper:Poon2021`, `paper:LeeSix2018`, `paper:Bolton2020 (cite:Bolton2020)`
 - Methods/Datasets: `code/scripts/annotate_ch.py`; `matched_normal_studies` config key
 - Key quantitative anchor: Lee-Six 2018 N_eff ~100,000 HSCs means drift cannot explain observable large CH clones — confirming Poon 2021's "unexplained selection" is genuine positive selection from uncharacterized drivers, not noise.

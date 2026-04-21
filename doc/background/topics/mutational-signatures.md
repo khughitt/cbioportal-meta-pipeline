@@ -6,10 +6,10 @@ status: "active"
 ontology_terms: []
 source_refs: []
 related:
-  - "article:Alexandrov2020"
-  - "article:Tate2019"
-  - "article:PCAWG2020"
-  - "article:Zehir2017"
+  - "paper:Alexandrov2020"
+  - "paper:Tate2019"
+  - "paper:PCAWG2020"
+  - "paper:Zehir2017"
 created: "2026-04-13"
 updated: "2026-04-13"
 ---

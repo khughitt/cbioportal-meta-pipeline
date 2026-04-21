@@ -1,12 +1,12 @@
 ---
-id: "article:SanchezVega2018"
-type: "article"
+id: "paper:SanchezVega2018"
+type: "paper"
 title: "Oncogenic Signaling Pathways in The Cancer Genome Atlas"
 status: "read"
 ontology_terms: []
 datasets: ["tcga-pancanatlas"]
 source_refs: ["cite:SanchezVega2018"]
-related: ["article:Bailey2018", "article:Ciriello2013", "article:Hoadley2018", "topic:pan-cancer-mutation-landscape"]
+related: ["paper:Bailey2018", "paper:Ciriello2013", "paper:Hoadley2018", "topic:pan-cancer-mutation-landscape"]
 created: "2026-04-13"
 updated: "2026-04-13"
 ---

@@ -10,8 +10,8 @@ source_refs:
 related:
   - "topic:pan-cancer-mutation-landscape"
   - "topic:mutation-rate-normalization"
-  - "article:Xu2025"
-  - "article:Yoshida2026"
+  - "paper:Xu2025"
+  - "paper:Yoshida2026"
 created: "2026-04-18"
 updated: "2026-04-18"
 ---
@@ -49,5 +49,5 @@ Xu et al. 2025 identified a statistically significant recurrent somatic mutation
 ## Related
 
 - Topic notes: `topic:pan-cancer-mutation-landscape`
-- Article notes: `article:Xu2025`, `article:Yoshida2026`, `article:Bailey2018`
+- Article notes: `paper:Xu2025`, `paper:Yoshida2026`, `paper:Bailey2018`
 - Methods/Datasets: cBioPortal mutation data for skin, prostate, testicular cancer cohorts; COSMIC Cancer Gene Census GLI1 entry

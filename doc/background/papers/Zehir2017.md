@@ -1,12 +1,12 @@
 ---
-id: "article:Zehir2017"
-type: "article"
+id: "paper:Zehir2017"
+type: "paper"
 title: "Mutational landscape of metastatic cancer revealed from prospective clinical sequencing of 10,000 patients"
 status: "read"
 ontology_terms: []
 datasets: ["msk-impact"]
 source_refs: ["cite:Zehir2017"]
-related: ["topic:pan-cancer-mutation-landscape", "topic:targeted-panel-sequencing-bias", "article:Chakravarty2017"]
+related: ["topic:pan-cancer-mutation-landscape", "topic:targeted-panel-sequencing-bias", "paper:Chakravarty2017"]
 created: "2026-04-13"
 updated: "2026-04-13"
 ---

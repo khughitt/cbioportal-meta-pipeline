@@ -1,6 +1,6 @@
 ---
-id: "article:Yoshida2026"
-type: "article"
+id: "paper:Yoshida2026"
+type: "paper"
 title: "Somatic mutations and clonal evolution in normal tissues and cancer development"
 status: "active"
 ontology_terms: []
@@ -9,8 +9,8 @@ source_refs:
   - "cite:Yoshida2026"
 related:
   - "topic:clonal-hematopoiesis-contamination"
-  - "article:Bolton2020"
-  - "article:Martincorena2017"
+  - "paper:Bolton2020"
+  - "paper:Martincorena2017"
   - "topic:pan-cancer-mutation-landscape"
   - "topic:mutation-rate-normalization"
 created: "2026-04-18"
@@ -127,7 +127,7 @@ Comprehensive signature-to-cause mapping (Table 2):
 This review is highly relevant to this project across three dimensions:
 
 **1. CH contamination in cross-study aggregation (direct pipeline relevance)**
-The treatment of CH as a predictable consequence of age and therapy directly supports the CH-aware stratification already implemented in the pipeline (see `topic:clonal-hematopoiesis-contamination`, `article:Bolton2020`). Yoshida's framework reinforces the mechanistic basis for our matched-normal stratification: unmatched-normal cohorts will inflate mutation rates for DNMT3A, TET2, ASXL1 in older/pretreated populations because these are positively selected normal-tissue clones, not tumor mutations.
+The treatment of CH as a predictable consequence of age and therapy directly supports the CH-aware stratification already implemented in the pipeline (see `topic:clonal-hematopoiesis-contamination`, `paper:Bolton2020`). Yoshida's framework reinforces the mechanistic basis for our matched-normal stratification: unmatched-normal cohorts will inflate mutation rates for DNMT3A, TET2, ASXL1 in older/pretreated populations because these are positively selected normal-tissue clones, not tumor mutations.
 
 **2. Driver gene interpretation — normal-tissue discordance**
 The NOTCH1/TP53 esophageal inversion (NOTCH1 high in normal, low in tumor; TP53 reversed) is a direct caution for pipeline outputs: elevated NOTCH1 mutation rates in a cBioPortal esophageal study could partially reflect normal-epithelial clone contamination rather than true tumor biology. This applies to any study where tumor purity is variable or where tissue is difficult to dissect (e.g., endoscopic biopsies).

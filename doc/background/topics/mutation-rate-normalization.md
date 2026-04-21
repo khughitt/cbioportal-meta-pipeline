@@ -6,10 +6,10 @@ status: "active"
 ontology_terms: []
 source_refs: []
 related:
-  - "article:Lawrence2014"
-  - "article:Martincorena2017"
-  - "article:Chang2016"
-  - "article:Bailey2018"
+  - "paper:Lawrence2014"
+  - "paper:Martincorena2017"
+  - "paper:Chang2016"
+  - "paper:Bailey2018"
   - "topic:cancer-driver-genes"
   - "topic:targeted-panel-sequencing-bias"
 created: "2026-04-13"

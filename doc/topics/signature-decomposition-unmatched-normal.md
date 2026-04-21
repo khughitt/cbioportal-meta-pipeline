@@ -27,10 +27,10 @@ related:
   - "topic:mutation-rate-normalization"
   - "topic:pan-cancer-mutation-landscape"
   - "topic:tumor-mutational-burden"
-  - "article:Yaacov2023"
-  - "article:Li2021"
-  - "article:Xu2025"
-  - "article:Yoshida2026"
+  - "paper:Yaacov2023"
+  - "paper:Li2021"
+  - "paper:Xu2025"
+  - "paper:Yoshida2026"
   - "question:q008-signature-decomposition-tissue-background-subtraction"
   - "question:q009-sbs1-lrr-bias-as-normal-contamination-flag"
   - "question:q010-cuplr-style-tof-classifier-for-suspect-normal-samples"
@@ -217,7 +217,7 @@ This is essentially what PCAWG did: extract signatures jointly from hundreds of 
 
 ## Replication-Timing Structure as a Decomposition Constraint
 
-From Yaacov et al. 2023 (see `article:Yaacov2023`):
+From Yaacov et al. 2023 (see `paper:Yaacov2023`):
 
 - **SBS1** is LRR-enriched in normal tissue but this bias is lost in cancer. This is the strongest published topographic fingerprint distinguishing normal-tissue from cancer-origin SBS1.
 - **SBS5** is ERR-enriched in both normal and cancer — no distinguishing topographic signal.

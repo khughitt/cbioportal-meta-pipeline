@@ -1,6 +1,6 @@
 ---
-id: "article:Canisius2016"
-type: "article"
+id: "paper:Canisius2016"
+type: "paper"
 title: "A novel independence test for somatic alterations in cancer shows that biology drives mutual exclusivity but chance explains most co-occurrence"
 status: "active"
 tags:
@@ -17,11 +17,11 @@ datasets:
 source_refs:
   - "cite:Canisius2016"
 related:
-  - "article:Ciriello2012"
-  - "article:Leiserson2015"
-  - "article:Kim2017"
-  - "article:Mina2020"
-  - "article:VanDeHaar2019"
+  - "paper:Ciriello2012"
+  - "paper:Leiserson2015"
+  - "paper:Kim2017"
+  - "paper:Mina2020"
+  - "paper:VanDeHaar2019"
 created: "2026-04-13"
 updated: "2026-04-13"
 ---

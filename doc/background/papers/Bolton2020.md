@@ -1,6 +1,6 @@
 ---
-id: "article:Bolton2020"
-type: "article"
+id: "paper:Bolton2020"
+type: "paper"
 title: "Cancer therapy shapes the fitness landscape of clonal hematopoiesis"
 status: "read"
 ontology_terms: []

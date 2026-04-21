@@ -1,12 +1,12 @@
 ---
-id: "article:ChakravartySolit2021"
-type: "article"
+id: "paper:ChakravartySolit2021"
+type: "paper"
 title: "Clinical cancer genomic profiling"
 status: "abstract-read"
 ontology_terms: []
 datasets: []
 source_refs: ["cite:ChakravartySolit2021"]
-related: ["article:Zehir2017", "article:AACRGENIEConsortium2017", "article:Pugh2022", "topic:targeted-panel-sequencing-bias", "topic:cohort-selection-bias-representativeness"]
+related: ["paper:Zehir2017", "paper:AACRGENIEConsortium2017", "paper:Pugh2022", "topic:targeted-panel-sequencing-bias", "topic:cohort-selection-bias-representativeness"]
 created: "2026-04-13"
 updated: "2026-04-13"
 ---

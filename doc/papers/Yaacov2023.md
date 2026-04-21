@@ -1,6 +1,6 @@
 ---
-id: "article:Yaacov2023"
-type: "article"
+id: "paper:Yaacov2023"
+type: "paper"
 title: "Mutational signatures association with replication timing in normal cells reveals similarities and differences with matched cancer tissues"
 status: "active"
 ontology_terms: []
@@ -10,7 +10,7 @@ datasets:
 source_refs:
   - "cite:Yaacov2023"
 related:
-  - "article:Yoshida2026"
+  - "paper:Yoshida2026"
   - "topic:mutation-rate-normalization"
   - "topic:pan-cancer-mutation-landscape"
 created: "2026-04-18"

@@ -1,6 +1,6 @@
 ---
-id: "article:Martincorena2018"
-type: "article"
+id: "paper:Martincorena2018"
+type: "paper"
 title: "Somatic mutant clones colonize the human esophagus with age"
 status: "active"
 ontology_terms: []
@@ -8,10 +8,10 @@ datasets: []
 source_refs:
   - "cite:Martincorena2018"
 related:
-  - "article:Yoshida2026"
-  - "article:Poon2021"
-  - "article:Li2021"
-  - "article:Gao2023"
+  - "paper:Yoshida2026"
+  - "paper:Poon2021"
+  - "paper:Li2021"
+  - "paper:Gao2023"
   - "topic:clonal-hematopoiesis-contamination"
   - "topic:pan-cancer-mutation-landscape"
   - "question:q001-normal-epithelial-clone-contamination-in-esophageal-studies"

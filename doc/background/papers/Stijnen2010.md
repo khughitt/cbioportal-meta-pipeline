@@ -1,6 +1,6 @@
 ---
-id: "article:Stijnen2010"
-type: "article"
+id: "paper:Stijnen2010"
+type: "paper"
 title: "Random effects meta-analysis of event outcome in the framework of the generalized linear mixed model with applications in sparse data"
 status: "active"
 ontology_terms: []
@@ -8,9 +8,9 @@ datasets: []
 source_refs:
   - "cite:Stijnen2010"
 related:
-  - "article:LinXu2020"
-  - "article:Nyaga2014"
-  - "article:Viechtbauer2010"
+  - "paper:LinXu2020"
+  - "paper:Nyaga2014"
+  - "paper:Viechtbauer2010"
   - "topic:cross-study-meta-analysis-cancer-genomics"
 created: "2026-04-13"
 updated: "2026-04-13"

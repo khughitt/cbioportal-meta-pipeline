@@ -6,11 +6,11 @@ status: "active"
 ontology_terms: []
 source_refs: []
 related:
-  - "article:Chakravarty2017"
-  - "article:Suehnholz2024"
-  - "article:Chang2016"
-  - "article:Gao2017"
-  - "article:Tate2019"
+  - "paper:Chakravarty2017"
+  - "paper:Suehnholz2024"
+  - "paper:Chang2016"
+  - "paper:Gao2017"
+  - "paper:Tate2019"
   - "topic:cancer-driver-genes"
   - "topic:cross-study-harmonization"
 created: "2026-04-13"

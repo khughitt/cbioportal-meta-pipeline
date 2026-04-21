@@ -6,11 +6,11 @@ status: "active"
 ontology_terms: []
 source_refs: []
 related:
-  - "article:Cerami2012"
-  - "article:Gao2013"
-  - "article:SanchezVega2018"
-  - "article:Bailey2018"
-  - "article:Ciriello2013"
+  - "paper:Cerami2012"
+  - "paper:Gao2013"
+  - "paper:SanchezVega2018"
+  - "paper:Bailey2018"
+  - "paper:Ciriello2013"
   - "topic:cancer-driver-genes"
 created: "2026-04-13"
 updated: "2026-04-13"

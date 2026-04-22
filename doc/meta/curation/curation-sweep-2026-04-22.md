@@ -299,3 +299,17 @@ Expected verification after this pass:
 - `uv run science-tool graph audit --project-root . --format json` remains clean on unresolved refs
 - `uv run science-tool health --project-root . --format json` continues to report only the shared-profile kind skips
 - `git diff --check` remains clean
+
+## Update — 2026-04-22 19:44 EDT
+
+Applied one more consistency cleanup after a quick interpretation-schema scan:
+
+- normalized `doc/interpretations/2026-04-17-poc-run.md` to match the newer interpretation contract by adding:
+  - `mode: dev`
+  - `source_refs`
+  - `input`
+  - `workflow_run`
+  - `prior_interpretations`
+- expanded its `related` links to include the immediate downstream fixes it actually surfaced (`task:t070`, `task:t105`)
+
+This appears to close the last obvious repo-local interpretation-metadata mismatch from the 2026-04-22 curation sweep.

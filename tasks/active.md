@@ -194,17 +194,6 @@ Surfaced as a real gap in t043: no pan-cancer benchmark at the pathway rollup le
 
 Gap surfaced in t059: TET2 solid-tumor biology literature is thinner than ASXL1. ASXL1 has clear MSI-CRC polyG-indel + CRPC / HNSCC / breast evidence (Katoh 2013). TET2 solid-tumor papers cluster around melanoma (catalytic-domain mutations), glioma (IDH-pathway interaction — TET2 is the IDH-pathway target, so IDH-mutant gliomas carry functional TET2 loss without TET2 mutation), and breast. Focused OpenAlex + PubMed search. Produces doc/searches/YYYY-MM-DD-tet2-solid-tumor-biology.md.
 
-## [t101] Decompose t077 (GLMM-logit pooled gene x cancer) into a plan + tracked subtasks before execution
-- type: dev
-- priority: P1
-- status: proposed
-- aspects: [software-development]
-- related: [task:t077, task:t079, plan:2026-04-13-t081-hypermutator-annotation-pipeline-plan]
-- group: meta-analysis
-- created: 2026-04-17
-
-Mirror the t081 pattern that just worked: write doc/plans/2026-04-17-t077-glmm-logit-plan.md decomposing t077 into tracked subtasks (e.g., input-schema adapter from gene_cancer_study_ratio_annotated feather, per-(gene, cancer) GLMM fit with study random effect, convergence + diagnostic rules, output schema for pooled effect + CI + heterogeneity statistic, per-study leave-one-out sensitivity, docs). Pre-registration (specs/pre-registration-t077-glmm-logit-pooling.md, t079) is already in hand and specifies expectations; this plan operationalizes it. Prereq: t100 PoC run so decisions are grounded in an observed cohort. Deliverable: plan document + 5-8 subtasks added via science-tool tasks add with blocked-by:t077 wiring.
-
 ## [t102] Audit two single-word commits on main (a2ce3fc save, c0f48af data) and either amend or document
 - type: dev
 - priority: P2
@@ -325,3 +314,75 @@ Current validate_input_contract accepts the assembly parameter but does not rang
 - created: 2026-04-19
 
 Before applying the t111 per-tissue snvs_per_mb correction to gene_cancer_study_ratio_annotated.feather frequencies, pre-register: (1) expected number of gene-cancer rankings that shift and by how many positions; (2) head-to-head comparison against a Martincorena 2017 dN/dS-based null as a simpler baseline. If the two approaches rank genes identically, t111's value-add collapses. Prevents ships-before-thinks bias on whether the empirical null is actually discriminating versus a uniform-rate-per-gene-length null. Deliverable: doc/meta/pre-registration-q007-null-model-correction.md.
+
+## [t115] t077: build pooled-input adapter table from per-study gene_cancer tables
+- type: dev
+- priority: P1
+- status: proposed
+- aspects: [software-development]
+- related: [task:t077, task:t079, doc:2026-04-22-t077-glmm-logit-plan]
+- blocked-by: [task:t077]
+- group: meta-analysis
+- created: 2026-04-22
+
+Create the long-format pooled-input builder for per-(study,cancer,gene) counts and denominators, using per-study gene_cancer_study.feather inputs so zero-event cells retain true n. Include study-level covariates needed by the pre-registration (panel_class, matched_normal).
+
+## [t116] t077: add isolated R meta-analysis env and CLI skeleton
+- type: dev
+- priority: P1
+- status: proposed
+- aspects: [software-development]
+- related: [task:t077, task:t079, doc:2026-04-22-t077-glmm-logit-plan]
+- blocked-by: [task:t077]
+- group: meta-analysis
+- created: 2026-04-22
+
+Add code/envs/r-meta.yml and the run_gene_cancer_meta_analysis.R entrypoint with a schema-valid round-trip path before fitting real models.
+
+## [t117] t077: implement confirmatory GLMM fit and fallback status logic
+- type: dev
+- priority: P1
+- status: proposed
+- aspects: [software-development]
+- related: [task:t077, task:t079, doc:2026-04-22-t077-glmm-logit-plan]
+- blocked-by: [task:t077]
+- group: meta-analysis
+- created: 2026-04-22
+
+Implement the pre-registered metafor::rma.glmm fit, cell filters, pooled effect outputs, heterogeneity metrics, and REML-logit fallback/status handling.
+
+## [t118] t077: verification and pre-registration conformance pass
+- type: dev
+- priority: P2
+- status: proposed
+- aspects: [software-development]
+- related: [task:t077, task:t079, doc:2026-04-22-t077-glmm-logit-plan]
+- blocked-by: [task:t077]
+- group: meta-analysis
+- created: 2026-04-22
+
+Run targeted tests, workflow-level sanity checks, and document any deviation from the active t077 pre-registration before reporting pooled results.
+
+## [t119] t077: add diagnostics and sensitivity outputs
+- type: dev
+- priority: P2
+- status: proposed
+- aspects: [software-development]
+- related: [task:t077, task:t079, doc:2026-04-22-t077-glmm-logit-plan]
+- blocked-by: [task:t077]
+- group: meta-analysis
+- created: 2026-04-22
+
+Emit convergence/fallback diagnostics plus the hold-out or leave-one-out sensitivity outputs required to evaluate the pre-registered integrity checks.
+
+## [t120] t077: wire Snakemake rule and join pooled outputs onto canonical tables
+- type: dev
+- priority: P1
+- status: proposed
+- aspects: [software-development]
+- related: [task:t077, doc:2026-04-22-t077-glmm-logit-plan]
+- blocked-by: [task:t077]
+- group: meta-analysis
+- created: 2026-04-22
+
+Add the workflow rules that build the long pooled input and run the R model, then join the resulting pooled metrics onto the consumer-facing annotated output surface.

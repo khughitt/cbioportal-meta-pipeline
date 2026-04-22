@@ -1,6 +1,6 @@
 # Canonical pipeline outputs
 
-*As-of: 2026-04-13*
+*As-of: 2026-04-22*
 
 This guide documents which outputs in `summary/mut/table/` are intended for downstream
 consumers vs which are intermediate artifacts. Closes audit finding F4
@@ -10,12 +10,13 @@ consumers vs which are intermediate artifacts. Closes audit finding F4
 
 Both canonical outputs carry three **gene-level** overlays (Bailey / CGC / Sanchez-Vega) from a
 single unified annotation step (`annotate.py`). The canonical ratio table additionally carries
-the CH-aware annotations from `annotate_ch.py`.
+the CH-aware annotations from `annotate_ch.py` plus the joined t077 pooled meta-analysis
+surface from `gene_cancer_pooled.feather`.
 
 | File | Annotation columns added |
 |---|---|
 | `gene_cancer_study_annotated.feather` | `bailey2018_driver`, `bailey2018_source`, `cgc_tier_1`, `cgc_tier_2`, `cgc_role_in_cancer`, `cgc_source`, `sanchez_vega_pathway`, `sanchez_vega_og_tsg`, `sanchez_vega_source` |
-| `gene_cancer_study_ratio_annotated.feather` | all of the above, plus `ch_priority_gene`, `mean_matched`, `mean_unmatched`, `n_matched_studies`, `n_unmatched_studies` |
+| `gene_cancer_study_ratio_annotated.feather` | all of the above, plus `ch_priority_gene`, `mean_matched`, `mean_unmatched`, `n_matched_studies`, `n_unmatched_studies`, and paired pooled meta-analysis columns such as `pooled_rate_inclusive`, `pooled_rate_exclusive`, `i2_inclusive`, `i2_exclusive`, `k_studies_inclusive`, `k_studies_exclusive`, `status_inclusive`, `status_exclusive` |
 
 These are the **only** tables consumers should read for cross-study mutation-frequency claims.
 
@@ -41,8 +42,9 @@ Consumers wanting higher-precision driver filters can combine overlays:
   including pathway-membership.
 
 The un-annotated intermediates remain (`gene_cancer_study.feather`,
-`gene_cancer_study_ratio.feather`, `gene_cancer_study_ratio_overlay_annotated.feather`) for
-debugging / backward-compatibility, but should not be consumed for quantitative claims.
+`gene_cancer_study_ratio.feather`, `gene_cancer_study_ratio_overlay_annotated.feather`,
+`gene_cancer_study_ratio_ch_annotated.feather`) for debugging / backward-compatibility, but
+should not be consumed for quantitative claims.
 
 ## Intermediate / raw outputs (do not consume directly)
 
@@ -50,7 +52,10 @@ debugging / backward-compatibility, but should not be consumed for quantitative 
 |---|---|
 | `gene_cancer_study.feather` | raw cross-study count table; **no driver overlay**, no CH-priority flag, no matched-normal stratification. Audit F4: consumers should switch to the `_annotated` version. |
 | `gene_cancer_study_ratio.feather` | raw cross-study ratio table; same shortcomings as above. |
-| `gene_cancer_study_ratio_bailey_annotated.feather` | intermediate in the chain — has Bailey overlay but not CH annotations. |
+| `gene_cancer_study_ratio_overlay_annotated.feather` | intermediate in the chain — has Bailey / CGC / Sanchez-Vega overlays but not CH annotations or pooled meta-analysis columns. |
+| `gene_cancer_study_ratio_ch_annotated.feather` | intermediate in the chain — has overlays + CH annotations, but not the joined pooled meta-analysis columns. |
+| `gene_cancer_pooled.feather` | long-format pooled t077 output keyed by `(cancer_type, symbol, analysis_view)`; authoritative for the meta-analysis fit itself, but not the consumer-facing wide ratio surface. |
+| `gene_cancer_pooled_diagnostics.feather` / `gene_cancer_pooled_leave_one_out.feather` | diagnostic sidecars for convergence / fallback / sensitivity review, not primary frequency-claim tables. |
 
 These remain in the pipeline output for backward-compatibility and debugging, but `rule all`
 declares the canonical (`_annotated`) versions as the documented final outputs.
@@ -75,7 +80,13 @@ gene_cancer_study.feather (raw num)
 
 gene_cancer_study_ratio.feather (raw ratio)
   └─→ annotate.py (unified overlay) ──→ gene_cancer_study_ratio_overlay_annotated.feather (intermediate)
-        └─→ annotate_ch.py ──→ gene_cancer_study_ratio_annotated.feather (canonical ratio)
+        └─→ annotate_ch.py ──→ gene_cancer_study_ratio_ch_annotated.feather (intermediate)
+
+gene_cancer_pooled_input.feather
+  └─→ run_gene_cancer_meta_analysis.R ──→ gene_cancer_pooled.feather (+ diagnostics / leave-one-out sidecars)
+
+gene_cancer_study_ratio_ch_annotated.feather + gene_cancer_pooled.feather
+  └─→ join_gene_cancer_meta.py ──→ gene_cancer_study_ratio_annotated.feather (canonical ratio)
 
 Reference feathers feeding into annotate.py:
   - metadata/bailey2018_drivers.feather        (from data/bailey2018_table_s1.tsv)
@@ -85,6 +96,7 @@ Reference feathers feeding into annotate.py:
 
 The unified annotator applies all three gene-level overlays in a single pass (replaces the
 earlier per-overlay chained-rules pattern). CH annotation chains off the overlay-annotated
-ratio so the canonical ratio output carries both gene-level overlays AND CH stratification.
-Changes to any reference feather or its upstream data file propagate through to the canonical
-outputs.
+ratio, and the pooled t077 surface is then joined onto that CH-aware table so the canonical
+ratio output carries gene-level overlays, CH stratification, and paired inclusive/exclusive
+meta-analysis summaries. Changes to any reference feather or its upstream data file propagate
+through to the canonical outputs.

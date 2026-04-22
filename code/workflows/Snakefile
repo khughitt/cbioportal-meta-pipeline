@@ -111,8 +111,8 @@ rule extract_normal_tissue_spectra:
 # annotate_drivers.py pattern (one rule per overlay per table).
 #
 # Canonical count-table output: `gene_cancer_study_annotated.feather`.
-# Canonical ratio-table output: `gene_cancer_study_ratio_annotated.feather` (then chained
-#                                 into annotate_ch for CH-aware stratification).
+# Canonical ratio-table output: `gene_cancer_study_ratio_annotated.feather` after CH-aware
+# stratification plus pooled t077 meta-analysis annotations.
 #
 rule annotate_gene_cancer_table:
   input:
@@ -137,10 +137,10 @@ rule annotate_gene_cancer_ratio_table:
     "../scripts/annotate.py"
 
 #
-# Clonal-hematopoiesis-aware annotation. Final canonical ratio output:
-# `gene_cancer_study_ratio_annotated.feather` — carries Bailey + CGC + pathway overlays (from
-# the upstream unified rule) AND the CH annotations. Closes audit findings F3 + F7; completes
-# F4 canonical-output redirect for the ratio table.
+# Clonal-hematopoiesis-aware annotation. Intermediate ratio output:
+# `gene_cancer_study_ratio_ch_annotated.feather` — carries Bailey + CGC + pathway overlays (from
+# the upstream unified rule) AND the CH annotations. The canonical ratio output is the
+# downstream meta-joined `gene_cancer_study_ratio_annotated.feather`.
 #
 # Adds `ch_priority_gene` flag (Bolton 2020 7-gene list) plus `mean_matched` / `mean_unmatched`
 # stratified ratios computed over per-study columns partitioned by the `matched_normal_studies`
@@ -154,9 +154,18 @@ rule annotate_ch_in_gene_cancer_ratio_table:
   input:
     out_dir.joinpath("summary/mut/table/gene_cancer_study_ratio_overlay_annotated.feather")
   output:
-    out_dir.joinpath("summary/mut/table/gene_cancer_study_ratio_annotated.feather")
+    out_dir.joinpath("summary/mut/table/gene_cancer_study_ratio_ch_annotated.feather")
   script:
     "../scripts/annotate_ch.py"
+
+rule join_gene_cancer_meta_in_ratio_table:
+  input:
+    ratio = out_dir.joinpath("summary/mut/table/gene_cancer_study_ratio_ch_annotated.feather"),
+    pooled = out_dir.joinpath("summary/mut/table/gene_cancer_pooled.feather")
+  output:
+    out_dir.joinpath("summary/mut/table/gene_cancer_study_ratio_annotated.feather")
+  script:
+    "../scripts/join_gene_cancer_meta.py"
 
 #
 # dNdScv per-study selection-based driver detection (Martincorena 2017).

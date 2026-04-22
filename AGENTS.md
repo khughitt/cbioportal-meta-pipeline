@@ -100,9 +100,12 @@ consumer-facing.
   drive the TMB denominator via `build_panel_callable_sizes`. See
   `topic:tumor-mutational-burden`.
 
-The final ratio output `gene_cancer_study_ratio_annotated.feather` carries **both** overlays.
-Consumers should prefer the `_annotated` versions; the unannotated `gene_cancer_study.feather`
-and `gene_cancer_study_ratio.feather` are intermediates.
+The final ratio output `gene_cancer_study_ratio_annotated.feather` carries the gene-level
+overlays, the CH-aware annotations, and the joined t077 pooled meta-analysis columns
+(`pooled_*_{inclusive,exclusive}`, `k_studies_{inclusive,exclusive}`,
+`status_{inclusive,exclusive}`, etc.). Consumers should prefer the `_annotated` versions; the
+unannotated `gene_cancer_study.feather` and `gene_cancer_study_ratio.feather` are
+intermediates.
 
 ## Alternate data sources
 

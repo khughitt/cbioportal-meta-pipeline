@@ -16,8 +16,9 @@ Adds three classes of annotation:
 
 Inputs
 ------
-- snakemake.input[0] : `summary/mut/table/gene_cancer_study_ratio.feather` — the cross-study
-  wide-format ratio table produced by `create_combined_gene_cancer_freq_table.py`.
+- snakemake.input[0] : `summary/mut/table/gene_cancer_study_ratio_overlay_annotated.feather`
+  — the cross-study wide-format ratio table after the unified Bailey / CGC /
+  Sanchez-Vega overlay step.
 
 Config
 ------
@@ -31,7 +32,10 @@ signal.
 
 Output
 ------
-- snakemake.output[0] : same table plus the columns above.
+- snakemake.output[0] : `summary/mut/table/gene_cancer_study_ratio_ch_annotated.feather` —
+  same table plus the columns above. A downstream join step adds the pooled t077
+  meta-analysis columns onto the final canonical
+  `summary/mut/table/gene_cancer_study_ratio_annotated.feather` surface.
 
 References
 ----------

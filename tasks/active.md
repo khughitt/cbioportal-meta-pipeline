@@ -314,15 +314,3 @@ Current validate_input_contract accepts the assembly parameter but does not rang
 - created: 2026-04-19
 
 Before applying the t111 per-tissue snvs_per_mb correction to gene_cancer_study_ratio_annotated.feather frequencies, pre-register: (1) expected number of gene-cancer rankings that shift and by how many positions; (2) head-to-head comparison against a Martincorena 2017 dN/dS-based null as a simpler baseline. If the two approaches rank genes identically, t111's value-add collapses. Prevents ships-before-thinks bias on whether the empirical null is actually discriminating versus a uniform-rate-per-gene-length null. Deliverable: doc/meta/pre-registration-q007-null-model-correction.md.
-
-## [t120] t077: wire Snakemake rule and join pooled outputs onto canonical tables
-- type: dev
-- priority: P1
-- status: proposed
-- aspects: [software-development]
-- related: [task:t077, doc:2026-04-22-t077-glmm-logit-plan]
-- blocked-by: [task:t077]
-- group: meta-analysis
-- created: 2026-04-22
-
-Add the workflow rules that build the long pooled input and run the R model, then join the resulting pooled metrics onto the consumer-facing annotated output surface.

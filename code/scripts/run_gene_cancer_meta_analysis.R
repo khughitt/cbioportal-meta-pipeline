@@ -163,6 +163,7 @@ fit_glmm_cell <- function(cell_df) {
     measure = "PLO",
     xi = y,
     ni = n,
+    mods = ~ panel_class + matched_normal,
     data = cell_df,
     test = "t"
   )
@@ -180,26 +181,41 @@ fit_reml_fallback <- function(cell_df) {
   rma.uni(
     yi,
     vi,
+    mods = ~ panel_class + matched_normal,
     data = esc,
     method = "REML",
     test = "knha"
   )
 }
 
+prediction_from_fit <- function(fit) {
+  if (isTRUE(fit$int.only) || ncol(fit$X) <= 1L) {
+    link_pred <- predict(fit)
+    rate_pred <- predict(fit, transf = transf.ilogit)
+  } else {
+    newmods <- matrix(colMeans(fit$X[, -1, drop = FALSE]), nrow = 1L)
+    colnames(newmods) <- colnames(fit$X)[-1]
+    link_pred <- predict(fit, newmods = newmods)
+    rate_pred <- predict(fit, newmods = newmods, transf = transf.ilogit)
+  }
+
+  list(link = link_pred, rate = rate_pred)
+}
+
 row_from_fit <- function(fit, cancer_type, symbol, analysis_view, k_studies, n_total, y_total, status) {
-  pred <- predict(fit, transf = transf.ilogit)
+  pred <- prediction_from_fit(fit)
   data.frame(
     cancer_type = cancer_type,
     symbol = symbol,
     analysis_view = analysis_view,
-    pooled_logit = as.numeric(fit$beta[1, 1]),
-    pooled_rate = as.numeric(pred$pred[1]),
-    pooled_ci_lo = as.numeric(pred$ci.lb[1]),
-    pooled_ci_hi = as.numeric(pred$ci.ub[1]),
+    pooled_logit = as.numeric(pred$link$pred[1]),
+    pooled_rate = as.numeric(pred$rate$pred[1]),
+    pooled_ci_lo = as.numeric(pred$rate$ci.lb[1]),
+    pooled_ci_hi = as.numeric(pred$rate$ci.ub[1]),
     tau2 = as.numeric(fit$tau2),
     i2 = as.numeric(fit$I2),
-    pi_lo = as.numeric(pred$pi.lb[1]),
-    pi_hi = as.numeric(pred$pi.ub[1]),
+    pi_lo = as.numeric(pred$rate$pi.lb[1]),
+    pi_hi = as.numeric(pred$rate$pi.ub[1]),
     k_studies = as.integer(k_studies),
     n_total = as.integer(n_total),
     y_total = as.integer(y_total),

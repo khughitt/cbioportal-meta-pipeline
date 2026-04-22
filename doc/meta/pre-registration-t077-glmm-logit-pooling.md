@@ -149,20 +149,25 @@ pooled biological interpretation is reported.
    paired hypermutator semantics. It does not change the registered estimand; it makes the
    inclusive-vs-exclusive choice explicit instead of encoding it in column suffixes.
 
-2. **The fitted surface is currently intercept-only.** The pooled-input adapter preserves
-   `panel_class` and `matched_normal` per study, and the runner now emits dedicated diagnostics
-   plus leave-one-out sensitivity sidecars. However, the implemented `run_gene_cancer_meta_analysis.R`
-   still fits the confirmatory GLMM / REML fallback on `(y, n)` only and returns the pooled
-   intercept for each cell. The registered moderator-enabled confirmatory fit remains the target,
-   and the output contract for a single moderator-adjusted pooled estimate is still unresolved.
-   Therefore, **no confirmatory biological interpretation should be reported from the pooled output
-   until moderator handling lands**.
+2. **The pooled summary is now moderator-adjusted via the observed study mix.** The runner
+   fits the confirmatory GLMM / REML fallback with `panel_class + matched_normal` in the fixed
+   part and reports a single pooled row per cell by predicting at the mean moderator design row
+   across the contributing studies for that cell. This resolves the earlier intercept-only gap
+   while preserving the registered one-row-per-cell output surface. Consumers should read the
+   pooled rate as the moderator-adjusted average for the observed study composition of that
+   `(gene, cancer, analysis_view)` cell, not as a reference-level stratum estimate.
 
 3. **REML fallback is represented in diagnostics/message output, not `status`.** The active
    implementation keeps the registered `status` enum (`ok / skipped_k / skipped_n / skipped_y /
    nonconverged`) and records fallback provenance in the diagnostics sidecar via `method_used`,
    `fallback_used`, and the captured GLMM / REML error fields, while also writing a stderr message
    when the REML escape hatch is used.
+
+4. **Only the hold-out integrity check is implemented so far.** The leave-one-out / hold-out
+   sidecar required for the first integrity check is present, but the pre-registered panel-class
+   sensitivity re-fits and random-reshuffling placebo outputs are not yet emitted by the pipeline.
+   Therefore, **confirmatory biological interpretation should still wait for those remaining
+   integrity-check surfaces**.
 
 ## Expected Outcomes
 

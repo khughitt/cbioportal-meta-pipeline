@@ -459,3 +459,88 @@ def test_cli_writes_leave_one_out_refits_for_holdout_ready_cells(tmp_path: Path)
     assert set(leave_one_out["base_status"]) == {"ok"}
     assert set(leave_one_out["holdout_status"]) <= {"ok", "nonconverged"}
     assert (leave_one_out["holdout_k_studies"] == 3).all()
+
+
+@pytest.mark.skipif(not _metafor_ready(), reason="Rscript with arrow+metafor is unavailable")
+def test_cli_pooled_output_depends_on_study_covariate_assignment(tmp_path: Path) -> None:
+    base = pd.DataFrame(
+        {
+            "study_id": ["s1", "s2", "s3", "s4", "s5", "s6"],
+            "cancer_type": ["BRCA"] * 6,
+            "symbol": ["TP53"] * 6,
+            "y_inclusive": [4, 6, 26, 29, 12, 14],
+            "y_exclusive": [4, 5, 24, 27, 11, 13],
+            "n_inclusive": [100, 100, 100, 100, 100, 100],
+            "n_exclusive": [100, 100, 100, 100, 100, 100],
+            "panel_class": [
+                "WES",
+                "WES",
+                "MC3",
+                "MC3",
+                "large_hybrid_capture",
+                "large_hybrid_capture",
+            ],
+            "matched_normal": [True, False, True, False, True, False],
+        }
+    )
+    shuffled = base.copy()
+    shuffled["panel_class"] = [
+        "MC3",
+        "large_hybrid_capture",
+        "WES",
+        "MC3",
+        "WES",
+        "large_hybrid_capture",
+    ]
+    shuffled["matched_normal"] = [False, True, False, True, True, False]
+
+    base_input = tmp_path / "base_input.feather"
+    shuffled_input = tmp_path / "shuffled_input.feather"
+    base_output = tmp_path / "base_output.feather"
+    shuffled_output = tmp_path / "shuffled_output.feather"
+    base.to_feather(base_input)
+    shuffled.to_feather(shuffled_input)
+
+    base_result = subprocess.run(
+        [
+            "Rscript",
+            str(SCRIPT),
+            "--input",
+            str(base_input),
+            "--output",
+            str(base_output),
+        ],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    shuffled_result = subprocess.run(
+        [
+            "Rscript",
+            str(SCRIPT),
+            "--input",
+            str(shuffled_input),
+            "--output",
+            str(shuffled_output),
+        ],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+
+    assert base_result.returncode == 0, base_result.stderr
+    assert shuffled_result.returncode == 0, shuffled_result.stderr
+
+    base_out = pd.read_feather(base_output)
+    shuffled_out = pd.read_feather(shuffled_output)
+    merged = base_out.merge(
+        shuffled_out,
+        on=["cancer_type", "symbol", "analysis_view"],
+        suffixes=("_base", "_shuffled"),
+    )
+
+    assert (merged["status_base"] == "ok").all()
+    assert (merged["status_shuffled"] == "ok").all()
+    assert (
+        (merged["pooled_rate_base"] - merged["pooled_rate_shuffled"]).abs() > 1e-6
+    ).any()

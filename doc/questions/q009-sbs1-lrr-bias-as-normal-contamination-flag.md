@@ -20,7 +20,7 @@ related:
   - "question:q003-replication-timing-as-gene-level-mutation-rate-confounder"
   - "question:q008-signature-decomposition-tissue-background-subtraction"
 created: "2026-04-18"
-updated: "2026-04-18"
+updated: "2026-04-22"
 ---
 
 # Can the SBS1 late-replicating-region bias (present in normal tissue, absent in cancer) serve as a practical contamination quality flag for cBioPortal studies?
@@ -46,6 +46,7 @@ Yaacov et al. 2023 (Scientific Reports) demonstrated that SBS1 mutations accumul
 - The main practical constraint is statistical power. Detecting an LRR enrichment of SBS1 requires enough SBS1-attributed mutations to compare regional distributions. For panel-sequenced studies with 50–200 mutations per sample, this test is unlikely to be powered per-sample; it might be powered at the per-study aggregate level (pooling all samples of the same study).
 - A simpler proxy: at the gene level, LRR-resident genes should show higher per-sample SBS1 mutation counts in studies with normal contamination. This can be tested with existing pipeline outputs by crossing gene positions with LRR/ERR annotations.
 - The Yaacov 2023 paper does not provide a standalone computational tool for this analysis; the methods use SigProfilerMatrixGenerator + custom RT-region annotation. SigProfilerTopography (a companion tool from the Alexandrov lab) is designed to compute topographic biases and would be the most accessible implementation pathway.
+- The coarse SBS1/SBS5 ratio proxy was tested first in `t110` and did **not** separate the first required BRCA matched-vs-unmatched comparison. That negative result raises the value of this more mechanistic RT-based branch: if a contamination flag is going to survive first contact with the data, it is more likely to be the direct LRR-bias path than the ratio proxy.
 
 ## Connections to Project
 
@@ -55,6 +56,7 @@ Yaacov et al. 2023 (Scientific Reports) demonstrated that SBS1 mutations accumul
   2. Annotate pipeline genes with ERR/LRR designation.
   3. For a test subset of matched-normal vs unmatched-normal studies, compute per-study SBS1 mutation density in ERR vs LRR genes; compare distributions.
   4. For WGS-level studies: apply SigProfilerTopography to compute formal LRR bias delta values and compare with expected cancer vs normal tissue values.
+  5. Current implementation entry point: `task:t121` (import Dileep 2015 constitutive bins and derive the gene-level map).
 - Priority level: medium for WGS studies; low for panel-only studies in the current pipeline. Becomes high if WGS inputs are added.
 
 ## Related

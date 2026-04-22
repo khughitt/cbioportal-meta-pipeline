@@ -18,7 +18,7 @@ related:
   - "paper:Higgins2002"
   - "paper:IntHout2016"
 created: "2026-04-14"
-updated: "2026-04-14"
+updated: "2026-04-22"
 ---
 
 # Pre-registration: GLMM-logit random-effects pooling for per-(gene, cancer) mutation rates
@@ -137,6 +137,32 @@ package set; in that case pin a specific image tag and reference via
 The existing `run_dndscv.R` rule is currently not wired into an isolated env — a
 **backfill task** to do the same for `run_dndscv.R` should follow this work (tracked
 separately; out of scope here).
+
+## Implementation Deviations (2026-04-22)
+
+These notes record the state of the in-repo implementation after `t115`-`t118`, before any
+pooled biological interpretation is reported.
+
+1. **Output surface carries an explicit `analysis_view` column.** The current runner writes
+   one pooled row per `(cancer_type, symbol, analysis_view)` where `analysis_view ∈ {inclusive,
+   exclusive}`. This is a representational extension driven by the already-landed t081/t098
+   paired hypermutator semantics. It does not change the registered estimand; it makes the
+   inclusive-vs-exclusive choice explicit instead of encoding it in column suffixes.
+
+2. **The fitted surface is currently intercept-only.** The pooled-input adapter preserves
+   `panel_class` and `matched_normal` per study, but the implemented `run_gene_cancer_meta_analysis.R`
+   currently fits the confirmatory GLMM / REML fallback on `(y, n)` only and returns the pooled
+   intercept for each cell. The registered moderator-enabled confirmatory fit remains the target,
+   but the output contract for a single moderator-adjusted pooled estimate is still unresolved and
+   the required diagnostics surface is not yet present. Therefore, **no confirmatory biological
+   interpretation should be reported from the pooled output until moderator handling and diagnostics
+   land**.
+
+3. **REML fallback is represented in diagnostics/message output, not `status`.** The active
+   implementation keeps the registered `status` enum (`ok / skipped_k / skipped_n / skipped_y /
+   nonconverged`) and emits fallback provenance via runner messages for now. A dedicated fallback /
+   convergence diagnostics table is deferred to `t119`, which is the planned place to surface
+   `method_used`, fallback reasons, and leave-one-out / hold-out readiness.
 
 ## Expected Outcomes
 

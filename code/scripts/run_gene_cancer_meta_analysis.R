@@ -166,6 +166,14 @@ summarize_cell <- function(cell_df, analysis_view, force_glmm_failure) {
 
   reml_fit <- try(fit_reml_fallback(cell_df), silent = TRUE)
   if (!inherits(reml_fit, "try-error")) {
+    message(
+      sprintf(
+        "GLMM failed for %s / %s / %s; using REML fallback.",
+        cancer_type,
+        symbol,
+        analysis_view
+      )
+    )
     return(
       row_from_fit(
         reml_fit,
@@ -175,7 +183,7 @@ summarize_cell <- function(cell_df, analysis_view, force_glmm_failure) {
         k_studies,
         n_total,
         y_total,
-        "ok_fallback_reml"
+        "ok"
       )
     )
   }

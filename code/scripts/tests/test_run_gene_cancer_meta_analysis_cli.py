@@ -315,5 +315,6 @@ def test_cli_falls_back_to_reml_when_glmm_is_forced_to_fail(tmp_path: Path) -> N
 
     assert result.returncode == 0, result.stderr
     out = pd.read_feather(output_path)
-    assert out["status"].tolist() == ["ok_fallback_reml", "ok_fallback_reml"]
+    assert "REML fallback" in result.stderr
+    assert out["status"].tolist() == ["ok", "ok"]
     assert out["converged"].tolist() == [True, True]

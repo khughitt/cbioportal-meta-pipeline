@@ -1,0 +1,9 @@
+channels:
+  - conda-forge
+dependencies:
+  - r-base>=4.3
+  - r-metafor
+  - r-arrow
+  - r-optparse
+  - r-matrix
+  - r-lme4

@@ -7,7 +7,6 @@ related:
   - "task:t077"
   - "task:t079"
   - "task:bias-audit-cross-study-aggregation-pipeline"
-  - "spec:research-question"
   - "topic:cross-study-meta-analysis-cancer-genomics"
   - "search:2026-04-13-cross-study-meta-analysis-stats"
   - "paper:DerSimonian1986"

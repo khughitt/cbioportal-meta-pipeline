@@ -15,7 +15,7 @@ ontology_terms:
 datasets:
   - "TCGA"
 source_refs:
-  - "cite:Canisius2016"
+  - "paper:Canisius2016"
 related:
   - "paper:Ciriello2012"
   - "paper:Leiserson2015"

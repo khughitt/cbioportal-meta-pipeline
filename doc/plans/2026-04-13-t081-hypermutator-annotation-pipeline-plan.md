@@ -1,3 +1,12 @@
+---
+id: "plan:2026-04-13-t081-hypermutator-annotation-pipeline-plan"
+type: "plan"
+title: "Hypermutator / TMB annotation pipeline plan"
+status: "active"
+created: "2026-04-13"
+updated: "2026-04-13"
+---
+
 # Hypermutator / TMB annotation pipeline plan (t081)
 
 > **For Claude:** REQUIRED SUB-SKILL: use `superpowers:executing-plans` to implement this plan task-by-task. Do **not** start Task 1 before `t079` (pre-register pooling method) has resolved whether this annotation affects pre-registered decisions.

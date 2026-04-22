@@ -13,7 +13,7 @@ ontology_terms:
   - "MeSH:D015972"
 datasets: []
 source_refs:
-  - "cite:VanDeHaar2019"
+  - "paper:VanDeHaar2019"
 related:
   - "paper:Canisius2016"
   - "paper:Mina2020"

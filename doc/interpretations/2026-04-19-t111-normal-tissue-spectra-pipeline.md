@@ -5,7 +5,7 @@ mode: "dev"
 title: "t111: normal-tissue spectra extraction pipeline — infrastructure + validation run"
 status: "active"
 source_refs:
-  - "cite:Li2021"
+  - "paper:Li2021"
 related:
   - "paper:Li2021"
   - "paper:Yoshida2026"

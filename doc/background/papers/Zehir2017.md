@@ -5,7 +5,7 @@ title: "Mutational landscape of metastatic cancer revealed from prospective clin
 status: "read"
 ontology_terms: []
 datasets: ["msk-impact"]
-source_refs: ["cite:Zehir2017"]
+source_refs: ["article:Zehir2017"]
 related: ["topic:pan-cancer-mutation-landscape", "topic:targeted-panel-sequencing-bias", "paper:Chakravarty2017"]
 created: "2026-04-13"
 updated: "2026-04-13"
@@ -53,7 +53,7 @@ classified against OncoKB therapeutic levels (1, 2A/2B, 3A/3B, 4) for clinical r
   of 197 genotype-matched trials.
 - **Pan-cancer drivers:** TP53 was altered in 41% of all samples (98% in HGSOC, 89% esophageal
   adenocarcinoma, 85% small-cell lung; >10% in 43/62 principal tumor types), and KRAS in 15%
-  (90% pancreatic, 44% colon; G12 codon = 80% of KRAS hits). PIK3CA H1047/E545 and BRAF V600
+  (90% pancreatic, 44% colon; G12 codon = 80% of KRAS hits). PIK3CA codons 1047 and 545 plus BRAF V600
   recurred across >20 tumor types each.
 - **Advanced-disease enrichment:** AR mutations occurred in 18% of metastatic prostate (vs 1% in
   TCGA) and ESR1 in 11% of metastatic breast (vs 4% in TCGA), almost exclusively in

@@ -13,9 +13,9 @@ datasets:
   - cBioPortal (~300 studies)
   - PCAWG
 source_refs:
-  - "cite:Nguyen2022CUPLR"
-  - "cite:Alexandrov2020"
-  - "cite:Li2021"
+  - "paper:Nguyen2022CUPLR"
+  - "paper:Alexandrov2020"
+  - "paper:Li2021"
 related:
   - "topic:signature-decomposition-unmatched-normal"
   - "paper:Li2021"

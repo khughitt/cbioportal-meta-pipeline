@@ -13,7 +13,7 @@ ontology_terms:
 datasets:
   - "TCGA"
 source_refs:
-  - "cite:Vandin2012"
+  - "paper:Vandin2012"
 related:
   - "paper:Ciriello2012"
   - "paper:Leiserson2013"

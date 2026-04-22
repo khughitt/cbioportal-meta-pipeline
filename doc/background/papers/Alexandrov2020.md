@@ -5,7 +5,7 @@ title: "The repertoire of mutational signatures in human cancer"
 status: "read"
 ontology_terms: []
 datasets: ["cosmic-signatures"]
-source_refs: ["cite:Alexandrov2020"]
+source_refs: ["article:Alexandrov2020"]
 related: ["paper:Tate2019", "paper:PCAWG2020", "topic:mutational-signatures"]
 created: "2026-04-13"
 updated: "2026-04-12"

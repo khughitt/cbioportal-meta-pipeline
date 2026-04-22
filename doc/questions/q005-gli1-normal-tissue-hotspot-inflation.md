@@ -6,7 +6,7 @@ status: "active"
 ontology_terms: []
 datasets: []
 source_refs:
-  - "cite:Xu2025"
+  - "paper:Xu2025"
 related:
   - "topic:pan-cancer-mutation-landscape"
   - "topic:mutation-rate-normalization"

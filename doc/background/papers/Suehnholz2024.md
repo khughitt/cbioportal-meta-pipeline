@@ -5,7 +5,7 @@ title: "Quantifying the Expanding Landscape of Clinical Actionability for Patien
 status: "read"
 ontology_terms: []
 datasets: ["msk-impact", "oncokb"]
-source_refs: ["cite:Suehnholz2024"]
+source_refs: ["article:Suehnholz2024"]
 related: ["paper:Chakravarty2017", "paper:Zehir2017", "topic:variant-interpretation-oncokb-vus", "topic:cross-study-harmonization"]
 created: "2026-04-13"
 updated: "2026-04-13"

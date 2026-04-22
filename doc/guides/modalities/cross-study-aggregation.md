@@ -1,3 +1,12 @@
+---
+id: "guide:cross-study-aggregation"
+type: "guide"
+title: "Cross-study aggregation"
+status: "active"
+created: "2026-04-13"
+updated: "2026-04-13"
+---
+
 # Cross-study aggregation — best-practices guide
 
 *As-of: 2026-04-13*

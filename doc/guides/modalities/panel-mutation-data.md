@@ -1,3 +1,12 @@
+---
+id: "modality-guide:panel-mutation-data"
+type: "modality-guide"
+title: "Targeted-panel mutation data"
+status: "active"
+created: "2026-04-14"
+updated: "2026-04-14"
+---
+
 # Targeted-panel mutation data — best-practices guide
 
 *As-of: 2026-04-14*

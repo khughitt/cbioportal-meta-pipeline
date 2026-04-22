@@ -11,9 +11,9 @@ ontology_terms:
   - SBS5
 datasets: []
 source_refs:
-  - "cite:Alexandrov2020"
-  - "cite:Li2021"
-  - "cite:Xu2025"
+  - "paper:Alexandrov2020"
+  - "paper:Li2021"
+  - "paper:Xu2025"
 related:
   - "topic:signature-decomposition-unmatched-normal"
   - "paper:Li2021"

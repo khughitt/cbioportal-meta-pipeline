@@ -13,7 +13,7 @@ datasets:
   - PCAWG
   - SomaMutDB
 source_refs:
-  - "cite:Yaacov2023"
+  - "paper:Yaacov2023"
 related:
   - "topic:signature-decomposition-unmatched-normal"
   - "paper:Yaacov2023"

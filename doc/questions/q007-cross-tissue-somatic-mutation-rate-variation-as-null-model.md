@@ -7,7 +7,7 @@ ontology_terms: []
 datasets:
   - "EGA:EGAD00001007859"
 source_refs:
-  - "cite:Li2021"
+  - "paper:Li2021"
 related:
   - "paper:Li2021"
   - "paper:Yoshida2026"

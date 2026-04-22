@@ -1,15 +1,15 @@
 ---
-id: "question:003-ch-priority-gene-completeness"
+id: "question:q006-ch-priority-gene-completeness"
 type: "question"
 title: "Is the 7-gene ch_priority_gene list sufficient to flag CH-related driver inflation in the cross-study mutation tables?"
 status: "active"
 ontology_terms: []
 datasets: []
 source_refs:
-  - "cite:Poon2021"
-  - "cite:Bolton2020"
-  - "cite:Coombs2017"
-  - "cite:LeeSix2018"
+  - "paper:Poon2021"
+  - "paper:Bolton2020"
+  - "paper:Coombs2017"
+  - "paper:LeeSix2018"
 related:
   - "paper:Poon2021"
   - "paper:LeeSix2018"

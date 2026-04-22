@@ -5,7 +5,7 @@ title: "Cell-of-Origin Patterns Dominate the Molecular Classification of 10,000 
 status: "read"
 ontology_terms: []
 datasets: ["tcga-pancanatlas"]
-source_refs: ["cite:Hoadley2018"]
+source_refs: ["article:Hoadley2018"]
 related: ["paper:Bailey2018", "paper:Ellrott2018", "paper:Ciriello2013", "topic:pan-cancer-mutation-landscape"]
 created: "2026-04-13"
 updated: "2026-04-12"

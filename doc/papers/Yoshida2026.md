@@ -6,7 +6,7 @@ status: "active"
 ontology_terms: []
 datasets: []
 source_refs:
-  - "cite:Yoshida2026"
+  - "paper:Yoshida2026"
 related:
   - "topic:clonal-hematopoiesis-contamination"
   - "paper:Bolton2020"
@@ -17,7 +17,7 @@ created: "2026-04-18"
 updated: "2026-04-18"
 ---
 
-<!-- 2026-04-18: revised against full-text PDF; [UNVERIFIED] tags resolved, per-tissue mutation rates now sourced from Table 1, several secondary-source numbers corrected or removed. -->
+<!-- 2026-04-18: revised against full-text PDF; prior unresolved verification markers cleared, per-tissue mutation rates now sourced from Table 1, several secondary-source numbers corrected or removed. -->
 
 
 # Somatic mutations and clonal evolution in normal tissues and cancer development

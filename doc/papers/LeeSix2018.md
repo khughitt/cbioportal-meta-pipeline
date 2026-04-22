@@ -6,7 +6,7 @@ status: "active"
 ontology_terms: []
 datasets: []
 source_refs:
-  - "cite:LeeSix2018"
+  - "paper:LeeSix2018"
 related:
   - "topic:clonal-hematopoiesis-contamination"
   - "paper:Poon2021"

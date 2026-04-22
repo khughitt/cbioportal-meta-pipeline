@@ -6,7 +6,7 @@ status: "active"
 ontology_terms: []
 datasets: []
 source_refs:
-  - "cite:Lin2024"
+  - "paper:Lin2024"
 related:
   - "question:q001-normal-epithelial-clone-contamination-in-esophageal-studies"
   - "paper:Lin2024"

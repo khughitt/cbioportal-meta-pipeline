@@ -6,7 +6,7 @@ status: "active"
 ontology_terms: []
 datasets: []
 source_refs:
-  - "cite:LinXu2020"
+  - "paper:LinXu2020"
 related:
   - "paper:Barendregt2013"
   - "paper:Stijnen2010"

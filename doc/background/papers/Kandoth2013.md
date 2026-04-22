@@ -5,7 +5,7 @@ title: "Mutational landscape and significance across 12 major cancer types"
 status: "read"
 ontology_terms: []
 datasets: ["tcga-pancanatlas"]
-source_refs: ["cite:Kandoth2013"]
+source_refs: ["article:Kandoth2013"]
 related: ["paper:Bailey2018", "paper:Lawrence2014", "topic:pan-cancer-mutation-landscape"]
 created: "2026-04-13"
 updated: "2026-04-13"

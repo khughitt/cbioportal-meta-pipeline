@@ -5,7 +5,7 @@ title: "Bias Audit: cross-study aggregation pipeline (preprocessing → clusteri
 status: "proposed"
 source_refs:
   - "spec:research-question"
-  - "guide:cross-study-aggregation"
+  - "topic:cross-study-harmonization"
   - "search:2026-04-13-cross-study-meta-analysis-stats"
   - "search:2026-04-13-cooccurrence-mutual-exclusivity-methods"
 related:

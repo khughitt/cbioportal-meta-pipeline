@@ -14,7 +14,7 @@ ontology_terms:
 datasets:
   - "TCGA"
 source_refs:
-  - "cite:Imielinski2017"
+  - "paper:Imielinski2017"
 related:
   - "paper:Lawrence2014"
   - "paper:Martincorena2017"

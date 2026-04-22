@@ -40,7 +40,7 @@ gene × cancer outputs.
   cohort-wide background rates (degraded on panels); the published static catalogs can be
   applied as annotation overlays to panel calls without re-running the methods.
 - **Hotspot vs domain-loss complementarity.** Oncogenes show hotspot recurrence (BRAF V600, KRAS
-  G12, PIK3CA H1047/E545); tumor suppressors show distributed truncating mutations. Hotspot
+  G12, PIK3CA codons 1047/545); tumor suppressors show distributed truncating mutations. Hotspot
   methods catch the former; recurrence-only methods catch both with bias toward the former;
   selection-based methods (dNdScv, see `topic:cancer-driver-genes`) catch the latter.
 

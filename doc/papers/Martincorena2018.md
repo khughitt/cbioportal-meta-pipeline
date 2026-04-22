@@ -6,7 +6,7 @@ status: "active"
 ontology_terms: []
 datasets: []
 source_refs:
-  - "cite:Martincorena2018"
+  - "paper:Martincorena2018"
 related:
   - "paper:Yoshida2026"
   - "paper:Poon2021"

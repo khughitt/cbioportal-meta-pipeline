@@ -5,7 +5,7 @@ title: "Identifying recurrent mutations in cancer reveals widespread lineage div
 status: "read"
 ontology_terms: []
 datasets: []
-source_refs: ["cite:Chang2016"]
+source_refs: ["article:Chang2016"]
 related: ["paper:Cerami2012", "paper:Chakravarty2017", "topic:hotspot-based-driver-detection", "topic:cancer-driver-genes", "topic:mutation-rate-normalization"]
 created: "2026-04-13"
 updated: "2026-04-13"

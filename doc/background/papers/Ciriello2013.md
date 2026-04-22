@@ -5,7 +5,7 @@ title: "Emerging landscape of oncogenic signatures across human cancers"
 status: "read"
 ontology_terms: []
 datasets: []
-source_refs: ["cite:Ciriello2013"]
+source_refs: ["article:Ciriello2013"]
 related: ["paper:SanchezVega2018", "paper:Kandoth2013", "topic:pan-cancer-mutation-landscape"]
 created: "2026-04-13"
 updated: "2026-04-13"

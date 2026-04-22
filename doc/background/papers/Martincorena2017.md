@@ -5,7 +5,7 @@ title: "Universal Patterns of Selection in Cancer and Somatic Tissues"
 status: "read"
 ontology_terms: []
 datasets: []
-source_refs: ["cite:Martincorena2017"]
+source_refs: ["article:Martincorena2017"]
 related: ["paper:Lawrence2014", "paper:Bailey2018", "topic:cancer-driver-genes"]
 created: "2026-04-13"
 updated: "2026-04-13"

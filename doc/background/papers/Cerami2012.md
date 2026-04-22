@@ -5,7 +5,7 @@ title: "The cBio cancer genomics portal: an open platform for exploring multidim
 status: "read"
 ontology_terms: []
 datasets: ["cbioportal"]
-source_refs: ["cite:Cerami2012"]
+source_refs: ["article:Cerami2012"]
 related: ["paper:Gao2013"]
 created: "2026-04-13"
 updated: "2026-04-13"

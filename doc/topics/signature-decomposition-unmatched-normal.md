@@ -14,14 +14,14 @@ datasets:
   - PCAWG
   - COSMIC v3.x
 source_refs:
-  - "cite:Alexandrov2020"
-  - "cite:Li2021"
-  - "cite:Xu2025"
-  - "cite:Yaacov2023"
-  - "cite:Yoshida2026"
-  - "cite:Jin2024"
-  - "cite:Degasperi2022"
-  - "cite:Nguyen2022CUPLR"
+  - "paper:Alexandrov2020"
+  - "paper:Li2021"
+  - "paper:Xu2025"
+  - "paper:Yaacov2023"
+  - "paper:Yoshida2026"
+  - "paper:Jin2024"
+  - "paper:Degasperi2022"
+  - "paper:Nguyen2022CUPLR"
 related:
   - "topic:clonal-hematopoiesis-contamination"
   - "topic:mutation-rate-normalization"

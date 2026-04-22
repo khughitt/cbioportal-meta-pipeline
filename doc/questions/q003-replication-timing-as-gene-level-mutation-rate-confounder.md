@@ -8,8 +8,8 @@ datasets:
   - cBioPortal studies
   - PCAWG
 source_refs:
-  - "cite:Yaacov2023"
-  - "cite:Yoshida2026"
+  - "paper:Yaacov2023"
+  - "paper:Yoshida2026"
 related:
   - "paper:Yaacov2023"
   - "topic:mutation-rate-normalization"

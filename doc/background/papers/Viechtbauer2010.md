@@ -6,7 +6,7 @@ status: "active"
 ontology_terms: []
 datasets: []
 source_refs:
-  - "cite:Viechtbauer2010"
+  - "paper:Viechtbauer2010"
 related:
   - "paper:Langan2018"
   - "paper:DerSimonian1986"

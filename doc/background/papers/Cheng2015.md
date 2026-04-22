@@ -5,7 +5,7 @@ title: "Memorial Sloan Kettering-Integrated Mutation Profiling of Actionable Can
 status: "read"
 ontology_terms: []
 datasets: ["msk-impact"]
-source_refs: ["cite:Cheng2015"]
+source_refs: ["article:Cheng2015"]
 related: ["paper:Zehir2017", "topic:targeted-panel-sequencing-bias"]
 created: "2026-04-13"
 updated: "2026-04-13"

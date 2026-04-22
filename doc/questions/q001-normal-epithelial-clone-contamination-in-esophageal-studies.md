@@ -6,10 +6,10 @@ status: "active"
 ontology_terms: []
 datasets: []
 source_refs:
-  - "cite:Yoshida2026"
-  - "cite:Martincorena2018"
-  - "cite:Poon2021"
-  - "cite:Li2021"
+  - "paper:Yoshida2026"
+  - "paper:Martincorena2018"
+  - "paper:Poon2021"
+  - "paper:Li2021"
 related:
   - "topic:clonal-hematopoiesis-contamination"
   - "paper:Yoshida2026"

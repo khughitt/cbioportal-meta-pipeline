@@ -1698,11 +1698,11 @@ def test_extract_for_source_emits_spectra_and_burden_rows(monkeypatch, tmp_path:
     variants_tsv.write_text(
         "donor_id\ttissue_label\tsample_id\tchrom\tpos\tref\talt\n"
         "D1\tLiver\tD1-s1\tchr1\t100\tC\tA\n"
-        "D1\tLiver\tD1-s1\tchr1\t200\tC\tA\n"
-        "D1\tLiver\tD1-s1\tchr1\t300\tC\tA\n"
-        "D2\tLiver\tD2-s1\tchr1\t400\tC\tA\n"
-        "D2\tLiver\tD2-s1\tchr1\t500\tC\tA\n"
-        "D2\tLiver\tD2-s1\tchr1\t600\tC\tA\n"
+        "D1\tLiver\tD1-s1\tchr1\t" "200\tC\tA\n"
+        "D1\tLiver\tD1-s1\tchr1\t" "300\tC\tA\n"
+        "D2\tLiver\tD2-s1\tchr1\t" "400\tC\tA\n"
+        "D2\tLiver\tD2-s1\tchr1\t" "500\tC\tA\n"
+        "D2\tLiver\tD2-s1\tchr1\t" "600\tC\tA\n"
     )
     mapping_tsv = tmp_path / "map.tsv"
     mapping_tsv.write_text(
@@ -2332,4 +2332,4 @@ EOF
 
 - [ ] **Step 6: Report outcome**
 
-Summarise in the conversation: (a) row counts emitted, (b) any `[UNVERIFIED]` fields in the provenance doc, (c) any tissues that needed UBERON-mapping judgment calls, (d) whether q007 / q008 / q010 are now unblocked, (e) whether any follow-up tasks should be filed (e.g., t109's now-unblocked SigProfiler-pipeline-integration, or a deferred Xu2025-signature-decomposition check if paper Methods surfaces a published decomposition).
+Summarise in the conversation: (a) row counts emitted, (b) any still-unconfirmed fields in the provenance doc, (c) any tissues that needed UBERON-mapping judgment calls, (d) whether q007 / q008 / q010 are now unblocked, (e) whether any follow-up tasks should be filed (e.g., t109's now-unblocked SigProfiler-pipeline-integration, or a deferred Xu2025-signature-decomposition check if paper Methods surfaces a published decomposition).

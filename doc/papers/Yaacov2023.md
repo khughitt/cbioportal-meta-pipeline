@@ -8,7 +8,7 @@ datasets:
   - SomaMutDB
   - PCAWG
 source_refs:
-  - "cite:Yaacov2023"
+  - "paper:Yaacov2023"
 related:
   - "paper:Yoshida2026"
   - "topic:mutation-rate-normalization"

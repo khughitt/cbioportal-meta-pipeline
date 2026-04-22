@@ -5,7 +5,7 @@ title: "Genomic characterization of metastatic patterns from prospective clinica
 status: "read"
 ontology_terms: []
 datasets: ["msk-met"]
-source_refs: ["cite:Nguyen2022"]
+source_refs: ["article:Nguyen2022"]
 related: ["paper:Zehir2017", "topic:pan-cancer-mutation-landscape"]
 created: "2026-04-13"
 updated: "2026-04-13"

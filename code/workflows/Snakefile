@@ -199,8 +199,30 @@ rule run_restricted_sigprofiler_assignment:
     lookup = "data/cosmic_cancer_type_signatures.tsv"
   output:
     out_dir.joinpath("studies/{id}/mut/signatures/restricted_assignment.feather")
+  params:
+    assignment_unit = "study"
   script:
     "../scripts/run_restricted_sigprofiler_assignment.py"
+
+rule run_restricted_sigprofiler_assignment_per_sample:
+  input:
+    mutations = out_dir.joinpath("studies/{id}/mut/table/mut.feather"),
+    samples = out_dir.joinpath("studies/{id}/metadata/samples.feather"),
+    lookup = "data/cosmic_cancer_type_signatures.tsv"
+  output:
+    out_dir.joinpath("studies/{id}/mut/signatures/restricted_assignment_per_sample.feather")
+  params:
+    assignment_unit = "sample"
+  script:
+    "../scripts/run_restricted_sigprofiler_assignment.py"
+
+rule compare_sbs1_sbs5_ratio:
+  input:
+    expand(out_dir.joinpath("studies/{id}/mut/signatures/restricted_assignment_per_sample.feather"), id=ids)
+  output:
+    out_dir.joinpath("summary/signatures/sbs1_sbs5_proxy_comparison.feather")
+  script:
+    "../scripts/compare_sbs1_sbs5_ratio.py"
 
 #
 # AACR Project GENIE per-panel coverage mask.

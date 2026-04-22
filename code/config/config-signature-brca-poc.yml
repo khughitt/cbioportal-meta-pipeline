@@ -1,0 +1,23 @@
+data_dir: "/data/raw/cbioportal"
+out_dir: "results/signature-brca-2026-04-22"
+
+studies:
+  - tcga_mc3
+  - msk_impact_2017
+
+matched_normal_studies:
+  - tcga_mc3
+
+panel_bearing_studies:
+  - msk_impact_2017
+
+study_panel_map: {}
+
+signature_assignment_genome_build: "GRCh37"
+signature_assignment_cosmic_version: "3.5"
+signature_assignment_exome: true
+signature_assignment_lookup_keys:
+  - breast
+
+signature_ratio_min_samples_per_group: 25
+signature_ratio_pseudocount: 0.5

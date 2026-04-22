@@ -1,8 +1,8 @@
 """
 run_restricted_sigprofiler_assignment.py
 
-Run SigProfilerAssignment on pooled study-level SBS96 spectra after restricting the
-reference signature database to cancer-type-appropriate SBS signatures.
+Run SigProfilerAssignment on study-level or per-sample SBS96 spectra after restricting
+the reference signature database to cancer-type-appropriate SBS signatures.
 
 Input surface:
 - mut.feather      — per-study mutations with sample_id_tumor / chromosome / alleles
@@ -10,11 +10,9 @@ Input surface:
 - cosmic lookup    — broad cancer-family allow-list derived from Alexandrov 2020
 
 Output:
-- restricted_assignment.feather — long-format per-(study, cancer_type, signature)
-  exposure table with fit statistics repeated on each signature row.
+- restricted_assignment*.feather — long-format exposure table with fit statistics
+  repeated on each signature row.
 """
-
-from __future__ import annotations
 
 import os
 import re
@@ -33,6 +31,40 @@ SPLIT_SIGNATURE_ALIASES: dict[str, list[str]] = {
     "SBS22": ["SBS22a", "SBS22b"],
     "SBS40": ["SBS40a", "SBS40b", "SBS40c"],
 }
+TCGA_CANCER_TYPE_MAP: dict[str, str] = {
+    "ACC": "liver",
+    "AML": "myeloid",
+    "BLCA": "bladder",
+    "BRCA": "breast",
+    "CESC": "head_neck",
+    "CHOL": "biliary",
+    "COAD": "colorectal",
+    "DLBC": "lymphoid",
+    "ESCA": "esophageal",
+    "GBM": "cns",
+    "HNSC": "head_neck",
+    "KICH": "kidney",
+    "KIRC": "kidney",
+    "KIRP": "kidney",
+    "LAML": "myeloid",
+    "LGG": "cns",
+    "LIHC": "liver",
+    "LUAD": "lung",
+    "LUSC": "lung",
+    "MESO": "soft_tissue",
+    "OV": "ovary",
+    "PAAD": "pancreas",
+    "PRAD": "prostate",
+    "READ": "colorectal",
+    "SARC": "soft_tissue",
+    "SKCM": "melanoma",
+    "STAD": "stomach",
+    "TGCT": "soft_tissue",
+    "THCA": "thyroid",
+    "UCEC": "uterus",
+    "UCS": "uterus",
+    "UVM": "melanoma",
+}
 
 
 def normalize_cancer_type(cancer_type: str) -> str:
@@ -43,6 +75,10 @@ def normalize_cancer_type(cancer_type: str) -> str:
     when a study's label is coarser than the PCAWG nomenclature.
     """
     text = cancer_type.strip().lower()
+    upper = cancer_type.strip().upper()
+
+    if upper in TCGA_CANCER_TYPE_MAP:
+        return TCGA_CANCER_TYPE_MAP[upper]
 
     if "breast" in text:
         return "breast"
@@ -161,22 +197,56 @@ def study_sample_name(study_id: str, lookup_key: str) -> str:
     return f"{study_id}__{safe_lookup}"
 
 
+def donor_id_for_assignment(*, sample_id: str, sample_name: str, assignment_unit: str) -> str:
+    if assignment_unit == "study":
+        return sample_name
+    if assignment_unit == "sample":
+        return sample_id
+    raise ValueError(f"Unsupported assignment_unit: {assignment_unit!r}")
+
+
+def normalize_chromosome_label(chromosome: str) -> str:
+    text = chromosome.strip()
+    if not text:
+        return text
+
+    upper = text.upper()
+    if upper.startswith("CHR"):
+        suffix = upper[3:]
+    else:
+        suffix = upper
+
+    if suffix in {str(i) for i in range(1, 23)} | {"X", "Y"}:
+        return f"chr{suffix}"
+    return text
+
+
 def prepare_sigprofiler_variants(
     *,
     mutations: pd.DataFrame,
     samples: pd.DataFrame,
     cancer_type: str,
     sample_name: str,
+    assignment_unit: str,
 ) -> pd.DataFrame:
-    sample_ids = set(samples.loc[samples["cancer_type"] == cancer_type, "sample_id"])
+    cancer_samples = samples.loc[samples["cancer_type"] == cancer_type, ["sample_id"]].copy()
+    sample_ids = set(cancer_samples["sample_id"])
     subset = mutations.loc[mutations["sample_id_tumor"].isin(sample_ids)].copy()
     if subset.empty:
         return pd.DataFrame(columns=["donor_id", "chrom", "pos", "ref", "alt"])
 
+    donor_map = {
+        sample_id: donor_id_for_assignment(
+            sample_id=sample_id,
+            sample_name=sample_name,
+            assignment_unit=assignment_unit,
+        )
+        for sample_id in cancer_samples["sample_id"].astype(str)
+    }
     out = pd.DataFrame(
         {
-            "donor_id": sample_name,
-            "chrom": subset["chromosome"].astype(str),
+            "donor_id": subset["sample_id_tumor"].astype(str).map(donor_map),
+            "chrom": subset["chromosome"].astype(str).map(normalize_chromosome_label),
             "pos": subset["start"].astype(int),
             "ref": subset["reference_allele"].astype(str),
             "alt": subset["tumor_seq_allele2"].astype(str),
@@ -232,6 +302,7 @@ def read_assignment_output(
     cancer_type: str,
     lookup_key: str,
     figure_cancer_type: str,
+    assignment_unit: str,
 ) -> pd.DataFrame:
     activities = pd.read_csv(
         output_dir / "Assignment_Solution" / "Activities" / "Assignment_Solution_Activities.txt",
@@ -255,6 +326,7 @@ def read_assignment_output(
     out.insert(1, "cancer_type", cancer_type)
     out.insert(2, "lookup_key", lookup_key)
     out.insert(3, "figure_cancer_type", figure_cancer_type)
+    out.insert(4, "assignment_unit", assignment_unit)
     out["status"] = "ok"
     out = out.rename(
         columns={
@@ -281,6 +353,8 @@ def build_assignment_table_for_study(  # noqa: PLR0913
     cosmic_version: str,
     exome: bool,
     work_dir: Path,
+    assignment_unit: str = "study",
+    allowed_lookup_keys: set[str] | None = None,
 ) -> pd.DataFrame:
     mutations = pd.read_feather(mutations_path)
     samples = pd.read_feather(samples_path)
@@ -300,7 +374,15 @@ def build_assignment_table_for_study(  # noqa: PLR0913
     outputs: list[pd.DataFrame] = []
 
     for cancer_type in sorted(samples["cancer_type"].dropna().astype(str).unique()):
-        lookup_key = normalize_cancer_type(cancer_type)
+        try:
+            lookup_key = normalize_cancer_type(cancer_type)
+        except ValueError:
+            if allowed_lookup_keys is not None:
+                continue
+            raise
+
+        if allowed_lookup_keys is not None and lookup_key not in allowed_lookup_keys:
+            continue
         if lookup_key not in lookup:
             raise ValueError(f"No signature lookup entry for normalized key {lookup_key!r}")
 
@@ -310,6 +392,7 @@ def build_assignment_table_for_study(  # noqa: PLR0913
             samples=samples,
             cancer_type=cancer_type,
             sample_name=sample_name,
+            assignment_unit=assignment_unit,
         )
         if variants.empty:
             continue
@@ -342,6 +425,7 @@ def build_assignment_table_for_study(  # noqa: PLR0913
                 cancer_type=cancer_type,
                 lookup_key=lookup_key,
                 figure_cancer_type=figure_sources[lookup_key],
+                assignment_unit=assignment_unit,
             )
         )
 
@@ -352,6 +436,7 @@ def build_assignment_table_for_study(  # noqa: PLR0913
                 "cancer_type",
                 "lookup_key",
                 "figure_cancer_type",
+                "assignment_unit",
                 "sample_name",
                 "signature",
                 "exposure",
@@ -368,7 +453,7 @@ def build_assignment_table_for_study(  # noqa: PLR0913
         )
 
     out = pd.concat(outputs, ignore_index=True)
-    return out.sort_values(["cancer_type", "signature"]).reset_index(drop=True)
+    return out.sort_values(["cancer_type", "sample_name", "signature"]).reset_index(drop=True)
 
 
 def main() -> None:
@@ -377,6 +462,8 @@ def main() -> None:
     genome_build = str(snek.config.get("signature_assignment_genome_build", "GRCh37"))
     cosmic_version = str(snek.config.get("signature_assignment_cosmic_version", "3.5"))
     exome = bool(snek.config.get("signature_assignment_exome", True))
+    assignment_unit = str(getattr(snek.params, "assignment_unit", "study"))
+    allowed_lookup_keys = set(snek.config.get("signature_assignment_lookup_keys", [])) or None
     output_path = Path(snek.output[0])
     work_dir = output_path.parent / f".{output_path.stem}_work"
     if work_dir.exists():
@@ -393,6 +480,8 @@ def main() -> None:
             cosmic_version=cosmic_version,
             exome=exome,
             work_dir=work_dir,
+            assignment_unit=assignment_unit,
+            allowed_lookup_keys=allowed_lookup_keys,
         )
         out.to_feather(output_path)
     finally:

@@ -248,6 +248,19 @@ rule compare_sbs1_sbs5_ratio:
   script:
     "../scripts/compare_sbs1_sbs5_ratio.py"
 
+rule compare_replication_timing_burden:
+  input:
+    gene_rt = "data/gene_replication_timing.feather",
+    mutations = expand(out_dir.joinpath("studies/{id}/mut/table/mut.feather"), id=ids),
+    assignments = expand(out_dir.joinpath("studies/{id}/mut/signatures/restricted_assignment_per_sample.feather"), id=ids)
+  output:
+    summary = out_dir.joinpath("summary/signatures/rt_gene_burden_comparison.feather"),
+    per_sample = out_dir.joinpath("summary/signatures/rt_gene_burden_per_sample.feather")
+  params:
+    ids = ids
+  script:
+    "../scripts/compare_replication_timing_burden.py"
+
 #
 # AACR Project GENIE per-panel coverage mask.
 #

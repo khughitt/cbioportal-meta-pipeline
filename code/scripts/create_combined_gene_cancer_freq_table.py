@@ -61,6 +61,11 @@ import sys
 import pandas as pd
 
 
+def _study_id_from_path(infile: str) -> str:
+    """Extract the study id from a per-study output path."""
+    return os.path.basename(os.path.dirname(os.path.dirname(os.path.dirname(infile))))
+
+
 def combine_paired_pivot(
     per_study_frames: list[tuple[str, pd.DataFrame]],
 ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
@@ -134,6 +139,93 @@ def combine_paired_pivot(
     )
     # Legacy alias (deviation from plan review finding #3; see module docstring).
     ratio_df["mean"] = ratio_df["mean_inclusive"]
+
+    return num_df, ratio_df, n_inclusive_df, n_exclusive_df
+
+
+def _load_cancer_presence(
+    per_study_cancer_paths: list[str],
+) -> dict[str, dict[str, tuple[int, int]]]:
+    """Load per-study cancer cohort denominators from cancer_study.feather files.
+
+    Returns ``{study_id: {cancer_type: (n_samples_inclusive, n_samples_exclusive)}}``.
+    """
+    out: dict[str, dict[str, tuple[int, int]]] = {}
+    for infile in per_study_cancer_paths:
+        study = _study_id_from_path(infile)
+        df = pd.read_feather(infile)
+        if df.empty:
+            out[study] = {}
+            continue
+        required = {"cancer_type", "n_samples_inclusive", "n_samples_exclusive"}
+        missing = required - set(df.columns)
+        if missing:
+            raise ValueError(
+                f"{infile} missing required cancer-summary columns: {sorted(missing)}"
+            )
+        out[study] = {
+            str(row["cancer_type"]): (
+                int(row["n_samples_inclusive"]),
+                int(row["n_samples_exclusive"]),
+            )
+            for _, row in df[
+                ["cancer_type", "n_samples_inclusive", "n_samples_exclusive"]
+            ].iterrows()
+        }
+    return out
+
+
+def _fill_missing_unmutated_cells(
+    num_df: pd.DataFrame,
+    ratio_df: pd.DataFrame,
+    n_inclusive_df: pd.DataFrame,
+    n_exclusive_df: pd.DataFrame,
+    *,
+    cancer_presence_by_study: dict[str, dict[str, tuple[int, int]]],
+    study_panel_map: dict[str, str],
+) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    """Backfill WES/unmapped-study missing cells as zero when the cancer exists.
+
+    The panel-aware per-study rule already emits dense callable `(cancer, gene)` rows,
+    so missing cells in mapped panel studies remain informative (`gene not callable`
+    or `cancer absent`) and must stay `NaN`. The remaining gap is WES / unmapped
+    studies: every gene is callable, but unmutated `(cancer, gene)` combinations are
+    absent from the per-study feather. For those studies only, fill missing cells with
+    zero counts and the cancer-level cohort denominator.
+    """
+    cancer_index = num_df.index.get_level_values("cancer_type")
+
+    for study, cancer_info in cancer_presence_by_study.items():
+        if study in study_panel_map:
+            continue
+        if study not in num_df.columns or study not in n_inclusive_df.columns:
+            continue
+
+        exclusive_col = f"{study}_exclusive"
+        if exclusive_col not in num_df.columns or exclusive_col not in ratio_df.columns:
+            raise ValueError(f"Missing paired exclusive column for study {study!r}")
+
+        for cancer_type, (n_inclusive, n_exclusive) in cancer_info.items():
+            cancer_mask = cancer_index == cancer_type
+            if not cancer_mask.any():
+                continue
+
+            missing_inclusive = num_df[study].isna() & cancer_mask
+            missing_exclusive = num_df[exclusive_col].isna() & cancer_mask
+
+            if missing_inclusive.any():
+                num_df.loc[missing_inclusive, study] = 0
+                ratio_df.loc[missing_inclusive, study] = (
+                    0.0 if n_inclusive > 0 else float("nan")
+                )
+                n_inclusive_df.loc[missing_inclusive, study] = n_inclusive
+
+            if missing_exclusive.any():
+                num_df.loc[missing_exclusive, exclusive_col] = 0
+                ratio_df.loc[missing_exclusive, exclusive_col] = (
+                    0.0 if n_exclusive > 0 else float("nan")
+                )
+                n_exclusive_df.loc[missing_exclusive, study] = n_exclusive
 
     return num_df, ratio_df, n_inclusive_df, n_exclusive_df
 
@@ -312,6 +404,7 @@ def _run_via_snakemake() -> None:
     snek = snakemake  # type: ignore[name-defined]  # noqa: F821
 
     per_study_paths: list[str] = list(snek.input.per_study)
+    per_study_cancer_paths: list[str] = list(snek.input.per_study_cancer)
     protein_lengths_path: str = snek.input.protein_lengths
     panel_coverage_path: str = snek.input.panel_coverage
 
@@ -319,9 +412,7 @@ def _run_via_snakemake() -> None:
     studies: list[str] = []
     for infile in per_study_paths:
         df = pd.read_feather(infile)
-        study = os.path.basename(
-            os.path.dirname(os.path.dirname(os.path.dirname(infile)))
-        )
+        study = _study_id_from_path(infile)
         studies.append(study)
         frames.append((study, df))
 
@@ -337,6 +428,15 @@ def _run_via_snakemake() -> None:
 
     panel_coverage = pd.read_feather(panel_coverage_path)
     study_panel_map: dict[str, str] = snek.config.get("study_panel_map", {}) or {}
+    cancer_presence_by_study = _load_cancer_presence(per_study_cancer_paths)
+    num_df, ratio_df, n_inclusive_df, n_exclusive_df = _fill_missing_unmutated_cells(
+        num_df,
+        ratio_df,
+        n_inclusive_df,
+        n_exclusive_df,
+        cancer_presence_by_study=cancer_presence_by_study,
+        study_panel_map=study_panel_map,
+    )
     num_df, ratio_df = _annotate_callability(
         num_df,
         ratio_df,

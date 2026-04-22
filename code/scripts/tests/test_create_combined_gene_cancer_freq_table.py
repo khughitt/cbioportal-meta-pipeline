@@ -114,6 +114,129 @@ def test_mean_columns_skip_missing_values() -> None:
     assert row["mean_exclusive"] == pytest.approx(0.08)
 
 
+def test_fill_missing_wes_cells_as_zero_when_cancer_present() -> None:
+    """t076: a missing WES cell means callable-but-unmutated when the cancer is
+    present in that study cohort."""
+    study_a = _per_study_frame([("A", "G", 10, 8, 0.10, 0.08, 100, 80)])
+    study_b = _per_study_frame([("A", "H", 3, 2, 0.06, 0.05, 50, 40)])
+
+    from create_combined_gene_cancer_freq_table import (
+        _fill_missing_unmutated_cells,
+        combine_paired_pivot,
+    )
+
+    num_df, ratio_df, n_incl_df, n_excl_df = combine_paired_pivot(
+        [("study_a", study_a), ("study_b", study_b)]
+    )
+    cancer_presence = {
+        "study_a": {"A": (100, 80)},
+        "study_b": {"A": (50, 40)},
+    }
+
+    num_out, ratio_out, n_incl_out, n_excl_out = _fill_missing_unmutated_cells(
+        num_df,
+        ratio_df,
+        n_incl_df,
+        n_excl_df,
+        cancer_presence_by_study=cancer_presence,
+        study_panel_map={},
+    )
+
+    row_num = num_out.reset_index().iloc[0]
+    row_ratio = ratio_out.reset_index().iloc[0]
+    row_n_incl = n_incl_out.reset_index().iloc[0]
+    row_n_excl = n_excl_out.reset_index().iloc[0]
+
+    assert row_num["study_b"] == 0
+    assert row_num["study_b_exclusive"] == 0
+    assert row_ratio["study_b"] == pytest.approx(0.0)
+    assert row_ratio["study_b_exclusive"] == pytest.approx(0.0)
+    assert row_n_incl["study_b"] == 50
+    assert row_n_excl["study_b"] == 40
+
+
+def test_missing_cell_stays_nan_when_cancer_absent_from_study() -> None:
+    """t076: if the cancer is absent from a study cohort, the combined cell must
+    remain NaN rather than being forced to zero."""
+    study_a = _per_study_frame([("A", "G", 10, 8, 0.10, 0.08, 100, 80)])
+    study_b = _per_study_frame([("B", "H", 3, 2, 0.06, 0.05, 50, 40)])
+
+    from create_combined_gene_cancer_freq_table import (
+        _fill_missing_unmutated_cells,
+        combine_paired_pivot,
+    )
+
+    num_df, ratio_df, n_incl_df, n_excl_df = combine_paired_pivot(
+        [("study_a", study_a), ("study_b", study_b)]
+    )
+    cancer_presence = {
+        "study_a": {"A": (100, 80)},
+        "study_b": {"B": (50, 40)},
+    }
+
+    num_out, ratio_out, n_incl_out, n_excl_out = _fill_missing_unmutated_cells(
+        num_df,
+        ratio_df,
+        n_incl_df,
+        n_excl_df,
+        cancer_presence_by_study=cancer_presence,
+        study_panel_map={},
+    )
+
+    row_num = num_out.reset_index().iloc[0]
+    row_ratio = ratio_out.reset_index().iloc[0]
+    row_n_incl = n_incl_out.reset_index().iloc[0]
+    row_n_excl = n_excl_out.reset_index().iloc[0]
+
+    assert pd.isna(row_num["study_b"])
+    assert pd.isna(row_num["study_b_exclusive"])
+    assert pd.isna(row_ratio["study_b"])
+    assert pd.isna(row_ratio["study_b_exclusive"])
+    assert pd.isna(row_n_incl["study_b"])
+    assert pd.isna(row_n_excl["study_b"])
+
+
+def test_missing_mapped_panel_cell_stays_nan() -> None:
+    """t076: mapped panel studies should not be zero-filled from study-level
+    cancer presence because a missing row can still mean gene-not-callable."""
+    study_a = _per_study_frame([("A", "G", 10, 8, 0.10, 0.08, 100, 80)])
+    study_panel = _per_study_frame([("A", "H", 3, 2, 0.06, 0.05, 50, 40)])
+
+    from create_combined_gene_cancer_freq_table import (
+        _fill_missing_unmutated_cells,
+        combine_paired_pivot,
+    )
+
+    num_df, ratio_df, n_incl_df, n_excl_df = combine_paired_pivot(
+        [("study_a", study_a), ("study_panel", study_panel)]
+    )
+    cancer_presence = {
+        "study_a": {"A": (100, 80)},
+        "study_panel": {"A": (50, 40)},
+    }
+
+    num_out, ratio_out, n_incl_out, n_excl_out = _fill_missing_unmutated_cells(
+        num_df,
+        ratio_df,
+        n_incl_df,
+        n_excl_df,
+        cancer_presence_by_study=cancer_presence,
+        study_panel_map={"study_panel": "PANEL_X"},
+    )
+
+    row_num = num_out.reset_index().iloc[0]
+    row_ratio = ratio_out.reset_index().iloc[0]
+    row_n_incl = n_incl_out.reset_index().iloc[0]
+    row_n_excl = n_excl_out.reset_index().iloc[0]
+
+    assert pd.isna(row_num["study_panel"])
+    assert pd.isna(row_num["study_panel_exclusive"])
+    assert pd.isna(row_ratio["study_panel"])
+    assert pd.isna(row_ratio["study_panel_exclusive"])
+    assert pd.isna(row_n_incl["study_panel"])
+    assert pd.isna(row_n_excl["study_panel"])
+
+
 def test_output_indexed_on_cancer_type_and_symbol() -> None:
     study_a = _per_study_frame(
         [

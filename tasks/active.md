@@ -73,17 +73,6 @@ Severity: Significant. From audit F10. Add cancer_saturation_status column deriv
 
 Severity: Minor. From audit F11. Trivial: count of non-null per-study columns per row, added as explicit column in output.
 
-## [t076] Pipeline addition: tighten NaN-vs-0 handling for panel-aware aggregation (F2 full close)
-- type: dev
-- priority: P1
-- status: proposed
-- aspects: [software-development]
-- related: [task:bias-audit-cross-study-aggregation-pipeline]
-- group: pipeline
-- created: 2026-04-13
-
-Follow-on to t074 annotation-only pass. Currently per-study NaN conflates three cases: (a) gene not on panel, (b) gene on panel but unmutated, (c) cancer-type not in study cohort. Case (c) disambiguation requires per-(study, cancer_type) sample counts (not currently ingested). With that ingested: fill NaN with 0 where gene-is-on-panel AND cancer-type-is-in-study; keep NaN otherwise. Replaces current .mean(skipna=True) bias where 'on panel, unmutated' studies are dropped.
-
 ## [t077] Pipeline addition: random-effects pooled gene×cancer table (GLMM-logit)
 - type: dev
 - priority: P1

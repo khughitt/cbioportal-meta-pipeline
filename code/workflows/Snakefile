@@ -266,6 +266,7 @@ rule create_combined_gene_cancer_mutation_matrices:
 rule create_combined_gene_cancer_freq_table:
   input:
     per_study = expand(out_dir.joinpath("studies/{id}/mut/table/gene_cancer_study.feather"), id=ids),
+    per_study_cancer = expand(out_dir.joinpath("studies/{id}/mut/table/cancer_study.feather"), id=ids),
     protein_lengths = out_dir.joinpath("metadata/protein_lengths.feather"),
     panel_coverage = out_dir.joinpath("metadata/genie_panel_coverage.feather")
   output:

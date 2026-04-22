@@ -261,3 +261,24 @@ Immediate outcome to verify:
 
 - the 7 unresolved-reference failures from `science-tool graph audit` should now be gone
 - the remaining health noise should mostly collapse to the broader document-kind/profile mismatch (`meta`, `pre-registration`, `synthesis`, `guide`, `modality-guide`, `curation-sweep`) rather than project-local broken links
+
+## Update — 2026-04-22 19:15 EDT
+
+Applied the next repo-contained cleanup after the link fixes:
+
+- removed redundant legacy task `type:` fields from `tasks/active.md` and `tasks/done/2026-04.md`
+  - verified beforehand that every affected task already carried `aspects:`, so this was a pure metadata cleanup rather than a semantic rewrite
+- added follow-up task `t125` to track the remaining shared-profile/entity-kind problem that cannot be solved from this repo alone
+
+Verification outcome:
+
+- `uv run science-tool health --project-root . --format json` now reports:
+  - `unresolved_refs: []`
+  - `legacy_task_type: []`
+- the only remaining health/graph noise is the unsupported document-kind set:
+  - `meta`
+  - `pre-registration`
+  - `synthesis`
+  - `guide`
+  - `modality-guide`
+  - `curation-sweep`

@@ -275,6 +275,16 @@ rule create_combined_gene_cancer_freq_table:
   script:
     "../scripts/create_combined_gene_cancer_freq_table.py"
 
+rule build_pooled_gene_cancer_input:
+  input:
+    per_study = expand(out_dir.joinpath("studies/{id}/mut/table/gene_cancer_study.feather"), id=ids),
+    per_study_cancer = expand(out_dir.joinpath("studies/{id}/mut/table/cancer_study.feather"), id=ids),
+    samples = expand(out_dir.joinpath("studies/{id}/metadata/samples.feather"), id=ids),
+  output:
+    out_dir.joinpath("summary/mut/table/gene_cancer_pooled_input.feather"),
+  script:
+    "../scripts/build_pooled_gene_cancer_input.py"
+
 rule create_combined_freq_tables:
   input:
     expand(out_dir.joinpath("studies/{id}/mut/table/{{entity}}_study.feather"), id=ids),

@@ -183,6 +183,7 @@ def _fill_missing_unmutated_cells(
     *,
     cancer_presence_by_study: dict[str, dict[str, tuple[int, int]]],
     study_panel_map: dict[str, str],
+    panel_bearing_studies: set[str] | None = None,
 ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     """Backfill WES/unmapped-study missing cells as zero when the cancer exists.
 
@@ -195,8 +196,10 @@ def _fill_missing_unmutated_cells(
     """
     cancer_index = num_df.index.get_level_values("cancer_type")
 
+    panel_restricted_studies = set(study_panel_map) | (panel_bearing_studies or set())
+
     for study, cancer_info in cancer_presence_by_study.items():
-        if study in study_panel_map:
+        if study in panel_restricted_studies:
             continue
         if study not in num_df.columns or study not in n_inclusive_df.columns:
             continue
@@ -436,6 +439,7 @@ def _run_via_snakemake() -> None:
         n_exclusive_df,
         cancer_presence_by_study=cancer_presence_by_study,
         study_panel_map=study_panel_map,
+        panel_bearing_studies=set(snek.config.get("panel_bearing_studies", [])),
     )
     num_df, ratio_df = _annotate_callability(
         num_df,

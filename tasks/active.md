@@ -315,18 +315,6 @@ Current validate_input_contract accepts the assembly parameter but does not rang
 
 Before applying the t111 per-tissue snvs_per_mb correction to gene_cancer_study_ratio_annotated.feather frequencies, pre-register: (1) expected number of gene-cancer rankings that shift and by how many positions; (2) head-to-head comparison against a Martincorena 2017 dN/dS-based null as a simpler baseline. If the two approaches rank genes identically, t111's value-add collapses. Prevents ships-before-thinks bias on whether the empirical null is actually discriminating versus a uniform-rate-per-gene-length null. Deliverable: doc/meta/pre-registration-q007-null-model-correction.md.
 
-## [t115] t077: build pooled-input adapter table from per-study gene_cancer tables
-- type: dev
-- priority: P1
-- status: proposed
-- aspects: [software-development]
-- related: [task:t077, task:t079, doc:2026-04-22-t077-glmm-logit-plan]
-- blocked-by: [task:t077]
-- group: meta-analysis
-- created: 2026-04-22
-
-Create the long-format pooled-input builder for per-(study,cancer,gene) counts and denominators, using per-study gene_cancer_study.feather inputs so zero-event cells retain true n. Include study-level covariates needed by the pre-registration (panel_class, matched_normal).
-
 ## [t116] t077: add isolated R meta-analysis env and CLI skeleton
 - type: dev
 - priority: P1

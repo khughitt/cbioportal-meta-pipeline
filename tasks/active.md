@@ -280,14 +280,3 @@ Current validate_input_contract accepts the assembly parameter but does not rang
 - created: 2026-04-19
 
 Before applying the t111 per-tissue snvs_per_mb correction to gene_cancer_study_ratio_annotated.feather frequencies, pre-register: (1) expected number of gene-cancer rankings that shift and by how many positions; (2) head-to-head comparison against a Martincorena 2017 dN/dS-based null as a simpler baseline. If the two approaches rank genes identically, t111's value-add collapses. Prevents ships-before-thinks bias on whether the empirical null is actually discriminating versus a uniform-rate-per-gene-length null. Deliverable: doc/meta/pre-registration-q007-null-model-correction.md.
-
-## [t121] q009: import constitutive replication-timing bins and derive gene-level ERR/LRR map
-- type: dev
-- priority: P2
-- status: active
-- aspects: [software-development]
-- related: [question:q003-replication-timing-as-gene-level-mutation-rate-confounder, question:q009-sbs1-lrr-bias-as-normal-contamination-flag, paper:Yaacov2023, doc:replication-timing-constitutive-regions]
-- group: pipeline
-- created: 2026-04-22
-
-Import the public human hg19 / GRCh37 constitutive replication-timing bins from Dileep 2015 Supplementary File `Supp-RT-human-50kb-bins.xlsx`, stage them as a versioned project asset, and derive a gene-level constitutive early/late annotation table by intersecting the bins with `data/grch37.tsv`. Emit explicit coverage fractions (`rt_ce_fraction`, `rt_cl_fraction`) plus a conservative assignment column rather than forcing every gene into a binary class. This is the load-bearing first step for both q003 and q009: without a stable gene-level ERR/LRR map, the SBS1 late-replication pilot remains hand-wavy.

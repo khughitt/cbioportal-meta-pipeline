@@ -106,6 +106,30 @@ rule extract_normal_tissue_spectra:
     "../scripts/extract_normal_tissue_spectra.py"
 
 #
+# Constitutive replication-timing annotations for q003 / q009.
+#
+# Manual prerequisite: download the public Dileep 2015 human supplement
+# `Supp-RT-human-50kb-bins.xlsx` to `data/`. The dataset note
+# `doc/datasets/replication-timing-constitutive-regions.md` records the exact
+# URL and SHA256.
+#
+# Outputs:
+#   data/replication_timing_constitutive_bins.feather
+#   data/gene_replication_timing.feather
+#
+# Not part of `rule all` yet: this is an opt-in surface for the q003/q009 branch.
+#
+rule prepare_replication_timing_annotations:
+  input:
+    rt_bins = "data/Supp-RT-human-50kb-bins.xlsx",
+    genes = "data/grch37.tsv"
+  output:
+    bins = "data/replication_timing_constitutive_bins.feather",
+    genes = "data/gene_replication_timing.feather"
+  script:
+    "../scripts/prepare_replication_timing_annotations.py"
+
+#
 # Unified annotation overlay. Applies Bailey 2018 + COSMIC CGC + Sanchez-Vega 2018 pathway
 # overlays in one pass to the raw cross-study feathers. Replaces the earlier chained
 # annotate_drivers.py pattern (one rule per overlay per table).

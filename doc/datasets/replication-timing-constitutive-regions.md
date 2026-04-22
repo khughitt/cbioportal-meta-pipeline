@@ -74,6 +74,29 @@ Recommended assignment rule:
 
 That keeps the panel/WES proxy explicit instead of silently over-calling noisy boundary genes.
 
+## Generated Outputs (2026-04-22)
+
+Rule: `prepare_replication_timing_annotations`
+
+Generated files:
+
+- `data/replication_timing_constitutive_bins.feather`
+- `data/gene_replication_timing.feather`
+
+Observed output summary from the first project run:
+
+- constitutive bins: `12,406`
+  - `CL`: `7,016`
+  - `CE`: `5,390`
+- gene-level rows: `66,978`
+  - `CE`: `11,394`
+  - `CL`: `3,132`
+  - `unassigned`: `52,452`
+
+The large `unassigned` fraction is expected at this stage because the current mapping is
+deliberately conservative: only genes overlapping constitutive (`CE`/`CL`) bins receive a
+label, while genes falling entirely in developmental / unclassified space remain unresolved.
+
 ## Not Chosen For The First Step
 
 - **SigProfilerTopography Repli-seq defaults / custom biosamples**

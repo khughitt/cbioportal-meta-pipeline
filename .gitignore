@@ -29,3 +29,8 @@ data/41586_2021_3836_MOESM5_ESM.xlsx
 data/li2021_somatic_mutations.tsv
 data/normal_tissue_spectra.tsv
 data/normal_tissue_burden.tsv
+
+# t121 replication-timing annotations — regenerable staged input + derived outputs
+data/Supp-RT-human-50kb-bins.xlsx
+data/replication_timing_constitutive_bins.feather
+data/gene_replication_timing.feather

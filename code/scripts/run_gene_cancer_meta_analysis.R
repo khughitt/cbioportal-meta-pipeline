@@ -62,6 +62,46 @@ validate_input_schema <- function(df) {
   }
 }
 
+empty_diagnostics_table <- function() {
+  data.frame(
+    cancer_type = character(),
+    symbol = character(),
+    analysis_view = character(),
+    status = character(),
+    method_used = character(),
+    fallback_used = logical(),
+    glmm_error = character(),
+    reml_error = character(),
+    heterogeneity_state = character(),
+    high_i2_threshold = numeric(),
+    leave_one_out_candidate = logical(),
+    k_studies = integer(),
+    n_total = integer(),
+    y_total = integer(),
+    stringsAsFactors = FALSE
+  )
+}
+
+empty_leave_one_out_table <- function() {
+  data.frame(
+    cancer_type = character(),
+    symbol = character(),
+    analysis_view = character(),
+    excluded_study_id = character(),
+    base_status = character(),
+    holdout_status = character(),
+    holdout_method_used = character(),
+    holdout_k_studies = integer(),
+    holdout_n_total = integer(),
+    holdout_y_total = integer(),
+    holdout_pooled_rate = numeric(),
+    holdout_ci_lo = numeric(),
+    holdout_ci_hi = numeric(),
+    holdout_i2 = numeric(),
+    stringsAsFactors = FALSE
+  )
+}
+
 empty_result_row <- function(cancer_type, symbol, analysis_view, k_studies, n_total, y_total, status) {
   data.frame(
     cancer_type = cancer_type,
@@ -80,6 +120,40 @@ empty_result_row <- function(cancer_type, symbol, analysis_view, k_studies, n_to
     y_total = as.integer(y_total),
     converged = FALSE,
     status = status,
+    stringsAsFactors = FALSE
+  )
+}
+
+diagnostic_row <- function(
+  cancer_type,
+  symbol,
+  analysis_view,
+  status,
+  method_used,
+  fallback_used,
+  glmm_error,
+  reml_error,
+  heterogeneity_state,
+  leave_one_out_candidate,
+  k_studies,
+  n_total,
+  y_total
+) {
+  data.frame(
+    cancer_type = cancer_type,
+    symbol = symbol,
+    analysis_view = analysis_view,
+    status = status,
+    method_used = method_used,
+    fallback_used = fallback_used,
+    glmm_error = glmm_error,
+    reml_error = reml_error,
+    heterogeneity_state = heterogeneity_state,
+    high_i2_threshold = 75.0,
+    leave_one_out_candidate = leave_one_out_candidate,
+    k_studies = as.integer(k_studies),
+    n_total = as.integer(n_total),
+    y_total = as.integer(y_total),
     stringsAsFactors = FALSE
   )
 }
@@ -135,7 +209,28 @@ row_from_fit <- function(fit, cancer_type, symbol, analysis_view, k_studies, n_t
   )
 }
 
-summarize_cell <- function(cell_df, analysis_view, force_glmm_failure) {
+heterogeneity_state_from_row <- function(pooled_row) {
+  if (!isTRUE(pooled_row$converged[[1]]) || is.na(pooled_row$i2[[1]])) {
+    return("not_evaluable")
+  }
+  if (pooled_row$i2[[1]] >= 75.0) {
+    return("high_i2")
+  }
+  "not_high_i2"
+}
+
+condition_message_or_na <- function(obj) {
+  if (!inherits(obj, "try-error")) {
+    return(NA_character_)
+  }
+  condition <- attr(obj, "condition")
+  if (!is.null(condition)) {
+    return(conditionMessage(condition))
+  }
+  as.character(obj)
+}
+
+analyze_cell <- function(cell_df, analysis_view, force_glmm_failure) {
   cancer_type <- as.character(cell_df$cancer_type[[1]])
   symbol <- as.character(cell_df$symbol[[1]])
   k_studies <- nrow(cell_df)
@@ -143,13 +238,61 @@ summarize_cell <- function(cell_df, analysis_view, force_glmm_failure) {
   y_total <- sum(cell_df$y)
 
   if (k_studies < 3L) {
-    return(empty_result_row(cancer_type, symbol, analysis_view, k_studies, n_total, y_total, "skipped_k"))
+    pooled <- empty_result_row(cancer_type, symbol, analysis_view, k_studies, n_total, y_total, "skipped_k")
+    diagnostics <- diagnostic_row(
+      cancer_type,
+      symbol,
+      analysis_view,
+      "skipped_k",
+      "not_fit",
+      FALSE,
+      NA_character_,
+      NA_character_,
+      "not_evaluable",
+      FALSE,
+      k_studies,
+      n_total,
+      y_total
+    )
+    return(list(pooled = pooled, diagnostics = diagnostics))
   }
   if (n_total < 200L) {
-    return(empty_result_row(cancer_type, symbol, analysis_view, k_studies, n_total, y_total, "skipped_n"))
+    pooled <- empty_result_row(cancer_type, symbol, analysis_view, k_studies, n_total, y_total, "skipped_n")
+    diagnostics <- diagnostic_row(
+      cancer_type,
+      symbol,
+      analysis_view,
+      "skipped_n",
+      "not_fit",
+      FALSE,
+      NA_character_,
+      NA_character_,
+      "not_evaluable",
+      FALSE,
+      k_studies,
+      n_total,
+      y_total
+    )
+    return(list(pooled = pooled, diagnostics = diagnostics))
   }
   if (y_total < 1L) {
-    return(empty_result_row(cancer_type, symbol, analysis_view, k_studies, n_total, y_total, "skipped_y"))
+    pooled <- empty_result_row(cancer_type, symbol, analysis_view, k_studies, n_total, y_total, "skipped_y")
+    diagnostics <- diagnostic_row(
+      cancer_type,
+      symbol,
+      analysis_view,
+      "skipped_y",
+      "not_fit",
+      FALSE,
+      NA_character_,
+      NA_character_,
+      "not_evaluable",
+      FALSE,
+      k_studies,
+      n_total,
+      y_total
+    )
+    return(list(pooled = pooled, diagnostics = diagnostics))
   }
 
   glmm_fit <- if (isTRUE(force_glmm_failure)) {
@@ -161,7 +304,23 @@ summarize_cell <- function(cell_df, analysis_view, force_glmm_failure) {
     try(fit_glmm_cell(cell_df), silent = TRUE)
   }
   if (!inherits(glmm_fit, "try-error")) {
-    return(row_from_fit(glmm_fit, cancer_type, symbol, analysis_view, k_studies, n_total, y_total, "ok"))
+    pooled <- row_from_fit(glmm_fit, cancer_type, symbol, analysis_view, k_studies, n_total, y_total, "ok")
+    diagnostics <- diagnostic_row(
+      cancer_type,
+      symbol,
+      analysis_view,
+      "ok",
+      "glmm",
+      FALSE,
+      NA_character_,
+      NA_character_,
+      heterogeneity_state_from_row(pooled),
+      k_studies >= 4L,
+      k_studies,
+      n_total,
+      y_total
+    )
+    return(list(pooled = pooled, diagnostics = diagnostics))
   }
 
   reml_fit <- try(fit_reml_fallback(cell_df), silent = TRUE)
@@ -174,21 +333,83 @@ summarize_cell <- function(cell_df, analysis_view, force_glmm_failure) {
         analysis_view
       )
     )
-    return(
-      row_from_fit(
-        reml_fit,
-        cancer_type,
-        symbol,
-        analysis_view,
-        k_studies,
-        n_total,
-        y_total,
-        "ok"
-      )
+    pooled <- row_from_fit(
+      reml_fit,
+      cancer_type,
+      symbol,
+      analysis_view,
+      k_studies,
+      n_total,
+      y_total,
+      "ok"
     )
+    diagnostics <- diagnostic_row(
+      cancer_type,
+      symbol,
+      analysis_view,
+      "ok",
+      "reml_fallback",
+      TRUE,
+      condition_message_or_na(glmm_fit),
+      NA_character_,
+      heterogeneity_state_from_row(pooled),
+      k_studies >= 4L,
+      k_studies,
+      n_total,
+      y_total
+    )
+    return(list(pooled = pooled, diagnostics = diagnostics))
   }
 
-  empty_result_row(cancer_type, symbol, analysis_view, k_studies, n_total, y_total, "nonconverged")
+  pooled <- empty_result_row(cancer_type, symbol, analysis_view, k_studies, n_total, y_total, "nonconverged")
+  diagnostics <- diagnostic_row(
+    cancer_type,
+    symbol,
+    analysis_view,
+    "nonconverged",
+    "failed",
+    FALSE,
+    condition_message_or_na(glmm_fit),
+    condition_message_or_na(reml_fit),
+    "not_evaluable",
+    FALSE,
+    k_studies,
+    n_total,
+    y_total
+  )
+  list(pooled = pooled, diagnostics = diagnostics)
+}
+
+build_leave_one_out_rows <- function(cell_df, analysis_view, base_analysis, force_glmm_failure) {
+  if (!isTRUE(base_analysis$diagnostics$leave_one_out_candidate[[1]])) {
+    return(empty_leave_one_out_table())
+  }
+
+  out_rows <- lapply(seq_len(nrow(cell_df)), function(i) {
+    excluded_study_id <- as.character(cell_df$study_id[[i]])
+    holdout_df <- cell_df[-i, , drop = FALSE]
+    holdout_analysis <- analyze_cell(holdout_df, analysis_view, force_glmm_failure)
+    holdout_pooled <- holdout_analysis$pooled
+    holdout_diag <- holdout_analysis$diagnostics
+    data.frame(
+      cancer_type = as.character(base_analysis$pooled$cancer_type[[1]]),
+      symbol = as.character(base_analysis$pooled$symbol[[1]]),
+      analysis_view = analysis_view,
+      excluded_study_id = excluded_study_id,
+      base_status = as.character(base_analysis$pooled$status[[1]]),
+      holdout_status = as.character(holdout_pooled$status[[1]]),
+      holdout_method_used = as.character(holdout_diag$method_used[[1]]),
+      holdout_k_studies = as.integer(holdout_pooled$k_studies[[1]]),
+      holdout_n_total = as.integer(holdout_pooled$n_total[[1]]),
+      holdout_y_total = as.integer(holdout_pooled$y_total[[1]]),
+      holdout_pooled_rate = as.numeric(holdout_pooled$pooled_rate[[1]]),
+      holdout_ci_lo = as.numeric(holdout_pooled$pooled_ci_lo[[1]]),
+      holdout_ci_hi = as.numeric(holdout_pooled$pooled_ci_hi[[1]]),
+      holdout_i2 = as.numeric(holdout_pooled$i2[[1]]),
+      stringsAsFactors = FALSE
+    )
+  })
+  do.call(rbind, out_rows)
 }
 
 summarize_view <- function(df, analysis_view, y_col, n_col, force_glmm_failure) {
@@ -204,23 +425,66 @@ summarize_view <- function(df, analysis_view, y_col, n_col, force_glmm_failure) 
   )
 
   split_cells <- split(view_df, list(view_df$cancer_type, view_df$symbol), drop = TRUE)
-  out_rows <- lapply(
+  analyses <- lapply(
     split_cells,
-    summarize_cell,
+    analyze_cell,
     analysis_view = analysis_view,
     force_glmm_failure = force_glmm_failure
   )
-  do.call(rbind, out_rows)
+  pooled_rows <- do.call(rbind, lapply(analyses, `[[`, "pooled"))
+  diagnostics_rows <- do.call(rbind, lapply(analyses, `[[`, "diagnostics"))
+  leave_one_out_rows <- lapply(
+    seq_along(split_cells),
+    function(i) build_leave_one_out_rows(split_cells[[i]], analysis_view, analyses[[i]], force_glmm_failure)
+  )
+  leave_one_out_rows <- Filter(function(df) nrow(df) > 0L, leave_one_out_rows)
+  leave_one_out_df <- if (length(leave_one_out_rows) > 0L) {
+    do.call(rbind, leave_one_out_rows)
+  } else {
+    empty_leave_one_out_table()
+  }
+
+  list(
+    pooled = pooled_rows,
+    diagnostics = diagnostics_rows,
+    leave_one_out = leave_one_out_df
+  )
 }
 
 build_output <- function(df, force_glmm_failure) {
   exclusive <- summarize_view(df, "exclusive", "y_exclusive", "n_exclusive", force_glmm_failure)
   inclusive <- summarize_view(df, "inclusive", "y_inclusive", "n_inclusive", force_glmm_failure)
-  out <- rbind(exclusive, inclusive)
+  out <- rbind(exclusive$pooled, inclusive$pooled)
   view_order <- c("exclusive", "inclusive")
   out <- out[order(out$cancer_type, out$symbol, match(out$analysis_view, view_order)), ]
   rownames(out) <- NULL
-  out
+  diagnostics <- rbind(exclusive$diagnostics, inclusive$diagnostics)
+  diagnostics <- diagnostics[
+    order(diagnostics$cancer_type, diagnostics$symbol, match(diagnostics$analysis_view, view_order)),
+  ]
+  rownames(diagnostics) <- NULL
+  leave_one_out_rows <- Filter(function(df) nrow(df) > 0L, list(exclusive$leave_one_out, inclusive$leave_one_out))
+  leave_one_out <- if (length(leave_one_out_rows) > 0L) {
+    do.call(rbind, leave_one_out_rows)
+  } else {
+    empty_leave_one_out_table()
+  }
+  if (nrow(leave_one_out) > 0L) {
+    leave_one_out <- leave_one_out[
+      order(
+        leave_one_out$cancer_type,
+        leave_one_out$symbol,
+        match(leave_one_out$analysis_view, view_order),
+        leave_one_out$excluded_study_id
+      ),
+    ]
+    rownames(leave_one_out) <- NULL
+  }
+  list(
+    pooled = out,
+    diagnostics = diagnostics,
+    leave_one_out = leave_one_out
+  )
 }
 
 main <- function() {
@@ -233,8 +497,18 @@ main <- function() {
 
   out <- build_output(df, isTRUE(options$force_glmm_failure))
   dir.create(dirname(output_path), recursive = TRUE, showWarnings = FALSE)
-  arrow::write_feather(out, output_path)
-  message(sprintf("Wrote %d pooled rows to %s", nrow(out), output_path))
+  arrow::write_feather(out$pooled, output_path)
+  if (!is.null(options$`diagnostics-output`)) {
+    diagnostics_path <- options$`diagnostics-output`
+    dir.create(dirname(diagnostics_path), recursive = TRUE, showWarnings = FALSE)
+    arrow::write_feather(out$diagnostics, diagnostics_path)
+  }
+  if (!is.null(options$`leave-one-out-output`)) {
+    leave_one_out_path <- options$`leave-one-out-output`
+    dir.create(dirname(leave_one_out_path), recursive = TRUE, showWarnings = FALSE)
+    arrow::write_feather(out$leave_one_out, leave_one_out_path)
+  }
+  message(sprintf("Wrote %d pooled rows to %s", nrow(out$pooled), output_path))
 }
 
 tryCatch(

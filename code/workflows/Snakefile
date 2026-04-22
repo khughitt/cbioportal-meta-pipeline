@@ -285,6 +285,22 @@ rule build_pooled_gene_cancer_input:
   script:
     "../scripts/build_pooled_gene_cancer_input.py"
 
+rule run_gene_cancer_meta_analysis:
+  input:
+    out_dir.joinpath("summary/mut/table/gene_cancer_pooled_input.feather"),
+  output:
+    pooled = out_dir.joinpath("summary/mut/table/gene_cancer_pooled.feather"),
+    diagnostics = out_dir.joinpath("summary/mut/table/gene_cancer_pooled_diagnostics.feather"),
+    leave_one_out = out_dir.joinpath("summary/mut/table/gene_cancer_pooled_leave_one_out.feather"),
+  conda:
+    "../envs/r-meta.yml"
+  shell:
+    "Rscript code/scripts/run_gene_cancer_meta_analysis.R "
+    "--input {input} "
+    "--output {output.pooled} "
+    "--diagnostics-output {output.diagnostics} "
+    "--leave-one-out-output {output.leave_one_out}"
+
 rule create_combined_freq_tables:
   input:
     expand(out_dir.joinpath("studies/{id}/mut/table/{{entity}}_study.feather"), id=ids),

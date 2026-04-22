@@ -150,19 +150,19 @@ pooled biological interpretation is reported.
    inclusive-vs-exclusive choice explicit instead of encoding it in column suffixes.
 
 2. **The fitted surface is currently intercept-only.** The pooled-input adapter preserves
-   `panel_class` and `matched_normal` per study, but the implemented `run_gene_cancer_meta_analysis.R`
-   currently fits the confirmatory GLMM / REML fallback on `(y, n)` only and returns the pooled
+   `panel_class` and `matched_normal` per study, and the runner now emits dedicated diagnostics
+   plus leave-one-out sensitivity sidecars. However, the implemented `run_gene_cancer_meta_analysis.R`
+   still fits the confirmatory GLMM / REML fallback on `(y, n)` only and returns the pooled
    intercept for each cell. The registered moderator-enabled confirmatory fit remains the target,
-   but the output contract for a single moderator-adjusted pooled estimate is still unresolved and
-   the required diagnostics surface is not yet present. Therefore, **no confirmatory biological
-   interpretation should be reported from the pooled output until moderator handling and diagnostics
-   land**.
+   and the output contract for a single moderator-adjusted pooled estimate is still unresolved.
+   Therefore, **no confirmatory biological interpretation should be reported from the pooled output
+   until moderator handling lands**.
 
 3. **REML fallback is represented in diagnostics/message output, not `status`.** The active
    implementation keeps the registered `status` enum (`ok / skipped_k / skipped_n / skipped_y /
-   nonconverged`) and emits fallback provenance via runner messages for now. A dedicated fallback /
-   convergence diagnostics table is deferred to `t119`, which is the planned place to surface
-   `method_used`, fallback reasons, and leave-one-out / hold-out readiness.
+   nonconverged`) and records fallback provenance in the diagnostics sidecar via `method_used`,
+   `fallback_used`, and the captured GLMM / REML error fields, while also writing a stderr message
+   when the REML escape hatch is used.
 
 ## Expected Outcomes
 

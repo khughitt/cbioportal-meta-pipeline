@@ -1,3 +1,17 @@
+---
+id: "dataset:replication-timing-constitutive-regions"
+type: "dataset"
+title: "Constitutive replication-timing regions (human hg19 / GRCh37)"
+status: "active"
+source_refs:
+  - "paper:Yaacov2023"
+related:
+  - "question:q003-replication-timing-as-gene-level-mutation-rate-confounder"
+  - "question:q009-sbs1-lrr-bias-as-normal-contamination-flag"
+created: "2026-04-22"
+updated: "2026-04-22"
+---
+
 # Constitutive replication-timing regions (human hg19 / GRCh37)
 
 Primary dataset for the first executable `q009` step: public 50 kb human genome bins

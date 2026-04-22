@@ -19,6 +19,12 @@ related:
   - "paper:Yaacov2023"
   - "question:q003-replication-timing-as-gene-level-mutation-rate-confounder"
   - "question:q008-signature-decomposition-tissue-background-subtraction"
+  - "task:t122"
+  - "task:t123"
+  - "task:t124"
+  - "dataset:replication-timing-constitutive-regions"
+  - "interpretation:2026-04-22-t122-rt-brca-pilot"
+  - "interpretation:2026-04-22-t123-rt-brca-sbs1-proxy-pilot"
 created: "2026-04-18"
 updated: "2026-04-22"
 ---
@@ -40,6 +46,8 @@ Yaacov et al. 2023 (Scientific Reports) demonstrated that SBS1 mutations accumul
 - Yaacov 2023: SBS1 LRR bias in normal tissue is highly reproducible (R = 0.967 between two independent cohorts) and statistically significant (Wilcoxon P < 2.2×10⁻¹⁶). The change between normal and cancer contexts is consistent across all four matched tissue pairs examined.
 - The signal requires aligning mutations to constitutive RT regions (~40% of the genome) and comparing early vs. late enrichment. For WGS, this is feasible with SigProfilerTopography or equivalent tools.
 - For panel/WES data (typical of cBioPortal): per-gene replication timing annotations exist (ENCODE RT data, mapped to RefSeq genes). A coarser version of the test — compare SBS1 mutation density across ERR-annotated vs LRR-annotated genes — is possible but has lower power due to fewer mutations per sample.
+- `t122` (BRCA matched vs unmatched, all mutations) produced a mixed result: unmatched `msk_impact_2017` showed a higher `CL/CE` ratio than matched `tcga_mc3`, but absolute `CL` burden remained lower, so the coarse gene-level RT signal was suggestive but still dominated by panel-vs-WES coverage differences.
+- `t123` then restricted the BRCA comparison to a simple SBS1-like proxy (coding CpG `C>T` plus complementary `G>A`) on the same assignment sample surface. That branch failed as an operational proxy: the unmatched panel cohort was overwhelmingly zero-inflated (`CE == 0` in 1,157/1,210 samples; `CL == 0` in 1,205/1,210), so the higher pseudocount-stabilized ratio was not persuasive evidence of SBS1-specific late-replication enrichment.
 
 ## Thoughts
 
@@ -47,16 +55,17 @@ Yaacov et al. 2023 (Scientific Reports) demonstrated that SBS1 mutations accumul
 - A simpler proxy: at the gene level, LRR-resident genes should show higher per-sample SBS1 mutation counts in studies with normal contamination. This can be tested with existing pipeline outputs by crossing gene positions with LRR/ERR annotations.
 - The Yaacov 2023 paper does not provide a standalone computational tool for this analysis; the methods use SigProfilerMatrixGenerator + custom RT-region annotation. SigProfilerTopography (a companion tool from the Alexandrov lab) is designed to compute topographic biases and would be the most accessible implementation pathway.
 - The coarse SBS1/SBS5 ratio proxy was tested first in `t110` and did **not** separate the first required BRCA matched-vs-unmatched comparison. That negative result raises the value of this more mechanistic RT-based branch: if a contamination flag is going to survive first contact with the data, it is more likely to be the direct LRR-bias path than the ratio proxy.
+- The April 22 RT branch materially sharpened that assessment. The all-mutation RT pilot (`t122`) was promising enough to justify a follow-up, but the first SBS1-enriched approximation (`t123`) collapsed under panel sparsity. So the remaining open question is no longer "should we try a proxy?" but "is a true SBS1 context/topography implementation justified here, or should the panel/WES proxy route be retired?"
 
 ## Connections to Project
 
 - Related hypotheses: none filed.
 - Required data or analyses:
-  1. Obtain constitutive replication-timing region annotations from the Yaacov 2023 / ENCODE RT data.
-  2. Annotate pipeline genes with ERR/LRR designation.
-  3. For a test subset of matched-normal vs unmatched-normal studies, compute per-study SBS1 mutation density in ERR vs LRR genes; compare distributions.
-  4. For WGS-level studies: apply SigProfilerTopography to compute formal LRR bias delta values and compare with expected cancer vs normal tissue values.
-  5. Current implementation entry point: `task:t121` (import Dileep 2015 constitutive bins and derive the gene-level map).
+  1. `t121` imported constitutive replication-timing bins and derived the conservative gene-level `CE`/`CL` map (`dataset:replication-timing-constitutive-regions`).
+  2. `t122` ran the first BRCA matched-vs-unmatched gene-level `CL/CE` burden pilot on all mutations.
+  3. `t123` reran that BRCA pilot on the simple SBS1-enriched proxy subset and found the panel/WES approximation too sparse to be operational.
+  4. `t124` is now the active fork decision: either scope a true mutation-context / SBS1-attribution or topography implementation, or retire the panel/WES proxy route for q009.
+  5. For WGS-level studies: apply SigProfilerTopography to compute formal LRR bias delta values and compare with expected cancer vs normal tissue values.
 - Priority level: medium for WGS studies; low for panel-only studies in the current pipeline. Becomes high if WGS inputs are added.
 
 ## Related
@@ -64,4 +73,5 @@ Yaacov et al. 2023 (Scientific Reports) demonstrated that SBS1 mutations accumul
 - Topic notes: `topic:signature-decomposition-unmatched-normal`
 - Article notes: `paper:Yaacov2023`
 - Related questions: `question:q003` (RT as gene-level mutation-rate confounder), `question:q008` (SBS1/SBS5 contamination magnitude)
+- Recent project evidence: `interpretation:2026-04-22-t122-rt-brca-pilot`, `interpretation:2026-04-22-t123-rt-brca-sbs1-proxy-pilot`
 - Methods/Datasets: SigProfilerTopography; ENCODE replication timing data (constitutive ERR/LRR regions); Yaacov 2023 code (see Yaacov et al. 2022, the companion cancer-RT paper for RT region construction)

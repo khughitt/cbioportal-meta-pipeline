@@ -1,3 +1,15 @@
+---
+id: "plan:2026-04-22-t077-glmm-logit-plan"
+type: "plan"
+title: "t077 GLMM-logit pooled gene x cancer implementation plan"
+status: "active"
+related:
+  - "task:t077"
+  - "task:t101"
+created: "2026-04-22"
+updated: "2026-04-22"
+---
+
 # t077 GLMM-Logit Pooled Gene x Cancer Implementation Plan
 
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.

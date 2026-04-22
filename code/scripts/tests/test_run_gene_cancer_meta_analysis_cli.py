@@ -544,3 +544,162 @@ def test_cli_pooled_output_depends_on_study_covariate_assignment(tmp_path: Path)
     assert (
         (merged["pooled_rate_base"] - merged["pooled_rate_shuffled"]).abs() > 1e-6
     ).any()
+
+
+@pytest.mark.skipif(not _metafor_ready(), reason="Rscript with arrow+metafor is unavailable")
+def test_cli_writes_panel_sensitivity_refits_for_mc3_and_genie_tumor_only(
+    tmp_path: Path,
+) -> None:
+    pooled_input = pd.DataFrame(
+        {
+            "study_id": ["genie", "tcga_mc3", "s1", "s2"],
+            "cancer_type": ["BRCA"] * 4,
+            "symbol": ["TP53"] * 4,
+            "y_inclusive": [25, 30, 12, 14],
+            "y_exclusive": [23, 28, 11, 13],
+            "n_inclusive": [100, 100, 100, 100],
+            "n_exclusive": [100, 100, 100, 100],
+            "panel_class": ["large_hybrid_capture", "MC3", "WES", "large_hybrid_capture"],
+            "matched_normal": [False, True, True, False],
+        }
+    )
+    input_path = tmp_path / "gene_cancer_pooled_input.feather"
+    output_path = tmp_path / "gene_cancer_pooled.feather"
+    panel_sensitivity_path = tmp_path / "gene_cancer_pooled_panel_sensitivity.feather"
+    pooled_input.to_feather(input_path)
+
+    result = subprocess.run(
+        [
+            "Rscript",
+            str(SCRIPT),
+            "--input",
+            str(input_path),
+            "--output",
+            str(output_path),
+            "--panel-sensitivity-output",
+            str(panel_sensitivity_path),
+        ],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+
+    assert result.returncode == 0, result.stderr
+
+    panel_sensitivity = pd.read_feather(panel_sensitivity_path)
+    assert list(panel_sensitivity.columns) == [
+        "cancer_type",
+        "symbol",
+        "analysis_view",
+        "sensitivity_name",
+        "base_status",
+        "sensitivity_status",
+        "sensitivity_method_used",
+        "sensitivity_k_studies",
+        "sensitivity_n_total",
+        "sensitivity_y_total",
+        "sensitivity_pooled_rate",
+        "sensitivity_ci_lo",
+        "sensitivity_ci_hi",
+        "sensitivity_i2",
+        "dropped_studies",
+    ]
+    assert len(panel_sensitivity) == 4
+    assert set(panel_sensitivity["analysis_view"]) == {"inclusive", "exclusive"}
+    assert set(panel_sensitivity["sensitivity_name"]) == {
+        "drop_mc3",
+        "drop_genie_tumor_only",
+    }
+    assert set(panel_sensitivity["base_status"]) == {"ok"}
+    assert set(panel_sensitivity["sensitivity_status"]) <= {"ok", "nonconverged"}
+    assert (
+        panel_sensitivity["sensitivity_method_used"]
+        .isin(["glmm", "reml_fallback", "failed"])
+        .all()
+    )
+    assert (panel_sensitivity["sensitivity_k_studies"] == 3).all()
+    assert (panel_sensitivity["dropped_studies"] == 1).all()
+
+
+@pytest.mark.skipif(not _metafor_ready(), reason="Rscript with arrow+metafor is unavailable")
+def test_cli_writes_placebo_refits_with_fixed_seed(tmp_path: Path) -> None:
+    pooled_input = pd.DataFrame(
+        {
+            "study_id": ["s1", "s2", "s3", "s4", "s5", "s6"],
+            "cancer_type": ["BRCA"] * 6,
+            "symbol": ["TP53"] * 6,
+            "y_inclusive": [4, 6, 26, 29, 12, 14],
+            "y_exclusive": [4, 5, 24, 27, 11, 13],
+            "n_inclusive": [100, 100, 100, 100, 100, 100],
+            "n_exclusive": [100, 100, 100, 100, 100, 100],
+            "panel_class": [
+                "WES",
+                "WES",
+                "MC3",
+                "MC3",
+                "large_hybrid_capture",
+                "large_hybrid_capture",
+            ],
+            "matched_normal": [True, False, True, False, True, False],
+        }
+    )
+    input_path = tmp_path / "gene_cancer_pooled_input.feather"
+    output_path = tmp_path / "gene_cancer_pooled.feather"
+    placebo_path = tmp_path / "gene_cancer_pooled_placebo.feather"
+    pooled_input.to_feather(input_path)
+
+    result = subprocess.run(
+        [
+            "Rscript",
+            str(SCRIPT),
+            "--input",
+            str(input_path),
+            "--output",
+            str(output_path),
+            "--placebo-output",
+            str(placebo_path),
+        ],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+
+    assert result.returncode == 0, result.stderr
+
+    baseline = pd.read_feather(output_path)
+    placebo = pd.read_feather(placebo_path)
+    assert list(placebo.columns) == [
+        "cancer_type",
+        "symbol",
+        "analysis_view",
+        "placebo_name",
+        "base_status",
+        "placebo_status",
+        "placebo_method_used",
+        "placebo_k_studies",
+        "placebo_n_total",
+        "placebo_y_total",
+        "placebo_pooled_rate",
+        "placebo_ci_lo",
+        "placebo_ci_hi",
+        "placebo_i2",
+        "shuffle_seed",
+    ]
+    assert len(placebo) == 2
+    assert set(placebo["analysis_view"]) == {"inclusive", "exclusive"}
+    assert set(placebo["placebo_name"]) == {"shuffle_study_labels"}
+    assert set(placebo["base_status"]) == {"ok"}
+    assert set(placebo["placebo_status"]) <= {"ok", "nonconverged"}
+    assert (
+        placebo["placebo_method_used"].isin(["glmm", "reml_fallback", "failed"]).all()
+    )
+    assert (placebo["placebo_k_studies"] == 6).all()
+    assert (placebo["shuffle_seed"] == 0).all()
+
+    merged = baseline.merge(
+        placebo,
+        on=["cancer_type", "symbol", "analysis_view"],
+    )
+    assert (
+        (merged["pooled_rate"] - merged["placebo_pooled_rate"]).abs() > 1e-6
+    ).any()

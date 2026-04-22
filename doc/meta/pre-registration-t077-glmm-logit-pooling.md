@@ -163,12 +163,6 @@ pooled biological interpretation is reported.
    `fallback_used`, and the captured GLMM / REML error fields, while also writing a stderr message
    when the REML escape hatch is used.
 
-4. **Only the hold-out integrity check is implemented so far.** The leave-one-out / hold-out
-   sidecar required for the first integrity check is present, but the pre-registered panel-class
-   sensitivity re-fits and random-reshuffling placebo outputs are not yet emitted by the pipeline.
-   Therefore, **confirmatory biological interpretation should still wait for those remaining
-   integrity-check surfaces**.
-
 ## Expected Outcomes
 
 **If H1 holds** and the model is correctly specified:

@@ -73,17 +73,6 @@ Severity: Significant. From audit F10. Add cancer_saturation_status column deriv
 
 Severity: Minor. From audit F11. Trivial: count of non-null per-study columns per row, added as explicit column in output.
 
-## [t077] Pipeline addition: random-effects pooled gene×cancer table (GLMM-logit)
-- type: dev
-- priority: P1
-- status: proposed
-- aspects: [software-development]
-- related: [task:bias-audit-cross-study-aggregation-pipeline]
-- group: meta-analysis
-- created: 2026-04-13
-
-
-
 ## [t078] Pipeline addition: cross-study co-occurrence / mutual-exclusivity statistic (DISCOVER/WeSME + Stouffer)
 - type: dev
 - priority: P2

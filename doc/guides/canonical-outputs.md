@@ -55,7 +55,7 @@ should not be consumed for quantitative claims.
 | `gene_cancer_study_ratio_overlay_annotated.feather` | intermediate in the chain — has Bailey / CGC / Sanchez-Vega overlays but not CH annotations or pooled meta-analysis columns. |
 | `gene_cancer_study_ratio_ch_annotated.feather` | intermediate in the chain — has overlays + CH annotations, but not the joined pooled meta-analysis columns. |
 | `gene_cancer_pooled.feather` | long-format pooled t077 output keyed by `(cancer_type, symbol, analysis_view)`; authoritative for the meta-analysis fit itself, but not the consumer-facing wide ratio surface. |
-| `gene_cancer_pooled_diagnostics.feather` / `gene_cancer_pooled_leave_one_out.feather` | diagnostic sidecars for convergence / fallback / sensitivity review, not primary frequency-claim tables. |
+| `gene_cancer_pooled_diagnostics.feather` / `gene_cancer_pooled_leave_one_out.feather` / `gene_cancer_pooled_panel_sensitivity.feather` / `gene_cancer_pooled_placebo.feather` | diagnostic sidecars for convergence, hold-out, panel-sensitivity, and placebo review; not primary frequency-claim tables. |
 
 These remain in the pipeline output for backward-compatibility and debugging, but `rule all`
 declares the canonical (`_annotated`) versions as the documented final outputs.
@@ -83,7 +83,12 @@ gene_cancer_study_ratio.feather (raw ratio)
         └─→ annotate_ch.py ──→ gene_cancer_study_ratio_ch_annotated.feather (intermediate)
 
 gene_cancer_pooled_input.feather
-  └─→ run_gene_cancer_meta_analysis.R ──→ gene_cancer_pooled.feather (+ diagnostics / leave-one-out sidecars)
+  └─→ run_gene_cancer_meta_analysis.R ──→ gene_cancer_pooled.feather
+        └─→ diagnostics / integrity-check sidecars:
+              - gene_cancer_pooled_diagnostics.feather
+              - gene_cancer_pooled_leave_one_out.feather
+              - gene_cancer_pooled_panel_sensitivity.feather
+              - gene_cancer_pooled_placebo.feather
 
 gene_cancer_study_ratio_ch_annotated.feather + gene_cancer_pooled.feather
   └─→ join_gene_cancer_meta.py ──→ gene_cancer_study_ratio_annotated.feather (canonical ratio)

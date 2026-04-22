@@ -34,6 +34,10 @@ parse_cli_args <- function(args) {
   if (is.null(values$force_glmm_failure)) {
     values$force_glmm_failure <- FALSE
   }
+  if (is.null(values$`shuffle-seed`)) {
+    values$`shuffle-seed` <- "0"
+  }
+  values$`shuffle-seed` <- as.integer(values$`shuffle-seed`)
 
   values
 }
@@ -98,6 +102,48 @@ empty_leave_one_out_table <- function() {
     holdout_ci_lo = numeric(),
     holdout_ci_hi = numeric(),
     holdout_i2 = numeric(),
+    stringsAsFactors = FALSE
+  )
+}
+
+empty_panel_sensitivity_table <- function() {
+  data.frame(
+    cancer_type = character(),
+    symbol = character(),
+    analysis_view = character(),
+    sensitivity_name = character(),
+    base_status = character(),
+    sensitivity_status = character(),
+    sensitivity_method_used = character(),
+    sensitivity_k_studies = integer(),
+    sensitivity_n_total = integer(),
+    sensitivity_y_total = integer(),
+    sensitivity_pooled_rate = numeric(),
+    sensitivity_ci_lo = numeric(),
+    sensitivity_ci_hi = numeric(),
+    sensitivity_i2 = numeric(),
+    dropped_studies = integer(),
+    stringsAsFactors = FALSE
+  )
+}
+
+empty_placebo_table <- function() {
+  data.frame(
+    cancer_type = character(),
+    symbol = character(),
+    analysis_view = character(),
+    placebo_name = character(),
+    base_status = character(),
+    placebo_status = character(),
+    placebo_method_used = character(),
+    placebo_k_studies = integer(),
+    placebo_n_total = integer(),
+    placebo_y_total = integer(),
+    placebo_pooled_rate = numeric(),
+    placebo_ci_lo = numeric(),
+    placebo_ci_hi = numeric(),
+    placebo_i2 = numeric(),
+    shuffle_seed = integer(),
     stringsAsFactors = FALSE
   )
 }
@@ -428,7 +474,110 @@ build_leave_one_out_rows <- function(cell_df, analysis_view, base_analysis, forc
   do.call(rbind, out_rows)
 }
 
-summarize_view <- function(df, analysis_view, y_col, n_col, force_glmm_failure) {
+build_panel_sensitivity_rows <- function(cell_df, analysis_view, base_analysis, force_glmm_failure) {
+  cancer_type <- as.character(base_analysis$pooled$cancer_type[[1]])
+  symbol <- as.character(base_analysis$pooled$symbol[[1]])
+  scenarios <- list(
+    drop_mc3 = cell_df$panel_class != "MC3",
+    drop_genie_tumor_only = !(cell_df$study_id == "genie" & !cell_df$matched_normal)
+  )
+
+  out_rows <- lapply(names(scenarios), function(sensitivity_name) {
+    mask <- scenarios[[sensitivity_name]]
+    sensitivity_df <- cell_df[mask, , drop = FALSE]
+    dropped_studies <- nrow(cell_df) - nrow(sensitivity_df)
+    sensitivity_analysis <- if (nrow(sensitivity_df) > 0L) {
+      analyze_cell(sensitivity_df, analysis_view, force_glmm_failure)
+    } else {
+      list(
+        pooled = empty_result_row(cancer_type, symbol, analysis_view, 0L, 0L, 0L, "skipped_k"),
+        diagnostics = diagnostic_row(
+          cancer_type,
+          symbol,
+          analysis_view,
+          "skipped_k",
+          "not_fit",
+          FALSE,
+          NA_character_,
+          NA_character_,
+          "not_evaluable",
+          FALSE,
+          0L,
+          0L,
+          0L
+        )
+      )
+    }
+    pooled <- sensitivity_analysis$pooled
+    diagnostics <- sensitivity_analysis$diagnostics
+    data.frame(
+      cancer_type = cancer_type,
+      symbol = symbol,
+      analysis_view = analysis_view,
+      sensitivity_name = sensitivity_name,
+      base_status = as.character(base_analysis$pooled$status[[1]]),
+      sensitivity_status = as.character(pooled$status[[1]]),
+      sensitivity_method_used = as.character(diagnostics$method_used[[1]]),
+      sensitivity_k_studies = as.integer(pooled$k_studies[[1]]),
+      sensitivity_n_total = as.integer(pooled$n_total[[1]]),
+      sensitivity_y_total = as.integer(pooled$y_total[[1]]),
+      sensitivity_pooled_rate = as.numeric(pooled$pooled_rate[[1]]),
+      sensitivity_ci_lo = as.numeric(pooled$pooled_ci_lo[[1]]),
+      sensitivity_ci_hi = as.numeric(pooled$pooled_ci_hi[[1]]),
+      sensitivity_i2 = as.numeric(pooled$i2[[1]]),
+      dropped_studies = as.integer(dropped_studies),
+      stringsAsFactors = FALSE
+    )
+  })
+  do.call(rbind, out_rows)
+}
+
+build_placebo_rows <- function(
+  cell_df,
+  analysis_view,
+  base_analysis,
+  force_glmm_failure,
+  shuffle_seed
+) {
+  if (nrow(cell_df) == 0L) {
+    return(empty_placebo_table())
+  }
+
+  set.seed(shuffle_seed)
+  perm <- sample.int(nrow(cell_df))
+  if (nrow(cell_df) > 1L && all(perm == seq_len(nrow(cell_df)))) {
+    perm <- c(2:nrow(cell_df), 1L)
+  }
+
+  placebo_df <- cell_df
+  placebo_df$study_id <- cell_df$study_id[perm]
+  placebo_df$panel_class <- cell_df$panel_class[perm]
+  placebo_df$matched_normal <- cell_df$matched_normal[perm]
+
+  placebo_analysis <- analyze_cell(placebo_df, analysis_view, force_glmm_failure)
+  pooled <- placebo_analysis$pooled
+  diagnostics <- placebo_analysis$diagnostics
+  data.frame(
+    cancer_type = as.character(base_analysis$pooled$cancer_type[[1]]),
+    symbol = as.character(base_analysis$pooled$symbol[[1]]),
+    analysis_view = analysis_view,
+    placebo_name = "shuffle_study_labels",
+    base_status = as.character(base_analysis$pooled$status[[1]]),
+    placebo_status = as.character(pooled$status[[1]]),
+    placebo_method_used = as.character(diagnostics$method_used[[1]]),
+    placebo_k_studies = as.integer(pooled$k_studies[[1]]),
+    placebo_n_total = as.integer(pooled$n_total[[1]]),
+    placebo_y_total = as.integer(pooled$y_total[[1]]),
+    placebo_pooled_rate = as.numeric(pooled$pooled_rate[[1]]),
+    placebo_ci_lo = as.numeric(pooled$pooled_ci_lo[[1]]),
+    placebo_ci_hi = as.numeric(pooled$pooled_ci_hi[[1]]),
+    placebo_i2 = as.numeric(pooled$i2[[1]]),
+    shuffle_seed = as.integer(shuffle_seed),
+    stringsAsFactors = FALSE
+  )
+}
+
+summarize_view <- function(df, analysis_view, y_col, n_col, force_glmm_failure, shuffle_seed) {
   view_df <- data.frame(
     study_id = as.character(df$study_id),
     cancer_type = as.character(df$cancer_type),
@@ -459,17 +608,29 @@ summarize_view <- function(df, analysis_view, y_col, n_col, force_glmm_failure) 
   } else {
     empty_leave_one_out_table()
   }
+  panel_sensitivity_rows <- lapply(
+    seq_along(split_cells),
+    function(i) build_panel_sensitivity_rows(split_cells[[i]], analysis_view, analyses[[i]], force_glmm_failure)
+  )
+  panel_sensitivity_df <- do.call(rbind, panel_sensitivity_rows)
+  placebo_rows <- lapply(
+    seq_along(split_cells),
+    function(i) build_placebo_rows(split_cells[[i]], analysis_view, analyses[[i]], force_glmm_failure, shuffle_seed)
+  )
+  placebo_df <- do.call(rbind, placebo_rows)
 
   list(
     pooled = pooled_rows,
     diagnostics = diagnostics_rows,
-    leave_one_out = leave_one_out_df
+    leave_one_out = leave_one_out_df,
+    panel_sensitivity = panel_sensitivity_df,
+    placebo = placebo_df
   )
 }
 
-build_output <- function(df, force_glmm_failure) {
-  exclusive <- summarize_view(df, "exclusive", "y_exclusive", "n_exclusive", force_glmm_failure)
-  inclusive <- summarize_view(df, "inclusive", "y_inclusive", "n_inclusive", force_glmm_failure)
+build_output <- function(df, force_glmm_failure, shuffle_seed) {
+  exclusive <- summarize_view(df, "exclusive", "y_exclusive", "n_exclusive", force_glmm_failure, shuffle_seed)
+  inclusive <- summarize_view(df, "inclusive", "y_inclusive", "n_inclusive", force_glmm_failure, shuffle_seed)
   out <- rbind(exclusive$pooled, inclusive$pooled)
   view_order <- c("exclusive", "inclusive")
   out <- out[order(out$cancer_type, out$symbol, match(out$analysis_view, view_order)), ]
@@ -496,10 +657,27 @@ build_output <- function(df, force_glmm_failure) {
     ]
     rownames(leave_one_out) <- NULL
   }
+  panel_sensitivity <- rbind(exclusive$panel_sensitivity, inclusive$panel_sensitivity)
+  panel_sensitivity <- panel_sensitivity[
+    order(
+      panel_sensitivity$cancer_type,
+      panel_sensitivity$symbol,
+      match(panel_sensitivity$analysis_view, view_order),
+      panel_sensitivity$sensitivity_name
+    ),
+  ]
+  rownames(panel_sensitivity) <- NULL
+  placebo <- rbind(exclusive$placebo, inclusive$placebo)
+  placebo <- placebo[
+    order(placebo$cancer_type, placebo$symbol, match(placebo$analysis_view, view_order)),
+  ]
+  rownames(placebo) <- NULL
   list(
     pooled = out,
     diagnostics = diagnostics,
-    leave_one_out = leave_one_out
+    leave_one_out = leave_one_out,
+    panel_sensitivity = panel_sensitivity,
+    placebo = placebo
   )
 }
 
@@ -511,7 +689,7 @@ main <- function() {
   df <- as.data.frame(arrow::read_feather(input_path))
   validate_input_schema(df)
 
-  out <- build_output(df, isTRUE(options$force_glmm_failure))
+  out <- build_output(df, isTRUE(options$force_glmm_failure), options$`shuffle-seed`)
   dir.create(dirname(output_path), recursive = TRUE, showWarnings = FALSE)
   arrow::write_feather(out$pooled, output_path)
   if (!is.null(options$`diagnostics-output`)) {
@@ -523,6 +701,16 @@ main <- function() {
     leave_one_out_path <- options$`leave-one-out-output`
     dir.create(dirname(leave_one_out_path), recursive = TRUE, showWarnings = FALSE)
     arrow::write_feather(out$leave_one_out, leave_one_out_path)
+  }
+  if (!is.null(options$`panel-sensitivity-output`)) {
+    panel_sensitivity_path <- options$`panel-sensitivity-output`
+    dir.create(dirname(panel_sensitivity_path), recursive = TRUE, showWarnings = FALSE)
+    arrow::write_feather(out$panel_sensitivity, panel_sensitivity_path)
+  }
+  if (!is.null(options$`placebo-output`)) {
+    placebo_path <- options$`placebo-output`
+    dir.create(dirname(placebo_path), recursive = TRUE, showWarnings = FALSE)
+    arrow::write_feather(out$placebo, placebo_path)
   }
   message(sprintf("Wrote %d pooled rows to %s", nrow(out$pooled), output_path))
 }

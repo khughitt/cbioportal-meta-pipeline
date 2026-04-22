@@ -301,6 +301,8 @@ rule run_gene_cancer_meta_analysis:
     pooled = out_dir.joinpath("summary/mut/table/gene_cancer_pooled.feather"),
     diagnostics = out_dir.joinpath("summary/mut/table/gene_cancer_pooled_diagnostics.feather"),
     leave_one_out = out_dir.joinpath("summary/mut/table/gene_cancer_pooled_leave_one_out.feather"),
+    panel_sensitivity = out_dir.joinpath("summary/mut/table/gene_cancer_pooled_panel_sensitivity.feather"),
+    placebo = out_dir.joinpath("summary/mut/table/gene_cancer_pooled_placebo.feather"),
   conda:
     "../envs/r-meta.yml"
   shell:
@@ -308,7 +310,9 @@ rule run_gene_cancer_meta_analysis:
     "--input {input} "
     "--output {output.pooled} "
     "--diagnostics-output {output.diagnostics} "
-    "--leave-one-out-output {output.leave_one_out}"
+    "--leave-one-out-output {output.leave_one_out} "
+    "--panel-sensitivity-output {output.panel_sensitivity} "
+    "--placebo-output {output.placebo}"
 
 rule create_combined_freq_tables:
   input:

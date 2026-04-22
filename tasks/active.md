@@ -8,26 +8,6 @@
 
 Dedicated search for panel-vs-WES TMB calibration methods.
 
-## [t026] Follow-up search: panel comparability / cross-panel normalization
-- type: research
-- priority: P2
-- status: proposed
-- aspects: [computational-analysis]
-- group: searches
-- created: 2026-04-13
-
-MSK-IMPACT vs FoundationOne vs GENIE panel intersection / callability-denominator methods. Gap from 2026-04-13 search.
-
-## [t043] Focused discovery search: pathway-level pan-cancer analysis methods
-- type: research
-- priority: P2
-- status: proposed
-- aspects: [computational-analysis]
-- group: searches
-- created: 2026-04-13
-
-Beyond Sanchez-Vega 2018 seed. Cover pan-cancer pathway enrichment methods and pathway-centric interpretation of mutation data. OpenAlex + PubMed.
-
 ## [t052] Pipeline addition: per-study cohort-stage descriptor
 - type: dev
 - priority: P1
@@ -71,27 +51,6 @@ Side-by-side: our summary/mut/clusters/cancer.feather vs Hoadley2018 integrated 
 
 Open question from CH topic: ASXL1 and TET2 are bona fide tumor suppressors in some lineages but also CH leakage. Disambiguation literature for solid-tumor pan-cancer panel data.
 
-## [t060] Flesh out modality guide: panel-mutation-data
-- type: research
-- priority: P2
-- status: proposed
-- aspects: [computational-analysis]
-- group: guides
-- created: 2026-04-13
-
-Expand checklist with sources from focused-search t026 (panel comparability). Add evidence-expected detail. Cross-link to per-(study, gene) callability rule once ingested.
-
-## [t070] F6 [Significant] MSK-IMPACT panel-version drift handling per sample
-- type: dev
-- priority: P1
-- status: proposed
-- aspects: [software-development]
-- related: [task:bias-audit-cross-study-aggregation-pipeline]
-- group: audit-fixes
-- created: 2026-04-13
-
-Severity: Significant. From audit F6. Per-sample panel_version flag from cBioPortal study definitions; for genes added in IMPACT-468/505 exclude earlier-cohort samples from denominator.
-
 ## [t072] F10 [Significant] Saturation-aware per-cancer interpretation context column
 - type: dev
 - priority: P3
@@ -128,10 +87,9 @@ Follow-on to t074 annotation-only pass. Currently per-study NaN conflates three 
 ## [t077] Pipeline addition: random-effects pooled gene×cancer table (GLMM-logit)
 - type: dev
 - priority: P1
-- status: blocked
+- status: proposed
 - aspects: [software-development]
 - related: [task:bias-audit-cross-study-aggregation-pipeline]
-- blocked-by: [task:t081, task:t079]
 - group: meta-analysis
 - created: 2026-04-13
 

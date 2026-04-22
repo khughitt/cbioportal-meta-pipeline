@@ -282,3 +282,20 @@ Verification outcome:
   - `guide`
   - `modality-guide`
   - `curation-sweep`
+
+## Update — 2026-04-22 19:36 EDT
+
+Applied the last two repo-local metadata fixes from this sweep:
+
+- normalized `doc/interpretations/2026-04-18-t070-poc-comparison.md` into the standard interpretation frontmatter shape with a canonical ID, `mode`, `source_refs`, `related`, and `prior_interpretations`
+- added outbound `related` links on `doc/papers/Poon2021.md` to the already-linked CH topic/question/paper cluster:
+  - `topic:clonal-hematopoiesis-contamination`
+  - `question:q006-ch-priority-gene-completeness`
+  - `paper:LeeSix2018`
+  - `paper:Martincorena2018`
+
+Expected verification after this pass:
+
+- `uv run science-tool graph audit --project-root . --format json` remains clean on unresolved refs
+- `uv run science-tool health --project-root . --format json` continues to report only the shared-profile kind skips
+- `git diff --check` remains clean

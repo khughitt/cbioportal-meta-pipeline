@@ -1,3 +1,25 @@
+---
+id: "interpretation:2026-04-18-t070-poc-comparison"
+type: "interpretation"
+mode: "dev"
+title: "t070: PoC pre/post comparison for MSK-IMPACT panel-version drift handling"
+status: "active"
+source_refs:
+  - "task:t070"
+  - "task:t100"
+related:
+  - "task:t070"
+  - "task:t100"
+  - "task:t105"
+  - "interpretation:2026-04-17-poc-run"
+created: "2026-04-18"
+updated: "2026-04-22"
+input: "Pre/post comparison: /data/packages/cbioportal/poc-pre-t070 vs results/poc-2026-04-17"
+workflow_run: "t070-2026-04-18-poc-comparison"
+prior_interpretations:
+  - "interpretation:2026-04-17-poc-run"
+---
+
 # t070 PoC pre/post comparison
 
 **Date:** 2026-04-18

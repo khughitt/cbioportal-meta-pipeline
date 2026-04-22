@@ -281,13 +281,13 @@ Current validate_input_contract accepts the assembly parameter but does not rang
 
 Before applying the t111 per-tissue snvs_per_mb correction to gene_cancer_study_ratio_annotated.feather frequencies, pre-register: (1) expected number of gene-cancer rankings that shift and by how many positions; (2) head-to-head comparison against a Martincorena 2017 dN/dS-based null as a simpler baseline. If the two approaches rank genes identically, t111's value-add collapses. Prevents ships-before-thinks bias on whether the empirical null is actually discriminating versus a uniform-rate-per-gene-length null. Deliverable: doc/meta/pre-registration-q007-null-model-correction.md.
 
-## [t123] q009: rerun BRCA RT pilot on SBS1-enriched mutations instead of all mutations
+## [t124] q009: decide whether to pursue true SBS1 context/topography or retire the panel/WES proxy route
 - type: research
 - priority: P2
 - status: proposed
 - aspects: [computational-analysis]
-- related: [task:t121, question:q009-sbs1-lrr-bias-as-normal-contamination-flag, paper:Yaacov2023, interpretation:2026-04-22-t122-rt-brca-pilot]
+- related: [task:t123, question:q009-sbs1-lrr-bias-as-normal-contamination-flag, paper:Yaacov2023, interpretation:2026-04-22-t123-rt-brca-sbs1-proxy-pilot]
 - group: pipeline
 - created: 2026-04-22
 
-The first gene-level RT pilot (`t122`) found that unmatched BRCA has a higher `CL/CE` ratio but lower absolute `CL` burden, so assay coverage still dominates the coarse signal. Follow up by restricting the comparison to an SBS1-enriched mutation subset or mutation-level attribution rather than all mutations. Minimum useful branch: start with a simple SBS1-like proxy (CpG C>T mutations) and re-run the `CL/CE` test on the same `tcga_mc3` vs `msk_impact_2017` sample set. If the directional signal survives, the RT branch is worth deeper signature-specific implementation; if it collapses, `q009` likely needs true WGS/topography rather than panel/WES approximation.
+The simple SBS1-like CpG proxy (`t123`) collapsed under zero inflation on the full BRCA assignment surface, especially in the unmatched panel cohort. Decide explicitly whether q009 should continue via a true mutation-context / SBS1-attribution implementation or whether the panel/WES proxy route should be retired as too sparse for this project surface. Deliverable: either a scoped implementation task for true context/topography support, or a written retirement/defer decision for the proxy branch.

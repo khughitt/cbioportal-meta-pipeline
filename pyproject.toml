@@ -10,6 +10,7 @@ dependencies = [
     "pyarrow>=23.0.1",
     "scikit-learn>=1.8.0",
     "seaborn>=0.13.2",
+    "sigprofilerassignment>=1.1.3",
     "sigprofilermatrixgenerator>=1.3.6",
     "snakemake>=9.19.0",
 ]

@@ -248,24 +248,12 @@ Surfaced by t100 PoC 2026-04-17: cluster_genes.py and cluster_cancer_types.py re
 
 Surfaced by t100 PoC 2026-04-17: is_hypermutator_relative reports 45.5% for brca_tcga_pan_can_atlas_2018 and 36.4% for skcm_tcga_pan_can_atlas_2018 (from doc/interpretations/2026-04-17-poc-run.md Finding 4). The Samstein 2019 definition is 'top-20%% TMB within the sample's histology' — which should yield at most ~20%% hypermutators per cancer type (slightly more with ties at the boundary). 45%% / 36%% far exceed this. Likely causes: (a) tied-sample promotion at the 80th-percentile cut without explicit tiebreak policy, (b) the per-histology grouping key is cancer_type but the TCGA 'cancer_type' labels collapse many distinct histologies into one bucket (e.g. 'Breast Cancer'), so a large fraction of samples tie at a low TMB boundary, or (c) an off-by-one in the quantile cut logic. Inspect _relative_top_quintile_flag in code/scripts/annotate_hypermutators.py (line 200 area).
 
-## [t109] Implement per-study cancer-type signature restriction for SigProfilerAssignment
-- type: dev
-- priority: P2
-- status: active
-- aspects: [software-development]
-- related: [topic:signature-decomposition-unmatched-normal, question:q008-signature-decomposition-tissue-background-subtraction, paper:Yaacov2023]
-- group: pipeline
-- created: 2026-04-18
-
-Add a lookup table 'data/cosmic_cancer_type_signatures.tsv' derived from Alexandrov 2020 Extended Data Figure 5 (COSMIC v3 signature x cancer type matrix) and a Snakemake rule that restricts SigProfilerAssignment (or equivalent) to type-appropriate signatures before any per-study decomposition analysis is run. Rationale: unrestricted COSMIC v3 refit over-fits on tissue-nonspecific normal-tissue signatures (SBS1, SBS5, SBS18) in unmatched-normal cBioPortal studies; cancer-type-prior restriction is the cheapest intervention documented in topic:signature-decomposition-unmatched-normal. Blocked-by: none (Alexandrov2020 ED Fig 5 is public). Expected output: per-study signature exposure vector only over cancer-type-allowed signatures; downstream: feeds q008 background subtraction and q009 SBS1-bias QC.
-
 ## [t110] Validate SBS1/SBS5 ratio as unmatched-normal contamination proxy (MC3 vs cBioPortal)
 - type: research
 - priority: P2
-- status: blocked
+- status: active
 - aspects: [computational-analysis]
 - related: [topic:signature-decomposition-unmatched-normal, question:q009-sbs1-lrr-bias-as-normal-contamination-flag, paper:Yaacov2023, paper:Xu2025]
-- blocked-by: [task:t109]
 - group: pipeline
 - created: 2026-04-18
 

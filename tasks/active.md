@@ -264,13 +264,3 @@ Before applying the t111 per-tissue snvs_per_mb correction to gene_cancer_study_
 - created: 2026-04-22
 
 The simple SBS1-like CpG proxy (`t123`) collapsed under zero inflation on the full BRCA assignment surface, especially in the unmatched panel cohort. Decide explicitly whether q009 should continue via a true mutation-context / SBS1-attribution implementation or whether the panel/WES proxy route should be retired as too sparse for this project surface. Deliverable: either a scoped implementation task for true context/topography support, or a written retirement/defer decision for the proxy branch.
-
-## [t125] Register project document kinds in Science shared profile or add repo-local alias support
-- priority: P2
-- status: proposed
-- aspects: [software-development]
-- related: [interpretation:2026-04-22-t123-rt-brca-sbs1-proxy-pilot, question:q009-sbs1-lrr-bias-as-normal-contamination-flag]
-- group: meta
-- created: 2026-04-22
-
-`science-tool health` and `graph audit` now have clean project-local refs, but they still emit repeated noise because this repo intentionally uses document kinds that are not registered in the active Science profile set: `meta`, `pre-registration`, `synthesis`, `guide`, `modality-guide`, and `curation-sweep`. Investigation on 2026-04-22 showed that the currently supported extension point is the shared manifest at `~/.config/science/registry/manifest.yaml`, not a repo-local file that can be committed here. Follow up by deciding one of two supported paths: (1) register these kinds in the shared Science profile with clear canonical prefixes and semantics, or (2) add repo-local alias/override support to science-tool so projects can declare non-core authored document kinds without mutating global config. Deliverable: reduced health/audit noise without reclassifying existing docs by hand.

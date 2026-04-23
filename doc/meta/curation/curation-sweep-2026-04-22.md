@@ -1,5 +1,10 @@
 ---
+id: "curation-sweep:2026-04-22"
 type: "curation-sweep"
+title: "Curation Sweep (2026-04-22)"
+status: "active"
+created: "2026-04-22"
+updated: "2026-04-22"
 generated_at: "2026-04-22T18:54:12-04:00"
 source_commit: "47d5528f6b66daa78afab492361b2af45f41b2a3"
 scope: "all"
@@ -313,3 +318,25 @@ Applied one more consistency cleanup after a quick interpretation-schema scan:
 - expanded its `related` links to include the immediate downstream fixes it actually surfaced (`task:t070`, `task:t105`)
 
 This appears to close the last obvious repo-local interpretation-metadata mismatch from the 2026-04-22 curation sweep.
+
+## Update — 2026-04-22 21:08 EDT
+
+Closed the remaining profile/tooling gap that had been left to `t125`:
+
+- `science-model` / `science-tool` now support a repo-local extension manifest at `knowledge/sources/<local>/manifest.yaml`
+- this repo now declares its six project-specific authored document kinds there:
+  - `meta`
+  - `pre-registration`
+  - `synthesis`
+  - `guide`
+  - `modality-guide`
+  - `curation-sweep`
+- `doc/meta/curation/curation-sweep-2026-04-22.md` was normalized with canonical `id` / `title` frontmatter so it loads as a real entity instead of degrading into a schema skip
+
+Verification against the branch-local Science implementation:
+
+- `science-tool graph audit --project-root . --format json` → clean, `rows: []`
+- `science-tool health --project-root . --format json` → clean, no unresolved refs and no unknown-kind/profile noise
+- `git diff --check` → clean
+
+This resolves the last project-local curation noise surfaced by the 2026-04-22 sweep. Any future custom authored kinds should now be added through the repo-local manifest rather than a machine-global shared registry edit.

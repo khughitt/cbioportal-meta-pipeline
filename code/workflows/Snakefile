@@ -912,4 +912,24 @@ rule fetch_select_tarball:
     mv {output}.tmp {output}
     """
 
+#
+# t078 SELECT pipeline - per-panel BED files derived from GENIE.
+#
+# Manual prereq: the GENIE consolidated genomic_information.txt at
+# {data_dir}/genie/genomic_information.txt (Synapse-gated upstream - see AGENTS.md
+# "External Reference Datasets"). Downstream rule (1a) consumes the per-panel BEDs.
+#
+rule build_panel_beds:
+  input:
+    data_dir.joinpath("genie/genomic_information.txt")
+  output:
+    "data/panels/IMPACT341.bed",
+    "data/panels/IMPACT410.bed",
+    "data/panels/IMPACT468.bed",
+    "data/panels/IMPACT505.bed",
+    "data/panels/F1CDx.bed",
+    "data/panels/F1.bed",
+  script:
+    "../scripts/build_panel_beds.py"
+
 # vi:ft=snakemake

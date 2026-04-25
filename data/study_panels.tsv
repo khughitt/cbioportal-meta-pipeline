@@ -1,0 +1,8 @@
+study_id	panel_id	sequencing_type
+brca_tcga	wes	wes
+coadread_tcga	wes	wes
+luad_tcga	wes	wes
+gbm_tcga	wes	wes
+lgg_tcga	wes	wes
+skcm_tcga	wes	wes
+msk_impact_2017	msk_impact_410	panel

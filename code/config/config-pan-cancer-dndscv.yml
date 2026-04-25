@@ -46,6 +46,12 @@ panel_bearing_studies:
 
 study_panel_map: {}
 
+# t077 build_pooled_gene_cancer_input requires explicit panel_class for any study
+# whose per-sample panel_id isn't populated. msk_met_2021 is MSK-IMPACT which is
+# the canonical large hybrid-capture panel.
+study_panel_class_map:
+  msk_met_2021: large_hybrid_capture
+
 panel_callable_mb_override: {}
 wes_default_callable_mb: 30.0
 panel_callable_mb_tolerance: 0.05

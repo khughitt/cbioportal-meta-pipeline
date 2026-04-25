@@ -241,6 +241,7 @@ def _annotate_callability(
     study_panel_map: dict[str, str],
     n_inclusive_df: pd.DataFrame,
     n_exclusive_df: pd.DataFrame,
+    enforce_callability_nesting_check: bool = True,
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Attach n_total_studies / n_contributing_studies / n_panel_covered_studies /
     callable_fraction columns to both num_df and ratio_df.
@@ -340,12 +341,27 @@ def _annotate_callability(
                         f"cohort_max_over_genes={cohort_per_study_per_cancer_inclusive.loc[cancer, study]:.0f} "
                         f"vs cancer_max_across_studies={maxes.loc[cancer]:.0f}"
                     )
-        raise ValueError(
+        message = (
             "Per-cancer cohort-size recovery assumption violated — at least one (study, "
             "cancer) cell has a max-over-genes denominator < 5% of the cancer's max across "
             "studies, suggesting non-nested panel mix (e.g., MSK-IMPACT solid-tumor + "
             "IMPACT-HEME-400 share no genes). First 10:\n  "
             + "\n  ".join(suspicious_rows[:10])
+        )
+        # t139 transitional escape hatch: the load-bearing role of this validation
+        # disappears once join_dndscv_into_annotated and other consumers source from
+        # the t077 meta-analysis output instead of this naive sample-weighted
+        # aggregation. Until then, callers running with mixed-panel cohorts can opt
+        # out via `--config enforce_callability_nesting_check=false`. The downstream
+        # `mean_inclusive` / `mean_exclusive` columns will be biased for the affected
+        # cells; consumers should prefer the t077 pooled output for cross-study
+        # claims. See task t139 and the t131 review.
+        if enforce_callability_nesting_check:
+            raise ValueError(message)
+        print(
+            "WARNING: " + message
+            + "\nProceeding because enforce_callability_nesting_check=false (t139).",
+            file=sys.stderr,
         )
 
     n_total_samples_inclusive = cohort_per_study_per_cancer_inclusive.sum(
@@ -441,6 +457,13 @@ def _run_via_snakemake() -> None:
         study_panel_map=study_panel_map,
         panel_bearing_studies=set(snek.config.get("panel_bearing_studies", [])),
     )
+    # snakemake's `--config KEY=VALUE` keeps VALUE as a string, so `bool('false')`
+    # is True. Coerce string forms explicitly.
+    raw_enforce = snek.config.get("enforce_callability_nesting_check", True)
+    if isinstance(raw_enforce, str):
+        enforce = raw_enforce.strip().lower() not in {"false", "0", "no", ""}
+    else:
+        enforce = bool(raw_enforce)
     num_df, ratio_df = _annotate_callability(
         num_df,
         ratio_df,
@@ -449,6 +472,7 @@ def _run_via_snakemake() -> None:
         study_panel_map,
         n_inclusive_df,
         n_exclusive_df,
+        enforce_callability_nesting_check=enforce,
     )
 
     num_df = num_df.reset_index()

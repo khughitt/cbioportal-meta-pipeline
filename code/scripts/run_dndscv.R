@@ -75,6 +75,16 @@ refdb     <- snakemake@params[["refdb"]]
 
 stopifnot(refdb %in% c("hg19", "hg38"))
 
+# Reproducibility — dndscv's poilog negative-binomial fits and indel-rate
+# estimation can vary run-to-run on borderline cohorts without a fixed seed.
+random_seed <- snakemake@config[["random_seed"]]
+if (is.null(random_seed)) {
+  stop("run_dndscv: config['random_seed'] is required for reproducibility ",
+       "(set in code/config/config-pan-cancer-dndscv.yml).")
+}
+set.seed(as.integer(random_seed))
+message(sprintf("run_dndscv: set.seed(%d)", as.integer(random_seed)))
+
 dir.create(dirname(genes_out), recursive = TRUE, showWarnings = FALSE)
 dir.create(dirname(run_out),   recursive = TRUE, showWarnings = FALSE)
 

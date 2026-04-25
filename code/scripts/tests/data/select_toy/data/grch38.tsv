@@ -1,0 +1,6 @@
+ensgene	entrez	symbol	chr	start	end	strand	biotype	description
+ENSG000	0	TP53	chr1	1	100	+	protein_coding	g
+ENSG001	1	KRAS	chr1	1	100	+	protein_coding	g
+ENSG002	2	EGFR	chr1	1	100	+	protein_coding	g
+ENSG003	3	BRAF	chr1	1	100	+	protein_coding	g
+ENSG004	4	MYC	chr1	1	100	+	protein_coding	g

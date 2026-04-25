@@ -1,0 +1,36 @@
+data_dir: "code/scripts/tests/data/select_toy"
+out_dir: "code/scripts/tests/data/select_toy/_out"
+studies: ["st1", "st2"]
+
+select:
+  enabled: true
+  gene_universe:
+    bailey2018: true
+    cosmic_cgc: true
+    sanchez_vega: true
+    custom_genes_tsv: null
+  thresholds:
+    min_stratum_samples: 20         # lowered for the toy dataset
+    min_gene_prevalence_frac: 0.03
+    min_gene_prevalence_count: 2
+    min_pair_co_count: 2
+    fdr_alpha: 0.10
+    study_residual_threshold_frac: 0.10
+  stouffer:
+    weight: "sqrt_n"
+  runtime:
+    n_permut: 50
+    n_cores: 1
+    max_memory_size_gb: 4
+    save_intermediate_files: false
+    randomization_switch_threshold: 30
+    min_feature_support: 2
+    min_feature_freq: 0.001
+  output_dir: "code/scripts/tests/data/select_toy/_out/select"
+  random_seed: 0
+  panel_beds:
+    panel_full: "code/scripts/tests/data/select_toy/panels/panel_full.bed"
+    panel_partial: "code/scripts/tests/data/select_toy/panels/panel_partial.bed"
+  sample_class_components: ["study_id"]
+  ch_priority_genes: []
+  make_select_report: false

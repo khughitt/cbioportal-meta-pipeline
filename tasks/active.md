@@ -254,23 +254,3 @@ Current validate_input_contract accepts the assembly parameter but does not rang
 - created: 2026-04-19
 
 Before applying the t111 per-tissue snvs_per_mb correction to gene_cancer_study_ratio_annotated.feather frequencies, pre-register: (1) expected number of gene-cancer rankings that shift and by how many positions; (2) head-to-head comparison against a Martincorena 2017 dN/dS-based null as a simpler baseline. If the two approaches rank genes identically, t111's value-add collapses. Prevents ships-before-thinks bias on whether the empirical null is actually discriminating versus a uniform-rate-per-gene-length null. Deliverable: doc/meta/pre-registration-q007-null-model-correction.md.
-
-## [t124] q009: decide whether to pursue true SBS1 context/topography or retire the panel/WES proxy route
-- priority: P2
-- status: proposed
-- aspects: [computational-analysis]
-- related: [task:t123, question:q009-sbs1-lrr-bias-as-normal-contamination-flag, paper:Yaacov2023, interpretation:2026-04-22-t123-rt-brca-sbs1-proxy-pilot]
-- group: pipeline
-- created: 2026-04-22
-
-Three q009 pilots (t110, t122, t123) all tested *per-sample* approximations of the Yaacov 2023 LRR-bias statistic and each failed for a different reason. None tested the published frame: per-study aggregate LRR bias of SBS1-attributed mutations. The fork posed in this task body — implement true topography support vs retire the proxy — is therefore a false binary. Resolve as a trichotomy via a single scoped test (t126): pooled SBS1-attributed mutations from t109/t110 per-sample assignments mapped to the t121 CE/CL gene set, with a panel-coverage-corrected denominator and an explicit pre-run power statement. Outcomes: (a) clean positive on the proper statistic -> q009 has a real answer and t124 closes as resolved; (b) negative with adequate power -> retire the q009 panel/WES branch and update q009 status to deferred; (c) underpowered -> defer (not retire) q009 with revisit-condition 'WGS inputs ingested'. See doc/discussions/2026-04-24-t124-q009-fork-decision.md for the full critical analysis.
-
-## [t126] q009: per-study aggregate SBS1 LRR-bias test using t109/t110 attributions + t121 RT map, with explicit pre-run power statement
-- priority: P1
-- status: proposed
-- aspects: [computational-analysis]
-- related: [task:t124,question:q009-sbs1-lrr-bias-as-normal-contamination-flag,task:t109,task:t110,task:t121,paper:Yaacov2023,discussion:2026-04-24-t124-q009-fork-decision]
-- group: pipeline
-- created: 2026-04-24
-
-Implement the per-study aggregate version of the Yaacov 2023 LRR-bias statistic — the only formulation matching both the published mechanism and q009's framing as a single-study contamination flag. Steps: (1) take per-mutation SBS1 posterior probabilities from the t109/t110 SigProfilerAssignment outputs (restricted-assignment per sample); (2) restrict to mutations with SBS1 posterior >= 0.7 (tunable, pre-register before running); (3) pool across all samples in a study; (4) intersect with t121 gene-level CE/CL annotations; (5) compute LRR fraction with bootstrap 95% CI per study. Critical: use a panel-coverage-corrected denominator (CE-covered vs CL-covered base pairs in panel coordinates), not raw gene counts — t121's CE:CL gene ratio is already 3.6:1 before panel filtering. Pre-run requirement: project the pooled SBS1-attributed mutation count for the BRCA tcga_mc3 / msk_impact_2017 pair and write the projected 95%-CI width for the LRR-fraction estimate. If projected n < 500 SBS1 mutations per study, mark the test underpowered before running and defer q009 with revisit-condition 'WGS inputs ingested'. Compare observed LRR fraction against (a) the published Yaacov 2023 cancer baseline (LRR-unbiased, ~0.40) and (b) the published normal-tissue baseline (~0.55-0.65); a study above the cancer baseline and approaching the normal baseline carries detectable normal-tissue SBS1 leakage. Output: results/<run-name>/summary/signatures/sbs1_lrr_bias_per_study.feather + a doc/interpretations/ note that closes t124 with one of: pass / retire / defer.

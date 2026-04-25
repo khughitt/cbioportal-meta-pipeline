@@ -2,7 +2,8 @@
 id: "question:q009-sbs1-lrr-bias-as-normal-contamination-flag"
 type: "question"
 title: "Can the SBS1 late-replicating-region bias (present in normal tissue, absent in cancer) serve as a practical contamination quality flag for cBioPortal studies?"
-status: "active"
+status: "deferred"
+revisit_condition: "WGS inputs ingested"
 ontology_terms:
   - mutational signatures
   - replication timing
@@ -22,12 +23,24 @@ related:
   - "task:t122"
   - "task:t123"
   - "task:t124"
+  - "task:t126"
   - "dataset:replication-timing-constitutive-regions"
   - "interpretation:2026-04-22-t122-rt-brca-pilot"
   - "interpretation:2026-04-22-t123-rt-brca-sbs1-proxy-pilot"
+  - "interpretation:2026-04-24-t126-sbs1-lrr-bias-per-study"
+  - "meta:pre-registration-t126-sbs1-lrr-bias-test"
 created: "2026-04-18"
-updated: "2026-04-22"
+updated: "2026-04-24"
 ---
+
+> **Status note (2026-04-24):** deferred per the t126 pre-registered decision rule.
+> The q009 mechanism cannot be evaluated on cBioPortal panel data because the
+> MSK-IMPACT panel covers only ~20.7 kb of constitutive late-replicating
+> territory (a 23:1 CE:CL bp ratio inside panel coverage), so the published SBS1
+> LRR-bias signal is not measurable on the unmatched-normal cohort q009 was
+> designed to flag. Revisit when WGS inputs are ingested. See
+> `interpretation:2026-04-24-t126-sbs1-lrr-bias-per-study` for the verdict trail
+> and `meta:pre-registration-t126-sbs1-lrr-bias-test` for the locked thresholds.
 
 # Can the SBS1 late-replicating-region bias (present in normal tissue, absent in cancer) serve as a practical contamination quality flag for cBioPortal studies?
 

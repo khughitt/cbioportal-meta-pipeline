@@ -31,6 +31,13 @@ select:
   panel_beds:
     panel_full: "code/scripts/tests/data/select_toy/panels/panel_full.bed"
     panel_partial: "code/scripts/tests/data/select_toy/panels/panel_partial.bed"
+  sources:
+    bailey: "code/scripts/tests/data/select_toy/data/bailey2018.tsv"
+    cgc: "code/scripts/tests/data/select_toy/data/cgc.tsv"
+    sanchez_vega: "code/scripts/tests/data/select_toy/data/sanchez_vega.tsv"
   sample_class_components: ["study_id"]
   ch_priority_genes: []
   make_select_report: false
+
+# Toy grch38 lookup (overrides the global data/grch38.tsv default for build_panel_gene_sets).
+select_grch38_path: "code/scripts/tests/data/select_toy/data/grch38.tsv"

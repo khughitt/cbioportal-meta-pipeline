@@ -341,14 +341,21 @@ if "snakemake" in globals():  # pragma: no cover  # set by Snakemake's script: d
     snek = snakemake  # type: ignore[name-defined]  # noqa: F821
 
     cancer_type = snek.wildcards["cancer_type"]
-    tier = snek.wildcards["tier"]  # 'B' or 'A'
-    cohort = snek.wildcards["cohort"]  # 'inclusive' or 'exclusive'
-    study = snek.wildcards.get("study")  # only for tier == 'A'
+    # tier/cohort/study come from wildcards on the canonical rule; the PA rule
+    # has no such wildcards and supplies them via params instead.
+    params_dict = dict(snek.params.items()) if hasattr(snek.params, "items") else {}
+    tier = snek.wildcards.get("tier") or params_dict.get("tier")  # 'B' / 'A' / 'PA'
+    cohort = snek.wildcards.get("cohort") or params_dict.get("cohort", "exclusive")
+    study = snek.wildcards.get("study") or params_dict.get("study")
 
     samples = pd.read_feather(snek.input["samples_annotated"])
     mutation_long = pd.read_feather(snek.input["mutation_long"])
     sample_panel_map = pd.read_feather(snek.input["sample_panel_map"])
-    gene_universe = pd.read_csv(snek.input["gene_universe"], sep="\t")
+    gene_universe = (
+        pd.read_csv(snek.input["gene_universe"], sep="\t")
+        if "gene_universe" in snek.input.keys()
+        else None
+    )
 
     panel_gene_sets: dict[str, pd.DataFrame] = {}
     for path in snek.input["panel_gene_sets"]:
@@ -401,6 +408,24 @@ if "snakemake" in globals():  # pragma: no cover  # set by Snakemake's script: d
             thresholds=thresholds,
             out_dir=out_dir_path,
             bailey_alteration_class=bailey,
+        )
+    elif tier == "PA":
+        # Pathway-aggregated cell. Cohort is fixed to 'exclusive' per Section 4.4.
+        # build_pathway_aggregated_gam writes its outputs into
+        # <out_dir_path>/pathway_aggregated/, which matches the
+        # run_select_pathway_aggregated rule's input path.
+        pathway_membership = pd.read_csv(snek.input["pathway_membership"], sep="\t")
+        out_dir_path.mkdir(parents=True, exist_ok=True)
+        build_pathway_aggregated_gam(
+            cancer_type=cancer_type,
+            samples=samples,
+            mutation_long=mutation_long,
+            sample_panel_map=sample_panel_map,
+            panel_gene_sets=panel_gene_sets,
+            pathway_membership=pathway_membership,
+            ch_priority_genes=ch_genes,
+            thresholds=thresholds,
+            out_dir=out_dir_path,
         )
     else:
         raise ValueError(f"unknown tier: {tier!r}")

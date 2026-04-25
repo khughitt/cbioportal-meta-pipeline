@@ -1,4 +1,5 @@
 """Verify all SELECT rules are present in the Snakefile under the opt-in gate."""
+
 from pathlib import Path
 
 SNAKEFILE = Path(__file__).resolve().parents[3] / "code" / "workflows" / "Snakefile"
@@ -8,6 +9,7 @@ EXPECTED_RULES = [
     "build_panel_gene_sets",
     "build_select_gene_universe",
     "build_select_gam",
+    "build_select_gam_pathway_aggregated",
     "run_select_per_cell",
     "aggregate_select_results",
     "run_select_pathway_aggregated",

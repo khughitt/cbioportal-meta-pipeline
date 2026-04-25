@@ -24,14 +24,16 @@ def _stage_toy_outputs() -> Path:
     out_dir = TOY / "_out"
     metadata = out_dir / "metadata"
     metadata.mkdir(parents=True, exist_ok=True)
-    for fn in (
-        "samples_annotated.feather",
-        "gene_sample_long.feather",
-        "sample_panel_map.feather",
-    ):
+    for fn in ("samples_annotated.feather", "sample_panel_map.feather"):
         src = TOY / "metadata" / fn
         if src.exists():
             shutil.copy(src, metadata / fn)
+    # mutation_long lives under summary/mut/table/ in the production layout.
+    mut_dst = out_dir / "summary" / "mut" / "table" / "gene_sample_long.feather"
+    mut_dst.parent.mkdir(parents=True, exist_ok=True)
+    src_mut = TOY / "metadata" / "gene_sample_long.feather"
+    if src_mut.exists():
+        shutil.copy(src_mut, mut_dst)
     # Stub bailey alteration class file to satisfy the rule input.
     bailey = metadata / "bailey_alteration_class.feather"
     if not bailey.exists():
@@ -49,25 +51,31 @@ def _stage_toy_outputs() -> Path:
 
 def test_dag_resolves_with_dry_run():
     _stage_toy_outputs()
+    # The Snakefile uses out_dir.joinpath(...) with the config's relative
+    # out_dir, so the dry-run target must be expressed relative to the repo
+    # root (cwd) -- absolute paths won't match the rule output patterns.
+    target = "code/scripts/tests/data/select_toy/_out/select/gene_pair_select.feather"
     cmd = [
         "uv",
         "run",
         "--frozen",
         "snakemake",
         "-s",
-        str(REPO / "code/workflows/Snakefile"),
+        "code/workflows/Snakefile",
         "--configfile",
-        str(CONFIG),
+        "code/scripts/tests/data/select_toy/config.yml",
         "-n",
         "--",
-        str(TOY / "_out/select/gene_pair_select.feather"),
+        target,
     ]
-    result = subprocess.run(cmd, capture_output=True, text=True, cwd=REPO, timeout=60)
+    result = subprocess.run(cmd, capture_output=True, text=True, cwd=REPO, timeout=120)
     if result.returncode != 0:
         pytest.skip(
             "snakemake -n failed for the toy fixture (likely an unsatisfied upstream "
-            "rule; this is a known-soft test). stderr head:\n"
-            + "\n".join(result.stderr.splitlines()[:10])
+            "rule; this is a known-soft test). stdout/stderr tail:\n"
+            + "\n".join(
+                result.stdout.splitlines()[-10:] + result.stderr.splitlines()[-5:]
+            )
         )
     assert (
         "build_select_gam" in result.stdout

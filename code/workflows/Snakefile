@@ -34,6 +34,27 @@ rule all:
     # out pending Python/marimo port. Reinstate once the port lands.
 
 #
+# t078 SELECT co-occurrence / mutual-exclusivity layer (opt-in via config["select"]
+# ["enabled"]). See doc/plans/2026-04-25-t078-select-cooccurrence-design.md.
+#
+
+select_enabled = config.get("select", {}).get("enabled", False)
+
+if select_enabled:
+
+  rule preflight_select_env:
+    """Rule (0): install CSOgroup/select v1.6.4 from vendored tarball, smoke
+    test on luad_data, write token. Every other SELECT rule depends on this."""
+    input:
+      tarball = "data/external/select_v1.6.4.tar.gz"
+    output:
+      token = out_dir.joinpath("select/.preflight_ok")
+    conda:
+      "../envs/select.yml"
+    script:
+      "../scripts/preflight_select_env.R"
+
+#
 # Bailey 2018 driver-annotation overlay.
 #
 # Manual prerequisite: download Bailey et al. 2018 (Cell) supplementary Table S1 from

@@ -24,3 +24,9 @@ dependencies:
   - r-tidyverse
   - r-jsonlite
   - r-testthat
+  # Direct deps of CSOgroup/select v1.6.4 not pulled in by the above
+  # (verified by attempting install + reading the failure):
+  - r-foreach
+  - r-doparallel
+  - r-matrixstats
+  - bioconductor-birewire

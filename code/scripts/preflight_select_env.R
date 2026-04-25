@@ -54,12 +54,14 @@ suppressPackageStartupMessages({
 
 data(luad_data)
 M  <- luad_data$gam
-sc <- luad_data$samples$sample.class
-ac <- luad_data$alterations$alteration.class
+sc <- luad_data$samples   # named character vec: names = sample IDs, value = sample.class
+ac <- luad_data$alt       # named character vec: names = alteration IDs, value = alteration.class
 
 stopifnot(is.matrix(M) || is.data.frame(M))
 stopifnot(!is.null(rownames(M)))
 stopifnot(!is.null(colnames(M)))
+stopifnot(is.character(sc), !is.null(names(sc)))
+stopifnot(is.character(ac), !is.null(names(ac)))
 
 message("[preflight] running select::select on luad_data with n.permut = 50 ...")
 res <- select::select(
@@ -75,6 +77,7 @@ res <- select::select(
   max.memory.size                = 8,
   FDR.cutoff                     = 1.0,
   calculate_FDR                  = FALSE,
+  calculate_APC_threshold        = FALSE,  # n.permut=50 is too small for APC
   verbose                        = FALSE
 )
 

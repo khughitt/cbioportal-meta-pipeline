@@ -26,6 +26,7 @@ select:
     randomization_switch_threshold: 30
     min_feature_support: 2
     min_feature_freq: 0.001
+    calculate_APC_threshold: false   # n.permut=50 is too small for APC estimation
   output_dir: "code/scripts/tests/data/select_toy/_out/select"
   random_seed: 0
   panel_beds:

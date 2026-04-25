@@ -9,17 +9,28 @@ suppressPackageStartupMessages({
   library(jsonlite)
 })
 
-# Resolve scripts dir relative to this file's location (no `here` dependency).
-this_file <- normalizePath(sys.frame(1)$ofile %||% commandArgs(trailingOnly = FALSE)[grep("--file=", commandArgs(trailingOnly = FALSE))][1])
-if (is.na(this_file) || nchar(this_file) == 0) {
-  this_file <- "code/scripts/tests/test_run_select.R"
+# Resolve scripts dir robustly across (a) Rscript test_run_select.R from repo
+# root, (b) testthat::test_file("code/scripts/tests/test_run_select.R") from
+# repo root, and (c) the snakemake script wrapper. testthat's loader does not
+# set sys.frame(1)$ofile, so we fall back to a fixed repo-relative path.
+candidate_paths <- c(
+  tryCatch(sys.frame(1)$ofile, error = function(e) NA_character_),
+  # testthat::test_file() chdirs into the test file's directory, so the bare
+  # basename resolves there.
+  "test_run_select.R",
+  "code/scripts/tests/test_run_select.R"
+)
+this_file <- NA_character_
+for (cand in candidate_paths) {
+  if (!is.na(cand) && nzchar(cand) && file.exists(cand)) {
+    this_file <- normalizePath(cand)
+    break
+  }
 }
-this_file_resolved <- if (file.exists(this_file)) {
-  normalizePath(this_file)
-} else {
-  normalizePath("code/scripts/tests/test_run_select.R")
+if (is.na(this_file)) {
+  stop("test_run_select.R: cannot locate own path for scripts_dir resolution")
 }
-scripts_dir <- dirname(dirname(this_file_resolved))
+scripts_dir <- dirname(dirname(this_file))
 source(file.path(scripts_dir, "run_select.R"), local = TRUE)
 
 write_sentinel_inputs <- function(dir, skip_reason) {

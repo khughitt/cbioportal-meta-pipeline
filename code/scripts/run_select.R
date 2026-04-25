@@ -90,7 +90,10 @@ run_one_cell <- function(cell_dir, out_path, cell_descriptor,
     randomization.switch.threshold = as.integer(runtime_config$randomization_switch_threshold),
     max.memory.size                = as.numeric(runtime_config$max_memory_size_gb),
     FDR.cutoff                     = 1.0,                # we recompute BH per stratum
-    calculate_APC_threshold        = TRUE,
+    calculate_APC_threshold        = isTRUE(
+      if (is.null(runtime_config$calculate_APC_threshold)) TRUE
+      else runtime_config$calculate_APC_threshold
+    ),
     calculate_FDR                  = FALSE,
     verbose                        = FALSE
   )

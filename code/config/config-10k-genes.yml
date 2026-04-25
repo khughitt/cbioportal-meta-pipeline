@@ -29,6 +29,9 @@ select:
     randomization_switch_threshold: 30
     min_feature_support: 5
     min_feature_freq: 0.001
+    # APC threshold needs enough non-NaN FDR rows to estimate the
+    # background distribution; disable it for small / preflight runs.
+    calculate_APC_threshold: true
 
   output_dir: "results/select"
   random_seed: 0

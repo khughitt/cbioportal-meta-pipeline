@@ -338,9 +338,19 @@ Extend convert_to_feather.py to retain per-variant allele-count columns alongsid
 - priority: P3
 - status: proposed
 - aspects: [computational-analysis]
-- related: [question:q012-mutation-ordering-cross-sectional-inference,task:t078,task:t081,task:t111]
+- related: [question:q012-mutation-ordering-cross-sectional-inference, task:t078, task:t081, task:t111]
 - blocked-by: [t078]
 - group: meta-analysis
 - created: 2026-04-24
 
 Once t078 co-occurrence/mutual-exclusivity is live, add Mutual Hazard Network (Schill 2020) fit using the same sample-specific-background-rate null and per-sample callability mask. Report primary results at Sanchez-Vega 10-pathway level; gene-level as drill-down. Stratify per histology and per hypermutator class (t081). Calibrate against PCAWG Gerstung 2020 pan-cancer chronology Table 1 before reporting any novel edges.
+
+## [t136] Canonicalize all variant coordinates to GRCh38 at ingestion (liftover from hg19)
+- priority: P2
+- status: proposed
+- aspects: [software-development]
+- related: [task:t131,topic:mutation-rate-normalization,discussion:2026-04-24-gene-length-bias-in-mutation-rankings-and-literature]
+- group: pipeline
+- created: 2026-04-24
+
+Add a liftover step in convert_to_feather.py that maps hg19-native study variants to GRCh38 using CrossMap or pyliftover with UCSC hg19ToHg38.over.chain.gz. Retain original chr/pos/build columns for audit. Single canonical build downstream unlocks dNdScv refdb selection, future GRCh38-only annotation sources (gnomAD v4, ClinVar, dbNSFP v4.x, AlphaMissense, latest COSMIC), and removes a class of silent-degradation bugs across the pipeline. Exonic SNV loss expected <0.1% (per UCSC chain coverage). This is the long-term destination flagged during t131 design — t131 itself uses cheaper per-study refdb routing as an interim. Out of scope for this task: re-running upstream tooling against the lifted coordinates (signature callers, replication-timing joins). Plan separately for those once the liftover artifact is in place.

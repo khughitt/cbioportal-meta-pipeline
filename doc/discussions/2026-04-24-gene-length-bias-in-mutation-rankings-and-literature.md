@@ -170,7 +170,11 @@ compute the Spearman correlation + Jaccard overlap at N = 10, 50, 100, 500, 1000
   them correctly.
 - Jaccard @ top-100 between raw and length-adjusted: my rough expectation is ~0.5–0.7.
   @ top-500: ~0.7–0.85. The movement is concentrated in the ranks you care about (top 30
-  is where biology lives and where length adjustment is most clarifying).
+  is where biology lives and where length adjustment is most clarifying). **(Empirical
+  result, see Empirical Result section below: this estimate was off by two orders of
+  magnitude — actual Jaccard@100 = 0.015. The pure length division scrambles the head of
+  the distribution far more aggressively than I expected, primarily because tiny-protein
+  artifacts dominate the adjusted ranking.)**
 
 **Deeper comparison (harder, requires external tools).** Run dNdScv over the combined
 cohort and compare to our raw and length-adjusted rankings. The pipeline already has
@@ -255,6 +259,49 @@ answer to "what does length adjustment actually buy, and where does it break?"
 | P2 | Opt dNdScv into `rule all` in a side config (`config-pan-cancer-dndscv.yml`), accepting the cost. Then emit a three-way ranking comparison report. | Closes the "length-only is below the 2013 bar" finding. Addresses `topic:mutation-rate-normalization` directly. | R env (`feedback:R-reproducibility-pipeline-tasks` — dndscv rule must use conda env YAML, not system R). |
 | P3 | Add `length_is_fallback` indicator column in `create_combined_gene_cancer_freq_table.py` (already tracked as `t086`). | Transparency about which genes got median-imputed length. | None. |
 | P3 | In any publication-ready ranking output, include both `mean_inclusive` and `mean_inclusive_per_kb` with a clear note that the latter is a first-order correction only; point readers to dNdScv output when available. | Prevents the pipeline from silently reproducing the bias the audit called out. | None. |
+
+## Empirical Result (notebook run, 2026-04-24)
+
+`code/notebooks/q011_length_adjustment_topn_comparison.py` against the
+`poc-2026-04-17` cohort (21,998 genes with non-zero `mean_inclusive`,
+19,180 with UniProt length, 200 Bailey 2018 drivers).
+
+- **Spearman ρ(mean_inclusive, mean_adj) = 0.372** — much weaker than the
+  pre-discussion intuition (which expected ρ in the 0.7-0.9 range). Length
+  scrambles the ranking thoroughly.
+- **Jaccard overlap, raw vs length-adjusted top-N:**
+
+  | N | intersection | Jaccard |
+  |---|---|---|
+  | 10 | 1 | 0.053 |
+  | 25 | 1 | 0.020 |
+  | 50 | 1 | 0.010 |
+  | 100 | 3 | 0.015 |
+  | 250 | 5 | 0.010 |
+  | 500 | 10 | 0.010 |
+  | 1000 | 38 | 0.019 |
+
+  The pre-discussion estimate was 0.5–0.7 at top-100; the actual value is
+  ~0.015. **Two orders of magnitude worse.** The two rankings are essentially
+  disjoint in their heads — only TP53 makes both top-10s.
+- **Top-10 raw**: TTN, MUC16, TP53, DNAH5, PCLO, LRP1B, OBSCN, CSMD3, CSMD1,
+  RYR2 — predictions confirmed exactly.
+- **Top-10 length-adjusted**: BAGE2, TP53, KRAS, CXCL12, PYY2, RHOA, DEFB119,
+  TMSB4X, SPANXN5, CDKN2A — short canonical drivers (TP53, KRAS, RHOA, CDKN2A)
+  AND short-protein artifacts (BAGE2, PYY2, DEFB119, TMSB4X, SPRR4, CXCL12 at
+  93 aa, etc).
+- **Length-only failure mode is dominant, not marginal**: 86 of the top-100
+  length-adjusted entries are short proteins (<200 aa) with no Bailey 2018
+  driver flag. Pure length division swings the ranking from "long-gene
+  passengers win" to "tiny-protein artifacts win" — the bias is symmetric and
+  equally bad in the opposite direction.
+
+This is the strongest case yet for **t131 — opt dNdScv into a side config
+and run the three-way comparison**. Neither raw counts nor length-only
+adjustment produces a defensible head-of-distribution. The clean
+length-and-context-aware rankings (MutSigCV, dNdScv) are the only ones that
+both demote the long-gene passengers and avoid inflating tiny-protein
+artifacts.
 
 ## Synthesis
 

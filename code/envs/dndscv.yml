@@ -16,11 +16,20 @@ dependencies:
   - r-base>=4.3
   - r-arrow
   - r-remotes
+  - r-rcpp           # transitive dep of dndscv that install_github would otherwise
+                     # compile from source; conda binary avoids the C++ toolchain.
+  - r-rcpparmadillo  # ditto — smoke run 2026-04-25 caught RcppArmadillo failing to
+                     # compile from source under remotes::install_github.
   - r-seqinr
   - r-mass
   - r-poilog
   - r-plyr
   - bioconductor-genomicranges
+  - bioconductor-genomeinfodb     # transitive dep of GenomicRanges that the conda
+                                  # recipe doesn't pull in as hard-required; dndscv
+                                  # loads it explicitly. Smoke run 2026-04-25
+                                  # caught this as `unable to load required package
+                                  # 'GenomeInfoDb'` inside dndscv().
   - bioconductor-biostrings
   - bioconductor-iranges
   - bioconductor-rsamtools

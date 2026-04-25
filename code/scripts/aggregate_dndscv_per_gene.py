@@ -64,6 +64,25 @@ stacked = stacked[stacked["symbol"].notna()].copy()
 stacked["symbol"] = stacked["symbol"].astype(str)
 print(f"aggregate_dndscv_per_gene: {len(stacked):,} (gene, cancer_type) rows total")
 
+if stacked.empty:
+    # All per-cancer outputs were sentinel-only (every cancer cohort hit
+    # failed_qc or below_threshold). Emit an empty pooled feather with the
+    # canonical schema so downstream rules see a valid file.
+    print("aggregate_dndscv_per_gene: no real (symbol, cancer_type) rows after filter; writing empty pooled feather")
+    pd.DataFrame(
+        columns=pd.Index(
+            [
+                "symbol",
+                "min_qglobal",
+                "n_cancers_significant_q05",
+                "n_cancers_significant_q01",
+                "n_cancers_tested",
+                "best_cancer_type",
+            ]
+        )
+    ).to_feather(snek.output[0])
+    raise SystemExit(0)
+
 
 def _per_gene(symbol: str, grp: pd.DataFrame) -> dict:
     q = grp["dndscv_qglobal_cv"].astype(float)

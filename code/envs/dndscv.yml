@@ -1,0 +1,26 @@
+# Conda env for dNdScv (Martincorena 2017) per-cancer-type driver detection.
+# Used by `rule run_dndscv_per_cancer` in code/workflows/Snakefile.
+#
+# dndscv DESCRIPTION (im3sanger/dndscv) Imports:
+#   seqinr, MASS, GenomicRanges, Biostrings, IRanges, Rsamtools, poilog, plyr
+#
+# dndscv itself is not on conda-forge or Bioconductor; run_dndscv.R bootstraps it
+# on first run via remotes::install_github("im3sanger/dndscv@<pinned-sha>").
+# Pinned SHA: 69007c2bbd2d6dae003a30dcfe5dda3df722b2f8 (2025-05-15).
+#
+# First-time env build is ~5-15 min on a warm conda cache (longer cold).
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - r-base>=4.3
+  - r-arrow
+  - r-remotes
+  - r-seqinr
+  - r-mass
+  - r-poilog
+  - r-plyr
+  - bioconductor-genomicranges
+  - bioconductor-biostrings
+  - bioconductor-iranges
+  - bioconductor-rsamtools

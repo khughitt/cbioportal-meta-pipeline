@@ -1,0 +1,99 @@
+#
+# cbioportal / pan-cancer + dNdScv side config (t131)
+#
+# Mirrors config-pan-cancer.yml and adds the dNdScv-specific knobs. Invoke as:
+#
+#   uv run snakemake -s code/workflows/Snakefile \
+#       --configfile code/config/config-pan-cancer-dndscv.yml \
+#       --use-conda -j1 all_with_dndscv
+#
+# Cost notes:
+#   - First-time conda env build for code/envs/dndscv.yml is ~5-15 min on a
+#     warm conda cache (longer cold). dndscv itself is bootstrapped from
+#     pinned GitHub SHA on first invocation (~5 min more). Subsequent runs
+#     reuse the env.
+#   - Per-cancer-type dNdScv invocations are independent (parallel-friendly
+#     with -jN). Wall time per invocation depends on cohort size; ~30s-3min.
+#
+# Build-metadata behavior:
+#   - convert_to_feather.py reads NCBI_Build column from data_mutations.txt
+#     for every study (present in 234/234 surveyed cBioPortal studies).
+#   - Normalized to "hg19" or "hg38". If a study has empty NCBI_Build OR a
+#     non-recognized value AND no entry in study_reference_build_override,
+#     the rule fails loudly. No silent default.
+#
+
+# input / output directories
+data_dir: "/data/raw/cbioportal"
+out_dir: "/data/packages/cbioportal/pan-cancer-dndscv"
+
+# minimum ratio of studies a gene must be present in to be included
+filtering:
+  genes:
+    min_studies_ratio: 0.2
+
+subsampling:
+  patients: 0.25  # combined gene-patient matrix
+
+summary:
+  table_max_rows: 50
+  min_gene_coverage_ratio: 0.4
+  min_gene_coverage_ratio_specific: 0.1
+  num_cancer_specific_results: 10
+
+panel_bearing_studies:
+  - msk_met_2021
+
+study_panel_map: {}
+
+panel_callable_mb_override: {}
+wes_default_callable_mb: 30.0
+panel_callable_mb_tolerance: 0.05
+
+random_seed: 0
+gmm_min_samples: 100
+
+# Annotation source paths (manual prereqs).
+cosmic_cgc_path: "/data/raw/cosmic/v100/Cosmic_CancerGeneCensus_v100_GRCh38.tsv"
+
+#
+# t131 — dNdScv-specific knobs
+#
+
+# Per-study build override for studies whose NCBI_Build column is empty or
+# unrecognized. Two studies surveyed had empty NCBI_Build (mixed_selpercatinib_2020,
+# ucec_ccr_msk_2022) but neither is in this run's `studies` list.
+study_reference_build_override: {}
+
+# Drop modality=panel rows during per-cancer-type combine. Set true for stricter
+# primary release runs (panel data degrades dNdScv's global background per
+# Martincorena 2017's caveats). Default false: include panel + flag via
+# dndscv_input_modality column on the canonical feather.
+dndscv_wes_only: false
+
+# Per-cancer-type cohort thresholds. Cohorts smaller than these emit
+# dndscv_input_status="below_threshold" rather than running dNdScv.
+dndscv_min_samples: 50
+dndscv_min_variants: 500
+
+# PubTator gene-mention counts for the q011 literature-attention correlation
+# panel in the three-way comparison notebook. Comment out to skip the join
+# (the comparison still runs; PubTator columns will be null).
+pubtator_path: "/data/proj/lit-explore/pubtator/2026-01-16/counts/gene_concept_ids.feather"
+
+# studies with 3+ cancer types and >1000 genes measured
+studies: [
+  "acc_2019",
+  "aml_ohsu_2018",
+  "aml_ohsu_2022",
+  "brain_cptac_2020",
+  "genie",
+  "msk_met_2021",
+  "metastatic_solid_tumors_mich_2017",
+  "mixed_allen_2018",
+  "mixed_pipseq_2017",
+  "pancan_pcawg_2020",
+  "pediatric_dkfz_2017",
+  "pog570_bcgsc_2020",
+  "pptc_2019"
+]

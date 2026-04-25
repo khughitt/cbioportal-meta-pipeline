@@ -49,7 +49,13 @@ snek = snakemake  # type: ignore[name-defined]
 
 mc3_path: str = snek.input.mc3_maf
 case_to_project_path: str = snek.input.case_to_project
-out_mut_path, out_samples_path, out_patients_path, out_study_path = snek.output
+(
+    out_mut_path,
+    out_samples_path,
+    out_patients_path,
+    out_study_path,
+    out_build_path,
+) = snek.output
 
 # ---------------------------------------------------------------------------
 # Case-to-project mapping (submitter_id -> TCGA project_id -> cancer_type).
@@ -213,6 +219,11 @@ mut.to_feather(out_mut_path)
 samples.to_feather(out_samples_path)
 patients.to_feather(out_patients_path)
 study_df.to_feather(out_study_path)
+
+# t131: persist study_build for downstream dNdScv routing.
+# MC3 v0.2.8 PUBLIC is hg19/GRCh37 by definition (Ellrott 2018).
+with open(out_build_path, "w") as fh:
+    fh.write("hg19")
 
 print(
     f"Wrote tcga_mc3 study: {len(mut):,} variants, "

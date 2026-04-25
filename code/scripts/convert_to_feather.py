@@ -158,6 +158,59 @@ mut = mut[mut.symbol.isin(grch37.symbol) | mut.symbol.isin(grch38.symbol)]
 # save result
 mut.to_feather(snek.output[0])
 
+
+# t131: persist per-study reference build (hg19/hg38) for downstream dNdScv routing.
+# Source of truth: NCBI_Build column in data_mutations.txt (present in 234/234
+# cBioPortal studies surveyed; 232/234 carry a value). Rare studies with empty
+# or non-standard build values are handled via study_reference_build_override
+# config map. Fail loud on unknown — no silent default per AGENTS.md.
+_BUILD_ALIASES = {
+    "GRCh37": "hg19", "grch37": "hg19", "hg19": "hg19", "b37": "hg19", "37": "hg19",
+    "GRCh38": "hg38", "grch38": "hg38", "hg38": "hg38", "b38": "hg38", "38": "hg38",
+}
+study_id = snek.wildcards["id"]
+override_map = snek.config.get("study_reference_build_override", {}) or {}
+if study_id in override_map:
+    build = override_map[study_id]
+    if build not in {"hg19", "hg38"}:
+        raise ValueError(
+            f"study_reference_build_override[{study_id!r}] = {build!r} must be "
+            "'hg19' or 'hg38'"
+        )
+else:
+    raw_build_values = pd.read_csv(
+        snek.input[0], sep="\t", comment="#", usecols=["NCBI_Build"], nrows=10
+    )
+    raw_unique = [
+        v
+        for v in raw_build_values["NCBI_Build"].dropna().astype(str).str.strip().unique()
+        if v
+    ]
+    if not raw_unique:
+        raise ValueError(
+            f"convert_to_feather: study {study_id!r} has empty NCBI_Build column. "
+            "Add an entry to config['study_reference_build_override'] = "
+            f"{{{study_id!r}: 'hg19' or 'hg38'}}."
+        )
+    if len(raw_unique) > 1:
+        raise ValueError(
+            f"convert_to_feather: study {study_id!r} has mixed NCBI_Build values "
+            f"in the first 10 rows: {raw_unique}. Resolve manually via "
+            "study_reference_build_override."
+        )
+    raw = raw_unique[0]
+    if raw not in _BUILD_ALIASES:
+        raise ValueError(
+            f"convert_to_feather: study {study_id!r} NCBI_Build = {raw!r} not "
+            f"recognized. Known aliases: {sorted(_BUILD_ALIASES)}. Override via "
+            "study_reference_build_override if needed."
+        )
+    build = _BUILD_ALIASES[raw]
+
+# Outputs[4] = studies/{id}/metadata/study_build.txt — single token, no trailing newline.
+with open(snek.output[4], "w") as fh:
+    fh.write(build)
+
 #
 # 2. sample metadata
 #

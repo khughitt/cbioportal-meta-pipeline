@@ -4,6 +4,8 @@
 import pathlib
 import re
 
+import pandas as pd
+
 data_dir = pathlib.Path(config['data_dir'])
 out_dir = pathlib.Path(config['out_dir'])
 
@@ -194,18 +196,172 @@ rule join_gene_cancer_meta_in_ratio_table:
 #
 # dNdScv per-study selection-based driver detection (Martincorena 2017).
 #
-# Requires R + dndscv (devtools::install_github("im3sanger/dndscv")). Optional rule —
-# include explicit dndscv outputs in `rule all` only on configurations where R+dndscv are
-# available. Uses GRCh37 RefCDS by default; for GRCh38 cohorts swap the refdb argument
-# in the script.
+# t131: dNdScv selection-based driver detection chain.
 #
-rule run_dndscv:
+# See doc/plans/2026-04-24-t131-dndscv-three-way-comparison-design.md for full
+# architecture. Summary:
+#   prepare_dndscv_input      per-study mut.feather → dndscv_input.feather
+#   combine_mut_per_cancer    [checkpoint] all per-study inputs → per-(cancer, build)
+#                             combined MAFs (slug = "{cancer_slug}__{build}")
+#   run_dndscv_per_cancer     R, conda env, per-(cancer, build) → per-gene results
+#   reconcile_dndscv_per_cancer  combine per-build outputs back per cancer_type
+#   aggregate_dndscv_per_gene per-cancer outputs → pan-cancer per-gene rollup
+#   join_dndscv_into_annotated  join 11-column schema-contract into the canonical
+#                             gene_cancer_study_ratio_annotated.feather
+#   compare_three_way_rankings  three-way per-gene ranking comparison + PubTator
+#
+# Activated by `rule all_with_dndscv` + code/config/config-pan-cancer-dndscv.yml.
+# Default `rule all` does NOT trigger this chain — keeps the pipeline R-free
+# for users without conda.
+#
+
+# Per-study dNdScv input preparation (consumes UNFILTERED mut.feather; the
+# filtered table censors low-coverage genes which would miscalibrate dNdScv's
+# trinucleotide background — see plan §"Latent bug found during planning").
+rule prepare_dndscv_input:
   input:
-    out_dir.joinpath("studies/{id}/mut/table/mut_filtered.feather")
+    mut     = out_dir.joinpath("studies/{id}/mut/table/mut.feather"),
+    samples = out_dir.joinpath("studies/{id}/metadata/samples.feather"),
+    build   = out_dir.joinpath("studies/{id}/metadata/study_build.txt")
   output:
-    out_dir.joinpath("studies/{id}/mut/dndscv/genes.feather")
+    out_dir.joinpath("studies/{id}/mut/dndscv_input.feather")
+  script:
+    "../scripts/prepare_dndscv_input.py"
+
+# Aggregate per-study dndscv inputs into per-(cancer_type, build) combined MAFs.
+# Checkpoint: outputs a directory whose tuple set is discovered post-run; downstream
+# rules use checkpoints.combine_mut_per_cancer_type.get(...) to enumerate them.
+checkpoint combine_mut_per_cancer_type:
+  input:
+    expand(
+      out_dir.joinpath("studies/{id}/mut/dndscv_input.feather"),
+      id=ids
+    )
+  output:
+    directory(out_dir.joinpath("summary/mut/dndscv_input"))
+  script:
+    "../scripts/combine_mut_per_cancer_type.py"
+
+# Run dNdScv on a single (cancer_type, build) combined cohort.
+# `wildcards.slug` is the "{cancer_slug}__{build}" string emitted by the
+# combine checkpoint; `params.refdb` is parsed from the slug suffix.
+def _refdb_from_slug(wildcards):
+  # slug format: "{cancer_slug}__{build}"
+  build = wildcards.slug.rsplit("__", 1)[-1]
+  if build not in {"hg19", "hg38"}:
+    raise ValueError(f"slug {wildcards.slug!r} suffix {build!r} not in {{hg19, hg38}}")
+  return build
+
+rule run_dndscv_per_cancer:
+  input:
+    maf  = out_dir.joinpath("summary/mut/dndscv_input/{slug}/mut_combined.feather"),
+    meta = out_dir.joinpath("summary/mut/dndscv_input/{slug}/cohort_meta.feather")
+  output:
+    genes = out_dir.joinpath("summary/mut/dndscv/per_cancer_per_build/{slug}/genes.feather"),
+    run   = out_dir.joinpath("summary/mut/dndscv/per_cancer_per_build/{slug}/run.feather")
+  params:
+    refdb = _refdb_from_slug
+  conda:
+    "../envs/dndscv.yml"
   script:
     "../scripts/run_dndscv.R"
+
+# Helpers to enumerate slugs from the checkpoint and group them by cancer_slug.
+def _all_slugs(wildcards):
+  cp_dir = checkpoints.combine_mut_per_cancer_type.get().output[0]
+  manifest = pd.read_feather(pathlib.Path(cp_dir) / "manifest.feather")
+  return list(manifest["slug"]) if not manifest.empty else []
+
+def _slugs_for_cancer(wildcards):
+  cp_dir = checkpoints.combine_mut_per_cancer_type.get().output[0]
+  manifest = pd.read_feather(pathlib.Path(cp_dir) / "manifest.feather")
+  if manifest.empty:
+    return []
+  matches = manifest[manifest["slug"].str.startswith(f"{wildcards.cancer_slug}__")]
+  return list(matches["slug"])
+
+def _per_build_genes(wildcards):
+  return [
+    out_dir.joinpath(f"summary/mut/dndscv/per_cancer_per_build/{slug}/genes.feather")
+    for slug in _slugs_for_cancer(wildcards)
+  ]
+
+def _per_build_runs(wildcards):
+  return [
+    out_dir.joinpath(f"summary/mut/dndscv/per_cancer_per_build/{slug}/run.feather")
+    for slug in _slugs_for_cancer(wildcards)
+  ]
+
+def _all_cancer_slugs(wildcards):
+  slugs = _all_slugs(wildcards)
+  return sorted({s.rsplit("__", 1)[0] for s in slugs})
+
+def _all_per_cancer_genes(wildcards):
+  return [
+    out_dir.joinpath(f"summary/mut/dndscv/per_cancer/{cs}/genes.feather")
+    for cs in _all_cancer_slugs(wildcards)
+  ]
+
+# Reconcile per-build outputs back to one per-cancer-type result.
+rule reconcile_dndscv_per_cancer:
+  input:
+    genes_inputs = _per_build_genes,
+    run_inputs   = _per_build_runs
+  output:
+    genes = out_dir.joinpath("summary/mut/dndscv/per_cancer/{cancer_slug}/genes.feather"),
+    run   = out_dir.joinpath("summary/mut/dndscv/per_cancer/{cancer_slug}/run.feather")
+  script:
+    "../scripts/reconcile_dndscv_per_cancer.py"
+
+# Per-gene pan-cancer rollup.
+rule aggregate_dndscv_per_gene:
+  input:
+    _all_per_cancer_genes
+  output:
+    out_dir.joinpath("summary/mut/table/dndscv_pooled.feather")
+  script:
+    "../scripts/aggregate_dndscv_per_gene.py"
+
+# Join dndscv columns into the canonical annotated feather.
+rule join_dndscv_into_annotated:
+  input:
+    annotated  = out_dir.joinpath("summary/mut/table/gene_cancer_study_ratio_annotated.feather"),
+    per_cancer = _all_per_cancer_genes
+  output:
+    out_dir.joinpath("summary/mut/table/gene_cancer_study_ratio_annotated_dndscv.feather")
+  script:
+    "../scripts/join_dndscv_into_annotated.py"
+
+# Three-way ranking comparison + PubTator. PubTator is conditional — driven by
+# config['pubtator_path']; when absent, the comparison still runs but with null
+# PubTator columns.
+def _three_way_inputs(wildcards):
+  base = {
+    "annotated": out_dir.joinpath("summary/mut/table/gene_cancer_study_ratio_annotated_dndscv.feather"),
+    "pooled":    out_dir.joinpath("summary/mut/table/dndscv_pooled.feather"),
+    "lengths":   out_dir.joinpath("metadata/protein_lengths.feather"),
+    "ensembl":   "data/grch37.tsv",
+  }
+  pub = config.get("pubtator_path")
+  if pub:
+    base["pubtator"] = pub
+  return base
+
+rule compare_three_way_rankings:
+  input:
+    unpack(_three_way_inputs)
+  output:
+    out_dir.joinpath("summary/mut/table/three_way_ranking_comparison.feather")
+  script:
+    "../scripts/compare_three_way_rankings.py"
+
+# Top-level dNdScv target. Triggers the full chain.
+rule all_with_dndscv:
+  input:
+    rules.all.input,
+    out_dir.joinpath("summary/mut/table/gene_cancer_study_ratio_annotated_dndscv.feather"),
+    out_dir.joinpath("summary/mut/table/dndscv_pooled.feather"),
+    out_dir.joinpath("summary/mut/table/three_way_ranking_comparison.feather")
 
 #
 # Restricted mutational-signature assignment (t109).
@@ -644,7 +800,8 @@ rule convert_to_feather:
     out_dir.joinpath("studies/{id}/mut/table/mut.feather"),
     out_dir.joinpath("studies/{id}/metadata/samples.feather"),
     out_dir.joinpath("studies/{id}/metadata/patients.feather"),
-    out_dir.joinpath("studies/{id}/metadata/study.feather")
+    out_dir.joinpath("studies/{id}/metadata/study.feather"),
+    out_dir.joinpath("studies/{id}/metadata/study_build.txt")
   script:
     "../scripts/convert_to_feather.py"
 
@@ -708,7 +865,8 @@ rule process_mc3:
     out_dir.joinpath("studies/tcga_mc3/mut/table/mut.feather"),
     out_dir.joinpath("studies/tcga_mc3/metadata/samples.feather"),
     out_dir.joinpath("studies/tcga_mc3/metadata/patients.feather"),
-    out_dir.joinpath("studies/tcga_mc3/metadata/study.feather")
+    out_dir.joinpath("studies/tcga_mc3/metadata/study.feather"),
+    out_dir.joinpath("studies/tcga_mc3/metadata/study_build.txt")
   script:
     "../scripts/process_mc3.py"
 

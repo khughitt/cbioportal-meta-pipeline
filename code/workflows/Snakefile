@@ -788,20 +788,22 @@ rule create_study_summary_table:
   script:
     "../scripts/create_study_summary_table.py"
 
-# Prefer the panel-aware rule when both rules could produce the same three base files.
-ruleorder: download_panel_study > download_study
-
-
 def _convert_to_feather_inputs(wildcards):
     """Conditional input dict: matrix file appended for panel-bearing studies.
 
     Matches the static classification in config['panel_bearing_studies']; do not
     file-existence-test (would make the DAG non-deterministic).
+
+    The download_study marker is included as an input dependency so that the
+    DAG runs the staging rule before convert_to_feather, but the canonical
+    raw paths under ``data_dir`` are read directly by the script (the marker
+    is never read).
     """
     base = {
         "mutations": data_dir.joinpath(f"{wildcards.id}/data_mutations.txt"),
         "samples":   data_dir.joinpath(f"{wildcards.id}/data_clinical_sample.txt"),
         "patients":  data_dir.joinpath(f"{wildcards.id}/data_clinical_patient.txt"),
+        "_staged":   out_dir.joinpath(f"metadata/raw_studies/{wildcards.id}.staged"),
     }
     if wildcards.id in config.get("panel_bearing_studies", []):
         base["panel_matrix"] = data_dir.joinpath(
@@ -823,39 +825,28 @@ rule convert_to_feather:
     "../scripts/convert_to_feather.py"
 
 
-rule download_panel_study:
-  """Variant of download_study for panel-bearing studies.
-
-  The download script already extracts the full tarball, so data_gene_panel_matrix.txt
-  lands on disk automatically. This rule declares it as an output so the DAG is aware
-  of it and can wire it through _convert_to_feather_inputs.
-
-  Outputs are wrapped with ``protected()`` so ``--forceall`` cannot silently wipe
-  raw study data that would then have to be re-downloaded (cBioPortal occasionally
-  returns HTTP 403 for re-requests). Use ``snakemake --unprotect`` to explicitly
-  mark a file as overwritable if you intend to re-download.
-  """
-  output:
-    protected(data_dir.joinpath("{id}/data_mutations.txt")),
-    protected(data_dir.joinpath("{id}/data_clinical_sample.txt")),
-    protected(data_dir.joinpath("{id}/data_clinical_patient.txt")),
-    protected(data_dir.joinpath("{id}/data_gene_panel_matrix.txt")),
-  wildcard_constraints:
-    # Use `or` (not `.get(key, default)`) so an explicitly-empty list also
-    # falls back to the sentinel — otherwise joining [] with | produces an
-    # empty regex that matches ANY study id and silently captures WES studies.
-    id="|".join(
-      re.escape(s) for s in (config.get("panel_bearing_studies") or ["__never__"])
-    )
-  script:
-    "../scripts/download_study.py"
-
+# Stage cBioPortal study raw data into ``data_dir`` and emit a per-out_dir marker.
+#
+# The output is intentionally a *marker file under out_dir*, NOT the raw tarball
+# contents under data_dir. This decouples per-run snakemake metadata from the
+# shared raw-data tree:
+#
+#   - A fresh out_dir invalidates only the marker, not the raw files. The script
+#     short-circuits when raw files already exist on disk, so a new out_dir
+#     produces a no-op rerun rather than risking re-download.
+#   - snakemake's pre-rule cleanup removes the marker (a tiny per-out_dir file)
+#     rather than the raw data files. A failed download therefore cannot wipe
+#     raw study data that another out_dir or a manual download has populated.
+#
+# The previous design used ``protected(data_dir.joinpath(...))`` outputs.
+# ``protected()`` only blocks ``--forceall``; it does NOT prevent the
+# pre-rule cleanup that snakemake performs when it decides to re-run a rule for
+# any other reason (mtime / code provenance / fresh metadata). cBioPortal returns
+# HTTP 403 on re-requests, so a single accidental rerun against a fresh out_dir
+# could permanently destroy the raw data.
 rule download_study:
-  """Outputs wrapped with ``protected()`` — see note on ``download_panel_study``."""
   output:
-    protected(data_dir.joinpath("{id}/data_mutations.txt")),
-    protected(data_dir.joinpath("{id}/data_clinical_sample.txt")),
-    protected(data_dir.joinpath("{id}/data_clinical_patient.txt")),
+    out_dir.joinpath("metadata/raw_studies/{id}.staged")
   script:
     "../scripts/download_study.py"
 

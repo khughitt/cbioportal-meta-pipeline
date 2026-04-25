@@ -103,6 +103,7 @@ def build_b_tier_cell(
     sample_class_components: list[str],
     thresholds: Thresholds,
     out_dir: Path,
+    bailey_alteration_class: pd.DataFrame | None = None,
 ) -> None:
     """Build one B-tier cell (cancer_type, cohort) of the SELECT input layer.
 
@@ -188,12 +189,18 @@ def build_b_tier_cell(
         }
     )
 
-    # alteration.class -- left as 'unknown' in this task; Bailey driver overlay
-    # is wired in Task 10 once we accept the Bailey TSV input.
+    # alteration.class -- Bailey-derived if provided, else 'unknown'.
+    if bailey_alteration_class is not None:
+        cls_lookup = bailey_alteration_class.set_index("symbol")["alteration_class"]
+        alteration_class_series = (
+            pd.Series(gam.columns).map(cls_lookup).fillna("unknown")
+        )
+    else:
+        alteration_class_series = pd.Series(["unknown"] * gam.shape[1])
     alteration_class_df = pd.DataFrame(
         {
             "symbol": gam.columns.astype(str),
-            "alteration_class": "unknown",
+            "alteration_class": alteration_class_series.astype(str).values,
         }
     )
 
@@ -213,7 +220,103 @@ def build_b_tier_cell(
     )
 
 
-if "snakemake" in globals():  # pragma: no cover  # set by Snakemake's script: directive
-    raise NotImplementedError(
-        "Snakemake entry point wired in Task 10 once A-tier scattering lands."
+def build_a_tier_cell(
+    cancer_type: str,
+    cohort: str,
+    study: str,
+    samples: pd.DataFrame,
+    mutation_long: pd.DataFrame,
+    sample_panel_map: pd.DataFrame,
+    panel_gene_sets: dict[str, pd.DataFrame],
+    gene_universe: pd.DataFrame,
+    ch_priority_genes: set[str],
+    sample_class_components: list[str],
+    thresholds: Thresholds,
+    out_dir: Path,
+    bailey_alteration_class: pd.DataFrame | None = None,
+) -> None:
+    """Same as build_b_tier_cell but pre-filtered to a single study."""
+    sub = samples[samples["study_id"] == study].copy()
+    build_b_tier_cell(
+        cancer_type=cancer_type,
+        cohort=cohort,
+        samples=sub,
+        mutation_long=mutation_long,
+        sample_panel_map=sample_panel_map,
+        panel_gene_sets=panel_gene_sets,
+        gene_universe=gene_universe,
+        ch_priority_genes=ch_priority_genes,
+        sample_class_components=sample_class_components,
+        thresholds=thresholds,
+        out_dir=out_dir,
+        bailey_alteration_class=bailey_alteration_class,
     )
+
+
+if "snakemake" in globals():  # pragma: no cover  # set by Snakemake's script: directive
+    snek = snakemake  # type: ignore[name-defined]  # noqa: F821
+
+    cancer_type = snek.wildcards["cancer_type"]
+    tier = snek.wildcards["tier"]  # 'B' or 'A'
+    cohort = snek.wildcards["cohort"]  # 'inclusive' or 'exclusive'
+    study = snek.wildcards.get("study")  # only for tier == 'A'
+
+    samples = pd.read_feather(snek.input["samples_annotated"])
+    mutation_long = pd.read_feather(snek.input["mutation_long"])
+    sample_panel_map = pd.read_feather(snek.input["sample_panel_map"])
+    gene_universe = pd.read_csv(snek.input["gene_universe"], sep="\t")
+
+    panel_gene_sets: dict[str, pd.DataFrame] = {}
+    for path in snek.input["panel_gene_sets"]:
+        df = pd.read_feather(path)
+        if df.empty:
+            continue
+        pid = df["panel_id"].iloc[0]
+        panel_gene_sets[pid] = df
+
+    bailey = (
+        pd.read_feather(snek.input["bailey_alteration_class"])
+        if "bailey_alteration_class" in snek.input.keys()
+        else None
+    )
+
+    ch_genes = set(snek.params.get("ch_priority_genes", []))
+    sc_components = list(snek.params["sample_class_components"])
+    thresholds = Thresholds(**snek.params["thresholds"])
+    out_dir_path = Path(snek.output["cell_dir"])
+
+    if tier == "B":
+        build_b_tier_cell(
+            cancer_type=cancer_type,
+            cohort=cohort,
+            samples=samples,
+            mutation_long=mutation_long,
+            sample_panel_map=sample_panel_map,
+            panel_gene_sets=panel_gene_sets,
+            gene_universe=gene_universe,
+            ch_priority_genes=ch_genes,
+            sample_class_components=sc_components,
+            thresholds=thresholds,
+            out_dir=out_dir_path,
+            bailey_alteration_class=bailey,
+        )
+    elif tier == "A":
+        if study is None:
+            raise ValueError("A-tier cells require a 'study' wildcard")
+        build_a_tier_cell(
+            cancer_type=cancer_type,
+            cohort=cohort,
+            study=study,
+            samples=samples,
+            mutation_long=mutation_long,
+            sample_panel_map=sample_panel_map,
+            panel_gene_sets=panel_gene_sets,
+            gene_universe=gene_universe,
+            ch_priority_genes=ch_genes,
+            sample_class_components=sc_components,
+            thresholds=thresholds,
+            out_dir=out_dir_path,
+            bailey_alteration_class=bailey,
+        )
+    else:
+        raise ValueError(f"unknown tier: {tier!r}")

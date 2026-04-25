@@ -169,6 +169,84 @@ def test_b_cell_below_stratum_threshold_writes_sentinel(
         assert (out / fn).exists()
 
 
+def test_a_tier_filters_to_single_study(tmp_path: Path, fixture_studies):
+    samples, mut, panel_map, panel_genes = fixture_studies
+    out = tmp_path / "cell_a"
+    mod.build_a_tier_cell(
+        cancer_type="luad",
+        cohort="inclusive",
+        study="st1",
+        samples=samples,
+        mutation_long=_to_long(mut),
+        sample_panel_map=panel_map,
+        panel_gene_sets={"panel_x": panel_genes},
+        gene_universe=pd.DataFrame(
+            {
+                "symbol": ["TP53", "KRAS", "EGFR", "BRAF", "MYC", "ZZTOPLOWFREQ"],
+                "from_bailey": [True] * 6,
+                "from_cgc": [False] * 6,
+                "from_sanchez_vega": [False] * 6,
+                "from_custom": [False] * 6,
+            }
+        ),
+        ch_priority_genes=set(),
+        sample_class_components=["study_id"],
+        thresholds=mod.Thresholds(
+            min_stratum_samples=30,
+            min_gene_prevalence_frac=0.03,
+            min_gene_prevalence_count=3,
+            study_residual_threshold_frac=0.10,
+        ),
+        out_dir=out,
+    )
+    sc = pd.read_feather(out / "sample_class.feather")
+    # Only 30 samples from study st1.
+    assert len(sc) == 30
+    assert (sc["sample_class"] == "st1").all()
+
+
+def test_alteration_class_uses_bailey_when_provided(tmp_path: Path, fixture_studies):
+    samples, mut, panel_map, panel_genes = fixture_studies
+    bailey_drivers = pd.DataFrame(
+        {
+            "symbol": ["TP53", "KRAS", "EGFR", "BRAF", "MYC"],
+            "alteration_class": ["tsg", "oncogene", "oncogene", "oncogene", "oncogene"],
+        }
+    )
+    out = tmp_path / "cell_b_with_bailey"
+    mod.build_b_tier_cell(
+        cancer_type="luad",
+        cohort="inclusive",
+        samples=samples,
+        mutation_long=_to_long(mut),
+        sample_panel_map=panel_map,
+        panel_gene_sets={"panel_x": panel_genes},
+        gene_universe=pd.DataFrame(
+            {
+                "symbol": ["TP53", "KRAS", "EGFR", "BRAF", "MYC", "ZZTOPLOWFREQ"],
+                "from_bailey": [True] * 6,
+                "from_cgc": [False] * 6,
+                "from_sanchez_vega": [False] * 6,
+                "from_custom": [False] * 6,
+            }
+        ),
+        ch_priority_genes=set(),
+        sample_class_components=["study_id"],
+        thresholds=mod.Thresholds(
+            min_stratum_samples=30,
+            min_gene_prevalence_frac=0.03,
+            min_gene_prevalence_count=3,
+            study_residual_threshold_frac=0.10,
+        ),
+        out_dir=out,
+        bailey_alteration_class=bailey_drivers,
+    )
+    ac = pd.read_feather(out / "alteration_class.feather")
+    cls = ac.set_index("symbol")["alteration_class"].to_dict()
+    assert cls["TP53"] == "tsg"
+    assert cls["KRAS"] == "oncogene"
+
+
 def _to_long(wide: pd.DataFrame) -> pd.DataFrame:
     """Convert a wide (sample x gene) bool table to (composite_sample_id, gene) long."""
     long = wide.melt(

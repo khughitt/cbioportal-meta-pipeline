@@ -247,6 +247,41 @@ def test_alteration_class_uses_bailey_when_provided(tmp_path: Path, fixture_stud
     assert cls["KRAS"] == "oncogene"
 
 
+def test_pathway_aggregated_gam_or_semantics(tmp_path: Path, fixture_studies):
+    samples, mut, panel_map, panel_genes = fixture_studies
+    pathways = pd.DataFrame(
+        {
+            "symbol": ["TP53", "KRAS", "BRAF", "EGFR"],
+            "pathway": ["P53", "RTK_RAS", "RTK_RAS", "RTK_RAS"],
+        }
+    )
+    out = tmp_path / "pa"
+    mod.build_pathway_aggregated_gam(
+        cancer_type="luad",
+        samples=samples,
+        mutation_long=_to_long(mut),
+        sample_panel_map=panel_map,
+        panel_gene_sets={"panel_x": panel_genes},
+        pathway_membership=pathways,
+        ch_priority_genes=set(),
+        thresholds=mod.Thresholds(
+            min_stratum_samples=30,
+            min_gene_prevalence_frac=0.03,
+            min_gene_prevalence_count=3,
+            study_residual_threshold_frac=0.10,
+        ),
+        out_dir=out,
+    )
+    pa_gam = pd.read_feather(out / "pathway_aggregated" / "gam.feather")
+    # Samples x 2 pathways.
+    assert "P53" in pa_gam.columns
+    assert "RTK_RAS" in pa_gam.columns
+    # A00 index 0 -> TP53 (i%2==0), KRAS (i%3==0), EGFR (i%4==0), BRAF (i%5==0). All True.
+    sample_a00 = pa_gam[pa_gam["composite_sample_id"] == "st1|A00"].iloc[0]
+    assert bool(sample_a00["P53"]) is True
+    assert bool(sample_a00["RTK_RAS"]) is True
+
+
 def _to_long(wide: pd.DataFrame) -> pd.DataFrame:
     """Convert a wide (sample x gene) bool table to (composite_sample_id, gene) long."""
     long = wide.melt(

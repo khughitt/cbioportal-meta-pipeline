@@ -253,6 +253,90 @@ def build_a_tier_cell(
     )
 
 
+def build_pathway_aggregated_gam(
+    cancer_type: str,
+    samples: pd.DataFrame,
+    mutation_long: pd.DataFrame,
+    sample_panel_map: pd.DataFrame,
+    panel_gene_sets: dict[str, pd.DataFrame],
+    pathway_membership: pd.DataFrame,  # cols: symbol, pathway
+    ch_priority_genes: set[str],
+    thresholds: Thresholds,
+    out_dir: Path,
+) -> None:
+    """Pathway-aggregated GAM (samples x 10 pathways), B-tier-exclusive cohort only."""
+    cohort_samples = samples[
+        (samples["cancer_type"] == cancer_type) & (~samples["is_hypermutator"])
+    ]
+    n_samples = len(cohort_samples)
+    out_dir = Path(out_dir) / "pathway_aggregated"
+    if n_samples < thresholds.min_stratum_samples:
+        _empty_outputs(out_dir, SKIP_INSUFFICIENT_SAMPLES, n_samples=n_samples)
+        return
+
+    sp = sample_panel_map.merge(
+        cohort_samples[["study_id", "sample_id"]],
+        on=["study_id", "sample_id"],
+        how="inner",
+        validate="one_to_one",
+    )
+    callable_genes = _intersect_panel_genes(sp["panel_id"], panel_gene_sets)
+    callable_genes -= ch_priority_genes
+
+    # Restrict pathway membership to callable genes only.
+    pm = pathway_membership[pathway_membership["symbol"].isin(callable_genes)]
+
+    sample_ids = cohort_samples["composite_sample_id"].tolist()
+    relevant = mutation_long[mutation_long["symbol"].isin(set(pm["symbol"]))]
+    relevant = relevant[relevant["composite_sample_id"].isin(sample_ids)]
+
+    # Join mutation events to pathways.
+    joined = relevant.merge(pm, on="symbol", how="inner")
+    pa_long = joined[["composite_sample_id", "pathway"]].drop_duplicates()
+    pa_long = pa_long.assign(value=True)
+
+    pathways = sorted(set(pm["pathway"]))
+    gam = (
+        pa_long.pivot_table(
+            index="composite_sample_id",
+            columns="pathway",
+            values="value",
+            fill_value=False,
+            aggfunc="any",
+        )
+        .reindex(index=sample_ids, columns=pathways)
+        .fillna(False)
+        .astype(bool)
+    )
+    gam.index.name = "composite_sample_id"
+
+    sample_class = pd.DataFrame(
+        {
+            "composite_sample_id": gam.index.tolist(),
+            "sample_class": cohort_samples.set_index("composite_sample_id")
+            .loc[gam.index, "study_id"]
+            .astype(str)
+            .values,
+        }
+    )
+    alteration_class = pd.DataFrame(
+        {
+            "symbol": pathways,
+            "alteration_class": "unknown",
+        }
+    )
+    metadata = {
+        "skip_reason": None,
+        "n_samples": int(n_samples),
+        "n_genes": int(gam.shape[1]),
+        "panel_intersection_size": int(len(callable_genes)),
+        "kind": "pathway_aggregated",
+    }
+    _write_cell_outputs(
+        out_dir, gam.reset_index(), sample_class, alteration_class, metadata
+    )
+
+
 if "snakemake" in globals():  # pragma: no cover  # set by Snakemake's script: directive
     snek = snakemake  # type: ignore[name-defined]  # noqa: F821
 

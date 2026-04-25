@@ -7,7 +7,8 @@ created: "2026-04-22"
 updated: "2026-04-22"
 generated_at: "2026-04-22T18:54:12-04:00"
 source_commit: "47d5528f6b66daa78afab492361b2af45f41b2a3"
-scope: "all"
+scope: "project"
+sweep_scope: "all"
 since: null
 mode: "propose"
 applied_changes: 0

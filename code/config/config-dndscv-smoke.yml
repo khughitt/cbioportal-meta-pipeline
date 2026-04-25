@@ -1,0 +1,92 @@
+#
+# cbioportal / t131 dNdScv smoke config
+#
+# Single-study, single-cancer-type config used to validate the conda env path
+# (`--use-conda`) end-to-end before kicking off the full pan-cancer-dndscv
+# run. Per t131 review finding F10.
+#
+# Invocation:
+#
+#   uv run snakemake -s code/workflows/Snakefile \
+#       --configfile code/config/config-dndscv-smoke.yml \
+#       --use-conda --conda-frontend mamba -j1 all_with_dndscv
+#
+# Expected wall time: ~10 min on first run (conda env build dominates),
+# ~1 min on subsequent runs (env cached).
+#
+# Study choice — `acc_2019` (Adrenocortical Carcinoma, Assie 2019):
+#   - Small WES cohort (~91 samples) — finishes dndscv in seconds.
+#   - hg19-aligned — exercises the GRCh37 dndscv refdb path.
+#   - Already on disk in /data/raw/cbioportal/.
+#
+# Thresholds lowered (`dndscv_min_samples=20`, `dndscv_min_variants=100`) so
+# the cohort actually reaches dndscv invocation rather than short-circuiting
+# to `below_threshold`. Defeats the purpose of a smoke test otherwise.
+#
+
+# input / output directories
+data_dir: "/data/raw/cbioportal"
+out_dir: "/data/packages/cbioportal/dndscv-smoke"
+
+# minimum ratio of studies a gene must be present in to be included
+filtering:
+  genes:
+    min_studies_ratio: 0.0  # single-study run; don't filter genes by cross-study coverage
+
+subsampling:
+  patients: 1.0
+
+summary:
+  table_max_rows: 50
+  min_gene_coverage_ratio: 0.0
+  min_gene_coverage_ratio_specific: 0.0
+  num_cancer_specific_results: 1
+
+matched_normal_studies: ["acc_2019"]
+
+cosmic_cgc_path: "/data/raw/cosmic/v100/Cosmic_CancerGeneCensus_v100_GRCh38.tsv"
+
+panel_bearing_studies: []
+study_panel_map: {}
+
+panel_callable_mb_override: {}
+wes_default_callable_mb: 30.0
+panel_callable_mb_tolerance: 0.05
+
+random_seed: 0
+gmm_min_samples: 100
+
+# Clustering knobs — required by `rule cluster_genes` / `rule cluster_cancer_types`
+# which are pulled in by `all_with_dndscv` via `rules.all.input`. Single-study smoke
+# won't produce meaningful clusters, but the rules need the config keys present.
+clustering:
+  gene:
+    k: 2                    # smoke has 3 cancer types; cluster needs k <= n_samples
+    gene_min_mutations: 1   # tiny cohort — relax thresholds so anything clusters
+    cancer_min_mutations: 1
+    random_seed: 0
+  cancer:
+    k: 2                    # acc_2019 yields only 3 cancer types
+    gene_min_mutations: 1
+    cancer_min_mutations: 1
+    random_seed: 0
+
+#
+# t131 — dNdScv-specific knobs
+#
+
+study_reference_build_override: {}
+
+# Smoke run is single WES study; no panel mixing concerns.
+dndscv_wes_only: false
+
+# Lowered thresholds so the small acc_2019 cohort actually runs dndscv
+# rather than short-circuiting to below_threshold.
+dndscv_min_samples: 20
+dndscv_min_variants: 100
+
+# PubTator panel exercised on smoke too — surfaces F3 join-coverage warnings
+# early. Comment out to skip.
+pubtator_path: "/data/proj/lit-explore/pubtator/2026-01-16/counts/gene_concept_ids.feather"
+
+studies: ["acc_2019"]

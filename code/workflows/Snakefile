@@ -870,4 +870,46 @@ rule process_mc3:
   script:
     "../scripts/process_mc3.py"
 
+#
+# t078 SELECT pipeline — vendored upstream R package.
+#
+# Downloads the v1.6.4 source tarball from the public GitHub release and
+# verifies its sha256 prefix. The artifact is committed to the repo so this
+# rule normally never runs; it exists so the download recipe is reproducible
+# (e.g., after `git clean -xdf data/external/` the rule restores the file
+# byte-for-byte). To upgrade, bump SELECT_VERSION + SELECT_SHA256_PREFIX and
+# re-run.
+#
+SELECT_VERSION = "1.6.4"
+SELECT_SHA256_PREFIX = "1927b9880132"   # 12-char prefix
+
+rule fetch_select_tarball:
+  output:
+    "data/external/select_v{version}.tar.gz".format(version=SELECT_VERSION)
+  params:
+    url=lambda wc: (
+      f"https://github.com/CSOgroup/select/archive/refs/tags/v{SELECT_VERSION}.tar.gz"
+    ),
+    expected_sha256_prefix=SELECT_SHA256_PREFIX,
+  shell:
+    r"""
+    mkdir -p $(dirname {output})
+    curl -sSfL {params.url} -o {output}.tmp
+    actual=$(sha256sum {output}.tmp | cut -c1-12)
+    if [ "{params.expected_sha256_prefix}" != "<TBD-after-first-download>" ] && \
+       [ "$actual" != "{params.expected_sha256_prefix}" ]; then
+      echo "ERROR: sha256 mismatch for {output}" >&2
+      echo "  expected prefix: {params.expected_sha256_prefix}" >&2
+      echo "  actual prefix:   $actual" >&2
+      rm -f {output}.tmp
+      exit 1
+    fi
+    file {output}.tmp | grep -q "gzip compressed" || (
+      echo "ERROR: download is not a gzip tarball (likely an HTML error page)" >&2
+      rm -f {output}.tmp
+      exit 1
+    )
+    mv {output}.tmp {output}
+    """
+
 # vi:ft=snakemake

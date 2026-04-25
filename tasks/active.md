@@ -272,3 +272,33 @@ Exercise the Li2021+Xu2025 reference spectra landed by t111 against the tcga_mc3
 - created: 2026-04-24
 
 Two workflow output directories currently sit on disk with no datapackage.json manifests: results/poc-2026-04-17/ (t100 PoC annotated artifact) and results/signature-brca-2026-04-22/ (t109/t110 signature-restriction outputs). Write Frictionless Data Package manifests retroactively so provenance is filesystem-readable rather than narrative-only. Recurring gap flagged on both 2026-04-22 and 2026-04-24.
+
+## [t129] Length × PubMed-mention regression pipeline step (q011)
+- priority: P2
+- status: proposed
+- aspects: [computational-analysis]
+- related: [question:q011-gene-length-as-literature-attention-confounder, topic:mutation-rate-normalization, discussion:2026-04-24-gene-length-bias-in-mutation-rankings-and-literature, task:t082]
+- group: meta-analysis
+- created: 2026-04-24
+
+Implement the regression spec'd in q011: log(mention_count+1) ~ log(protein_length) + log(mutation_count+1) over protein-coding genes (PubTator 2026-01-16 + UniProt + cBioPortal aggregate counts). Report marginal vs partial length slope with bootstrap CIs. Subgroup by Bailey 2018 driver list. Sensitivity: dNdScv-corrected counts, disease-co-mention covariate, non-cancer placebo slice. Output: doc/interpretations/<date>-q011-length-attention-regression.md plus a length-residualized 'attention prior' feather under models/. Requires HGNC alias mapping (t082) for the PubTator↔UniProt join.
+
+## [t130] Paper summary: Stoeger & Nunes Amaral 2018 (gene-attention accessibility features)
+- priority: P2
+- status: proposed
+- aspects: [computational-analysis]
+- related: [question:q011-gene-length-as-literature-attention-confounder, topic:mutation-rate-normalization, discussion:2026-04-24-gene-length-bias-in-mutation-rankings-and-literature]
+- group: searches
+- created: 2026-04-24
+
+Use science:research-papers to summarize Stoeger T, Gerlach M, Morimoto RI, Nunes Amaral LA. 2018. 'Large-scale investigation of the reasons why potentially important genes are ignored.' PLOS Biology 16(9):e2006643. doi:10.1371/journal.pbio.2006643. Methodological reference for the literature-attention bias side of q011 — they show chemical/experimental accessibility features predict per-gene publication count better than biological importance. Need: their list of accessibility features, their model form, effect-size estimates, and how (or whether) they treat gene/transcript length specifically.
+
+## [t131] Opt dNdScv into rule all via config-pan-cancer-dndscv.yml + three-way ranking comparison
+- priority: P2
+- status: proposed
+- aspects: [computational-analysis, software-development]
+- related: [topic:mutation-rate-normalization,discussion:2026-04-24-gene-length-bias-in-mutation-rankings-and-literature,question:q011-gene-length-as-literature-attention-confounder,paper:Martincorena2017]
+- group: pipeline
+- created: 2026-04-24
+
+Add a side config code/config/config-pan-cancer-dndscv.yml that includes the per-study dNdScv outputs (studies/{id}/mut/dndscv/genes.feather) in rule all. Then write a comparison report: raw vs length-adjusted vs dNdScv-selection rankings, Spearman + Jaccard@10/50/100/500, and per-list correlation with PubTator gene-mention counts. Closes the 'length-only is below the 2013 methodology bar' finding from the bias audit and topic:mutation-rate-normalization. CONSTRAINT (per memory:r-reproducibility): the dNdScv rule must use a conda/mamba env YAML or Docker image — never assume system R.

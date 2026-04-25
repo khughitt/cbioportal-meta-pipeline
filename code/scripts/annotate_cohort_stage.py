@@ -39,12 +39,12 @@ def load_and_validate_registry(path: Path) -> pd.DataFrame:
     if missing:
         raise ValueError(f"registry {path} missing columns: {missing}")
     for col in ("default_is_metastatic", "default_is_pre_treated"):
-        bad = ~df[col].isin(ENUM_VALUES)
+        bad = ~df[col].isin(list(ENUM_VALUES))
         if bad.any():
             raise ValueError(
                 f"{col} has invalid values: {sorted(df.loc[bad, col].unique().tolist())}"
             )
-    bad_kinds = ~df["pattern_kind"].isin(PATTERN_KIND_VALUES)
+    bad_kinds = ~df["pattern_kind"].isin(list(PATTERN_KIND_VALUES))
     if bad_kinds.any():
         raise ValueError(
             f"pattern_kind has invalid values: {sorted(df.loc[bad_kinds, 'pattern_kind'].unique().tolist())}"

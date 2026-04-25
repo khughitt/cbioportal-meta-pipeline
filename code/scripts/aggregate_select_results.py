@@ -207,5 +207,121 @@ def add_concordance_flag(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
+def pathway_rollup(
+    headline: pd.DataFrame,
+    pathway_membership: pd.DataFrame,
+) -> pd.DataFrame:
+    """EXPLORATORY: Stouffer over gene-pair Z-scores grouped by pathway pair.
+
+    Per design Section 4.6 step 5 + risk #4: gene-pairs within a pathway block
+    are correlated through shared genes, so Stouffer's null is mis-specified.
+    This output is for hypothesis generation only.
+    """
+    if headline.empty:
+        return pd.DataFrame(
+            columns=[
+                "pathway_i",
+                "pathway_j",
+                "cancer_type",
+                "cohort",
+                "rollup_stouffer_z",
+                "rollup_stouffer_p",
+                "n_constituent_pairs",
+            ]
+        )
+    pm = pathway_membership.set_index("symbol")["pathway"]
+    df = headline[
+        [
+            "gene_i",
+            "gene_j",
+            "cancer_type",
+            "cohort",
+            "b_p_wMI",
+            "b_direction",
+            "b_n_samples",
+        ]
+    ].copy()
+    df["pathway_i"] = df["gene_i"].map(pm)
+    df["pathway_j"] = df["gene_j"].map(pm)
+    df = df.dropna(subset=["pathway_i", "pathway_j", "b_p_wMI"])
+
+    sign_map = {"CO": +1, "ME": -1, "none": 0}
+    df["sign"] = df["b_direction"].map(sign_map).fillna(0).astype(int)
+    df["weight"] = np.sqrt(df["b_n_samples"].astype(float))
+
+    rows: list[dict] = []
+    for keys, sub in df.groupby(
+        ["pathway_i", "pathway_j", "cancer_type", "cohort"], observed=True
+    ):
+        z, p, n_used = lib.signed_stouffer(
+            pvalues=sub["b_p_wMI"].to_numpy(dtype=float),
+            signs=sub["sign"].to_numpy(dtype=float),
+            weights=sub["weight"].to_numpy(dtype=float),
+        )
+        rows.append(
+            {
+                "pathway_i": keys[0],
+                "pathway_j": keys[1],
+                "cancer_type": keys[2],
+                "cohort": keys[3],
+                "rollup_stouffer_z": z,
+                "rollup_stouffer_p": p,
+                "n_constituent_pairs": int(n_used),
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def build_sibling_annotation(headline: pd.DataFrame) -> pd.DataFrame:
+    """Per (symbol, cancer_type) significant-partners count from B-tier exclusive cohort."""
+    if headline.empty:
+        return pd.DataFrame(
+            columns=[
+                "symbol",
+                "cancer_type",
+                "n_significant_select_partners_q01",
+                "n_significant_select_partners_q01_concordant",
+            ]
+        )
+    excl = headline[headline["cohort"] == "exclusive"].copy()
+    excl["q_sig"] = excl["b_q_wMI_within_stratum"].fillna(1.0) < 0.10
+    excl["q_sig_concordant"] = excl["q_sig"] & (excl["b_a_concordance"] == "concordant")
+
+    pieces: list[pd.DataFrame] = []
+    for left_col in ("gene_i", "gene_j"):
+        sub = excl[[left_col, "cancer_type", "q_sig", "q_sig_concordant"]].copy()
+        sub = sub.rename(columns={left_col: "symbol"})
+        pieces.append(sub)
+    long = pd.concat(pieces, ignore_index=True)
+    grouped = long.groupby(
+        ["symbol", "cancer_type"], observed=True, as_index=False
+    ).agg(
+        n_significant_select_partners_q01=("q_sig", "sum"),
+        n_significant_select_partners_q01_concordant=("q_sig_concordant", "sum"),
+    )
+    grouped["n_significant_select_partners_q01"] = grouped[
+        "n_significant_select_partners_q01"
+    ].astype(int)
+    grouped["n_significant_select_partners_q01_concordant"] = grouped[
+        "n_significant_select_partners_q01_concordant"
+    ].astype(int)
+    return grouped
+
+
+# Snakemake entry point.
 if "snakemake" in globals():  # pragma: no cover  # set by Snakemake's script: directive
-    raise NotImplementedError("Snakemake entry point lands in Task 17.")
+    snek = snakemake  # type: ignore[name-defined]  # noqa: F821
+
+    per_cell_paths = [Path(p) for p in snek.input["per_cell"]]
+    pathway_membership = pd.read_csv(snek.input["pathway_membership"], sep="\t")
+
+    df_b = compute_b_tier_qvalues(concat_b_tier(per_cell_paths))
+    df_a = compute_a_tier_stouffer(concat_a_tier(per_cell_paths))
+    headline = add_concordance_flag(union_join(df_b, df_a))
+    rollup = pathway_rollup(headline, pathway_membership)
+    annotation = build_sibling_annotation(headline)
+
+    Path(snek.output["gene_pair"]).parent.mkdir(parents=True, exist_ok=True)
+    headline.reset_index(drop=True).to_feather(snek.output["gene_pair"])
+    rollup.reset_index(drop=True).to_feather(snek.output["pathway_rollup"])
+    annotation.reset_index(drop=True).to_feather(snek.output["annotation"])

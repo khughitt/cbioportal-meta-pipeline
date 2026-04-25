@@ -233,6 +233,88 @@ def test_concordance_flag_categories(scenario, expected):
     assert out == expected
 
 
+def test_pathway_rollup_groups_by_pathway_pair(tmp_path: Path):
+    """Stouffer over gene-pairs grouped by their pathway membership."""
+    headline = pd.DataFrame(
+        [
+            {
+                "gene_i": "TP53",
+                "gene_j": "KRAS",
+                "cancer_type": "luad",
+                "cohort": "exclusive",
+                "b_p_wMI": 0.01,
+                "b_direction": "ME",
+                "b_n_samples": 100,
+            },
+            {
+                "gene_i": "TP53",
+                "gene_j": "BRAF",
+                "cancer_type": "luad",
+                "cohort": "exclusive",
+                "b_p_wMI": 0.05,
+                "b_direction": "ME",
+                "b_n_samples": 100,
+            },
+            {
+                "gene_i": "EGFR",
+                "gene_j": "BRAF",
+                "cancer_type": "luad",
+                "cohort": "exclusive",
+                "b_p_wMI": 0.01,
+                "b_direction": "CO",
+                "b_n_samples": 100,
+            },
+        ]
+    )
+    pathway_membership = pd.DataFrame(
+        {
+            "symbol": ["TP53", "KRAS", "BRAF", "EGFR"],
+            "pathway": ["P53", "RTK_RAS", "RTK_RAS", "RTK_RAS"],
+        }
+    )
+    out = mod.pathway_rollup(headline, pathway_membership)
+    rolled = out.set_index(["pathway_i", "pathway_j", "cancer_type", "cohort"])
+    assert ("P53", "RTK_RAS", "luad", "exclusive") in rolled.index
+    assert (
+        rolled.loc[("P53", "RTK_RAS", "luad", "exclusive"), "n_constituent_pairs"] == 2
+    )
+
+
+def test_sibling_annotation_counts_partners(tmp_path: Path):
+    headline = pd.DataFrame(
+        [
+            {
+                "gene_i": "TP53",
+                "gene_j": "KRAS",
+                "cancer_type": "luad",
+                "cohort": "exclusive",
+                "b_q_wMI_within_stratum": 0.005,
+                "b_a_concordance": "concordant",
+            },
+            {
+                "gene_i": "TP53",
+                "gene_j": "EGFR",
+                "cancer_type": "luad",
+                "cohort": "exclusive",
+                "b_q_wMI_within_stratum": 0.05,
+                "b_a_concordance": "b_only",
+            },
+            {
+                "gene_i": "TP53",
+                "gene_j": "BRAF",
+                "cancer_type": "luad",
+                "cohort": "exclusive",
+                "b_q_wMI_within_stratum": 0.5,
+                "b_a_concordance": "untested",
+            },
+        ]
+    )
+    out = mod.build_sibling_annotation(headline)
+    tp53_luad = out[(out["symbol"] == "TP53") & (out["cancer_type"] == "luad")].iloc[0]
+    assert tp53_luad["n_significant_select_partners_q01"] == 2
+    assert tp53_luad["n_significant_select_partners_q01_concordant"] == 1
+
+
 def test_b_tier_columns_have_b_prefix(tmp_path: Path):
     df = _per_cell(
         [{"gene_i": "TP53", "gene_j": "KRAS", "p_wMI": 0.001, "direction": "ME"}]

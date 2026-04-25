@@ -601,10 +601,30 @@ rule create_combined_gene_patient_matrix:
     "../scripts/create_combined_gene_patient_matrix.py"
 
 rule create_combined_sample_table:
+  """Combined per-sample cancer-type table + (t078) sample-to-panel map.
+
+  Two outputs:
+    - metadata/samples.feather (legacy): concat of per-study samples feathers
+      projected to {patient_id, sample_id, cancer_type, cancer_type_detailed}.
+    - metadata/sample_panel_map.feather (new, t078): per-(study_id, sample_id)
+      panel_id assignment sourced from data/study_panels.tsv (per-study) or
+      the GENIE clinical sample file (per-sample for genie_v9.1).
+
+  The genie_assay_table input defaults to the GENIE consolidated clinical
+  sample file under {data_dir}/genie/. Override via config["select"]
+  ["genie_clinical_sample_path"] for runs that omit GENIE -- the script
+  tolerates a missing/empty file as long as no genie_v9.1 samples are present
+  in the per_study inputs."""
   input:
-    expand(out_dir.joinpath("studies/{id}/metadata/samples.feather"), id=ids)
+    per_study=expand(out_dir.joinpath("studies/{id}/metadata/samples.feather"), id=ids),
+    study_panels="data/study_panels.tsv",
+    genie_assay_table=config.get("select", {}).get(
+      "genie_clinical_sample_path",
+      str(data_dir.joinpath("genie/data_clinical_sample.txt")),
+    ),
   output:
-    out_dir.joinpath("metadata/samples.feather"),
+    combined=out_dir.joinpath("metadata/samples.feather"),
+    sample_panel_map=out_dir.joinpath("metadata/sample_panel_map.feather"),
   script:
     "../scripts/create_combined_sample_table.py"
 

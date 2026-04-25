@@ -2,6 +2,6 @@ pattern	pattern_kind	default_is_metastatic	default_is_pre_treated	priority	sourc
 *_tcga_pan_can_atlas_*	glob	false	false	100	TCGA accrual largely targets primary untreated specimens (Cancer Genome Atlas Research Network 2008); fallback default - sample-level metadata always wins	SKCM has metastatic samples that override via sample_type
 tcga_mc3	study_id	false	false	50	Ellrott 2018 MC3 pseudo-study: TCGA matched-normal pan-cancer MAF, primary tumors
 msk_impact_*	glob	unknown	unknown	100	MSK-IMPACT clinical sequencing: mixed primary/metastatic, sample-level fields override (Zehir 2017)
-genie	study_id	unknown	unknown	100	AACR GENIE: clinical sequencing, mixed; sample-level SAMPLE_TYPE drives override
+genie	study_id	unknown	unknown	100	AACR Project GENIE Consortium 2017 (Cancer Discov): clinical sequencing, mixed; sample-level SAMPLE_TYPE drives override
 metastatic_solid_tumors_mich_2017	study_id	true	unknown	10	Robinson 2017 MET500: all metastatic by design
 pog570_bcgsc_2020	study_id	true	true	10	BCGSC POG-570: metastatic, post-treatment by design

@@ -1,0 +1,135 @@
+data_dir: /data/raw/cbioportal
+out_dir: results/t052-validation-2026-04-25
+filtering:
+  genes:
+    min_studies_ratio: 0.2
+subsampling:
+  patients: 1.0
+summary:
+  table_max_rows: 50
+  min_gene_coverage_ratio: 0.4
+  min_gene_coverage_ratio_specific: 0.1
+  num_cancer_specific_results: 10
+matched_normal_studies:
+- ucec_tcga_pan_can_atlas_2018
+- skcm_tcga_pan_can_atlas_2018
+- brca_tcga_pan_can_atlas_2018
+cosmic_cgc_path: /data/raw/cosmic/v100/Cosmic_CancerGeneCensus_v100_GRCh38.tsv
+panel_bearing_studies:
+- msk_impact_2017
+study_panel_map: {}
+panel_callable_mb_override:
+  MSK-IMPACT-341: 0.89
+  MSK-IMPACT-410: 1.01
+  MSK-IMPACT-468: 1.22
+  MSK-IMPACT-505: 1.45
+wes_default_callable_mb: 30.0
+panel_callable_mb_tolerance: 0.05
+random_seed: 0
+gmm_min_samples: 100
+composite_min_absolute_tmb: 10.0
+clustering:
+  gene:
+    k: 10
+    gene_min_mutations: 10
+    cancer_min_mutations: 5
+    random_seed: 0
+  cancer:
+    k: 5
+    gene_min_mutations: 10
+    cancer_min_mutations: 5
+    random_seed: 0
+studies:
+- prad_tcga_pan_can_atlas_2018
+cancer_types:
+- Acute myeloid leukemia
+- Adenosarcoma
+- Adrenal Tumor
+- Adrenocortical carcinoma
+- Adrenocortical Carcinoma
+- Ampullary Cancer
+- Anal Cancer
+- Appendiceal Cancer
+- B-Lymphoblastic Leukemia/Lymphoma
+- Bladder Cancer
+- Bone Cancer
+- Bowel Cancer, NOS
+- Brain Cancer
+- Breast Cancer
+- Breast Sarcoma
+- Cancer of Unknown Primary
+- Cervical Cancer
+- Choroid Plexus Tumor
+- CNS Cancer
+- Colorectal Cancer
+- Cutaneous malignancy of hair matrix cells
+- Diffuse Glioma
+- Embryonal Tumor
+- Encapsulated Glioma
+- Endometrial Cancer
+- Ependymomal Tumor
+- Esophagogastric Cancer
+- Essential Thrombocythemia
+- Fibrosarcoma
+- Gastrointestinal Neuroendocrine Tumor
+- Gastrointestinal Stromal Tumor
+- Germ Cell Tumor
+- Glioblastoma
+- Glioma
+- Head and Neck Cancer
+- Head and Neck Cancer, NOS
+- Hepatobiliary Cancer
+- Hodgkin Lymphoma-like PTLD
+- Intraductal Papillary Mucinous Neoplasm
+- Leukemia
+- Liver Tumor
+- Lung Cancer
+- Lung Cancer, NOS
+- Lymphoid Neoplasm
+- Mastocytosis
+- Mature B-cell lymphoma
+- Mature B-Cell Neoplasms
+- Mature T and NK Neoplasms
+- Medulloblastoma
+- Melanoma
+- Mesothelioma
+- Miscellaneous Neuroepithelial Tumor
+- Mucinous Adenocarcinoma Lymph Node
+- Myelodysplastic/Myeloproliferative Neoplasms
+- Nerve Sheath Tumor
+- Nested stromal epithelial tumor of the liver
+- Non-Germinomatous Germ Cell Tumor
+- Non-Hodgkin Lymphoma
+- Non-Seminomatous Germ Cell Tumor
+- Non-Small Cell Lung Cancer
+- Other
+- Ovarian Cancer
+- Ovarian Germ Cell Tumor
+- Ovarian/Fallopian Tube Cancer, NOS
+- Pancreatic Cancer
+- Penile Cancer
+- Peripheral Nervous System
+- Pineal Tumor
+- Posttransplant Lymphoproliferative Disorders
+- Prostate Cancer
+- Prostate Cancer, NOS
+- Renal cancer
+- Renal Cell Carcinoma
+- Retinoblastoma
+- Salivary Gland Cancer
+- Salivary Gland-Type Tumor of the Lung
+- Sellar Tumor
+- Sex Cord Stromal Tumor
+- Skin Cancer, Non-Melanoma
+- Small Bowel Cancer
+- Small Cell Lung Cancer
+- Soft Tissue Sarcoma
+- Soft Tissue Tumor
+- T-Lymphoblastic Leukemia/Lymphoma
+- Teratoma with Malignant Transformation
+- Thymic Tumor
+- Thyroid Cancer
+- Uterine Endometrioid Carcinoma
+- Uterine Sarcoma
+- Vaginal Cancer
+- Wilms Tumor

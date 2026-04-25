@@ -151,3 +151,33 @@ def classify_metastatic(
         if norm_site and norm_site not in METASTATIC_SITE_SENTINELS:
             return True, "sample_metadata:metastatic_site"
     return _resolve_from_registry(registry, study_id, "default_is_metastatic")
+
+
+PRE_TREATED_VALUE_MAP: dict[str, bool] = {
+    "post treatment": True,
+    "pretreated": True,
+    "treated": True,
+    "pre treatment": False,
+    "treatment naive": False,
+    "naive": False,
+}
+
+PRE_TREATED_SAMPLE_FIELDS: tuple[str, ...] = ("sample_type_detailed", "SPECIMEN_TYPE")
+
+
+def classify_pre_treated(
+    sample_row: dict | pd.Series, study_id: str, registry: pd.DataFrame
+) -> tuple[bool | None, str]:
+    """Resolve ``is_pre_treated`` for a single sample.
+
+    Most studies do not carry per-sample treatment status. Order:
+    ``sample_type_detailed`` -> ``SPECIMEN_TYPE`` -> registry.
+    """
+    for fld in PRE_TREATED_SAMPLE_FIELDS:
+        raw = sample_row.get(fld, "") if hasattr(sample_row, "get") else ""
+        if raw is None:
+            continue
+        norm = _normalize(str(raw))
+        if norm in PRE_TREATED_VALUE_MAP:
+            return PRE_TREATED_VALUE_MAP[norm], f"sample_metadata:{fld}"
+    return _resolve_from_registry(registry, study_id, "default_is_pre_treated")

@@ -191,3 +191,25 @@ def test_metastatic_glob_pattern_with_leading_wildcard_matches(tmp_path: Path) -
     )
     assert val is False
     assert src == "registry_glob"
+
+
+# ---------------------------------------------------------------------------
+# Treatment-axis classifier (2 tests)
+# ---------------------------------------------------------------------------
+
+
+def test_pre_treated_resolves_via_sample_type_detailed(tmp_path: Path) -> None:
+    registry = _toy_registry(tmp_path)
+    sample_row = {"sample_type_detailed": "Post-treatment"}
+    val, src = mod.classify_pre_treated(sample_row, "msk_impact_2017", registry)
+    assert val is True
+    assert src == "sample_metadata:sample_type_detailed"
+
+
+def test_pre_treated_normalization_handles_punctuation_variants(tmp_path: Path) -> None:
+    registry = _toy_registry(tmp_path)
+    for raw in ("Treatment-naive", "treatment_naive", "  TREATMENT  NAIVE  "):
+        sample_row = {"sample_type_detailed": raw}
+        val, src = mod.classify_pre_treated(sample_row, "msk_impact_2017", registry)
+        assert val is False, f"failed for {raw!r}"
+        assert src == "sample_metadata:sample_type_detailed"

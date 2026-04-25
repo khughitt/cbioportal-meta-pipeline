@@ -755,6 +755,23 @@ rule annotate_hypermutators:
   script:
     "../scripts/annotate_hypermutators.py"
 
+rule annotate_cohort_stage:
+  input:
+    samples = out_dir.joinpath("studies/{id}/metadata/samples.feather"),
+    registry = "data/cbioportal_study_cohort_profiles.tsv"
+  output:
+    out_dir.joinpath("studies/{id}/metadata/samples_stage_annotated.feather")
+  script:
+    "../scripts/annotate_cohort_stage.py"
+
+rule build_study_cohort_composition:
+  input:
+    expand(out_dir.joinpath("studies/{id}/metadata/samples_stage_annotated.feather"), id=ids)
+  output:
+    out_dir.joinpath("summary/metadata/study_cohort_composition.feather")
+  script:
+    "../scripts/build_study_cohort_composition.py"
+
 rule check_gene_coverage:
   input:
     expand(out_dir.joinpath("studies/{id}/mut/table/mut.feather"), id=ids),

@@ -131,5 +131,81 @@ def compute_a_tier_stouffer(df_a: pd.DataFrame) -> pd.DataFrame:
     return out
 
 
+def union_join(df_b: pd.DataFrame, df_a: pd.DataFrame) -> pd.DataFrame:
+    """Outer join on (gene_i, gene_j, cancer_type, cohort) -- preserves a_only / b_only."""
+    if df_b.empty and df_a.empty:
+        return pd.DataFrame()
+    if df_b.empty:
+        return df_a.copy()
+    if df_a.empty:
+        return df_b.copy()
+    return df_b.merge(df_a, on=KEY_COLS, how="outer")
+
+
+_FDR_THRESHOLD = 0.10
+_CONSENSUS_THRESHOLD = 0.7
+
+
+def compute_concordance_flag(
+    row: pd.Series,
+    fdr_alpha: float = _FDR_THRESHOLD,
+    consensus_threshold: float = _CONSENSUS_THRESHOLD,
+) -> str:
+    """Categorical concordance flag per design Section 4.6 step 4."""
+    b_q = row.get("b_q_wMI_within_stratum")
+    a_q = row.get("a_q_wMI_within_stratum")
+    b_dir = row.get("b_direction")
+    a_consensus = row.get("a_direction_consensus_frac")
+    a_k = row.get("a_k_studies_contributing")
+
+    b_present = pd.notna(b_q)
+    a_present = pd.notna(a_q)
+    b_sig = b_present and b_q < fdr_alpha
+    a_sig = a_present and a_q < fdr_alpha
+
+    if not b_present and not a_present:
+        return "untested"
+
+    if a_present and (a_k is None or pd.isna(a_k) or a_k < 2):
+        return "insufficient_a_studies"
+
+    if b_sig and a_sig:
+        consensus_ok = pd.notna(a_consensus) and a_consensus >= consensus_threshold
+        # Infer A-tier dominant direction from sign of stouffer_z.
+        a_z = row.get("a_stouffer_z_wMI")
+        if pd.notna(a_z) and a_z > 0:
+            a_dom_dir = "CO"
+        elif pd.notna(a_z) and a_z < 0:
+            a_dom_dir = "ME"
+        else:
+            a_dom_dir = None
+        signs_agree = a_dom_dir is not None and b_dir == a_dom_dir
+        if signs_agree and consensus_ok:
+            return "concordant"
+        return "direction_conflict"
+
+    if b_sig and not a_sig:
+        return "b_only"
+
+    if a_sig and not b_sig and b_present:
+        return "a_only_b_present"
+
+    if a_sig and not b_present:
+        return "a_only_b_absent"
+
+    return "untested"
+
+
+def add_concordance_flag(df: pd.DataFrame) -> pd.DataFrame:
+    """Apply compute_concordance_flag row-wise."""
+    if df.empty:
+        df = df.copy()
+        df["b_a_concordance"] = pd.Series(dtype="string")
+        return df
+    df = df.copy()
+    df["b_a_concordance"] = df.apply(compute_concordance_flag, axis=1).astype("string")
+    return df
+
+
 if "snakemake" in globals():  # pragma: no cover  # set by Snakemake's script: directive
     raise NotImplementedError("Snakemake entry point lands in Task 17.")

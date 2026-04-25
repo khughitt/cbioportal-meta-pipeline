@@ -7,6 +7,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+import pytest
+
 import aggregate_select_results as mod
 
 
@@ -153,6 +155,82 @@ def test_a_tier_counts_attempted_includes_sentinels(tmp_path: Path):
     row = out.iloc[0]
     assert row["a_k_studies_contributing"] == 1
     assert row["a_k_studies_attempted"] == 2
+
+
+def test_union_join_preserves_a_only_b_absent(tmp_path: Path):
+    df_b = pd.DataFrame(
+        [
+            {
+                "gene_i": "TP53",
+                "gene_j": "KRAS",
+                "cancer_type": "luad",
+                "cohort": "exclusive",
+                "b_n_samples": 100,
+                "b_n_i_only": 10,
+                "b_n_j_only": 10,
+                "b_n_both": 5,
+                "b_n_neither": 75,
+                "b_select_score": 0.5,
+                "b_p_wMI": 0.001,
+                "b_p_ME": 0.002,
+                "b_direction": "ME",
+                "b_q_wMI_within_stratum": 0.005,
+                "b_skip_reason": pd.NA,
+            }
+        ]
+    )
+    df_a = pd.DataFrame(
+        [
+            {
+                "gene_i": "EGFR",
+                "gene_j": "MYC",  # not in B-tier
+                "cancer_type": "luad",
+                "cohort": "exclusive",
+                "a_stouffer_z_wMI": 3.0,
+                "a_stouffer_p_wMI": 0.003,
+                "a_q_wMI_within_stratum": 0.01,
+                "a_k_studies_contributing": 3,
+                "a_k_studies_attempted": 3,
+                "a_direction_consensus_frac": 1.0,
+                "a_skip_reason": pd.NA,
+            }
+        ]
+    )
+    out = mod.union_join(df_b, df_a)
+    assert len(out) == 2
+    egfr_myc = out[(out["gene_i"] == "EGFR") & (out["gene_j"] == "MYC")].iloc[0]
+    assert pd.isna(egfr_myc["b_p_wMI"])
+    assert egfr_myc["a_q_wMI_within_stratum"] == pytest.approx(0.01)
+
+
+@pytest.mark.parametrize(
+    "scenario,expected",
+    [
+        # (b_q, a_q, b_dir, a_z, k, consensus) -> expected
+        ((0.05, 0.05, "ME", -3.0, 3, 1.0), "concordant"),
+        ((0.05, 0.05, "ME", +3.0, 3, 0.5), "direction_conflict"),
+        ((0.05, 0.5, "ME", -3.0, 3, 1.0), "b_only"),
+        ((0.5, 0.05, "ME", +3.0, 3, 1.0), "a_only_b_present"),
+        ((np.nan, 0.05, np.nan, +3.0, 3, 1.0), "a_only_b_absent"),
+        ((0.05, 0.5, "ME", +3.0, 1, 1.0), "insufficient_a_studies"),
+        ((np.nan, np.nan, np.nan, np.nan, 0, np.nan), "untested"),
+    ],
+)
+def test_concordance_flag_categories(scenario, expected):
+    b_q, a_q, b_dir, a_z, k, cons = scenario
+    out = mod.compute_concordance_flag(
+        pd.Series(
+            {
+                "b_q_wMI_within_stratum": b_q,
+                "a_q_wMI_within_stratum": a_q,
+                "b_direction": b_dir,
+                "a_stouffer_z_wMI": a_z,
+                "a_direction_consensus_frac": cons,
+                "a_k_studies_contributing": k,
+            }
+        )
+    )
+    assert out == expected
 
 
 def test_b_tier_columns_have_b_prefix(tmp_path: Path):

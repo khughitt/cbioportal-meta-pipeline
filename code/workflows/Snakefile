@@ -34,6 +34,231 @@ rule all:
     # out pending Python/marimo port. Reinstate once the port lands.
 
 #
+# t078 SELECT co-occurrence / mutual-exclusivity layer (opt-in via config["select"]
+# ["enabled"]). See doc/plans/2026-04-25-t078-select-cooccurrence-design.md.
+#
+
+select_enabled = config.get("select", {}).get("enabled", False)
+
+def _panels_for_cancer_study(cancer_type: str, study: str | None = None) -> list[str]:
+  """Panels needed for one cell, looked up by cancer_type and (optional) study.
+
+  For A-tier cells: pass the named study so only that study's panel(s) are returned.
+  For B-tier and PA cells: pass study=None to get every panel that any sample of
+  the cancer type uses.
+
+  Reads sample_panel_map.feather + samples_annotated.feather lazily; rules using
+  this helper must depend on those files existing before the lambda is evaluated.
+  """
+  spm = pd.read_feather(out_dir.joinpath("metadata/sample_panel_map.feather"))
+  samples = pd.read_feather(out_dir.joinpath("metadata/samples_annotated.feather"))
+  rel = samples.merge(spm, on=["study_id", "sample_id"], how="inner")
+  rel = rel[rel["cancer_type"] == cancer_type]
+  if study is not None:
+    rel = rel[rel["study_id"] == study]
+  return sorted(rel["panel_id"].dropna().unique().tolist())
+
+
+def _panels_for_cell(config: dict, wildcards) -> list[str]:
+  """Wildcards-shape adapter for build_select_gam (B/A) rule."""
+  study = wildcards.study if wildcards.tier == "A" else None
+  return _panels_for_cancer_study(wildcards.cancer_type, study)
+
+
+def _all_per_cell_paths(config: dict) -> list[str]:
+  """Enumerate every per-cell pair_stats.feather Snakemake should expand to.
+
+  Reads samples_annotated.feather lazily. The aggregate rule's `input:` lambda
+  must wait for that file before this is invoked at DAG-resolution time.
+  """
+  samples = pd.read_feather(out_dir.joinpath("metadata/samples_annotated.feather"))
+  cancer_types = sorted(samples["cancer_type"].dropna().unique())
+  studies = sorted(samples["study_id"].dropna().unique())
+  paths: list[str] = []
+  for ct in cancer_types:
+    for cohort in ("inclusive", "exclusive"):
+      paths.append(str(out_dir.joinpath(
+        f"select/per_cell/{ct}/B/_/{cohort}/pair_stats.feather"
+      )))
+      for st in studies:
+        paths.append(str(out_dir.joinpath(
+          f"select/per_cell/{ct}/A/{st}/{cohort}/pair_stats.feather"
+        )))
+  return paths
+
+
+if select_enabled:
+
+  rule preflight_select_env:
+    """Rule (0): install CSOgroup/select v1.6.4 from vendored tarball, smoke
+    test on luad_data, write token. Every other SELECT rule depends on this."""
+    input:
+      tarball = "data/external/select_v1.6.4.tar.gz"
+    output:
+      token = out_dir.joinpath("select/.preflight_ok")
+    conda:
+      "../envs/select.yml"
+    script:
+      "../scripts/preflight_select_env.R"
+
+  rule build_panel_gene_sets:
+    """Rule (1a): per-panel callable-gene feathers.
+
+    Panel BED path resolves via config["select"]["panel_beds"][panel_id] when
+    present, otherwise falls back to data/panels/{panel_id}.bed. Tests using
+    the toy fixture override via the panel_beds config block."""
+    input:
+      bed = lambda wc: config.get("select", {}).get("panel_beds", {}).get(
+        wc.panel_id, f"data/panels/{wc.panel_id}.bed"
+      ),
+      grch38 = lambda wc: config.get(
+        "select_grch38_path", "data/grch38.tsv"
+      )
+    output:
+      out_dir.joinpath("select/panel_gene_sets/{panel_id}.feather")
+    script:
+      "../scripts/build_panel_gene_sets.py"
+
+  rule build_select_gene_universe:
+    """Rule (1b): union of Bailey/CGC/Sanchez-Vega/optional custom genes.
+
+    Source paths resolve via config["select"]["sources"][...] when present,
+    otherwise fall back to the pipeline defaults under data/. Tests using the
+    toy fixture override via the sources config block."""
+    input:
+      bailey = config.get("select", {}).get("sources", {}).get(
+        "bailey", "data/bailey2018_table_s1.tsv"
+      ),
+      cgc = config.get("select", {}).get("sources", {}).get(
+        "cgc", "data/cosmic_cgc.tsv"
+      ),
+      sanchez_vega = config.get("select", {}).get("sources", {}).get(
+        "sanchez_vega", "data/sanchez_vega_pathways.tsv"
+      )
+    output:
+      universe = out_dir.joinpath("select/gene_universe.tsv")
+    params:
+      bailey_version = "2018",
+      cgc_version = "2024-09",
+      sanchez_vega_version = "2018"
+    script:
+      "../scripts/build_select_gene_universe.py"
+
+  # Cell wildcards: cancer_type, tier in {B, A}, cohort in {inclusive, exclusive},
+  # study (only when tier == 'A').
+  rule build_select_gam:
+    """Rule (2): per-cell SELECT inputs (GAM + sample.class + alteration.class)."""
+    input:
+      samples_annotated = out_dir.joinpath("metadata/samples_annotated.feather"),
+      mutation_long = out_dir.joinpath("summary/mut/table/gene_sample_long.feather"),
+      sample_panel_map = out_dir.joinpath("metadata/sample_panel_map.feather"),
+      panel_gene_sets = lambda wc: expand(
+        str(out_dir.joinpath("select/panel_gene_sets/{panel_id}.feather")),
+        panel_id=_panels_for_cell(config, wc),
+      ),
+      gene_universe = out_dir.joinpath("select/gene_universe.tsv"),
+      bailey_alteration_class = out_dir.joinpath("metadata/bailey_alteration_class.feather"),
+      preflight_token = out_dir.joinpath("select/.preflight_ok")
+    output:
+      cell_dir = directory(
+        out_dir.joinpath("select/inputs/{cancer_type}/{tier}/{study}/{cohort}/")
+      )
+    params:
+      thresholds = config["select"]["thresholds"],
+      sample_class_components = config["select"]["sample_class_components"],
+      ch_priority_genes = config["select"].get(
+        "ch_priority_genes",
+        ["DNMT3A", "PPM1D", "TET2", "TP53", "ASXL1", "CHEK2", "PRPF8"],
+      )
+    script:
+      "../scripts/build_select_gam.py"
+
+  rule run_select_per_cell:
+    """Rule (3): per-cell SELECT wrapper around select::select()."""
+    input:
+      cell_dir = out_dir.joinpath("select/inputs/{cancer_type}/{tier}/{study}/{cohort}/"),
+      preflight_token = out_dir.joinpath("select/.preflight_ok")
+    output:
+      pair_stats = out_dir.joinpath(
+        "select/per_cell/{cancer_type}/{tier}/{study}/{cohort}/pair_stats.feather"
+      )
+    params:
+      runtime = config["select"]["runtime"],
+      random_seed = config["select"]["random_seed"]
+    conda:
+      "../envs/select.yml"
+    script:
+      "../scripts/run_select.R"
+
+  # Pathway-aggregated cell uses tier sentinel "PA" with cohort fixed to "exclusive"
+  # (the only biologically interpretable cohort for pathway aggregation -- see design
+  # Section 4.4). Output goes to a sibling directory of the B/A inputs so the
+  # wildcard schema does not collide.
+  rule build_select_gam_pathway_aggregated:
+    """Rule (2-PA): pathway-aggregated sibling GAM (B-tier-exclusive cohort)."""
+    input:
+      samples_annotated = out_dir.joinpath("metadata/samples_annotated.feather"),
+      mutation_long = out_dir.joinpath("summary/mut/table/gene_sample_long.feather"),
+      sample_panel_map = out_dir.joinpath("metadata/sample_panel_map.feather"),
+      panel_gene_sets = lambda wc: expand(
+        str(out_dir.joinpath("select/panel_gene_sets/{panel_id}.feather")),
+        panel_id=_panels_for_cancer_study(wc.cancer_type, study=None),
+      ),
+      gene_universe = out_dir.joinpath("select/gene_universe.tsv"),
+      pathway_membership = config.get("select", {}).get("sources", {}).get(
+        "sanchez_vega", "data/sanchez_vega_pathways.tsv"
+      ),
+      preflight_token = out_dir.joinpath("select/.preflight_ok")
+    output:
+      cell_dir = directory(
+        out_dir.joinpath("select/inputs_pathway_aggregated/{cancer_type}/")
+      )
+    params:
+      thresholds = config["select"]["thresholds"],
+      sample_class_components = config["select"]["sample_class_components"],
+      ch_priority_genes = config["select"].get(
+        "ch_priority_genes",
+        ["DNMT3A", "PPM1D", "TET2", "TP53", "ASXL1", "CHEK2", "PRPF8"],
+      ),
+      tier = "PA",
+      cohort = "exclusive"
+    script:
+      "../scripts/build_select_gam.py"
+
+  rule run_select_pathway_aggregated:
+    """Rule (5): pathway x pathway SELECT on the pathway-aggregated GAM."""
+    input:
+      cell_dir = out_dir.joinpath(
+        "select/inputs_pathway_aggregated/{cancer_type}/pathway_aggregated/"
+      ),
+      preflight_token = out_dir.joinpath("select/.preflight_ok")
+    output:
+      pair_stats = out_dir.joinpath(
+        "select/per_cell/{cancer_type}/pathway_aggregated/pair_stats.feather"
+      )
+    params:
+      runtime = config["select"]["runtime"],
+      random_seed = config["select"]["random_seed"]
+    conda:
+      "../envs/select.yml"
+    script:
+      "../scripts/run_select_pathway_aggregated.R"
+
+  rule aggregate_select_results:
+    """Rule (4): cross-cell aggregation -> headline feathers."""
+    input:
+      per_cell = lambda wc: _all_per_cell_paths(config),
+      pathway_membership = config.get("select", {}).get("sources", {}).get(
+        "sanchez_vega", "data/sanchez_vega_pathways.tsv"
+      )
+    output:
+      gene_pair = out_dir.joinpath("select/gene_pair_select.feather"),
+      pathway_rollup = out_dir.joinpath("select/pathway_rollup_gene_pairs.feather"),
+      annotation = out_dir.joinpath("select/gene_cancer_study_select_annotation.feather")
+    script:
+      "../scripts/aggregate_select_results.py"
+
+#
 # Bailey 2018 driver-annotation overlay.
 #
 # Manual prerequisite: download Bailey et al. 2018 (Cell) supplementary Table S1 from
@@ -580,10 +805,30 @@ rule create_combined_gene_patient_matrix:
     "../scripts/create_combined_gene_patient_matrix.py"
 
 rule create_combined_sample_table:
+  """Combined per-sample cancer-type table + (t078) sample-to-panel map.
+
+  Two outputs:
+    - metadata/samples.feather (legacy): concat of per-study samples feathers
+      projected to {patient_id, sample_id, cancer_type, cancer_type_detailed}.
+    - metadata/sample_panel_map.feather (new, t078): per-(study_id, sample_id)
+      panel_id assignment sourced from data/study_panels.tsv (per-study) or
+      the GENIE clinical sample file (per-sample for genie_v9.1).
+
+  The genie_assay_table input defaults to the GENIE consolidated clinical
+  sample file under {data_dir}/genie/. Override via config["select"]
+  ["genie_clinical_sample_path"] for runs that omit GENIE -- the script
+  tolerates a missing/empty file as long as no genie_v9.1 samples are present
+  in the per_study inputs."""
   input:
-    expand(out_dir.joinpath("studies/{id}/metadata/samples.feather"), id=ids)
+    per_study=expand(out_dir.joinpath("studies/{id}/metadata/samples.feather"), id=ids),
+    study_panels="data/study_panels.tsv",
+    genie_assay_table=config.get("select", {}).get(
+      "genie_clinical_sample_path",
+      str(data_dir.joinpath("genie/data_clinical_sample.txt")),
+    ),
   output:
-    out_dir.joinpath("metadata/samples.feather"),
+    combined=out_dir.joinpath("metadata/samples.feather"),
+    sample_panel_map=out_dir.joinpath("metadata/sample_panel_map.feather"),
   script:
     "../scripts/create_combined_sample_table.py"
 
@@ -877,5 +1122,103 @@ rule process_mc3:
     out_dir.joinpath("studies/tcga_mc3/metadata/study_build.txt")
   script:
     "../scripts/process_mc3.py"
+
+#
+# t078 SELECT pipeline — vendored upstream R package.
+#
+# Downloads the v1.6.4 source tarball from the public GitHub release and
+# verifies its sha256 prefix. The artifact is committed to the repo so this
+# rule normally never runs; it exists so the download recipe is reproducible
+# (e.g., after `git clean -xdf data/external/` the rule restores the file
+# byte-for-byte). To upgrade, bump SELECT_VERSION + SELECT_SHA256_PREFIX and
+# re-run.
+#
+SELECT_VERSION = "1.6.4"
+SELECT_SHA256_PREFIX = "1927b9880132"   # 12-char prefix
+
+rule fetch_select_tarball:
+  output:
+    "data/external/select_v{version}.tar.gz".format(version=SELECT_VERSION)
+  params:
+    url=lambda wc: (
+      f"https://github.com/CSOgroup/select/archive/refs/tags/v{SELECT_VERSION}.tar.gz"
+    ),
+    expected_sha256_prefix=SELECT_SHA256_PREFIX,
+  shell:
+    r"""
+    mkdir -p $(dirname {output})
+    curl -sSfL {params.url} -o {output}.tmp
+    actual=$(sha256sum {output}.tmp | cut -c1-12)
+    if [ "{params.expected_sha256_prefix}" != "<TBD-after-first-download>" ] && \
+       [ "$actual" != "{params.expected_sha256_prefix}" ]; then
+      echo "ERROR: sha256 mismatch for {output}" >&2
+      echo "  expected prefix: {params.expected_sha256_prefix}" >&2
+      echo "  actual prefix:   $actual" >&2
+      rm -f {output}.tmp
+      exit 1
+    fi
+    file {output}.tmp | grep -q "gzip compressed" || (
+      echo "ERROR: download is not a gzip tarball (likely an HTML error page)" >&2
+      rm -f {output}.tmp
+      exit 1
+    )
+    mv {output}.tmp {output}
+    """
+
+#
+# t078 SELECT pipeline - vendored COSMIC Cancer Gene Census snapshot.
+#
+# Manual prereq: the Sanger CGC TSV at config["cosmic_cgc_raw_path"] (default
+# /data/raw/cosmic/v100/Cosmic_CancerGeneCensus_v100_GRCh38.tsv -- auth-gated,
+# download with a free academic COSMIC account). The artifact data/cosmic_cgc.tsv
+# is committed; this rule documents the copy recipe and verifies the sha256
+# prefix to flag silent upstream substitution.
+#
+COSMIC_CGC_SHA256_PREFIX = "abf3681d6d01"   # 12-char prefix
+
+rule vendor_cosmic_cgc:
+  input:
+    config.get(
+      "cosmic_cgc_raw_path",
+      "/data/raw/cosmic/v100/Cosmic_CancerGeneCensus_v100_GRCh38.tsv",
+    )
+  output:
+    "data/cosmic_cgc.tsv"
+  params:
+    expected_sha256_prefix=COSMIC_CGC_SHA256_PREFIX
+  shell:
+    r"""
+    cp {input} {output}.tmp
+    actual=$(sha256sum {output}.tmp | cut -c1-12)
+    if [ "{params.expected_sha256_prefix}" != "<TBD-after-first-copy>" ] && \
+       [ "$actual" != "{params.expected_sha256_prefix}" ]; then
+      echo "ERROR: sha256 mismatch for {output}" >&2
+      echo "  expected prefix: {params.expected_sha256_prefix}" >&2
+      echo "  actual prefix:   $actual" >&2
+      rm -f {output}.tmp
+      exit 1
+    fi
+    mv {output}.tmp {output}
+    """
+
+#
+# t078 SELECT pipeline - per-panel BED files derived from GENIE.
+#
+# Manual prereq: the GENIE consolidated genomic_information.txt at
+# {data_dir}/genie/genomic_information.txt (Synapse-gated upstream - see AGENTS.md
+# "External Reference Datasets"). Downstream rule (1a) consumes the per-panel BEDs.
+#
+rule build_panel_beds:
+  input:
+    data_dir.joinpath("genie/genomic_information.txt")
+  output:
+    "data/panels/IMPACT341.bed",
+    "data/panels/IMPACT410.bed",
+    "data/panels/IMPACT468.bed",
+    "data/panels/IMPACT505.bed",
+    "data/panels/F1CDx.bed",
+    "data/panels/F1.bed",
+  script:
+    "../scripts/build_panel_beds.py"
 
 # vi:ft=snakemake

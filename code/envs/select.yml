@@ -1,0 +1,32 @@
+# code/envs/select.yml
+#
+# Conda env for the t078 SELECT co-occurrence / mutual-exclusivity pipeline.
+# Used by rules (0), (3), (5) in code/workflows/Snakefile.
+#
+# CSOgroup/select v1.6.4 itself is NOT installed here. It is installed into the
+# active env's R library by rule (0) `preflight_select_env` from the vendored
+# tarball at data/external/select_v1.6.4.tar.gz. Per design Section 4.8 there is
+# NO `r-devtools` and NO `r-remotes` here — the vendored tarball is the only
+# install path. If you find yourself wanting to add either dep, read the design
+# doc risk #2 first.
+#
+# First-time env build is ~5-15 min on a warm conda cache.
+name: select-t078
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - r-base=4.4
+  - r-arrow
+  - r-igraph
+  - r-rcppparallel
+  - r-data.table
+  - r-tidyverse
+  - r-jsonlite
+  - r-testthat
+  # Direct deps of CSOgroup/select v1.6.4 not pulled in by the above
+  # (verified by attempting install + reading the failure):
+  - r-foreach
+  - r-doparallel
+  - r-matrixstats
+  - bioconductor-birewire

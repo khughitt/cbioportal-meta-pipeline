@@ -1,0 +1,327 @@
+"""Rule (4): aggregate per-cell SELECT outputs into headline feathers.
+
+This task implements the B-tier slice. Subsequent tasks add A-tier Stouffer,
+union join + concordance flag, and pathway rollup + sibling annotation.
+"""
+
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+
+import select_lib as lib
+
+
+KEY_COLS = ["gene_i", "gene_j", "cancer_type", "cohort"]
+B_RENAME = {
+    "n_samples": "b_n_samples",
+    "n_i_only": "b_n_i_only",
+    "n_j_only": "b_n_j_only",
+    "n_both": "b_n_both",
+    "n_neither": "b_n_neither",
+    "select_score": "b_select_score",
+    "p_wMI": "b_p_wMI",
+    "p_ME": "b_p_ME",
+    "direction": "b_direction",
+    "skip_reason": "b_skip_reason",
+}
+
+
+def concat_b_tier(per_cell_paths: list[Path]) -> pd.DataFrame:
+    """Concatenate all B-tier per-cell pair feathers, dropping sentinel rows."""
+    frames = []
+    for p in per_cell_paths:
+        df = pd.read_feather(p)
+        df = df[df["tier"] == "B"]
+        df = df[df["skip_reason"].isna()]  # drop sentinel rows
+        frames.append(df)
+    if not frames:
+        return pd.DataFrame(columns=list(B_RENAME.keys()) + KEY_COLS)
+    return pd.concat(frames, ignore_index=True)
+
+
+def compute_b_tier_qvalues(df_b: pd.DataFrame) -> pd.DataFrame:
+    """Add b_q_wMI_within_stratum via BH-FDR per (cancer_type, cohort)."""
+    df = df_b.rename(columns=B_RENAME).copy()
+    if df.empty:
+        df["b_q_wMI_within_stratum"] = pd.Series(dtype="float64")
+        return df
+    df["b_q_wMI_within_stratum"] = lib.bh_fdr_within_groups(
+        df, group_cols=["cancer_type", "cohort"], pvalue_col="b_p_wMI"
+    )
+    return df
+
+
+def concat_a_tier(per_cell_paths: list[Path]) -> pd.DataFrame:
+    """Concatenate all A-tier per-cell pair feathers (sentinels included)."""
+    frames = []
+    for p in per_cell_paths:
+        df = pd.read_feather(p)
+        df = df[df["tier"] == "A"]
+        frames.append(df)
+    if not frames:
+        return pd.DataFrame()
+    return pd.concat(frames, ignore_index=True)
+
+
+def compute_a_tier_stouffer(df_a: pd.DataFrame) -> pd.DataFrame:
+    """Sign-aware weighted-Z aggregate over A-tier per-study cells.
+
+    Returns one row per (gene_i, gene_j, cancer_type, cohort) appearing in df_a
+    with non-sentinel rows. Sentinel rows count toward `a_k_studies_attempted`
+    but not `a_k_studies_contributing`.
+    """
+    if df_a.empty:
+        return pd.DataFrame()
+
+    df = df_a.copy()
+    df["is_sentinel"] = df["skip_reason"].notna()
+
+    real = df[~df["is_sentinel"]].copy()
+    if real.empty:
+        return pd.DataFrame()
+
+    sign_map = {"CO": +1, "ME": -1, "none": 0}
+    real["sign"] = real["direction"].map(sign_map).fillna(0).astype(int)
+    real["weight"] = np.sqrt(real["n_samples"].astype(float))
+
+    out_rows: list[dict] = []
+    for keys, sub in real.groupby(KEY_COLS, observed=True):
+        z, p, n_used = lib.signed_stouffer(
+            pvalues=sub["p_wMI"].to_numpy(dtype=float),
+            signs=sub["sign"].to_numpy(dtype=float),
+            weights=sub["weight"].to_numpy(dtype=float),
+        )
+        d_frac = lib.direction_consensus_frac(sub["direction"].astype(str).tolist())
+
+        # Attempted count: contributing studies for this pair plus sentinel A-tier
+        # studies in the same cancer_type x cohort.
+        ct, ch = keys[2], keys[3]
+        sentinel_studies = (
+            df_a[
+                (df_a["cancer_type"] == ct)
+                & (df_a["cohort"] == ch)
+                & df_a["skip_reason"].notna()
+            ]["study"]
+            .dropna()
+            .unique()
+        )
+        attempted = n_used + len(set(sentinel_studies))
+
+        out_rows.append(
+            {
+                "gene_i": keys[0],
+                "gene_j": keys[1],
+                "cancer_type": ct,
+                "cohort": ch,
+                "a_stouffer_z_wMI": z,
+                "a_stouffer_p_wMI": p,
+                "a_k_studies_contributing": int(n_used),
+                "a_k_studies_attempted": int(attempted),
+                "a_direction_consensus_frac": d_frac,
+                "a_skip_reason": pd.NA,
+            }
+        )
+    out = pd.DataFrame(out_rows)
+    if out.empty:
+        return out
+    out["a_q_wMI_within_stratum"] = lib.bh_fdr_within_groups(
+        out, group_cols=["cancer_type", "cohort"], pvalue_col="a_stouffer_p_wMI"
+    )
+    return out
+
+
+def union_join(df_b: pd.DataFrame, df_a: pd.DataFrame) -> pd.DataFrame:
+    """Outer join on (gene_i, gene_j, cancer_type, cohort) -- preserves a_only / b_only."""
+    if df_b.empty and df_a.empty:
+        return pd.DataFrame()
+    if df_b.empty:
+        return df_a.copy()
+    if df_a.empty:
+        return df_b.copy()
+    return df_b.merge(df_a, on=KEY_COLS, how="outer")
+
+
+_FDR_THRESHOLD = 0.10
+_CONSENSUS_THRESHOLD = 0.7
+
+
+def compute_concordance_flag(
+    row: pd.Series,
+    fdr_alpha: float = _FDR_THRESHOLD,
+    consensus_threshold: float = _CONSENSUS_THRESHOLD,
+) -> str:
+    """Categorical concordance flag per design Section 4.6 step 4."""
+    b_q = row.get("b_q_wMI_within_stratum")
+    a_q = row.get("a_q_wMI_within_stratum")
+    b_dir = row.get("b_direction")
+    a_consensus = row.get("a_direction_consensus_frac")
+    a_k = row.get("a_k_studies_contributing")
+
+    b_present = pd.notna(b_q)
+    a_present = pd.notna(a_q)
+    b_sig = b_present and b_q < fdr_alpha
+    a_sig = a_present and a_q < fdr_alpha
+
+    if not b_present and not a_present:
+        return "untested"
+
+    if a_present and (a_k is None or pd.isna(a_k) or a_k < 2):
+        return "insufficient_a_studies"
+
+    if b_sig and a_sig:
+        consensus_ok = pd.notna(a_consensus) and a_consensus >= consensus_threshold
+        # Infer A-tier dominant direction from sign of stouffer_z.
+        a_z = row.get("a_stouffer_z_wMI")
+        if pd.notna(a_z) and a_z > 0:
+            a_dom_dir = "CO"
+        elif pd.notna(a_z) and a_z < 0:
+            a_dom_dir = "ME"
+        else:
+            a_dom_dir = None
+        signs_agree = a_dom_dir is not None and b_dir == a_dom_dir
+        if signs_agree and consensus_ok:
+            return "concordant"
+        return "direction_conflict"
+
+    if b_sig and not a_sig:
+        return "b_only"
+
+    if a_sig and not b_sig and b_present:
+        return "a_only_b_present"
+
+    if a_sig and not b_present:
+        return "a_only_b_absent"
+
+    return "untested"
+
+
+def add_concordance_flag(df: pd.DataFrame) -> pd.DataFrame:
+    """Apply compute_concordance_flag row-wise."""
+    if df.empty:
+        df = df.copy()
+        df["b_a_concordance"] = pd.Series(dtype="string")
+        return df
+    df = df.copy()
+    df["b_a_concordance"] = df.apply(compute_concordance_flag, axis=1).astype("string")
+    return df
+
+
+def pathway_rollup(
+    headline: pd.DataFrame,
+    pathway_membership: pd.DataFrame,
+) -> pd.DataFrame:
+    """EXPLORATORY: Stouffer over gene-pair Z-scores grouped by pathway pair.
+
+    Per design Section 4.6 step 5 + risk #4: gene-pairs within a pathway block
+    are correlated through shared genes, so Stouffer's null is mis-specified.
+    This output is for hypothesis generation only.
+    """
+    if headline.empty:
+        return pd.DataFrame(
+            columns=[
+                "pathway_i",
+                "pathway_j",
+                "cancer_type",
+                "cohort",
+                "rollup_stouffer_z",
+                "rollup_stouffer_p",
+                "n_constituent_pairs",
+            ]
+        )
+    pm = pathway_membership.set_index("symbol")["pathway"]
+    df = headline[
+        [
+            "gene_i",
+            "gene_j",
+            "cancer_type",
+            "cohort",
+            "b_p_wMI",
+            "b_direction",
+            "b_n_samples",
+        ]
+    ].copy()
+    df["pathway_i"] = df["gene_i"].map(pm)
+    df["pathway_j"] = df["gene_j"].map(pm)
+    df = df.dropna(subset=["pathway_i", "pathway_j", "b_p_wMI"])
+
+    sign_map = {"CO": +1, "ME": -1, "none": 0}
+    df["sign"] = df["b_direction"].map(sign_map).fillna(0).astype(int)
+    df["weight"] = np.sqrt(df["b_n_samples"].astype(float))
+
+    rows: list[dict] = []
+    for keys, sub in df.groupby(
+        ["pathway_i", "pathway_j", "cancer_type", "cohort"], observed=True
+    ):
+        z, p, n_used = lib.signed_stouffer(
+            pvalues=sub["b_p_wMI"].to_numpy(dtype=float),
+            signs=sub["sign"].to_numpy(dtype=float),
+            weights=sub["weight"].to_numpy(dtype=float),
+        )
+        rows.append(
+            {
+                "pathway_i": keys[0],
+                "pathway_j": keys[1],
+                "cancer_type": keys[2],
+                "cohort": keys[3],
+                "rollup_stouffer_z": z,
+                "rollup_stouffer_p": p,
+                "n_constituent_pairs": int(n_used),
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def build_sibling_annotation(headline: pd.DataFrame) -> pd.DataFrame:
+    """Per (symbol, cancer_type) significant-partners count from B-tier exclusive cohort."""
+    if headline.empty:
+        return pd.DataFrame(
+            columns=[
+                "symbol",
+                "cancer_type",
+                "n_significant_select_partners_q01",
+                "n_significant_select_partners_q01_concordant",
+            ]
+        )
+    excl = headline[headline["cohort"] == "exclusive"].copy()
+    excl["q_sig"] = excl["b_q_wMI_within_stratum"].fillna(1.0) < 0.10
+    excl["q_sig_concordant"] = excl["q_sig"] & (excl["b_a_concordance"] == "concordant")
+
+    pieces: list[pd.DataFrame] = []
+    for left_col in ("gene_i", "gene_j"):
+        sub = excl[[left_col, "cancer_type", "q_sig", "q_sig_concordant"]].copy()
+        sub = sub.rename(columns={left_col: "symbol"})
+        pieces.append(sub)
+    long = pd.concat(pieces, ignore_index=True)
+    grouped = long.groupby(
+        ["symbol", "cancer_type"], observed=True, as_index=False
+    ).agg(
+        n_significant_select_partners_q01=("q_sig", "sum"),
+        n_significant_select_partners_q01_concordant=("q_sig_concordant", "sum"),
+    )
+    grouped["n_significant_select_partners_q01"] = grouped[
+        "n_significant_select_partners_q01"
+    ].astype(int)
+    grouped["n_significant_select_partners_q01_concordant"] = grouped[
+        "n_significant_select_partners_q01_concordant"
+    ].astype(int)
+    return grouped
+
+
+# Snakemake entry point.
+if "snakemake" in globals():  # pragma: no cover  # set by Snakemake's script: directive
+    snek = snakemake  # type: ignore[name-defined]  # noqa: F821
+
+    per_cell_paths = [Path(p) for p in snek.input["per_cell"]]
+    pathway_membership = pd.read_csv(snek.input["pathway_membership"], sep="\t")
+
+    df_b = compute_b_tier_qvalues(concat_b_tier(per_cell_paths))
+    df_a = compute_a_tier_stouffer(concat_a_tier(per_cell_paths))
+    headline = add_concordance_flag(union_join(df_b, df_a))
+    rollup = pathway_rollup(headline, pathway_membership)
+    annotation = build_sibling_annotation(headline)
+
+    Path(snek.output["gene_pair"]).parent.mkdir(parents=True, exist_ok=True)
+    headline.reset_index(drop=True).to_feather(snek.output["gene_pair"])
+    rollup.reset_index(drop=True).to_feather(snek.output["pathway_rollup"])
+    annotation.reset_index(drop=True).to_feather(snek.output["annotation"])

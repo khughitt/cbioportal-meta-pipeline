@@ -365,43 +365,55 @@ non-WES studies.
 
 - [ ] **Step 1: Source the panel BEDs**
 
-The MSK-IMPACT BEDs are published in the GENIE distribution under
-`data/genie_v9.1-public/<assay_id>/genomic_information.txt`. Run:
+The MSK-IMPACT and Foundation Medicine BEDs are published in the GENIE distribution.
+The actual data layout (verified at plan time): a single
+`/data/raw/cbioportal/genie/genomic_information.txt` with one row per
+(assay × interval), columns `Chromosome, Start_Position, End_Position, Hugo_Symbol,
+SEQ_ASSAY_ID, Feature_Type, includeInPanel, clinicalReported`. Filter by `SEQ_ASSAY_ID`
+to derive each panel's BED.
 
 ```bash
 mkdir -p data/panels
-# MSK-IMPACT panels are GENIE assay IDs MSK-IMPACT341, MSK-IMPACT410, etc.
-# Convert each to a 3-column BED (chrom, start, end) with a 4th 'symbol' column.
 uv run python - <<'PY'
 import pandas as pd
 from pathlib import Path
 
-genie_dir = Path("data/genie_v9.1-public")
+src = Path("/data/raw/cbioportal/genie/genomic_information.txt")
+if not src.exists():
+    raise FileNotFoundError(f"GENIE genomic_information.txt missing: {src}")
+
+df = pd.read_csv(src, sep="\t", dtype={"Chromosome": "string"})
+df = df[df["includeInPanel"].fillna(True).astype(bool)]   # drop excluded intervals
+df = df[df["Feature_Type"] == "exon"]                     # restrict to exon coverage
+
 mapping = {
     "MSK-IMPACT341": "data/panels/IMPACT341.bed",
     "MSK-IMPACT410": "data/panels/IMPACT410.bed",
     "MSK-IMPACT468": "data/panels/IMPACT468.bed",
     "MSK-IMPACT505": "data/panels/IMPACT505.bed",
+    # GENIE has no pure FoundationOne F1/F1CDx panel; closest proxies:
+    "DUKE-F1-DX1": "data/panels/F1CDx.bed",
+    "PROV-FOUNDATIONONELIQUIDCDX": "data/panels/F1.bed",
 }
 for assay, out in mapping.items():
-    src = genie_dir / assay / "genomic_information.txt"
-    if not src.exists():
-        raise FileNotFoundError(f"GENIE assay missing: {src}")
-    df = pd.read_csv(src, sep="\t")
-    # GENIE schema: Chromosome, Start_Position, End_Position, Hugo_Symbol, ...
-    bed = df[["Chromosome", "Start_Position", "End_Position", "Hugo_Symbol"]]
+    sub = df[df["SEQ_ASSAY_ID"] == assay]
+    if sub.empty:
+        # Empty placeholder so the BED file path exists.
+        Path(out).write_text("")
+        print(f"WARN: no rows for {assay}; wrote empty placeholder {out}")
+        continue
+    bed = sub[["Chromosome", "Start_Position", "End_Position", "Hugo_Symbol"]].copy()
     bed.columns = ["chrom", "start", "end", "symbol"]
     bed.to_csv(out, sep="\t", index=False, header=False)
     print(f"wrote {out}: {len(bed)} intervals, {bed['symbol'].nunique()} symbols")
 PY
 ```
 
-For FoundationOne (F1, F1CDx), the BEDs are not in the GENIE public distribution; they
-are published by Foundation Medicine via the Roche Diagnostics website. **Manual
-prerequisite** — record this in `data/panels/README.md` step 3 below. If the BEDs are
-not available at this implementation time, create empty placeholder BEDs and mark them
-in the README; rule (1a) will produce empty panel-gene-sets for them, which is
-non-fatal as long as no study is mapped to those panels.
+The proxy F1/F1CDx mapping is documented in `data/panels/README.md`. If the project
+later acquires pure Foundation Medicine BEDs, these placeholders should be replaced.
+For studies mapped to the F1/F1CDx proxy panels, the panel-intersection callability
+mask will reflect the proxy's gene coverage — call this out in the headline run's
+provenance notes.
 
 - [ ] **Step 2: Write the failing test**
 
@@ -778,6 +790,60 @@ conda env's R library, runs select::select on bundled luad_data with
 n.permut=50, verifies the upstream output schema, and writes the
 .preflight_ok token. All other SELECT rules will depend on this token
 so the DAG fails fast if SELECT install or API drifts.
+
+Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>
+EOF
+)"
+```
+
+---
+
+## Task 4.5: Vendor COSMIC Cancer Gene Census
+
+**Why:** Task 5 reads `data/cosmic_cgc.tsv`. The project has the upstream file at
+`/data/raw/cosmic/v100/Cosmic_CancerGeneCensus_v100_GRCh38.tsv` (CGC v100, GRCh38, ~180 KB).
+Vendor a copy under `data/` + a README so the path is explicit and version-stamped.
+
+**Files:**
+- Create: `data/cosmic_cgc.tsv` (renamed copy)
+- Create: `data/cosmic_cgc.README.md`
+
+- [ ] **Step 1: Copy + record provenance**
+
+```bash
+cp /data/raw/cosmic/v100/Cosmic_CancerGeneCensus_v100_GRCh38.tsv data/cosmic_cgc.tsv
+sha256sum data/cosmic_cgc.tsv | cut -c1-12
+```
+
+Capture the 12-char prefix; embed it in the README in step 2.
+
+- [ ] **Step 2: Write `data/cosmic_cgc.README.md`**
+
+```markdown
+# data/cosmic_cgc.tsv
+
+COSMIC Cancer Gene Census v100 (GRCh38).
+
+- Source: /data/raw/cosmic/v100/Cosmic_CancerGeneCensus_v100_GRCh38.tsv (Sanger)
+- Vendored at: 2026-04-25
+- sha256 (12-char prefix): `<insert-from-step-1>`
+- Schema: tab-separated; primary column `Gene Symbol` (consumed by Task 5
+  `build_select_gene_universe.py`).
+
+To upgrade: replace this file, update sha256 above, bump `cgc_version` in the
+config block of `code/config/config-10k-genes.yml`.
+```
+
+- [ ] **Step 3: Commit**
+
+```bash
+git add data/cosmic_cgc.tsv data/cosmic_cgc.README.md
+git commit -m "$(cat <<'EOF'
+chore(t078): vendor COSMIC Cancer Gene Census v100
+
+Source: /data/raw/cosmic/v100/Cosmic_CancerGeneCensus_v100_GRCh38.tsv
+(Sanger). Used by Task 5 build_select_gene_universe.py as one of the
+three union sources (alongside Bailey 2018 and Sanchez-Vega 2018).
 
 Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>
 EOF

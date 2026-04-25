@@ -167,7 +167,7 @@ Surfaced as a real gap in t043: no pan-cancer benchmark at the pathway rollup le
 Gap surfaced in t059: TET2 solid-tumor biology literature is thinner than ASXL1. ASXL1 has clear MSI-CRC polyG-indel + CRPC / HNSCC / breast evidence (Katoh 2013). TET2 solid-tumor papers cluster around melanoma (catalytic-domain mutations), glioma (IDH-pathway interaction — TET2 is the IDH-pathway target, so IDH-mutant gliomas carry functional TET2 loss without TET2 mutation), and breast. Focused OpenAlex + PubMed search. Produces doc/searches/YYYY-MM-DD-tet2-solid-tumor-biology.md.
 
 ## [t102] Audit two single-word commits on main (a2ce3fc save, c0f48af data) and either amend or document
-- priority: P2
+- priority: P3
 - status: proposed
 - aspects: [software-development]
 - group: meta
@@ -226,7 +226,7 @@ Surfaced by t100 PoC 2026-04-17: cluster_genes.py and cluster_cancer_types.py re
 Surfaced by t100 PoC 2026-04-17: is_hypermutator_relative reports 45.5% for brca_tcga_pan_can_atlas_2018 and 36.4% for skcm_tcga_pan_can_atlas_2018 (from doc/interpretations/2026-04-17-poc-run.md Finding 4). The Samstein 2019 definition is 'top-20%% TMB within the sample's histology' — which should yield at most ~20%% hypermutators per cancer type (slightly more with ties at the boundary). 45%% / 36%% far exceed this. Likely causes: (a) tied-sample promotion at the 80th-percentile cut without explicit tiebreak policy, (b) the per-histology grouping key is cancer_type but the TCGA 'cancer_type' labels collapse many distinct histologies into one bucket (e.g. 'Breast Cancer'), so a large fraction of samples tie at a low TMB boundary, or (c) an off-by-one in the quantile cut logic. Inspect _relative_top_quintile_flag in code/scripts/annotate_hypermutators.py (line 200 area).
 
 ## [t112] Integrate Lee-Six 2018 blood (or Xu 2025 dbGaP) as second normal-tissue source for t111 outputs
-- priority: P2
+- priority: P3
 - status: proposed
 - aspects: [software-development]
 - related: [task:t111, topic:signature-decomposition-unmatched-normal, question:q006-ch-priority-gene-completeness, question:q008-signature-decomposition-tissue-background-subtraction, paper:LeeSix2018, paper:Xu2025]
@@ -254,3 +254,21 @@ Current validate_input_contract accepts the assembly parameter but does not rang
 - created: 2026-04-19
 
 Before applying the t111 per-tissue snvs_per_mb correction to gene_cancer_study_ratio_annotated.feather frequencies, pre-register: (1) expected number of gene-cancer rankings that shift and by how many positions; (2) head-to-head comparison against a Martincorena 2017 dN/dS-based null as a simpler baseline. If the two approaches rank genes identically, t111's value-add collapses. Prevents ships-before-thinks bias on whether the empirical null is actually discriminating versus a uniform-rate-per-gene-length null. Deliverable: doc/meta/pre-registration-q007-null-model-correction.md.
+
+## [t127] First q008 quantitative pass: unmatched-normal contamination magnitude using t111 normal_tissue_spectra
+- priority: P2
+- status: proposed
+- related: [question:q008, task:t111, meta:next-steps-2026-04-24]
+- group: meta-analysis
+- created: 2026-04-24
+
+Exercise the Li2021+Xu2025 reference spectra landed by t111 against the tcga_mc3 vs msk_impact_2017 pair (or equivalent matched/unmatched study pair) to produce a first numeric estimate of unmatched-normal contamination magnitude. Closes the built-but-unexploited risk called out in meta:next-steps-2026-04-24 gap 2.
+
+## [t128] Emit retroactive datapackage.json manifests for results/poc-2026-04-17/ and results/signature-brca-2026-04-22/
+- priority: P2
+- status: proposed
+- related: [task:t100, meta:next-steps-2026-04-24]
+- group: pipeline
+- created: 2026-04-24
+
+Two workflow output directories currently sit on disk with no datapackage.json manifests: results/poc-2026-04-17/ (t100 PoC annotated artifact) and results/signature-brca-2026-04-22/ (t109/t110 signature-restriction outputs). Write Frictionless Data Package manifests retroactively so provenance is filesystem-readable rather than narrative-only. Recurring gap flagged on both 2026-04-22 and 2026-04-24.

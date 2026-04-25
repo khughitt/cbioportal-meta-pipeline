@@ -297,8 +297,50 @@ Use science:research-papers to summarize Stoeger T, Gerlach M, Morimoto RI, Nune
 - priority: P2
 - status: proposed
 - aspects: [computational-analysis, software-development]
-- related: [topic:mutation-rate-normalization,discussion:2026-04-24-gene-length-bias-in-mutation-rankings-and-literature,question:q011-gene-length-as-literature-attention-confounder,paper:Martincorena2017]
+- related: [topic:mutation-rate-normalization, discussion:2026-04-24-gene-length-bias-in-mutation-rankings-and-literature, question:q011-gene-length-as-literature-attention-confounder, paper:Martincorena2017]
 - group: pipeline
 - created: 2026-04-24
 
 Add a side config code/config/config-pan-cancer-dndscv.yml that includes the per-study dNdScv outputs (studies/{id}/mut/dndscv/genes.feather) in rule all. Then write a comparison report: raw vs length-adjusted vs dNdScv-selection rankings, Spearman + Jaccard@10/50/100/500, and per-list correlation with PubTator gene-mention counts. Closes the 'length-only is below the 2013 methodology bar' finding from the bias audit and topic:mutation-rate-normalization. CONSTRAINT (per memory:r-reproducibility): the dNdScv rule must use a conda/mamba env YAML or Docker image — never assume system R.
+
+## [t132] Literature search: mutation-ordering methods for cross-sectional data (MHN / CBN / CAPRI / REVOLVER / PCAWG chronology)
+- priority: P2
+- status: proposed
+- aspects: [computational-analysis]
+- related: [question:q012-mutation-ordering-cross-sectional-inference, discussion:2026-04-24-mutation-ordering-and-path-dependency, task:t078]
+- group: searches
+- created: 2026-04-24
+
+Method × assumption table comparing Mutual Hazard Networks (Schill 2020), Conjunctive Bayesian Networks (Beerenwinkel 2007), CAPRI/TRONCO (Caravagna 2016), REVOLVER (Caravagna 2018), HINTRA, PMCE, and PCAWG pan-cancer chronology (Gerstung 2020 Nature 578:122). Deliverable: doc/searches/YYYY-MM-DD-mutation-ordering-methods.md. Goal: decide whether detecting A→B asymmetries in cBioPortal data is a method-selection problem (pick MHN) or a novel-methods problem.
+
+## [t133] Audit VAF availability across cBioPortal/GENIE studies
+- priority: P2
+- status: proposed
+- aspects: [software-development]
+- related: [question:q012-mutation-ordering-cross-sectional-inference, discussion:2026-04-24-mutation-ordering-and-path-dependency]
+- group: audits
+- created: 2026-04-24
+
+Hard gate on any clonality-based ordering work. For each study in code/config/config-full.yml, inspect pre-convert_to_feather MAF headers and tally which carry (a) tumor_f / VAF directly, (b) t_alt_count + t_ref_count (can compute VAF), (c) neither. Also record sequencing type (WES vs panel) and matched-normal status. Output: doc/audits/YYYY-MM-DD-vaf-availability-audit.md. Decision rule: if ≥50% of samples retain VAF, unlock pipeline change to preserve VAF; if not, restrict ordering work to CBN/MHN-style population-level inference only.
+
+## [t134] Pipeline addition: retain VAF (t_alt_count, t_ref_count, tumor_f) in per-study variant feathers
+- priority: P3
+- status: proposed
+- aspects: [software-development]
+- related: [question:q012-mutation-ordering-cross-sectional-inference]
+- blocked-by: [Audit VAF availability across cBioPortal/GENIE studies]
+- group: pipeline
+- created: 2026-04-24
+
+Extend convert_to_feather.py to retain per-variant allele-count columns alongside gene/sample presence calls. Unblocks clonality-based ordering (MHN validation companion), CCF estimation, per-sample signature deconvolution at variant level, and general driver-evolution work. Contingent on VAF-availability audit confirming retention is worthwhile.
+
+## [t135] MHN fit per histology as directed companion to t078 co-occurrence results
+- priority: P3
+- status: proposed
+- aspects: [computational-analysis]
+- related: [question:q012-mutation-ordering-cross-sectional-inference,task:t078,task:t081,task:t111]
+- blocked-by: [t078]
+- group: meta-analysis
+- created: 2026-04-24
+
+Once t078 co-occurrence/mutual-exclusivity is live, add Mutual Hazard Network (Schill 2020) fit using the same sample-specific-background-rate null and per-sample callability mask. Report primary results at Sanchez-Vega 10-pathway level; gene-level as drill-down. Stratify per histology and per hypermutator class (t081). Calibrate against PCAWG Gerstung 2020 pan-cancer chronology Table 1 before reporting any novel edges.

@@ -65,39 +65,34 @@ stacked["symbol"] = stacked["symbol"].astype(str)
 print(f"aggregate_dndscv_per_gene: {len(stacked):,} (gene, cancer_type) rows total")
 
 
-def _per_gene(grp: pd.DataFrame) -> pd.Series:
+def _per_gene(symbol: str, grp: pd.DataFrame) -> dict:
     q = grp["dndscv_qglobal_cv"].astype(float)
     has_q = q.notna()
     n_tested = int(grp.shape[0])
     if not has_q.any():
-        return pd.Series(
-            {
-                "min_qglobal": pd.NA,
-                "n_cancers_significant_q05": 0,
-                "n_cancers_significant_q01": 0,
-                "n_cancers_tested": n_tested,
-                "best_cancer_type": pd.NA,
-            }
-        )
+        return {
+            "symbol": symbol,
+            "min_qglobal": pd.NA,
+            "n_cancers_significant_q05": 0,
+            "n_cancers_significant_q01": 0,
+            "n_cancers_tested": n_tested,
+            "best_cancer_type": pd.NA,
+        }
     qmin = float(q[has_q].min())
     best_idx = q[has_q].astype(float).idxmin()
     best_cancer = str(grp.loc[best_idx, "cancer_type"])
-    return pd.Series(
-        {
-            "min_qglobal": qmin,
-            "n_cancers_significant_q05": int(((q < 0.05) & has_q).sum()),
-            "n_cancers_significant_q01": int(((q < 0.01) & has_q).sum()),
-            "n_cancers_tested": n_tested,
-            "best_cancer_type": best_cancer,
-        }
-    )
+    return {
+        "symbol": symbol,
+        "min_qglobal": qmin,
+        "n_cancers_significant_q05": int(((q < 0.05) & has_q).sum()),
+        "n_cancers_significant_q01": int(((q < 0.01) & has_q).sum()),
+        "n_cancers_tested": n_tested,
+        "best_cancer_type": best_cancer,
+    }
 
 
-pooled = (
-    stacked.groupby("symbol", as_index=False, sort=True)
-    .apply(_per_gene, include_groups=False)
-    .reset_index(drop=True)
-)
+rows = [_per_gene(str(sym), grp) for sym, grp in stacked.groupby("symbol", sort=True)]
+pooled = pd.DataFrame(rows)
 
 # `groupby(...).apply` flattens to long-format with `symbol` carried via the
 # as_index=False; double-check shape.

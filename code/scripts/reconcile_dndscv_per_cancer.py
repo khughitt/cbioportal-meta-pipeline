@@ -42,6 +42,11 @@ if len(genes_paths) != len(run_paths):
 def _load_pair(genes_path: str, run_path: str) -> tuple[pd.DataFrame, pd.Series]:
     genes = pd.read_feather(genes_path)
     run = pd.read_feather(run_path).iloc[0]
+    # dndscv may emit either `qglobal_cv` (when both subs + indels are tested,
+    # outp=3) or `qallsubs_cv` (subs-only, our case since prepare_dndscv_input
+    # restricts to SNVs). Normalize to a single internal name `qglobal_cv`.
+    if "qglobal_cv" not in genes.columns and "qallsubs_cv" in genes.columns:
+        genes = genes.rename(columns={"qallsubs_cv": "qglobal_cv"})
     return genes, run
 
 
@@ -120,12 +125,12 @@ if has_real_rows:
 # Per-gene rollup: take min qglobal_cv across builds; carry forward the
 # refdb/modality/sample-counts of the lower-q sub-cohort (or the only sub-cohort).
 # ---------------------------------------------------------------------------
-def _row_for_gene(grp: pd.DataFrame) -> pd.Series:
+def _row_for_gene(symbol: str, grp: pd.DataFrame) -> dict:
     grp_with_q = grp.dropna(subset=["qglobal_cv"])
     if grp_with_q.empty:
         # All sub-cohorts produced no result for this gene.
         winner = grp.iloc[0]
-        qglobal = pd.NA
+        qglobal: object = pd.NA
     else:
         winner = grp_with_q.loc[grp_with_q["qglobal_cv"].astype(float).idxmin()]
         qglobal = float(winner["qglobal_cv"])
@@ -142,30 +147,28 @@ def _row_for_gene(grp: pd.DataFrame) -> pd.Series:
     else:
         modality = "mixed"
 
-    return pd.Series(
-        {
-            "symbol": str(winner["symbol"]),
-            "cancer_type": cancer_type,
-            "dndscv_qglobal_cv": qglobal,
-            "dndscv_input_modality": modality,
-            "dndscv_panel_only": modality == "panel",
-            "dndscv_n_samples": n_samples_total,
-            "dndscv_n_variants": n_variants_total,
-            "dndscv_split_build": split_build,
-            "dndscv_refdb": str(winner["refdb"]),
-            "dndscv_package_version": str(winner["package_version"]),
-            "dndscv_git_sha": str(winner["git_sha"]),
-            "_winner_status": str(winner["status"]),
-        }
-    )
+    return {
+        "symbol": symbol,
+        "cancer_type": cancer_type,
+        "dndscv_qglobal_cv": qglobal,
+        "dndscv_input_modality": modality,
+        "dndscv_panel_only": modality == "panel",
+        "dndscv_n_samples": n_samples_total,
+        "dndscv_n_variants": n_variants_total,
+        "dndscv_split_build": split_build,
+        "dndscv_refdb": str(winner["refdb"]),
+        "dndscv_package_version": str(winner["package_version"]),
+        "dndscv_git_sha": str(winner["git_sha"]),
+        "_winner_status": str(winner["status"]),
+    }
 
 
 if has_real_rows:
-    out = (
-        stacked.groupby("symbol", as_index=False, sort=False)
-        .apply(_row_for_gene, include_groups=False)
-        .reset_index(drop=True)
-    )
+    rows = [
+        _row_for_gene(str(sym), grp)
+        for sym, grp in stacked.groupby("symbol", sort=False)
+    ]
+    out = pd.DataFrame(rows)
 else:
     # No real per-gene rows from any sub-cohort. Emit a single placeholder row
     # capturing the worst-case status across builds so downstream knows the

@@ -29,59 +29,18 @@
 #
 import pandas as pd
 
-snek = snakemake  # type: ignore[name-defined]  # noqa: F821
+POOLED_SCHEMA = [
+    "symbol",
+    "min_qglobal",
+    "n_cancers_significant_q05",
+    "n_cancers_significant_q01",
+    "n_cancers_tested",
+    "best_cancer_type",
+]
 
-paths = list(snek.input)
-print(f"aggregate_dndscv_per_gene: reading {len(paths):,} per-cancer outputs")
 
-frames = []
-for path in paths:
-    df = pd.read_feather(path)
-    if df.empty:
-        continue
-    frames.append(df)
-
-if not frames:
-    print("aggregate_dndscv_per_gene: no inputs; writing empty pooled feather")
-    pd.DataFrame(
-        columns=pd.Index(
-            [
-                "symbol",
-                "min_qglobal",
-                "n_cancers_significant_q05",
-                "n_cancers_significant_q01",
-                "n_cancers_tested",
-                "best_cancer_type",
-            ]
-        )
-    ).to_feather(snek.output[0])
-    raise SystemExit(0)
-
-stacked = pd.concat(frames, ignore_index=True)
-# Drop rows with no symbol (placeholder rows from cancer types with no
-# real per-gene results).
-stacked = stacked[stacked["symbol"].notna()].copy()
-stacked["symbol"] = stacked["symbol"].astype(str)
-print(f"aggregate_dndscv_per_gene: {len(stacked):,} (gene, cancer_type) rows total")
-
-if stacked.empty:
-    # All per-cancer outputs were sentinel-only (every cancer cohort hit
-    # failed_qc or below_threshold). Emit an empty pooled feather with the
-    # canonical schema so downstream rules see a valid file.
-    print("aggregate_dndscv_per_gene: no real (symbol, cancer_type) rows after filter; writing empty pooled feather")
-    pd.DataFrame(
-        columns=pd.Index(
-            [
-                "symbol",
-                "min_qglobal",
-                "n_cancers_significant_q05",
-                "n_cancers_significant_q01",
-                "n_cancers_tested",
-                "best_cancer_type",
-            ]
-        )
-    ).to_feather(snek.output[0])
-    raise SystemExit(0)
+def _empty_pooled() -> pd.DataFrame:
+    return pd.DataFrame(columns=pd.Index(POOLED_SCHEMA))
 
 
 def _per_gene(symbol: str, grp: pd.DataFrame) -> dict:
@@ -110,31 +69,59 @@ def _per_gene(symbol: str, grp: pd.DataFrame) -> dict:
     }
 
 
-rows = [_per_gene(str(sym), grp) for sym, grp in stacked.groupby("symbol", sort=True)]
-pooled = pd.DataFrame(rows)
+def aggregate_dndscv_per_gene(per_cancer_frames: list[pd.DataFrame]) -> pd.DataFrame:
+    """Roll per-cancer dNdScv outputs into a per-gene pan-cancer summary.
 
-# `groupby(...).apply` flattens to long-format with `symbol` carried via the
-# as_index=False; double-check shape.
-if "symbol" not in pooled.columns:
-    raise RuntimeError(
-        "aggregate_dndscv_per_gene: groupby+apply produced unexpected schema "
-        f"({list(pooled.columns)})"
+    Each input frame is one per-cancer-type genes.feather as produced by
+    `reconcile_dndscv_per_cancer.py`. Sentinel rows (where ``symbol`` is
+    NA, indicating a cohort that hit `failed_qc` or `below_threshold`) are
+    filtered before the rollup.
+
+    Returns a DataFrame with the canonical schema (``POOLED_SCHEMA``);
+    empty-but-schema-conforming when no input frame contains real per-gene
+    rows.
+    """
+    real_frames = [df for df in per_cancer_frames if not df.empty]
+    if not real_frames:
+        return _empty_pooled()
+
+    stacked = pd.concat(real_frames, ignore_index=True)
+    stacked = stacked[stacked["symbol"].notna()].copy()
+
+    if stacked.empty:
+        # Every per-cancer feather was sentinel-only.
+        return _empty_pooled()
+
+    stacked["symbol"] = stacked["symbol"].astype(str)
+    rows = [
+        _per_gene(str(sym), grp) for sym, grp in stacked.groupby("symbol", sort=True)
+    ]
+    pooled = pd.DataFrame(rows)
+    if "symbol" not in pooled.columns:
+        raise RuntimeError(
+            "aggregate_dndscv_per_gene: groupby produced unexpected schema "
+            f"({list(pooled.columns)})"
+        )
+    return (
+        pooled[POOLED_SCHEMA]
+        .sort_values(by="min_qglobal", na_position="last")
+        .reset_index(drop=True)
     )
 
-pooled = pooled[
-    [
-        "symbol",
-        "min_qglobal",
-        "n_cancers_significant_q05",
-        "n_cancers_significant_q01",
-        "n_cancers_tested",
-        "best_cancer_type",
-    ]
-].sort_values(by="min_qglobal", na_position="last").reset_index(drop=True)
 
-pooled.to_feather(snek.output[0])
-print(
-    f"aggregate_dndscv_per_gene: wrote {len(pooled):,} genes "
-    f"({int(pooled['min_qglobal'].notna().sum()):,} with non-null min_qglobal) "
-    f"to {snek.output[0]}"
-)
+def _run_via_snakemake() -> None:
+    snek = snakemake  # type: ignore[name-defined]  # noqa: F821
+    paths = list(snek.input)
+    print(f"aggregate_dndscv_per_gene: reading {len(paths):,} per-cancer outputs")
+    per_cancer_frames = [pd.read_feather(p) for p in paths]
+    pooled = aggregate_dndscv_per_gene(per_cancer_frames)
+    pooled.to_feather(snek.output[0])
+    print(
+        f"aggregate_dndscv_per_gene: wrote {len(pooled):,} genes "
+        f"({int(pooled['min_qglobal'].notna().sum()):,} with non-null min_qglobal) "
+        f"to {snek.output[0]}"
+    )
+
+
+if "snakemake" in globals():
+    _run_via_snakemake()

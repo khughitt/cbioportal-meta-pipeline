@@ -28,8 +28,6 @@
 #
 import pandas as pd
 
-snek = snakemake  # type: ignore[name-defined]  # noqa: F821
-
 REQUIRED_MUT_COLS = (
     "sample_id_tumor",
     "chromosome",
@@ -40,108 +38,129 @@ REQUIRED_MUT_COLS = (
     "symbol",
 )
 REQUIRED_SAMPLE_COLS = ("sample_id", "cancer_type")
+OUTPUT_SCHEMA = [
+    "sample_id",
+    "cancer_type",
+    "chr",
+    "pos",
+    "ref",
+    "alt",
+    "build",
+    "modality",
+]
 
-study_id = snek.wildcards["id"]
 
+def prepare_dndscv_input(
+    mut: pd.DataFrame,
+    samples: pd.DataFrame,
+    build: str,
+    study_id: str = "<test>",
+) -> pd.DataFrame:
+    """Pure-Python core: validate inputs, filter to SNVs, attach
+    ``cancer_type`` + ``modality`` per sample, and emit the dndscv input
+    schema. Snakemake glue (file I/O) lives in ``_run_via_snakemake``.
 
-def _fail(msg: str) -> None:
-    raise ValueError(f"prepare_dndscv_input ({study_id}): {msg}")
+    All sample_id columns are coerced to str so the join survives studies
+    that store integer sample IDs (e.g. pog570_bcgsc_2020).
+    """
+    if build not in {"hg19", "hg38"}:
+        raise ValueError(
+            f"prepare_dndscv_input ({study_id}): study_build={build!r} not in {{hg19, hg38}}"
+        )
 
+    missing_mut = [c for c in REQUIRED_MUT_COLS if c not in mut.columns]
+    if missing_mut:
+        raise ValueError(
+            f"prepare_dndscv_input ({study_id}): mut missing columns: {missing_mut}"
+        )
+    missing_samp = [c for c in REQUIRED_SAMPLE_COLS if c not in samples.columns]
+    if missing_samp:
+        raise ValueError(
+            f"prepare_dndscv_input ({study_id}): samples missing columns: {missing_samp}"
+        )
 
-# ---------------------------------------------------------------------------
-# Load inputs.
-# ---------------------------------------------------------------------------
-mut = pd.read_feather(snek.input.mut)
-samples = pd.read_feather(snek.input.samples)
-with open(snek.input.build) as fh:
-    build = fh.read().strip()
+    # SNV-only filter (dndscv's per-codon background applies to SNVs).
+    mut_snv = mut[mut["variant_type"].astype(str) == "SNP"].copy()
 
-if build not in {"hg19", "hg38"}:
-    _fail(f"study_build.txt content {build!r} not in {{hg19, hg38}}")
-
-missing_mut = [c for c in REQUIRED_MUT_COLS if c not in mut.columns]
-if missing_mut:
-    _fail(f"mut.feather missing required columns: {missing_mut}")
-missing_samp = [c for c in REQUIRED_SAMPLE_COLS if c not in samples.columns]
-if missing_samp:
-    _fail(f"samples.feather missing required columns: {missing_samp}")
-
-# ---------------------------------------------------------------------------
-# Filter to SNVs.
-# ---------------------------------------------------------------------------
-n_in = len(mut)
-mut = mut[mut["variant_type"].astype(str) == "SNP"].copy()
-n_snv = len(mut)
-print(
-    f"prepare_dndscv_input ({study_id}): SNV filter retained {n_snv:,} / {n_in:,} "
-    f"rows ({100 * n_snv / max(n_in, 1):.1f}%)"
-)
-
-# Drop rows with empty/sentinel ref or alt.
-ref = mut["reference_allele"].astype(str).str.strip()
-alt = mut["tumor_seq_allele2"].astype(str).str.strip()
-keep = (ref != "") & (alt != "") & (ref != "-") & (alt != "-") & (ref != "nan") & (alt != "nan")
-n_pre = len(mut)
-mut = mut.loc[keep].copy()
-print(
-    f"prepare_dndscv_input ({study_id}): allele filter retained {len(mut):,} / "
-    f"{n_pre:,} rows"
-)
-
-# ---------------------------------------------------------------------------
-# Build modality lookup from samples table.
-# `panel_id` is populated by resolve_panel_ids in convert_to_feather.py;
-# panel-bearing studies have a non-null panel_id per sample, WES studies
-# have NaN.
-# ---------------------------------------------------------------------------
-if "panel_id" in samples.columns:
-    samples_modality = samples[["sample_id"]].copy()
-    samples_modality["modality"] = (
-        samples["panel_id"]
-        .where(samples["panel_id"].notna(), other=None)
-        .map(lambda v: "panel" if v is not None and str(v) != "" else "wes")
+    # Drop rows with empty/sentinel ref or alt.
+    ref = mut_snv["reference_allele"].astype(str).str.strip()
+    alt = mut_snv["tumor_seq_allele2"].astype(str).str.strip()
+    keep = (
+        (ref != "")
+        & (alt != "")
+        & (ref != "-")
+        & (alt != "-")
+        & (ref != "nan")
+        & (alt != "nan")
     )
-else:
+    mut_snv = mut_snv.loc[keep].copy()
+
+    # Build modality lookup from samples table. `panel_id` is populated by
+    # resolve_panel_ids in convert_to_feather.py; panel-bearing studies have
+    # a non-null panel_id per sample, WES studies have NaN.
     samples_modality = samples[["sample_id"]].copy()
-    samples_modality["modality"] = "wes"
+    if "panel_id" in samples.columns:
+        # NaN/None/empty-string → wes; any populated value → panel.
+        # (Naive `.map(lambda v: 'panel' if str(v) != '' else 'wes')` mis-tags
+        # NaN as 'panel' because str(NaN) == 'nan'.)
+        has_panel = samples["panel_id"].notna() & (
+            samples["panel_id"].astype(str).str.strip() != ""
+        )
+        samples_modality["modality"] = has_panel.map(
+            {True: "panel", False: "wes"}
+        ).astype(str)
+    else:
+        samples_modality["modality"] = "wes"
 
-samples_join = samples[["sample_id", "cancer_type"]].merge(
-    samples_modality, on="sample_id", how="left"
-)
+    samples_join = samples[["sample_id", "cancer_type"]].merge(
+        samples_modality, on="sample_id", how="left"
+    )
+    # Some studies (pog570_bcgsc_2020) store sample_id as int64; the mut-side
+    # cast below forces str, so coerce samples-side too to keep merge dtypes
+    # aligned.
+    samples_join["sample_id"] = samples_join["sample_id"].astype(str)
 
-# ---------------------------------------------------------------------------
-# Build the output frame.
-# ---------------------------------------------------------------------------
-out = pd.DataFrame(
-    {
-        "sample_id": mut["sample_id_tumor"].astype(str).values,
-        "chr": mut["chromosome"].astype(str).str.replace(r"^chr", "", regex=True).values,
-        "pos": pd.to_numeric(mut["start"], errors="coerce").astype("Int64").values,
-        "ref": ref.loc[mut.index].values,
-        "alt": alt.loc[mut.index].values,
-    }
-)
+    out = pd.DataFrame(
+        {
+            "sample_id": mut_snv["sample_id_tumor"].astype(str).values,
+            "chr": mut_snv["chromosome"].astype(str).str.replace(r"^chr", "", regex=True).values,
+            "pos": pd.to_numeric(mut_snv["start"], errors="coerce").astype("Int64").values,
+            "ref": ref.loc[mut_snv.index].values,
+            "alt": alt.loc[mut_snv.index].values,
+        }
+    )
 
-# Join cancer_type + modality. Inner join: rows with no sample-table entry
-# cannot have cancer_type and would corrupt downstream per-cancer combine.
-out = out.merge(samples_join, on="sample_id", how="inner")
-print(
-    f"prepare_dndscv_input ({study_id}): sample-join retained {len(out):,} rows"
-)
+    # Inner join: rows with no sample-table entry have no cancer_type and
+    # would corrupt downstream per-cancer combine.
+    out = out.merge(samples_join, on="sample_id", how="inner")
 
-# Drop rows where pos or chr is empty after coercion.
-out = out.dropna(subset=["pos", "chr"]).copy()
-out = out[out["chr"].astype(str) != ""]
+    # Drop rows where pos or chr coerced to NA / empty.
+    out = out.dropna(subset=["pos", "chr"]).copy()
+    out = out[out["chr"].astype(str) != ""]
 
-# Pin schema-contract types.
-out["build"] = build
-out["modality"] = out["modality"].astype("category")
-out["cancer_type"] = out["cancer_type"].astype("category")
-out = out[["sample_id", "cancer_type", "chr", "pos", "ref", "alt", "build", "modality"]]
+    out["build"] = build
+    out["modality"] = out["modality"].astype("category")
+    out["cancer_type"] = out["cancer_type"].astype("category")
+    out = out[OUTPUT_SCHEMA].reset_index(drop=True)
+    return out
 
-# Reset index so to_feather is happy.
-out = out.reset_index(drop=True)
-out.to_feather(snek.output[0])
-print(
-    f"prepare_dndscv_input ({study_id}): wrote {len(out):,} rows to {snek.output[0]}"
-)
+
+def _run_via_snakemake() -> None:
+    snek = snakemake  # type: ignore[name-defined]  # noqa: F821
+    study_id = snek.wildcards["id"]
+    mut = pd.read_feather(snek.input.mut)
+    samples = pd.read_feather(snek.input.samples)
+    with open(snek.input.build) as fh:
+        build = fh.read().strip()
+
+    n_in = len(mut)
+    out = prepare_dndscv_input(mut, samples, build, study_id=study_id)
+    print(
+        f"prepare_dndscv_input ({study_id}): wrote {len(out):,} / {n_in:,} rows "
+        f"to {snek.output[0]}"
+    )
+    out.to_feather(snek.output[0])
+
+
+if "snakemake" in globals():
+    _run_via_snakemake()

@@ -1,0 +1,3 @@
+comparison_id	gene	target_variant	metastatic_study_id	metastatic_cancer_type	metastatic_expected_rate	primary_study_id	primary_cancer_type	primary_expected_rate	expected_source	notes
+ar_prostate_zehir2017	AR		msk_impact_2017	Prostate Cancer	0.18	prad_tcga_pan_can_atlas_2018	Prostate Adenocarcinoma	0.01	Zehir2017_Fig5
+esr1_breast_zehir2017	ESR1		msk_impact_2017	Breast Cancer	0.11	brca_tcga_pan_can_atlas_2018	Breast Cancer	0.04	Zehir2017_Fig5

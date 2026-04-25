@@ -1,4 +1,5 @@
 """Toy fixture must produce a resolvable DAG for the SELECT rules."""
+
 from __future__ import annotations
 
 import shutil
@@ -23,8 +24,11 @@ def _stage_toy_outputs() -> Path:
     out_dir = TOY / "_out"
     metadata = out_dir / "metadata"
     metadata.mkdir(parents=True, exist_ok=True)
-    for fn in ("samples_annotated.feather", "gene_sample_long.feather",
-               "sample_panel_map.feather"):
+    for fn in (
+        "samples_annotated.feather",
+        "gene_sample_long.feather",
+        "sample_panel_map.feather",
+    ):
         src = TOY / "metadata" / fn
         if src.exists():
             shutil.copy(src, metadata / fn)
@@ -32,7 +36,10 @@ def _stage_toy_outputs() -> Path:
     bailey = metadata / "bailey_alteration_class.feather"
     if not bailey.exists():
         import pandas as pd
-        pd.DataFrame({"symbol": ["TP53"], "alteration_class": ["tsg"]}).to_feather(bailey)
+
+        pd.DataFrame({"symbol": ["TP53"], "alteration_class": ["tsg"]}).to_feather(
+            bailey
+        )
     # Pre-create the preflight token to skip rule (0).
     select_dir = out_dir / "select"
     select_dir.mkdir(parents=True, exist_ok=True)
@@ -43,9 +50,14 @@ def _stage_toy_outputs() -> Path:
 def test_dag_resolves_with_dry_run():
     _stage_toy_outputs()
     cmd = [
-        "uv", "run", "--frozen", "snakemake",
-        "-s", str(REPO / "code/workflows/Snakefile"),
-        "--configfile", str(CONFIG),
+        "uv",
+        "run",
+        "--frozen",
+        "snakemake",
+        "-s",
+        str(REPO / "code/workflows/Snakefile"),
+        "--configfile",
+        str(CONFIG),
         "-n",
         "--",
         str(TOY / "_out/select/gene_pair_select.feather"),
@@ -54,7 +66,10 @@ def test_dag_resolves_with_dry_run():
     if result.returncode != 0:
         pytest.skip(
             "snakemake -n failed for the toy fixture (likely an unsatisfied upstream "
-            f"rule; this is a known-soft test). stderr head:\n"
+            "rule; this is a known-soft test). stderr head:\n"
             + "\n".join(result.stderr.splitlines()[:10])
         )
-    assert "build_select_gam" in result.stdout or "aggregate_select_results" in result.stdout
+    assert (
+        "build_select_gam" in result.stdout
+        or "aggregate_select_results" in result.stdout
+    )

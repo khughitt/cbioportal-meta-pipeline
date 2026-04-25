@@ -7,16 +7,6 @@
 
 Dedicated search for panel-vs-WES TMB calibration methods.
 
-## [t052] Pipeline addition: per-study cohort-stage descriptor
-- priority: P1
-- status: proposed
-- aspects: [software-development]
-- related: [task:bias-audit-cross-study-aggregation-pipeline]
-- group: pipeline
-- created: 2026-04-13
-
-Ingest per-study primary/metastatic/pre-treated annotation from cBioPortal clinical sample tables. Concrete bias to address: AR 18% in MSK metastatic prostate vs 1% in TCGA primary; ESR1 11% vs 4%. From cohort-selection-bias synthesis.
-
 ## [t055] Pipeline addition: M/C-class descriptor (mutation-vs-CNA hyperbola)
 - priority: P3
 - status: deferred
@@ -349,7 +339,7 @@ Once t078 co-occurrence/mutual-exclusivity is live, add Mutual Hazard Network (S
 - priority: P2
 - status: proposed
 - aspects: [software-development]
-- related: [task:t131,topic:mutation-rate-normalization,discussion:2026-04-24-gene-length-bias-in-mutation-rankings-and-literature]
+- related: [task:t131, topic:mutation-rate-normalization, discussion:2026-04-24-gene-length-bias-in-mutation-rankings-and-literature]
 - group: pipeline
 - created: 2026-04-24
 

@@ -56,16 +56,6 @@ Severity: Significant. From audit F10. Add cancer_saturation_status column deriv
 
 Severity: Minor. From audit F11. Trivial: count of non-null per-study columns per row, added as explicit column in output.
 
-## [t078] Pipeline addition: cross-study co-occurrence / mutual-exclusivity statistic (DISCOVER/WeSME + Stouffer)
-- priority: P2
-- status: proposed
-- aspects: [software-development]
-- related: [topic:co-occurrence-and-mutual-exclusivity, search:2026-04-13-cooccurrence-mutual-exclusivity-methods, topic:cross-study-harmonization]
-- group: meta-analysis
-- created: 2026-04-13
-
-
-
 ## [t082] Pipeline addition: HGNC gene-symbol alias mapping in convert_to_feather.py
 - priority: P2
 - status: proposed
@@ -344,3 +334,52 @@ Once t078 co-occurrence/mutual-exclusivity is live, add Mutual Hazard Network (S
 - created: 2026-04-24
 
 Add a liftover step in convert_to_feather.py that maps hg19-native study variants to GRCh38 using CrossMap or pyliftover with UCSC hg19ToHg38.over.chain.gz. Retain original chr/pos/build columns for audit. Single canonical build downstream unlocks dNdScv refdb selection, future GRCh38-only annotation sources (gnomAD v4, ClinVar, dbNSFP v4.x, AlphaMissense, latest COSMIC), and removes a class of silent-degradation bugs across the pipeline. Exonic SNV loss expected <0.1% (per UCSC chain coverage). This is the long-term destination flagged during t131 design — t131 itself uses cheaper per-study refdb routing as an interim. Out of scope for this task: re-running upstream tooling against the lifted coordinates (signature callers, replication-timing joins). Plan separately for those once the liftover artifact is in place.
+
+## [t137] t078 SELECT pipeline integration wiring (production prerequisites)
+- priority: P2
+- status: proposed
+- aspects: [software-development]
+- related: [task:t078, task:t081]
+- blocked-by: [t081]
+- group: pipeline
+- created: 2026-04-25
+
+t078 implementation landed unit-tested + DAG-dry-run-validated, but the
+plan referenced upstream artefacts that the existing pipeline does not
+currently produce. Discovered when attempting an end-to-end smoke run.
+Wiring the gaps closed will let the SELECT rules run on real data:
+
+1. **`gene_sample_long.feather`** — t078 rules read
+   `summary/mut/table/gene_sample_long.feather` (per-sample × gene long
+   table). No current rule produces it. Needs a new
+   `build_gene_sample_long` rule that derives per-(composite_sample_id,
+   symbol) rows from the per-study `studies/{id}/mut/table/mut.feather`
+   files (concat + project + dedupe).
+
+2. **`samples_annotated.feather`** — t078 expects the
+   `metadata/samples_annotated.feather` written by the t081
+   hypermutator pipeline. The 10k dataset does not currently have this
+   file produced; running the hypermutator pipeline against the 10k
+   config would land it. Blocked by t081 readiness for this dataset.
+
+3. **`bailey_alteration_class.feather` schema mismatch** — t078 references
+   `metadata/bailey_alteration_class.feather` with cols (symbol,
+   alteration_class). The existing `process_bailey2018_drivers` rule
+   writes `metadata/bailey2018_drivers.feather` with a different schema.
+   Either (i) switch t078 to read the existing feather and adapt its
+   loader to the actual schema, or (ii) add a small adapter rule that
+   projects the bailey drivers feather to the expected
+   (symbol, alteration_class) shape.
+
+4. **`sanchez_vega_pathways.tsv` vs `.feather`** — t078 reads the TSV;
+   the existing `process_sanchez_vega_pathways` rule writes a feather.
+   Either (i) switch t078 to read the feather, or (ii) add a TSV export
+   to the existing rule. Recommend (i) — feather is canonical.
+
+5. **`sample_panel_map.feather`** — producible by the rule t078 added
+   (Task 7 of the implementation plan); requires
+   `samples_annotated.feather` to exist first (depends on item 2).
+
+After wiring: smoke-run with `n_permut=50` and 1-2 cancer types to
+verify production data flows end-to-end, then bump to full
+`n_permut=1000` for the headline run.

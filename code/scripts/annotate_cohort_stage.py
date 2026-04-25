@@ -27,6 +27,19 @@ ENUM_VALUES: frozenset[str] = frozenset({"true", "false", "unknown"})
 PATTERN_KIND_VALUES: frozenset[str] = frozenset({"study_id", "glob"})
 
 
+def _normalize(value: str) -> str:
+    """Normalize a string for cohort-stage value lookup.
+
+    Strip whitespace, casefold, replace hyphens and underscores with spaces, and
+    collapse repeated whitespace. ``"Treatment-naive"`` and ``"  TREATMENT  NAIVE  "``
+    both normalize to ``"treatment naive"``.
+    """
+    s = str(value).strip().casefold().replace("-", " ").replace("_", " ")
+    while "  " in s:
+        s = s.replace("  ", " ")
+    return s
+
+
 def load_and_validate_registry(path: Path) -> pd.DataFrame:
     """Load the cohort-stage registry TSV and validate its contents.
 

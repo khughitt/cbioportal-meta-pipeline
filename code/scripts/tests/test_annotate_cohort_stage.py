@@ -92,3 +92,16 @@ def test_registry_validation_rejects_empty_source(tmp_path: Path) -> None:
     )
     with pytest.raises(ValueError, match="source"):
         mod.load_and_validate_registry(path)
+
+
+# ---------------------------------------------------------------------------
+# Value normalization (1 test)
+# ---------------------------------------------------------------------------
+
+
+def test_normalize_collapses_case_punctuation_and_whitespace() -> None:
+    canonical = "treatment naive"
+    assert mod._normalize("Treatment-naive") == canonical
+    assert mod._normalize("treatment_naive") == canonical
+    assert mod._normalize("  TREATMENT  NAIVE  ") == canonical
+    assert mod._normalize("Treatment Naive") == canonical

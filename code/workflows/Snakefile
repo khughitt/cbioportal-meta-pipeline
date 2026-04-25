@@ -934,6 +934,42 @@ rule fetch_select_tarball:
     """
 
 #
+# t078 SELECT pipeline - vendored COSMIC Cancer Gene Census snapshot.
+#
+# Manual prereq: the Sanger CGC TSV at config["cosmic_cgc_raw_path"] (default
+# /data/raw/cosmic/v100/Cosmic_CancerGeneCensus_v100_GRCh38.tsv -- auth-gated,
+# download with a free academic COSMIC account). The artifact data/cosmic_cgc.tsv
+# is committed; this rule documents the copy recipe and verifies the sha256
+# prefix to flag silent upstream substitution.
+#
+COSMIC_CGC_SHA256_PREFIX = "abf3681d6d01"   # 12-char prefix
+
+rule vendor_cosmic_cgc:
+  input:
+    config.get(
+      "cosmic_cgc_raw_path",
+      "/data/raw/cosmic/v100/Cosmic_CancerGeneCensus_v100_GRCh38.tsv",
+    )
+  output:
+    "data/cosmic_cgc.tsv"
+  params:
+    expected_sha256_prefix=COSMIC_CGC_SHA256_PREFIX
+  shell:
+    r"""
+    cp {input} {output}.tmp
+    actual=$(sha256sum {output}.tmp | cut -c1-12)
+    if [ "{params.expected_sha256_prefix}" != "<TBD-after-first-copy>" ] && \
+       [ "$actual" != "{params.expected_sha256_prefix}" ]; then
+      echo "ERROR: sha256 mismatch for {output}" >&2
+      echo "  expected prefix: {params.expected_sha256_prefix}" >&2
+      echo "  actual prefix:   $actual" >&2
+      rm -f {output}.tmp
+      exit 1
+    fi
+    mv {output}.tmp {output}
+    """
+
+#
 # t078 SELECT pipeline - per-panel BED files derived from GENIE.
 #
 # Manual prereq: the GENIE consolidated genomic_information.txt at

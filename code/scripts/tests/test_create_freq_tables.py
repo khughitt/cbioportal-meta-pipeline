@@ -389,3 +389,44 @@ def test_off_panel_gene_above_threshold_raises() -> None:
     panel_coverage = pd.DataFrame({"panel_id": ["PANEL_BIG"], "gene": ["GENE_A"]})
     with pytest.raises(ValueError, match="no panel coverage"):
         compute_freq_tables(muts, samples, flags, panel_coverage=panel_coverage)
+
+
+# --- Regression: mixed sample_id dtypes across study sources --------------- #
+#
+# Caught in the t131 full pan-cancer-dndscv run 2026-04-25: pog570_bcgsc_2020
+# stores sample_id as int64 in samples.feather and sample_id_tumor as int64
+# in mut.feather, while the cross-study samples_annotated.feather (built by
+# combine_samples_tmb) carries str-typed sample_id post-concat. The merge
+# `mut.merge(samples_meta).merge(flags)` failed with
+#   ValueError: You are trying to merge on int64 and str columns for key 'sample_id'.
+# Fix: cast every sample_id column to str at compute_freq_tables entry.
+
+def test_int_sample_ids_in_mut_and_samples_with_str_flags() -> None:
+    """Reproduces the pog570_bcgsc_2020 cross-study merge failure from
+    full-run-#5 (2026-04-25)."""
+    muts = pd.DataFrame.from_records(
+        [("GENE1", 100), ("GENE1", 200), ("GENE2", 300)],
+        columns=["symbol", "sample_id_tumor"],
+    )
+    # int sample_id (matches what pog570's samples.feather stores natively).
+    samples = pd.DataFrame.from_records(
+        [
+            (100, "Cancer A", "A detailed"),
+            (200, "Cancer A", "A detailed"),
+            (300, "Cancer B", "B detailed"),
+        ],
+        columns=["sample_id", "cancer_type", "cancer_type_detailed"],
+    )
+    # str sample_id (matches what samples_annotated.feather carries post-concat
+    # across mixed-dtype studies).
+    flags = pd.DataFrame.from_records(
+        [("100", False), ("200", False), ("300", False)],
+        columns=["sample_id", "is_hypermutator"],
+    )
+
+    _, _, gene_df, gene_cancer_df = compute_freq_tables(muts, samples, flags)
+
+    # Did not crash; produced expected per-gene rows.
+    assert set(gene_df["symbol"]) == {"GENE1", "GENE2"}
+    assert int(gene_df.loc[gene_df["symbol"] == "GENE1", "num_inclusive"].iloc[0]) == 2
+    assert int(gene_df.loc[gene_df["symbol"] == "GENE2", "num_inclusive"].iloc[0]) == 1

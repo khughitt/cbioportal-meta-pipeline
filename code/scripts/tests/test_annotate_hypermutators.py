@@ -582,3 +582,25 @@ def pytest_approx(expected: float, rel: float = 1e-6) -> object:
     import pytest
 
     return pytest.approx(expected, rel=rel)
+
+
+# --- Regression: missing msi_type column ---------------------------------- #
+#
+# Caught in t131 full pan-cancer-dndscv run 2026-04-25: not every cBioPortal
+# study carries an MSI-H call (older studies pre-date routine MSI testing).
+# annotate_hypermutators previously hard-keyed on samples["msi_type"] and
+# raised KeyError when the column was absent. Fix: treat absence as no MSI-H
+# (msi_h all False).
+
+def test_missing_msi_type_column_treats_as_no_msi_h() -> None:
+    samples_tmb = _samples_tmb([{"sample_id": "S1", "tmb": 5.0}])
+    samples_tmb = samples_tmb.drop(columns=["msi_type", "msi_score"])  # cBioPortal-old shape
+    out = annotate_hypermutators(
+        samples_tmb_combined=samples_tmb,
+        samples_gmm_flagged=_samples_gmm([{"sample_id": "S1"}]),
+        per_cancer_gmm_fits=_per_cancer([{"cancer_type": "Test Cancer"}]),
+    )
+    row = out.loc[out["sample_id"] == "S1"].iloc[0]
+    # No POLE/POLD1 hotspot, no MSI-H, no GMM trigger → NOT a hypermutator.
+    assert not row["is_hypermutator"]
+    assert "msi_h" not in str(row.get("hypermutator_reason", ""))

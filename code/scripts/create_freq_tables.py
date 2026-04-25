@@ -83,13 +83,19 @@ def compute_freq_tables(
     mut = mutations[["symbol", "sample_id_tumor"]].rename(
         columns={"sample_id_tumor": "sample_id"}
     )
+    # Some studies (e.g. pog570_bcgsc_2020) store sample IDs as int64; the
+    # cross-study `samples_annotated.feather` has them as str post-concat.
+    # Force str on every sample_id column so merges align across all studies.
+    mut["sample_id"] = mut["sample_id"].astype(str)
 
     sample_cols = ["sample_id", "cancer_type", "cancer_type_detailed"]
     if "panel_id" in samples.columns:
         sample_cols.append("panel_id")
-    samples_meta = samples[sample_cols]
+    samples_meta = samples[sample_cols].copy()
+    samples_meta["sample_id"] = samples_meta["sample_id"].astype(str)
 
     flags = _prepare_flags(hypermutator_flags, samples_meta)
+    flags["sample_id"] = flags["sample_id"].astype(str)
 
     # Prerequisite check: every non-null panel_id in samples must have coverage rows.
     if panel_coverage is not None and "panel_id" in samples_meta.columns:

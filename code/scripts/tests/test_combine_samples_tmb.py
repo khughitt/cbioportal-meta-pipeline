@@ -101,3 +101,72 @@ def test_empty_studies_list_returns_empty_dataframe_with_schema() -> None:
     out = combine_samples_tmb(per_study_tmb=[], per_study_hotspots=[])
     assert out.empty
     assert "pole_hotspot_detected" in out.columns
+
+
+# --- Regression: mixed identifier dtypes across studies -------------------- #
+#
+# Caught in the t131 full pan-cancer-dndscv run 2026-04-25: pog570_bcgsc_2020
+# stores patient_id and sample_id as int64 while every other study stores them
+# as str. After pd.concat the column became object-dtype with mixed Python
+# types; pyarrow.to_feather raised
+#   ArrowTypeError: Expected bytes, got a 'int' object
+# Fix: coerce all known identifier columns to str inside combine_samples_tmb.
+
+def _tmb_int_ids(study_id: str, sample_ids: list[int], tmb_values: list[float]) -> pd.DataFrame:
+    """Like _tmb but with int64 sample_id and patient_id columns."""
+    return pd.DataFrame(
+        {
+            "study_id": study_id,
+            "sample_id": sample_ids,                # int64
+            "patient_id": [s - 1 for s in sample_ids],  # int64
+            "cancer_type": ["Test Cancer"] * len(sample_ids),
+            "tmb": tmb_values,
+            "tmb_log10": [pd.NA] * len(sample_ids),
+            "panel_callable_mb": [1.0] * len(sample_ids),
+            "tmb_source": ["bed_sum"] * len(sample_ids),
+            "msi_type": [pd.NA] * len(sample_ids),
+            "msi_score": [pd.NA] * len(sample_ids),
+        }
+    )
+
+
+def _tmb_str_ids(study_id: str, sample_ids: list[str], tmb_values: list[float]) -> pd.DataFrame:
+    return pd.DataFrame(
+        {
+            "study_id": study_id,
+            "sample_id": sample_ids,
+            "patient_id": [f"P{s}" for s in sample_ids],
+            "cancer_type": ["Test Cancer"] * len(sample_ids),
+            "tmb": tmb_values,
+            "tmb_log10": [pd.NA] * len(sample_ids),
+            "panel_callable_mb": [1.0] * len(sample_ids),
+            "tmb_source": ["bed_sum"] * len(sample_ids),
+            "msi_type": [pd.NA] * len(sample_ids),
+            "msi_score": [pd.NA] * len(sample_ids),
+        }
+    )
+
+
+def test_mixed_dtype_identifier_columns_serialize() -> None:
+    """Reproduces the pog570 cross-study patient_id+sample_id concat failure."""
+    out = combine_samples_tmb(
+        per_study_tmb=[
+            _tmb_str_ids("study_a", ["A1", "A2"], [1.0, 2.0]),
+            _tmb_int_ids("pog570_like", [101, 102], [3.0, 4.0]),
+        ],
+        per_study_hotspots=[_hotspots([], [], [])],
+    )
+    # After concat the identifier columns must be all-str so to_feather succeeds.
+    # (Pandas may pick StringDtype or object; both serialize cleanly via arrow.)
+    assert all(isinstance(v, str) for v in out["sample_id"])
+    assert all(isinstance(v, str) for v in out["patient_id"])
+    # Round-trip through arrow IPC to mirror to_feather's serialization path.
+    import io
+    import pyarrow as pa
+    import pyarrow.ipc as ipc
+    buf = io.BytesIO()
+    table = pa.Table.from_pandas(out)
+    with ipc.new_file(buf, table.schema) as writer:
+        writer.write_table(table)
+    # If the cast worked, this is round-trippable; if not, ArrowTypeError fires above.
+    assert buf.tell() > 0

@@ -153,7 +153,12 @@ def _apply_decision_table(
     tmb = samples["tmb"].to_numpy(dtype=float)
     pole = samples["pole_hotspot_detected"].fillna(False).to_numpy(dtype=bool)
     pold1 = samples["pold1_hotspot_detected"].fillna(False).to_numpy(dtype=bool)
-    msi_h = (samples["msi_type"].fillna("").astype(str) == "MSI-H").to_numpy(dtype=bool)
+    # `msi_type` is optional — not every study carries an MSI-H call (older
+     # studies pre-date routine MSI testing). Treat absence as no MSI-H.
+    if "msi_type" in samples.columns:
+        msi_h = (samples["msi_type"].fillna("").astype(str) == "MSI-H").to_numpy(dtype=bool)
+    else:
+        msi_h = np.zeros(n, dtype=bool)
     is_bimodal = (samples["fit_quality"].fillna("").astype(str) == "bimodal").to_numpy(
         dtype=bool
     )

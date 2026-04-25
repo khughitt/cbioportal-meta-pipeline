@@ -53,6 +53,13 @@ def combine_samples_tmb(
 
     tmb = pd.concat(per_study_tmb, ignore_index=True)
 
+    # Some studies (e.g. pog570_bcgsc_2020) store identifier columns as int64;
+    # concat across mixed-dtype frames yields an object column that pyarrow
+    # cannot serialize. Coerce all known identifier columns to str.
+    for col in ("study_id", "sample_id", "patient_id", "cancer_type", "sample_id_tumor"):
+        if col in tmb.columns:
+            tmb[col] = tmb[col].astype(str)
+
     if per_study_hotspots:
         hotspots = pd.concat(per_study_hotspots, ignore_index=True)
     else:

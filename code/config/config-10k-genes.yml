@@ -2,6 +2,50 @@
 # multi-cancer studies with ~10k+ genes
 #
 
+# t078 SELECT co-occurrence / mutual-exclusivity layer (opt-in).
+select:
+  enabled: false                    # opt-in. Set to true on dev runs.
+
+  gene_universe:
+    bailey2018: true
+    cosmic_cgc: true
+    sanchez_vega: true
+    custom_genes_tsv: null
+
+  thresholds:
+    min_stratum_samples: 30
+    min_gene_prevalence_frac: 0.03
+    min_gene_prevalence_count: 3
+    study_residual_threshold_frac: 0.10
+
+  stouffer:
+    weight: "sqrt_n"
+
+  runtime:
+    n_permut: 1000
+    n_cores: 8
+    max_memory_size_gb: 100
+    save_intermediate_files: false
+    randomization_switch_threshold: 30
+    min_feature_support: 5
+    min_feature_freq: 0.001
+
+  output_dir: "results/select"
+  random_seed: 0
+
+  panel_beds:
+    msk_impact_341: "data/panels/IMPACT341.bed"
+    msk_impact_410: "data/panels/IMPACT410.bed"
+    msk_impact_468: "data/panels/IMPACT468.bed"
+    msk_impact_505: "data/panels/IMPACT505.bed"
+    foundation_one: "data/panels/F1.bed"
+    foundation_one_cdx: "data/panels/F1CDx.bed"
+
+  sample_class_components: ["study_id"]
+  ch_priority_genes: ["DNMT3A", "PPM1D", "TET2", "TP53", "ASXL1", "CHEK2", "PRPF8"]
+
+  make_select_report: false
+
 # input / output directories
 data_dir: "/data/raw/cbioportal"
 out_dir: "/data/packages/cbioportal/10k"

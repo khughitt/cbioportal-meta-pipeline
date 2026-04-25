@@ -40,6 +40,46 @@ rule all:
 
 select_enabled = config.get("select", {}).get("enabled", False)
 
+def _panels_for_cell(config: dict, wildcards) -> list[str]:
+  """Panels needed by one (cancer_type, tier, study?, cohort) cell.
+
+  For A-tier cells: only the panel(s) of the named study; usually 1 unless GENIE.
+  For B-tier cells: every panel that any sample of that cancer type uses.
+
+  Reads sample_panel_map.feather + samples_annotated.feather lazily; the rule
+  must depend on those checkpoints existing before this lambda is evaluated.
+  """
+  spm = pd.read_feather(out_dir.joinpath("metadata/sample_panel_map.feather"))
+  samples = pd.read_feather(out_dir.joinpath("metadata/samples_annotated.feather"))
+  rel = samples.merge(spm, on=["study_id", "sample_id"], how="inner")
+  rel = rel[rel["cancer_type"] == wildcards.cancer_type]
+  if wildcards.tier == "A":
+    rel = rel[rel["study_id"] == wildcards.study]
+  return sorted(rel["panel_id"].dropna().unique().tolist())
+
+
+def _all_per_cell_paths(config: dict) -> list[str]:
+  """Enumerate every per-cell pair_stats.feather Snakemake should expand to.
+
+  Reads samples_annotated.feather lazily. The aggregate rule's `input:` lambda
+  must wait for that file before this is invoked at DAG-resolution time.
+  """
+  samples = pd.read_feather(out_dir.joinpath("metadata/samples_annotated.feather"))
+  cancer_types = sorted(samples["cancer_type"].dropna().unique())
+  studies = sorted(samples["study_id"].dropna().unique())
+  paths: list[str] = []
+  for ct in cancer_types:
+    for cohort in ("inclusive", "exclusive"):
+      paths.append(str(out_dir.joinpath(
+        f"select/per_cell/{ct}/B/_/{cohort}/pair_stats.feather"
+      )))
+      for st in studies:
+        paths.append(str(out_dir.joinpath(
+          f"select/per_cell/{ct}/A/{st}/{cohort}/pair_stats.feather"
+        )))
+  return paths
+
+
 if select_enabled:
 
   rule preflight_select_env:
@@ -53,6 +93,108 @@ if select_enabled:
       "../envs/select.yml"
     script:
       "../scripts/preflight_select_env.R"
+
+  rule build_panel_gene_sets:
+    """Rule (1a): per-panel callable-gene feathers."""
+    input:
+      bed = "data/panels/{panel_id}.bed",
+      grch38 = "data/grch38.tsv"
+    output:
+      out_dir.joinpath("select/panel_gene_sets/{panel_id}.feather")
+    script:
+      "../scripts/build_panel_gene_sets.py"
+
+  rule build_select_gene_universe:
+    """Rule (1b): union of Bailey/CGC/Sanchez-Vega/optional custom genes."""
+    input:
+      bailey = "data/bailey2018_table_s1.tsv",
+      cgc = "data/cosmic_cgc.tsv",
+      sanchez_vega = "data/sanchez_vega_pathways.tsv"
+    output:
+      universe = out_dir.joinpath("select/gene_universe.tsv")
+    params:
+      bailey_version = "2018",
+      cgc_version = "2024-09",
+      sanchez_vega_version = "2018"
+    script:
+      "../scripts/build_select_gene_universe.py"
+
+  # Cell wildcards: cancer_type, tier in {B, A}, cohort in {inclusive, exclusive},
+  # study (only when tier == 'A').
+  rule build_select_gam:
+    """Rule (2): per-cell SELECT inputs (GAM + sample.class + alteration.class)."""
+    input:
+      samples_annotated = out_dir.joinpath("metadata/samples_annotated.feather"),
+      mutation_long = out_dir.joinpath("summary/mut/table/gene_sample_long.feather"),
+      sample_panel_map = out_dir.joinpath("metadata/sample_panel_map.feather"),
+      panel_gene_sets = lambda wc: expand(
+        str(out_dir.joinpath("select/panel_gene_sets/{panel_id}.feather")),
+        panel_id=_panels_for_cell(config, wc),
+      ),
+      gene_universe = out_dir.joinpath("select/gene_universe.tsv"),
+      bailey_alteration_class = out_dir.joinpath("metadata/bailey_alteration_class.feather"),
+      preflight_token = out_dir.joinpath("select/.preflight_ok")
+    output:
+      cell_dir = directory(
+        out_dir.joinpath("select/inputs/{cancer_type}/{tier}/{study}/{cohort}/")
+      )
+    params:
+      thresholds = config["select"]["thresholds"],
+      sample_class_components = config["select"]["sample_class_components"],
+      ch_priority_genes = config["select"].get(
+        "ch_priority_genes",
+        ["DNMT3A", "PPM1D", "TET2", "TP53", "ASXL1", "CHEK2", "PRPF8"],
+      )
+    script:
+      "../scripts/build_select_gam.py"
+
+  rule run_select_per_cell:
+    """Rule (3): per-cell SELECT wrapper around select::select()."""
+    input:
+      cell_dir = out_dir.joinpath("select/inputs/{cancer_type}/{tier}/{study}/{cohort}/"),
+      preflight_token = out_dir.joinpath("select/.preflight_ok")
+    output:
+      pair_stats = out_dir.joinpath(
+        "select/per_cell/{cancer_type}/{tier}/{study}/{cohort}/pair_stats.feather"
+      )
+    params:
+      runtime = config["select"]["runtime"],
+      random_seed = config["select"]["random_seed"]
+    conda:
+      "../envs/select.yml"
+    script:
+      "../scripts/run_select.R"
+
+  rule run_select_pathway_aggregated:
+    """Rule (5): pathway x pathway SELECT on the pathway-aggregated GAM."""
+    input:
+      cell_dir = out_dir.joinpath(
+        "select/inputs/{cancer_type}/B/_/exclusive/pathway_aggregated/"
+      ),
+      preflight_token = out_dir.joinpath("select/.preflight_ok")
+    output:
+      pair_stats = out_dir.joinpath(
+        "select/per_cell/{cancer_type}/pathway_aggregated/pair_stats.feather"
+      )
+    params:
+      runtime = config["select"]["runtime"],
+      random_seed = config["select"]["random_seed"]
+    conda:
+      "../envs/select.yml"
+    script:
+      "../scripts/run_select_pathway_aggregated.R"
+
+  rule aggregate_select_results:
+    """Rule (4): cross-cell aggregation -> headline feathers."""
+    input:
+      per_cell = lambda wc: _all_per_cell_paths(config),
+      pathway_membership = "data/sanchez_vega_pathways.tsv"
+    output:
+      gene_pair = out_dir.joinpath("select/gene_pair_select.feather"),
+      pathway_rollup = out_dir.joinpath("select/pathway_rollup_gene_pairs.feather"),
+      annotation = out_dir.joinpath("select/gene_cancer_study_select_annotation.feather")
+    script:
+      "../scripts/aggregate_select_results.py"
 
 #
 # Bailey 2018 driver-annotation overlay.

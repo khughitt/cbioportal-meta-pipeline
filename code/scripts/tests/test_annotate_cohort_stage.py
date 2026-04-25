@@ -213,3 +213,33 @@ def test_pre_treated_normalization_handles_punctuation_variants(tmp_path: Path) 
         val, src = mod.classify_pre_treated(sample_row, "msk_impact_2017", registry)
         assert val is False, f"failed for {raw!r}"
         assert src == "sample_metadata:sample_type_detailed"
+
+
+# ---------------------------------------------------------------------------
+# Combined per-sample classifier + per-study annotator (1 test)
+# ---------------------------------------------------------------------------
+
+
+def test_axes_resolve_independently_one_via_metadata_other_via_registry(
+    tmp_path: Path,
+) -> None:
+    registry = _toy_registry(tmp_path)
+    samples = pd.DataFrame(
+        [
+            {"sample_id": "s1", "sample_type": "Metastasis"},
+            {"sample_id": "s2", "sample_type": "Primary"},
+            {"sample_id": "s3", "sample_type": ""},
+        ]
+    )
+    out = mod.annotate_samples(samples, "msk_impact_2017", registry)
+    # s1: metastatic=True (sample), pre_treated=NA (registry msk_impact_* default)
+    # s2: metastatic=False (sample), pre_treated=NA (registry default)
+    # s3: metastatic=NA (registry default), pre_treated=NA (registry default)
+    assert out.loc[0, "is_metastatic"] is True
+    assert pd.isna(out.loc[0, "is_pre_treated"])
+    assert out.loc[0, "cohort_stage_metastatic_source"] == "sample_metadata:sample_type"
+    assert out.loc[0, "cohort_stage_treatment_source"] == "registry_glob"
+
+    assert out.loc[1, "is_metastatic"] is False
+    assert pd.isna(out.loc[2, "is_metastatic"])
+    assert out.loc[2, "cohort_stage_metastatic_source"] == "registry_glob"

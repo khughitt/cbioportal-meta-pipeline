@@ -181,3 +181,72 @@ def classify_pre_treated(
         if norm in PRE_TREATED_VALUE_MAP:
             return PRE_TREATED_VALUE_MAP[norm], f"sample_metadata:{fld}"
     return _resolve_from_registry(registry, study_id, "default_is_pre_treated")
+
+
+def classify_sample(
+    sample_row: dict | pd.Series, study_id: str, registry: pd.DataFrame
+) -> dict[str, object]:
+    """Resolve both cohort-stage axes for one sample, independently."""
+    is_met, met_src = classify_metastatic(sample_row, study_id, registry)
+    is_tx, tx_src = classify_pre_treated(sample_row, study_id, registry)
+    return {
+        "is_metastatic": is_met,
+        "is_pre_treated": is_tx,
+        "cohort_stage_metastatic_source": met_src,
+        "cohort_stage_treatment_source": tx_src,
+    }
+
+
+def annotate_samples(
+    samples_df: pd.DataFrame, study_id: str, registry: pd.DataFrame
+) -> pd.DataFrame:
+    """Apply ``classify_sample`` over a samples DataFrame; return annotated copy.
+
+    Output preserves all input columns and adds: ``is_metastatic`` (nullable bool),
+    ``is_pre_treated`` (nullable bool), ``cohort_stage_metastatic_source`` (category),
+    ``cohort_stage_treatment_source`` (category).
+    """
+    out = samples_df.copy()
+    rows = [
+        classify_sample(row, study_id, registry) for _, row in samples_df.iterrows()
+    ]
+    annotation = pd.DataFrame(rows, index=samples_df.index)
+    # Use object dtype to preserve Python bool/None values for nullable semantics
+    out["is_metastatic"] = annotation["is_metastatic"]
+    out["is_pre_treated"] = annotation["is_pre_treated"]
+    out["cohort_stage_metastatic_source"] = annotation[
+        "cohort_stage_metastatic_source"
+    ].astype("category")
+    out["cohort_stage_treatment_source"] = annotation[
+        "cohort_stage_treatment_source"
+    ].astype("category")
+    return out
+
+
+def annotate_study(samples_path: str, registry_path: str, output_path: str) -> None:
+    registry = load_and_validate_registry(Path(registry_path))
+    samples = pd.read_feather(samples_path)
+    # Path layout: results/<run>/studies/<study_id>/metadata/samples.feather
+    study_id = Path(samples_path).parent.parent.name
+    annotated = annotate_samples(samples, study_id, registry)
+    Path(output_path).parent.mkdir(parents=True, exist_ok=True)
+    annotated.to_feather(output_path)
+
+
+if __name__ == "__main__":
+    try:
+        snek = snakemake  # type: ignore[name-defined]  # noqa: F821
+        annotate_study(
+            samples_path=str(snek.input.samples),
+            registry_path=str(snek.input.registry),
+            output_path=str(snek.output[0]),
+        )
+    except NameError:
+        import argparse
+
+        p = argparse.ArgumentParser(description=__doc__)
+        p.add_argument("--samples", required=True)
+        p.add_argument("--registry", required=True)
+        p.add_argument("--output", required=True)
+        args = p.parse_args()
+        annotate_study(args.samples, args.registry, args.output)

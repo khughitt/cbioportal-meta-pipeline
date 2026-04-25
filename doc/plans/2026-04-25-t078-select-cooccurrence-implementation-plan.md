@@ -152,31 +152,88 @@ code/config/config-10k-genes.yml                           # Add select: block
 
 **Why:** The design requires a single, reproducible SELECT install path with no network
 fallback (design risk #2). Vendoring the upstream v1.6.4 source tarball into the repo
-makes the install offline-able and stable against upstream repo deletion.
+makes the install offline-able and stable against upstream repo deletion. The download
+recipe is captured as a Snakemake rule (`fetch_select_tarball`) so the artifact is fully
+reproducible — `git clean` can wipe `data/external/` and a single `snakemake` invocation
+restores it bit-for-bit (sha256-verified).
 
 **Files:**
 - Create: `data/external/select_v1.6.4.tar.gz`
 - Create: `data/external/README.md` (one-paragraph note: source URL, sha256, license)
+- Modify: `code/workflows/Snakefile` — add `rule fetch_select_tarball`
 
-- [ ] **Step 1: Download the v1.6.4 tarball**
+- [ ] **Step 1: Add `rule fetch_select_tarball` to the Snakefile**
 
-```bash
-mkdir -p data/external
-curl -sL https://github.com/CSOgroup/select/archive/refs/tags/v1.6.4.tar.gz \
-  -o data/external/select_v1.6.4.tar.gz
+Append to `code/workflows/Snakefile` (alongside the existing manual-prereq rules like
+`process_bailey2018_drivers`):
+
+```python
+#
+# t078 SELECT pipeline — vendored upstream R package.
+#
+# Downloads the v1.6.4 source tarball from the public GitHub release and
+# verifies its sha256 prefix. The artifact is committed to the repo so this
+# rule normally never runs; it exists so the download recipe is reproducible
+# (e.g., after `git clean -xdf data/external/` the rule restores the file
+# byte-for-byte). To upgrade, bump SELECT_VERSION + SELECT_SHA256_PREFIX and
+# re-run.
+#
+SELECT_VERSION = "1.6.4"
+SELECT_SHA256_PREFIX = "<TBD-after-first-download>"   # 12-char prefix
+
+rule fetch_select_tarball:
+  output:
+    "data/external/select_v{version}.tar.gz".format(version=SELECT_VERSION)
+  params:
+    url=lambda wc: (
+      f"https://github.com/CSOgroup/select/archive/refs/tags/v{SELECT_VERSION}.tar.gz"
+    ),
+    expected_sha256_prefix=SELECT_SHA256_PREFIX,
+  shell:
+    r"""
+    mkdir -p $(dirname {output})
+    curl -sSfL {params.url} -o {output}.tmp
+    actual=$(sha256sum {output}.tmp | cut -c1-12)
+    if [ "{params.expected_sha256_prefix}" != "<TBD-after-first-download>" ] && \
+       [ "$actual" != "{params.expected_sha256_prefix}" ]; then
+      echo "ERROR: sha256 mismatch for {output}" >&2
+      echo "  expected prefix: {params.expected_sha256_prefix}" >&2
+      echo "  actual prefix:   $actual" >&2
+      rm -f {output}.tmp
+      exit 1
+    fi
+    file {output}.tmp | grep -q "gzip compressed" || (
+      echo "ERROR: download is not a gzip tarball (likely an HTML error page)" >&2
+      rm -f {output}.tmp
+      exit 1
+    )
+    mv {output}.tmp {output}
+    """
 ```
 
-Expected: file size ~few hundred KB. Verify with `ls -lh data/external/select_v1.6.4.tar.gz`.
+- [ ] **Step 2: Run the rule once to populate the artifact**
 
-- [ ] **Step 2: Record the sha256 for provenance**
+```bash
+uv run snakemake -s code/workflows/Snakefile -j1 \
+  --configfile code/config/config-10k-genes.yml \
+  data/external/select_v1.6.4.tar.gz
+```
+
+Expected: file size ~few hundred KB. Verify with
+`ls -lh data/external/select_v1.6.4.tar.gz` and
+`file data/external/select_v1.6.4.tar.gz` (should report "gzip compressed data").
+
+- [ ] **Step 3: Record the sha256 prefix and pin it in the Snakefile**
 
 ```bash
 sha256sum data/external/select_v1.6.4.tar.gz | cut -c1-12
 ```
 
-Capture the 12-char prefix; we'll embed it in the README in step 3.
+Edit the `SELECT_SHA256_PREFIX = "<TBD-after-first-download>"` line in
+`code/workflows/Snakefile` and replace the placeholder with the 12-char prefix.
+This pins future re-downloads to the verified bytes.
 
-- [ ] **Step 3: Write `data/external/README.md`**
+- [ ] **Step 4: Write `data/external/README.md`**
 
 ```markdown
 # data/external/
@@ -189,27 +246,32 @@ CSOgroup/select R package, v1.6.4 (released 2024-11-26).
 
 - Source: https://github.com/CSOgroup/select/archive/refs/tags/v1.6.4.tar.gz
 - License: LGPL-3.0
-- sha256 (12-char prefix): `<insert-from-step-2>`
+- sha256 (12-char prefix): `<insert-from-step-3>`
+- Re-derive: `uv run snakemake -s code/workflows/Snakefile -j1 \
+  --configfile code/config/config-10k-genes.yml data/external/select_v1.6.4.tar.gz`
 
 Used by `code/envs/select.yml` + rule (0) `preflight_select_env` per
 `doc/plans/2026-04-25-t078-select-cooccurrence-design.md` Section 4.1.
 
-Do not delete or modify. To upgrade, replace the tarball, update the
-sha256 line above, bump the version reference in `code/envs/select.yml`
-and `code/scripts/preflight_select_env.R`, and re-run validation
+Do not delete or modify. To upgrade, bump `SELECT_VERSION` + `SELECT_SHA256_PREFIX`
+in `code/workflows/Snakefile`, re-run the rule, then update `code/envs/select.yml`
+and `code/scripts/preflight_select_env.R` to match. Re-run validation
 (Section 8 of the design doc).
 ```
 
-- [ ] **Step 4: Commit**
+- [ ] **Step 5: Commit**
 
 ```bash
-git add data/external/select_v1.6.4.tar.gz data/external/README.md
+git add data/external/select_v1.6.4.tar.gz data/external/README.md \
+        code/workflows/Snakefile
 git commit -m "$(cat <<'EOF'
 chore(t078): vendor CSOgroup/select v1.6.4 source tarball
 
 Pinned vendoring per design doc risk #2 (no network fallback for the
 SELECT install path). Adds data/external/select_v1.6.4.tar.gz plus a
-README capturing source URL, sha256, and license.
+README capturing source URL, sha256, and license. Adds a Snakemake
+rule `fetch_select_tarball` so the artifact can be restored byte-for-byte
+from upstream after a clean (sha256-verified).
 
 Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>
 EOF
@@ -361,53 +423,117 @@ non-WES studies.
 - Create: `data/panels/F1.bed`, `data/panels/F1CDx.bed`
 - Create: `data/panels/README.md`
 - Create: `data/study_panels.tsv`
+- Create: `code/scripts/build_panel_beds.py`
 - Create: `code/scripts/tests/test_panel_beds.py`
+- Modify: `code/workflows/Snakefile` — add `rule build_panel_beds`
 
-- [ ] **Step 1: Source the panel BEDs**
+- [ ] **Step 1a: Write `code/scripts/build_panel_beds.py`**
 
-The MSK-IMPACT and Foundation Medicine BEDs are published in the GENIE distribution.
-The actual data layout (verified at plan time): a single
-`/data/raw/cbioportal/genie/genomic_information.txt` with one row per
-(assay × interval), columns `Chromosome, Start_Position, End_Position, Hugo_Symbol,
-SEQ_ASSAY_ID, Feature_Type, includeInPanel, clinicalReported`. Filter by `SEQ_ASSAY_ID`
-to derive each panel's BED.
+Lift the inline heredoc into a real script so the rule has a `script:` target. Use
+the `snakemake.input/.output` pattern matching other scripts in `code/scripts/`.
 
-```bash
-mkdir -p data/panels
-uv run python - <<'PY'
-import pandas as pd
+```python
+"""Derive per-panel BED files from the GENIE consolidated genomic_information.txt.
+
+Snakemake-driven: input is the GENIE consolidated assay BED, output is one BED
+per panel listed in PANEL_TO_ASSAY (MSK-IMPACT 341/410/468/505 and the F1/F1CDx
+proxies). Empty placeholder files are written for assays absent from the GENIE
+release so downstream rules see a stable file set.
+
+The output BEDs are 4-column TSV (chrom, start, end, symbol) with no header, one
+row per (assay × exon interval). Multiple rows per gene are expected; rule (1a)
+deduplicates per (panel_id, symbol).
+"""
+from __future__ import annotations
+
 from pathlib import Path
 
-src = Path("/data/raw/cbioportal/genie/genomic_information.txt")
-if not src.exists():
-    raise FileNotFoundError(f"GENIE genomic_information.txt missing: {src}")
+import pandas as pd
+from rich import print as rprint
 
-df = pd.read_csv(src, sep="\t", dtype={"Chromosome": "string"})
-df = df[df["includeInPanel"].fillna(True).astype(bool)]   # drop excluded intervals
-df = df[df["Feature_Type"] == "exon"]                     # restrict to exon coverage
-
-mapping = {
+# GENIE assay id -> output BED path (relative to repo root).
+# F1/F1CDx are proxies, not pure Foundation Medicine BEDs — see data/panels/README.md.
+PANEL_TO_ASSAY: dict[str, str] = {
     "MSK-IMPACT341": "data/panels/IMPACT341.bed",
     "MSK-IMPACT410": "data/panels/IMPACT410.bed",
     "MSK-IMPACT468": "data/panels/IMPACT468.bed",
     "MSK-IMPACT505": "data/panels/IMPACT505.bed",
-    # GENIE has no pure FoundationOne F1/F1CDx panel; closest proxies:
     "DUKE-F1-DX1": "data/panels/F1CDx.bed",
     "PROV-FOUNDATIONONELIQUIDCDX": "data/panels/F1.bed",
 }
-for assay, out in mapping.items():
-    sub = df[df["SEQ_ASSAY_ID"] == assay]
-    if sub.empty:
-        # Empty placeholder so the BED file path exists.
-        Path(out).write_text("")
-        print(f"WARN: no rows for {assay}; wrote empty placeholder {out}")
-        continue
-    bed = sub[["Chromosome", "Start_Position", "End_Position", "Hugo_Symbol"]].copy()
-    bed.columns = ["chrom", "start", "end", "symbol"]
-    bed.to_csv(out, sep="\t", index=False, header=False)
-    print(f"wrote {out}: {len(bed)} intervals, {bed['symbol'].nunique()} symbols")
-PY
+
+
+def build_panel_beds(genie_genomic_info: Path, out_paths: dict[str, Path]) -> None:
+    """Write one BED per assay in PANEL_TO_ASSAY from the consolidated GENIE file."""
+    if not genie_genomic_info.exists():
+        raise FileNotFoundError(f"GENIE genomic_information.txt missing: {genie_genomic_info}")
+
+    df = pd.read_csv(genie_genomic_info, sep="\t", dtype={"Chromosome": "string"})
+    df = df[df["includeInPanel"].fillna(True).astype(bool)]
+    df = df[df["Feature_Type"] == "exon"]
+
+    for assay, out in out_paths.items():
+        out.parent.mkdir(parents=True, exist_ok=True)
+        sub = df[df["SEQ_ASSAY_ID"] == assay]
+        if sub.empty:
+            out.write_text("")
+            rprint(f"[yellow]WARN[/]: no rows for {assay}; wrote empty placeholder {out}")
+            continue
+        bed = sub[["Chromosome", "Start_Position", "End_Position", "Hugo_Symbol"]].copy()
+        bed.columns = ["chrom", "start", "end", "symbol"]
+        bed.to_csv(out, sep="\t", index=False, header=False)
+        rprint(f"wrote {out}: {len(bed)} intervals, {bed['symbol'].nunique()} symbols")
+
+
+if __name__ == "__main__":
+    # Snakemake entry point.
+    src = Path(snakemake.input[0])  # type: ignore[name-defined]  # noqa: F821
+    out_paths = {assay: Path(p) for assay, p in zip(PANEL_TO_ASSAY, snakemake.output)}  # type: ignore[name-defined]  # noqa: F821
+    build_panel_beds(src, out_paths)
 ```
+
+- [ ] **Step 1b: Add `rule build_panel_beds` to the Snakefile**
+
+Append to `code/workflows/Snakefile`:
+
+```python
+#
+# t078 SELECT pipeline — per-panel BED files derived from GENIE.
+#
+# Manual prereq: the GENIE consolidated genomic_information.txt at
+# {data_dir}/genie/genomic_information.txt (Synapse-gated upstream — see AGENTS.md
+# "External Reference Datasets"). Downstream rule (1a) consumes the per-panel BEDs.
+#
+rule build_panel_beds:
+  input:
+    data_dir.joinpath("genie/genomic_information.txt")
+  output:
+    "data/panels/IMPACT341.bed",
+    "data/panels/IMPACT410.bed",
+    "data/panels/IMPACT468.bed",
+    "data/panels/IMPACT505.bed",
+    "data/panels/F1CDx.bed",
+    "data/panels/F1.bed",
+  script:
+    "../scripts/build_panel_beds.py"
+```
+
+(The script's `PANEL_TO_ASSAY` dict ordering matches the rule's `output:` order so
+`zip(PANEL_TO_ASSAY, snakemake.output)` lines up assay → path. If you reorder one,
+reorder both.)
+
+- [ ] **Step 1c: Run the rule once to populate the BEDs**
+
+```bash
+uv run snakemake -s code/workflows/Snakefile -j1 \
+  --configfile code/config/config-10k-genes.yml \
+  build_panel_beds
+```
+
+Expected: six files under `data/panels/`. The four MSK-IMPACT panels should each
+have ~341/410/468/505 unique symbols (subject to ±some slack for the test in step 2).
+F1/F1CDx may be empty if those GENIE assay IDs are absent from the local consolidated
+file — the script writes empty placeholders so the file paths exist.
 
 The proxy F1/F1CDx mapping is documented in `data/panels/README.md`. If the project
 later acquires pure Foundation Medicine BEDs, these placeholders should be replaced.
@@ -529,14 +655,18 @@ Expected: all PASS, or F1/F1CDx PASS-skip if empty placeholders.
 - [ ] **Step 5: Commit**
 
 ```bash
-git add data/panels/ data/study_panels.tsv code/scripts/tests/test_panel_beds.py
+git add data/panels/ data/study_panels.tsv \
+        code/scripts/build_panel_beds.py \
+        code/scripts/tests/test_panel_beds.py \
+        code/workflows/Snakefile
 git commit -m "$(cat <<'EOF'
 chore(t078): vendor panel BEDs + data/study_panels.tsv
 
-MSK-IMPACT 341/410/468/505 BEDs derived from GENIE v9.1
-genomic_information.txt. F1/F1CDx vendored from Foundation Medicine if
-available, empty placeholder otherwise. data/study_panels.tsv is the
-non-GENIE non-WES fallback per-study mapping consumed by Task 7.
+MSK-IMPACT 341/410/468/505 BEDs derived from the GENIE consolidated
+genomic_information.txt via a new Snakemake rule build_panel_beds (script
+code/scripts/build_panel_beds.py). F1/F1CDx vendored from Foundation
+Medicine if available, empty placeholder otherwise. data/study_panels.tsv
+is the non-GENIE non-WES fallback per-study mapping consumed by Task 7.
 Sanity tests assert MSK-IMPACT panel sizes within expected ranges.
 
 Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>
@@ -802,22 +932,80 @@ EOF
 
 **Why:** Task 5 reads `data/cosmic_cgc.tsv`. The project has the upstream file at
 `/data/raw/cosmic/v100/Cosmic_CancerGeneCensus_v100_GRCh38.tsv` (CGC v100, GRCh38, ~180 KB).
-Vendor a copy under `data/` + a README so the path is explicit and version-stamped.
+Vendor a copy under `data/` + a README so the path is explicit and version-stamped, and
+add a Snakemake rule (`vendor_cosmic_cgc`) that captures the copy + sha256 verification
+recipe — the artifact is committed but the rule lets `git clean` survivors regenerate it
+from the local raw snapshot.
 
 **Files:**
 - Create: `data/cosmic_cgc.tsv` (renamed copy)
 - Create: `data/cosmic_cgc.README.md`
+- Modify: `code/workflows/Snakefile` — add `rule vendor_cosmic_cgc`
 
-- [ ] **Step 1: Copy + record provenance**
+- [ ] **Step 1: Add `rule vendor_cosmic_cgc` to the Snakefile**
+
+Append to `code/workflows/Snakefile` (alongside the other t078 vendoring rules):
+
+```python
+#
+# t078 SELECT pipeline — vendored COSMIC Cancer Gene Census snapshot.
+#
+# Manual prereq: the Sanger CGC TSV at
+# config["cosmic_cgc_raw_path"] (default
+# /data/raw/cosmic/v100/Cosmic_CancerGeneCensus_v100_GRCh38.tsv —
+# auth-gated; download with a free academic COSMIC account). The artifact
+# data/cosmic_cgc.tsv is committed; this rule documents the copy recipe and
+# verifies the sha256 prefix to flag silent upstream substitution.
+#
+COSMIC_CGC_SHA256_PREFIX = "<TBD-after-first-copy>"   # 12-char prefix
+
+rule vendor_cosmic_cgc:
+  input:
+    config.get(
+      "cosmic_cgc_raw_path",
+      "/data/raw/cosmic/v100/Cosmic_CancerGeneCensus_v100_GRCh38.tsv",
+    )
+  output:
+    "data/cosmic_cgc.tsv"
+  params:
+    expected_sha256_prefix=COSMIC_CGC_SHA256_PREFIX
+  shell:
+    r"""
+    cp {input} {output}.tmp
+    actual=$(sha256sum {output}.tmp | cut -c1-12)
+    if [ "{params.expected_sha256_prefix}" != "<TBD-after-first-copy>" ] && \
+       [ "$actual" != "{params.expected_sha256_prefix}" ]; then
+      echo "ERROR: sha256 mismatch for {output}" >&2
+      echo "  expected prefix: {params.expected_sha256_prefix}" >&2
+      echo "  actual prefix:   $actual" >&2
+      rm -f {output}.tmp
+      exit 1
+    fi
+    mv {output}.tmp {output}
+    """
+```
+
+- [ ] **Step 2: Run the rule once to populate the artifact**
 
 ```bash
-cp /data/raw/cosmic/v100/Cosmic_CancerGeneCensus_v100_GRCh38.tsv data/cosmic_cgc.tsv
+uv run snakemake -s code/workflows/Snakefile -j1 \
+  --configfile code/config/config-10k-genes.yml \
+  data/cosmic_cgc.tsv
+```
+
+Expected: ~180 KB tab-separated file at `data/cosmic_cgc.tsv` with `Gene Symbol`
+header column.
+
+- [ ] **Step 3: Record the sha256 prefix and pin it in the Snakefile**
+
+```bash
 sha256sum data/cosmic_cgc.tsv | cut -c1-12
 ```
 
-Capture the 12-char prefix; embed it in the README in step 2.
+Edit the `COSMIC_CGC_SHA256_PREFIX = "<TBD-after-first-copy>"` line in
+`code/workflows/Snakefile` and replace the placeholder with the 12-char prefix.
 
-- [ ] **Step 2: Write `data/cosmic_cgc.README.md`**
+- [ ] **Step 4: Write `data/cosmic_cgc.README.md`**
 
 ```markdown
 # data/cosmic_cgc.tsv
@@ -826,24 +1014,31 @@ COSMIC Cancer Gene Census v100 (GRCh38).
 
 - Source: /data/raw/cosmic/v100/Cosmic_CancerGeneCensus_v100_GRCh38.tsv (Sanger)
 - Vendored at: 2026-04-25
-- sha256 (12-char prefix): `<insert-from-step-1>`
+- sha256 (12-char prefix): `<insert-from-step-3>`
+- Re-derive: `uv run snakemake -s code/workflows/Snakefile -j1 \
+  --configfile code/config/config-10k-genes.yml data/cosmic_cgc.tsv`
 - Schema: tab-separated; primary column `Gene Symbol` (consumed by Task 5
   `build_select_gene_universe.py`).
 
-To upgrade: replace this file, update sha256 above, bump `cgc_version` in the
-config block of `code/config/config-10k-genes.yml`.
+To upgrade: replace the raw source file (or override `cosmic_cgc_raw_path` in
+the config), bump `COSMIC_CGC_SHA256_PREFIX` in `code/workflows/Snakefile`,
+re-run the rule, and bump `cgc_version` in the config block of
+`code/config/config-10k-genes.yml`.
 ```
 
-- [ ] **Step 3: Commit**
+- [ ] **Step 5: Commit**
 
 ```bash
-git add data/cosmic_cgc.tsv data/cosmic_cgc.README.md
+git add data/cosmic_cgc.tsv data/cosmic_cgc.README.md code/workflows/Snakefile
 git commit -m "$(cat <<'EOF'
 chore(t078): vendor COSMIC Cancer Gene Census v100
 
 Source: /data/raw/cosmic/v100/Cosmic_CancerGeneCensus_v100_GRCh38.tsv
 (Sanger). Used by Task 5 build_select_gene_universe.py as one of the
-three union sources (alongside Bailey 2018 and Sanchez-Vega 2018).
+three union sources (alongside Bailey 2018 and Sanchez-Vega 2018). Adds
+a Snakemake rule vendor_cosmic_cgc capturing the copy recipe + sha256
+verification so the artifact can be regenerated from the local raw
+snapshot after a clean.
 
 Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>
 EOF

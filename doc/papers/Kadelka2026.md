@@ -88,7 +88,7 @@ No direct methodological overlap: this paper is conceptual/theoretical and does 
 
 ## Model / Tool Availability
 
-- **BoolForge** (Python): Random generation and analysis of Boolean functions and networks. arXiv preprint https://doi.org/10.48550/arXiv.2509.02496 (2025). Source: https://github.com/ckadelka/PerspectiveCanalization. License not specified in the paper [UNVERIFIED].
+- **BoolForge** (Python): Random generation and analysis of Boolean functions and networks. arXiv preprint https://doi.org/10.48550/arXiv.2509.02496 (2025). Source: https://github.com/ckadelka/PerspectiveCanalization. License not specified in the paper; GitHub reported no repository license and no root `LICENSE` file on 2026-04-26.
 
 ## Follow-up
 

@@ -28,7 +28,7 @@ related:
   - "interpretation:2026-04-22-t122-rt-brca-pilot"
   - "interpretation:2026-04-22-t123-rt-brca-sbs1-proxy-pilot"
   - "interpretation:2026-04-24-t126-sbs1-lrr-bias-per-study"
-  - "meta:pre-registration-t126-sbs1-lrr-bias-test"
+  - "pre-registration:pre-registration-t126-sbs1-lrr-bias-test"
 created: "2026-04-18"
 updated: "2026-04-24"
 ---
@@ -40,7 +40,7 @@ updated: "2026-04-24"
 > LRR-bias signal is not measurable on the unmatched-normal cohort q009 was
 > designed to flag. Revisit when WGS inputs are ingested. See
 > `interpretation:2026-04-24-t126-sbs1-lrr-bias-per-study` for the verdict trail
-> and `meta:pre-registration-t126-sbs1-lrr-bias-test` for the locked thresholds.
+> and `pre-registration:pre-registration-t126-sbs1-lrr-bias-test` for the locked thresholds.
 
 # Can the SBS1 late-replicating-region bias (present in normal tissue, absent in cancer) serve as a practical contamination quality flag for cBioPortal studies?
 

@@ -52,6 +52,16 @@ analogous bias contaminates the "is this gene well-studied" axis.
 
 ---
 
+## Critical Analysis
+
+Protein-length division is useful as a first diagnostic, but it is not a discovery-grade null.
+It removes one obvious long-gene artifact while creating a second failure mode: tiny proteins
+can dominate adjusted rankings, and real large drivers can be over-penalized. The more robust
+direction is to treat length as one covariate among regional mutation rate, sequence context,
+panel callability, cohort composition, and selection signal. The literature-attention axis is
+also not independent evidence unless gene-level publication counts are residualized against
+mutation burden and accessibility features.
+
 ## Q1. Is adjusting for gene length standard practice in cancer-gene discovery?
 
 **Yes, for discovery; inconsistently, for descriptive lists.** Every serious driver-discovery

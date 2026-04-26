@@ -7,7 +7,6 @@ created: "2026-04-25"
 updated: "2026-04-25"
 related:
   - "task:t078"
-  - "plan:2026-04-25-t078-select-cooccurrence-design"
 ---
 
 # t078 SELECT co-occurrence pipeline — Implementation Plan
@@ -1365,22 +1364,28 @@ import build_panel_gene_sets as mod
 def grch38(tmp_path: Path):
     """Tiny grch38.tsv lookup with 4 canonical symbols."""
     p = tmp_path / "grch38.tsv"
+    rows = [
+        ["ensgene", "entrez", "symbol", "chr", "start", "end", "strand", "biotype", "description"],
+        ["ENSG1", "1", "TP53", "17", "1", "100", "+", "protein_coding", "tp53 gene"],
+        ["ENSG2", "2", "KRAS", "12", "1", "100", "+", "protein_coding", "kras"],
+        ["ENSG3", "3", "EGFR", "7", "1", "100", "+", "protein_coding", "egfr"],
+        ["ENSG4", "4", "BRAF", "7", "1", "100", "+", "protein_coding", "braf"],
+    ]
     p.write_text(
-        "ensgene\tentrez\tsymbol\tchr\tstart\tend\tstrand\tbiotype\tdescription\n"
-        "ENSG1\t1\tTP53\t17\t1\t100\t+\tprotein_coding\tt53\n"
-        "ENSG2\t2\tKRAS\t12\t1\t100\t+\tprotein_coding\tkras\n"
-        "ENSG3\t3\tEGFR\t7\t1\t100\t+\tprotein_coding\tegfr\n"
-        "ENSG4\t4\tBRAF\t7\t1\t100\t+\tprotein_coding\tbraf\n"
+        "\n".join("\t".join(row) for row in rows) + "\n"
     )
     return p
 
 
 def test_panel_gene_set_dedupes_intervals(tmp_path: Path, grch38):
     bed = tmp_path / "tinypanel.bed"
+    bed_rows = [
+        ["chr17", "1", "100", "TP53"],
+        ["chr17", "101", "200", "TP53"],  # second exon — must dedupe
+        ["chr12", "1", "100", "KRAS"],
+    ]
     bed.write_text(
-        "chr17\t1\t100\tTP53\n"
-        "chr17\t101\t200\tTP53\n"        # second exon — must dedupe
-        "chr12\t1\t100\tKRAS\n"
+        "\n".join("\t".join(row) for row in bed_rows) + "\n"
     )
     out = tmp_path / "tinypanel.feather"
     mod.build_panel_gene_set(

@@ -9,7 +9,6 @@ source_refs:
   - "cite:Smith2022"
 related:
   - "topic:tumor-mutational-burden"
-  - "topic:hypermutator-detection"
   - "topic:pan-cancer-mutation-landscape"
 created: "2026-04-25"
 updated: "2026-04-25"

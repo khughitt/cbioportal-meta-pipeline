@@ -13,7 +13,7 @@ related:
   - "task:t121"
   - "question:q009-sbs1-lrr-bias-as-normal-contamination-flag"
   - "discussion:2026-04-24-t124-q009-fork-decision"
-  - "meta:pre-registration-t126-sbs1-lrr-bias-test"
+  - "pre-registration:pre-registration-t126-sbs1-lrr-bias-test"
 created: "2026-04-24"
 updated: "2026-04-24"
 workflow_run: "t126-sbs1-lrr-bias-2026-04-24"

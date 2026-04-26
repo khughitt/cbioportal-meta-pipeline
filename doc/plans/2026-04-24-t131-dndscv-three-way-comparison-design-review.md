@@ -1,6 +1,6 @@
 ---
-id: "review:2026-04-25-t131-dndscv-three-way-comparison"
-type: "review"
+id: "report:2026-04-25-t131-dndscv-three-way-comparison"
+type: "report"
 title: "Pipeline review — t131 dNdScv three-way ranking comparison (design v3)"
 plan: "doc/plans/2026-04-24-t131-dndscv-three-way-comparison-design.md"
 related:

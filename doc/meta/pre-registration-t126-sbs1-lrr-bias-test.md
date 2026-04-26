@@ -1,8 +1,10 @@
 ---
-id: "meta:pre-registration-t126-sbs1-lrr-bias-test"
+id: "pre-registration:pre-registration-t126-sbs1-lrr-bias-test"
 type: "pre-registration"
 title: "Pre-registration: t126 — per-study aggregate SBS1 LRR-bias test"
 status: "active"
+committed: "2026-04-24"
+spec: ""
 source_refs:
   - "paper:Yaacov2023"
   - "paper:Alexandrov2020"
@@ -28,6 +30,18 @@ updated: "2026-04-24"
 Resolve `t124` (the q009 fork) by running the per-study aggregate version of the Yaacov 2023 LRR-bias statistic — the only formulation that simultaneously matches (a) the published mechanism and (b) q009's framing as a single-study contamination flag. Three prior pilots (`t110`, `t122`, `t123`) tested per-sample approximations and each failed for a different sparsity reason; this test pools across samples within a study before evaluating LRR enrichment.
 
 This document is written **before** any implementation begins, so that the test outcomes (pass / retire / defer) are determined by pre-registered thresholds rather than post-hoc rationalization.
+
+## Hypotheses Under Test
+
+- **H1:** If unmatched-normal contamination contributes detectable SBS1 signal in the
+  unmatched panel cohort, then the panel cohort's panel-coverage-corrected LRR fraction
+  will exceed both the matched-control cohort's interval and the pre-registered 0.45
+  threshold.
+- **H0:** The unmatched panel cohort's corrected LRR fraction overlaps the matched-control
+  cohort and remains below 0.45 despite adequate effective SBS1 counts.
+- **Power gate:** If effective post-correction SBS1 support is below the pre-registered
+  floor, the test is underpowered and q009 is deferred rather than interpreted as positive
+  or negative evidence.
 
 ## Pre-run power projection
 
@@ -119,7 +133,14 @@ For `tcga_mc3` (a WES pseudo-study), `panel_*_bp_overlap` is the exonic CE/CL bp
 
 Cluster bootstrap by sample (1,000 resamples): resample sample_ids with replacement within a study, recompute `f_LRR_corrected`. Report 95% percentile CI for the per-study estimate.
 
-## Decision rules
+## Expected Outcomes
+
+The analysis has three allowed outcomes: `pass`, `retire`, or `defer`. A pass would justify
+promoting q009 into an operational contamination-flag follow-up. A retire outcome would close
+this SBS1-LRR route as negative evidence for the current panel/WES setting. A defer outcome
+would preserve the question but require WGS-scale inputs before retrying.
+
+## Decision Criteria
 
 The test outcome is one of three pre-registered verdicts. Each maps to a concrete next action.
 
@@ -130,6 +151,13 @@ The test outcome is one of three pre-registered verdicts. Each maps to a concret
 | **defer** | The effective `n` post-panel-correction is `< 500`, or the bootstrap CI half-width exceeds ±10 pp on the panel cohort | Close `t124` as resolved with insufficient evidence; update `q009` status to `deferred` with revisit-condition `WGS inputs ingested`; do NOT retire the question |
 
 Outcomes are evaluated per cohort but the q009 verdict is panel-cohort-driven (`tcga_mc3` is the matched control; the contamination signal must be detectable on the unmatched panel cohort to be operationally useful).
+
+## Null Result Plan
+
+A powered null result maps to **retire**: close `t124` as resolved with negative evidence,
+update `q009` to `retired`, and stop further panel/WES SBS1 LRR work. An underpowered or
+too-wide result maps to **defer**: close `t124` as insufficient evidence, update `q009` to
+`deferred`, and revisit only when WGS inputs are available.
 
 ## What this test does NOT establish
 

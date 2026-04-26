@@ -1,8 +1,10 @@
 ---
-id: "meta:pre-registration-t077-glmm-logit-pooling"
+id: "pre-registration:pre-registration-t077-glmm-logit-pooling"
 type: "pre-registration"
 title: "Pre-registration: GLMM-logit random-effects pooling for per-(gene, cancer) mutation rates (t077)"
 status: "active"
+committed: "2026-04-14"
+spec: ""
 related:
   - "task:t077"
   - "task:t079"

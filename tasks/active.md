@@ -238,6 +238,7 @@ Before applying the t111 per-tissue snvs_per_mb correction to gene_cancer_study_
 ## [t127] First q008 quantitative pass: unmatched-normal contamination magnitude using t111 normal_tissue_spectra
 - priority: P2
 - status: proposed
+- aspects: [computational-analysis]
 - related: [question:q008, task:t111, meta:next-steps-2026-04-24]
 - group: meta-analysis
 - created: 2026-04-24
@@ -247,6 +248,7 @@ Exercise the Li2021+Xu2025 reference spectra landed by t111 against the tcga_mc3
 ## [t128] Emit retroactive datapackage.json manifests for results/poc-2026-04-17/ and results/signature-brca-2026-04-22/
 - priority: P2
 - status: proposed
+- aspects: [software-development]
 - related: [task:t100, meta:next-steps-2026-04-24]
 - group: pipeline
 - created: 2026-04-24

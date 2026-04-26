@@ -13,7 +13,7 @@ source_refs:
   - "paper:Lu2023"
   - "paper:Nagpal2022"
 related:
-  - "spec:research-question"
+  - "topic:pan-cancer-mutation-landscape"
 created: "2026-04-25"
 updated: "2026-04-25"
 ---

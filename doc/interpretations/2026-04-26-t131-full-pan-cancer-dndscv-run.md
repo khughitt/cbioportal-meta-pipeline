@@ -4,7 +4,7 @@ type: "interpretation"
 title: "t131 full pan-cancer-dndscv run — chain works end-to-end; min-q rollup tiebreaker and pooled-mean inflation surface as data-quality bugs"
 status: "active"
 source_refs:
-  - "review:2026-04-25-t131-dndscv-three-way-comparison"
+  - "report:2026-04-25-t131-dndscv-three-way-comparison"
   - "discussion:2026-04-24-gene-length-bias-in-mutation-rankings-and-literature"
   - "question:q011-gene-length-as-literature-attention-confounder"
 related:

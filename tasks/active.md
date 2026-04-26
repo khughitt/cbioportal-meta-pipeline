@@ -416,3 +416,26 @@ The project's t077 meta-analysis pipeline (`run_gene_cancer_meta_analysis.R`) is
 - Keeps the existing gene_cancer_study.feather long-format output intact (per the t131 review interim split) — this task only changes which AGGREGATION is canonical, not what's available.
 
 **Cross-references**: this task is the long-term destination; a short-term split was applied 2026-04-25 to unblock t131 (see commit history).
+
+## [t140] Adopt 2026-04-25 Science P1 conventions
+- priority: P3
+- status: proposed
+- aspects: [project-conventions]
+- related: []
+- created: 2026-04-25
+
+cbioportal already converges on the canonical Science conventions established by the 2026-04-25 P1 rollout (`science/docs/plans/2026-04-25-conventions-audit-p1-rollout.md`). All five script-driven shape rules in `science/scripts/migrate_downstream_conventions.py` produce zero changes against this project (verified 2026-04-25):
+
+- report-id-prefix: 0
+- synthesis-type-mm30: 0
+- synthesis-type-pl-emergent-threads: 0
+- synthesis-report-kind-pl-hyp: 0
+- pre-registration-type: 0
+- natural-systems-pre-reg-frontmatter: 0 (report-only)
+
+Pending adoption tracks:
+- Tasks-archive (Plan #6): current `tasks/active.md` lag = 0; nothing to migrate. When `science-tool tasks archive` ships, no action needed.
+- Validator MAV update (Plan #7 + MAV): pending upstream merge. Will pull canonical `validate.sh` via `science-tool project artifacts update validate.sh` once available.
+- Code -> task back-link (Plan #9): already adopting Pattern 1 (filename tag) for 3 marimo notebooks under `code/notebooks/`. No action needed.
+
+Surfaced by: 2026-04-25 downstream conventions migration cycle (orchestrator agent).

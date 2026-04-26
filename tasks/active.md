@@ -501,3 +501,90 @@ Surfaced by: 2026-04-25 downstream conventions migration cycle (orchestrator age
 **Acceptance**: a fresh `--use-conda` run with `-j8` does not hit the bootstrap race for `run_dndscv_per_cancer`.
 
 **Cross-references**: identified during the t131 smoke run 2026-04-25 (commit `1dd1414` added the rcpparmadillo workaround).
+
+## [t144] Fix dNdScv per-gene aggregation tiebreaker (n_cancers_significant_q05 secondary sort)
+- priority: P1
+- status: proposed
+- aspects: [software-development]
+- related: [task:t131, interpretation:2026-04-26-t131-full-pan-cancer-dndscv-run]
+- group: pipeline
+- created: 2026-04-26
+
+**Bug.** At full pan-cancer scale, 829 genes hit `min_qglobal == 0.0` exactly (BH-FDR machine-precision floor — all canonical drivers TP53/KRAS/PIK3CA/PTEN/etc. tied at zero). The current `compare_three_way_rankings.py` ranks by `min_qglobal` only; among ties, `pandas.nsmallest` falls back to insertion order = alphabetical symbol order. Result: `rank_dndscv` top-100 = `[AATK, ABCA13, ABCA2, ABCA7, ABCB11, ABL1, ACACB, ACTG1, ACVR1, ACVR1B, AGO2, AGRN, AHNAK, AHNAK2, AKAP13, AKT1, AKT2, AKT3, ALK, ALMS1, …]` (alphabetical). Bailey driver recovery degrades from a possible 62/100 → 29/100, and the `best_cancer_type` column reports "Ampullary Cancer" for TP53 / KRAS / PIK3CA (alphabetical first cancer at q=0). This is **not a problem with dNdScv**; it's a rollup-design bug.
+
+**Fix.** Lexicographic sort on `(min_qglobal ASC, n_cancers_significant_q05 DESC)` in `aggregate_dndscv_per_gene.py` and the rank assignment in `compare_three_way_rankings.py`. Re-run only `aggregate_dndscv_per_gene` + `join_dndscv_into_annotated` + `compare_three_way_rankings` (cheap; no dNdScv re-compute needed).
+
+**Validation.** Empirically confirmed in the 2026-04-26 interpretation: the fix recovers 8/10, 22/25, 37/50, 62/100, 145/500 Bailey drivers (vs 2, 5, 17, 29, 104 with the broken tiebreaker), and lifts canonical drivers TP53/KRAS/NRAS/PIK3CA/RB1/PTEN/FBXW7 to ranks 1–9.
+
+**Test.** Add a regression test: among synthetic genes with `min_q == 0`, the gene with higher `n_cancers_significant_q05` ranks first.
+
+**Acceptance**: `rank_dndscv == 1` is held by the gene with highest `n_cancers_significant_q05` among the q=0 set, not by the alphabetically-first gene.
+
+## [t145] Diagnose pooled-meta-analysis mean_inclusive inflation (snoU13/Y_RNA/fragile-site dominance)
+- priority: P1
+- status: proposed
+- aspects: [software-development, computational-analysis]
+- related: [task:t077, task:t131, task:t139, interpretation:2026-04-26-t131-full-pan-cancer-dndscv-run]
+- group: pipeline
+- created: 2026-04-26
+
+**Bug.** At full pan-cancer scale, raw mutation-frequency top-15 (`mean_inclusive` from t077 pooled meta-analysis) is dominated by pseudogenes and known common-fragile-site (CFS) genes at implausible 65–84% rates per their best cancer type:
+- Pseudogenes / non-coding: snoU13 (0.84), Y_RNA (0.82), RP11-127H5.1 (0.69)
+- CFS genes: LSAMP (0.73), MACROD2 (0.72), NKAIN3 (0.71), GPC5 (0.71), KCNIP4 (0.71), SGCZ (0.69), LRRTM4 (0.67), IMMP2L (0.66), CNTNAP2 (0.66), GRID2 (0.65), MARCH1 (0.65), FHIT (0.65)
+
+Result: Bailey driver recovery for raw and length-adjusted top-100 = **0** (both schemes; PoC was 5 and 6 respectively).
+
+**Hypothesis to test.** The `enforce_callability_nesting_check=false` bypass (commit `f877ec7`, t139) let through study/cancer combinations whose callability denominators violate the nesting assumption the pooled meta-analysis was designed for, inflating estimates at coverage-sensitive loci (CFS genes, pseudogenes). Alternative: this is independent of t139 and is an upstream issue in `build_pooled_gene_cancer_input` itself.
+
+**Diagnostic.** Re-run the meta-analysis on a small cancer subset (3-5 cancers, ~3 studies each) with `enforce_callability_nesting_check=true`. Compare top-15 raw `mean_inclusive` ranking pre vs post. If snoU13 / Y_RNA / FHIT / MACROD2 disappear, t139 caused it and t139 should be bumped from P2 → P1. If they persist, the inflation is upstream of the bypass and needs a separate root-cause investigation.
+
+**Acceptance**: documented root cause + a fix path. If t139 is the cause, the fix is the t139 work itself.
+
+## [t146] External validation of pan-cancer dNdScv ranking against IntOGen / Martincorena 2017
+- priority: P2
+- status: proposed
+- aspects: [computational-analysis]
+- related: [task:t131, interpretation:2026-04-26-t131-full-pan-cancer-dndscv-run]
+- group: validation
+- created: 2026-04-26
+
+The 2026-04-26 t131 interpretation flagged **mild circularity** in using Bailey 2018 driver recovery as the primary validation metric — Bailey 2018 used dNdScv as one of seven driver-detection inputs, so high Bailey recovery is partly self-validation. Need an external reference that does NOT include dNdScv as an input.
+
+**Targets**:
+- Martincorena 2017 supplementary tables (the original pan-cancer dNdScv ranking).
+- IntOGen pan-cancer driver list (uses MutSig + OncodriveCLUSTL + OncodriveFML + dNdScv; pull only the non-dNdScv subset).
+- COSMIC Cancer Gene Census tier 1 (curated by literature, not by dNdScv).
+
+**Output**: rank-rank Spearman correlation table; spot-check the top-50 disagreements between our pan-cancer dNdScv and IntOGen's; document any systematic differences (e.g., do we over-rank long genes that IntOGen flags as artifacts?).
+
+## [t147] Stratify dNdScv per-cancer runs by hypermutator-filtered cohorts
+- priority: P2
+- status: proposed
+- aspects: [computational-analysis, software-development]
+- related: [task:t131, task:t081, task:t141, interpretation:2026-04-26-t131-full-pan-cancer-dndscv-run]
+- group: pipeline
+- created: 2026-04-26
+
+The t131 interpretation noted that even after the t144 tiebreaker fix, TTN persists at v2 rank #5 and AHNAK / AHNAK2 / ABCA13 survive in the q=0 set despite dNdScv's trinucleotide-context correction. The leading explanation is that hypermutated samples (POLE / POLD1 / MSI-H) inflate per-gene mutation counts uniformly across the genome, with the largest absolute inflation at the longest genes — defeating the per-cancer trinucleotide-context background.
+
+**Approach**: re-run `run_dndscv_per_cancer` on cohorts with `is_hypermutator == False` (the existing t081 annotation) and compare the per-cancer q=0 set sizes and top-50 rankings. If hypermutator removal eliminates TTN / AHNAK / AHNAK2 from the top, the inflation is hypermutator-driven; if not, it's something else.
+
+**Cost**: blocked on t141 (R meta-analysis parallelization) being shipped, otherwise the re-runs take 12+ hours each. Could also do this for a single cancer (Endometrial Cancer = UCEC, the most POLE-rich) as a cheap pilot.
+
+**Output**: per-cancer-type comparison feather; recommendation for whether to gate `run_dndscv_per_cancer` on hypermutator-filtered cohorts by default.
+
+## [t148] Replace single-cancer best_cancer_type with multi-cancer set field in per-gene rollup
+- priority: P3
+- status: proposed
+- aspects: [software-development]
+- related: [task:t131, task:t144, interpretation:2026-04-26-t131-full-pan-cancer-dndscv-run]
+- group: pipeline
+- created: 2026-04-26
+
+The current `best_cancer_type` column in `dndscv_pooled.feather` and `three_way_ranking_comparison.feather` reports a single cancer type as "best", chosen by `idxmin(min_q)`. At full pan-cancer scale this is dominated by alphabetical-tie artifacts (Ampullary Cancer appears as "best" for TP53, KRAS, PIK3CA, ARID1A, ARID2 — purely because of alphabetical tiebreaking among many cancers all hitting q=0). t144 will partially fix this for the top hits, but the underlying single-cancer field is information-lossy when many cancers tie.
+
+**Replace** `best_cancer_type` with one or more of:
+- `cancers_with_significant_q05` (sorted list / count) — already partially captured as `n_cancers_significant_q05`; expose the cancer names too.
+- `most_significant_cancer_by_n_samples` (cohort-power-weighted; tie-broken by larger cohort).
+
+**Acceptance**: per-gene rollup carries enough information to identify *which* cancer types contribute to a gene's q-significance, not just one alphabetically-arbitrary "best".

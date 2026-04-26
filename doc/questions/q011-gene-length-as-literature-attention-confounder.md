@@ -17,7 +17,32 @@ related:
   - "discussion:2026-04-24-gene-length-bias-in-mutation-rankings-and-literature"
   - "question:q003-replication-timing-as-gene-level-mutation-rate-confounder"
 created: "2026-04-24"
-updated: "2026-04-24"
+updated: "2026-04-26"
+---
+
+## Evidence Update — 2026-04-26 (full pan-cancer-dndscv run, t131)
+
+The full pan-cancer-dndscv pipeline now produces a Phase-1 PubTator correlation
+panel (n=18,028 genes). Spearman ρ vs `log10(PubTator mention count)`:
+
+| Ranking | full-run ρ | PoC ρ |
+|---|---|---|
+| raw (count) | +0.002 (n.s.) | +0.127 |
+| length-adjusted | −0.109 | −0.009 |
+| dndscv | +0.184 | +0.055 |
+
+Direction is **consistent with the q011 conjecture** (length-mediated attention)
+but the magnitudes are **unstable** between PoC and full run. The instability is
+driven by two independent data-quality issues surfaced by the same run
+(see `interpretation:2026-04-26-t131-full-pan-cancer-dndscv-run`): (a) BH-FDR
+floor pile-up in the dNdScv min-q rollup → alphabetical tiebreaker artifact in
+the dNdScv ranking (filed as `t144`), and (b) inflated `mean_inclusive` in the
+t077 pooled meta-analysis (snoU13 / Y_RNA / fragile-site genes at 65–84% rates,
+collapsing raw-axis Bailey driver recovery to zero — filed as `t145`).
+
+**Verdict:** PoC + full-run direction supports q011 modestly; magnitudes
+unreliable until t144 and t145 are resolved. The Phase-2 partial-slope
+regression (t129) remains the cleaner test.
 ---
 
 # Does gene length confound literature attention independently of mutation count?

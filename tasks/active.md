@@ -398,7 +398,7 @@ Add a short interpretive section to the hypermutator/TMB topic note (or a new su
 - priority: P2
 - status: proposed
 - aspects: [computational-analysis, software-development]
-- related: [task:t077,task:t131,task:t086]
+- related: [task:t077, task:t131, task:t086]
 - group: pipeline
 - created: 2026-04-25
 
@@ -421,7 +421,6 @@ The project's t077 meta-analysis pipeline (`run_gene_cancer_meta_analysis.R`) is
 - priority: P3
 - status: proposed
 - aspects: [project-conventions]
-- related: []
 - created: 2026-04-25
 
 cbioportal already converges on the canonical Science conventions established by the 2026-04-25 P1 rollout (`science/docs/plans/2026-04-25-conventions-audit-p1-rollout.md`). All five script-driven shape rules in `science/scripts/migrate_downstream_conventions.py` produce zero changes against this project (verified 2026-04-25):
@@ -439,3 +438,66 @@ Pending adoption tracks:
 - Code -> task back-link (Plan #9): already adopting Pattern 1 (filename tag) for 3 marimo notebooks under `code/notebooks/`. No action needed.
 
 Surfaced by: 2026-04-25 downstream conventions migration cycle (orchestrator agent).
+
+## [t141] Parallelize run_gene_cancer_meta_analysis.R via mclapply
+- priority: P2
+- status: proposed
+- aspects: [software-development]
+- related: [task:t077, task:t131, task:t139]
+- group: pipeline
+- created: 2026-04-26
+
+**Bottleneck.** `run_gene_cancer_meta_analysis.R` is by far the slowest rule in the pipeline. The full pan-cancer-dndscv run launched 2026-04-25 17:10 was still in the meta-analysis loop ~16 hours later (12+ hours of single-process CPU time at 97% utilization).
+
+**Why it's slow.** Input `gene_cancer_pooled_input.feather` is ~1.96M rows = 474,524 unique (cancer_type, symbol) cells (148 cancers × ~3,200 genes per cancer × up-to-13 studies of evidence each). For each cell the script runs FIVE separate analyses — pooled, leave-one-out, panel-sensitivity, placebo, diagnostics — each with a GLMM fit + REML fallback. Two passes total (inclusive + exclusive cohorts). The main loop at lines 592-620 uses `lapply()` throughout — single-threaded.
+
+**Optimization angles** (in priority order):
+1. **`parallel::mclapply` swap** — 1-line change at `lapply(split_cells, analyze_cell, ...)` and the four similar lapply calls below. With `mc.cores = config$threads` should be a 4-8× win on a typical multi-core box. Single highest-leverage change.
+2. **Skip degenerate cells** — meta-analysis on a single stratum is meaningless. The hundreds of "GLMM failed for X / Y / Z; using REML fallback" warnings in the log are likely dominated by such cells. Add an early-exit when n_studies <= 1 (still emit a row with NA pooled estimate so downstream join doesn't fail).
+3. **Cache GLMM convergence diagnostics** — re-runs can skip cells known to be REML-only.
+4. **Switch backend** — `glmmTMB` or `rstan` is typically 5-20× faster than `glmer` on small grouped data. Larger refactor; do only if (1)-(3) aren't enough.
+
+**Acceptance**: full pan-cancer-dndscv (~13 studies, 148 cancer types) completes the meta-analysis rule in under 2 hours on 4 cores.
+
+**Cross-references**: identified during the t131 full pan-cancer-dndscv run 2026-04-25. The bottleneck blocks t131's terminal `compare_three_way_rankings` rule from running on the canonical pan-cancer cohort. Related to t139 (which would change which aggregation downstream consumes — so the optimization may move in priority depending on whether the meta-analysis stays canonical).
+
+## [t142] Speed up create_correlation_matrices.py for large studies
+- priority: P3
+- status: proposed
+- aspects: [software-development]
+- related: [task:t131]
+- group: pipeline
+- created: 2026-04-26
+
+**Bottleneck.** `create_correlation_matrices.py` is O(n_genes²) per study and dominates upstream wall time for large cohorts. In the full pan-cancer-dndscv run 2026-04-25, `pancan_pcawg_2020` (~18,500 genes) took 2h 30min for one (cancer_cor.feather, gene_cor.feather) pair; output was 1.33 GB. There are 13 studies in the canonical pan-cancer config; `msk_met_2021` and `genie` are even larger.
+
+**Optimization angles** (in priority order):
+1. **`numpy.corrcoef` on the dense matrix** instead of pandas-level pairwise. Order of magnitude.
+2. **Pre-filter genes with < K mutations** before correlating — most pairs are noise. Even K=3 should drop 50-80% of genes for most studies.
+3. **Sparse representation** for the underlying gene × sample mutation matrix.
+4. Per-study parallelism via `-j` already works; per-cell intra-rule multiprocessing could push further.
+
+**Acceptance**: `create_correlation_matrices` for `msk_met_2021` finishes in under 30 minutes on a single core.
+
+**Cross-references**: identified during the t131 full pan-cancer-dndscv run 2026-04-25.
+
+## [t143] Pre-bake dndscv into vendored conda env to remove install_github race
+- priority: P3
+- status: proposed
+- aspects: [software-development]
+- related: [task:t131]
+- group: pipeline
+- created: 2026-04-26
+
+**Issue.** `run_dndscv.R`'s self-bootstrap step (`remotes::install_github("im3sanger/dndscv@<sha>")`) races when called from parallel R processes that share the same conda env's R library. The smoke run 2026-04-25 hit this twice: the first parallel job to attempt install would succeed, but the second would error with `dndscv install_github reported success but namespace still missing` (RcppArmadillo install collision under the same library prefix). The race resolved itself on retry once dndscv was already installed in the env, but it makes the first fresh-env run flaky and bounds `-jN` parallelism for `run_dndscv_per_cancer` until the env warms up.
+
+**Workarounds applied** so far: pre-installing `r-rcpp` and `r-rcpparmadillo` via conda (so they're not compiled from source under the install_github call). This narrows the race window but doesn't eliminate it.
+
+**Real fix** options:
+1. **Vendored dndscv tarball** — `code/envs/dndscv.yml` adds `r-dndscv` from a private conda channel built from a pinned dndscv tarball. Eliminates the bootstrap step entirely.
+2. **Docker / Apptainer image** with dndscv pre-installed. Snakemake supports `container:` directives.
+3. **File-system lock** in `run_dndscv.R`'s bootstrap function — `dir.create()` is atomic on POSIX; first process to create the lock dir does the install, others wait on a `.complete` marker.
+
+**Acceptance**: a fresh `--use-conda` run with `-j8` does not hit the bootstrap race for `run_dndscv_per_cancer`.
+
+**Cross-references**: identified during the t131 smoke run 2026-04-25 (commit `1dd1414` added the rcpparmadillo workaround).

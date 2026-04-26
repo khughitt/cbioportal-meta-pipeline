@@ -1,16 +1,57 @@
 #!/usr/bin/env bash
+# science-managed-artifact: validate.sh
+# science-managed-version: 2026.04.26.2
+# science-managed-source-sha256: 9d6a34869403411d42cefd0fb7f6a2e433320329d2e8f2da244c2171878eb136
+# === managed-artifact: hook infrastructure ===
+declare -A SCIENCE_VALIDATE_HOOKS=()
+
+register_validation_hook() {
+  local hook_name="$1"
+  local fn_name="$2"
+  if [[ -z "${SCIENCE_VALIDATE_HOOKS[$hook_name]:-}" ]]; then
+    SCIENCE_VALIDATE_HOOKS[$hook_name]="$fn_name"
+  else
+    SCIENCE_VALIDATE_HOOKS[$hook_name]+=" $fn_name"
+  fi
+}
+
+dispatch_hook() {
+  local hook_name="$1"
+  local fns="${SCIENCE_VALIDATE_HOOKS[$hook_name]:-}"
+  for fn in $fns; do
+    "$fn"
+  done
+}
+
+if [[ -f "validate.local.sh" ]]; then
+  # shellcheck source=/dev/null
+  source "validate.local.sh"
+fi
+
+# Trap post_validation hooks so they fire on every exit path
+# (success, failure, signal). Set AFTER sidecar source so any hooks
+# the sidecar registered are visible.
+trap 'dispatch_hook post_validation' EXIT
+
+# === canonical body ===
 # validate.sh — Structural validation for Science research projects
 # Returns non-zero on failure. Used as backpressure in research loops.
 #
 # Usage: bash validate.sh [--verbose]
+#
+# Env opt-outs (managed-artifact contract):
+#   SCIENCE_VALIDATE_SKIP_DOTENV=1    skip auto-sourcing of project-local .env
+#   SCIENCE_VALIDATE_SKIP_ID_PREFIX=1 skip per-type id-prefix conformance check
 
 # Note: intentionally NOT using set -e — we count errors and report at the end.
 set -uo pipefail
 
 export UV_CACHE_DIR="${UV_CACHE_DIR:-/tmp/uv-cache}"
 
-# Source .env for SCIENCE_TOOL_PATH and other project-local settings
-if [ -f ".env" ]; then
+# Source .env for SCIENCE_TOOL_PATH and other project-local settings.
+# Set SCIENCE_VALIDATE_SKIP_DOTENV=1 to skip (e.g., when SCIENCE_TOOL_PATH is
+# already exported in the developer's shell).
+if [ -z "${SCIENCE_VALIDATE_SKIP_DOTENV:-}" ] && [ -f ".env" ]; then
     set -a
     # shellcheck disable=SC1091
     . ./.env
@@ -122,6 +163,10 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 echo "Science Project Validation"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
+# Hook point: pre_validation. Fires after helpers and banner are set up,
+# before any canonical-section runs.
+dispatch_hook "pre_validation"
+
 # ─── 1. Project manifest ───────────────────────────────────────────
 echo ""
 echo "Checking project manifest..."
@@ -150,8 +195,14 @@ if not isinstance(profiles, dict):
 elif not isinstance(profiles.get("local"), str) or not profiles.get("local"):
     print("missing-local")
 else:
+    # Additive check: knowledge_profiles.curated must be a list when present.
+    # The legacy top-level `ontologies` list-shape check is preserved; removing
+    # it is a separate downstream-migration cycle (see Plan #7 Task 3).
+    curated = profiles.get("curated")
     ontologies = data.get("ontologies")
-    if ontologies is not None and not isinstance(ontologies, list):
+    if curated is not None and not isinstance(curated, list):
+        print("invalid-curated")
+    elif ontologies is not None and not isinstance(ontologies, list):
         print("invalid-ontologies")
     else:
         print("ok")
@@ -164,6 +215,9 @@ PYEOF
             ;;
         missing-local)
             error "science.yaml knowledge_profiles.local missing or empty"
+            ;;
+        invalid-curated)
+            error "science.yaml knowledge_profiles.curated must be a list"
             ;;
         invalid-ontologies)
             error "science.yaml ontologies must be a list"
@@ -220,7 +274,14 @@ if [ "$PROFILE" = "software" ] && [ -f "RESEARCH_PLAN.md" ]; then
 fi
 
 if [ -d "docs" ] && [ -d "$DOC_DIR" ]; then
-    warn "Duplicate document roots detected: ${DOC_DIR}/ and docs/"
+    # Sanction the agent-vs-human authoring split: docs/ that contains only
+    # the docs/superpowers/ subtree (plans/specs authored via skills) is not
+    # a duplicate-root violation. Any other content under docs/ still warns.
+    # Adding a new sanctioned subtree requires a separate plan (see
+    # docs/audits/downstream-project-conventions/synthesis.md §4.5).
+    if find docs -type f ! -path 'docs/superpowers/*' -print -quit 2>/dev/null | grep -q .; then
+        warn "Duplicate document roots detected: ${DOC_DIR}/ and docs/"
+    fi
 fi
 
 if [ "$PROFILE" = "research" ]; then
@@ -307,6 +368,14 @@ if [ -d "$SPECS_DIR/hypotheses" ]; then
            ! grep -q "^status:" "$hyp_file" 2>/dev/null; then
             warn "${hyp_file} missing Status field"
         fi
+
+        # If phase is present, value must be one of the enumerated values.
+        # Absent is fine — defaults to `active` per spec.
+        # Tolerates an optional trailing YAML comment (the template ships one).
+        phase_value=$(sed -n "s/^phase:[[:space:]]*['\"]\\{0,1\\}\\([^'\"[:space:]]*\\)['\"]\\{0,1\\}[[:space:]]*\\(#.*\\)\\{0,1\\}\$/\\1/p" "$hyp_file" | head -n 1 || true)
+        if [ -n "$phase_value" ] && [ "$phase_value" != "candidate" ] && [ "$phase_value" != "active" ]; then
+            warn "${hyp_file} has invalid phase '${phase_value}' (must be 'candidate' or 'active')"
+        fi
     done
 fi
 
@@ -378,6 +447,24 @@ for f in "$DOC_DIR/meta/next-steps-"*.md; do
             warn "Next-steps $f missing section: $section"
         fi
     done
+
+    # Chain link resolution. Accept entity-id (meta:next-steps-YYYY-MM-DD)
+    # or relative path (doc/meta/next-steps-YYYY-MM-DD.md). Absence is fine.
+    # We deliberately do NOT parse `prior_analyses:` (block- or inline-list);
+    # protein-landscape's variant is accepted by silence — broken-link
+    # resolution for that field is a future cycle.
+    prior_value=$(sed -n "s/^prior:[[:space:]]*['\"]\\{0,1\\}\\([^'\"]*\\)['\"]\\{0,1\\}[[:space:]]*$/\\1/p" "$f" | head -n 1 || true)
+    if [ -n "$prior_value" ]; then
+        candidate_path=""
+        case "$prior_value" in
+            meta:next-steps-*) candidate_path="$DOC_DIR/meta/${prior_value#meta:}.md" ;;
+            *.md) candidate_path="$prior_value" ;;
+            *) candidate_path="$prior_value" ;;
+        esac
+        if [ ! -f "$candidate_path" ]; then
+            warn "${f}: broken prior link '${prior_value}' (resolved to ${candidate_path})"
+        fi
+    fi
 done
 
 if ! ls "$DOC_DIR/meta/next-steps-"*.md 1>/dev/null 2>&1; then
@@ -445,13 +532,31 @@ if [ -d "$DOC_DIR/discussions" ]; then
 fi
 
 # --- Pre-registration documents ---
-for f in "$DOC_DIR/meta/pre-registration-"*.md; do
+# Inspect both placements observed across downstream projects (audit §3.2):
+#   doc/meta/pre-registration-<slug>.md  (natural-systems, protein-landscape, cbioportal)
+#   doc/pre-registrations/<slug>.md      (mm30 canonical)
+for f in "$DOC_DIR/meta/pre-registration-"*.md "$DOC_DIR/pre-registrations/"*.md; do
     [ -f "$f" ] || continue
+
     for section in "Hypotheses Under Test" "Expected Outcomes" "Decision Criteria" "Null Result Plan"; do
         if ! grep -q "## $section" "$f"; then
             warn "Pre-registration $f missing section: $section"
         fi
     done
+
+    # Parse frontmatter type using the same recipe as the notes section.
+    # Note: id-prefix conformance is handled by Plan #7 Task 6's PREFIX_RULES
+    # table, not here, to avoid duplicate warnings on the same condition.
+    pre_type=$(sed -n "s/^type:[[:space:]]*['\"]\\{0,1\\}\\([^'\"]*\\)['\"]\\{0,1\\}[[:space:]]*$/\\1/p" "$f" | head -n 1 || true)
+
+    if [ "$pre_type" = "pre-registration" ]; then
+        if ! grep -Eq '^committed:[[:space:]]' "$f" 2>/dev/null; then
+            warn "${f} type 'pre-registration' should declare a 'committed:' date in frontmatter"
+        fi
+        if ! grep -Eq '^spec:[[:space:]]' "$f" 2>/dev/null; then
+            warn "${f} type 'pre-registration' should declare a 'spec:' field (empty string is OK if no paired design doc)"
+        fi
+    fi
 done
 
 # --- Hypothesis comparison documents ---
@@ -472,6 +577,37 @@ for f in "$DOC_DIR/meta/bias-audit-"*.md; do
             warn "Bias audit $f missing section: $section"
         fi
     done
+done
+
+# ─── 11a. Synthesis frontmatter conformance ───────────────────────
+# Gate on `type: synthesis` so legacy `type: report` synthesis files (mm30) and
+# project-local `type: emergent-threads` files (protein-landscape) stay silent.
+# The per-kind required-field warnings match the test-asserted strings below.
+for f in "$DOC_DIR/reports/synthesis"/*.md "$DOC_DIR/reports/synthesis.md"; do
+    [ -f "$f" ] || continue
+    parsed_type=$(sed -n "s/^type:[[:space:]]*['\"]\\{0,1\\}\\([^'\"]*\\)['\"]\\{0,1\\}[[:space:]]*$/\\1/p" "$f" | head -n 1 || true)
+    [ "$parsed_type" = "synthesis" ] || continue
+    parsed_kind=$(sed -n "s/^report_kind:[[:space:]]*['\"]\\{0,1\\}\\([^'\"]*\\)['\"]\\{0,1\\}[[:space:]]*$/\\1/p" "$f" | head -n 1 || true)
+    case "$parsed_kind" in
+        hypothesis-synthesis|synthesis-rollup|emergent-threads) ;;
+        "") warn "$f: missing report_kind" ;;
+        *)  warn "$f: invalid report_kind '$parsed_kind'" ;;
+    esac
+    grep -q "^source_commit:" "$f" || warn "$f: missing source_commit"
+    case "$parsed_kind" in
+        synthesis-rollup)
+            grep -q "^synthesized_from:" "$f" || warn "$f: missing synthesized_from"
+            ;;
+        hypothesis-synthesis)
+            grep -q "^hypothesis:" "$f" || warn "$f: missing hypothesis"
+            grep -q "^provenance_coverage:" "$f" || warn "$f: missing provenance_coverage"
+            ;;
+        emergent-threads)
+            grep -q "^orphan_question_count:" "$f" || warn "$f: missing orphan_question_count"
+            grep -q "^orphan_interpretation_count:" "$f" || warn "$f: missing orphan_interpretation_count"
+            grep -q "^orphan_ids:" "$f" || warn "$f: missing orphan_ids"
+            ;;
+    esac
 done
 
 # ─── 12. Notes conformance ─────────────────────────────────────────
@@ -550,6 +686,9 @@ fi
 echo ""
 echo "Checking knowledge graph..."
 
+# Gate: when science-tool is unavailable, $SCIENCE_TOOL is empty and the entire
+# block below is skipped — so promoting "unparseable output" from warn to error
+# below cannot fire spuriously on environments without the tool installed.
 if [ -n "$SCIENCE_TOOL" ]; then
     audit_output=$($SCIENCE_TOOL graph audit --project-root . --format json 2>/dev/null) || true
     if printf "%s" "$audit_output" | python3 -c "import sys,json; json.load(sys.stdin)" &>/dev/null; then
@@ -577,7 +716,7 @@ for row in json.load(sys.stdin)['rows']:
 ")
         fi
     else
-        warn "graph audit produced unparseable output (expected for fresh projects)"
+        error "graph audit produced unparseable output"
     fi
 
     if [ -f "$KNOWLEDGE_DIR/graph.trig" ]; then
@@ -711,6 +850,92 @@ else
         info "  $(echo "$task_ids" | wc -l) task(s) validated"
     else
         info "  no tasks in active.md"
+    fi
+fi
+
+# ─── 17. Per-type id-prefix conformance ──────────────────────────
+# Catches drift like `type: report` paired with `id: doc:...` (audit synthesis
+# §9.3 / §5.3). Implemented as a warn (not error): existing downstream projects
+# carry violations and an error here would block adoption on first managed
+# update. Set SCIENCE_VALIDATE_SKIP_ID_PREFIX=1 to skip for projects mid-migration.
+#
+# Note: rows for `pre-registration` and `synthesis` are forward-compatible —
+# they fire only after those type-promotions ship downstream (synthesis §3.2/§3.3).
+# Until then, files using legacy shapes (e.g., `type: plan` for pre-regs,
+# `type: report` with `id: report:synthesis-...`) are unaffected because the
+# rule only fires when `type:` matches a row in PREFIX_RULES.
+if [ -z "${SCIENCE_VALIDATE_SKIP_ID_PREFIX:-}" ]; then
+    echo ""
+    echo "Checking per-type id-prefix conformance..."
+    id_prefix_result=$(IDP_DOC="$DOC_DIR" IDP_SPECS="$SPECS_DIR" python3 - <<'PYEOF'
+import os
+import re
+from pathlib import Path
+
+PREFIX_RULES = {
+    "hypothesis": "hypothesis:",
+    "question": "question:",
+    "paper": "paper:",
+    "interpretation": "interpretation:",
+    "report": "report:",
+    "discussion": "discussion:",
+    "plan": "plan:",
+    "spec": "spec:",
+    "topic": "topic:",
+    "concept": "concept:",
+    "dataset": "dataset:",
+    "method": "method:",
+    "synthesis": "synthesis:",
+    "pre-registration": "pre-registration:",
+}
+
+QUOTE = "[\"']?"
+
+
+def extract_field(text, name):
+    m = re.search(rf'^{name}:\s*{QUOTE}([^"\'\n]+){QUOTE}\s*$', text, re.MULTILINE)
+    return m.group(1).strip() if m else None
+
+
+violations = []
+roots = [os.environ.get("IDP_DOC", "doc"), os.environ.get("IDP_SPECS", "specs")]
+for root in roots:
+    p = Path(root)
+    if not p.is_dir():
+        continue
+    for md in p.rglob("*.md"):
+        # Skip templates (mirrors Section 16 exclusion).
+        if "templates" in md.parts:
+            continue
+        try:
+            content = md.read_text(encoding="utf-8")
+        except Exception:
+            continue
+        m = re.match(r"^---\n(.*?)\n---", content, re.DOTALL)
+        if not m:
+            continue
+        fm = m.group(1)
+        t = extract_field(fm, "type")
+        i = extract_field(fm, "id")
+        if not t or not i:
+            continue
+        if t not in PREFIX_RULES:
+            continue
+        expected = PREFIX_RULES[t]
+        if not i.startswith(expected):
+            violations.append(f"{md}: type={t} but id={i} (expected prefix '{expected}')")
+
+for v in violations:
+    print(v)
+PYEOF
+2>/dev/null || true)
+    if [ -n "$id_prefix_result" ]; then
+        while IFS= read -r line; do
+            [ -z "$line" ] && continue
+            warn "id-prefix mismatch: ${line}"
+        done <<< "$id_prefix_result"
+    else
+        info "  all type/id prefixes conform"
     fi
 fi
 
@@ -851,6 +1076,10 @@ else
         fi
     done
 fi
+
+# Hook point: extra_checks. Fires after all canonical sections complete,
+# before the pass/fail summary. Use for project-specific structural checks.
+dispatch_hook "extra_checks"
 
 # ─── Summary ─────────────────────────────────────────────────────
 echo ""

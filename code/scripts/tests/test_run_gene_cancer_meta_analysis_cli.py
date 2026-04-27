@@ -621,6 +621,107 @@ def test_cli_writes_panel_sensitivity_refits_for_mc3_and_genie_tumor_only(
     assert (panel_sensitivity["dropped_studies"] == 1).all()
 
 
+@pytest.mark.skipif(not _rscript_ready(), reason="Rscript with arrow is unavailable")
+def test_cli_rejects_non_positive_threads(tmp_path: Path) -> None:
+    pooled_input = pd.DataFrame(
+        {
+            "study_id": ["s1"],
+            "cancer_type": ["BRCA"],
+            "symbol": ["TP53"],
+            "y_inclusive": [1],
+            "y_exclusive": [1],
+            "n_inclusive": [10],
+            "n_exclusive": [10],
+            "panel_class": ["WES"],
+            "matched_normal": [True],
+        }
+    )
+    input_path = tmp_path / "in.feather"
+    output_path = tmp_path / "out.feather"
+    pooled_input.to_feather(input_path)
+    result = subprocess.run(
+        [
+            "Rscript",
+            str(SCRIPT),
+            "--input",
+            str(input_path),
+            "--output",
+            str(output_path),
+            "--threads",
+            "0",
+        ],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode != 0
+    assert "--threads" in result.stderr
+
+
+@pytest.mark.skipif(not _metafor_ready(), reason="Rscript with arrow+metafor is unavailable")
+def test_cli_parallel_threads_match_serial_output(tmp_path: Path) -> None:
+    """t141: parallel::mclapply fan-out must produce bitwise-identical output
+    to the serial path. Multiple cells across two cancer types ensure the
+    parallel branch is exercised for the per-cell loop."""
+    pooled_input = pd.DataFrame(
+        {
+            "study_id": ["s1", "s2", "s3", "s4", "s1", "s2", "s3", "s4"],
+            "cancer_type": ["BRCA"] * 4 + ["LUAD"] * 4,
+            "symbol": ["TP53"] * 4 + ["KRAS"] * 4,
+            "y_inclusive": [20, 15, 12, 18, 22, 17, 14, 19],
+            "y_exclusive": [18, 14, 10, 16, 20, 15, 12, 17],
+            "n_inclusive": [100, 80, 60, 90, 110, 85, 65, 95],
+            "n_exclusive": [90, 70, 55, 85, 100, 75, 60, 90],
+            "panel_class": ["WES", "large_hybrid_capture", "WES", "MC3"] * 2,
+            "matched_normal": [True, False, True, True] * 2,
+        }
+    )
+    input_path = tmp_path / "in.feather"
+    pooled_input.to_feather(input_path)
+
+    serial_output = tmp_path / "serial.feather"
+    parallel_output = tmp_path / "parallel.feather"
+    serial_diag = tmp_path / "serial_diag.feather"
+    parallel_diag = tmp_path / "parallel_diag.feather"
+
+    def _run(out_path: Path, diag_path: Path, threads: str) -> subprocess.CompletedProcess:
+        return subprocess.run(
+            [
+                "Rscript",
+                str(SCRIPT),
+                "--input",
+                str(input_path),
+                "--output",
+                str(out_path),
+                "--diagnostics-output",
+                str(diag_path),
+                "--threads",
+                threads,
+            ],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+
+    serial = _run(serial_output, serial_diag, "1")
+    parallel = _run(parallel_output, parallel_diag, "2")
+
+    assert serial.returncode == 0, serial.stderr
+    assert parallel.returncode == 0, parallel.stderr
+
+    serial_df = pd.read_feather(serial_output).sort_values(
+        ["cancer_type", "symbol", "analysis_view"]
+    ).reset_index(drop=True)
+    parallel_df = pd.read_feather(parallel_output).sort_values(
+        ["cancer_type", "symbol", "analysis_view"]
+    ).reset_index(drop=True)
+    pd.testing.assert_frame_equal(serial_df, parallel_df)
+
+    # Banner should appear in stderr only for the parallel run.
+    assert "parallel::mclapply" not in serial.stderr
+    assert "parallel::mclapply" in parallel.stderr
+
+
 @pytest.mark.skipif(not _metafor_ready(), reason="Rscript with arrow+metafor is unavailable")
 def test_cli_writes_placebo_refits_with_fixed_seed(tmp_path: Path) -> None:
     pooled_input = pd.DataFrame(

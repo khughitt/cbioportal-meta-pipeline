@@ -103,3 +103,9 @@ studies: [
   "pog570_bcgsc_2020",
   "pptc_2019"
 ]
+
+# t141: parallelize the t077 R meta-analysis via parallel::mclapply.
+# Default (1) preserves serial behavior; bump for pan-cancer scale where the
+# rule is the dominant single-process bottleneck (12+ hr serial on the full
+# ~474k-cell input).
+meta_analysis_threads: 4

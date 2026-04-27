@@ -1,7 +1,20 @@
 suppressPackageStartupMessages({
   library(arrow)
   library(metafor)
+  library(parallel)
 })
+
+# Fan-out helper (t141): use parallel::mclapply when threads>1, else plain
+# lapply. mclapply forks; each child sees a snapshot of the parent's environment
+# and arguments are copy-on-write — so per-cell `set.seed(shuffle_seed)` calls
+# inside analyze_cell remain deterministic regardless of mc.cores. Default
+# (threads=1) preserves serial behavior for the existing test suite.
+parallel_lapply <- function(x, fn, ..., threads) {
+  if (threads <= 1L) {
+    return(lapply(x, fn, ...))
+  }
+  parallel::mclapply(x, fn, ..., mc.cores = threads, mc.preschedule = TRUE)
+}
 
 parse_cli_args <- function(args) {
   if (length(args) == 0L) {
@@ -38,6 +51,14 @@ parse_cli_args <- function(args) {
     values$`shuffle-seed` <- "0"
   }
   values$`shuffle-seed` <- as.integer(values$`shuffle-seed`)
+
+  if (is.null(values$threads)) {
+    values$threads <- "1"
+  }
+  values$threads <- as.integer(values$threads)
+  if (is.na(values$threads) || values$threads < 1L) {
+    stop("Flag --threads requires a positive integer.", call. = FALSE)
+  }
 
   values
 }
@@ -577,7 +598,7 @@ build_placebo_rows <- function(
   )
 }
 
-summarize_view <- function(df, analysis_view, y_col, n_col, force_glmm_failure, shuffle_seed) {
+summarize_view <- function(df, analysis_view, y_col, n_col, force_glmm_failure, shuffle_seed, threads) {
   view_df <- data.frame(
     study_id = as.character(df$study_id),
     cancer_type = as.character(df$cancer_type),
@@ -590,17 +611,19 @@ summarize_view <- function(df, analysis_view, y_col, n_col, force_glmm_failure, 
   )
 
   split_cells <- split(view_df, list(view_df$cancer_type, view_df$symbol), drop = TRUE)
-  analyses <- lapply(
+  analyses <- parallel_lapply(
     split_cells,
     analyze_cell,
     analysis_view = analysis_view,
-    force_glmm_failure = force_glmm_failure
+    force_glmm_failure = force_glmm_failure,
+    threads = threads
   )
   pooled_rows <- do.call(rbind, lapply(analyses, `[[`, "pooled"))
   diagnostics_rows <- do.call(rbind, lapply(analyses, `[[`, "diagnostics"))
-  leave_one_out_rows <- lapply(
+  leave_one_out_rows <- parallel_lapply(
     seq_along(split_cells),
-    function(i) build_leave_one_out_rows(split_cells[[i]], analysis_view, analyses[[i]], force_glmm_failure)
+    function(i) build_leave_one_out_rows(split_cells[[i]], analysis_view, analyses[[i]], force_glmm_failure),
+    threads = threads
   )
   leave_one_out_rows <- Filter(function(df) nrow(df) > 0L, leave_one_out_rows)
   leave_one_out_df <- if (length(leave_one_out_rows) > 0L) {
@@ -608,14 +631,16 @@ summarize_view <- function(df, analysis_view, y_col, n_col, force_glmm_failure, 
   } else {
     empty_leave_one_out_table()
   }
-  panel_sensitivity_rows <- lapply(
+  panel_sensitivity_rows <- parallel_lapply(
     seq_along(split_cells),
-    function(i) build_panel_sensitivity_rows(split_cells[[i]], analysis_view, analyses[[i]], force_glmm_failure)
+    function(i) build_panel_sensitivity_rows(split_cells[[i]], analysis_view, analyses[[i]], force_glmm_failure),
+    threads = threads
   )
   panel_sensitivity_df <- do.call(rbind, panel_sensitivity_rows)
-  placebo_rows <- lapply(
+  placebo_rows <- parallel_lapply(
     seq_along(split_cells),
-    function(i) build_placebo_rows(split_cells[[i]], analysis_view, analyses[[i]], force_glmm_failure, shuffle_seed)
+    function(i) build_placebo_rows(split_cells[[i]], analysis_view, analyses[[i]], force_glmm_failure, shuffle_seed),
+    threads = threads
   )
   placebo_df <- do.call(rbind, placebo_rows)
 
@@ -628,9 +653,9 @@ summarize_view <- function(df, analysis_view, y_col, n_col, force_glmm_failure, 
   )
 }
 
-build_output <- function(df, force_glmm_failure, shuffle_seed) {
-  exclusive <- summarize_view(df, "exclusive", "y_exclusive", "n_exclusive", force_glmm_failure, shuffle_seed)
-  inclusive <- summarize_view(df, "inclusive", "y_inclusive", "n_inclusive", force_glmm_failure, shuffle_seed)
+build_output <- function(df, force_glmm_failure, shuffle_seed, threads) {
+  exclusive <- summarize_view(df, "exclusive", "y_exclusive", "n_exclusive", force_glmm_failure, shuffle_seed, threads)
+  inclusive <- summarize_view(df, "inclusive", "y_inclusive", "n_inclusive", force_glmm_failure, shuffle_seed, threads)
   out <- rbind(exclusive$pooled, inclusive$pooled)
   view_order <- c("exclusive", "inclusive")
   out <- out[order(out$cancer_type, out$symbol, match(out$analysis_view, view_order)), ]
@@ -689,7 +714,10 @@ main <- function() {
   df <- as.data.frame(arrow::read_feather(input_path))
   validate_input_schema(df)
 
-  out <- build_output(df, isTRUE(options$force_glmm_failure), options$`shuffle-seed`)
+  if (options$threads > 1L) {
+    message(sprintf("Using %d worker(s) via parallel::mclapply.", options$threads))
+  }
+  out <- build_output(df, isTRUE(options$force_glmm_failure), options$`shuffle-seed`, options$threads)
   dir.create(dirname(output_path), recursive = TRUE, showWarnings = FALSE)
   arrow::write_feather(out$pooled, output_path)
   if (!is.null(options$`diagnostics-output`)) {

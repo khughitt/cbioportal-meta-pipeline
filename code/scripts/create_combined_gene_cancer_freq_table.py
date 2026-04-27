@@ -129,8 +129,22 @@ def combine_paired_pivot(
     n_inclusive_df = pd.concat(n_inclusive_frames, axis=1)
     n_exclusive_df = pd.concat(n_exclusive_frames, axis=1)
 
-    inclusive_ratio_cols = [c for c in ratio_df.columns if not c.endswith("_exclusive")]
-    exclusive_ratio_cols = [c for c in ratio_df.columns if c.endswith("_exclusive")]
+    ratio_df = _recompute_mean_columns(ratio_df)
+
+    return num_df, ratio_df, n_inclusive_df, n_exclusive_df
+
+
+def _recompute_mean_columns(ratio_df: pd.DataFrame) -> pd.DataFrame:
+    """Recompute pooled mean columns from paired per-study ratio columns."""
+    summary_cols = {"mean", "mean_inclusive", "mean_exclusive", "mean_adj"}
+    inclusive_ratio_cols = [
+        c
+        for c in ratio_df.columns
+        if isinstance(c, str)
+        and c not in summary_cols
+        and f"{c}_exclusive" in ratio_df.columns
+    ]
+    exclusive_ratio_cols = [f"{c}_exclusive" for c in inclusive_ratio_cols]
     ratio_df["mean_inclusive"] = ratio_df[inclusive_ratio_cols].mean(
         axis=1, skipna=True
     )
@@ -139,8 +153,7 @@ def combine_paired_pivot(
     )
     # Legacy alias (deviation from plan review finding #3; see module docstring).
     ratio_df["mean"] = ratio_df["mean_inclusive"]
-
-    return num_df, ratio_df, n_inclusive_df, n_exclusive_df
+    return ratio_df
 
 
 def _load_cancer_presence(
@@ -230,6 +243,7 @@ def _fill_missing_unmutated_cells(
                 )
                 n_exclusive_df.loc[missing_exclusive, study] = n_exclusive
 
+    ratio_df = _recompute_mean_columns(ratio_df)
     return num_df, ratio_df, n_inclusive_df, n_exclusive_df
 
 
@@ -359,7 +373,8 @@ def _annotate_callability(
         if enforce_callability_nesting_check:
             raise ValueError(message)
         print(
-            "WARNING: " + message
+            "WARNING: "
+            + message
             + "\nProceeding because enforce_callability_nesting_check=false (t139).",
             file=sys.stderr,
         )
@@ -437,14 +452,6 @@ def _run_via_snakemake() -> None:
 
     num_df, ratio_df, n_inclusive_df, n_exclusive_df = combine_paired_pivot(frames)
 
-    # Sort by mean_inclusive descending for stable ranking.
-    ratio_df = ratio_df.sort_values("mean_inclusive", ascending=False)
-    num_df = num_df.reindex(ratio_df.index)
-    n_inclusive_df = n_inclusive_df.reindex(ratio_df.index)
-    n_exclusive_df = n_exclusive_df.reindex(ratio_df.index)
-
-    ratio_df = _protein_length_adjusted(ratio_df, pd.read_feather(protein_lengths_path))
-
     panel_coverage = pd.read_feather(panel_coverage_path)
     study_panel_map: dict[str, str] = snek.config.get("study_panel_map", {}) or {}
     cancer_presence_by_study = _load_cancer_presence(per_study_cancer_paths)
@@ -457,6 +464,15 @@ def _run_via_snakemake() -> None:
         study_panel_map=study_panel_map,
         panel_bearing_studies=set(snek.config.get("panel_bearing_studies", [])),
     )
+    # Sort and length-adjust after zero-fill so pooled summaries reflect the
+    # final callable-but-unmutated WES cells.
+    ratio_df = ratio_df.sort_values("mean_inclusive", ascending=False)
+    num_df = num_df.reindex(ratio_df.index)
+    n_inclusive_df = n_inclusive_df.reindex(ratio_df.index)
+    n_exclusive_df = n_exclusive_df.reindex(ratio_df.index)
+
+    ratio_df = _protein_length_adjusted(ratio_df, pd.read_feather(protein_lengths_path))
+
     # snakemake's `--config KEY=VALUE` keeps VALUE as a string, so `bool('false')`
     # is True. Coerce string forms explicitly.
     raw_enforce = snek.config.get("enforce_callability_nesting_check", True)

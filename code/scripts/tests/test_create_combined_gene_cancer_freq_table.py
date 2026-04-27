@@ -155,6 +155,40 @@ def test_fill_missing_wes_cells_as_zero_when_cancer_present() -> None:
     assert row_n_excl["study_b"] == 40
 
 
+def test_fill_missing_wes_cells_recomputes_mean_columns() -> None:
+    """t145: zero-filled WES cells must contribute to pooled mean columns."""
+    study_a = _per_study_frame([("A", "G", 1, 1, 1.0, 1.0, 1, 1)])
+    study_b = _per_study_frame([("A", "H", 0, 0, 0.0, 0.0, 10, 10)])
+
+    from create_combined_gene_cancer_freq_table import (
+        _fill_missing_unmutated_cells,
+        combine_paired_pivot,
+    )
+
+    num_df, ratio_df, n_incl_df, n_excl_df = combine_paired_pivot(
+        [("study_a", study_a), ("study_b", study_b)]
+    )
+
+    _, ratio_out, _, _ = _fill_missing_unmutated_cells(
+        num_df,
+        ratio_df,
+        n_incl_df,
+        n_excl_df,
+        cancer_presence_by_study={
+            "study_a": {"A": (1, 1)},
+            "study_b": {"A": (10, 10)},
+        },
+        study_panel_map={},
+    )
+
+    row = ratio_out.loc[("A", "G")]
+    assert row["study_a"] == pytest.approx(1.0)
+    assert row["study_b"] == pytest.approx(0.0)
+    assert row["mean_inclusive"] == pytest.approx(0.5)
+    assert row["mean_exclusive"] == pytest.approx(0.5)
+    assert row["mean"] == row["mean_inclusive"]
+
+
 def test_missing_cell_stays_nan_when_cancer_absent_from_study() -> None:
     """t076: if the cancer is absent from a study cohort, the combined cell must
     remain NaN rather than being forced to zero."""

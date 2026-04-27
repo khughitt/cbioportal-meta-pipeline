@@ -503,24 +503,6 @@ Surfaced by: 2026-04-25 downstream conventions migration cycle (orchestrator age
 
 **Cross-references**: identified during the t131 smoke run 2026-04-25 (commit `1dd1414` added the rcpparmadillo workaround).
 
-## [t144] Fix dNdScv per-gene aggregation tiebreaker (n_cancers_significant_q05 secondary sort)
-- priority: P1
-- status: proposed
-- aspects: [software-development]
-- related: [task:t131, interpretation:2026-04-26-t131-full-pan-cancer-dndscv-run]
-- group: pipeline
-- created: 2026-04-26
-
-**Bug.** At full pan-cancer scale, 829 genes hit `min_qglobal == 0.0` exactly (BH-FDR machine-precision floor — all canonical drivers TP53/KRAS/PIK3CA/PTEN/etc. tied at zero). The current `compare_three_way_rankings.py` ranks by `min_qglobal` only; among ties, `pandas.nsmallest` falls back to insertion order = alphabetical symbol order. Result: `rank_dndscv` top-100 = `[AATK, ABCA13, ABCA2, ABCA7, ABCB11, ABL1, ACACB, ACTG1, ACVR1, ACVR1B, AGO2, AGRN, AHNAK, AHNAK2, AKAP13, AKT1, AKT2, AKT3, ALK, ALMS1, …]` (alphabetical). Bailey driver recovery degrades from a possible 62/100 → 29/100, and the `best_cancer_type` column reports "Ampullary Cancer" for TP53 / KRAS / PIK3CA (alphabetical first cancer at q=0). This is **not a problem with dNdScv**; it's a rollup-design bug.
-
-**Fix.** Lexicographic sort on `(min_qglobal ASC, n_cancers_significant_q05 DESC)` in `aggregate_dndscv_per_gene.py` and the rank assignment in `compare_three_way_rankings.py`. Re-run only `aggregate_dndscv_per_gene` + `join_dndscv_into_annotated` + `compare_three_way_rankings` (cheap; no dNdScv re-compute needed).
-
-**Validation.** Empirically confirmed in the 2026-04-26 interpretation: the fix recovers 8/10, 22/25, 37/50, 62/100, 145/500 Bailey drivers (vs 2, 5, 17, 29, 104 with the broken tiebreaker), and lifts canonical drivers TP53/KRAS/NRAS/PIK3CA/RB1/PTEN/FBXW7 to ranks 1–9.
-
-**Test.** Add a regression test: among synthetic genes with `min_q == 0`, the gene with higher `n_cancers_significant_q05` ranks first.
-
-**Acceptance**: `rank_dndscv == 1` is held by the gene with highest `n_cancers_significant_q05` among the q=0 set, not by the alphabetically-first gene.
-
 ## [t145] Diagnose pooled-meta-analysis mean_inclusive inflation (snoU13/Y_RNA/fragile-site dominance)
 - priority: P1
 - status: proposed

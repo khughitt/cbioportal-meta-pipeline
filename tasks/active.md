@@ -440,28 +440,6 @@ Pending adoption tracks:
 
 Surfaced by: 2026-04-25 downstream conventions migration cycle (orchestrator agent).
 
-## [t141] Parallelize run_gene_cancer_meta_analysis.R via mclapply
-- priority: P2
-- status: proposed
-- aspects: [software-development]
-- related: [task:t077, task:t131, task:t139]
-- group: pipeline
-- created: 2026-04-26
-
-**Bottleneck.** `run_gene_cancer_meta_analysis.R` is by far the slowest rule in the pipeline. The full pan-cancer-dndscv run launched 2026-04-25 17:10 was still in the meta-analysis loop ~16 hours later (12+ hours of single-process CPU time at 97% utilization).
-
-**Why it's slow.** Input `gene_cancer_pooled_input.feather` is ~1.96M rows = 474,524 unique (cancer_type, symbol) cells (148 cancers × ~3,200 genes per cancer × up-to-13 studies of evidence each). For each cell the script runs FIVE separate analyses — pooled, leave-one-out, panel-sensitivity, placebo, diagnostics — each with a GLMM fit + REML fallback. Two passes total (inclusive + exclusive cohorts). The main loop at lines 592-620 uses `lapply()` throughout — single-threaded.
-
-**Optimization angles** (in priority order):
-1. **`parallel::mclapply` swap** — 1-line change at `lapply(split_cells, analyze_cell, ...)` and the four similar lapply calls below. With `mc.cores = config$threads` should be a 4-8× win on a typical multi-core box. Single highest-leverage change.
-2. **Skip degenerate cells** — meta-analysis on a single stratum is meaningless. The hundreds of "GLMM failed for X / Y / Z; using REML fallback" warnings in the log are likely dominated by such cells. Add an early-exit when n_studies <= 1 (still emit a row with NA pooled estimate so downstream join doesn't fail).
-3. **Cache GLMM convergence diagnostics** — re-runs can skip cells known to be REML-only.
-4. **Switch backend** — `glmmTMB` or `rstan` is typically 5-20× faster than `glmer` on small grouped data. Larger refactor; do only if (1)-(3) aren't enough.
-
-**Acceptance**: full pan-cancer-dndscv (~13 studies, 148 cancer types) completes the meta-analysis rule in under 2 hours on 4 cores.
-
-**Cross-references**: identified during the t131 full pan-cancer-dndscv run 2026-04-25. The bottleneck blocks t131's terminal `compare_three_way_rankings` rule from running on the canonical pan-cancer cohort. Related to t139 (which would change which aggregation downstream consumes — so the optimization may move in priority depending on whether the meta-analysis stays canonical).
-
 ## [t142] Speed up create_correlation_matrices.py for large studies
 - priority: P3
 - status: proposed

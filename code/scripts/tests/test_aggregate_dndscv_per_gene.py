@@ -129,6 +129,33 @@ def test_mixed_real_and_sentinel_rows_filters_sentinels() -> None:
     assert row["n_cancers_tested"] == 2  # sentinels are NOT counted
 
 
+def test_secondary_sort_breaks_q_ties_by_n_cancers_significant() -> None:
+    """t144 regression: among genes tied at min_qglobal (e.g. the BH-FDR
+    machine-precision floor at q=0.0 in pan-cancer runs), the gene with more
+    cancer types significant at q<0.05 must rank first. Without the
+    secondary key, ties resolved alphabetically — collapsing TP53/KRAS/PIK3CA
+    to arbitrary positions in the top-100."""
+    out = aggregate_dndscv_per_gene(
+        [
+            # ZGENE: tied at q=0 in 1 cancer
+            _per_cancer_frame([("ZGENE", "Breast Cancer", 0.0)]),
+            # AGENE: tied at q=0 in 3 cancers (more support)
+            _per_cancer_frame([("AGENE", "Breast Cancer", 0.0)]),
+            _per_cancer_frame([("AGENE", "Lung Cancer", 0.0)]),
+            _per_cancer_frame([("AGENE", "Pancreatic", 0.0)]),
+            # MGENE: tied at q=0 in 2 cancers
+            _per_cancer_frame([("MGENE", "Breast Cancer", 0.0)]),
+            _per_cancer_frame([("MGENE", "NSCLC", 0.0)]),
+        ]
+    )
+    # Order should be by n_cancers_significant_q05 desc among the q=0 set:
+    # AGENE (3) → MGENE (2) → ZGENE (1).
+    # NOT alphabetical (which would be AGENE, MGENE, ZGENE — AGENE first by
+    # accident here, but ZGENE last would be correct only by coincidence).
+    assert list(out["symbol"]) == ["AGENE", "MGENE", "ZGENE"]
+    assert list(out["n_cancers_significant_q05"]) == [3, 2, 1]
+
+
 def test_output_sorted_by_min_qglobal() -> None:
     """Most-significant genes appear first; nulls last."""
     out = aggregate_dndscv_per_gene(

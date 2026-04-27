@@ -156,9 +156,24 @@ per_gene["rank_raw"] = per_gene["mean_inclusive"].rank(
 per_gene["rank_length_adj"] = per_gene["mean_adj"].rank(
     method="dense", ascending=False, na_option="bottom"
 ).astype("Int64")
-per_gene["rank_dndscv"] = per_gene["min_qglobal"].rank(
-    method="dense", ascending=True, na_option="bottom"
-).astype("Int64")
+# Composite-key dense rank for dNdScv (t144): primary key min_qglobal asc,
+# secondary key n_cancers_significant_q05 desc. Single-column rank() collapses
+# all q=0 BH-FDR-floor ties to rank 1; the per-gene rollup's secondary key
+# breaks those ties so the gene with the most cancer types significant at
+# q<0.05 ranks first among the q=0 set.
+_dndscv_sorted = per_gene[["min_qglobal", "n_cancers_significant_q05"]].sort_values(
+    by=["min_qglobal", "n_cancers_significant_q05"],
+    ascending=[True, False],
+    na_position="last",
+    kind="mergesort",
+)
+_dndscv_ranks = (
+    _dndscv_sorted.groupby(
+        ["min_qglobal", "n_cancers_significant_q05"], dropna=False, sort=False
+    ).ngroup()
+    + 1
+)
+per_gene["rank_dndscv"] = _dndscv_ranks.reindex(per_gene.index).astype("Int64")
 
 # Pairwise rank-shift columns (signed Δrank).
 per_gene["shift_raw_to_length"] = per_gene["rank_length_adj"] - per_gene["rank_raw"]

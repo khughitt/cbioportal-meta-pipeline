@@ -102,9 +102,19 @@ def aggregate_dndscv_per_gene(per_cancer_frames: list[pd.DataFrame]) -> pd.DataF
             "aggregate_dndscv_per_gene: groupby produced unexpected schema "
             f"({list(pooled.columns)})"
         )
+    # Lexicographic sort: lower q wins, ties broken by more cancer types
+    # significant at q<0.05 (t144). Without the secondary key, the BH-FDR
+    # machine-precision floor at full pan-cancer scale produces hundreds of
+    # genes tied at min_qglobal=0.0, with insertion order = alphabetical
+    # symbol order — which collapses canonical drivers (TP53, KRAS, ...) to
+    # arbitrary ranks.
     return (
         pooled[POOLED_SCHEMA]
-        .sort_values(by="min_qglobal", na_position="last")
+        .sort_values(
+            by=["min_qglobal", "n_cancers_significant_q05"],
+            ascending=[True, False],
+            na_position="last",
+        )
         .reset_index(drop=True)
     )
 

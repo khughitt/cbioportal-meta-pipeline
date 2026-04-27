@@ -321,11 +321,10 @@ Extend convert_to_feather.py to retain per-variant allele-count columns alongsid
 - status: proposed
 - aspects: [computational-analysis]
 - related: [question:q012-mutation-ordering-cross-sectional-inference, task:t078, task:t081, task:t111]
-- blocked-by: [t078]
 - group: meta-analysis
 - created: 2026-04-24
 
-Once t078 co-occurrence/mutual-exclusivity is live, add Mutual Hazard Network (Schill 2020) fit using the same sample-specific-background-rate null and per-sample callability mask. Report primary results at Sanchez-Vega 10-pathway level; gene-level as drill-down. Stratify per histology and per hypermutator class (t081). Calibrate against PCAWG Gerstung 2020 pan-cancer chronology Table 1 before reporting any novel edges.
+t078 co-occurrence/mutual-exclusivity landed 2026-04-25 (no longer blocking). Add Mutual Hazard Network (Schill 2020) fit using the same sample-specific-background-rate null and per-sample callability mask. Report primary results at Sanchez-Vega 10-pathway level; gene-level as drill-down. Stratify per histology and per hypermutator class (t081). Calibrate against PCAWG Gerstung 2020 pan-cancer chronology Table 1 before reporting any novel edges.
 
 ## [t136] Canonicalize all variant coordinates to GRCh38 at ingestion (liftover from hg19)
 - priority: P2

@@ -237,7 +237,7 @@ Before applying the t111 per-tissue snvs_per_mb correction to gene_cancer_study_
 
 ## [t127] First q008 quantitative pass: unmatched-normal contamination magnitude using t111 normal_tissue_spectra
 - priority: P2
-- status: proposed
+- status: active
 - aspects: [computational-analysis]
 - related: [question:q008-signature-decomposition-tissue-background-subtraction, task:t111, meta:next-steps-2026-04-24]
 - group: meta-analysis

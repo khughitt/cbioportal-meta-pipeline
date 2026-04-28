@@ -1,144 +1,177 @@
-# t127 — q008 quantitative pass: unmatched-normal SBS1/SBS5 contamination magnitude — Plan
+# t127 — q008 quantitative pilot: unmatched-normal SBS1/SBS5 contamination magnitude — Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: superpowers:subagent-driven-development. Steps use `- [ ]` checkbox syntax.
 
-**Goal:** Produce the first numeric estimate of the SBS1/SBS5 contamination magnitude attributable to unmatched-normal sequencing in cBioPortal-style cohorts, using SigProfilerAssignment over a matched-vs-unmatched study pair and the Li2021 reference spectra landed by t111. Closes the "built-but-unexploited" gap from `meta:next-steps-2026-04-24` and gives `question:q008` a quantitative anchor.
+**Goal:** Produce a first numeric **pilot estimate** of how the SBS1+SBS5 exposure-fraction differs between matched-normal and unmatched-normal cohorts of the same cancer type, under the existing t109/t110 SigProfilerAssignment surface, and test whether subtracting the Li2021 normal-tissue spectrum (t111 output) as a residual-matrix transform attenuates the gap. Closes the "built-but-unexploited" gap from `meta:next-steps-2026-04-24` for `question:q008`.
 
-**Hypothesis under test (q008 quantitative):** In matched-cancer-type cohorts, unmatched-normal samples carry a higher fraction of SBS1+SBS5 mutations than matched-normal samples, and the excess is attenuated when the per-tissue Li2021 normal-tissue spectrum is subtracted as a fixed offset prior to decomposition.
+**Framing.** This is a **pilot consistency test**, not a causal attribution. The matched/unmatched contrast confounds normal-status with assay (WES vs panel), variant caller, primary-vs-clinical cohort, and likely age/stage mix. The verdict language reflects this: results read as "consistent / inconsistent with contamination" with named alternative explanations; causal attribution requires a follow-up study with a within-cohort matched-vs-unmatched comparator.
 
-**Pre-registered thresholds (declared before running decomposition):**
+**Pre-registered hypothesis (q008 quantitative).** In matched-cancer-type cohorts that pass all sensitivity gates, unmatched-normal samples carry a higher fraction of SBS1+SBS5 mutations than matched-normal samples; this gap is reduced when the per-tissue Li2021 spectrum is subtracted as a fixed shape offset prior to re-assignment.
 
-- **Effect threshold:** ≥ 5 percentage-point excess in mean SBS1+SBS5 exposure fraction in unmatched vs matched cohort, at the cancer-type level — substantive (consistent with the 8% CH-style false-positive rate). Below 2 pp — null.
-- **Subtraction threshold:** the per-tissue background-subtraction step (Strategy 2 in `topic:signature-decomposition-unmatched-normal`) "works" if it reduces the unmatched-vs-matched SBS1+SBS5 gap by ≥ 50% without inflating cancer-type-specific signature exposures (SBS2/SBS13/SBS3/SBS10 etc.) by more than 10%.
-- **Test:** two-sided Mann–Whitney on per-sample SBS1+SBS5 fraction, FDR-corrected across cancer types; supplemented with bootstrap CIs on the cohort-mean gap.
+**Pre-registered thresholds (committed before any decomposition is run; no post-hoc relaxation).**
 
-**Scope:** SBS only. Single matched-vs-unmatched study pair. Two-stage analysis (raw decomposition; with background subtraction). No de-novo NMF; no purity covariate (filed as follow-up).
+- **Effect threshold:** ≥ 5 percentage-point cohort-mean Δ(SBS1+SBS5 fraction) — substantive consistency. < 2 pp — null. 2–5 pp — mild.
+- **Subtraction "rescue":** Δ(c\*) ≤ 50 % of Δ(c=0) AND collateral cancer-type signature change (SBS2/SBS3/SBS10/SBS13) ≤ 10 % per signature.
+- **Test:** two-sided Mann–Whitney U on per-sample SBS1+SBS5 fraction, BH-FDR across cancer types; bootstrap (1000 resamples, seed 0) for cohort-mean Δ CI.
+- **No-go rule:** if fewer than **3** cancer types survive the Task 1 feasibility gate, the run is downgraded to a *descriptive* pilot (per-cancer-type Δ reported, but the "≥ half of cancer types" verbiage and any aggregate verdict are dropped).
+- **No-go rule (subtraction arm):** if fewer than **3** cancer types are subtraction-eligible (Li2021 tissue mapping present + survives feasibility gate), the subtraction verdict is descriptive only.
 
-**Tech stack:** Python 3.13+, SigProfilerAssignment, SigProfilerMatrixGenerator, pandas, pyarrow, polars, click, pytest. Output as feather + a marimo summary notebook.
+**Scope:** SBS only. Single matched-vs-unmatched study pair. No de-novo NMF, no MuSiCal cross-tool comparison, no purity covariate, no LRR/ERR test (deferred, per t126 / q009).
 
-**Related:** `task:t127`, `task:t111`, `question:q008-signature-decomposition-tissue-background-subtraction`, `question:q009-sbs1-lrr-bias-as-normal-contamination-flag`, `topic:signature-decomposition-unmatched-normal`, `paper:Li2021`, `paper:DiazGay2023`.
+**Tech stack:** Python 3.13+, the existing `code/scripts/run_restricted_sigprofiler_assignment.py` and Snakefile rules (no parallel decomposition path), plus a new `subtract_normal_background.py` operating on the SBS96 matrix. Statistical comparison + interpretation in a marimo notebook.
+
+**Related:** `task:t127`, `task:t109`, `task:t110`, `task:t111`, `task:t126`, `question:q008`, `question:q009`, `topic:signature-decomposition-unmatched-normal`, `paper:Li2021`, `paper:DiazGay2023`.
 
 ---
 
-## Cohort selection
+## Cohort selection (raw-comparison population)
 
-| Role | Study | Sequencing | Normal | Rationale |
+| Role | Study | Sequencing | Normal | Build |
 |---|---|---|---|---|
-| Matched-normal anchor | `tcga_mc3` (already configured per AGENTS.md) | WES, MC3 7-caller consensus | matched (by design) | 9,104 samples × 32 cancer types; cleanest possible matched-normal baseline |
-| Unmatched-normal probe | `msk_impact_2017` | MSK-IMPACT panel (~410-468 genes depending on version) | unmatched / PoN | Largest unmatched-normal panel cohort already in the pipeline; stage-aligned to TCGA cancer types |
+| Matched-normal anchor | `tcga_mc3` | WES (MC3 7-caller consensus) | matched | GRCh37 (verify per Task 0) |
+| Unmatched-normal probe | `msk_impact_2017` | MSK-IMPACT panel (~410–468 genes) | unmatched / PoN | per `metadata/study_build.txt`; do not assume |
 
-**Cancer-type intersection.** Restrict the analysis to cancer types with ≥ 50 samples in BOTH cohorts. Likely candidates from prior pipeline runs: Breast, Colorectal, Lung Adenocarcinoma, Lung Squamous, Endometrial, Bladder, Pancreatic, Glioma, Melanoma, Ovarian. Final list determined in Task 1.
+**Confounders the verdict must explicitly note (named, not dismissed):** WES vs panel callable territory; variant caller / filter pipeline (MC3 7-caller vs MSK clinical); primary-treatment-naïve vs metastatic-clinical cohort balance; tobacco-/UV-exposure mix; age distribution. Sensitivity controls in Task 4.
 
-**Caveat (pre-registered):** `msk_impact_2017` is panel-sequenced (~1.2 Mb callable) while `tcga_mc3` is WES (~30 Mb). Per-sample mutation counts will be ~25× lower in the panel arm. SigProfilerSingleSample (per Jin2024 benchmarking) outperforms MuSiCal at panel mutation counts; we use SigProfilerAssignment which has SingleSample mode. The signal we test (SBS1+SBS5 *fraction*, not absolute count) is robust to total-count differences but loses statistical power below ~20 SBS calls per sample. Samples with < 20 callable SBS calls are dropped at Task 2 and the dropped fraction is reported.
+**Subtraction-eligible population.** Restricted to cancer types whose tissue maps to a Li2021 organ (Bronchia, Cardia, Colon, Duodenum, Esophagus, Liver, Pancreas, Prostate, Small Intestine — exact list emitted in Task 3 from `data/normal_tissue_spectra.tsv`). Cancer types without a Li2021 reference (Breast, Ovarian, Glioma, Endometrial, Bladder, Melanoma, etc.) appear in the raw-comparison arm only.
 
 ---
 
 ## Task 0 — Pre-flight gate
 
-Before any code is written.
+Before any code is written; before Task 1 runs.
 
-- [ ] **Step 1: SigProfilerAssignment dependency resolution.** Confirm `SigProfilerAssignment` and `SigProfilerMatrixGenerator` are addable via `uv add`. Verify GRCh37 and GRCh38 reference installation hooks (the matrix generator downloads ~3 GB of trinucleotide context tables on first run; we cache to `data/sigprofiler-cache/`, gitignored).
-- [ ] **Step 2: Cohort feasibility check.** Read `studies/tcga_mc3/mut/table/gene_cancer_study.feather` and `studies/msk_impact_2017/mut/table/gene_cancer_study.feather` (or upstream per-sample MAFs); confirm per-sample SBS-call counts and the cancer-type intersection ≥ 5 cancer types meeting the n=50/n=50 floor. If not, halt and re-scope.
-- [ ] **Step 3: Genome-build alignment.** MC3 is GRCh37; MSK-IMPACT public is GRCh38. Decide: either (a) lift one to a single build before context counting or (b) run two SigProfiler matrix-generation jobs and join in signature space (signature definitions are build-agnostic). Default: (b) — cheaper and less error-prone. Document choice in the design doc.
-- [ ] **Step 4: Document the threshold pre-registration in this plan file** (already declared above) and commit the plan before any data is touched. Reproducibility covenant.
+- [ ] **Step 1: SigProfilerAssignment is already a project dep (t109/t110).** Verify by running the existing rule on a small fixture or checking that `studies/<id>/mut/signatures/restricted_assignment_per_sample.feather` exists for at least one current study. No new `uv add`.
+- [ ] **Step 2: Confirm the Snakefile per-sample surface (`rule run_restricted_sigprofiler_assignment_per_sample`, `code/workflows/Snakefile:612`) is the input we use.** Output schema documented at `code/scripts/run_restricted_sigprofiler_assignment.py:430` — long-format `(study_id, cancer_type, sample_name, signature, exposure, total_mutations, cosine_similarity, ...)`.
+- [ ] **Step 3: Per-study assembly check.** Read `studies/tcga_mc3/metadata/study_build.txt` and `studies/msk_impact_2017/metadata/study_build.txt` (or equivalent — confirm the file name in `convert_to_feather.py`). Record both. Wire each study's build into the Snakemake invocation rather than assuming the single global `signature_assignment_genome_build`. If the field doesn't exist, file a sub-task to add it; do **not** proceed with a hard-coded build.
+- [ ] **Step 4: Commit this plan and the threshold pre-registration before any decomposition runs.**
 
 ---
 
-## Task 1 — Per-sample SBS96 matrix construction
+## Task 1 — Feasibility table (hard pre-run power gate)
+
+This task replaces the old "≥ 5 cancer types" handwave. We compute the projected retained-sample and retained-SBS counts per cancer type *before* committing to the comparison; the cancer-type list emerges from the table, it is not declared up front.
 
 **Files:**
-- New: `code/scripts/build_sample_sbs96_matrix.py`
-- New: `code/scripts/tests/test_build_sample_sbs96_matrix.py`
+- New: `code/scripts/build_q008_feasibility_table.py`
+- New: `code/scripts/tests/test_build_q008_feasibility_table.py`
+- Output: `results/q008-quantitative-pass-2026-04-28/feasibility/feasibility_table.feather`
 
-- [ ] **Step 1: Per-study MAF → SigProfilerMatrixGenerator input.** From the per-study MAF (or per-study `gene_cancer_study.feather` upstream, whichever carries chrom/pos/ref/alt + sample_id), emit a `simple_format.txt` per cancer-type cohort in each study, suitable as SPMG input. Drop indels (we are SBS-only); drop variants with N alleles.
-- [ ] **Step 2: Matrix generation.** Run SigProfilerMatrixGenerator with `exome=True` for both studies (panel coverage approximated as exome for the trinucleotide normalization step is acceptable per Diaz-Gay2023 supplementary — confirmed before run; if not, use `exome=False` with raw counts and document).
-- [ ] **Step 3: Output.** Write `/data/packages/cbioportal/q008-validation/sbs96/{study}/{cancer_type}.SBS96.tsv` plus a manifest at `/data/packages/cbioportal/q008-validation/sbs96/manifest.feather` listing (study, cancer_type, sample_id, callable_mb, n_sbs_called).
-- [ ] **Step 4: Tests.** Pure-function tests on the MAF→simple_format conversion; one slow-marked end-to-end test on a 5-sample fixture.
+For each cancer-type label present in **both** `studies/tcga_mc3/metadata/samples.feather` and `studies/msk_impact_2017/metadata/samples.feather`:
+
+- [ ] **Step 1: Per-sample SBS-call counts.** From each study's `mut.feather`, count SBS calls per sample (filter chrom-normal, ref/alt single-nucleotide ACGT — same filter as `prepare_sigprofiler_variants`).
+- [ ] **Step 2: Apply sensitivity exclusions before counting** (per review F3): drop hypermutators (use the existing `samples_annotated.feather` `is_hypermutator` flag from the t081 hypermutator pipeline), drop MSI-H, drop POLE/POLD1 hotspot carriers. Record dropped counts.
+- [ ] **Step 3: Apply count-floor filter (n_sbs ≥ 20)** and report the dropped fraction.
+- [ ] **Step 4: Emit the feasibility table** with columns: `cancer_type, n_matched_pre, n_matched_hypermut_dropped, n_matched_msi_dropped, n_matched_pole_dropped, n_matched_n20_dropped, n_matched_retained, median_sbs_matched, n_unmatched_pre, ..._retained, median_sbs_unmatched, li2021_tissue_uberon (or null), li2021_eligible_bool, raw_eligible_bool`.
+- [ ] **Step 5: Eligibility rule.** A cancer type is `raw_eligible` iff `n_matched_retained ≥ 50 AND n_unmatched_retained ≥ 50 AND median_sbs_unmatched ≥ 20`. It is `li2021_eligible` additionally iff `li2021_tissue_uberon is not null`.
+- [ ] **Step 6: Decision.** Count `raw_eligible` cancer types. If < 3, halt and re-frame as descriptive pilot per the no-go rule. If ≥ 3, proceed; record the canonical eligible-cancer-type list to the feasibility table.
 
 ---
 
-## Task 2 — Per-sample SigProfilerAssignment with cancer-type-restricted catalogue
+## Task 2 — Run the existing per-sample assignment surface
+
+We do **not** build a new SBS96 / decomposition path. We use what t109/t110 already produce, plus one tweak.
 
 **Files:**
-- New: `code/scripts/decompose_sbs96.py`
-- New: `code/scripts/tests/test_decompose_sbs96.py`
+- Touch: `code/scripts/run_restricted_sigprofiler_assignment.py` (small extensions only)
+- Touch: `code/workflows/Snakefile` (configuration only; no new rules)
 
-- [ ] **Step 1: Cancer-type → allowed SBS list.** Build `data/cosmic_v3p3_per_cancer_signature_exclusions.tsv` from COSMIC Extended Data Figure 5 / Alexandrov2020 supplement (Intervention 1 in the topic note). One row per cancer-type, columns `cancer_type, allowed_sbs (semicolon-list)`. Manual / one-time extraction.
-- [ ] **Step 2: Per-sample assignment.** Run `Analyzer.decompose_fit` with `signature_database='COSMIC_v3.3_SBS_GRCh37'` (or build-matched), `exclude_signature_subgroups` populated from the cancer-type list, `nnls_add_penalty=0.05` (default), `cosmic_version=3.3`, `make_plots=False`, `seed=0`. Output is per-sample SBS96 → COSMIC exposures.
-- [ ] **Step 3: Quality gate.** Drop samples with < 20 SBS calls; record drop count per (study, cancer_type) in a side feather. Exposures are normalized to fractions per sample (sum to 1).
-- [ ] **Step 4: Output.** `/data/packages/cbioportal/q008-validation/exposures/{study}_{cancer_type}_raw.feather` with columns `sample_id, study, cancer_type, n_sbs, sbs01, sbs02, …, sbs95, sbs1_5_fraction`.
-- [ ] **Step 5: Tests.** Pure-function test on the cancer-type→allowed-list lookup; integration test on a deterministic fixture cohort with known signature ground truth.
+- [ ] **Step 1: Persist the per-cohort SBS96 matrices.** The existing script writes the matrix to `group_dir / "sample_matrix.tsv"` inside `work_dir` and then deletes `work_dir` (`code/scripts/run_restricted_sigprofiler_assignment.py:471` and `:488`). Add a small extension: when a `--keep-matrix-output <path>` parameter (or equivalent Snakemake `params.keep_matrix`) is set, copy each `sample_matrix.tsv` to `<path>/{study_id}__{lookup_key}.SBS96.tsv` before tearing down. This makes the matrices available as the input to Task 3 without re-running matrix generation.
+- [ ] **Step 2: Add a parallel input mode `--matrix-input <path>`.** When set, skip `prepare_sigprofiler_variants` + `build_sigprofiler_input_matrix` and feed the matrix directly to `run_sigprofiler_assignment`. This is what the subtraction arm (Task 3) needs.
+- [ ] **Step 3: Run per-study, per-sample assignment for the eligible cohort.** Use the existing `rule run_restricted_sigprofiler_assignment_per_sample` for `tcga_mc3` and `msk_impact_2017`, configured with `signature_assignment_lookup_keys` set to the eligible-cancer-type lookup keys from Task 1, and `keep_matrix_output` set to `results/q008-quantitative-pass-2026-04-28/sbs96/`.
+- [ ] **Step 4: Outputs.** `studies/{tcga_mc3,msk_impact_2017}/mut/signatures/restricted_assignment_per_sample.feather` and the persisted SBS96 matrices.
+- [ ] **Step 5: Tests.** Pure-function regression on the new `--keep-matrix-output` and `--matrix-input` paths. The existing assignment behaviour must remain bit-identical when neither flag is set.
 
 ---
 
-## Task 3 — Background-subtraction variant (Strategy 2)
+## Task 3 — Background-subtraction transform on the SBS96 matrix
 
 **Files:**
 - New: `code/scripts/subtract_normal_background.py`
 - New: `code/scripts/tests/test_subtract_normal_background.py`
+- Output: `results/q008-quantitative-pass-2026-04-28/sbs96-subtracted/{c}/{study}__{cancer_type}.SBS96.tsv` plus a per-(sample, c) subtraction-diagnostics manifest.
 
-- [ ] **Step 1: Cancer-type → tissue UBERON mapping.** Build `data/cancer_type_to_normal_tissue.tsv` mapping each cancer type to its closest Li2021 tissue UBERON (e.g., LUAD → UBERON:0002185 bronchia; COAD → UBERON:0001155 colon; ESCA → UBERON:0001043 esophagus). Manual / curated. Document non-matches (e.g., breast, glioma have no Li2021 reference; those cancer types are dropped from the subtraction arm).
-- [ ] **Step 2: Reference spectrum extraction.** From `data/normal_tissue_spectra.tsv` (t111 output), extract the `donor_averaged_fraction` row for each mapped tissue. Renormalize to a probability vector over 96 trinucleotide contexts.
-- [ ] **Step 3: Per-sample subtraction.** For sample with mutation count vector `m_i` (length 96, sum = `n_i`) and tissue reference fraction vector `r_t`:
-  - Choose contamination fraction `c` (hyperparameter). Default 0.10. Sensitivity panel at c ∈ {0.0, 0.05, 0.10, 0.20, 0.30}.
-  - Subtract: `m_i' = max(0, m_i − c · n_i · r_t)` element-wise.
-  - Discard samples where post-subtraction `sum(m_i') < 10` (insufficient residual signal).
-- [ ] **Step 4: Re-decomposition.** Re-run Task 2 Step 2 on the subtracted matrices; output `_subtracted_c{cc}.feather` per c value.
-- [ ] **Step 5: Tests.** Conservation test: decomposing a pure-tissue spectrum should yield (after subtraction at c=1.0) a near-zero residual that does not assign meaningful exposure to any cancer-type signature. Round-trip test: subtraction at c=0 must equal raw decomposition exactly.
+Per review F6, the Li2021 reference is a WES-derived shape; subtracting it from MSK-IMPACT panel counts is a **shape-only approximation**. We accept this explicitly and report subtraction diagnostics so the downstream interpretation can flag where the approximation breaks.
+
+- [ ] **Step 1: Cancer-type → tissue UBERON mapping.** Build `data/cancer_type_to_normal_tissue_uberon.tsv`, one row per cancer type, with the closest Li2021 organ or `null`. Manual / curated; cite Li2021 organ list. Cancer types with `null` are skipped in the subtraction arm.
+- [ ] **Step 2: Reference shape vector.** From `data/normal_tissue_spectra.tsv`, take rows with `aggregation == 'donor_averaged_fraction'` and `value_type == 'fractions'` for each mapped UBERON. Renormalize to sum-1 across the 96 trinucleotide contexts.
+- [ ] **Step 3: Per-sample residual-matrix transform.** For each sample with SBS96 count vector `m_i` (sum `n_i`), tissue reference fraction vector `r_t`, and contamination fraction `c`:
+  - `m_i'(k) = max(0, m_i(k) − c · n_i · r_t(k))` per context k.
+  - Diagnostics recorded per sample: `removed_mass = c · n_i`, `clipped_mass = sum(c · n_i · r_t − m_i)+ ` (mass that could not be removed because the sample had less than the reference assigned to that context), `residual_mass = sum(m_i')`.
+  - Drop sample from subtraction arm if `residual_mass < 10`.
+- [ ] **Step 4: Sensitivity sweep.** Compute residual matrices for `c ∈ {0.0, 0.05, 0.10, 0.20, 0.30}`. `c = 0.0` is the round-trip control (must equal the raw matrix exactly).
+- [ ] **Step 5: Re-assignment.** Re-run Task 2 Step 3 against each `c > 0` matrix using the new `--matrix-input` mode. Cancer-type signature restriction (the existing lookup) is preserved.
+- [ ] **Step 6: Exome-flag sensitivity.** Run the re-assignment with `signature_assignment_exome=True` (the t109 default) and `signature_assignment_exome=False`, on c=0.10 only, to measure how much the exome-context normalization affects the verdict. Record both. (This addresses the "Li2021 WES vs panel territory" caveat in the F6 review point.)
+- [ ] **Step 7: Tests.**
+  - Round-trip: c=0 residual matrix == raw matrix exactly (per-cell).
+  - Mass-conservation diagnostic: `removed_mass + residual_mass + clipped_mass = n_i` (per sample, within float tolerance).
+  - Synthetic spike test: a sample synthesized as `m_i = n_i · r_t` with c=1 yields residual_mass = 0.
 
 ---
 
-## Task 4 — Statistical comparison
+## Task 4 — Statistical comparison with sensitivity controls
 
 **Files:**
-- New: `code/scripts/compare_matched_vs_unmatched_sbs.py`
-- New: `code/scripts/tests/test_compare_matched_vs_unmatched_sbs.py`
+- New: `code/scripts/compare_q008_matched_vs_unmatched.py`
+- New: `code/scripts/tests/test_compare_q008_matched_vs_unmatched.py`
+- Output: `results/q008-quantitative-pass-2026-04-28/comparison/q008_quantitative_pilot.feather` and `..._sensitivity.feather`.
 
-- [ ] **Step 1: Effect-size estimation.** For each cancer type with ≥ 50 samples in both arms, compute `Δ = mean(SBS1+SBS5 fraction | unmatched) − mean(SBS1+SBS5 fraction | matched)`. Bootstrap 1000 iterations for 95 % CI on Δ. Same for individual SBS1, SBS5, and SBS18 fractions.
-- [ ] **Step 2: Hypothesis test.** Two-sided Mann–Whitney U on per-sample SBS1+SBS5 fraction, BH-FDR across cancer types. Pre-registered α = 0.05.
-- [ ] **Step 3: Subtraction-effect estimation.** For each cancer type and each `c ∈ {0, 0.05, 0.10, 0.20, 0.30}`, recompute Δ. Report Δ(c) curve; cite the c* value at which Δ first crosses below 50 % of Δ(0).
-- [ ] **Step 4: Cancer-signature collateral check.** For SBS2, SBS13 (APOBEC), SBS3 (HRD), SBS10a/b (POLE) — confirm post-subtraction exposures change by ≤ 10 % vs raw. If they don't, the subtraction is over-correcting and the c* gate above is unsafe.
-- [ ] **Step 5: Output.** `/data/packages/cbioportal/q008-validation/comparison/q008_quantitative_pass.feather` with columns `cancer_type, n_matched, n_unmatched, delta_sbs1_5, delta_ci_low, delta_ci_high, mannwhitney_p, fdr_q, c_star, delta_post_subtraction, collateral_max_pct_change`.
-- [ ] **Step 6: Tests.** Synthetic cohort test: inject known SBS1 excess into unmatched arm, verify recovery within bootstrap CI.
+- [ ] **Step 1: Per-sample SBS1+SBS5 fraction.** Compute from the raw and the c-swept assignment outputs. For SBS40 (split a/b/c per `SPLIT_SIGNATURE_ALIASES`), do **not** include in SBS1+SBS5; report SBS40-total separately for context.
+- [ ] **Step 2: Primary comparison.** For each `raw_eligible` cancer type, Mann–Whitney U on per-sample SBS1+SBS5 fraction (matched vs unmatched, raw c=0), BH-FDR across cancer types. Bootstrap 1000 (seed 0) for the cohort-mean Δ CI.
+- [ ] **Step 3: Subtraction comparison.** For each `li2021_eligible` cancer type and each c, recompute Δ. Report the Δ(c) curve and the `c_star` at which Δ first ≤ 50 % of Δ(0).
+- [ ] **Step 4: Collateral signature panel.** For SBS2, SBS13 (APOBEC), SBS3 (HRD), SBS10a, SBS10b (POLE), report mean exposure-fraction change vs raw at c\*. The subtraction "rescue" verdict requires **all** four ≤ 10 %.
+- [ ] **Step 5: Sensitivity panels.**
+  - **Stage strat** (per review F3): if `samples_annotated.feather` carries a primary/metastatic flag (or stage), recompute Δ within each stratum. If stratification is impossible, report the cohort-stage composition and flag this as an unresolved confounder in the verdict.
+  - **Hypermutator-included sensitivity:** recompute Δ with hypermutators retained; large change ⇒ exclusion was load-bearing.
+  - **Cohort age sensitivity:** if `samples_annotated.feather` carries patient age, regress per-sample SBS1 fraction on age within each arm and report the residual matched-vs-unmatched gap. SBS1 is clock-like; age-uncorrected Δ is biased.
+  - **Negative-control signatures:** SBS9 (lymphoid) and SBS31 (platinum) should show **no** matched-vs-unmatched gap in non-applicable cancer types. If they do, the comparison is picking up assay artifact rather than contamination biology.
+- [ ] **Step 6: Output.** Two feathers — primary (Δ + CI + p + q + c\*) and sensitivity (one row per panel). Preserve the eligible-cancer-type list from Task 1.
+- [ ] **Step 7: Tests.** Synthetic cohort: inject a known SBS1 excess into the unmatched arm, verify Δ recovery within bootstrap CI; round-trip on a zero-effect synthetic cohort (Δ should be ≈ 0).
 
 ---
 
 ## Task 5 — Interpretation + verdict
 
 **Files:**
-- New: `doc/interpretations/2026-MM-DD-t127-q008-quantitative-pass.md`
-- New: `code/notebooks/2026-MM-DD-q008-quantitative-pass.py` (marimo)
+- New: `doc/interpretations/2026-MM-DD-t127-q008-quantitative-pilot.md`
+- New: `code/notebooks/2026-MM-DD-q008-quantitative-pilot.py` (marimo)
 
-- [ ] **Step 1: Marimo summary notebook.** Altair plots: (a) per-cancer-type Δ with CI bars; (b) Δ(c) curves; (c) per-cancer-type SBS1+SBS5 fraction histograms (matched vs unmatched, raw vs subtracted); (d) collateral signature panel.
-- [ ] **Step 2: Interpretation doc.** Use the project's interpretation frontmatter convention. Verdict against the pre-registered thresholds. Verdict categories: **substantive contamination** (Δ ≥ 5 pp in ≥ half of cancer types), **mild** (2–5 pp), **null** (< 2 pp). Subtraction verdict: **rescues** (Δ(c\*) reduction ≥ 50 % with collateral ≤ 10 %), **partial**, **fails / over-corrects**. Cite the topic note plus q008 / q009 questions.
-- [ ] **Step 3: Update topic + question state.** If verdict is substantive: file follow-up tasks for (a) scaling Strategy 2 to all cBioPortal unmatched studies, (b) tumor-purity covariate integration (Strategy 4), (c) per-study annotation flag analogous to `ch_priority_gene`. If verdict is null: update q008 with the negative result; deprioritize Strategies 2–5 in the topic note.
+- [ ] **Step 1: Marimo notebook.** Altair plots: (a) feasibility table; (b) per-cancer-type Δ with CI bars (raw); (c) Δ(c) curves for li2021-eligible types; (d) subtraction diagnostics (removed/clipped/residual mass per cancer type); (e) collateral signature panel; (f) sensitivity panels.
+- [ ] **Step 2: Interpretation doc.** Frontmatter follows project convention (`type: interpretation`, related to `task:t127`, `question:q008`, `hypothesis:h01-non-tumor-signal-contamination`). Verdict structure:
+  - **Headline verdict:** "pilot evidence consistent / inconsistent with contamination" (not causal). Cite the matched-vs-unmatched Δ and the named confounders that remain unresolved.
+  - **Subtraction verdict:** rescues / partial / fails-or-overcorrects, gated on `c_star` AND collateral-signature thresholds. If panel sparsity makes the residual matrix structurally noisy (per t126), report this as the dominant uncertainty.
+  - **Confounder ledger:** one paragraph per named confounder (assay, caller, stage, age, exposure mix), what the sensitivity panel showed, what's unresolved.
+  - **Population-denominator caveat:** "≥ half of cancer types" framing is used **only if** ≥ 6 raw-eligible cancer types pass; below that, individual cancer-type Δs are reported descriptively without aggregation.
+- [ ] **Step 3: Update topic + question state.** If verdict is substantive: file follow-ups for (a) within-cohort matched-vs-unmatched comparator (e.g., stratify a single study with both arms, if any exists), (b) tumor-purity covariate (Strategy 4), (c) per-study `unmatched_normal_risk` annotation analogous to `ch_priority_gene`. If null: update q008 with the negative descriptive result and deprioritize Strategies 2–5 in the topic note.
 
 ---
 
 ## Compute budget
 
-- Task 1 SPMG run: ~30–60 min on the MC3 + MSK-IMPACT pair.
-- Task 2 SigProfilerAssignment over ~10 cancer-type cohorts × 2 studies: ~2–4 hours per cancer type at ~1k samples; ~20–40 hours total. Embarrassingly parallel; use `parallel::mclapply`-equivalent (`joblib.Parallel`) or per-cancer-type Snakemake rules. Realistic wall clock: 4–8 hours with parallelism.
-- Task 3 subtraction + re-decomposition × 5 c-values: another 4–8 hours. Mitigation: run only c ∈ {0.0, 0.10, 0.20} initially, fill in the curve only if the headline signal warrants it.
+- Task 1 (feasibility table): minutes.
+- Task 2 (re-running existing per-sample rule, two studies, eligible cancer types): the existing rule is per-study + per-cancer-type and embarrassingly parallel. Realistic wall clock 1–3 hours.
+- Task 3 (subtraction transform + re-assignment, 5 c values, optional exome-flag sensitivity at c=0.10): the transform itself is fast; re-assignment dominates. ≈ 5 × the Task 2 cost in the worst case, mitigated by running c ∈ {0, 0.10, 0.20} first and infilling only if warranted. Realistic 4–10 hours.
 - Tasks 4–5: < 1 hour.
 
-Total: one dedicated session, ideally on the workstation with the SigProfiler cache pre-warmed.
+Single dedicated session, with a feasibility-table checkpoint after Task 1 that may halt the run early if the no-go rule fires.
 
 ---
 
 ## Out-of-scope (deferred)
 
-- Tumor-purity covariate (Strategy 4) — needs ABSOLUTE/PureCN per-sample purity ingestion (separate task).
-- WGS-based LRR/ERR topographic test for q009 — not applicable to MC3 / MSK-IMPACT (both are exome/panel).
+- Tumor-purity covariate (Strategy 4) — needs ABSOLUTE/PureCN ingestion.
+- WGS-based LRR/ERR topographic test for q009 — `defer` per `interpretation:2026-04-24-t126-sbs1-lrr-bias-per-study`; gated on a WGS cohort (Hartwig HMF).
 - MuSiCal / SigFormer cross-tool comparison.
-- Extending to all cBioPortal unmatched studies — gated on the pilot result here.
-- CUPLR-style classifier (q010) — separate plan.
+- Extending to all cBioPortal unmatched studies — gated on this pilot.
+- CUPLR-style q010 classifier — separate plan.
+- Within-cohort matched-vs-unmatched comparator — strongest causal-attribution design, but no candidate cohort identified yet.
 
 ---
 
 ## Reproducibility covenant
 
-- `random_seed = 0` for SigProfilerAssignment and the bootstrap.
-- All thresholds declared in this file before any decomposition is run; commit this plan before Task 0 Step 2.
-- All intermediate outputs written under `/data/packages/cbioportal/q008-validation/` with per-step manifests.
-- The SigProfiler reference cache (`data/sigprofiler-cache/`) is gitignored but its version is pinned in `pyproject.toml` via the `SigProfilerAssignment` entry.
+- `random_seed = 0` for SigProfilerAssignment, the bootstrap, and any sub-sampling.
+- All thresholds and no-go rules in this file before any decomposition runs.
+- All intermediate outputs under `results/q008-quantitative-pass-2026-04-28/`. Per-step manifest at `results/q008-quantitative-pass-2026-04-28/manifest.feather`.
+- The SigProfiler reference cache version is whatever the existing t109/t110 surface uses (`signature_assignment_cosmic_version` config, default `"3.5"` per `code/scripts/run_restricted_sigprofiler_assignment.py:463`). No version downgrade.
+- Per-study assembly read from study metadata (Task 0 Step 3). No hard-coded build.

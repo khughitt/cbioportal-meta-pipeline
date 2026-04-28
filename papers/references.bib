@@ -1,6 +1,31 @@
 % references.bib — BibTeX database for this Science project
 % Use keys in the format: FirstAuthorLastNameYear (e.g., Smith2024)
 
+@article{Schill2024,
+  author  = {Schill, Rudolf and Klever, Maren and L{\"o}sch, Andreas and Hu, Y. Linda and Vocht, Stefan and Rupp, Kevin and Grasedyck, Lars and Spang, Rainer and Beerenwinkel, Niko},
+  title   = {Correcting for Observation Bias in Cancer Progression Modeling},
+  journal = {Journal of Computational Biology},
+  year    = {2024},
+  volume  = {31},
+  number  = {10},
+  pages   = {927--945},
+  pmid    = {39480133},
+  doi     = {10.1089/cmb.2024.0666},
+  note    = {Extends MHN (Schill 2020) with an observation event: tumor detection is modeled as an (n+1)th event whose rate depends on genotype, resolving the collider bias in diagnostic cross-sectional cohorts. TP53 increases detection rate in CRC; EGFR in LUAD (10.91x multiplier reported in Vocht 2026 demo). Required correction before MHN/CBN fitting on cBioPortal data. Conference version: RECOMB 2024, doi:10.1007/978-1-0716-3989-4_14. Implementation: mhn Python package (Vocht 2026, spang-lab/LearnMHN).},
+}
+
+@article{Vocht2026,
+  author  = {Vocht, Stefan and Hu, Yanren Linda and L{\"o}sch, Andreas and Rupp, Kevin and Wettig, Tilo and Grasedyck, Lars and Beerenwinkel, Niko and Spang, Rainer and Schill, Rudolf},
+  title   = {mhn: a {Python} package for analyzing cancer progression with {Mutual Hazard Networks}},
+  journal = {Bioinformatics Advances},
+  year    = {2026},
+  volume  = {6},
+  number  = {1},
+  pages   = {vbaf283},
+  doi     = {10.1093/bioadv/vbaf283},
+  note    = {Python package implementing Mutual Hazard Networks for cancer progression modeling. State space restriction + CUDA lifts practical event ceiling from ~25 to >100 events (32 active/sample hard limit). Resolves cross-sectional collider bias via observation-event modeling (Schill 2024). Demo: 3,662 AACR GENIE LUADs, 12 driver genes. EGFR-KRAS mutual exclusivity, EGFR-TP53 synergy recovered. MIT license; PyPI: mhn; GitHub: spang-lab/LearnMHN.},
+}
+
 @article{Rashid2025,
   author  = {Rashid, Mubasher and Hegade, Abhiram},
   title   = {Operating principles of interconnected feedback loops driving cell fate transitions},

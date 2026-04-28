@@ -239,7 +239,7 @@ Before applying the t111 per-tissue snvs_per_mb correction to gene_cancer_study_
 - priority: P2
 - status: proposed
 - aspects: [computational-analysis]
-- related: [question:q008, task:t111, meta:next-steps-2026-04-24]
+- related: [question:q008-signature-decomposition-tissue-background-subtraction, task:t111, meta:next-steps-2026-04-24]
 - group: meta-analysis
 - created: 2026-04-24
 
@@ -320,11 +320,11 @@ Extend convert_to_feather.py to retain per-variant allele-count columns alongsid
 - priority: P3
 - status: proposed
 - aspects: [computational-analysis]
-- related: [question:q012-mutation-ordering-cross-sectional-inference, task:t078, task:t081, task:t111]
+- related: [question:q012-mutation-ordering-cross-sectional-inference, hypothesis:h04-mhn-pathway-ordering, paper:Schill2024, paper:Vocht2026, task:t078, task:t081, task:t111, task:t152]
 - group: meta-analysis
 - created: 2026-04-24
 
-t078 co-occurrence/mutual-exclusivity landed 2026-04-25 (no longer blocking). Add Mutual Hazard Network (Schill 2020) fit using the same sample-specific-background-rate null and per-sample callability mask. Report primary results at Sanchez-Vega 10-pathway level; gene-level as drill-down. Stratify per histology and per hypermutator class (t081). Calibrate against PCAWG Gerstung 2020 pan-cancer chronology Table 1 before reporting any novel edges.
+t078 co-occurrence/mutual-exclusivity landed 2026-04-25 (no longer blocking). Add observation-event Mutual Hazard Network fit (Schill 2024 / Vocht 2026), using the same sample-specific-background-rate null and per-sample callability mask. Report primary results at Sanchez-Vega 10-pathway level; gene-level as drill-down. Stratify per histology and per hypermutator class (t081). Calibrate against PCAWG Gerstung 2020 pan-cancer chronology Table 1 before reporting any novel edges. Do not report classical cMHN-only edges as biological ordering evidence; cMHN is a baseline for bias comparison only.
 
 ## [t136] Canonicalize all variant coordinates to GRCh38 at ingestion (liftover from hg19)
 - priority: P2
@@ -341,7 +341,7 @@ Add a liftover step in convert_to_feather.py that maps hg19-native study variant
 - status: proposed
 - aspects: [software-development]
 - related: [task:t078, task:t081]
-- blocked-by: [t081]
+- blocked-by: [task:t081]
 - group: pipeline
 - created: 2026-04-25
 
@@ -529,3 +529,123 @@ The current `best_cancer_type` column in `dndscv_pooled.feather` and `three_way_
 - `most_significant_cancer_by_n_samples` (cohort-power-weighted; tie-broken by larger cohort).
 
 **Acceptance**: per-gene rollup carries enough information to identify *which* cancer types contribute to a gene's q-significance, not just one alphabetically-arbitrary "best".
+
+## [t149] Leave-one-study-out replication-rate analysis for top-N gene-cancer associations
+- priority: P2
+- status: proposed
+- aspects: [computational-analysis]
+- related: [question:q013-cross-study-replication-rate, hypothesis:h02-cross-study-ranking-divergence-is-structured, task:t141, task:t146]
+- group: validation
+- created: 2026-04-28
+
+Implement the `q013` leave-one-study-out protocol. For each evaluable cancer type (>=3 contributing studies after assay / matched-normal stratification), hold out one study, recompute top-N gene-cancer rankings on the remaining studies, and compare against both the all-study reference and the held-out study where powered. Report rank-+/-5 stability for canonical drivers (Bailey 2018 union CGC tier 1) and top-100-from-any-scheme long-tail candidates separately, with bootstrap CIs.
+
+Acceptance: `doc/interpretations/<date>-q013-loo-replication-rate.md` with per-cancer and pan-cancer stability tables; a reusable wrapper or notebook that can be re-run after study-set changes; explicit flags for cancer types where LOO is only a single-study influence diagnostic.
+
+## [t150] Normal-tissue WGS cohort feasibility audit for cross-tissue background atlas
+- priority: P2
+- status: proposed
+- aspects: [computational-analysis]
+- related: [hypothesis:h05-healthy-somatic-background-atlas, topic:normal-tissue-mutation-atlas, question:q007-cross-tissue-somatic-mutation-rate-variation-as-null-model]
+- group: audits
+- created: 2026-04-28
+
+Enumerate published apparently-healthy normal-tissue WGS / deep-sequencing cohorts relevant to `h05`: tissue, n_samples, donor age range, sequencing depth, variant-calling regime, public availability, raw VCF availability, and mapping to cBioPortal cancer-type contexts. Decide whether a uniform-subset meta-analysis or random-effects meta-analysis is feasible.
+
+Acceptance: `doc/audits/<date>-normal-tissue-wgs-cohort-feasibility.md` with a table of cohorts and a promotion recommendation for `h05` (active / keep candidate / retire).
+
+## [t151] Normal-tissue background meta-analysis pilot on one tractable tissue
+- priority: P3
+- status: proposed
+- aspects: [computational-analysis]
+- related: [task:t150, hypothesis:h05-healthy-somatic-background-atlas, hypothesis:h01-non-tumor-signal-contamination, question:q007-cross-tissue-somatic-mutation-rate-variation-as-null-model]
+- group: meta-analysis
+- created: 2026-04-28
+
+After `t150`, run a scoped pilot on the most tractable tissue (likely esophagus or colon). Estimate an age-stratified normal-tissue mutation background and substitute it into the relevant `h01` contamination test (e.g. q001 NOTCH1 in esophagus). Report whether the cross-tissue normal null improves matched-vs-unmatched correction over the current within-pipeline null.
+
+Acceptance: one tissue-specific interpretation document with effect size, uncertainty, and a recommendation on whether to scale the atlas work.
+
+## [t152] Replicate Vocht 2026 LUAD MHN demo and run simulation calibration
+- priority: P2
+- status: proposed
+- aspects: [computational-analysis]
+- related: [hypothesis:h04-mhn-pathway-ordering, question:q012-mutation-ordering-cross-sectional-inference, task:t135, paper:Vocht2026, paper:Schill2024]
+- group: validation
+- created: 2026-04-28
+
+Install `mhn` via `uv add mhn`, reproduce the Vocht 2026 GENIE LUAD demonstration as closely as possible on the project's GENIE release, and benchmark runtime / active-event limits. Then generate synthetic tumors from a known MHN, subsample to project-like panel and cohort-size distributions, and test whether the observation-event MHN recovers >=70% of injected pathway-level edges.
+
+Acceptance: `doc/interpretations/<date>-mhn-luad-demo-and-simulation-calibration.md`; explicit decision on whether `h04` can be promoted or remains candidate.
+
+## [t153] CFS overlap annotation and RT-vs-CFS residual regression
+- priority: P3
+- status: proposed
+- aspects: [computational-analysis, software-development]
+- related: [question:q014-cfs-as-distinct-confounder-class, question:q003-replication-timing-as-gene-level-mutation-rate-confounder, hypothesis:h01-non-tumor-signal-contamination, hypothesis:h02-cross-study-ranking-divergence-is-structured, task:t121]
+- group: meta-analysis
+- created: 2026-04-28
+
+Build a per-gene common-fragile-site overlap annotation from published CFS catalogues and join it to the existing gene-level replication-timing map. Regress per-gene mutation-rate residuals on both RT-late status and CFS overlap. If CFS carries a non-zero coefficient after RT adjustment, treat CFS as a distinct correction channel.
+
+Acceptance: CFS annotation artifact under `data/` or `models/`, plus `doc/interpretations/<date>-q014-cfs-vs-rt.md` with coefficient estimates and a correction recommendation.
+
+## [t154] Panel-vs-WES ascertainment analysis for mutation rankings and literature attention
+- priority: P2
+- status: proposed
+- aspects: [computational-analysis]
+- related: [question:q016-panel-induced-ascertainment, hypothesis:h03-gene-length-confounds-literature-attention, task:t086, task:t129]
+- group: meta-analysis
+- created: 2026-04-28
+
+For cancer types with both panel and WES studies, compute panel-only, WES-only, and combined top-N rankings using the existing callability-aware denominators. Compare Jaccard / Spearman / Bailey recovery, then re-run the q011 / h03 length-attention regression within panel-only and WES-only strata to quantify panel-induced ascertainment.
+
+Acceptance: `doc/interpretations/<date>-q016-panel-induced-ascertainment.md` with a clear recommendation for whether `t129` must include assay stratum as a covariate.
+
+## [t155] Compare pan-cancer dNdScv aggregation rules under q-value floor pile-up
+- priority: P3
+- status: proposed
+- aspects: [computational-analysis]
+- related: [question:q015-pan-cancer-aggregator-choice, hypothesis:h02-cross-study-ranking-divergence-is-structured, task:t144, task:t146, task:t148]
+- group: meta-analysis
+- created: 2026-04-28
+
+Evaluate candidate per-gene pan-cancer dNdScv aggregators on the existing per-cancer dNdScv outputs: current lexicographic `(min_q, n_cancers_significant_q05)`, Stouffer/Fisher-style combined evidence, rank pooling, and cancer-count weighted variants. Compare Bailey recovery, IntOGen / Martincorena agreement, and leave-one-cancer-out stability.
+
+Acceptance: `doc/interpretations/<date>-q015-dndscv-aggregator-choice.md` and a pre-registered default aggregator recommendation for production outputs.
+
+## [t156] cBioPortal pre-malignant cohort audit
+- priority: P2
+- status: proposed
+- aspects: [computational-analysis]
+- related: [hypothesis:h06-pre-malignant-n-minus-1-driver-carriage, topic:pre-cancer-prevalence-and-impact, question:q012-mutation-ordering-cross-sectional-inference]
+- group: audits
+- created: 2026-04-28
+
+Enumerate cBioPortal studies that include pre-malignant samples or matched precursor/invasive cohorts. Record disease pair, sub-stage labels, n_pre_malignant, n_invasive, assay regime, matched-normal status, available variant modalities, and whether the current mutation-only pipeline can observe the relevant drivers.
+
+Acceptance: `doc/audits/<date>-cbioportal-pre-malignant-cohort-audit.md` with a promotion recommendation for `h06`.
+
+## [t157] First pre-malignant-to-invasive paired driver-overlap analysis
+- priority: P3
+- status: proposed
+- aspects: [computational-analysis]
+- related: [task:t156, hypothesis:h06-pre-malignant-n-minus-1-driver-carriage, topic:pre-cancer-prevalence-and-impact]
+- group: meta-analysis
+- created: 2026-04-28
+
+After `t156`, choose the most tractable paired set (likely Barrett's -> EAC or MDS -> AML) and compute mutation-observable top-25 driver overlap, late-stage residual drivers, and checkpoint/chromatin enrichment. Exclude CNAs, fusions, and translocations unless those modalities are explicitly added.
+
+Acceptance: `doc/interpretations/<date>-pre-malignant-invasive-driver-overlap.md` with local falsification/support for `h06` and a recommendation on whether to scale across pairs.
+
+## [t158] Cross-study saturation curve for top-N ranking stability
+- priority: P3
+- status: proposed
+- aspects: [computational-analysis]
+- related: [question:q017-cross-study-saturation-curve, question:q013-cross-study-replication-rate, hypothesis:h02-cross-study-ranking-divergence-is-structured, task:t072, task:t149]
+- group: validation
+- created: 2026-04-28
+
+Run k-study subsampling ablations for evaluable cancer types and pan-cancer rankings. For k in a pre-registered grid (e.g. 1, 2, 3, 5, 10, 20, all), repeatedly sample k studies, recompute top-N rankings, and estimate variance / Jaccard / Spearman to the full-study reference. Identify the saturation point or mark cancers as unsaturated.
+
+Acceptance: `doc/interpretations/<date>-q017-cross-study-saturation-curve.md` with per-cancer saturation status and recommendations for reporting thresholds.

@@ -1,5 +1,3 @@
-# Project-local aliases retained only where the graph layer needs stable shorthand.
-
 aliases:
-  "topic:cross-study-harmonization": "topic:cross-study-harmonization"
-  "topic:pan-cancer-interpretive-frames": "topic:pan-cancer-interpretive-frames"
+  topic:cross-study-harmonization: topic:cross-study-harmonization
+  topic:pan-cancer-interpretive-frames: topic:pan-cancer-interpretive-frames

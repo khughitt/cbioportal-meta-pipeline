@@ -1,0 +1,76 @@
+#
+# t127 q008 quantitative pilot — minimal config for MC3 ingestion plus the
+# matched-vs-unmatched comparators used in this run. Scoped narrowly:
+# the only goal is to materialize per-study mut.feather + samples.feather
+# for tcga_mc3 (matched-normal anchor) and the candidate unmatched-normal
+# probe(s).
+#
+# See doc/plans/2026-04-28-t127-q008-quantitative-pass-plan.md.
+#
+
+data_dir: "/data/raw/cbioportal"
+out_dir: "results/q008-quantitative-pass-2026-04-28"
+
+filtering:
+  genes:
+    min_studies_ratio: 0.2
+
+subsampling:
+  patients: 1.0
+
+summary:
+  table_max_rows: 50
+  min_gene_coverage_ratio: 0.4
+  min_gene_coverage_ratio_specific: 0.1
+  num_cancer_specific_results: 10
+
+# tcga_mc3 is matched-normal by design (per AGENTS.md). msk_impact_2017
+# turned out to be 98% matched at the sample level (MATCHED_STATUS column);
+# we still ingest it here so the within-study unmatched arm (n=242) is
+# available for a sensitivity/descriptive comparison even if power is low.
+matched_normal_studies:
+  - tcga_mc3
+
+cosmic_cgc_path: "/data/raw/cosmic/v100/Cosmic_CancerGeneCensus_v100_GRCh38.tsv"
+
+panel_bearing_studies:
+  - msk_impact_2017
+
+study_panel_map: {}
+
+panel_callable_mb_override:
+  MSK-IMPACT-341: 0.89
+  MSK-IMPACT-410: 1.01
+  MSK-IMPACT-468: 1.22
+  MSK-IMPACT-505: 1.45
+
+wes_default_callable_mb: 30.0
+panel_callable_mb_tolerance: 0.05
+
+random_seed: 0
+gmm_min_samples: 100
+composite_min_absolute_tmb: 10.0
+
+clustering:
+  gene:
+    k: 10
+    gene_min_mutations: 10
+    cancer_min_mutations: 5
+    random_seed: 0
+  cancer:
+    k: 5
+    gene_min_mutations: 10
+    cancer_min_mutations: 5
+    random_seed: 0
+
+# Signature-assignment (t109/t110) defaults; aligned with
+# run_restricted_sigprofiler_assignment.py.
+signature_assignment_genome_build: "GRCh37"
+signature_assignment_cosmic_version: "3.5"
+signature_assignment_exome: true
+
+studies:
+  - tcga_mc3
+  - msk_impact_2017
+
+cancer_types: []

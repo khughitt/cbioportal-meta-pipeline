@@ -483,7 +483,7 @@ Surfaced by: 2026-04-25 downstream conventions migration cycle (orchestrator age
 
 ## [t146] External validation of pan-cancer dNdScv ranking against IntOGen / Martincorena 2017
 - priority: P2
-- status: proposed
+- status: blocked
 - aspects: [computational-analysis]
 - related: [task:t131, interpretation:2026-04-26-t131-full-pan-cancer-dndscv-run]
 - group: validation
@@ -529,18 +529,6 @@ The current `best_cancer_type` column in `dndscv_pooled.feather` and `three_way_
 - `most_significant_cancer_by_n_samples` (cohort-power-weighted; tie-broken by larger cohort).
 
 **Acceptance**: per-gene rollup carries enough information to identify *which* cancer types contribute to a gene's q-significance, not just one alphabetically-arbitrary "best".
-
-## [t149] Leave-one-study-out replication-rate analysis for top-N gene-cancer associations
-- priority: P2
-- status: proposed
-- aspects: [computational-analysis]
-- related: [question:q013-cross-study-replication-rate, hypothesis:h02-cross-study-ranking-divergence-is-structured, task:t141, task:t146]
-- group: validation
-- created: 2026-04-28
-
-Implement the `q013` leave-one-study-out protocol. For each evaluable cancer type (>=3 contributing studies after assay / matched-normal stratification), hold out one study, recompute top-N gene-cancer rankings on the remaining studies, and compare against both the all-study reference and the held-out study where powered. Report rank-+/-5 stability for canonical drivers (Bailey 2018 union CGC tier 1) and top-100-from-any-scheme long-tail candidates separately, with bootstrap CIs.
-
-Acceptance: `doc/interpretations/<date>-q013-loo-replication-rate.md` with per-cancer and pan-cancer stability tables; a reusable wrapper or notebook that can be re-run after study-set changes; explicit flags for cancer types where LOO is only a single-study influence diagnostic.
 
 ## [t150] Normal-tissue WGS cohort feasibility audit for cross-tissue background atlas
 - priority: P2
@@ -649,3 +637,153 @@ Acceptance: `doc/interpretations/<date>-pre-malignant-invasive-driver-overlap.md
 Run k-study subsampling ablations for evaluable cancer types and pan-cancer rankings. For k in a pre-registered grid (e.g. 1, 2, 3, 5, 10, 20, all), repeatedly sample k studies, recompute top-N rankings, and estimate variance / Jaccard / Spearman to the full-study reference. Identify the saturation point or mark cancers as unsaturated.
 
 Acceptance: `doc/interpretations/<date>-q017-cross-study-saturation-curve.md` with per-cancer saturation status and recommendations for reporting thresholds.
+
+## [t159] Reconnect t131 interpretation to h02 spine via related: field
+- priority: P2
+- status: proposed
+- aspects: [computational-analysis]
+- related: [interpretation:2026-04-26-t131-full-pan-cancer-dndscv-run, hypothesis:h02-cross-study-ranking-divergence-is-structured, meta:big-picture-2026-04-28]
+- group: spine-hygiene
+- created: 2026-04-28
+
+Big-picture validator flagged t131 as orphan because its frontmatter cites question:q011 in source_refs but not in related:. Add hypothesis:h02-cross-study-ranking-divergence-is-structured to the related: list so the resolver picks it up. Pure metadata fix, no analysis change. Acceptance: validator no longer reports t131 as orphan.
+
+## [t160] Add missing YAML frontmatter to t145 mean-inclusive-inflation interpretation
+- priority: P2
+- status: proposed
+- aspects: [computational-analysis]
+- related: [interpretation:2026-04-27-t145-mean-inclusive-inflation-diagnostic, hypothesis:h02-cross-study-ranking-divergence-is-structured, meta:big-picture-2026-04-28]
+- group: spine-hygiene
+- created: 2026-04-28
+
+The t145 diagnostic file currently has no YAML frontmatter at all, leaving it orphaned by absence rather than choice. Add canonical frontmatter (id, title, related: [task:t145, hypothesis:h02-cross-study-ranking-divergence-is-structured, interpretation:2026-04-26-t131-full-pan-cancer-dndscv-run], prior_interpretations: [2026-04-26-t131-full-pan-cancer-dndscv-run, 2026-04-27-t144-tiebreaker-fix-rerun]). Acceptance: validator picks up t145 in the h02 bundle.
+
+## [t161] Absorb orphan questions q014/q016/q017 into hypothesis spine
+- priority: P2
+- status: proposed
+- aspects: [computational-analysis]
+- related: [hypothesis:h02-cross-study-ranking-divergence-is-structured, hypothesis:h03-gene-length-confounds-literature-attention, question:q014-cfs-as-distinct-confounder-class, question:q016-panel-induced-ascertainment, question:q017-cross-study-saturation-curve, meta:big-picture-2026-04-28]
+- group: spine-hygiene
+- created: 2026-04-28
+
+Resolver currently treats q014/q016/q017 as orphan questions even though they substantively belong on the spine. Amend specs/hypotheses/h02-*.md related: to add q014 (CFS gene-level confounder refinement) and q017 (saturation curve). Amend specs/hypotheses/h03-*.md related: to add q016 (panel-induced ascertainment). Pure metadata change. Acceptance: resolve-questions output drops these three from the orphan set; emergent-threads regenerates with smaller orphan_question_count.
+
+## [t163] Gene-level RT correlation vs full-scale dNdScv residual (q003 quantitative test)
+- priority: P1
+- status: proposed
+- aspects: [computational-analysis]
+- related: [question:q003-replication-timing-as-gene-level-mutation-rate-confounder, hypothesis:h02-cross-study-ranking-divergence-is-structured, task:t131, task:t147, task:t153, meta:big-picture-2026-04-28]
+- group: h02-residuals
+- created: 2026-04-28
+
+t147 stratifies dNdScv by hypermutator status; t153 tests CFS as a distinct confounder. Neither does the simpler RT-residual regression. Take the post-fix dNdScv v2 per-gene effect-size residual (after length and trinucleotide-context correction) and regress it against ENCODE Repli-seq replication-timing decile (or wavelet smoothed RT). Test whether TTN-at-rank-4 is explained by residual RT covariation. This is the missing baseline test for q003 at full pan-cancer scale; t122/t123 BRCA pilots were both confounded (panel sparsity) and gave only directional evidence. Acceptance: doc/interpretations/<date>-q003-rt-residual-regression.md with effect size + bootstrap CI, and an explicit verdict on whether TTN's rank-4 position survives RT adjustment.
+
+## [t164] Draft candidate hypothesis h07: signature/topography-based contamination QC (absorbs q009)
+- priority: P2
+- status: proposed
+- aspects: [computational-analysis]
+- related: [question:q009-sbs1-lrr-bias-as-normal-contamination-flag, hypothesis:h01-non-tumor-signal-contamination, interpretation:2026-04-22-t123-rt-brca-sbs1-proxy-pilot, interpretation:2026-04-24-t126-sbs1-lrr-bias-per-study, meta:big-picture-2026-04-28]
+- group: hypothesis-spine
+- created: 2026-04-28
+
+Run /science:add-hypothesis to formalize a candidate sub-hypothesis (proposed id h07) absorbing q009, t123, and t126. Working frame: 'a well-powered WGS-based topographic or signature-based diagnostic can directly flag studies with excess normal-tissue contamination, independently of tumor-purity proxies'. Distinguished from h01 because h01 targets correction whereas h07 targets *detection* — a per-study quality flag with a pre-registered threshold (e.g. SBS1 LRR-bias delta, or SBS1 fraction excess vs the matched-cohort pool). Promotion gate: any one WGS cohort added (Hartwig HMF or PCAWG follow-on). Acceptance: specs/hypotheses/h07-*.md with phase: candidate, status: proposed, source_refs to Tomkova 2018 / Sherman 2024, and the three promotion criteria stated.
+
+## [t165] Draft candidate hypothesis h08: pan-cancer aggregator choice materially changes q=0 ranking (absorbs q015)
+- priority: P2
+- status: proposed
+- aspects: [computational-analysis]
+- related: [question:q015-pan-cancer-aggregator-choice, hypothesis:h02-cross-study-ranking-divergence-is-structured, task:t155, interpretation:2026-04-26-t131-full-pan-cancer-dndscv-run, interpretation:2026-04-27-t144-tiebreaker-fix-rerun, meta:big-picture-2026-04-28]
+- group: hypothesis-spine
+- created: 2026-04-28
+
+Run /science:add-hypothesis to formalize a candidate sub-hypothesis (proposed id h08) absorbing q015 and the t131/t144/t145 chain. Working frame: 'in the q=0 BH-FDR floor regime that affects ~829 genes in the pan-cancer dNdScv ranking, the choice of aggregator (lexicographic vs Stouffer vs Fisher vs inverse-variance vs Bayesian hierarchical) materially changes the top-N gene set and at least one aggregator dominates under leave-one-cancer-out stability'. Methodological in flavor but project-specific in scale (829 genes at the floor; tiebreaker changed 12/15 top-15 identities, t144). Promotion gate: t155 produces a stability-vs-aggregator panel. Acceptance: specs/hypotheses/h08-*.md with phase: candidate, status: proposed, propositions tied to a concrete aggregator-comparison protocol.
+
+## [t166] Acquire and integrate Hartwig HMF metastatic WGS cohort (~6,000 tumors)
+- priority: P1
+- status: proposed
+- aspects: [computational-analysis]
+- related: [hypothesis:h01-non-tumor-signal-contamination, hypothesis:h02-cross-study-ranking-divergence-is-structured, hypothesis:h05-healthy-somatic-background-atlas, question:q009-sbs1-lrr-bias-as-normal-contamination-flag, topic:signature-decomposition-unmatched-normal, topic:targeted-panel-sequencing-bias, meta:big-picture-2026-04-28]
+- group: dataset-acquisition
+- created: 2026-04-28
+
+Hartwig Medical Foundation database is a research-access metastatic WGS cohort, ~6000 tumors with matched normals, deeply called and uniformly processed. Adding it would unblock several lines simultaneously. (1) q009 SBS1 LRR-bias diagnostic was deferred (interpretation:2026-04-24-t126-sbs1-lrr-bias-per-study) under a pre-registered termination rule because MSK-IMPACT panel coverage of constitutive late-replicating bins is structurally insufficient (~20.7 kb across the panel; n_sbs1_pooled = 176 vs 500-floor; CI half-width 0.194 vs 0.10 ceiling). Hartwig WGS bypasses this entirely — every constitutive LRR bin is fully sampled. (2) h02 panel-vs-WES ascertainment work (t154) currently relies on TCGA MC3 as the WES comparator, which is matched-normal but primary-tumor; Hartwig adds a matched-normal metastatic comparator for stage-effect deconfounding. (3) h05 cross-tissue background atlas: Hartwig matched normals provide a clean cross-tissue normal sample distribution covering ~25 cancer-relevant tissues. (4) Replication-timing residual regression at full WGS scale (t163) becomes possible without panel-coverage caveats. Access: DUA via hartwigmedicalfoundation.nl/applying-for-data, typically 3-6 months. Pipeline integration scope: ingest as a single pseudo-study (parallel to tcga_mc3 MC3 path, code/scripts/process_mc3.py), add it to the matched_normal_studies config list, validate WES-vs-WGS callable-region denominators in build_panel_callable_sizes. Acceptance: data/hartwig_v6/ populated; convert_to_feather pipeline ingests; per-study mutation feathers exist for ≥20 cancer types; one rerun of the t126 SBS1 LRR-bias test on the Hartwig subset reaching a non-deferred verdict.
+
+## [t167] Acquire and integrate PCAWG / ICGC-25K WGS cohort
+- priority: P2
+- status: proposed
+- aspects: [computational-analysis]
+- related: [hypothesis:h01-non-tumor-signal-contamination, hypothesis:h02-cross-study-ranking-divergence-is-structured, hypothesis:h04-mhn-pathway-ordering, question:q009-sbs1-lrr-bias-as-normal-contamination-flag, question:q012-mutation-ordering-cross-sectional-inference, paper:PCAWG2020, meta:big-picture-2026-04-28]
+- group: dataset-acquisition
+- created: 2026-04-28
+
+PCAWG (~2,800 tumors, 38 cancer types, fully WGS, matched normals, harmonized PanCancer Analysis of Whole Genomes consortium calls) is the canonical WGS-tier comparator for any rank-stability or topographic claim. Three motivations specific to this project. (1) Cross-validation against Gerstung 2020: the PCAWG chronology paper provides per-cancer mutation-order benchmarks against which any h04 MHN result must be sanity-checked; we cannot run that benchmark without PCAWG-tier data in our pipeline. (2) Topographic / signature-bias diagnostics (q009, h07 if filed): same payoff as Hartwig but with broader cancer-type coverage and primary-tumor (vs metastatic) sample distribution. (3) h02 LOSO replication test (t149): adding PCAWG as one held-out cohort tests whether the 62/100 Bailey recovery in dNdScv survives leave-one-cohort-out at the WGS stratum level. Access: dbGaP phs001629 (PCAWG mutations) requires institutional DAR; ICGC DACO governs the broader release. Practical scope: ingest the consensus mutation calls TSV (parallel to the MC3 path) as one pseudo-study or per-project pseudo-studies; the difficult bit is CNA calls (not modeled by the pipeline yet, out-of-scope per AGENTS.md). Acceptance: data/pcawg_v2/ ingested; ≥30 cancer types appear in per-study feathers; one held-out LOSO iteration runs successfully; one Gerstung 2020 chronology comparison appended to t152 calibration if h04 has progressed.
+
+## [t168] Investigate Genomics England 100K WGS access for h02 LOSO and h05 atlas
+- priority: P3
+- status: proposed
+- aspects: [computational-analysis]
+- related: [hypothesis:h02-cross-study-ranking-divergence-is-structured, hypothesis:h05-healthy-somatic-background-atlas, question:q013-cross-study-replication-rate, question:q017-cross-study-saturation-curve, meta:big-picture-2026-04-28]
+- group: dataset-acquisition
+- created: 2026-04-28
+
+Genomics England 100K Genomes Project: ~70,000 cancer WGS samples + matched germline, harmonized through the Cancer Programme pipeline. Largest single WGS cancer cohort in the world. Motivations: (1) h02 saturation curve (q017, t158): testing whether top-N ranking stability saturates at the WGS-scale becomes possible only with cohorts in the 50k+ range; cBioPortal+GENIE+Hartwig+PCAWG combined still does not reach this scale uniformly. (2) h05 healthy somatic background: GEL holds matched-germline WGS, which is the closest existing approximation to a population-level normal somatic-mutation reference at scale. Access barrier: UK-only DAC; non-UK researchers must collaborate with a UK-based institution (Genomics England Research Environment is a secure analysis platform — cannot extract raw data). This task is exploratory: file as 'investigate' rather than 'integrate', because the access friction is high and the pipeline would need to run inside the GE Research Environment rather than ingesting locally. Acceptance: a one-page memo at doc/feasibility/2026-XX-genomics-england-feasibility.md with go/no-go recommendation, contingent partnership candidates, and an estimate of integration cost.
+
+## [t169] Acquire GTEx v10 + Yizhak2019 / Rockweiler2023 healthy-tissue somatic call sets for h05 atlas
+- priority: P1
+- status: proposed
+- aspects: [computational-analysis]
+- related: [hypothesis:h05-healthy-somatic-background-atlas, hypothesis:h01-non-tumor-signal-contamination, question:q007-cross-tissue-somatic-mutation-rate-variation-as-null-model, task:t150, task:t151, task:t111, topic:normal-tissue-mutation-atlas, meta:big-picture-2026-04-28]
+- group: dataset-acquisition
+- created: 2026-04-28
+
+The current h05 cross-tissue normal background relies on Li 2021 spectra alone (resolved via task:t111 for 56 per-tissue spectra). Two complementary public sources expand coverage substantially. (1) Yizhak 2019 (RNA-MuTect): somatic variants called from GTEx RNA-seq across 29 tissues, ~6,700 samples, age-stratified. Trades VAF accuracy for breadth and age-coverage. (2) Rockweiler 2023: somatic mutation rates from GTEx WGS for the subset with whole-genome data, more accurate but much smaller n. Together, GTEx-grounded Yizhak + Rockweiler covers age × tissue × mutation-class space far better than Li 2021 alone, which is essential for the P1 '>2 OoM cross-tissue rate variation' claim and for the per-tissue null model that task:t114 wants to pre-register. Access: GTEx v10 expression and metadata are public (gtexportal.org); somatic call tables are supplementary tables to the respective papers (already public). Pipeline integration scope: parallel to the t111 Li 2021 spectra script — extract per-sample spectra from each call set, harmonize tissue labels against the cBioPortal cancer-type axis, emit normal_tissue_spectra.feather extensions covering Yizhak / Rockweiler tissues. Acceptance: data/yizhak2019_rnamutect/ and data/rockweiler2023_gtex_wgs/ populated; t111 script extension produces a unified normal-tissue spectra feather covering ≥40 tissue × age strata; one pilot of the t151 esophagus or colon background null swap uses the expanded reference and reports an effect-size delta versus Li-only.
+
+## [t170] Integrate PubTator Central + iCite + OpenAlex for h03 literature-attention regression
+- priority: P1
+- status: proposed
+- aspects: [computational-analysis]
+- related: [hypothesis:h03-gene-length-confounds-literature-attention, question:q011-gene-length-as-literature-attention-confounder, task:t129, task:t130, topic:mutation-rate-normalization, meta:big-picture-2026-04-28]
+- group: dataset-acquisition
+- created: 2026-04-28
+
+t129 (the partial-slope regression for beta_length) and the broader h03 framing both depend on a robust literature-attention metric. PubMed mention count alone has known issues: it conflates primary research with reviews, treats every paper as equally weighted, and cannot disentangle gene-as-subject from gene-as-mention. Three sources together give a triangulated attention signal. (1) PubTator Central: NCBI's BioConcept-tagged corpus, gene-resolved at the entity level (resolves the gene-as-subject problem; provides per-gene primary-research vs review counts). (2) iCite (NIH OPA): per-paper citation counts and the Relative Citation Ratio, lets us weight mentions by paper-level impact and citation-window stability. (3) OpenAlex: independent corpus with author-affiliation and topic metadata, useful as an orthogonal validation of PubTator counts (does the PubTator-derived beta_length replicate against an independently-built corpus?). All three are free public APIs / bulk downloads. Pipeline integration scope: a code/scripts/build_gene_attention_features.py that joins gene HGNC symbol -> NCBI Entrez -> PubTator counts, OpenAlex topic counts, iCite RCR-weighted mentions, and emits gene_attention_features.feather. Acceptance: gene_attention_features.feather exists for all protein-coding genes with: pubtator_mention_count, pubtator_research_only, openalex_mention_count, icite_rcr_weighted_mentions, time-window subsets (pre-2010 / post-2010). t129 regression runs against this feather. PubTator-vs-OpenAlex correlation panel reported as a sanity check.
+
+## [t171] External validation: integrate IntOGen 2024 + DepMap dependency scores
+- priority: P1
+- status: proposed
+- aspects: [computational-analysis]
+- related: [hypothesis:h02-cross-study-ranking-divergence-is-structured, task:t146, question:q013-cross-study-replication-rate, meta:big-picture-2026-04-28]
+- group: dataset-acquisition
+- created: 2026-04-28
+
+t146 (external validation of pan-cancer dNdScv ranking against IntOGen / Martincorena 2017) is the bias-mitigation step for the Bailey-circularity caveat: Bailey 2018 was used to build the project's driver overlay, so reporting Bailey recovery as the headline external-validation number is partially circular. Two independently-constructed external benchmarks resolve this. (1) IntOGen 2024: their 2024 release uses a different driver-detection ensemble (OncodriveFML, OncodriveCLUSTL, MutPanning, etc.) on a different cohort union; recovery against IntOGen is the cleanest 'does the project's rank match independent driver discovery' test. (2) DepMap CRISPR essentiality: orthogonal axis entirely — does the project's top-N pan-cancer driver list intersect more strongly with DepMap-essential genes than chance? This is the biology-not-statistics validation. Both are free public downloads (intogen.org/download; depmap.org/portal). Pipeline integration scope: a code/scripts/build_external_driver_benchmarks.py that pulls IntOGen 2024 driver list (per cancer type and pan-cancer) and DepMap 23Q4+ gene-essentiality scores (mean + cancer-type-stratified), emits external_driver_benchmarks.feather. t146 then computes Spearman, Jaccard@K, and odds-ratio for the project's dNdScv top-N vs each. Acceptance: external_driver_benchmarks.feather exists; t146 produces doc/interpretations/<date>-t146-external-validation.md with three numbers (vs IntOGen, vs Martincorena 2017, vs DepMap) plus interpretation.
+
+## [t172] Investigate MC3 controlled-access tier (TCGA non-PASS variants) for caller-confidence stratification
+- priority: P3
+- status: proposed
+- aspects: [computational-analysis]
+- related: [hypothesis:h01-non-tumor-signal-contamination, question:q008-signature-decomposition-tissue-background-subtraction, task:t127, meta:big-picture-2026-04-28]
+- group: dataset-acquisition
+- created: 2026-04-28
+
+The current ingest uses MC3 v0.2.8 PUBLIC (PASS-only). The controlled-access MC3 tier exposes the non-PASS variants and per-caller filter flags. Motivation specific to h01: when the q008 quantitative contamination-magnitude pass (t127) reports 'this gene shows X% excess SBS1 in unmatched cohorts', a likely critique is 'maybe that excess is low-confidence variants slipping through unmatched-normal filtering'. Having access to per-caller flags lets us stratify the contamination signal by caller-confidence and report which contamination claims are robust to PASS-only restriction. Lower priority because P3 — the public PASS tier should be sufficient for the first contamination magnitude estimate. Access: dbGaP phs000178 (TCGA controlled access), institutional DAR required. Pipeline integration scope: minimal — same MC3 ingest path with an extra column carrying the per-caller filter set. Acceptance: a feasibility memo at doc/feasibility/2026-XX-mc3-controlled-tier.md with go/no-go recommendation. Defer execution until t127 and t146 have produced public-tier results that justify the access friction.
+
+## [t173] LOSO against dNdScv ranking (decisive test for h02 P1/P2)
+- priority: P1
+- status: proposed
+- aspects: [computational-analysis]
+- related: [hypothesis:h02-cross-study-ranking-divergence-is-structured, question:q013-cross-study-replication-rate, task:t149, interpretation:2026-04-28-t149-loso-replication, meta:big-picture-2026-04-28]
+- group: h02-residuals
+- created: 2026-04-28
+
+t149 ran LOSO against the t077 pooled_rate ranking and found median K=100 recovery of 0.18-0.21 (interpretation:2026-04-28-t149-loso-replication). That instability is largely an artifact of pooled_rate being a point-estimate (no significance / sample-size weighting). The decisive test of h02 P1/P2 requires LOSO against the dNdScv ranking, which combines effect-size with selection-test significance. Implementation: re-run dNdScv per LOO iteration (10 iterations × current ~12-hour full-cohort runtime, parallelizable per t141). Compare top-N (K=10,25,50,100) Bailey recovery and pair-overlap across iterations. Acceptance: doc/interpretations/<date>-t173-loso-dndscv.md with decisive verdict on P1 (canonical-driver Jaccard@100 stable across LOSO at >=0.5) and P2 (specialty studies disrupt more than general).
+
+## [t174] Normalize dNdScv isoform-level symbols (CDKN2A.p16INK4a etc.) prior to overlay joins
+- priority: P3
+- status: proposed
+- aspects: [computational-analysis]
+- related: [task:t146, interpretation:2026-04-28-t146-external-validation-cgc, meta:big-picture-2026-04-28]
+- group: h02-residuals
+- created: 2026-04-28
+
+dNdScv outputs CDKN2A under two isoform-level symbols (CDKN2A.p16INK4a, CDKN2A.p14ARF) which do not match the bare-symbol Bailey/CGC overlay tables. This causes a NaN in the bailey2018_driver column for the rank-6 pan-cancer gene, leading to apparent miss in recovery@10 (which is really 9/10 not 8/10 against Bailey). Fix in code/scripts/aggregate_dndscv_per_gene.py or as a post-merge normalization step in code/scripts/annotate_drivers.py: if symbol contains a dot, also overlay against the leading prefix. Acceptance: dndscv_pooled.feather top-10 has correct Bailey/CGC flags for CDKN2A; t146 K=10 recovery becomes 9/10 not 8/10.

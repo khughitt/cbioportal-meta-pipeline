@@ -78,3 +78,35 @@ design review because its current cross-study size heuristic can flag legitimate
 small WES cohorts. For publication-facing raw rankings, consider replacing the
 per-cancer unweighted mean rollup with a pre-registered sample-weighted or
 model-based per-gene summary.
+
+## Downstream Consistency Check (t162, 2026-04-28)
+
+Verified via mtime + spot-check that the b7c615c fix has propagated through the
+full dNdScv-tier chain on the canonical pan-cancer build at
+`/data/packages/cbioportal/pan-cancer/`:
+
+- `gene_cancer_study.feather`, `gene_cancer_study_ratio.feather`,
+  `three_way_ranking_comparison.feather`, `gene_cancer_study_ratio_annotated.feather`,
+  `gene_cancer_study_ratio_ch_annotated.feather`,
+  `gene_cancer_study_ratio_overlay_annotated.feather`, and
+  `gene_cancer_study_ratio_annotated_dndscv.feather` all carry mtime
+  2026-04-27 08:53, which is one minute after the fix commit b7c615c
+  (2026-04-27 08:52). They reflect the recomputed `mean_inclusive` /
+  `mean_exclusive` / `mean` columns.
+- Spot check on the t145 reference example: `Bladder Cancer / HTR2C` has
+  `mean_inclusive = 0.2` (one `1/1` hit + four zero-filled callable WES study
+  rows), matching the fix specification exactly. Old value was 1.0.
+- Multi-study top-15 (n_contributing_studies ≥ 3) is now
+  KIT (GIST), TP53 (Ovarian / Esophagogastric / Ampullary), KRAS (Pancreatic),
+  JAK2 (MPN), POLQ (NST) — canonical lineage drivers replacing the snoU13 / Y_RNA
+  / LSAMP / MACROD2 / FHIT inflation reported in §Effect-Of-The-Fix.
+
+The t077 pooled meta-analysis chain (`gene_cancer_pooled*.feather`, mtimes
+2026-04-25 / 2026-04-26) is **independent** of the t145 fix:
+`build_pooled_gene_cancer_input.py` consumes the per-study
+`studies/{id}/mut/table/gene_cancer_study.feather` files, not the combined
+freq-table outputs, and the t145 bug was in the cross-study mean computation
+only. The older mtime is therefore correct, not stale.
+
+Conclusion: no rebuild required. The h02 raw-frequency / length-adjusted /
+dNdScv comparison panels can now be cited from the canonical pan-cancer outputs.

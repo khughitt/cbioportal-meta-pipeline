@@ -503,6 +503,7 @@ The project's t077 meta-analysis pipeline (`run_gene_cancer_meta_analysis.R`) is
 - priority: P3
 - status: proposed
 - aspects: [project-conventions]
+- group: meta
 - created: 2026-04-25
 
 cbioportal already converges on the canonical Science conventions established by the 2026-04-25 P1 rollout (`science/docs/plans/2026-04-25-conventions-audit-p1-rollout.md`). All five script-driven shape rules in `science/scripts/migrate_downstream_conventions.py` produce zero changes against this project (verified 2026-04-25):
@@ -566,7 +567,7 @@ Surfaced by: 2026-04-25 downstream conventions migration cycle (orchestrator age
 - priority: P2
 - status: blocked
 - aspects: [computational-analysis]
-- related: [task:t131, interpretation:2026-04-26-t131-full-pan-cancer-dndscv-run]
+- related: [task:t131, task:t171, interpretation:2026-04-28-t146-external-validation-cgc, interpretation:2026-04-26-t131-full-pan-cancer-dndscv-run]
 - group: validation
 - created: 2026-04-26
 
@@ -624,7 +625,7 @@ Enumerate published apparently-healthy normal-tissue WGS / deep-sequencing cohor
 Acceptance: `doc/audits/<date>-normal-tissue-wgs-cohort-feasibility.md` with a table of cohorts and a promotion recommendation for `h05` (active / keep candidate / retire).
 
 ## [t151] Normal-tissue background meta-analysis pilot on one tractable tissue
-- priority: P3
+- priority: P2
 - status: proposed
 - aspects: [computational-analysis]
 - related: [task:t150, hypothesis:h05-healthy-somatic-background-atlas, hypothesis:h01-non-tumor-signal-contamination, question:q007-cross-tissue-somatic-mutation-rate-variation-as-null-model]
@@ -648,7 +649,7 @@ Install `mhn` via `uv add mhn`, reproduce the Vocht 2026 GENIE LUAD demonstratio
 Acceptance: `doc/interpretations/<date>-mhn-luad-demo-and-simulation-calibration.md`; explicit decision on whether `h04` can be promoted or remains candidate.
 
 ## [t153] CFS overlap annotation and RT-vs-CFS residual regression
-- priority: P3
+- priority: P2
 - status: proposed
 - aspects: [computational-analysis, software-development]
 - related: [question:q014-cfs-as-distinct-confounder-class, question:q003-replication-timing-as-gene-level-mutation-rate-confounder, hypothesis:h01-non-tumor-signal-contamination, hypothesis:h02-cross-study-ranking-divergence-is-structured, task:t121]
@@ -660,7 +661,7 @@ Build a per-gene common-fragile-site overlap annotation from published CFS catal
 Acceptance: CFS annotation artifact under `data/` or `models/`, plus `doc/interpretations/<date>-q014-cfs-vs-rt.md` with coefficient estimates and a correction recommendation.
 
 ## [t154] Panel-vs-WES ascertainment analysis for mutation rankings and literature attention
-- priority: P2
+- priority: P1
 - status: proposed
 - aspects: [computational-analysis]
 - related: [question:q016-panel-induced-ascertainment, hypothesis:h03-gene-length-confounds-literature-attention, task:t086, task:t129]

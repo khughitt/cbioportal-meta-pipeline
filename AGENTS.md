@@ -118,6 +118,7 @@ intermediates.
     - `data/mc3.v0.2.8.PUBLIC.maf.gz` (GDC PASS release, ~720 MB).
     - `data/tcga_case_to_project.tsv` (submitter_id -> TCGA project_id; fetched once from
       the GDC API).
+    - source: https://gdc.cancer.gov/about-data/publications/mc3-2017
 
 ## External Reference Datasets (manual prerequisites)
 

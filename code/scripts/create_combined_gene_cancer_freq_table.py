@@ -57,6 +57,7 @@ Config
 
 import os
 import sys
+from typing import cast
 
 import pandas as pd
 
@@ -221,15 +222,14 @@ def _load_cancer_presence(
             raise ValueError(
                 f"{infile} missing required cancer-summary columns: {sorted(missing)}"
             )
-        out[study] = {
-            str(row["cancer_type"]): (
-                int(row["n_samples_inclusive"]),
-                int(row["n_samples_exclusive"]),
+        out[study] = {}
+        for cancer_type, n_samples_inclusive, n_samples_exclusive in df[
+            ["cancer_type", "n_samples_inclusive", "n_samples_exclusive"]
+        ].itertuples(index=False, name=None):
+            out[study][str(cancer_type)] = (
+                int(n_samples_inclusive),
+                int(n_samples_exclusive),
             )
-            for _, row in df[
-                ["cancer_type", "n_samples_inclusive", "n_samples_exclusive"]
-            ].iterrows()
-        }
     return out
 
 
@@ -378,21 +378,24 @@ def _annotate_callability(
     # per-cancer max recovers the cohort total).
     cancer_idx = ratio_df.index.get_level_values("cancer_type")
 
-    cohort_per_study_per_cancer_inclusive = n_inclusive_df.groupby(
-        level="cancer_type"
-    ).max()
-    cohort_per_study_per_cancer_exclusive = n_exclusive_df.groupby(
-        level="cancer_type"
-    ).max()
+    cohort_per_study_per_cancer_inclusive = cast(
+        pd.DataFrame, n_inclusive_df.groupby(level="cancer_type").max()
+    )
+    cohort_per_study_per_cancer_exclusive = cast(
+        pd.DataFrame, n_exclusive_df.groupby(level="cancer_type").max()
+    )
     # C1 guard: detect non-nested panel mixes where groupby-max under-counts.
     # If any (study, cancer) cell's recovered cohort size is implausibly small
     # relative to the cancer's max across studies, the assumption is violated.
     NESTING_THRESHOLD = 0.05
-    maxes = cohort_per_study_per_cancer_inclusive.max(axis=1)
-    ratios = cohort_per_study_per_cancer_inclusive.divide(maxes, axis=0)
-    suspicious = (
-        ratios < NESTING_THRESHOLD
-    ) & cohort_per_study_per_cancer_inclusive.notna()
+    maxes = cast(pd.Series, cohort_per_study_per_cancer_inclusive.max(axis=1))
+    ratios = cast(
+        pd.DataFrame, cohort_per_study_per_cancer_inclusive.divide(maxes, axis=0)
+    )
+    suspicious = cast(
+        pd.DataFrame,
+        (ratios < NESTING_THRESHOLD) & cohort_per_study_per_cancer_inclusive.notna(),
+    )
     if suspicious.any().any():
         suspicious_rows = []
         for cancer in suspicious.index:
@@ -427,11 +430,11 @@ def _annotate_callability(
             file=sys.stderr,
         )
 
-    n_total_samples_inclusive = cohort_per_study_per_cancer_inclusive.sum(
-        axis=1, skipna=True
+    n_total_samples_inclusive = cast(
+        pd.Series, cohort_per_study_per_cancer_inclusive.sum(axis=1)
     )
-    n_total_samples_exclusive = cohort_per_study_per_cancer_exclusive.sum(
-        axis=1, skipna=True
+    n_total_samples_exclusive = cast(
+        pd.Series, cohort_per_study_per_cancer_exclusive.sum(axis=1)
     )
     n_total_inclusive_raw = pd.Series(
         cancer_idx.map(n_total_samples_inclusive), index=ratio_df.index
@@ -507,7 +510,7 @@ def _protein_length_adjusted(
     plengths = protein_lengths[
         protein_lengths.symbol.isin(ratio_df.index.get_level_values("symbol"))
     ].set_index("symbol")
-    median_length = float(plengths["length"].astype(float).median())
+    median_length = cast(float, plengths["length"].astype(float).median())
     mean_mi = ratio_df["mean_inclusive"]
     merged = pd.merge(mean_mi, plengths, left_index=True, right_index=True, how="left")
     merged["length"] = merged["length"].astype(float).fillna(median_length)

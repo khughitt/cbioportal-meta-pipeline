@@ -228,6 +228,7 @@ def _build_gene_table(
     df = df.astype(int)
 
     if use_panel_path:
+        assert panel_coverage is not None
         callable_pairs = (
             panel_coverage[["panel_id", "gene"]]
             .drop_duplicates()
@@ -339,6 +340,7 @@ def _build_gene_cancer_table(
     )
 
     if use_panel_path:
+        assert panel_coverage is not None
         callable_pairs = (
             panel_coverage[["panel_id", "gene"]]
             .drop_duplicates()

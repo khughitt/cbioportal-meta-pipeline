@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import SupportsFloat, cast
+
 import pandas as pd
 import pytest
 
@@ -19,6 +21,10 @@ def _annotated(rows: list[dict]) -> pd.DataFrame:
     return df
 
 
+def _as_float(value: object) -> float:
+    return float(cast(SupportsFloat, value))
+
+
 def test_percentages_sum_to_one_within_each_axis() -> None:
     samples = _annotated(
         [
@@ -29,12 +35,12 @@ def test_percentages_sum_to_one_within_each_axis() -> None:
         ]
     )
     row = mod.build_composition("S", samples)
-    assert row["pct_metastatic"] + row["pct_primary"] + row[
-        "pct_metastatic_unknown"
-    ] == pytest.approx(1.0)
-    assert row["pct_pre_treated"] + row["pct_naive"] + row[
-        "pct_pre_treated_unknown"
-    ] == pytest.approx(1.0)
+    assert _as_float(row["pct_metastatic"]) + _as_float(row["pct_primary"]) + _as_float(
+        row["pct_metastatic_unknown"]
+    ) == pytest.approx(1.0)
+    assert _as_float(row["pct_pre_treated"]) + _as_float(row["pct_naive"]) + _as_float(
+        row["pct_pre_treated_unknown"]
+    ) == pytest.approx(1.0)
 
 
 def test_dominance_classes_cover_all_four_states() -> None:

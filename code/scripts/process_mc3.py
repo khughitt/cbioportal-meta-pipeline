@@ -45,7 +45,7 @@ import sys
 
 import pandas as pd
 
-snek = snakemake  # type: ignore[name-defined]
+snek = snakemake  # type: ignore[name-defined]  # noqa: F821
 
 mc3_path: str = snek.input.mc3_maf
 case_to_project_path: str = snek.input.case_to_project
@@ -61,8 +61,8 @@ case_to_project_path: str = snek.input.case_to_project
 # Case-to-project mapping (submitter_id -> TCGA project_id -> cancer_type).
 # ---------------------------------------------------------------------------
 case_to_project = pd.read_csv(case_to_project_path, sep="\t", dtype=str)
-case_to_project["cancer_type"] = (
-    case_to_project["project_id"].str.replace(r"^TCGA-", "", regex=True)
+case_to_project["cancer_type"] = case_to_project["project_id"].str.replace(
+    r"^TCGA-", "", regex=True
 )
 case_to_project_map: dict[str, str] = dict(
     zip(case_to_project["submitter_id"], case_to_project["cancer_type"])
@@ -79,17 +79,37 @@ print(
 grch37 = pd.read_csv("data/grch37.tsv", sep="\t")
 grch38 = pd.read_csv("data/grch38.tsv", sep="\t")
 valid_symbols: set[str] = set(grch37.symbol).union(grch38.symbol)
-print(f"Reference gene set: {len(valid_symbols)} symbols (GRCh37 ∪ GRCh38)", file=sys.stderr)
+print(
+    f"Reference gene set: {len(valid_symbols)} symbols (GRCh37 ∪ GRCh38)",
+    file=sys.stderr,
+)
 
 # ---------------------------------------------------------------------------
 # MC3 MAF ingestion. Read all columns we need, filter PASS, join to cancer_type.
 # ---------------------------------------------------------------------------
 mc3_cols_needed = [
-    "Hugo_Symbol", "Entrez_Gene_Id", "Center", "Chromosome", "Start_Position",
-    "End_Position", "Consequence", "Variant_Classification", "Variant_Type",
-    "Reference_Allele", "Tumor_Seq_Allele1", "Tumor_Seq_Allele2", "dbSNP_RS",
-    "Tumor_Sample_Barcode", "Matched_Norm_Sample_Barcode", "Mutation_Status",
-    "HGVSp_Short", "Transcript_ID", "RefSeq", "Protein_position", "Codons", "FILTER",
+    "Hugo_Symbol",
+    "Entrez_Gene_Id",
+    "Center",
+    "Chromosome",
+    "Start_Position",
+    "End_Position",
+    "Consequence",
+    "Variant_Classification",
+    "Variant_Type",
+    "Reference_Allele",
+    "Tumor_Seq_Allele1",
+    "Tumor_Seq_Allele2",
+    "dbSNP_RS",
+    "Tumor_Sample_Barcode",
+    "Matched_Norm_Sample_Barcode",
+    "Mutation_Status",
+    "HGVSp_Short",
+    "Transcript_ID",
+    "RefSeq",
+    "Protein_position",
+    "Codons",
+    "FILTER",
 ]
 
 dtypes = {
@@ -174,7 +194,9 @@ samples = (
     .reset_index(drop=True)
 )
 samples["patient_id"] = samples["sample_id"].astype(str).str.slice(0, 12)
-samples["cancer_type"] = samples["patient_id"].map(case_to_project_map).fillna("UNKNOWN")
+samples["cancer_type"] = (
+    samples["patient_id"].map(case_to_project_map).fillna("UNKNOWN")
+)
 # TCGA doesn't publish a "detailed" cancer-type column in the MC3 MAF; mirror the cBioPortal
 # schema by duplicating cancer_type into cancer_type_detailed. Downstream-consumer-friendly.
 samples["cancer_type_detailed"] = samples["cancer_type"]
@@ -209,8 +231,9 @@ study_mdat = {
     "patients": len(set(samples["patient_id"])),
     "samples": len(set(samples["sample_id"])),
 }
-study_df = pd.DataFrame({"entity": list(study_mdat.keys()),
-                         "num": list(study_mdat.values())})
+study_df = pd.DataFrame(
+    {"entity": list(study_mdat.keys()), "num": list(study_mdat.values())}
+)
 
 # ---------------------------------------------------------------------------
 # Write outputs.

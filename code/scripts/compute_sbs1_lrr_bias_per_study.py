@@ -489,8 +489,13 @@ def _resolve_chrom_dir() -> Path:
     """Locate SigProfilerMatrixGenerator's GRCh37 TSB chromosome directory."""
     import SigProfilerMatrixGenerator as smg  # type: ignore
 
+    module_file = smg.__file__
+    if module_file is None:
+        raise RuntimeError(
+            "Could not locate SigProfilerMatrixGenerator package directory."
+        )
     return (
-        Path(smg.__file__).resolve().parent
+        Path(module_file).resolve().parent
         / "references"
         / "chromosomes"
         / "tsb"
@@ -501,7 +506,10 @@ def _resolve_chrom_dir() -> Path:
 def _resolve_sigprofiler_assignment_root() -> Path:
     import SigProfilerAssignment as spa  # type: ignore
 
-    return Path(spa.__file__).resolve().parent
+    module_file = spa.__file__
+    if module_file is None:
+        raise RuntimeError("Could not locate SigProfilerAssignment package directory.")
+    return Path(module_file).resolve().parent
 
 
 def run_per_study(

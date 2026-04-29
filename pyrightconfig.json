@@ -1,0 +1,13 @@
+{
+  "include": ["code/scripts"],
+  "exclude": [
+    "**/__pycache__",
+    ".venv",
+    ".snakemake",
+    "archive",
+    "code/notebooks",
+    "results",
+    "science"
+  ],
+  "useLibraryCodeForTypes": false
+}

@@ -25,12 +25,13 @@ A feather file keyed by `(gene, cancer_type)` with columns:
     consensus_score       (float)
     source                (str)  — "Bailey2018"
 """
+
 import sys
 from pathlib import Path
 
 import pandas as pd
 
-snek = snakemake  # type: ignore[name-defined]
+snek = snakemake  # type: ignore[name-defined]  # noqa: F821
 
 input_path = Path(snek.input[0])
 output_feather = snek.output[0]
@@ -67,6 +68,7 @@ if missing:
         f"Missing required columns {sorted(missing)} in Bailey Table S1. Got: {list(raw.columns)}"
     )
 
+
 def _col(row: pd.Series, *names: str) -> str:
     for n in names:
         if n in row.index and bool(pd.notna(row[n])):
@@ -75,22 +77,25 @@ def _col(row: pd.Series, *names: str) -> str:
                 return v
     return ""
 
-drivers = pd.DataFrame({
-    "gene": raw["gene"].astype(str).str.strip().str.upper(),
-    "cancer_type": raw["cancer"].astype(str).str.strip().str.upper(),
-    "prediction": raw.apply(
-        lambda r: _col(
-            r,
-            "tumor_suppressor_or_oncogene_prediction_(by_20/20+)",
-            "prediction",
-            "og/tsg",
+
+drivers = pd.DataFrame(
+    {
+        "gene": raw["gene"].astype(str).str.strip().str.upper(),
+        "cancer_type": raw["cancer"].astype(str).str.strip().str.upper(),
+        "prediction": raw.apply(
+            lambda r: _col(
+                r,
+                "tumor_suppressor_or_oncogene_prediction_(by_20/20+)",
+                "prediction",
+                "og/tsg",
+            ),
+            axis=1,
         ),
-        axis=1,
-    ),
-    "decision": raw.apply(lambda r: _col(r, "decision"), axis=1),
-    "tissue_frequency": raw.apply(lambda r: _col(r, "tissue_frequency"), axis=1),
-    "pancan_frequency": raw.apply(lambda r: _col(r, "pancan_frequency"), axis=1),
-})
+        "decision": raw.apply(lambda r: _col(r, "decision"), axis=1),
+        "tissue_frequency": raw.apply(lambda r: _col(r, "tissue_frequency"), axis=1),
+        "pancan_frequency": raw.apply(lambda r: _col(r, "pancan_frequency"), axis=1),
+    }
+)
 
 # Consensus score — numeric if present, else null.
 if "consensus_score" in raw.columns:
@@ -100,9 +105,13 @@ else:
 
 drivers["source"] = "Bailey2018"
 
-drivers = drivers.loc[
-    (drivers["gene"].str.len() > 0) & (drivers["cancer_type"].str.len() > 0)
-].drop_duplicates(subset=["gene", "cancer_type"]).reset_index(drop=True)
+drivers = (
+    drivers.loc[
+        (drivers["gene"].str.len() > 0) & (drivers["cancer_type"].str.len() > 0)
+    ]
+    .drop_duplicates(subset=["gene", "cancer_type"])
+    .reset_index(drop=True)
+)
 
 drivers.to_feather(output_feather)
 print(

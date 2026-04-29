@@ -31,10 +31,10 @@ from create_combined_gene_cancer_freq_table import (
 
 type PanelClass = Literal["large_hybrid_capture", "small_amplicon", "WES", "MC3"]
 
-PANEL_CLASS_LARGE = "large_hybrid_capture"
-PANEL_CLASS_SMALL = "small_amplicon"
-PANEL_CLASS_WES = "WES"
-PANEL_CLASS_MC3 = "MC3"
+PANEL_CLASS_LARGE: PanelClass = "large_hybrid_capture"
+PANEL_CLASS_SMALL: PanelClass = "small_amplicon"
+PANEL_CLASS_WES: PanelClass = "WES"
+PANEL_CLASS_MC3: PanelClass = "MC3"
 
 _LARGE_PANEL_MARKERS = (
     "MSK-IMPACT",
@@ -64,7 +64,9 @@ def build_pooled_input(
     sample_panel_ids_by_study = sample_panel_ids_by_study or {}
     study_panel_class_map = study_panel_class_map or {}
 
-    num_df, ratio_df, n_inclusive_df, n_exclusive_df = combine_paired_pivot(per_study_frames)
+    num_df, ratio_df, n_inclusive_df, n_exclusive_df = combine_paired_pivot(
+        per_study_frames
+    )
     num_df, ratio_df, n_inclusive_df, n_exclusive_df = _fill_missing_unmutated_cells(
         num_df,
         ratio_df,
@@ -92,9 +94,11 @@ def build_pooled_input(
         if study_df.empty:
             continue
 
-        study_df[["y_inclusive", "y_exclusive", "n_inclusive", "n_exclusive"]] = study_df[
-            ["y_inclusive", "y_exclusive", "n_inclusive", "n_exclusive"]
-        ].astype(int)
+        study_df[["y_inclusive", "y_exclusive", "n_inclusive", "n_exclusive"]] = (
+            study_df[
+                ["y_inclusive", "y_exclusive", "n_inclusive", "n_exclusive"]
+            ].astype(int)
+        )
         study_df.insert(0, "study_id", study_id)
         study_df["panel_class"] = classify_study_panel_class(
             study_id=study_id,
@@ -147,7 +151,11 @@ def classify_study_panel_class(
     if explicit_panel_id is not None:
         panel_ids.add(explicit_panel_id)
 
-    if not panel_ids and study_id not in panel_bearing_studies and explicit_panel_id is None:
+    if (
+        not panel_ids
+        and study_id not in panel_bearing_studies
+        and explicit_panel_id is None
+    ):
         return PANEL_CLASS_WES
     if not panel_ids:
         raise ValueError(
@@ -155,7 +163,9 @@ def classify_study_panel_class(
             "but no panel ids were available. Add study_panel_class_map if needed."
         )
 
-    panel_classes = {_classify_panel_id(panel_id) for panel_id in panel_ids}
+    panel_classes: set[PanelClass] = {
+        _classify_panel_id(panel_id) for panel_id in panel_ids
+    }
     if len(panel_classes) != 1:
         raise ValueError(
             f"Study {study_id!r} spans multiple panel classes {sorted(panel_classes)!r}; "
@@ -202,7 +212,9 @@ def _run_via_snakemake() -> None:
     snek = snakemake  # type: ignore[name-defined]  # noqa: F821
     pooled = build_pooled_input(
         per_study_frames=_load_per_study_frames(list(snek.input.per_study)),
-        cancer_presence_by_study=_load_cancer_presence(list(snek.input.per_study_cancer)),
+        cancer_presence_by_study=_load_cancer_presence(
+            list(snek.input.per_study_cancer)
+        ),
         matched_normal_studies=set(snek.config.get("matched_normal_studies", [])),
         study_panel_map=dict(snek.config.get("study_panel_map", {})),
         panel_bearing_studies=set(snek.config.get("panel_bearing_studies", [])),

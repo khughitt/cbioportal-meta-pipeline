@@ -120,7 +120,12 @@ def normalize_cancer_type(cancer_type: str) -> str:
         or "brain" in text
     ):
         return "cns"
-    if "acute myeloid" in text or "myeloid" in text or "myelodysplastic" in text or "myeloproliferative" in text:
+    if (
+        "acute myeloid" in text
+        or "myeloid" in text
+        or "myelodysplastic" in text
+        or "myeloproliferative" in text
+    ):
         return "myeloid"
     if (
         "lymph" in text
@@ -138,7 +143,9 @@ def normalize_cancer_type(cancer_type: str) -> str:
     if "stomach" in text or "gastric" in text or "esophagogastric" in text:
         return "stomach"
 
-    raise ValueError(f"Unsupported cancer_type for COSMIC restriction lookup: {cancer_type!r}")
+    raise ValueError(
+        f"Unsupported cancer_type for COSMIC restriction lookup: {cancer_type!r}"
+    )
 
 
 def load_signature_lookup(path: Path) -> dict[str, list[str]]:
@@ -155,24 +162,45 @@ def load_signature_lookup(path: Path) -> dict[str, list[str]]:
     return grouped
 
 
-def expand_signature_aliases(requested_signatures: list[str], reference_columns: list[str]) -> list[str]:
+def expand_signature_aliases(
+    requested_signatures: list[str], reference_columns: list[str]
+) -> list[str]:
     expanded: list[str] = []
     for signature in requested_signatures:
         if signature in SPLIT_SIGNATURE_ALIASES:
-            expanded.extend([s for s in SPLIT_SIGNATURE_ALIASES[signature] if s in reference_columns])
+            expanded.extend(
+                [
+                    s
+                    for s in SPLIT_SIGNATURE_ALIASES[signature]
+                    if s in reference_columns
+                ]
+            )
         elif signature in reference_columns:
             expanded.append(signature)
 
     unique = sorted(set(expanded), key=expanded.index)
     if not unique:
-        raise ValueError(f"No requested signatures were present in the reference database: {requested_signatures!r}")
+        raise ValueError(
+            f"No requested signatures were present in the reference database: {requested_signatures!r}"
+        )
     return unique
 
 
-def default_signature_database_path(*, genome_build: str, cosmic_version: str, exome: bool) -> Path:
-    root = Path(SigProfilerAssignment.__file__).resolve().parent
+def default_signature_database_path(
+    *, genome_build: str, cosmic_version: str, exome: bool
+) -> Path:
+    module_file = SigProfilerAssignment.__file__
+    if module_file is None:
+        raise RuntimeError("Could not locate SigProfilerAssignment package directory.")
+    root = Path(module_file).resolve().parent
     suffix = "_exome" if exome else ""
-    return root / "data" / "Reference_Signatures" / genome_build / f"COSMIC_v{cosmic_version}_SBS_{genome_build}{suffix}.txt"
+    return (
+        root
+        / "data"
+        / "Reference_Signatures"
+        / genome_build
+        / f"COSMIC_v{cosmic_version}_SBS_{genome_build}{suffix}.txt"
+    )
 
 
 def write_restricted_signature_database(
@@ -184,7 +212,9 @@ def write_restricted_signature_database(
     reference = pd.read_csv(reference_path, sep="\t")
     type_col = "Type" if "Type" in reference.columns else "MutationType"
     if type_col not in reference.columns:
-        raise ValueError(f"Reference signature database missing Type column: {reference_path}")
+        raise ValueError(
+            f"Reference signature database missing Type column: {reference_path}"
+        )
 
     expanded = expand_signature_aliases(requested_signatures, list(reference.columns))
     subset = reference[[type_col, *expanded]].copy()
@@ -197,7 +227,9 @@ def study_sample_name(study_id: str, lookup_key: str) -> str:
     return f"{study_id}__{safe_lookup}"
 
 
-def donor_id_for_assignment(*, sample_id: str, sample_name: str, assignment_unit: str) -> str:
+def donor_id_for_assignment(
+    *, sample_id: str, sample_name: str, assignment_unit: str
+) -> str:
     if assignment_unit == "study":
         return sample_name
     if assignment_unit == "sample":
@@ -229,7 +261,9 @@ def prepare_sigprofiler_variants(
     sample_name: str,
     assignment_unit: str,
 ) -> pd.DataFrame:
-    cancer_samples = samples.loc[samples["cancer_type"] == cancer_type, ["sample_id"]].copy()
+    cancer_samples = samples.loc[
+        samples["cancer_type"] == cancer_type, ["sample_id"]
+    ].copy()
     sample_ids = set(cancer_samples["sample_id"])
     subset = mutations.loc[mutations["sample_id_tumor"].isin(sample_ids)].copy()
     if subset.empty:
@@ -262,9 +296,16 @@ def prepare_sigprofiler_variants(
     return out
 
 
-def build_sigprofiler_input_matrix(variants_df: pd.DataFrame, *, assembly: str) -> pd.DataFrame:
+def build_sigprofiler_input_matrix(
+    variants_df: pd.DataFrame, *, assembly: str
+) -> pd.DataFrame:
     sbs96 = _sigprofiler_matrix(variants_df, assembly=assembly)
-    return sbs96.reindex(CONTEXT_96).fillna(0).reset_index().rename(columns={"index": "MutationType"})
+    return (
+        sbs96.reindex(CONTEXT_96)
+        .fillna(0)
+        .reset_index()
+        .rename(columns={"index": "MutationType"})
+    )
 
 
 def run_sigprofiler_assignment(
@@ -305,11 +346,17 @@ def read_assignment_output(
     assignment_unit: str,
 ) -> pd.DataFrame:
     activities = pd.read_csv(
-        output_dir / "Assignment_Solution" / "Activities" / "Assignment_Solution_Activities.txt",
+        output_dir
+        / "Assignment_Solution"
+        / "Activities"
+        / "Assignment_Solution_Activities.txt",
         sep="\t",
     )
     stats = pd.read_csv(
-        output_dir / "Assignment_Solution" / "Solution_Stats" / "Assignment_Solution_Samples_Stats.txt",
+        output_dir
+        / "Assignment_Solution"
+        / "Solution_Stats"
+        / "Assignment_Solution_Samples_Stats.txt",
         sep="\t",
     )
 
@@ -384,7 +431,9 @@ def build_assignment_table_for_study(  # noqa: PLR0913
         if allowed_lookup_keys is not None and lookup_key not in allowed_lookup_keys:
             continue
         if lookup_key not in lookup:
-            raise ValueError(f"No signature lookup entry for normalized key {lookup_key!r}")
+            raise ValueError(
+                f"No signature lookup entry for normalized key {lookup_key!r}"
+            )
 
         sample_name = study_sample_name(study_id, lookup_key)
         variants = prepare_sigprofiler_variants(
@@ -453,7 +502,9 @@ def build_assignment_table_for_study(  # noqa: PLR0913
         )
 
     out = pd.concat(outputs, ignore_index=True)
-    return out.sort_values(["cancer_type", "sample_name", "signature"]).reset_index(drop=True)
+    return out.sort_values(["cancer_type", "sample_name", "signature"]).reset_index(
+        drop=True
+    )
 
 
 def main() -> None:
@@ -463,7 +514,9 @@ def main() -> None:
     cosmic_version = str(snek.config.get("signature_assignment_cosmic_version", "3.5"))
     exome = bool(snek.config.get("signature_assignment_exome", True))
     assignment_unit = str(getattr(snek.params, "assignment_unit", "study"))
-    allowed_lookup_keys = set(snek.config.get("signature_assignment_lookup_keys", [])) or None
+    allowed_lookup_keys = (
+        set(snek.config.get("signature_assignment_lookup_keys", [])) or None
+    )
     output_path = Path(snek.output[0])
     work_dir = output_path.parent / f".{output_path.stem}_work"
     if work_dir.exists():

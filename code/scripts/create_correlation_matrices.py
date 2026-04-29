@@ -3,7 +3,7 @@
 #
 import pandas as pd
 
-snek = snakemake
+snek = snakemake  # type: ignore[name-defined]  # noqa: F821
 
 disease_mut = pd.read_feather(snek.input[0]).set_index("symbol")
 patient_mut = pd.read_feather(snek.input[1]).set_index("symbol")

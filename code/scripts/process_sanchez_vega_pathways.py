@@ -30,21 +30,30 @@ Output
     hotspot_3d_count      (int)  — number of 3D-hotspot clusters reported
     source                (str)  — "SanchezVega2018"
 """
+
 import sys
 import warnings
 from pathlib import Path
 
 import pandas as pd
 
-snek = snakemake  # type: ignore[name-defined]
+snek = snakemake  # type: ignore[name-defined]  # noqa: F821
 
 input_path = Path(snek.input[0])
 output_feather = snek.output[0]
 
 # Sheets that are per-pathway gene templates; all others are ignored.
 PATHWAY_SHEETS = {
-    "Cell Cycle", "HIPPO", "MYC", "NOTCH", "NRF2", "PI3K",
-    "TGF-Beta", "RTK RAS", "TP53", "WNT",
+    "Cell Cycle",
+    "HIPPO",
+    "MYC",
+    "NOTCH",
+    "NRF2",
+    "PI3K",
+    "TGF-Beta",
+    "RTK RAS",
+    "TP53",
+    "WNT",
 }
 
 
@@ -76,6 +85,7 @@ with warnings.catch_warnings():
     warnings.simplefilter("ignore")
     sheets = pd.read_excel(input_path, sheet_name=None, engine="openpyxl")
 
+
 def _locate_header_row(sheet_df: pd.DataFrame) -> int:
     """Return the row index containing the 'Gene' header, or -1 if not found.
 
@@ -98,19 +108,23 @@ for sheet_name, sheet_df in sheets.items():
 
     header_row = _locate_header_row(sheet_df)
     if header_row == -2:
-        print(f"[skip] sheet {sheet_name!r}: could not locate 'Gene' header row",
-              file=sys.stderr)
+        print(
+            f"[skip] sheet {sheet_name!r}: could not locate 'Gene' header row",
+            file=sys.stderr,
+        )
         continue
     if header_row >= 0:
         sheet_df.columns = sheet_df.iloc[header_row].astype(str)
-        sheet_df = sheet_df.iloc[header_row + 1:].reset_index(drop=True)
+        sheet_df = sheet_df.iloc[header_row + 1 :].reset_index(drop=True)
 
     norm = {c: str(c).strip() for c in sheet_df.columns}
     sheet_df = sheet_df.rename(columns=norm)
 
     if "Gene" not in sheet_df.columns:
-        print(f"[skip] sheet {sheet_name!r}: no 'Gene' column after header normalization",
-              file=sys.stderr)
+        print(
+            f"[skip] sheet {sheet_name!r}: no 'Gene' column after header normalization",
+            file=sys.stderr,
+        )
         continue
 
     # Drop rows without a gene symbol.
@@ -122,16 +136,20 @@ for sheet_name, sheet_df in sheets.items():
             return sheet_df[name]
         return pd.Series([default] * len(sheet_df), index=sheet_df.index)
 
-    out = pd.DataFrame({
-        "pathway": _normalize_pathway_name(sheet_name),
-        "gene": sheet_df["Gene"].astype(str).str.strip().str.upper(),
-        "og_tsg": _column("OG/TSG", "").astype(str).str.strip(),
-        "is_mutsig_driver": _column("MutSig", 0).apply(lambda v: str(v).strip() == "1"),
-        "has_gistic_amp": _column("GISTIC amp").apply(_is_present),
-        "has_gistic_del": _column("GISTIC del").apply(_is_present),
-        "hotspot_count": _column("Hotspots (AA #)").apply(_count_residues),
-        "hotspot_3d_count": _column("3D Hotspots (AA #)").apply(_count_residues),
-    })
+    out = pd.DataFrame(
+        {
+            "pathway": _normalize_pathway_name(sheet_name),
+            "gene": sheet_df["Gene"].astype(str).str.strip().str.upper(),
+            "og_tsg": _column("OG/TSG", "").astype(str).str.strip(),
+            "is_mutsig_driver": _column("MutSig", 0).apply(
+                lambda v: str(v).strip() == "1"
+            ),
+            "has_gistic_amp": _column("GISTIC amp").apply(_is_present),
+            "has_gistic_del": _column("GISTIC del").apply(_is_present),
+            "hotspot_count": _column("Hotspots (AA #)").apply(_count_residues),
+            "hotspot_3d_count": _column("3D Hotspots (AA #)").apply(_count_residues),
+        }
+    )
     out["source"] = "SanchezVega2018"
     frames.append(out)
 
@@ -141,7 +159,9 @@ if not frames:
         "PATHWAY_SHEETS constant in this script."
     )
 
-pathways = pd.concat(frames, ignore_index=True).drop_duplicates(subset=["pathway", "gene"])
+pathways = pd.concat(frames, ignore_index=True).drop_duplicates(
+    subset=["pathway", "gene"]
+)
 pathways = pathways.reset_index(drop=True)
 pathways.to_feather(output_feather)
 

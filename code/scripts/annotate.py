@@ -39,12 +39,13 @@ Notes
   in our aggregation (cBioPortal uses its own taxonomy). When they don't match, the pan-cancer
   (Bailey's "PANCAN") annotation still applies, preserving at least a pan-cancer driver flag.
 """
+
 import sys
 from pathlib import Path
 
 import pandas as pd
 
-snek = snakemake  # type: ignore[name-defined]
+snek = snakemake  # type: ignore[name-defined]  # noqa: F821
 
 freq_path = Path(snek.input[0])
 bailey_path = Path(snek.input[1])

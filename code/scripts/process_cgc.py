@@ -28,12 +28,13 @@ Output
     mutation_types       (str)    — raw CGC mutation-type codes
     source               (str)    — "COSMIC-CGC"
 """
+
 import sys
 from pathlib import Path
 
 import pandas as pd
 
-snek = snakemake  # type: ignore[name-defined]
+snek = snakemake  # type: ignore[name-defined]  # noqa: F821
 
 input_path = Path(snek.input[0])
 output_feather = snek.output[0]
@@ -63,17 +64,19 @@ def _str(series_name: str) -> pd.Series:
 
 tier_series = pd.to_numeric(raw["Tier"], errors="coerce")
 
-out = pd.DataFrame({
-    "gene": raw["Gene Symbol"].astype(str).str.strip().str.upper(),
-    "tier": tier_series.fillna(0).astype(int),
-    "hallmark": _bool("Hallmark"),
-    "role_in_cancer": _str("Role in Cancer"),
-    "somatic": _bool("Somatic"),
-    "germline": _bool("Germline"),
-    "tumour_types_somatic": _str("Tumour Types(Somatic)"),
-    "mutation_types": _str("Mutation Types"),
-    "source": "COSMIC-CGC",
-})
+out = pd.DataFrame(
+    {
+        "gene": raw["Gene Symbol"].astype(str).str.strip().str.upper(),
+        "tier": tier_series.fillna(0).astype(int),
+        "hallmark": _bool("Hallmark"),
+        "role_in_cancer": _str("Role in Cancer"),
+        "somatic": _bool("Somatic"),
+        "germline": _bool("Germline"),
+        "tumour_types_somatic": _str("Tumour Types(Somatic)"),
+        "mutation_types": _str("Mutation Types"),
+        "source": "COSMIC-CGC",
+    }
+)
 
 # Drop rows without a gene symbol or valid tier.
 out = out.loc[(out["gene"].str.len() > 0) & (out["tier"].isin([1, 2]))].copy()

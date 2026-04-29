@@ -4,10 +4,12 @@ import pandas as pd
 import pytest
 
 from cancer_type_normalization import (
+    LabelNormalizationStats,
     canonicalize_alias_map,
     extract_label_alias_maps,
     normalize_code_label,
     normalize_human_label,
+    normalize_sample_labels,
 )
 
 
@@ -103,3 +105,110 @@ def test_extract_label_alias_maps_ignores_unrelated_config() -> None:
         "cancer_type": {"breast cancer": "Breast carcinoma"},
         "oncotree_code": {"LUAD": "LUAD"},
     }
+
+
+def _sample_labels() -> pd.DataFrame:
+    return pd.DataFrame(
+        {
+            "sample_id": ["S1", "S2", "S3", "S4"],
+            "cancer_type": pd.Series(
+                ["  Breast   Cancer ", "Lung Cancer", "   ", "breast cancer"],
+                dtype="category",
+            ),
+            "cancer_type_detailed": pd.Series(
+                ["  Invasive   Breast Carcinoma ", "LUAD", None, "LUAD"],
+                dtype="category",
+            ),
+            "primary_site": pd.Series(
+                [" Breast ", " Lung ", " ", "Breast"], dtype="category"
+            ),
+            "sample_class": pd.Series(
+                [" Tumor ", "Tumor", " ", None], dtype="category"
+            ),
+            "sample_type": pd.Series(
+                [" Primary  Tumor ", "Metastasis", "", None], dtype="category"
+            ),
+            "sample_type_detailed": pd.Series(
+                [" Primary ", " Distant   Metastasis ", "", None], dtype="category"
+            ),
+            "oncotree_code": pd.Series([" brca ", " luad ", " ", None], dtype="category"),
+        }
+    )
+
+
+def test_normalize_sample_labels_cleans_aliases_and_rebuilds_categories() -> None:
+    out, stats = normalize_sample_labels(
+        _sample_labels(),
+        {
+            "cancer_type": {"breast cancer": "Breast Carcinoma"},
+            "cancer_type_detailed": {"LUAD": "Lung Adenocarcinoma"},
+            "oncotree_code": {"BRCA": "BRCA"},
+        },
+    )
+
+    assert out["cancer_type"].tolist()[:2] == ["Breast Cancer", "Lung Cancer"]
+    assert out.loc[3, "cancer_type"] == "Breast Carcinoma"
+    assert pd.isna(out.loc[2, "cancer_type"])
+    assert out["cancer_type_detailed"].tolist()[:2] == [
+        "Invasive Breast Carcinoma",
+        "Lung Adenocarcinoma",
+    ]
+    assert out["primary_site"].tolist()[:2] == ["Breast", "Lung"]
+    assert out["sample_class"].tolist()[:2] == ["Tumor", "Tumor"]
+    assert out["sample_type"].tolist()[:2] == ["Primary Tumor", "Metastasis"]
+    assert out["sample_type_detailed"].tolist()[:2] == [
+        "Primary",
+        "Distant Metastasis",
+    ]
+    assert out["oncotree_code"].tolist()[:2] == ["BRCA", "LUAD"]
+
+    for column in [
+        "cancer_type",
+        "cancer_type_detailed",
+        "primary_site",
+        "sample_class",
+        "sample_type",
+        "sample_type_detailed",
+        "oncotree_code",
+    ]:
+        assert str(out[column].dtype) == "category"
+
+    by_column = {item.column: item for item in stats}
+    assert by_column["cancer_type"].alias_rewritten == 1
+    assert by_column["cancer_type"].blanked_to_na == 1
+    assert by_column["oncotree_code"].changed == 3
+
+
+def test_normalize_sample_labels_is_idempotent() -> None:
+    first, _ = normalize_sample_labels(
+        _sample_labels(), {"cancer_type": {"breast cancer": "Breast Carcinoma"}}
+    )
+    second, stats = normalize_sample_labels(
+        first, {"cancer_type": {"breast cancer": "Breast Carcinoma"}}
+    )
+    pd.testing.assert_frame_equal(first, second)
+    assert all(
+        item.changed == 0 and item.alias_rewritten == 0 and item.blanked_to_na == 0
+        for item in stats
+    )
+
+
+def test_normalize_sample_labels_alias_resolution_is_single_pass() -> None:
+    frame = pd.DataFrame({"sample_id": ["S1"], "cancer_type": ["A"]})
+    out, _ = normalize_sample_labels(frame, {"cancer_type": {"A": "B", "B": "C"}})
+    assert out.loc[0, "cancer_type"] == "B"
+
+
+def test_normalize_sample_labels_ignores_missing_optional_columns() -> None:
+    frame = pd.DataFrame({"sample_id": ["S1"], "cancer_type": ["  A  "]})
+    out, stats = normalize_sample_labels(frame, {"primary_site": {"X": "Y"}})
+    assert out["cancer_type"].tolist() == ["A"]
+    assert "primary_site" not in out.columns
+    assert [item.column for item in stats] == ["cancer_type"]
+
+
+def test_normalize_sample_labels_returns_copy() -> None:
+    frame = pd.DataFrame({"sample_id": ["S1"], "cancer_type": ["  A  "]})
+    out, _ = normalize_sample_labels(frame, {})
+    assert out is not frame
+    assert frame.loc[0, "cancer_type"] == "  A  "

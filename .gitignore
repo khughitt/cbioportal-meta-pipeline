@@ -1,4 +1,5 @@
 archive/
+logs/
 
 # Science framework
 .env

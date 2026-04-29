@@ -2,7 +2,7 @@
 id: "discussion:2026-04-24-gene-length-bias-in-mutation-rankings-and-literature"
 type: "discussion"
 title: "Gene length as a confounder: mutation rankings and literature attention"
-status: "in-progress"
+status: "active"
 source_refs:
   - "paper:Lawrence2014"
   - "paper:Martincorena2017"

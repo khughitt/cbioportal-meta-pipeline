@@ -2,7 +2,7 @@
 id: "discussion:2026-04-24-mutation-ordering-and-path-dependency"
 type: "discussion"
 title: "Mutation ordering and path dependency — can we detect A→B asymmetries in cBioPortal data?"
-status: "in-progress"
+status: "active"
 source_refs: []
 related:
   - "task:t078"

@@ -8,6 +8,11 @@ import numpy as np
 import pandas as pd
 from pandas.api.types import CategoricalDtype
 
+from cancer_type_normalization import (
+    extract_label_alias_maps,
+    log_label_normalization_stats,
+    normalize_sample_labels,
+)
 from msi_normalization import log_msi_type_counts, normalize_msi_columns
 from resolve_panel_id import resolve_panel_ids  # type: ignore[import-not-found]
 
@@ -242,6 +247,10 @@ sample_mdat = sample_mdat.rename(
         "SEQ_ASSAY_ID": "seq_assay_id",
     }
 )
+
+label_alias_maps = extract_label_alias_maps(snek.config)
+sample_mdat, label_stats = normalize_sample_labels(sample_mdat, label_alias_maps)
+log_label_normalization_stats(label_stats, study_id=snek.wildcards["id"])
 
 # convert age to ordinal (genie)
 if "age" in sample_mdat.columns:

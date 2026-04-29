@@ -1,5 +1,7 @@
 """Tests for t083 cancer-type label normalization."""
 
+import logging
+
 import pandas as pd
 import pytest
 
@@ -7,6 +9,7 @@ from cancer_type_normalization import (
     LabelNormalizationStats,
     canonicalize_alias_map,
     extract_label_alias_maps,
+    log_label_normalization_stats,
     normalize_code_label,
     normalize_human_label,
     normalize_sample_labels,
@@ -212,3 +215,24 @@ def test_normalize_sample_labels_returns_copy() -> None:
     out, _ = normalize_sample_labels(frame, {})
     assert out is not frame
     assert frame.loc[0, "cancer_type"] == "  A  "
+
+
+def test_log_label_normalization_stats_emits_per_study_counts(
+    caplog: pytest.LogCaptureFixture,
+) -> None:
+    caplog.set_level(logging.INFO, logger="cancer_type_normalization")
+    stats = [
+        LabelNormalizationStats(
+            column="cancer_type", changed=2, blanked_to_na=1, alias_rewritten=1
+        ),
+        LabelNormalizationStats(
+            column="oncotree_code", changed=1, blanked_to_na=0, alias_rewritten=0
+        ),
+    ]
+
+    log_label_normalization_stats(stats, study_id="study_a")
+
+    assert "study study_a" in caplog.text
+    assert "cancer_type" in caplog.text
+    assert "alias_rewritten=1" in caplog.text
+    assert "oncotree_code" in caplog.text

@@ -6,11 +6,14 @@ alias maps for cancer labels.
 
 from __future__ import annotations
 
-from collections.abc import Callable, Mapping
+from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass
+import logging
 import re
 
 import pandas as pd
+
+logger = logging.getLogger("cancer_type_normalization")
 
 _WHITESPACE_RE = re.compile(r"\s+")
 
@@ -160,3 +163,20 @@ def _values_differ(original: object, normalized: str | None) -> bool:
     if normalized is None:
         return True
     return original_text != normalized
+
+
+def log_label_normalization_stats(
+    stats: Sequence[LabelNormalizationStats], *, study_id: str
+) -> None:
+    """Emit per-study diagnostics for non-zero t083 label normalization events."""
+    for item in stats:
+        if item.changed == 0 and item.blanked_to_na == 0 and item.alias_rewritten == 0:
+            continue
+        logger.info(
+            "cancer_type_normalization: study %s column %s changed=%d blanked_to_na=%d alias_rewritten=%d",
+            study_id,
+            item.column,
+            item.changed,
+            item.blanked_to_na,
+            item.alias_rewritten,
+        )

@@ -75,7 +75,9 @@ def canonicalize_alias_map(
     for raw_key, raw_value in alias_map.items():
         key = normalizer(raw_key)
         if key is None:
-            raise ValueError("Label normalization alias map contains an empty alias key.")
+            raise ValueError(
+                "Label normalization alias map contains an empty alias key."
+            )
         if not isinstance(raw_value, str):
             raise TypeError(
                 f"Label normalization alias value for {key!r} must be a string, "
@@ -119,7 +121,9 @@ def normalize_sample_labels(
         if column not in out.columns:
             continue
         normalizer = (
-            normalize_code_label if column in _CODE_LABEL_COLUMNS else normalize_human_label
+            normalize_code_label
+            if column in _CODE_LABEL_COLUMNS
+            else normalize_human_label
         )
         aliases = alias_maps.get(column, {})
         normalized_values: list[str | None] = []

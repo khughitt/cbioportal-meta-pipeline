@@ -67,7 +67,8 @@ def test_duplicate_normalized_alias_keys_fail() -> None:
 def test_empty_alias_keys_fail(bad_key: object) -> None:
     with pytest.raises(ValueError, match="empty alias key"):
         canonicalize_alias_map(
-            {bad_key: "Breast Cancer"}, normalizer=normalize_human_label  # type: ignore[dict-item]
+            {bad_key: "Breast Cancer"},
+            normalizer=normalize_human_label,  # type: ignore[dict-item]
         )
 
 
@@ -83,7 +84,8 @@ def test_empty_alias_values_fail(bad_value: object) -> None:
 def test_non_string_alias_values_raise_typeerror(bad_value: object) -> None:
     with pytest.raises(TypeError, match="must be a string"):
         canonicalize_alias_map(
-            {"Breast Cancer": bad_value}, normalizer=normalize_human_label  # type: ignore[dict-item]
+            {"Breast Cancer": bad_value},
+            normalizer=normalize_human_label,  # type: ignore[dict-item]
         )
 
 
@@ -134,7 +136,9 @@ def _sample_labels() -> pd.DataFrame:
             "sample_type_detailed": pd.Series(
                 [" Primary ", " Distant   Metastasis ", "", None], dtype="category"
             ),
-            "oncotree_code": pd.Series([" brca ", " luad ", " ", None], dtype="category"),
+            "oncotree_code": pd.Series(
+                [" brca ", " luad ", " ", None], dtype="category"
+            ),
         }
     )
 

@@ -170,8 +170,16 @@ mut.to_feather(snek.output[0])
 # or non-standard build values are handled via study_reference_build_override
 # config map. Fail loud on unknown — no silent default per AGENTS.md.
 _BUILD_ALIASES = {
-    "GRCh37": "hg19", "grch37": "hg19", "hg19": "hg19", "b37": "hg19", "37": "hg19",
-    "GRCh38": "hg38", "grch38": "hg38", "hg38": "hg38", "b38": "hg38", "38": "hg38",
+    "GRCh37": "hg19",
+    "grch37": "hg19",
+    "hg19": "hg19",
+    "b37": "hg19",
+    "37": "hg19",
+    "GRCh38": "hg38",
+    "grch38": "hg38",
+    "hg38": "hg38",
+    "b38": "hg38",
+    "38": "hg38",
 }
 study_id = snek.wildcards["id"]
 override_map = snek.config.get("study_reference_build_override", {}) or {}
@@ -188,7 +196,11 @@ else:
     )
     raw_unique = [
         v
-        for v in raw_build_values["NCBI_Build"].dropna().astype(str).str.strip().unique()
+        for v in raw_build_values["NCBI_Build"]
+        .dropna()
+        .astype(str)
+        .str.strip()
+        .unique()
         if v
     ]
     if not raw_unique:

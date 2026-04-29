@@ -186,15 +186,25 @@ def test_empty_alias_keys_fail(bad_key: object) -> None:
         canonicalize_alias_map({bad_key: "Breast Cancer"}, normalizer=normalize_human_label)  # type: ignore[dict-item]
 
 
-@pytest.mark.parametrize("bad_value", ["", "   ", None, pd.NA])
+@pytest.mark.parametrize("bad_value", ["", "   "])
 def test_empty_alias_values_fail(bad_value: object) -> None:
     with pytest.raises(ValueError, match="empty alias value"):
+        canonicalize_alias_map({"Breast Cancer": bad_value}, normalizer=normalize_human_label)  # type: ignore[dict-item]
+
+
+@pytest.mark.parametrize("bad_value", [None, pd.NA, 123])
+def test_non_string_alias_values_raise_typeerror(bad_value: object) -> None:
+    with pytest.raises(TypeError, match="must be a string"):
         canonicalize_alias_map({"Breast Cancer": bad_value}, normalizer=normalize_human_label)  # type: ignore[dict-item]
 
 
 def test_non_mapping_alias_config_fails() -> None:
     with pytest.raises(TypeError, match="cancer_type_alias_map"):
         extract_label_alias_maps({"cancer_type_alias_map": ["not", "a", "mapping"]})
+
+
+def test_none_alias_config_is_treated_as_empty() -> None:
+    assert extract_label_alias_maps({"cancer_type_alias_map": None}) == {}
 
 
 def test_extract_label_alias_maps_ignores_unrelated_config() -> None:
@@ -389,6 +399,12 @@ def test_normalize_sample_labels_is_idempotent() -> None:
     assert all(item.changed == 0 and item.alias_rewritten == 0 and item.blanked_to_na == 0 for item in stats)
 
 
+def test_normalize_sample_labels_alias_resolution_is_single_pass() -> None:
+    frame = pd.DataFrame({"sample_id": ["S1"], "cancer_type": ["A"]})
+    out, _ = normalize_sample_labels(frame, {"cancer_type": {"A": "B", "B": "C"}})
+    assert out.loc[0, "cancer_type"] == "B"
+
+
 def test_normalize_sample_labels_ignores_missing_optional_columns() -> None:
     frame = pd.DataFrame({"sample_id": ["S1"], "cancer_type": ["  A  "]})
     out, stats = normalize_sample_labels(frame, {"primary_site": {"X": "Y"}})
@@ -435,6 +451,11 @@ _CODE_LABEL_COLUMNS = ("oncotree_code",)
 
 @dataclass(frozen=True)
 class LabelNormalizationStats:
+    """Per-column stats; changed is the total transformed count.
+
+    blanked_to_na and alias_rewritten are non-disjoint subsets of changed.
+    """
+
     column: str
     changed: int
     blanked_to_na: int
@@ -583,8 +604,10 @@ logger = logging.getLogger("cancer_type_normalization")
 def log_label_normalization_stats(
     stats: Sequence[LabelNormalizationStats], *, study_id: str
 ) -> None:
-    """Emit per-study diagnostics for t083 label normalization."""
+    """Emit per-study diagnostics for non-zero t083 label normalization events."""
     for item in stats:
+        if item.changed == 0 and item.blanked_to_na == 0 and item.alias_rewritten == 0:
+            continue
         logger.info(
             "cancer_type_normalization: study %s column %s changed=%d blanked_to_na=%d alias_rewritten=%d",
             study_id,
@@ -647,10 +670,26 @@ git commit -m "feat: apply cancer label normalization on ingest"
 ## Task 5: Static Verification And Task Closeout
 
 **Files:**
+- Modify: `AGENTS.md`
 - Modify: `tasks/active.md` through `science-tool`
 - Modify: `tasks/done/2026-04.md` through `science-tool`
 
-- [ ] **Step 1: Run focused tests**
+- [ ] **Step 1: Document optional config keys**
+
+Add this paragraph after the hypermutator annotation bullet list in `AGENTS.md`:
+
+```markdown
+### Optional ingest-time label canonicalization
+
+`convert_to_feather.py` applies deterministic t083 cleanup to clinical sample labels:
+whitespace is stripped/collapsed for `cancer_type`, `cancer_type_detailed`, `primary_site`,
+`sample_class`, `sample_type`, and `sample_type_detailed`; `oncotree_code` is also uppercased.
+Run configs may provide `cancer_type_alias_map`, `cancer_type_detailed_alias_map`,
+`primary_site_alias_map`, and `oncotree_code_alias_map` to collapse known study-specific labels
+without adding an external OncoTree table.
+```
+
+- [ ] **Step 2: Run focused tests**
 
 Run:
 
@@ -660,7 +699,7 @@ uv run --frozen pytest code/scripts/tests/test_cancer_type_normalization.py code
 
 Expected: PASS.
 
-- [ ] **Step 2: Run pyright**
+- [ ] **Step 3: Run pyright**
 
 Run:
 
@@ -670,7 +709,7 @@ uv run --frozen pyright
 
 Expected: `0 errors, 0 warnings, 0 informations`.
 
-- [ ] **Step 3: Run Ruff check**
+- [ ] **Step 4: Run Ruff check**
 
 Run:
 
@@ -680,17 +719,23 @@ uv run --frozen ruff check code/scripts
 
 Expected: `All checks passed!`.
 
-- [ ] **Step 4: Run focused format check**
+- [ ] **Step 5: Run format check**
 
 Run:
+
+```bash
+uv run --frozen ruff format --check code/scripts
+```
+
+Expected: all `code/scripts` files are already formatted. If unrelated pre-existing formatting
+drift appears, do not reformat unrelated files in this task; record the drift in the final notes
+and run the focused format command below instead:
 
 ```bash
 uv run --frozen ruff format --check code/scripts/cancer_type_normalization.py code/scripts/convert_to_feather.py code/scripts/tests/test_cancer_type_normalization.py
 ```
 
-Expected: all listed files already formatted.
-
-- [ ] **Step 5: Mark t083 done**
+- [ ] **Step 6: Mark t083 done**
 
 Run:
 
@@ -700,16 +745,16 @@ uv run --frozen science-tool tasks done t083 --note "Implemented ingest-time can
 
 Expected: task t083 moves out of `tasks/active.md` into the monthly done file.
 
-- [ ] **Step 6: Commit task closeout**
+- [ ] **Step 7: Commit task closeout**
 
 Run:
 
 ```bash
-git add tasks/active.md tasks/done/2026-04.md
+git add AGENTS.md tasks/active.md tasks/done/2026-04.md
 git commit -m "chore(tasks): close t083"
 ```
 
-- [ ] **Step 7: Final status check**
+- [ ] **Step 8: Final status check**
 
 Run:
 

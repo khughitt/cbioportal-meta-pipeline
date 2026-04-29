@@ -46,16 +46,6 @@ Open question from CH topic: ASXL1 and TET2 are bona fide tumor suppressors in s
 
 
 
-## [t083] Pipeline addition: cancer-type label canonicalization (strip+case; optional OncoTree mapping)
-- priority: P2
-- status: proposed
-- aspects: [software-development]
-- related: [task:bias-audit-cross-study-aggregation-pipeline]
-- group: pipeline
-- created: 2026-04-13
-
-
-
 ## [t084] Pipeline addition: study-prefix patient_id in combined sample table to prevent cross-study collisions
 - priority: P3
 - status: proposed

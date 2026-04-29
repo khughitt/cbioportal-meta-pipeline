@@ -100,6 +100,15 @@ consumer-facing.
   drive the TMB denominator via `build_panel_callable_sizes`. See
   `topic:tumor-mutational-burden`.
 
+### Optional ingest-time label canonicalization
+
+`convert_to_feather.py` applies deterministic t083 cleanup to clinical sample labels:
+whitespace is stripped/collapsed for `cancer_type`, `cancer_type_detailed`, `primary_site`,
+`sample_class`, `sample_type`, and `sample_type_detailed`; `oncotree_code` is also uppercased.
+Run configs may provide `cancer_type_alias_map`, `cancer_type_detailed_alias_map`,
+`primary_site_alias_map`, and `oncotree_code_alias_map` to collapse known study-specific labels
+without adding an external OncoTree table.
+
 The final ratio output `gene_cancer_study_ratio_annotated.feather` carries the gene-level
 overlays, the CH-aware annotations, and the joined t077 pooled meta-analysis columns
 (`pooled_*_{inclusive,exclusive}`, `k_studies_{inclusive,exclusive}`,

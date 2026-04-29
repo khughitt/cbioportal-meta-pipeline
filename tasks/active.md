@@ -36,26 +36,6 @@ Side-by-side: our summary/mut/clusters/cancer.feather vs Hoadley2018 integrated 
 
 Open question from CH topic: ASXL1 and TET2 are bona fide tumor suppressors in some lineages but also CH leakage. Disambiguation literature for solid-tumor pan-cancer panel data.
 
-## [t072] F10 [Significant] Saturation-aware per-cancer interpretation context column
-- priority: P3
-- status: proposed
-- aspects: [software-development]
-- related: [task:t067]
-- group: audit-fixes
-- created: 2026-04-13
-
-Severity: Significant. From audit F10. Add cancer_saturation_status column derived from per-cancer cohort N + Lawrence 2014 per-cancer required-N. Flag long-tail rankings for under-sampled cancers.
-
-## [t073] F11 [Minor] Add n_studies_contributing column to gene_cancer_study output
-- priority: P3
-- status: proposed
-- aspects: [software-development]
-- related: [task:t067]
-- group: audit-fixes
-- created: 2026-04-13
-
-Severity: Minor. From audit F11. Trivial: count of non-null per-study columns per row, added as explicit column in output.
-
 ## [t082] Pipeline addition: HGNC gene-symbol alias mapping in convert_to_feather.py
 - priority: P2
 - status: proposed

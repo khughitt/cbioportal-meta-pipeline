@@ -479,3 +479,88 @@ def test_callable_sample_fraction_distinguishes_per_cancer_partial_coverage() ->
     # would report 10/14 = 0.71 — this assertion would catch that bug.
     assert cx["callable_sample_fraction_inclusive"] == pytest.approx(1.0)
     assert cy["callable_sample_fraction_inclusive"] == pytest.approx(1.0)
+
+
+def test_n_studies_contributing_alias_matches_non_null_inclusive_studies() -> None:
+    """t073: expose the explicit task-named contribution count column."""
+    study_a = _per_study_frame([("Neuroblastoma", "GENE1", 5, 5, 0.5, 0.5, 10, 10)])
+    study_b = _per_study_frame([("Neuroblastoma", "GENE2", 3, 3, 0.3, 0.3, 10, 10)])
+
+    from create_combined_gene_cancer_freq_table import (
+        _annotate_callability,
+        combine_paired_pivot,
+    )
+
+    num_df, ratio_df, n_incl_df, n_excl_df = combine_paired_pivot(
+        [("study_a", study_a), ("study_b", study_b)]
+    )
+    panel_coverage = pd.DataFrame({"panel_id": ["PANEL_A"], "gene": ["GENE1"]})
+    num_out, ratio_out = _annotate_callability(
+        num_df,
+        ratio_df,
+        studies=["study_a", "study_b"],
+        panel_coverage=panel_coverage,
+        study_panel_map={},
+        n_inclusive_df=n_incl_df,
+        n_exclusive_df=n_excl_df,
+    )
+
+    row = ratio_out.loc[("Neuroblastoma", "GENE1")]
+    assert row["n_contributing_studies"] == 1
+    assert row["n_studies_contributing"] == 1
+    assert num_out.loc[("Neuroblastoma", "GENE1"), "n_studies_contributing"] == 1
+
+
+def test_lawrence2014_saturation_context_uses_per_cancer_cohort_size() -> None:
+    """t072: add per-cancer saturation context from explicit Lawrence 2014 references."""
+    study_a = _per_study_frame(
+        [
+            ("Neuroblastoma", "GENE1", 5, 5, 0.0125, 0.0125, 400, 400),
+            ("Melanoma", "GENE1", 4, 4, 0.04, 0.04, 100, 100),
+            ("Rare Cancer", "GENE1", 1, 1, 0.1, 0.1, 10, 10),
+        ]
+    )
+    study_b = _per_study_frame(
+        [
+            ("Neuroblastoma", "GENE1", 3, 3, 0.01, 0.01, 300, 300),
+            ("Melanoma", "GENE1", 4, 4, 0.04, 0.04, 100, 100),
+            ("Rare Cancer", "GENE1", 1, 1, 0.1, 0.1, 10, 10),
+        ]
+    )
+
+    from create_combined_gene_cancer_freq_table import (
+        _annotate_callability,
+        combine_paired_pivot,
+    )
+
+    num_df, ratio_df, n_incl_df, n_excl_df = combine_paired_pivot(
+        [("study_a", study_a), ("study_b", study_b)]
+    )
+    panel_coverage = pd.DataFrame({"panel_id": ["PANEL_A"], "gene": ["GENE1"]})
+    _, ratio_out = _annotate_callability(
+        num_df,
+        ratio_df,
+        studies=["study_a", "study_b"],
+        panel_coverage=panel_coverage,
+        study_panel_map={},
+        n_inclusive_df=n_incl_df,
+        n_exclusive_df=n_excl_df,
+    )
+
+    supported = ratio_out.loc[("Neuroblastoma", "GENE1")]
+    assert supported["n_total_samples_in_cancer_inclusive"] == 700
+    assert supported["lawrence2014_required_n"] == 650
+    assert supported["lawrence2014_saturation_fraction"] == pytest.approx(700 / 650)
+    assert supported["cancer_saturation_status"] == "saturated"
+
+    undersampled = ratio_out.loc[("Melanoma", "GENE1")]
+    assert undersampled["n_total_samples_in_cancer_inclusive"] == 200
+    assert undersampled["lawrence2014_required_n"] == 5300
+    assert undersampled["lawrence2014_saturation_fraction"] == pytest.approx(200 / 5300)
+    assert undersampled["cancer_saturation_status"] == "undersampled"
+
+    unsupported = ratio_out.loc[("Rare Cancer", "GENE1")]
+    assert unsupported["n_total_samples_in_cancer_inclusive"] == 20
+    assert pd.isna(unsupported["lawrence2014_required_n"])
+    assert pd.isna(unsupported["lawrence2014_saturation_fraction"])
+    assert unsupported["cancer_saturation_status"] == "no_lawrence_reference"

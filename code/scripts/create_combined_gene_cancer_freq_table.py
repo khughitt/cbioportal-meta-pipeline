@@ -60,10 +60,55 @@ import sys
 
 import pandas as pd
 
+LAWRENCE2014_REQUIRED_N_BY_CANCER: dict[str, int] = {
+    # Lawrence 2014 power analysis examples for a reasonably comprehensive
+    # catalog of candidate cancer genes mutated in >=2% of patients.
+    "melanoma": 5300,
+    "neuroblastoma": 650,
+}
+
+LAWRENCE2014_CANCER_ALIASES: dict[str, str] = {
+    "melanoma": "melanoma",
+    "skin cutaneous melanoma": "melanoma",
+    "neuroblastoma": "neuroblastoma",
+}
+
 
 def _study_id_from_path(infile: str) -> str:
     """Extract the study id from a per-study output path."""
     return os.path.basename(os.path.dirname(os.path.dirname(os.path.dirname(infile))))
+
+
+def _normalize_cancer_label(cancer_type: object) -> str:
+    """Normalize a cancer label for explicit reference-table lookup."""
+    return str(cancer_type).strip().lower().replace("-", " ")
+
+
+def _build_lawrence2014_required_n(
+    overrides: dict[str, int] | None = None,
+) -> dict[str, int]:
+    """Build explicit cancer-label -> required-N references.
+
+    The built-ins include only values stated directly in Lawrence 2014's power-analysis
+    discussion. Config overrides allow a run to provide a fuller curated table without
+    silently extrapolating from unsupported cancer labels.
+    """
+    required_n = dict(LAWRENCE2014_REQUIRED_N_BY_CANCER)
+    if overrides:
+        for cancer_type, required in overrides.items():
+            normalized = _normalize_cancer_label(cancer_type)
+            canonical = LAWRENCE2014_CANCER_ALIASES.get(normalized, normalized)
+            required_n[canonical] = int(required)
+    return required_n
+
+
+def _classify_saturation_status(required_n: float, total_samples: float) -> str:
+    """Return saturation status from explicit required-N and observed cohort size."""
+    if pd.isna(required_n):
+        return "no_lawrence_reference"
+    if total_samples >= required_n:
+        return "saturated"
+    return "undersampled"
 
 
 def combine_paired_pivot(
@@ -256,6 +301,7 @@ def _annotate_callability(
     n_inclusive_df: pd.DataFrame,
     n_exclusive_df: pd.DataFrame,
     enforce_callability_nesting_check: bool = True,
+    lawrence2014_required_n_by_cancer: dict[str, int] | None = None,
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Attach n_total_studies / n_contributing_studies / n_panel_covered_studies /
     callable_fraction columns to both num_df and ratio_df.
@@ -317,6 +363,8 @@ def _annotate_callability(
         num_df[inclusive_cols].notna().sum(axis=1).astype(int).to_numpy()
     )
     ratio_df["n_contributing_studies"] = n_contributing_per_row.to_numpy()
+    for df in (num_df, ratio_df):
+        df["n_studies_contributing"] = df["n_contributing_studies"].to_numpy()
 
     # t070: sample-weighted callability columns.
     # Per-(cancer, gene) sum across studies of panel-restricted denominator.
@@ -385,16 +433,39 @@ def _annotate_callability(
     n_total_samples_exclusive = cohort_per_study_per_cancer_exclusive.sum(
         axis=1, skipna=True
     )
-    n_total_inclusive_per_row = pd.Series(
+    n_total_inclusive_raw = pd.Series(
         cancer_idx.map(n_total_samples_inclusive), index=ratio_df.index
     )
-    n_total_exclusive_per_row = pd.Series(
+    n_total_exclusive_raw = pd.Series(
         cancer_idx.map(n_total_samples_exclusive), index=ratio_df.index
     )
+    n_total_inclusive_per_row = n_total_inclusive_raw.copy()
+    n_total_exclusive_per_row = n_total_exclusive_raw.copy()
     n_total_inclusive_per_row = n_total_inclusive_per_row.replace(0, float("nan"))
     n_total_exclusive_per_row = n_total_exclusive_per_row.replace(0, float("nan"))
 
+    required_n_by_cancer = _build_lawrence2014_required_n(
+        lawrence2014_required_n_by_cancer
+    )
+    normalized_cancers = pd.Series(
+        cancer_idx.map(_normalize_cancer_label), index=ratio_df.index
+    ).map(lambda label: LAWRENCE2014_CANCER_ALIASES.get(label, label))
+    lawrence_required_n = normalized_cancers.map(required_n_by_cancer).astype(float)
+    lawrence_fraction = n_total_inclusive_raw.astype(float) / lawrence_required_n
+    saturation_status = [
+        _classify_saturation_status(required_n, total_samples)
+        for required_n, total_samples in zip(
+            lawrence_required_n, n_total_inclusive_raw.astype(float), strict=True
+        )
+    ]
+
     for df in (num_df, ratio_df):
+        df["n_total_samples_in_cancer_inclusive"] = (
+            n_total_inclusive_raw.reindex(df.index).fillna(0).astype("int64").to_numpy()
+        )
+        df["n_total_samples_in_cancer_exclusive"] = (
+            n_total_exclusive_raw.reindex(df.index).fillna(0).astype("int64").to_numpy()
+        )
         df["n_panel_covered_samples_inclusive"] = (
             n_panel_covered_inclusive.reindex(df.index)
             .fillna(0)
@@ -414,6 +485,16 @@ def _annotate_callability(
         df["callable_sample_fraction_exclusive"] = (
             df["n_panel_covered_samples_exclusive"].astype(float)
             / n_total_exclusive_per_row.astype(float).to_numpy()
+        )
+        df["lawrence2014_required_n"] = lawrence_required_n.reindex(df.index).to_numpy()
+        df["lawrence2014_saturation_fraction"] = lawrence_fraction.reindex(
+            df.index
+        ).to_numpy()
+        df["cancer_saturation_status"] = (
+            pd.Series(saturation_status, index=ratio_df.index)
+            .reindex(df.index)
+            .astype(str)
+            .to_numpy()
         )
 
     return num_df, ratio_df
@@ -489,6 +570,9 @@ def _run_via_snakemake() -> None:
         n_inclusive_df,
         n_exclusive_df,
         enforce_callability_nesting_check=enforce,
+        lawrence2014_required_n_by_cancer=snek.config.get(
+            "lawrence2014_required_n_by_cancer"
+        ),
     )
 
     num_df = num_df.reset_index()

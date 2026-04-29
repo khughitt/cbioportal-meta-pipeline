@@ -9,18 +9,30 @@ consumers vs which are intermediate artifacts. Closes audit finding F4
 ## Canonical outputs (use these)
 
 Both canonical outputs carry three **gene-level** overlays (Bailey / CGC / Sanchez-Vega) from a
-single unified annotation step (`annotate.py`). The canonical ratio table additionally carries
-the CH-aware annotations from `annotate_ch.py` plus the joined t077 pooled meta-analysis
-surface from `gene_cancer_pooled.feather`.
+single unified annotation step (`annotate.py`). The raw cross-study gene-cancer tables now also
+carry per-row study-contribution and per-cancer saturation context from
+`create_combined_gene_cancer_freq_table.py`; these columns flow through the canonical annotated
+outputs. The canonical ratio table additionally carries the CH-aware annotations from
+`annotate_ch.py` plus the joined t077 pooled meta-analysis surface from
+`gene_cancer_pooled.feather`.
 
 | File | Annotation columns added |
 |---|---|
-| `gene_cancer_study_annotated.feather` | `bailey2018_driver`, `bailey2018_source`, `cgc_tier_1`, `cgc_tier_2`, `cgc_role_in_cancer`, `cgc_source`, `sanchez_vega_pathway`, `sanchez_vega_og_tsg`, `sanchez_vega_source` |
+| `gene_cancer_study_annotated.feather` | `n_studies_contributing`, `n_total_samples_in_cancer_inclusive`, `n_total_samples_in_cancer_exclusive`, `lawrence2014_required_n`, `lawrence2014_saturation_fraction`, `cancer_saturation_status`, plus `bailey2018_driver`, `bailey2018_source`, `cgc_tier_1`, `cgc_tier_2`, `cgc_role_in_cancer`, `cgc_source`, `sanchez_vega_pathway`, `sanchez_vega_og_tsg`, `sanchez_vega_source` |
 | `gene_cancer_study_ratio_annotated.feather` | all of the above, plus `ch_priority_gene`, `mean_matched`, `mean_unmatched`, `n_matched_studies`, `n_unmatched_studies`, and paired pooled meta-analysis columns such as `pooled_rate_inclusive`, `pooled_rate_exclusive`, `i2_inclusive`, `i2_exclusive`, `k_studies_inclusive`, `k_studies_exclusive`, `status_inclusive`, `status_exclusive` |
 
 These are the **only** tables consumers should read for cross-study mutation-frequency claims.
 
 ### Overlay semantics
+
+- **Study / saturation context**: `n_studies_contributing` is the explicit count of non-null
+  inclusive per-study columns for each `(cancer_type, symbol)` row. The paired
+  `n_total_samples_in_cancer_{inclusive,exclusive}` columns expose the per-cancer denominator
+  used for sample-weighted callability. `lawrence2014_required_n` and
+  `lawrence2014_saturation_fraction` compare the inclusive per-cancer cohort size with explicit
+  Lawrence 2014 required-N references. `cancer_saturation_status` is `saturated`,
+  `undersampled`, or `no_lawrence_reference`; the last value means no explicit Lawrence
+  reference was available for that cancer label, so no hidden threshold was applied.
 
 - **Bailey 2018** (`bailey2018_driver`): per-(gene, cancer_type) boolean. True if the (gene,
   cancer_type) pair is in Bailey's per-cancer roster OR if the gene is a Bailey pan-cancer

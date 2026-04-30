@@ -25,7 +25,7 @@
 - `rg '"status": "fail"' /tmp/cbioportal-graph-audit.json`: no matches
 - `SCIENCE_CONFIG_DIR=/tmp/science-phase2-cbioportal uv run science-tool graph build`: passed and materialized `knowledge/graph.trig`
 - `SCIENCE_CONFIG_DIR=/tmp/science-phase2-cbioportal-verify uv run --frozen science-tool graph build`: passed and materialized `knowledge/graph.trig`
-- `bash validate.sh --verbose`: passed with one existing `[UNVERIFIED]` warning in `doc/papers/Schill2024.md`
+- `bash validate.sh --verbose`: passed with one existing unverified-source warning in `doc/papers/Schill2024.md`
 
 ## Move Notes
 

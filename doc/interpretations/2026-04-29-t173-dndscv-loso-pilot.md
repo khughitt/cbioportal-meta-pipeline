@@ -60,11 +60,11 @@ the holdout top 100 (0.68) relative to the base top 100 (0.61), while CGC tier-1
 decreased modestly from 0.90 to 0.86. GENIE removal therefore appears to change which
 driver-supported genes rank highly, rather than just replacing drivers with non-drivers.
 
-Reference-recovery values should be treated as pre-t174 values. dNdScv currently carries CDKN2A
-as isoform-level symbols such as `CDKN2A.p16INK4a`, while Bailey and CGC references use bare
-gene symbols. Resolving t174 will shift absolute Bailey/CGC recovery at K values where a CDKN2A
-isoform is present. It will not change the rank-overlap/Jaccard gate, and the relative conclusion
-from this pilot does not depend on the current absolute recovery values.
+Postscript: t174 has now resolved the CDKN2A isoform-symbol overlay issue. This historical pilot
+note keeps the original pilot table for traceability; use
+`doc/interpretations/2026-04-30-t173-dndscv-loso-synthesis.md` for the final post-t174
+Bailey/CGC recovery values. The rank-overlap/Jaccard gate and the relative conclusion from this
+pilot did not depend on the reference overlays.
 
 ## Rank changes
 

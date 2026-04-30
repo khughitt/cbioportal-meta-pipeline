@@ -90,6 +90,7 @@ change the next best use of compute: stop the blind broad-holdout fan-out for no
 the GENIE-specific mechanism. The next analysis should identify which GENIE cancer/build groups
 or high-weight cancer labels drive the genes lost and gained in the `exclude_genie` top 100.
 
-The pre-t174 CDKN2A caveat still applies. Absolute Bailey/CGC recovery values may shift after
-isoform-level symbols are normalized, but the Jaccard contrast and GENIE-specific conclusion do
-not depend on those reference overlays.
+Postscript: t174 has now resolved the CDKN2A isoform-symbol overlay issue. Use
+`doc/interpretations/2026-04-30-t173-dndscv-loso-synthesis.md` for the final post-t174
+Bailey/CGC recovery values. The Jaccard contrast and GENIE-specific conclusion did not depend on
+those reference overlays.

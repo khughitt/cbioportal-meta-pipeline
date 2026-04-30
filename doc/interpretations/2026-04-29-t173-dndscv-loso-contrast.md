@@ -97,9 +97,10 @@ instability" explanation. The next useful step is either:
 - stop the expensive fan-out and investigate which GENIE cancer/build groups drive the
   re-ranking.
 
-The same pre-t174 CDKN2A caveat applies as in the pilot note: absolute Bailey/CGC recovery values
-may shift after isoform-level symbols are normalized, but the Jaccard gate and contrastive
-conclusion do not depend on those reference overlays.
+Postscript: t174 has now resolved the CDKN2A isoform-symbol overlay issue. Use
+`doc/interpretations/2026-04-30-t173-dndscv-loso-synthesis.md` for the final post-t174
+Bailey/CGC recovery values. The Jaccard gate and contrastive conclusion did not depend on those
+reference overlays.
 
 Follow-up: the second broad non-GENIE contrast, `pog570_bcgsc_2020`, has now been run and also
 supports the GENIE-specific disruption reading; see

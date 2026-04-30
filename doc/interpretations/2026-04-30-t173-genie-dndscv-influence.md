@@ -157,6 +157,6 @@ lost-significance table is therefore the better lens for "which labels weaken ba
 genes," while the summed-rank table is the better lens for "where the global rank movement is
 concentrated."
 
-The t174 CDKN2A isoform-symbol caveat still applies for external driver overlays, but this
-analysis uses dNdScv ranks and per-cancer dNdScv evidence directly, so the main attribution does
+t174 has now resolved the CDKN2A isoform-symbol caveat for external driver overlays. This
+analysis uses dNdScv ranks and per-cancer dNdScv evidence directly, so the main attribution did
 not depend on Bailey/CGC matching.

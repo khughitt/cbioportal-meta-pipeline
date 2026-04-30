@@ -2,14 +2,14 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Add the minimum upstream support in `~/d/science/` (a.k.a. `science-tool`) for the meta-project federation model defined in `2026-04-30-cancer-meta-project-design.md` §3 — so that a `meta` project can register children, cross-project addresses can be written consistently, the federated knowledge graph can be materialized, and `science:status --federated` can roll up status across children.
+**Goal:** Add the minimum upstream support in `~/d/science/` (a.k.a. `science-tool`) for the meta-project federation model defined in `2026-04-30-cancer-meta-project-design.md` §3 — so that a `meta` project can register children, cross-project addresses can be written consistently, the federated knowledge graph can be materialized, and a federated status rollup can be produced.
 
 **Architecture:**
-- Add a typed `ProjectConfig` pydantic schema for `science.yaml` (currently parsed ad-hoc) — new fields: `id`, `role`, `parent`, plus `children:` for `meta` projects. Extend the existing `RegisteredProject` global registry to track `parent`/`role`. Keep `science:sync` as the single sync entrypoint, taught to recognize meta/children relationships. Implement federated graph materialization as a new mode in the existing `graph` command. `status --federated` walks `children:` and concatenates per-child status renderings under an umbrella header.
+- Add a typed `ProjectConfig` pydantic schema for `science.yaml` (currently parsed ad-hoc) — new fields: `id`, `role`, `parent`, plus `children:` for `meta` projects. Extend the existing `RegisteredProject` global registry to track `parent`/`role`/`id`. Add a new `science-tool federation` click subgroup with `validate` and `status` subcommands. Extend the existing `graph build` command so that, in a child, it auto-registers the parent meta, and in a meta, it runs the standard local materialization first and then a federation pass that unions each child's TriG contexts under `cancer://<child-id>` named graphs. Update the existing `/science:status` skill to dispatch to `science-tool federation status` when `role: meta`.
 - Path canonicalization: `science.yaml` stores tilde-prefixed paths; resolution uses `Path.expanduser().resolve()`; comparisons always operate on resolved physical paths.
 - All writes are local: a child's commands only write the child's files; meta's commands only write meta's files.
 
-**Tech Stack:** Python 3.13+, pydantic v2, click (CLI), pyyaml, rdflib (existing dep), pytest. All in `~/d/science/science-tool/`.
+**Tech Stack:** Python 3.11+ (per `science-tool/pyproject.toml`'s `requires-python = ">=3.11"`), pydantic v2, click (CLI; existing group `main` exposed as the `science-tool` entry point), pyyaml, rdflib (existing dep, already used with named graphs and TriG), pytest. All in `~/d/science/science-tool/`. Do NOT use 3.12/3.13-only APIs (e.g., `typing.Self` is fine; `typing.override` is not).
 
 **Plan location:** This plan lives at `~/d/r/cbioportal/doc/plans/2026-04-30-federation-v1-plan.md` for now (paired with the design doc); it moves to `~/d/cancer/meta/doc/plans/` once the umbrella is materialized in Phase 3.
 
@@ -18,21 +18,24 @@
 ## Task 0: Repo orientation (no code)
 
 **Files (read-only):**
-- Read: `~/d/science/science-tool/pyproject.toml` (deps, package layout)
-- Read: `~/d/science/science-tool/src/science_tool/cli.py` — locate `sync`, `status`, `graph` click commands; note line numbers
+- Read: `~/d/science/science-tool/pyproject.toml` (deps, package layout — note `requires-python = ">=3.11"` and `science-tool = "science_tool.cli:main"` script entry: the click group is named **`main`**, not `cli`)
+- Read: `~/d/science/science-tool/src/science_tool/cli.py` — locate the click group (line ~100, `@click.group()` `def main()`), the existing `sync` group (line ~3143, with subcommands `run`, `status`, `projects`, `rebuild`), and the `graph` group (line ~552, with `build`/`audit`/`migrate` and `ensure_registered` invoked from `graph_build`).
 - Read: `~/d/science/science-tool/src/science_tool/paths.py` (existing `science.yaml` profile resolution)
 - Read: `~/d/science/science-tool/src/science_tool/registry/config.py` (existing global cross-project registry at `~/.config/science/config.yaml`)
+- Read: `~/d/science/science-tool/src/science_tool/registry/sync.py` (the actual `sync run` engine called by the CLI)
 - Read: `~/d/science/science-tool/src/science_tool/graph/sources.py` (`load_project_sources` and `science.yaml` parsing for graph)
-- Read: `~/d/science/science-tool/src/science_tool/graph/store.py` (graph materialization — TriG output, named graphs)
-- Read existing tests under `~/d/science/science-tool/tests/` to learn the test conventions used (fixture patterns, factory style, async/sync, mock vs. real fs)
-- Read: `2026-04-30-cancer-meta-project-design.md` §3 (Federation v1.0 spec) — the source of truth for what this plan implements
+- Read: `~/d/science/science-tool/src/science_tool/graph/store.py` — note the existing `GRAPH_LAYERS` constant (`"graph/knowledge"`, `"graph/bridge"`, `"graph/causal"`, `"graph/provenance"`, `"graph/datasets"`). Existing TriG output already uses named graphs; **federated parsing must use `rdflib.Dataset()`, not `rdflib.Graph()`**, or contexts will be silently dropped.
+- Read: `~/d/science/commands/status.md` and `~/d/science/commands/sync.md` — these are the *skill* documents (markdown command files) that the user invokes via `/science:status` / `/science:sync`. Note: there is currently **no** `science-tool status` click subcommand. The skill walks project files itself; this plan adds a new CLI command and updates the skill to call it.
+- Read existing tests under `~/d/science/science-tool/tests/` to learn the test conventions used (fixture patterns, `CliRunner` usage, mock vs. real fs).
+- Read: `2026-04-30-cancer-meta-project-design.md` §3 (Federation v1.0 spec) — the source of truth for what this plan implements.
 
 - [ ] **Step 1: Read the listed files and write a 200-word orientation note** to `~/d/science/science-tool/notes/2026-04-30-federation-orientation.md` (gitignored; just a scratch note). The note must answer:
   1. Where is `science.yaml` currently parsed? (List all call sites)
   2. Is there an existing pydantic schema for `science.yaml`? If yes, where; if no, that's a gap this plan must fill.
-  3. How does `science:sync` currently discover peer projects? (Trace the dispatch path.)
-  4. What graph IR does `science:graph build` emit? (TriG, single-graph or named-graphs already?)
-  5. What test framework + fixture style is conventional?
+  3. How does the existing `science-tool sync run` engine work? Where is the auto-registration of *the current project* triggered? (Hint: `graph build`, via `ensure_registered`.)
+  4. What graph IR does `science-tool graph build` emit? Confirm: TriG with named graphs (per `GRAPH_LAYERS`).
+  5. What does `/science:status` (the skill) currently do? Note that the federation rollup will be a new `science-tool federation status` CLI command, and the skill is updated to invoke it when the project's `role: meta`.
+  6. What test framework + fixture style is conventional?
 
   This note exists to prevent later tasks from making wrong assumptions. Do **not** edit code in this task.
 
@@ -67,18 +70,19 @@ from science_tool.project_config import (
 
 def test_loads_minimal_existing_yaml(tmp_path: Path) -> None:
     """An existing science.yaml without new fields must still load."""
+    project_root = tmp_path / "cbioportal"
+    project_root.mkdir()
     yaml_text = """
 name: cbioportal
 created: "2025-02-21"
 profile: research
 research_question: "What is the structure of somatic mutations across cancers?"
 """
-    yaml_path = tmp_path / "science.yaml"
-    yaml_path.write_text(yaml_text)
+    (project_root / "science.yaml").write_text(yaml_text)
 
-    cfg = load_project_config(tmp_path)
+    cfg = load_project_config(project_root)
     assert cfg.name == "cbioportal"
-    assert cfg.id == "cbioportal"  # defaults to dirname-equivalent
+    assert cfg.id == "cbioportal"  # defaults to project_root.name when not declared
     assert cfg.role == "standalone"  # default
     assert cfg.parent is None
     assert cfg.children == []
@@ -403,7 +407,7 @@ git commit -m "feat(project_config): tilde-prefixed path resolution helpers"
 - Create: `~/d/science/science-tool/src/science_tool/federation.py`
 - Test: `~/d/science/science-tool/tests/test_federation_validation.py`
 
-`science:sync` (Task 4) needs to validate that meta's `children:` and each child's `parent:` agree. This task isolates the validation logic so it's testable independently of CLI dispatch.
+The `science-tool federation validate` CLI subcommand (Task 4) needs to check that meta's `children:` manifest and each child's `parent:` back-reference agree. This task isolates the validation logic so it's testable independently of CLI dispatch.
 
 - [ ] **Step 1: Write failing tests.**
 
@@ -719,39 +723,39 @@ git commit -m "feat(federation): validate meta/children round-trip"
 
 ---
 
-## Task 4: Wire federation validation into `science:sync`
+## Task 4: Federation CLI subgroup + parent auto-register from `graph build`
 
 **Files:**
-- Modify: `~/d/science/science-tool/src/science_tool/cli.py` (sync command — locate via `grep -n "def sync\|@.*sync" cli.py`)
-- Modify: `~/d/science/science-tool/src/science_tool/registry/config.py` (extend `RegisteredProject` with optional `parent`/`role`/`id`)
-- Test: `~/d/science/science-tool/tests/test_sync_federation.py`
+- Create: `~/d/science/science-tool/src/science_tool/federation_cli.py` (new click subgroup `federation`)
+- Modify: `~/d/science/science-tool/src/science_tool/cli.py` — register the new subgroup with `main` (one-line addition near the other `main.add_command(...)` calls around line 182–189); extend the existing `graph_build` (line ~552) so that when the current project has `parent:` set, it also calls `ensure_registered` for the parent meta.
+- Modify: `~/d/science/science-tool/src/science_tool/registry/config.py` — extend `RegisteredProject` with optional `id`/`role`/`parent` fields and update `ensure_registered` to accept and refresh them idempotently.
+- Test: `~/d/science/science-tool/tests/test_federation_cli.py`
+- Test: `~/d/science/science-tool/tests/test_graph_build_parent_register.py`
 
-`science:sync` currently auto-registers a project to `~/.config/science/config.yaml`. We extend it so that:
-1. When called inside a `meta` project, it also runs `validate_federation` and prints any issues (warning, not error).
-2. When called inside a child with a declared `parent:`, it ensures the parent meta is registered too.
-3. The global registry tracks each project's role/parent so `status --federated` doesn't have to walk the filesystem.
+### Why a new subgroup, not a `sync` extension
 
-- [ ] **Step 1: Write failing tests** that drive `science:sync` end-to-end through click's `CliRunner`.
+`science-tool sync` is an existing click group with subcommands `run`, `status`, `projects`, `rebuild`. Auto-registration of the *current* project happens in `graph build` (via `ensure_registered`), not in `sync`. Federation validation is a different concern from cross-project sync execution and deserves its own subgroup so users can call it explicitly: `science-tool federation validate`. The plan doesn't shoehorn validation into `sync run`.
+
+The one extension to existing CLI behavior: when `graph build` runs in a project with `parent:` declared, it also registers the parent meta. This keeps the same place where current-project registration already lives, so meta auto-discovery doesn't surprise anyone reading `sync`'s code.
+
+- [ ] **Step 1: Failing tests for the new `federation` subgroup.**
 
 ```python
-# tests/test_sync_federation.py
+# tests/test_federation_cli.py
 from pathlib import Path
 
 import pytest
 from click.testing import CliRunner
 
-from science_tool.cli import cli  # adjust if the click group is exported under a different name
-from science_tool.registry.config import GlobalConfig, load_global_config
+from science_tool.cli import main
 
 
 def _write_yaml(path: Path, body: str) -> None:
     (path / "science.yaml").write_text(body, encoding="utf-8")
 
 
-def test_sync_meta_project_validates_children(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-    cfg_dir = tmp_path / "cfg"
-    monkeypatch.setenv("SCIENCE_CONFIG_DIR", str(cfg_dir))
-
+def test_federation_validate_clean(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("SCIENCE_CONFIG_DIR", str(tmp_path / "cfg"))
     meta = tmp_path / "meta"
     a = tmp_path / "a"
     meta.mkdir(); a.mkdir()
@@ -774,19 +778,15 @@ parent: {meta}
 profile: research
 research_question: "..."
 """)
-    runner = CliRunner()
-    result = runner.invoke(cli, ["sync"], catch_exceptions=False, env={}, color=False)
-    # invoke from meta dir
     monkeypatch.chdir(meta)
-    result = runner.invoke(cli, ["sync"])
-    assert result.exit_code == 0
-    cfg = load_global_config(cfg_dir / "config.yaml")
-    assert any(p.path.endswith("/meta") for p in cfg.projects)
+    runner = CliRunner()
+    result = runner.invoke(main, ["federation", "validate"])
+    assert result.exit_code == 0, result.output
+    assert "ok" in result.output.lower() or "no issues" in result.output.lower()
 
 
-def test_sync_meta_surfaces_issues_as_warnings(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-    cfg_dir = tmp_path / "cfg"
-    monkeypatch.setenv("SCIENCE_CONFIG_DIR", str(cfg_dir))
+def test_federation_validate_surfaces_issues(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("SCIENCE_CONFIG_DIR", str(tmp_path / "cfg"))
     meta = tmp_path / "meta"
     a = tmp_path / "a"
     meta.mkdir(); a.mkdir()
@@ -810,18 +810,51 @@ research_question: "..."
 """)  # no parent: declared
     monkeypatch.chdir(meta)
     runner = CliRunner()
-    result = runner.invoke(cli, ["sync"])
-    assert result.exit_code == 0  # warnings, not errors
+    result = runner.invoke(main, ["federation", "validate"])
+    # Issues are surfaced; exit code is non-zero so callers can detect them.
+    assert result.exit_code != 0
     assert "missing_parent" in result.output
 
 
-def test_sync_child_registers_parent_meta(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_federation_validate_refuses_non_meta(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("SCIENCE_CONFIG_DIR", str(tmp_path / "cfg"))
+    a = tmp_path / "a"
+    a.mkdir()
+    _write_yaml(a, """
+name: a
+id: a
+role: data-source
+profile: research
+research_question: "..."
+""")
+    monkeypatch.chdir(a)
+    runner = CliRunner()
+    result = runner.invoke(main, ["federation", "validate"])
+    assert result.exit_code != 0
+    assert "not a meta" in result.output.lower() or "not a meta" in (result.stderr or "").lower()
+```
+
+- [ ] **Step 2: Failing test for parent auto-registration via `graph build`.**
+
+```python
+# tests/test_graph_build_parent_register.py
+from pathlib import Path
+
+import pytest
+from click.testing import CliRunner
+
+from science_tool.cli import main
+from science_tool.registry.config import load_global_config
+
+
+def test_graph_build_in_child_registers_parent(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     cfg_dir = tmp_path / "cfg"
     monkeypatch.setenv("SCIENCE_CONFIG_DIR", str(cfg_dir))
+
     meta = tmp_path / "meta"
     a = tmp_path / "a"
     meta.mkdir(); a.mkdir()
-    _write_yaml(meta, f"""
+    (meta / "science.yaml").write_text(f"""
 name: meta
 id: meta
 role: meta
@@ -831,30 +864,37 @@ children:
   - id: a
     path: {a}
     role: data-source
-""")
-    _write_yaml(a, f"""
+""", encoding="utf-8")
+    (a / "science.yaml").write_text(f"""
 name: a
 id: a
 role: data-source
 parent: {meta}
 profile: research
 research_question: "..."
-""")
+""", encoding="utf-8")
+
     monkeypatch.chdir(a)
     runner = CliRunner()
-    result = runner.invoke(cli, ["sync"])
-    assert result.exit_code == 0
+    result = runner.invoke(main, ["graph", "build"])
+    assert result.exit_code == 0, result.output
+
     cfg = load_global_config(cfg_dir / "config.yaml")
     paths = {p.path for p in cfg.projects}
     assert any(p.endswith("/a") for p in paths)
     assert any(p.endswith("/meta") for p in paths)
+    # Confirm role/parent fields are populated on the registered child.
+    child_entry = next(p for p in cfg.projects if p.path.endswith("/a"))
+    assert child_entry.role == "data-source"
+    assert child_entry.parent and child_entry.parent.endswith("/meta")
 ```
 
-- [ ] **Step 2: Run failing tests.** They will fail because of the new sync behavior.
+- [ ] **Step 3: Run tests; confirm 4 fail.**
 
-- [ ] **Step 3: Extend `RegisteredProject` schema** in `registry/config.py` (additive; existing fields unchanged):
+- [ ] **Step 4: Extend `RegisteredProject`** in `registry/config.py`. Additive; defaults preserve existing config files.
 
 ```python
+# in src/science_tool/registry/config.py
 class RegisteredProject(BaseModel):
     """A project registered for cross-project sync."""
 
@@ -866,31 +906,155 @@ class RegisteredProject(BaseModel):
     parent: str | None = None  # tilde-prefixed; None for non-children
 ```
 
-Update `ensure_registered` to accept optional `id`/`role`/`parent` and to refresh those fields on subsequent calls (idempotent update, not just append).
+Update `ensure_registered`:
 
-- [ ] **Step 4: Modify `science:sync` command in `cli.py`** to:
-  1. Load `ProjectConfig` for the current project.
-  2. Pass `id`/`role`/`parent` into `ensure_registered`.
-  3. If `role == META`: run `validate_federation(project_root)` and emit each issue as a warning line (`click.echo(f"warning: {kind} for child {id}: {detail}", err=True)`). Do not raise.
-  4. If `parent` is set on the current project: also call `ensure_registered` for the parent meta (so a child's sync brings the parent into the registry).
+```python
+def ensure_registered(
+    project_root: Path,
+    project_name: str,
+    config_path: Path | None = None,
+    project_id: str | None = None,
+    role: str | None = None,
+    parent: str | None = None,
+) -> None:
+    """Register or refresh a project. Idempotent. Refreshes federation fields when supplied."""
+    config_path = config_path or get_default_config_path()
+    resolved = str(project_root.resolve())
+    cfg = load_global_config(config_path)
 
-  The existing sync command body must stay intact for non-meta, non-child projects.
+    for project in cfg.projects:
+        if project.path == resolved:
+            # refresh federation fields when supplied (no-op when None)
+            changed = False
+            if project_id is not None and project.id != project_id:
+                project.id = project_id
+                changed = True
+            if role is not None and project.role != role:
+                project.role = role
+                changed = True
+            if parent is not None and project.parent != parent:
+                project.parent = parent
+                changed = True
+            if changed:
+                save_global_config(cfg, config_path)
+            return
 
-  Concrete edit shape (locate the function via `grep -n "def sync\|@cli.command(\"sync\")\|^def sync_" src/science_tool/cli.py`):
-  - Right after current project registration, branch on `project_config.role`.
-  - Use `from science_tool.federation import validate_federation` and `from science_tool.project_config import load_project_config`.
+    cfg.projects.append(
+        RegisteredProject(
+            path=resolved,
+            name=project_name,
+            registered=date.today(),
+            id=project_id,
+            role=role,
+            parent=parent,
+        )
+    )
+    save_global_config(cfg, config_path)
+```
 
-- [ ] **Step 5: Run all tests; confirm green and no regressions.**
+- [ ] **Step 5: Implement `federation_cli.py`.**
+
+```python
+# src/science_tool/federation_cli.py
+"""CLI subgroup for federation v1.0: validate, status (status added in Task 8)."""
+
+from __future__ import annotations
+
+from pathlib import Path
+
+import click
+
+from science_tool.federation import validate_federation
+from science_tool.project_config import ProjectRole, load_project_config
+
+
+@click.group(name="federation")
+def federation_group() -> None:
+    """Federation operations: validate and roll up across meta children."""
+
+
+@federation_group.command("validate")
+@click.option(
+    "--project-root",
+    default=".",
+    show_default=True,
+    type=click.Path(path_type=Path, file_okay=False, dir_okay=True),
+)
+def federation_validate(project_root: Path) -> None:
+    """Validate meta's children manifest against each child's parent back-reference."""
+    root = Path.cwd() if str(project_root) == "." else project_root
+    cfg = load_project_config(root)
+    if cfg.role != ProjectRole.META:
+        raise click.ClickException(f"{root} is not a meta project (role={cfg.role!r})")
+
+    issues = validate_federation(root)
+    if not issues:
+        click.echo("ok: federation consistent")
+        return
+
+    for issue in issues:
+        click.echo(
+            f"{issue.kind}: child={issue.child_id}: {issue.detail}",
+            err=True,
+        )
+    raise click.exceptions.Exit(1)
+```
+
+- [ ] **Step 6: Register the subgroup with `main`** in `cli.py` near the existing `main.add_command(...)` block (around lines 182–189). Add:
+
+```python
+from science_tool.federation_cli import federation_group
+main.add_command(federation_group)
+```
+
+- [ ] **Step 7: Extend `graph_build`** (in `cli.py`, around line 552) to register the parent meta after registering the current project. Locate the existing block:
+
+```python
+if _science_yaml.is_file():
+    _project_name = (_yaml.safe_load(_science_yaml.read_text()) or {}).get("name", _project_root.name)
+    ensure_registered(_project_root, str(_project_name))
+```
+
+Replace with:
+
+```python
+if _science_yaml.is_file():
+    from science_tool.project_config import load_project_config
+
+    _cfg = load_project_config(_project_root)
+    ensure_registered(
+        _project_root,
+        _cfg.name,
+        project_id=_cfg.id,
+        role=str(_cfg.role),
+        parent=_cfg.parent,
+    )
+    if _cfg.parent is not None:
+        from science_tool.project_config import resolve_parent_path
+
+        _parent_path = resolve_parent_path(_cfg.parent)
+        if _parent_path is not None and (_parent_path / "science.yaml").is_file():
+            _parent_cfg = load_project_config(_parent_path)
+            ensure_registered(
+                _parent_path,
+                _parent_cfg.name,
+                project_id=_parent_cfg.id,
+                role=str(_parent_cfg.role),
+                parent=_parent_cfg.parent,
+            )
+```
+
+- [ ] **Step 8: Run all tests; confirm green and no regressions.**
 
 ```bash
 uv run --frozen pytest -x
 ```
 
-- [ ] **Step 6: Commit.**
+- [ ] **Step 9: Commit.**
 
 ```bash
-git add src/science_tool/cli.py src/science_tool/registry/config.py tests/test_sync_federation.py
-git commit -m "feat(sync): meta-aware sync with federation validation + parent auto-register"
+git add src/science_tool/federation_cli.py src/science_tool/cli.py src/science_tool/registry/config.py tests/test_federation_cli.py tests/test_graph_build_parent_register.py
+git commit -m "feat(federation): federation validate CLI + parent auto-register from graph build"
 ```
 
 ---
@@ -1010,15 +1174,25 @@ git commit -m "feat(addressing): cross-project address parse/render"
 - Create: `~/d/science/science-tool/src/science_tool/graph/federation.py`
 - Test: `~/d/science/science-tool/tests/test_graph_federation.py`
 
-Meta's `knowledge/graph.trig` is assembled by reading each child's `knowledge/graph.trig` and including their triples as named graphs (one named graph per child id), preserving the child's authority. Provenance triples annotate each named graph.
+Meta's `knowledge/graph.trig` is assembled by:
+1. Materializing meta's own local sources (existing pipeline) and capturing their triples in `cancer://meta`.
+2. Reading each child's `knowledge/graph.trig` (which uses named graphs per `GRAPH_LAYERS`) and unioning *all of the child's contexts* into a single `cancer://<child-id>` named graph in the federated output.
+3. Adding provenance triples (`prov:wasDerivedFrom`, `prov:generatedAtTime`) and meta-level cross-project claims to `cancer://meta`.
 
-- [ ] **Step 1: Read** `~/d/science/science-tool/src/science_tool/graph/store.py` (lines 1-200 first, then locate the materialize function used by `graph build`). Note:
-  - Whether the existing graph is a single TriG default graph or already uses named graphs.
-  - The function signature for materialization (probably `materialize_graph(project_root: Path) -> Path`).
+Two parsing pitfalls to handle correctly (per code review):
+- **Use `rdflib.Dataset()` to parse child TriG, not `rdflib.Graph()`.** A child's `graph.trig` uses named graphs (`graph/knowledge`, `graph/bridge`, etc.); parsing it into a `Graph()` reads only the default-graph triples and drops everything else.
+- **Walk all of the source dataset's contexts**, not just the default graph, when copying triples into the destination named graph.
 
-  Without this, the federated assembly will fight the existing format. Record findings as a comment at the top of the new file.
+For v1.0 we **collapse** child-side layer graphs into a single `cancer://<child-id>` graph in the federated output (simpler queries, smaller surface area). Preserving the layer hierarchy under `cancer://<child-id>/<layer>` is a future v1.1+ option, not blocking.
 
-- [ ] **Step 2: Failing test.** This test sets up a tiny meta + 2 children, calls the federated assembler, then parses the result and confirms named graphs are present.
+- [ ] **Step 1: Read** the existing `materialize_graph` function in `~/d/science/science-tool/src/science_tool/graph/store.py` and confirm:
+  - Its signature (likely `materialize_graph(project_root: Path) -> Path`).
+  - Whether it writes directly to `<project_root>/knowledge/graph.trig`, or returns the path it wrote.
+  - That `GRAPH_LAYERS` are emitted as named graphs in the output (already verified during Task 0; reconfirm here before touching anything).
+
+  Note findings as comments at the top of `graph/federation.py`.
+
+- [ ] **Step 2: Failing tests.** Test fixtures use `Dataset()` to write TriG with named graphs (matching real-world child outputs), not `Graph()` with default-graph triples (which would mask the rdflib bug).
 
 ```python
 # tests/test_graph_federation.py
@@ -1026,17 +1200,27 @@ from pathlib import Path
 
 import pytest
 import rdflib
+from rdflib import Dataset, Graph, Literal, URIRef
+from rdflib.namespace import PROV, RDF
 
 from science_tool.graph.federation import materialize_federated_graph
 
 
-def _write_trig(path: Path, body: str) -> None:
-    (path / "knowledge").mkdir(exist_ok=True)
-    (path / "knowledge" / "graph.trig").write_text(body, encoding="utf-8")
-
-
 def _write_yaml(path: Path, body: str) -> None:
     (path / "science.yaml").write_text(body, encoding="utf-8")
+
+
+def _write_layered_trig(child_root: Path, child_id: str) -> None:
+    """Write a TriG file with multiple named graphs, like real child outputs."""
+    knowledge_dir = child_root / "knowledge"
+    knowledge_dir.mkdir(exist_ok=True)
+    ds = Dataset()
+    ex = rdflib.Namespace("https://example.org/")
+    knowledge = ds.graph(URIRef(f"https://example.org/{child_id}/graph/knowledge"))
+    knowledge.add((ex[f"{child_id}-claim"], RDF.type, ex.Claim))
+    bridge = ds.graph(URIRef(f"https://example.org/{child_id}/graph/bridge"))
+    bridge.add((ex[f"{child_id}-link"], RDF.type, ex.Bridge))
+    ds.serialize(destination=knowledge_dir / "graph.trig", format="trig")
 
 
 def test_assembles_named_graphs_per_child(tmp_path: Path) -> None:
@@ -1076,32 +1260,58 @@ parent: {meta}
 profile: research
 research_question: "..."
 """)
-
-    _write_trig(a, """
-@prefix ex: <https://example.org/> .
-ex:a-claim a ex:Claim .
-""")
-    _write_trig(b, """
-@prefix ex: <https://example.org/> .
-ex:b-claim a ex:Claim .
-""")
+    _write_layered_trig(a, "a")
+    _write_layered_trig(b, "b")
 
     out_path = materialize_federated_graph(meta)
     assert out_path.exists()
 
-    ds = rdflib.Dataset()
+    ds = Dataset()
     ds.parse(out_path, format="trig")
-    graph_names = {str(g.identifier) for g in ds.graphs() if g.identifier != rdflib.URIRef("urn:x-rdflib:default")}
-    # Each child gets its own named graph, plus the meta-level named graph.
+    graph_names = {str(g.identifier) for g in ds.graphs() if g.identifier != URIRef("urn:x-rdflib:default")}
     assert "cancer://a" in graph_names
     assert "cancer://b" in graph_names
     assert "cancer://meta" in graph_names
 
-    # Provenance: meta graph should contain prov triples about each child graph.
-    meta_graph = ds.graph(rdflib.URIRef("cancer://meta"))
-    prov_subjects = {str(s) for s, _, _ in meta_graph.triples((None, rdflib.URIRef("http://www.w3.org/ns/prov#wasDerivedFrom"), None))}
+    # Critical: triples from EACH layer of the child's TriG must be present.
+    a_graph = ds.graph(URIRef("cancer://a"))
+    a_subjects = {str(s) for s in a_graph.subjects()}
+    assert "https://example.org/a-claim" in a_subjects, "knowledge-layer triple missing"
+    assert "https://example.org/a-link" in a_subjects, "bridge-layer triple missing — Dataset() not used for parse"
+
+    # Provenance triples in cancer://meta
+    meta_graph = ds.graph(URIRef("cancer://meta"))
+    prov_subjects = {str(s) for s, _, _ in meta_graph.triples((None, PROV.wasDerivedFrom, None))}
     assert "cancer://a" in prov_subjects
     assert "cancer://b" in prov_subjects
+
+
+def test_includes_meta_local_triples(tmp_path: Path) -> None:
+    """Meta's own local graph (its umbrella claims) must end up in cancer://meta."""
+    meta = tmp_path / "meta"
+    meta.mkdir()
+    _write_yaml(meta, f"""
+name: meta
+id: meta
+role: meta
+profile: research
+research_question: "Umbrella."
+children: []
+""")
+    knowledge_dir = meta / "knowledge"
+    knowledge_dir.mkdir()
+    pre = Dataset()
+    ex = rdflib.Namespace("https://example.org/")
+    g = pre.graph(URIRef("https://example.org/meta/graph/knowledge"))
+    g.add((ex["meta-claim"], RDF.type, ex.UmbrellaClaim))
+    pre.serialize(destination=knowledge_dir / "graph.trig", format="trig")
+
+    out_path = materialize_federated_graph(meta)
+    ds = Dataset()
+    ds.parse(out_path, format="trig")
+    meta_graph = ds.graph(URIRef("cancer://meta"))
+    meta_subjects = {str(s) for s in meta_graph.subjects()}
+    assert "https://example.org/meta-claim" in meta_subjects, "meta's own local triple lost"
 
 
 def test_skips_child_without_graph_trig(tmp_path: Path) -> None:
@@ -1127,7 +1337,7 @@ parent: {meta}
 profile: research
 research_question: "..."
 """)
-    # No graph.trig in a/ — assembler should still succeed and emit just meta.
+    # No graph.trig in a/ — assembler still succeeds and emits just meta + provenance gap.
     out_path = materialize_federated_graph(meta)
     assert out_path.exists()
 
@@ -1146,22 +1356,32 @@ research_question: "..."
         materialize_federated_graph(a)
 ```
 
-- [ ] **Step 3: Run; confirm 3 fail.**
+- [ ] **Step 3: Run; confirm 4 fail.**
 
 - [ ] **Step 4: Implement `graph/federation.py`.**
 
 ```python
 # src/science_tool/graph/federation.py
-"""Federated graph assembly: include each child's graph.trig as a named graph."""
+"""Federated graph assembly.
+
+Existing per-project ``graph.trig`` outputs use named graphs (per
+``GRAPH_LAYERS`` in ``graph/store.py``: ``graph/knowledge``, ``graph/bridge``,
+``graph/causal``, ``graph/provenance``, ``graph/datasets``). Federation reads
+each child's TriG with ``rdflib.Dataset`` (not ``Graph``, which silently drops
+non-default contexts) and unions all of the child's contexts into a single
+``cancer://<child-id>`` named graph in the federated output.
+
+For v1.0 we collapse child layers; preserving them as
+``cancer://<child-id>/<layer>`` is a future option.
+"""
 
 from __future__ import annotations
 
 from datetime import datetime, timezone
 from pathlib import Path
 
-import rdflib
-from rdflib import Dataset, Graph, Literal, URIRef
-from rdflib.namespace import PROV, RDF
+from rdflib import Dataset, Literal, URIRef
+from rdflib.namespace import PROV
 
 from science_tool.project_config import (
     ChildEntry,
@@ -1171,6 +1391,7 @@ from science_tool.project_config import (
 )
 
 _URI_SCHEME = "cancer"
+_XSD_DATETIME = URIRef("http://www.w3.org/2001/XMLSchema#dateTime")
 
 
 def _project_uri(project_id: str) -> URIRef:
@@ -1180,12 +1401,14 @@ def _project_uri(project_id: str) -> URIRef:
 def materialize_federated_graph(meta_root: Path) -> Path:
     """Materialize meta's federated graph.trig.
 
-    Each child's knowledge/graph.trig is included as a named graph (one named
-    graph per child id). Meta-level claims live in the cancer://meta named graph,
-    along with provenance triples annotating each child graph.
+    Behavior:
+    - First materialize meta's own local sources via the existing pipeline.
+      The resulting triples land in ``cancer://meta``.
+    - Then union each child's TriG contexts into ``cancer://<child-id>``.
+    - Annotate ``cancer://meta`` with provenance triples for each included child.
 
-    Returns the output path (meta_root/knowledge/graph.trig).
-    Raises ValueError if meta_root is not a meta project.
+    Returns the output path (``meta_root/knowledge/graph.trig``).
+    Raises ValueError if ``meta_root`` is not a meta project.
     """
     cfg = load_project_config(meta_root)
     if cfg.role != ProjectRole.META:
@@ -1199,8 +1422,11 @@ def materialize_federated_graph(meta_root: Path) -> Path:
     meta_uri = _project_uri(cfg.id or meta_root.name)
     meta_graph = ds.graph(meta_uri)
 
-    timestamp = Literal(datetime.now(timezone.utc).isoformat(), datatype=URIRef("http://www.w3.org/2001/XMLSchema#dateTime"))
+    # Step A: meta's own local triples → cancer://meta
+    _materialize_meta_local(meta_root, meta_graph)
 
+    # Step B: each child's TriG → cancer://<child-id>
+    timestamp = Literal(datetime.now(timezone.utc).isoformat(), datatype=_XSD_DATETIME)
     for child in cfg.children:
         child_uri = _project_uri(child.id)
         included = _include_child_graph(ds, child, child_uri)
@@ -1212,12 +1438,34 @@ def materialize_federated_graph(meta_root: Path) -> Path:
     return out_path
 
 
+def _materialize_meta_local(meta_root: Path, dest_graph) -> None:  # type: ignore[no-untyped-def]
+    """Materialize meta's own local sources into ``dest_graph``.
+
+    v1.0 implementation: read meta's existing ``knowledge/graph.trig`` if present
+    (assumed to have been produced by an earlier ``science-tool graph build``
+    against meta's local sources, prior to federation). Union all its contexts
+    into ``dest_graph``.
+
+    A future refinement: invoke the existing per-project ``materialize_graph``
+    pipeline directly to a memory dataset, avoiding the read-then-overwrite
+    round trip. Out of scope for v1.0.
+    """
+    src_path = meta_root / "knowledge" / "graph.trig"
+    if not src_path.is_file():
+        return
+    src = Dataset()
+    src.parse(src_path, format="trig")
+    for ctx in src.contexts():
+        for triple in ctx:
+            dest_graph.add(triple)
+
+
 def _child_graph_path(child: ChildEntry) -> Path:
     return resolve_child_path(child) / "knowledge" / "graph.trig"
 
 
 def _include_child_graph(ds: Dataset, child: ChildEntry, child_uri: URIRef) -> bool:
-    """Read the child's graph.trig and add its triples under ``child_uri``.
+    """Union all contexts of the child's TriG into ``cancer://<child-id>``.
 
     Returns True if a graph file was found and included.
     """
@@ -1225,14 +1473,15 @@ def _include_child_graph(ds: Dataset, child: ChildEntry, child_uri: URIRef) -> b
     if not src_path.is_file():
         return False
     target = ds.graph(child_uri)
-    src = Graph()
+    src = Dataset()
     src.parse(src_path, format="trig")
-    for triple in src:
-        target.add(triple)
+    for ctx in src.contexts():
+        for triple in ctx:
+            target.add(triple)
     return True
 ```
 
-- [ ] **Step 5: Run tests; confirm 3 pass.**
+- [ ] **Step 5: Run tests; confirm 4 pass.** The `test_assembles_named_graphs_per_child` test specifically asserts that the *bridge*-layer triple is preserved — this is the regression check for the `Graph()` vs. `Dataset()` parsing pitfall.
 
 - [ ] **Step 6: Run the full suite for regressions.**
 
@@ -1240,29 +1489,36 @@ def _include_child_graph(ds: Dataset, child: ChildEntry, child_uri: URIRef) -> b
 
 ```bash
 git add src/science_tool/graph/federation.py tests/test_graph_federation.py
-git commit -m "feat(graph): federated graph materialization with named-graph-per-child"
+git commit -m "feat(graph): federated graph assembly preserving child layers + meta local"
 ```
+
+### Note: read-then-overwrite of meta's `knowledge/graph.trig`
+
+`materialize_federated_graph` reads `meta_root/knowledge/graph.trig` (Step A in `_materialize_meta_local`) and then later overwrites the same path with the federated output. This means: **before federation, meta must have run a standard graph build to produce its own local triples.** Task 7 enforces this ordering by having `graph_build` in a meta project first call the standard `materialize_graph` (writing meta's local triples) and *then* call `materialize_federated_graph` on the same project root, which re-reads those triples and re-emits with children included.
 
 ---
 
-## Task 7: Wire federated graph mode into `science:graph build`
+## Task 7: Wire federated graph mode into `graph build`
 
 **Files:**
-- Modify: `~/d/science/science-tool/src/science_tool/cli.py` (locate `graph_build` — line ~552 in the current snapshot)
+- Modify: `~/d/science/science-tool/src/science_tool/cli.py` (existing `graph_build` function at line ~552)
 - Test: `~/d/science/science-tool/tests/test_graph_build_federated.py`
 
-Behavior change: when `science:graph build` is invoked inside a `meta` project, automatically dispatch to `materialize_federated_graph` instead of the standard `materialize_graph`. No flag needed — the project's role determines the mode.
+Behavior change: when `science-tool graph build` runs in a `meta` project, after the standard `materialize_graph` produces meta's local triples (so `cancer://meta` will pick them up), the federation assembler runs on top, re-reading those local triples and unioning each child's contexts. The user invokes one command; both phases happen.
 
-- [ ] **Step 1: Failing test.**
+- [ ] **Step 1: Failing test.** The fixture writes a child's TriG using `Dataset()` (matching real-world layered output) so the assertion exercises the layer-preserving parser fixed in Task 6.
 
 ```python
 # tests/test_graph_build_federated.py
 from pathlib import Path
 
 import pytest
+import rdflib
 from click.testing import CliRunner
+from rdflib import Dataset, URIRef
+from rdflib.namespace import RDF
 
-from science_tool.cli import cli
+from science_tool.cli import main
 
 
 def test_graph_build_in_meta_uses_federated(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
@@ -1290,38 +1546,56 @@ parent: {meta}
 profile: research
 research_question: "..."
 """, encoding="utf-8")
+
+    # Child has a TriG with named graphs (matches real outputs).
     (a / "knowledge").mkdir()
-    (a / "knowledge" / "graph.trig").write_text("""
-@prefix ex: <https://example.org/> .
-ex:a-claim a ex:Claim .
-""", encoding="utf-8")
+    ex = rdflib.Namespace("https://example.org/")
+    a_ds = Dataset()
+    a_ds.graph(URIRef("https://example.org/a/graph/knowledge")).add(
+        (ex["a-claim"], RDF.type, ex.Claim)
+    )
+    a_ds.serialize(destination=a / "knowledge" / "graph.trig", format="trig")
 
     monkeypatch.chdir(meta)
     runner = CliRunner()
-    result = runner.invoke(cli, ["graph", "build"])
-    assert result.exit_code == 0
-    out = (meta / "knowledge" / "graph.trig").read_text(encoding="utf-8")
-    # Federated output must contain a named-graph block for the child id.
-    assert "cancer://a" in out or "<cancer://a>" in out
+    result = runner.invoke(main, ["graph", "build"])
+    assert result.exit_code == 0, result.output
+
+    out_ds = Dataset()
+    out_ds.parse(meta / "knowledge" / "graph.trig", format="trig")
+    graph_names = {str(g.identifier) for g in out_ds.graphs() if g.identifier != URIRef("urn:x-rdflib:default")}
+    assert "cancer://a" in graph_names
+    assert "cancer://meta" in graph_names
+
+    # Confirm child layer triples landed in cancer://a (the fix for the layer-drop bug).
+    a_graph = out_ds.graph(URIRef("cancer://a"))
+    a_subjects = {str(s) for s in a_graph.subjects()}
+    assert "https://example.org/a-claim" in a_subjects
 ```
 
-- [ ] **Step 2: Modify `graph_build` in `cli.py`** to dispatch on role.
+- [ ] **Step 2: Modify `graph_build` in `cli.py`** so that, in a meta project, it runs the standard local materialization first and then federation. The standard path for non-meta projects must remain unchanged.
 
-  Concrete edit: at the start of `graph_build`, after computing `_project_root`, load the config and branch:
+  Concrete edit shape: after computing `_project_root` and after the existing `ensure_registered` block (already extended in Task 4 Step 7), insert the federation dispatch.
 
 ```python
 from science_tool.project_config import ProjectRole, load_project_config
 from science_tool.graph.federation import materialize_federated_graph
 
-# inside graph_build, after _project_root is set:
-try:
-    _cfg = load_project_config(_project_root)
-except Exception:
-    _cfg = None
+# After the existing ensure_registered block in graph_build:
+_cfg = load_project_config(_project_root)
+if _cfg.role == ProjectRole.META:
+    # Phase A: standard materialization writes meta's local triples to
+    # meta_root/knowledge/graph.trig.
+    try:
+        local_trig_path = materialize_graph(_project_root)
+    except ValueError as exc:
+        raise click.ClickException(str(exc)) from exc
+    click.echo(f"Materialized meta local graph at {local_trig_path}")
 
-if _cfg is not None and _cfg.role == ProjectRole.META:
-    trig_path = materialize_federated_graph(_project_root)
-    click.echo(f"Materialized federated graph at {trig_path}")
+    # Phase B: federation re-reads meta's local triples (placing them in
+    # cancer://meta) and unions each child's contexts into cancer://<child-id>.
+    federated_path = materialize_federated_graph(_project_root)
+    click.echo(f"Materialized federated graph at {federated_path}")
     return
 
 # ... existing standalone-graph path follows unchanged
@@ -1333,45 +1607,38 @@ if _cfg is not None and _cfg.role == ProjectRole.META:
 
 ```bash
 git add src/science_tool/cli.py tests/test_graph_build_federated.py
-git commit -m "feat(cli): graph build auto-dispatches to federated mode in meta projects"
+git commit -m "feat(cli): graph build runs local + federated phases in meta projects"
 ```
 
 ---
 
-## Task 8: `science:status --federated` rollup
+## Task 8: `science-tool federation status` CLI + `/science:status` skill update
 
 **Files:**
-- Modify: `~/d/science/science-tool/src/science_tool/cli.py` (locate the `status` command via `grep -n "@.*\.command(\"status\")\|def status\b" src/science_tool/cli.py`)
-- Create: `~/d/science/science-tool/src/science_tool/federation_status.py` (rollup logic, kept separate from CLI)
-- Test: `~/d/science/science-tool/tests/test_status_federated.py`
+- Create: `~/d/science/science-tool/src/science_tool/federation_status.py` (rollup logic)
+- Modify: `~/d/science/science-tool/src/science_tool/federation_cli.py` (add `status` subcommand to the existing `federation_group` from Task 4)
+- Modify: `~/d/science/commands/status.md` (the `/science:status` skill — teach it to invoke the new CLI when the project's `role: meta`)
+- Test: `~/d/science/science-tool/tests/test_federation_status_cli.py`
 
-The rollup walks meta's `children:`, generates each child's status using the existing per-project status renderer (refactor it into a callable function if it's currently inline in the CLI), and prefixes each section with the child's id and role. An umbrella header summarizes counts.
+### Why a new CLI subcommand, not a `/science:status` skill rewrite
 
-- [ ] **Step 1: Read** the current `status` command body. If status rendering is inline in the CLI, extract it into a function `render_project_status(project_root: Path) -> str` in a new module `src/science_tool/status_render.py` (this refactor itself should be one small commit before the rest of the task — see Step 1a).
+The `/science:status` skill at `~/d/science/commands/status.md` is the user-facing entry point and currently walks project files itself (no CLI shells out). For federation, rolling up across multiple projects deterministically is real computation that benefits from being a CLI command (testable, scriptable, single source of truth). The skill stays the entry point — it just learns to call `science-tool federation status` when the project's role is `meta`.
 
-- [ ] **Step 1a: Refactor commit (if needed).**
+The rollup is intentionally simple in v1.0: it produces a markdown document with a per-child summary section + an umbrella header. It does **not** try to deeply mirror everything `/science:status` shows. That depth lives in the per-project skill invocation; federation gives the cross-cutting view.
 
-```bash
-# only if status logic is inline in CLI
-git add src/science_tool/status_render.py src/science_tool/cli.py
-git commit -m "refactor(status): extract render_project_status helper"
-```
-
-If the status logic is already in a separate module, skip Step 1a.
-
-- [ ] **Step 2: Failing test for `--federated` flag.**
+- [ ] **Step 1: Failing test for the new CLI subcommand.**
 
 ```python
-# tests/test_status_federated.py
+# tests/test_federation_status_cli.py
 from pathlib import Path
 
 import pytest
 from click.testing import CliRunner
 
-from science_tool.cli import cli
+from science_tool.cli import main
 
 
-def test_status_federated_walks_children(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_federation_status_walks_children(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setenv("SCIENCE_CONFIG_DIR", str(tmp_path / "cfg"))
     meta = tmp_path / "meta"
     a = tmp_path / "a"
@@ -1393,27 +1660,32 @@ children:
     path: {b}
     role: cancer-type
 """, encoding="utf-8")
-    for child_dir, child_id, child_role in ((a, "a", "data-source"), (b, "b", "cancer-type")):
+    for child_dir, child_id, child_role, q in (
+        (a, "a", "data-source", "child a question"),
+        (b, "b", "cancer-type", "child b question"),
+    ):
         (child_dir / "science.yaml").write_text(f"""
 name: {child_id}
 id: {child_id}
 role: {child_role}
 parent: {meta}
 profile: research
-research_question: "child {child_id}"
+research_question: "{q}"
 """, encoding="utf-8")
 
     monkeypatch.chdir(meta)
     runner = CliRunner()
-    result = runner.invoke(cli, ["status", "--federated"])
-    assert result.exit_code == 0
-    # Output mentions both children and the meta umbrella section.
-    assert "meta" in result.output.lower()
-    assert "data-source" in result.output or "a" in result.output
-    assert "cancer-type" in result.output or "b" in result.output
+    result = runner.invoke(main, ["federation", "status"])
+    assert result.exit_code == 0, result.output
+    # Output mentions the umbrella header and each child by id and role.
+    assert "Federation:" in result.output or "federation" in result.output.lower()
+    assert "data-source" in result.output
+    assert "cancer-type" in result.output
+    assert "child a question" in result.output
+    assert "child b question" in result.output
 
 
-def test_status_federated_rejects_non_meta(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_federation_status_refuses_non_meta(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setenv("SCIENCE_CONFIG_DIR", str(tmp_path / "cfg"))
     a = tmp_path / "a"
     a.mkdir()
@@ -1426,16 +1698,41 @@ research_question: "..."
 """, encoding="utf-8")
     monkeypatch.chdir(a)
     runner = CliRunner()
-    result = runner.invoke(cli, ["status", "--federated"])
+    result = runner.invoke(main, ["federation", "status"])
     assert result.exit_code != 0
-    assert "not a meta" in result.output.lower() or "not a meta" in (result.stderr or "")
+    assert "not a meta" in result.output.lower() or "not a meta" in (result.stderr or "").lower()
+
+
+def test_federation_status_handles_missing_child(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """A child path declared in meta but absent on disk should not crash the rollup."""
+    monkeypatch.setenv("SCIENCE_CONFIG_DIR", str(tmp_path / "cfg"))
+    meta = tmp_path / "meta"
+    meta.mkdir()
+    missing = tmp_path / "missing"
+    (meta / "science.yaml").write_text(f"""
+name: meta
+id: meta
+role: meta
+profile: research
+research_question: "..."
+children:
+  - id: missing
+    path: {missing}
+    role: data-source
+""", encoding="utf-8")
+    monkeypatch.chdir(meta)
+    runner = CliRunner()
+    result = runner.invoke(main, ["federation", "status"])
+    # Rollup should still complete; missing child surfaces as a note.
+    assert result.exit_code == 0, result.output
+    assert "missing" in result.output
 ```
 
-- [ ] **Step 3: Implement `federation_status.py`.**
+- [ ] **Step 2: Implement `federation_status.py`.** v1.0 renders a self-contained summary per child from its `science.yaml` (name, role, research question, count of questions/hypotheses if those dirs exist). It does not invoke the per-project status skill's full rendering — that's a v1.1+ option once we know what's worth aggregating.
 
 ```python
 # src/science_tool/federation_status.py
-"""Federated status rollup: meta umbrella + per-child sections."""
+"""Federation status rollup: meta umbrella + per-child summary."""
 
 from __future__ import annotations
 
@@ -1443,13 +1740,12 @@ from io import StringIO
 from pathlib import Path
 
 from science_tool.project_config import (
+    ChildEntry,
+    ProjectConfig,
     ProjectRole,
     load_project_config,
     resolve_child_path,
 )
-
-# This import path is the conventional one created in Task 8 Step 1a (or already existing).
-from science_tool.status_render import render_project_status
 
 
 def render_federated_status(meta_root: Path) -> str:
@@ -1459,31 +1755,115 @@ def render_federated_status(meta_root: Path) -> str:
 
     buf = StringIO()
     buf.write(f"# Federation: {cfg.id or meta_root.name}\n\n")
+    buf.write(f"Research question: {cfg.model_dump().get('research_question', '(none)')}\n\n")
     buf.write(f"Children: {len(cfg.children)}\n\n")
+
     for child in cfg.children:
         buf.write(f"---\n\n## {child.id} ({child.role})\n\n")
-        child_root = resolve_child_path(child)
-        try:
-            buf.write(render_project_status(child_root))
-        except Exception as exc:  # surface but continue
-            buf.write(f"(failed to render status: {exc})\n")
+        buf.write(_render_child_summary(child))
         buf.write("\n")
 
-    buf.write(f"---\n\n## Meta ({cfg.id})\n\n")
-    buf.write(render_project_status(meta_root))
+    buf.write("---\n\n## Meta scope\n\n")
+    buf.write(_render_meta_scope(meta_root, cfg))
     return buf.getvalue()
+
+
+def _render_child_summary(child: ChildEntry) -> str:
+    child_root = resolve_child_path(child)
+    if not (child_root / "science.yaml").is_file():
+        return f"_missing_: declared path `{child_root}` has no science.yaml\n"
+
+    try:
+        child_cfg = load_project_config(child_root)
+    except Exception as exc:
+        return f"_failed to load_: {exc}\n"
+
+    raw = child_cfg.model_dump()
+    rq = raw.get("research_question", "(none)")
+    lines = [
+        f"- name: {child_cfg.name}",
+        f"- path: {child_root}",
+        f"- research question: {rq}",
+    ]
+    questions_dir = child_root / "doc" / "questions"
+    hypotheses_dir = child_root / "doc" / "hypotheses"
+    if questions_dir.is_dir():
+        lines.append(f"- questions: {sum(1 for _ in questions_dir.glob('*.md'))}")
+    if hypotheses_dir.is_dir():
+        lines.append(f"- hypotheses: {sum(1 for _ in hypotheses_dir.glob('*.md'))}")
+    return "\n".join(lines) + "\n"
+
+
+def _render_meta_scope(meta_root: Path, cfg: ProjectConfig) -> str:
+    raw = cfg.model_dump()
+    lines = [f"- name: {cfg.name}", f"- id: {cfg.id}"]
+    questions_dir = meta_root / "doc" / "questions"
+    if questions_dir.is_dir():
+        lines.append(f"- foundational questions: {sum(1 for _ in questions_dir.glob('*.md'))}")
+    if "tags" in raw:
+        lines.append(f"- tags: {raw['tags']}")
+    return "\n".join(lines) + "\n"
 ```
 
-- [ ] **Step 4: Add `--federated` option to the existing `status` click command** in `cli.py`. When set, dispatch to `render_federated_status`; without it, behavior is unchanged.
+- [ ] **Step 3: Add `status` subcommand to the existing `federation_group`** in `federation_cli.py` (the group was created in Task 4):
+
+```python
+# add to src/science_tool/federation_cli.py
+
+from science_tool.federation_status import render_federated_status
+
+
+@federation_group.command("status")
+@click.option(
+    "--project-root",
+    default=".",
+    show_default=True,
+    type=click.Path(path_type=Path, file_okay=False, dir_okay=True),
+)
+def federation_status(project_root: Path) -> None:
+    """Render a cross-project status rollup for a meta umbrella."""
+    root = Path.cwd() if str(project_root) == "." else project_root
+    try:
+        rendered = render_federated_status(root)
+    except ValueError as exc:
+        raise click.ClickException(str(exc)) from exc
+    click.echo(rendered)
+```
+
+- [ ] **Step 4: Update `~/d/science/commands/status.md`** to teach the skill to dispatch to the federation CLI when the current project's `role` is `meta`. Add this stanza near the start of the skill's "Setup" section, *before* the existing `Read science.yaml` step:
+
+```markdown
+## Federation handling
+
+If `science.yaml` declares `role: meta`, the rest of this skill's per-project
+flow is replaced by:
+
+```
+science-tool federation status
+```
+
+Print the result and stop. Do not attempt to read individual children's
+project files yourself — the CLI does that consistently and is the single
+source of truth for cross-project rollups.
+
+For non-meta projects (the default), proceed with the existing per-project
+status flow below.
+```
 
 - [ ] **Step 5: Run tests; full suite.**
+
+```bash
+uv run --frozen pytest -x
+```
 
 - [ ] **Step 6: Commit.**
 
 ```bash
-git add src/science_tool/federation_status.py src/science_tool/cli.py tests/test_status_federated.py
-git commit -m "feat(status): --federated rollup walks meta children"
+git add src/science_tool/federation_status.py src/science_tool/federation_cli.py ../commands/status.md tests/test_federation_status_cli.py
+git commit -m "feat(federation): status rollup CLI + skill dispatch for meta projects"
 ```
+
+> Note on the path `../commands/status.md`: this file lives in `~/d/science/commands/`, which is the parent of `science-tool/`. The git repo root is `~/d/science/`, so the `git add` from `science-tool/` reaches outside its directory but stays inside the repo. If the science framework keeps `commands/` and `science-tool/` in *separate* git repos, split this into two commits accordingly.
 
 ---
 
@@ -1492,9 +1872,9 @@ git commit -m "feat(status): --federated rollup walks meta children"
 **Files:**
 - Test: `~/d/science/science-tool/tests/test_federation_integration.py`
 
-End-to-end: scaffold a meta + 2 children, run `sync`, run `graph build`, run `status --federated`, parse outputs, assert the federation is internally consistent.
+End-to-end: scaffold a meta + 2 children, run `federation validate`, run `graph build`, run `federation status`, parse outputs, assert the federation is internally consistent.
 
-- [ ] **Step 1: Write test.** Use the same fixture pattern from Task 4/8 but combined.
+- [ ] **Step 1: Write test.** Use the same fixture pattern from Task 4/8 but combined. Fixture writes child TriGs with `Dataset()` (named graphs, matching real outputs).
 
 ```python
 # tests/test_federation_integration.py
@@ -1503,8 +1883,10 @@ from pathlib import Path
 import pytest
 import rdflib
 from click.testing import CliRunner
+from rdflib import Dataset, URIRef
+from rdflib.namespace import RDF
 
-from science_tool.cli import cli
+from science_tool.cli import main
 
 
 def _make_child(path: Path, child_id: str, role: str, meta_path: Path, with_graph: bool = True) -> None:
@@ -1519,10 +1901,12 @@ research_question: "child {child_id}"
 """, encoding="utf-8")
     if with_graph:
         (path / "knowledge").mkdir()
-        (path / "knowledge" / "graph.trig").write_text(f"""
-@prefix ex: <https://example.org/> .
-ex:{child_id}-claim a ex:Claim .
-""", encoding="utf-8")
+        ex = rdflib.Namespace("https://example.org/")
+        ds = Dataset()
+        ds.graph(URIRef(f"https://example.org/{child_id}/graph/knowledge")).add(
+            (ex[f"{child_id}-claim"], RDF.type, ex.Claim)
+        )
+        ds.serialize(destination=path / "knowledge" / "graph.trig", format="trig")
 
 
 def test_federation_round_trip(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
@@ -1551,25 +1935,29 @@ children:
     runner = CliRunner()
     monkeypatch.chdir(meta)
 
-    # 1. sync from meta — should validate cleanly
-    result = runner.invoke(cli, ["sync"])
+    # 1. federation validate from meta — should be clean
+    result = runner.invoke(main, ["federation", "validate"])
     assert result.exit_code == 0, result.output
 
-    # 2. graph build in meta — federated assembly
-    result = runner.invoke(cli, ["graph", "build"])
+    # 2. graph build in meta — local + federated phases
+    result = runner.invoke(main, ["graph", "build"])
     assert result.exit_code == 0, result.output
 
-    # 3. status --federated
-    result = runner.invoke(cli, ["status", "--federated"])
+    # 3. federation status
+    result = runner.invoke(main, ["federation", "status"])
     assert result.exit_code == 0, result.output
     assert "a" in result.output
     assert "b" in result.output
 
     # 4. Parse the federated graph and confirm shape
-    ds = rdflib.Dataset()
+    ds = Dataset()
     ds.parse(meta / "knowledge" / "graph.trig", format="trig")
-    graph_names = {str(g.identifier) for g in ds.graphs() if g.identifier != rdflib.URIRef("urn:x-rdflib:default")}
+    graph_names = {str(g.identifier) for g in ds.graphs() if g.identifier != URIRef("urn:x-rdflib:default")}
     assert {"cancer://a", "cancer://b", "cancer://meta"}.issubset(graph_names)
+
+    # 5. Confirm the layer-preserving parser actually preserved layered triples.
+    a_subjects = {str(s) for s in ds.graph(URIRef("cancer://a")).subjects()}
+    assert "https://example.org/a-claim" in a_subjects
 ```
 
 - [ ] **Step 2: Run test; confirm green.**
@@ -1595,7 +1983,7 @@ Content of `federation.md` must cover:
 3. The canonical path rule (tilde-prefixed, expand on use).
 4. Cross-project addressing convention: `<project-id>:<artifact-id>` and `<cancer://project-id/artifact-id>` URI form.
 5. Federated graph behavior: named-graph-per-child, provenance triples, read-only.
-6. `science:status --federated` usage.
+6. `science-tool federation validate` and `science-tool federation status` usage; the `/science:status` skill dispatch.
 7. What's deferred to v1.1+ (link to the design doc's §3.5 deferred table).
 
 - [ ] **Step 1: Write `federation.md`** following the structure above. No placeholders — everything in the design doc §3 is concrete enough to lift in.
@@ -1657,7 +2045,7 @@ cd ~/d/r/cbioportal
 uv sync
 ```
 
-- [ ] **Step 2: Run `science:sync`** — must remain green and not start emitting warnings (since cbioportal still has no `parent:` and no `children:`, it should behave exactly as before).
+- [ ] **Step 2: Run `science-tool graph build`** — must remain green. cbioportal has no `parent:` and no `role: meta`, so behavior should match pre-federation (single-project materialization, no federation phase, no parent auto-register). Also verify `science-tool sync run` still works.
 
 - [ ] **Step 3: Run `bash validate.sh --verbose`** — must remain green.
 
@@ -1679,7 +2067,7 @@ This plan covers Phase 1 only. The other phases from `2026-04-30-cancer-meta-pro
 | Phase | What | When to plan |
 |---|---|---|
 | Phase 2 | Migrate cbioportal + mm30 into `~/d/cancer/`; bootstrap minimal `meta/`; backwards-compat symlinks; memory dir renames; per-child validation | After Phase 1 lands and is exercised in the dependent projects |
-| Phase 3 | Day-1 scaffolding for `meta/`, `mechanisms/evolution/`, `conditions/pre-cancer/`; foundational questions; cbioportal/MM `science.yaml` + README/AGENTS updates; first `science:status --federated` run | Immediately after Phase 2 |
+| Phase 3 | Day-1 scaffolding for `meta/`, `mechanisms/evolution/`, `conditions/pre-cancer/`; foundational questions; cbioportal/MM `science.yaml` + README/AGENTS updates; first `science-tool federation status` run | Immediately after Phase 2 |
 | Phase 4 | First literature lap: PDF manifest pre-flight → triage → batched deep read with `science:paper-researcher` sub-agents → lap-1 synthesis | After Phase 3 |
 | Phase 5+ | Subsequent laps; Federation v1.1+ features (deferred items in design §3.5) as real usage pressure justifies | Ongoing |
 
@@ -1691,10 +2079,10 @@ Plans for Phases 2–5 are written when their predecessors land, not preemptivel
 
 - **Spec coverage.** Each numbered piece of design §3.6's effort table maps to a task here:
   - `science.yaml` schema additions + validators → Tasks 1, 2
-  - `children:` manifest support in `science:sync` → Task 4 (with Task 3 as the validation library)
+  - `children:` manifest support + federation `validate` CLI + parent auto-register → Task 4 (with Task 3 as the validation library)
   - Addressing convention doc + URI form → Tasks 5, 10
-  - `create-graph` / `update-graph` federation mode → Tasks 6, 7
-  - `science:status --federated` rollup → Task 8
+  - Federated `graph build` (local + federated phases, layer-preserving) → Tasks 6, 7
+  - Federated status rollup CLI + `/science:status` skill dispatch → Task 8
   - Tests + docs → Task 9 (integration), Task 10 (docs), Task 11 (self-check), Task 12 (smoke)
 - **Placeholder scan.** No "TBD"/"fill in details" left in the plan. Where the plan acknowledges discovery (the Task 0 orientation note, the conditional refactor in Task 8 Step 1a), it's because the existing CLI structure can't be assumed without reading the source — this is honest about the unknown rather than a hidden placeholder.
 - **Type consistency.** `ProjectConfig`, `ChildEntry`, `ProjectRole`, `Address`, `FederationIssue` defined in Tasks 1/3/5 are referenced consistently in Tasks 4/6/7/8/9. `materialize_federated_graph(meta_root: Path) -> Path` matches between Task 6 and Task 7. `render_project_status(project_root: Path) -> str` is created (or extracted) in Task 8 Step 1a and consumed in Step 3.

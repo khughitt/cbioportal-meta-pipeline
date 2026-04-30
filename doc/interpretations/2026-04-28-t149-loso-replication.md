@@ -1,5 +1,9 @@
 ---
 id: "interpretation:2026-04-28-t149-loso-replication"
+type: "interpretation"
+status: "active"
+source_refs:
+  - "task:t149"
 title: "t149 leave-one-study-out replication-rate analysis — pooled_rate top-N is unstable; instability concentrates in small / specialty studies and is not rescued by Bailey restriction"
 date: "2026-04-28"
 related:

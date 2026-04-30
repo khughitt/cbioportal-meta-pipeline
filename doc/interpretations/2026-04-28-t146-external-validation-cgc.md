@@ -1,5 +1,9 @@
 ---
 id: "interpretation:2026-04-28-t146-external-validation-cgc"
+type: "interpretation"
+status: "active"
+source_refs:
+  - "task:t146"
 title: "t146 external validation (partial) — pan-cancer dNdScv ranking shows 88-90% CGC tier-1+2 recovery and 61% Bailey 2018 recovery at K=100; IntOGen + Martincorena 2017 pass blocks on t171"
 date: "2026-04-28"
 related:

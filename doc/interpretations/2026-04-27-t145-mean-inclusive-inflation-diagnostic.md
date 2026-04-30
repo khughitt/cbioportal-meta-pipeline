@@ -1,3 +1,19 @@
+---
+id: "interpretation:2026-04-27-t145-mean-inclusive-inflation-diagnostic"
+type: "interpretation"
+title: "t145 mean-inclusive inflation diagnostic — stale pooled means before WES zero-fill caused raw ranking inflation"
+status: "active"
+source_refs:
+  - "task:t145"
+related:
+  - "task:t145"
+  - "task:t160"
+  - "hypothesis:h02-cross-study-ranking-divergence-is-structured"
+  - "question:q015-pan-cancer-aggregator-choice"
+created: "2026-04-27"
+updated: "2026-04-27"
+---
+
 # t145 Mean-Inclusive Inflation Diagnostic
 
 Date: 2026-04-27

@@ -1175,7 +1175,7 @@ git commit -m "feat(addressing): cross-project address parse/render"
 - Test: `~/d/science/science-tool/tests/test_graph_federation.py`
 
 Meta's `knowledge/graph.trig` is assembled by:
-1. Materializing meta's own local sources (existing pipeline) and capturing their triples in `cancer://meta`.
+1. Reading meta's already-materialized local graph and capturing those triples in `cancer://meta`.
 2. Reading each child's `knowledge/graph.trig` (which uses named graphs per `GRAPH_LAYERS`) and unioning *all of the child's contexts* into a single `cancer://<child-id>` named graph in the federated output.
 3. Adding provenance triples (`prov:wasDerivedFrom`, `prov:generatedAtTime`) and meta-level cross-project claims to `cancer://meta`.
 
@@ -1185,7 +1185,7 @@ Two parsing pitfalls to handle correctly (per code review):
 
 For v1.0 we **collapse** child-side layer graphs into a single `cancer://<child-id>` graph in the federated output (simpler queries, smaller surface area). Preserving the layer hierarchy under `cancer://<child-id>/<layer>` is a future v1.1+ option, not blocking.
 
-- [ ] **Step 1: Read** the existing `materialize_graph` function in `~/d/science/science-tool/src/science_tool/graph/store.py` and confirm:
+- [ ] **Step 1: Read** the existing `materialize_graph` function in `~/d/science/science-tool/src/science_tool/graph/materialize.py` and confirm:
   - Its signature (likely `materialize_graph(project_root: Path) -> Path`).
   - Whether it writes directly to `<project_root>/knowledge/graph.trig`, or returns the path it wrote.
   - That `GRAPH_LAYERS` are emitted as named graphs in the output (already verified during Task 0; reconfirm here before touching anything).
@@ -1200,10 +1200,10 @@ from pathlib import Path
 
 import pytest
 import rdflib
-from rdflib import Dataset, Graph, Literal, URIRef
+from rdflib import Dataset, URIRef
 from rdflib.namespace import PROV, RDF
 
-from science_tool.graph.federation import materialize_federated_graph
+from science_tool.graph.federation import assemble_federated_graph
 
 
 def _write_yaml(path: Path, body: str) -> None:
@@ -1263,7 +1263,7 @@ research_question: "..."
     _write_layered_trig(a, "a")
     _write_layered_trig(b, "b")
 
-    out_path = materialize_federated_graph(meta)
+    out_path = assemble_federated_graph(meta)
     assert out_path.exists()
 
     ds = Dataset()
@@ -1281,9 +1281,14 @@ research_question: "..."
 
     # Provenance triples in cancer://meta
     meta_graph = ds.graph(URIRef("cancer://meta"))
-    prov_subjects = {str(s) for s, _, _ in meta_graph.triples((None, PROV.wasDerivedFrom, None))}
+    prov_rows = {
+        (str(s), str(o))
+        for s, _, o in meta_graph.triples((None, PROV.wasDerivedFrom, None))
+    }
+    prov_subjects = {subject for subject, _ in prov_rows}
     assert "cancer://a" in prov_subjects
     assert "cancer://b" in prov_subjects
+    assert any(obj.startswith("file://") and obj.endswith("/a/knowledge/graph.trig") for _, obj in prov_rows)
 
 
 def test_includes_meta_local_triples(tmp_path: Path) -> None:
@@ -1306,7 +1311,7 @@ children: []
     g.add((ex["meta-claim"], RDF.type, ex.UmbrellaClaim))
     pre.serialize(destination=knowledge_dir / "graph.trig", format="trig")
 
-    out_path = materialize_federated_graph(meta)
+    out_path = assemble_federated_graph(meta)
     ds = Dataset()
     ds.parse(out_path, format="trig")
     meta_graph = ds.graph(URIRef("cancer://meta"))
@@ -1337,8 +1342,8 @@ parent: {meta}
 profile: research
 research_question: "..."
 """)
-    # No graph.trig in a/ — assembler still succeeds and emits just meta + provenance gap.
-    out_path = materialize_federated_graph(meta)
+    # No graph.trig in a/ — assembler still succeeds and emits just the meta graph.
+    out_path = assemble_federated_graph(meta)
     assert out_path.exists()
 
 
@@ -1353,7 +1358,7 @@ profile: research
 research_question: "..."
 """)
     with pytest.raises(ValueError, match="not a meta"):
-        materialize_federated_graph(a)
+        assemble_federated_graph(a)
 ```
 
 - [ ] **Step 3: Run; confirm 4 fail.**
@@ -1381,7 +1386,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from rdflib import Dataset, Literal, URIRef
-from rdflib.namespace import PROV
+from rdflib.graph import Graph
+from rdflib.namespace import PROV, RDF
 
 from science_tool.project_config import (
     ChildEntry,
@@ -1398,17 +1404,21 @@ def _project_uri(project_id: str) -> URIRef:
     return URIRef(f"{_URI_SCHEME}://{project_id}")
 
 
-def materialize_federated_graph(meta_root: Path) -> Path:
-    """Materialize meta's federated graph.trig.
+def assemble_federated_graph(meta_root: Path) -> Path:
+    """Assemble meta's federated graph.trig from existing graph files.
 
     Behavior:
-    - First materialize meta's own local sources via the existing pipeline.
-      The resulting triples land in ``cancer://meta``.
+    - Read meta's existing local ``knowledge/graph.trig`` and put those
+      triples in ``cancer://meta``.
     - Then union each child's TriG contexts into ``cancer://<child-id>``.
     - Annotate ``cancer://meta`` with provenance triples for each included child.
 
     Returns the output path (``meta_root/knowledge/graph.trig``).
     Raises ValueError if ``meta_root`` is not a meta project.
+
+    This function does not invoke ``materialize_graph`` itself. The CLI
+    ``graph build`` command owns the two-phase flow: first standard local
+    materialization, then this federation assembly pass.
     """
     cfg = load_project_config(meta_root)
     if cfg.role != ProjectRole.META:
@@ -1422,8 +1432,8 @@ def materialize_federated_graph(meta_root: Path) -> Path:
     meta_uri = _project_uri(cfg.id or meta_root.name)
     meta_graph = ds.graph(meta_uri)
 
-    # Step A: meta's own local triples → cancer://meta
-    _materialize_meta_local(meta_root, meta_graph)
+    # Step A: meta's already-materialized local triples → cancer://meta
+    _include_meta_local_graph(meta_root, meta_graph)
 
     # Step B: each child's TriG → cancer://<child-id>
     timestamp = Literal(datetime.now(timezone.utc).isoformat(), datatype=_XSD_DATETIME)
@@ -1431,24 +1441,25 @@ def materialize_federated_graph(meta_root: Path) -> Path:
         child_uri = _project_uri(child.id)
         included = _include_child_graph(ds, child, child_uri)
         if included:
-            meta_graph.add((child_uri, PROV.wasDerivedFrom, Literal(str(_child_graph_path(child)))))
+            source_uri = URIRef(_child_graph_path(child).resolve().as_uri())
+            meta_graph.add((child_uri, PROV.wasDerivedFrom, source_uri))
+            meta_graph.add((source_uri, RDF.type, PROV.Entity))
             meta_graph.add((child_uri, PROV.generatedAtTime, timestamp))
 
     ds.serialize(destination=out_path, format="trig")
     return out_path
 
 
-def _materialize_meta_local(meta_root: Path, dest_graph) -> None:  # type: ignore[no-untyped-def]
-    """Materialize meta's own local sources into ``dest_graph``.
+def _include_meta_local_graph(meta_root: Path, dest_graph: Graph) -> None:
+    """Read meta's already-materialized local graph into ``dest_graph``.
 
     v1.0 implementation: read meta's existing ``knowledge/graph.trig`` if present
     (assumed to have been produced by an earlier ``science-tool graph build``
     against meta's local sources, prior to federation). Union all its contexts
     into ``dest_graph``.
 
-    A future refinement: invoke the existing per-project ``materialize_graph``
-    pipeline directly to a memory dataset, avoiding the read-then-overwrite
-    round trip. Out of scope for v1.0.
+    A future refinement: expose the existing per-project ``materialize_graph``
+    pipeline as an in-memory dataset builder. Out of scope for v1.0.
     """
     src_path = meta_root / "knowledge" / "graph.trig"
     if not src_path.is_file():
@@ -1492,9 +1503,18 @@ git add src/science_tool/graph/federation.py tests/test_graph_federation.py
 git commit -m "feat(graph): federated graph assembly preserving child layers + meta local"
 ```
 
-### Note: read-then-overwrite of meta's `knowledge/graph.trig`
+### Note: assembler contract and CLI ordering
 
-`materialize_federated_graph` reads `meta_root/knowledge/graph.trig` (Step A in `_materialize_meta_local`) and then later overwrites the same path with the federated output. This means: **before federation, meta must have run a standard graph build to produce its own local triples.** Task 7 enforces this ordering by having `graph_build` in a meta project first call the standard `materialize_graph` (writing meta's local triples) and *then* call `materialize_federated_graph` on the same project root, which re-reads those triples and re-emits with children included.
+`assemble_federated_graph` is intentionally an assembler, not the local source
+materializer. It reads `meta_root/knowledge/graph.trig` as the meta-local input
+and then overwrites that same path with the federated output. This means:
+**before assembly, meta must have run a standard graph build to produce its own
+local triples.** Task 7 enforces this ordering by having `graph_build` in a meta
+project first call the standard `materialize_graph` (writing meta's local
+triples) and *then* call `assemble_federated_graph` on the same project root,
+which re-reads those triples and re-emits with children included. Callers should
+not invoke `assemble_federated_graph` directly on a stale already-federated
+`graph.trig`; the supported user entry point is `science-tool graph build`.
 
 ---
 
@@ -1579,7 +1599,7 @@ research_question: "..."
 
 ```python
 from science_tool.project_config import ProjectRole, load_project_config
-from science_tool.graph.federation import materialize_federated_graph
+from science_tool.graph.federation import assemble_federated_graph
 
 # After the existing ensure_registered block in graph_build:
 _cfg = load_project_config(_project_root)
@@ -1594,7 +1614,7 @@ if _cfg.role == ProjectRole.META:
 
     # Phase B: federation re-reads meta's local triples (placing them in
     # cancer://meta) and unions each child's contexts into cancer://<child-id>.
-    federated_path = materialize_federated_graph(_project_root)
+    federated_path = assemble_federated_graph(_project_root)
     click.echo(f"Materialized federated graph at {federated_path}")
     return
 
@@ -1618,6 +1638,7 @@ git commit -m "feat(cli): graph build runs local + federated phases in meta proj
 - Create: `~/d/science/science-tool/src/science_tool/federation_status.py` (rollup logic)
 - Modify: `~/d/science/science-tool/src/science_tool/federation_cli.py` (add `status` subcommand to the existing `federation_group` from Task 4)
 - Modify: `~/d/science/commands/status.md` (the `/science:status` skill — teach it to invoke the new CLI when the project's `role: meta`)
+- Modify (regenerated): `~/d/science/codex-skills/science-status/SKILL.md` (generated from `commands/status.md`)
 - Test: `~/d/science/science-tool/tests/test_federation_status_cli.py`
 
 ### Why a new CLI subcommand, not a `/science:status` skill rewrite
@@ -1785,13 +1806,21 @@ def _render_child_summary(child: ChildEntry) -> str:
         f"- path: {child_root}",
         f"- research question: {rq}",
     ]
-    questions_dir = child_root / "doc" / "questions"
-    hypotheses_dir = child_root / "doc" / "hypotheses"
-    if questions_dir.is_dir():
-        lines.append(f"- questions: {sum(1 for _ in questions_dir.glob('*.md'))}")
-    if hypotheses_dir.is_dir():
-        lines.append(f"- hypotheses: {sum(1 for _ in hypotheses_dir.glob('*.md'))}")
+    question_count = _count_markdown(child_root / "doc" / "questions")
+    hypothesis_count = _count_markdown(child_root / "specs" / "hypotheses") + _count_markdown(
+        child_root / "doc" / "hypotheses"
+    )
+    if question_count:
+        lines.append(f"- questions: {question_count}")
+    if hypothesis_count:
+        lines.append(f"- hypotheses: {hypothesis_count}")
     return "\n".join(lines) + "\n"
+
+
+def _count_markdown(path: Path) -> int:
+    if not path.is_dir():
+        return 0
+    return sum(1 for _ in path.glob("*.md"))
 
 
 def _render_meta_scope(meta_root: Path, cfg: ProjectConfig) -> str:
@@ -1832,7 +1861,7 @@ def federation_status(project_root: Path) -> None:
 
 - [ ] **Step 4: Update `~/d/science/commands/status.md`** to teach the skill to dispatch to the federation CLI when the current project's `role` is `meta`. Add this stanza near the start of the skill's "Setup" section, *before* the existing `Read science.yaml` step:
 
-```markdown
+````markdown
 ## Federation handling
 
 If `science.yaml` declares `role: meta`, the rest of this skill's per-project
@@ -1848,22 +1877,48 @@ source of truth for cross-project rollups.
 
 For non-meta projects (the default), proceed with the existing per-project
 status flow below.
+````
+
+- [ ] **Step 5: Regenerate the Codex skill mirror.** Because Codex uses generated `codex-skills/` rather than `commands/` directly, regenerate after editing `commands/status.md`.
+
+```bash
+cd ~/d/science
+UV_CACHE_DIR=/tmp/uv-cache uv run --project science-tool python scripts/generate_codex_skills.py
 ```
 
-- [ ] **Step 5: Run tests; full suite.**
+Expected: output includes `Generated Codex skills in .../codex-skills`.
+
+- [ ] **Step 6: Verify the generated status skill contains the federation branch.**
+
+```bash
+rg -n "Federation handling|science-tool federation status|role: meta" codex-skills/science-status/SKILL.md
+```
+
+Expected: all three strings are found.
+
+- [ ] **Step 7: Run tests; full suite.**
 
 ```bash
 uv run --frozen pytest -x
 ```
 
-- [ ] **Step 6: Commit.**
+Also run the Codex-skill generator tests from the science repo root:
 
 ```bash
-git add src/science_tool/federation_status.py src/science_tool/federation_cli.py ../commands/status.md tests/test_federation_status_cli.py
+cd ~/d/science
+uv run --project science-tool pytest science-tool/tests/test_codex_skills.py -q
+```
+
+Expected: green.
+
+- [ ] **Step 8: Commit.**
+
+```bash
+git add src/science_tool/federation_status.py src/science_tool/federation_cli.py ../commands/status.md ../codex-skills/science-status/SKILL.md tests/test_federation_status_cli.py
 git commit -m "feat(federation): status rollup CLI + skill dispatch for meta projects"
 ```
 
-> Note on the path `../commands/status.md`: this file lives in `~/d/science/commands/`, which is the parent of `science-tool/`. The git repo root is `~/d/science/`, so the `git add` from `science-tool/` reaches outside its directory but stays inside the repo. If the science framework keeps `commands/` and `science-tool/` in *separate* git repos, split this into two commits accordingly.
+> Note on the paths `../commands/status.md` and `../codex-skills/science-status/SKILL.md`: these files live under `~/d/science/`, which is the parent of `science-tool/`. The git repo root is `~/d/science/`, so the `git add` from `science-tool/` reaches outside its directory but stays inside the repo. If the science framework keeps `commands/`, `codex-skills/`, and `science-tool/` in *separate* git repos, split this into separate commits accordingly.
 
 ---
 
@@ -2082,8 +2137,8 @@ Plans for Phases 2–5 are written when their predecessors land, not preemptivel
   - `children:` manifest support + federation `validate` CLI + parent auto-register → Task 4 (with Task 3 as the validation library)
   - Addressing convention doc + URI form → Tasks 5, 10
   - Federated `graph build` (local + federated phases, layer-preserving) → Tasks 6, 7
-  - Federated status rollup CLI + `/science:status` skill dispatch → Task 8
+  - Federated status rollup CLI + `/science:status` skill dispatch + generated Codex skill mirror → Task 8
   - Tests + docs → Task 9 (integration), Task 10 (docs), Task 11 (self-check), Task 12 (smoke)
-- **Placeholder scan.** No "TBD"/"fill in details" left in the plan. Where the plan acknowledges discovery (the Task 0 orientation note, the conditional refactor in Task 8 Step 1a), it's because the existing CLI structure can't be assumed without reading the source — this is honest about the unknown rather than a hidden placeholder.
-- **Type consistency.** `ProjectConfig`, `ChildEntry`, `ProjectRole`, `Address`, `FederationIssue` defined in Tasks 1/3/5 are referenced consistently in Tasks 4/6/7/8/9. `materialize_federated_graph(meta_root: Path) -> Path` matches between Task 6 and Task 7. `render_project_status(project_root: Path) -> str` is created (or extracted) in Task 8 Step 1a and consumed in Step 3.
-- **Granularity.** Each step is 2–5 minutes for an engineer who's read Task 0. Tests-first throughout. Frequent commits (one per task at minimum, with Task 8 having an extra refactor commit if needed).
+- **Placeholder scan.** No open placeholders are left in the plan. The only discovery step is Task 0's orientation note, which records current source layout before implementation.
+- **Type consistency.** `ProjectConfig`, `ChildEntry`, `ProjectRole`, `Address`, `FederationIssue`, and `assemble_federated_graph(meta_root: Path) -> Path` are referenced consistently across Tasks 1–9.
+- **Granularity.** Each step is 2–5 minutes for an engineer who's read Task 0. Tests-first throughout. Frequent commits, with one commit per task.

@@ -7,208 +7,227 @@
 #   3. dNdScv selection-based ranking   (min_qglobal across cancer types from
 #                                        summary/mut/table/dndscv_pooled.feather)
 #
-# PLUS literature-attention (PubTator gene-mention counts) for the q011
-# correlation panel.
-#
-# Inputs (snek.input):
-#   annotated   — summary/mut/table/gene_cancer_study_ratio_annotated_dndscv.feather
-#                 (post-join_dndscv_into_annotated; carries dndscv columns)
-#   pooled      — summary/mut/table/dndscv_pooled.feather
-#   lengths     — metadata/protein_lengths.feather
-#   ensembl     — data/grch37.tsv (entrez↔symbol mapping for PubTator join)
-#   pubtator    — /data/proj/lit-explore/pubtator/2026-01-16/counts/gene_concept_ids.feather
-#                 OPTIONAL — handled gracefully if absent. Wired via Snakefile
-#                 with conditional input (the path is constant; if the file
-#                 doesn't exist the rule's `input` declaration must be guarded
-#                 by config or removed for environments without /data/proj).
-#
-# Output (snek.output[0]):
-#   summary/mut/table/three_way_ranking_comparison.feather
-#
-# Output schema (per-gene):
-#   symbol, length, mean_inclusive, mean_adj, min_qglobal,
-#   n_cancers_significant_q05, best_cancer_type,
-#   pubtator_mention_count, pubtator_log10_mentions,
-#   rank_raw, rank_length_adj, rank_dndscv,
-#   shift_raw_to_length, shift_raw_to_dndscv, shift_length_to_dndscv,
-#   bailey_driver, cgc_tier_1, ch_priority_gene
-#
+from __future__ import annotations
+
 import math
 
 import pandas as pd
 
-snek = snakemake  # type: ignore[name-defined]  # noqa: F821
+from symbol_normalization import driver_overlay_symbol
+
+
+def build_three_way_comparison(
+    annotated: pd.DataFrame,
+    pooled: pd.DataFrame,
+    lengths: pd.DataFrame,
+    *,
+    pubtator: pd.DataFrame | None = None,
+    ensembl: pd.DataFrame | None = None,
+) -> pd.DataFrame:
+    """Build the per-gene three-way comparison table."""
+    per_gene = _per_gene_rollup(annotated)
+    per_gene = per_gene[per_gene["mean_inclusive"] > 0].copy()
+    print(f"compare_three_way_rankings: {len(per_gene):,} genes with mean_inclusive>0")
+
+    lengths = lengths.copy()
+    lengths["symbol"] = lengths["symbol"].astype(str)
+    per_gene = per_gene.merge(lengths, on="symbol", how="left")
+
+    pooled_prepared = pooled.copy()
+    pooled_prepared["symbol"] = pooled_prepared["symbol"].astype(str)
+    per_gene = per_gene.merge(
+        pooled_prepared[
+            [
+                "symbol",
+                "min_qglobal",
+                "n_cancers_significant_q05",
+                "best_cancer_type",
+            ]
+        ],
+        on="symbol",
+        how="outer",
+    )
+    per_gene = _attach_overlay_flags(per_gene, annotated)
+
+    per_gene = _join_pubtator(per_gene, pubtator=pubtator, ensembl=ensembl)
+    per_gene = _add_rank_columns(per_gene)
+    return _finalize_columns(per_gene)
 
 
 def _per_gene_rollup(annot: pd.DataFrame) -> pd.DataFrame:
-    """Aggregate annotated feather (per (gene, cancer_type)) → per-gene."""
+    """Aggregate annotated feather (per (gene, cancer_type)) to per-gene."""
     annot = annot.copy()
     annot["symbol"] = annot["symbol"].astype(str)
-    bailey = (
-        annot.groupby("symbol")["bailey2018_driver"].max()
-        if "bailey2018_driver" in annot.columns
-        else pd.Series(dtype="boolean")
-    )
-    cgc = (
-        annot.groupby("symbol")["cgc_tier_1"].max()
-        if "cgc_tier_1" in annot.columns
-        else pd.Series(dtype="boolean")
-    )
-    ch = (
-        annot.groupby("symbol")["ch_priority_gene"].max()
-        if "ch_priority_gene" in annot.columns
-        else pd.Series(dtype="boolean")
-    )
     out = annot.groupby("symbol").agg(
         mean_inclusive=("mean_inclusive", "mean"),
         mean_adj=("mean_adj", "mean"),
         n_cancers=("cancer_type", "nunique"),
     )
-    if not bailey.empty:
-        out["bailey_driver"] = bailey
-    if not cgc.empty:
-        out["cgc_tier_1"] = cgc
-    if not ch.empty:
-        out["ch_priority_gene"] = ch
     return out.reset_index()
 
 
-# ---------------------------------------------------------------------------
-# Load inputs.
-# ---------------------------------------------------------------------------
-annot = pd.read_feather(snek.input.annotated)
-pooled = pd.read_feather(snek.input.pooled)
-lengths = pd.read_feather(snek.input.lengths)
+def _attach_overlay_flags(per_gene: pd.DataFrame, annot: pd.DataFrame) -> pd.DataFrame:
+    out = per_gene.copy()
+    out["symbol"] = out["symbol"].astype(str)
+    out["_driver_overlay_symbol"] = out["symbol"].map(driver_overlay_symbol)
+    overlay = _overlay_flags_by_symbol(annot)
+    out = out.merge(overlay, on="_driver_overlay_symbol", how="left")
+    for col in ("bailey_driver", "cgc_tier_1", "ch_priority_gene"):
+        if col in out.columns:
+            out[col] = out[col].fillna(False).astype(bool)
+    return out.drop(columns=["_driver_overlay_symbol"])
 
-# ---------------------------------------------------------------------------
-# Per-gene rollup of annotated feather.
-# ---------------------------------------------------------------------------
-per_gene = _per_gene_rollup(annot)
-per_gene = per_gene[per_gene["mean_inclusive"] > 0].copy()
-print(f"compare_three_way_rankings: {len(per_gene):,} genes with mean_inclusive>0")
 
-# Join lengths.
-lengths = lengths.copy()
-lengths["symbol"] = lengths["symbol"].astype(str)
-per_gene = per_gene.merge(lengths, on="symbol", how="left")
+def _overlay_flags_by_symbol(annot: pd.DataFrame) -> pd.DataFrame:
+    annot = annot.copy()
+    annot["symbol"] = annot["symbol"].astype(str)
+    annot["_driver_overlay_symbol"] = annot["symbol"].map(driver_overlay_symbol)
+    specs = {
+        "bailey2018_driver": "bailey_driver",
+        "cgc_tier_1": "cgc_tier_1",
+        "ch_priority_gene": "ch_priority_gene",
+    }
+    rows = pd.DataFrame(
+        {"_driver_overlay_symbol": sorted(set(annot["_driver_overlay_symbol"]))}
+    )
+    for input_col, output_col in specs.items():
+        if input_col in annot.columns:
+            flags = (
+                annot.groupby("_driver_overlay_symbol")[input_col]
+                .max()
+                .rename(output_col)
+            )
+            rows = rows.merge(flags, on="_driver_overlay_symbol", how="left")
+    return rows
 
-# Join pooled dndscv signal (per-gene).
-pooled = pooled.copy()
-pooled["symbol"] = pooled["symbol"].astype(str)
-per_gene = per_gene.merge(
-    pooled[["symbol", "min_qglobal", "n_cancers_significant_q05", "best_cancer_type"]],
-    on="symbol",
-    how="left",
-)
 
-# ---------------------------------------------------------------------------
-# PubTator join (optional).
-# ---------------------------------------------------------------------------
-pubtator_path = getattr(snek.input, "pubtator", None)
-ensembl_path = getattr(snek.input, "ensembl", None)
-if pubtator_path and ensembl_path:
-    try:
-        pub = pd.read_feather(pubtator_path)
-        ens = pd.read_csv(
-            ensembl_path,
-            sep="\t",
-            usecols=["entrez", "symbol"],
+def _join_pubtator(
+    per_gene: pd.DataFrame,
+    *,
+    pubtator: pd.DataFrame | None,
+    ensembl: pd.DataFrame | None,
+) -> pd.DataFrame:
+    if pubtator is None or ensembl is None:
+        out = per_gene.copy()
+        out["pubtator_mention_count"] = pd.NA
+        out["pubtator_log10_mentions"] = pd.NA
+        return out
+
+    ens = ensembl.dropna(subset=["entrez", "symbol"]).drop_duplicates().copy()
+    ens["entrez"] = ens["entrez"].astype("Int64").astype(str)
+    ens["symbol"] = ens["symbol"].astype(str)
+    pub = pubtator.copy()
+    pub["concept_id"] = pub["concept_id"].astype(str)
+    pub_per_symbol = (
+        pub.merge(ens, left_on="concept_id", right_on="entrez", how="inner")
+        .groupby("symbol", as_index=False)["n"]
+        .sum()
+        .rename(columns={"n": "pubtator_mention_count"})
+    )
+    out = per_gene.merge(pub_per_symbol, on="symbol", how="left")
+    out["pubtator_log10_mentions"] = out["pubtator_mention_count"].apply(
+        lambda value: (
+            math.log10(float(value) + 1.0) if pd.notna(value) else float("nan")
         )
-        ens = ens.dropna(subset=["entrez", "symbol"]).drop_duplicates()
-        ens["entrez"] = ens["entrez"].astype("Int64").astype(str)
-        ens["symbol"] = ens["symbol"].astype(str)
-        pub = pub.copy()
-        pub["concept_id"] = pub["concept_id"].astype(str)
-        # Sum mentions per HGNC symbol across all entrez IDs that map to it.
-        pub_per_symbol = (
-            pub.merge(ens, left_on="concept_id", right_on="entrez", how="inner")
-            .groupby("symbol", as_index=False)["n"]
-            .sum()
-            .rename(columns={"n": "pubtator_mention_count"})
-        )
-        per_gene = per_gene.merge(pub_per_symbol, on="symbol", how="left")
-        per_gene["pubtator_log10_mentions"] = per_gene["pubtator_mention_count"].apply(
-            lambda v: math.log10(float(v) + 1.0) if pd.notna(v) else float("nan")
-        )
-        n_pub = int(per_gene["pubtator_mention_count"].notna().sum())
-        print(
-            f"compare_three_way_rankings: PubTator joined; {n_pub:,} / {len(per_gene):,} "
-            "genes with mention counts"
-        )
-    except FileNotFoundError as e:
-        print(f"compare_three_way_rankings: PubTator path missing ({e}); skipping join")
-        per_gene["pubtator_mention_count"] = pd.NA
-        per_gene["pubtator_log10_mentions"] = pd.NA
-else:
-    per_gene["pubtator_mention_count"] = pd.NA
-    per_gene["pubtator_log10_mentions"] = pd.NA
+    )
+    n_pub = int(out["pubtator_mention_count"].notna().sum())
+    print(
+        f"compare_three_way_rankings: PubTator joined; {n_pub:,} / {len(out):,} "
+        "genes with mention counts"
+    )
+    return out
 
-# ---------------------------------------------------------------------------
-# Compute three rank columns.
-#   rank_raw            descending in mean_inclusive
-#   rank_length_adj     descending in mean_adj
-#   rank_dndscv         ascending in min_qglobal (lower q = higher significance)
-# Use dense rank. Genes with NaN scores in a given metric get the worst rank.
-# ---------------------------------------------------------------------------
-per_gene["rank_raw"] = per_gene["mean_inclusive"].rank(
-    method="dense", ascending=False, na_option="bottom"
-).astype("Int64")
-per_gene["rank_length_adj"] = per_gene["mean_adj"].rank(
-    method="dense", ascending=False, na_option="bottom"
-).astype("Int64")
-# Composite-key dense rank for dNdScv (t144): primary key min_qglobal asc,
-# secondary key n_cancers_significant_q05 desc. Single-column rank() collapses
-# all q=0 BH-FDR-floor ties to rank 1; the per-gene rollup's secondary key
-# breaks those ties so the gene with the most cancer types significant at
-# q<0.05 ranks first among the q=0 set.
-_dndscv_sorted = per_gene[["min_qglobal", "n_cancers_significant_q05"]].sort_values(
-    by=["min_qglobal", "n_cancers_significant_q05"],
-    ascending=[True, False],
-    na_position="last",
-    kind="mergesort",
-)
-_dndscv_ranks = (
-    _dndscv_sorted.groupby(
-        ["min_qglobal", "n_cancers_significant_q05"], dropna=False, sort=False
-    ).ngroup()
-    + 1
-)
-per_gene["rank_dndscv"] = _dndscv_ranks.reindex(per_gene.index).astype("Int64")
 
-# Pairwise rank-shift columns (signed Δrank).
-per_gene["shift_raw_to_length"] = per_gene["rank_length_adj"] - per_gene["rank_raw"]
-per_gene["shift_raw_to_dndscv"] = per_gene["rank_dndscv"] - per_gene["rank_raw"]
-per_gene["shift_length_to_dndscv"] = per_gene["rank_dndscv"] - per_gene["rank_length_adj"]
+def _add_rank_columns(per_gene: pd.DataFrame) -> pd.DataFrame:
+    out = per_gene.copy()
+    out["rank_raw"] = (
+        out["mean_inclusive"]
+        .rank(method="dense", ascending=False, na_option="bottom")
+        .astype("Int64")
+    )
+    out["rank_length_adj"] = (
+        out["mean_adj"]
+        .rank(method="dense", ascending=False, na_option="bottom")
+        .astype("Int64")
+    )
+    dndscv_sorted = out[["min_qglobal", "n_cancers_significant_q05"]].sort_values(
+        by=["min_qglobal", "n_cancers_significant_q05"],
+        ascending=[True, False],
+        na_position="last",
+        kind="mergesort",
+    )
+    dndscv_ranks = (
+        dndscv_sorted.groupby(
+            ["min_qglobal", "n_cancers_significant_q05"],
+            dropna=False,
+            sort=False,
+        ).ngroup()
+        + 1
+    )
+    out["rank_dndscv"] = dndscv_ranks.reindex(out.index).astype("Int64")
+    out["shift_raw_to_length"] = out["rank_length_adj"] - out["rank_raw"]
+    out["shift_raw_to_dndscv"] = out["rank_dndscv"] - out["rank_raw"]
+    out["shift_length_to_dndscv"] = out["rank_dndscv"] - out["rank_length_adj"]
+    return out
 
-# ---------------------------------------------------------------------------
-# Final column order.
-# ---------------------------------------------------------------------------
-cols = [
-    "symbol",
-    "length",
-    "mean_inclusive",
-    "mean_adj",
-    "min_qglobal",
-    "n_cancers_significant_q05",
-    "best_cancer_type",
-    "pubtator_mention_count",
-    "pubtator_log10_mentions",
-    "rank_raw",
-    "rank_length_adj",
-    "rank_dndscv",
-    "shift_raw_to_length",
-    "shift_raw_to_dndscv",
-    "shift_length_to_dndscv",
-]
-for opt in ("bailey_driver", "cgc_tier_1", "ch_priority_gene"):
-    if opt in per_gene.columns:
-        cols.append(opt)
 
-out = per_gene[cols].reset_index(drop=True)
-out.to_feather(snek.output[0])
+def _finalize_columns(per_gene: pd.DataFrame) -> pd.DataFrame:
+    cols = [
+        "symbol",
+        "length",
+        "mean_inclusive",
+        "mean_adj",
+        "min_qglobal",
+        "n_cancers_significant_q05",
+        "best_cancer_type",
+        "pubtator_mention_count",
+        "pubtator_log10_mentions",
+        "rank_raw",
+        "rank_length_adj",
+        "rank_dndscv",
+        "shift_raw_to_length",
+        "shift_raw_to_dndscv",
+        "shift_length_to_dndscv",
+    ]
+    for opt in ("bailey_driver", "cgc_tier_1", "ch_priority_gene"):
+        if opt in per_gene.columns:
+            cols.append(opt)
+    return per_gene[cols].reset_index(drop=True)
 
-print(
-    f"compare_three_way_rankings: wrote {len(out):,} rows to {snek.output[0]}\n"
-    f"  - {int(out['min_qglobal'].notna().sum()):,} with dndscv signal\n"
-    f"  - {int(out['pubtator_mention_count'].notna().sum()):,} with PubTator counts"
-)
+
+def _run_via_snakemake() -> None:
+    snek = snakemake  # type: ignore[name-defined]  # noqa: F821
+    annotated = pd.read_feather(snek.input.annotated)
+    pooled = pd.read_feather(snek.input.pooled)
+    lengths = pd.read_feather(snek.input.lengths)
+
+    pubtator_path = getattr(snek.input, "pubtator", None)
+    ensembl_path = getattr(snek.input, "ensembl", None)
+    pubtator = None
+    ensembl = None
+    if pubtator_path and ensembl_path:
+        try:
+            pubtator = pd.read_feather(pubtator_path)
+            ensembl = pd.read_csv(ensembl_path, sep="\t", usecols=["entrez", "symbol"])
+        except FileNotFoundError as error:
+            print(
+                f"compare_three_way_rankings: PubTator path missing ({error}); skipping join"
+            )
+
+    out = build_three_way_comparison(
+        annotated=annotated,
+        pooled=pooled,
+        lengths=lengths,
+        pubtator=pubtator,
+        ensembl=ensembl,
+    )
+    out.to_feather(snek.output[0])
+    print(
+        f"compare_three_way_rankings: wrote {len(out):,} rows to {snek.output[0]}\n"
+        f"  - {int(out['min_qglobal'].notna().sum()):,} with dndscv signal\n"
+        f"  - {int(out['pubtator_mention_count'].notna().sum()):,} with PubTator counts"
+    )
+
+
+if "snakemake" in globals():
+    _run_via_snakemake()

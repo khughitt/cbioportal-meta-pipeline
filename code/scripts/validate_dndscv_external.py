@@ -26,10 +26,14 @@ import click
 import pandas as pd
 from scipy.stats import fisher_exact
 
+from symbol_normalization import expand_reference_symbols_to_universe
+
 K_VALUES = (10, 25, 50, 100, 250, 500)
 
 
-def odds_ratio_at_k(top_set: set[str], list_set: set[str], universe: set[str]) -> tuple[float, float]:
+def odds_ratio_at_k(
+    top_set: set[str], list_set: set[str], universe: set[str]
+) -> tuple[float, float]:
     a = len(top_set & list_set)
     b = len(top_set - list_set)
     c = len((list_set - top_set) & universe)
@@ -40,9 +44,39 @@ def odds_ratio_at_k(top_set: set[str], list_set: set[str], universe: set[str]) -
     return float(or_), float(p)
 
 
+def extract_reference_sets(
+    annotated: pd.DataFrame, universe: set[str]
+) -> dict[str, set[str]]:
+    """Extract Bailey/CGC references, expanding bare symbols to dNdScv isoforms."""
+    bailey = _symbols_where(annotated, "bailey2018_driver", universe)
+    cgc_t1 = _symbols_where(annotated, "cgc_tier_1", universe)
+    cgc_t2 = _symbols_where(annotated, "cgc_tier_2", universe)
+    return {
+        "bailey2018": bailey,
+        "cgc_tier1": cgc_t1,
+        "cgc_tier1_or_2": cgc_t1 | cgc_t2,
+    }
+
+
+def _symbols_where(
+    annotated: pd.DataFrame, flag_col: str, universe: set[str]
+) -> set[str]:
+    if flag_col not in annotated.columns:
+        return set()
+    flags = annotated[flag_col].fillna(False).astype(bool)
+    reference_symbols = annotated.loc[flags, "symbol"].dropna().astype(str)
+    return expand_reference_symbols_to_universe(reference_symbols, universe)
+
+
 @click.command()
 @click.option("--annotated", "annotated_path", type=Path, required=True)
-@click.option("--pooled", "pooled_path", type=Path, required=True, help="dndscv_pooled.feather (per-gene rollup)")
+@click.option(
+    "--pooled",
+    "pooled_path",
+    type=Path,
+    required=True,
+    help="dndscv_pooled.feather (per-gene rollup)",
+)
 @click.option("--out-dir", "out_dir", type=Path, required=True)
 def main(annotated_path: Path, pooled_path: Path, out_dir: Path) -> None:
     annot = pd.read_feather(annotated_path)
@@ -56,43 +90,44 @@ def main(annotated_path: Path, pooled_path: Path, out_dir: Path) -> None:
         ["min_qglobal", "n_cancers_significant_q05"],
         ascending=[True, False],
     )
-    print("rank: min_qglobal asc, then n_cancers_significant_q05 desc (t144 tiebreaker)")
+    print(
+        "rank: min_qglobal asc, then n_cancers_significant_q05 desc (t144 tiebreaker)"
+    )
 
-    universe = set(pooled_ranked["symbol"].unique())
-    bailey = set(annot.loc[annot["bailey2018_driver"], "symbol"].unique()) & universe
-    cgc_t1 = set(annot.loc[annot["cgc_tier_1"].fillna(False), "symbol"].unique()) & universe
-    cgc_t2 = set(annot.loc[annot["cgc_tier_2"].fillna(False), "symbol"].unique()) & universe
-    cgc_all = cgc_t1 | cgc_t2
+    universe = set(pooled_ranked["symbol"].dropna().astype(str).unique())
+    refs = extract_reference_sets(annot, universe)
     print(f"universe |U| = {len(universe)}")
-    print(f"|Bailey ∩ U| = {len(bailey)}")
-    print(f"|CGC tier1 ∩ U| = {len(cgc_t1)}")
-    print(f"|CGC tier1+2 ∩ U| = {len(cgc_all)}")
+    print(f"|Bailey ∩ U| = {len(refs['bailey2018'])}")
+    print(f"|CGC tier1 ∩ U| = {len(refs['cgc_tier1'])}")
+    print(f"|CGC tier1+2 ∩ U| = {len(refs['cgc_tier1_or_2'])}")
 
     rows: list[dict] = []
     for k in K_VALUES:
-        top_genes = set(pooled_ranked.head(k)["symbol"].unique())
-        for name, ref_set in [
-            ("bailey2018", bailey),
-            ("cgc_tier1", cgc_t1),
-            ("cgc_tier1_or_2", cgc_all),
-        ]:
+        top_genes = set(pooled_ranked.head(k)["symbol"].dropna().astype(str).unique())
+        for name, ref_set in refs.items():
             inter = top_genes & ref_set
-            jaccard = len(inter) / len(top_genes | ref_set) if (top_genes | ref_set) else float("nan")
+            jaccard = (
+                len(inter) / len(top_genes | ref_set)
+                if (top_genes | ref_set)
+                else float("nan")
+            )
             recovery = len(inter) / len(top_genes) if top_genes else float("nan")
             ref_recovery = len(inter) / len(ref_set) if ref_set else float("nan")
             or_, p_or = odds_ratio_at_k(top_genes, ref_set, universe)
-            rows.append({
-                "k": k,
-                "reference": name,
-                "ref_size": len(ref_set),
-                "top_size": len(top_genes),
-                "intersection": len(inter),
-                "recovery_in_top": recovery,
-                "recovery_of_ref": ref_recovery,
-                "jaccard": jaccard,
-                "odds_ratio_enrichment": or_,
-                "fisher_pvalue_one_sided": p_or,
-            })
+            rows.append(
+                {
+                    "k": k,
+                    "reference": name,
+                    "ref_size": len(ref_set),
+                    "top_size": len(top_genes),
+                    "intersection": len(inter),
+                    "recovery_in_top": recovery,
+                    "recovery_of_ref": ref_recovery,
+                    "jaccard": jaccard,
+                    "odds_ratio_enrichment": or_,
+                    "fisher_pvalue_one_sided": p_or,
+                }
+            )
 
     summary = pd.DataFrame(rows)
     summary_path = out_dir / "dndscv_external_validation.feather"
@@ -101,7 +136,14 @@ def main(annotated_path: Path, pooled_path: Path, out_dir: Path) -> None:
     print()
     print(f"wrote: {summary_path}")
     print()
-    with pd.option_context("display.max_rows", None, "display.width", 180, "display.float_format", "{:0.4f}".format):
+    with pd.option_context(
+        "display.max_rows",
+        None,
+        "display.width",
+        180,
+        "display.float_format",
+        "{:0.4f}".format,
+    ):
         print(summary.to_string(index=False))
 
 

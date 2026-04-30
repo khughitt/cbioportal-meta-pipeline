@@ -13,6 +13,8 @@ from pathlib import Path
 import click
 import pandas as pd
 
+from symbol_normalization import expand_reference_symbols_to_universe
+
 K_VALUES = (10, 25, 50, 100)
 BASE_OVERLAP_COLUMNS = [
     "excluded_study_id",
@@ -142,7 +144,8 @@ def _symbols_where(
     if flag_col not in annotated.columns:
         return set()
     flags = annotated[flag_col].fillna(False).astype(bool)
-    return set(annotated.loc[flags, "symbol"].dropna().astype(str)) & universe
+    reference_symbols = annotated.loc[flags, "symbol"].dropna().astype(str)
+    return expand_reference_symbols_to_universe(reference_symbols, universe)
 
 
 def _top_symbols(ranked: pd.DataFrame, k: int) -> set[str]:

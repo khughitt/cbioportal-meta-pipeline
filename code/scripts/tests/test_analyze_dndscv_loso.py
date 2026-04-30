@@ -55,6 +55,24 @@ def test_extract_reference_sets_uses_unique_symbols_in_universe() -> None:
     assert refs["cgc_tier1_or_2"] == {"TP53", "KRAS", "APC"}
 
 
+def test_extract_reference_sets_maps_cdkn2a_isoform_symbols_to_bare_reference() -> None:
+    annotated = pd.DataFrame(
+        {
+            "symbol": ["CDKN2A", "TP53"],
+            "bailey2018_driver": [True, True],
+            "cgc_tier_1": [True, True],
+            "cgc_tier_2": [False, False],
+        }
+    )
+
+    refs = extract_reference_sets(
+        annotated, universe={"CDKN2A.p16INK4a", "CDKN2A.p14arf", "TP53", "CDKN2AIP"}
+    )
+
+    assert refs["bailey2018"] == {"CDKN2A.p16INK4a", "CDKN2A.p14arf", "TP53"}
+    assert refs["cgc_tier1"] == {"CDKN2A.p16INK4a", "CDKN2A.p14arf", "TP53"}
+
+
 def test_compare_loso_rankings_reports_topk_overlap_and_reference_recovery() -> None:
     base = _pooled(
         [

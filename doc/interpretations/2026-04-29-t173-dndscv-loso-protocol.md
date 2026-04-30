@@ -45,7 +45,8 @@ P1 criterion is whether canonical-driver Jaccard at K=100 is stable across LOSO 
 supported only if specialty-study holdouts disrupt top-K overlap more than generalist-study
 holdouts after comparing the same dNdScv ranking metric.
 
-t173 remains open. The `exclude_genie` pilot plus two broad non-GENIE contrasts
-(`msk_met_2021`, `pog570_bcgsc_2020`) are complete. Both broad contrasts support a
-GENIE-specific disruption reading. Full P2 adjudication still needs either a complete LOSO set
-or a focused analysis of the GENIE cancer/build groups driving the re-ranking.
+t173 is now closed by `doc/interpretations/2026-04-30-t173-dndscv-loso-synthesis.md`. The
+`exclude_genie` pilot plus two broad non-GENIE contrasts (`msk_met_2021`,
+`pog570_bcgsc_2020`) are complete. Both broad contrasts support a GENIE-specific disruption
+reading, and the follow-up GENIE influence attribution explains the mechanism sufficiently for
+the current decision point.

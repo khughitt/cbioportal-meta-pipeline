@@ -830,6 +830,8 @@ The current ingest uses MC3 v0.2.8 PUBLIC (PASS-only). The controlled-access MC3
 
 t149 ran LOSO against the t077 pooled_rate ranking and found median K=100 recovery of 0.18-0.21 (interpretation:2026-04-28-t149-loso-replication). That instability is largely an artifact of pooled_rate being a point-estimate (no significance / sample-size weighting). The decisive test of h02 P1/P2 requires LOSO against the dNdScv ranking, which combines effect-size with selection-test significance. Implementation: re-run dNdScv per LOO iteration (10 iterations × current ~12-hour full-cohort runtime, parallelizable per t141). Compare top-N (K=10,25,50,100) Bailey recovery and pair-overlap across iterations. Acceptance: doc/interpretations/<date>-t173-loso-dndscv.md with decisive verdict on P1 (canonical-driver Jaccard@100 stable across LOSO at >=0.5) and P2 (specialty studies disrupt more than general).
 
+2026-04-30 update: GENIE influence attribution implemented in `code/scripts/analyze_genie_dndscv_influence.py` with plan `doc/plans/2026-04-30-t173-genie-dndscv-influence-plan.md` and interpretation `doc/interpretations/2026-04-30-t173-genie-dndscv-influence.md`. Result: GENIE disruption is structured and much larger than the two broad non-GENIE controls; dominant mechanism is broad shared-label evidence shift across high-sample hg19 cancer labels, plus a threshold/missingness tail.
+
 ## [t174] Normalize dNdScv isoform-level symbols (CDKN2A.p16INK4a etc.) prior to overlay joins
 - priority: P3
 - status: proposed

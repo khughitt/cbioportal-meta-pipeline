@@ -630,18 +630,6 @@ Build a per-gene common-fragile-site overlap annotation from published CFS catal
 
 Acceptance: CFS annotation artifact under `data/` or `models/`, plus `doc/interpretations/<date>-q014-cfs-vs-rt.md` with coefficient estimates and a correction recommendation.
 
-## [t154] Panel-vs-WES ascertainment analysis for mutation rankings and literature attention
-- priority: P1
-- status: proposed
-- aspects: [computational-analysis]
-- related: [question:q016-panel-induced-ascertainment, hypothesis:h03-gene-length-confounds-literature-attention, task:t086, task:t129]
-- group: meta-analysis
-- created: 2026-04-28
-
-For cancer types with both panel and WES studies, compute panel-only, WES-only, and combined top-N rankings using the existing callability-aware denominators. Compare Jaccard / Spearman / Bailey recovery, then re-run the q011 / h03 length-attention regression within panel-only and WES-only strata to quantify panel-induced ascertainment.
-
-Acceptance: `doc/interpretations/<date>-q016-panel-induced-ascertainment.md` with a clear recommendation for whether `t129` must include assay stratum as a covariate.
-
 ## [t155] Compare pan-cancer dNdScv aggregation rules under q-value floor pile-up
 - priority: P3
 - status: proposed
@@ -720,15 +708,23 @@ The t145 diagnostic file currently has no YAML frontmatter at all, leaving it or
 
 Resolver currently treats q014/q016/q017 as orphan questions even though they substantively belong on the spine. Amend specs/hypotheses/h02-*.md related: to add q014 (CFS gene-level confounder refinement) and q017 (saturation curve). Amend specs/hypotheses/h03-*.md related: to add q016 (panel-induced ascertainment). Pure metadata change. Acceptance: resolve-questions output drops these three from the orphan set; emergent-threads regenerates with smaller orphan_question_count.
 
-## [t163] Gene-level RT correlation vs full-scale dNdScv residual (q003 quantitative test)
-- priority: P1
+## [t175] Integrate standalone analysis scripts into Snakemake when promoted to recurring outputs
+- priority: P2
 - status: proposed
-- aspects: [computational-analysis]
-- related: [question:q003-replication-timing-as-gene-level-mutation-rate-confounder, hypothesis:h02-cross-study-ranking-divergence-is-structured, task:t131, task:t147, task:t153, meta:big-picture-2026-04-28]
-- group: h02-residuals
-- created: 2026-04-28
+- aspects: [software-development]
+- related: [task:t154, task:t163, question:q016-panel-induced-ascertainment, question:q003-replication-timing-as-gene-level-mutation-rate-confounder]
+- group: pipeline
+- created: 2026-04-29
 
-t147 stratifies dNdScv by hypermutator status; t153 tests CFS as a distinct confounder. Neither does the simpler RT-residual regression. Take the post-fix dNdScv v2 per-gene effect-size residual (after length and trinucleotide-context correction) and regress it against ENCODE Repli-seq replication-timing decile (or wavelet smoothed RT). Test whether TTN-at-rank-4 is explained by residual RT covariation. This is the missing baseline test for q003 at full pan-cancer scale; t122/t123 BRCA pilots were both confounded (panel sparsity) and gave only directional evidence. Acceptance: doc/interpretations/<date>-q003-rt-residual-regression.md with effect size + bootstrap CI, and an explicit verdict on whether TTN's rank-4 position survives RT adjustment.
+The t154 panel-vs-WES ascertainment and t163 RT residual analyses currently run as standalone
+tested scripts that write outputs under `/data/packages/cbioportal/pan-cancer/summary/`. That is
+appropriate for first-pass hypothesis testing, but if either analysis becomes a recurring
+consumer-facing output it should be wired into `code/workflows/Snakefile` with explicit inputs,
+outputs, and config-gated inclusion in `rule all` or a named analysis target.
+
+Acceptance: add Snakemake rules for promoted standalone analyses, document their output locations
+in `doc/guides/canonical-outputs.md` or the relevant modality guide, and keep one CLI smoke path for
+ad-hoc reruns.
 
 ## [t164] Draft candidate hypothesis h07: signature/topography-based contamination QC (absorbs q009)
 - priority: P2
@@ -822,7 +818,7 @@ The current ingest uses MC3 v0.2.8 PUBLIC (PASS-only). The controlled-access MC3
 
 ## [t173] LOSO against dNdScv ranking (decisive test for h02 P1/P2)
 - priority: P1
-- status: proposed
+- status: active
 - aspects: [computational-analysis]
 - related: [hypothesis:h02-cross-study-ranking-divergence-is-structured, question:q013-cross-study-replication-rate, task:t149, interpretation:2026-04-28-t149-loso-replication, meta:big-picture-2026-04-28]
 - group: h02-residuals
@@ -830,7 +826,7 @@ The current ingest uses MC3 v0.2.8 PUBLIC (PASS-only). The controlled-access MC3
 
 t149 ran LOSO against the t077 pooled_rate ranking and found median K=100 recovery of 0.18-0.21 (interpretation:2026-04-28-t149-loso-replication). That instability is largely an artifact of pooled_rate being a point-estimate (no significance / sample-size weighting). The decisive test of h02 P1/P2 requires LOSO against the dNdScv ranking, which combines effect-size with selection-test significance. Implementation: re-run dNdScv per LOO iteration (10 iterations × current ~12-hour full-cohort runtime, parallelizable per t141). Compare top-N (K=10,25,50,100) Bailey recovery and pair-overlap across iterations. Acceptance: doc/interpretations/<date>-t173-loso-dndscv.md with decisive verdict on P1 (canonical-driver Jaccard@100 stable across LOSO at >=0.5) and P2 (specialty studies disrupt more than general).
 
-2026-04-30 update: GENIE influence attribution implemented in `code/scripts/analyze_genie_dndscv_influence.py` with plan `doc/plans/2026-04-30-t173-genie-dndscv-influence-plan.md` and interpretation `doc/interpretations/2026-04-30-t173-genie-dndscv-influence.md`. Result: GENIE disruption is structured and much larger than the two broad non-GENIE controls; dominant mechanism is broad shared-label evidence shift across high-sample hg19 cancer labels, plus a threshold/missingness tail.
+2026-04-29/30 update: pilot-first harness added (plan: doc/plans/2026-04-29-t173-dndscv-loso-plan.md; protocol note: doc/interpretations/2026-04-29-t173-dndscv-loso-protocol.md). The first pilot holdout excludes `genie` and writes to `/data/packages/cbioportal/pan-cancer-dndscv-loso/exclude_genie`. The real `exclude_genie` dNdScv rerun completed and produced `summary/mut/table/dndscv_pooled.feather`; comparison outputs are in `/data/packages/cbioportal/pan-cancer/summary/dndscv_loso`. Pilot result: doc/interpretations/2026-04-29-t173-dndscv-loso-pilot.md. Gate result: Jaccard@100 = 0.429, below the planned 0.5 fan-out threshold. This is a one-holdout result, not a LOSO distribution. A pre-registered broad non-GENIE contrast then excluded `msk_met_2021`; result: Jaccard@100 = 0.852, above the >=0.60 threshold for a GENIE-specific disruption reading (doc/interpretations/2026-04-29-t173-dndscv-loso-contrast.md). A second broad non-GENIE contrast excluded `pog570_bcgsc_2020`; result: Jaccard@100 = 0.923 (doc/interpretations/2026-04-30-t173-dndscv-loso-second-broad-contrast.md). Do not launch the remaining blind fan-out yet. Next decision: stop broad holdout compute and investigate which GENIE cancer/build groups drive the re-ranking, unless a complete LOSO distribution is explicitly required. Mechanism plan: doc/plans/2026-04-30-t173-genie-dndscv-influence-plan.md. GENIE influence attribution result: doc/interpretations/2026-04-30-t173-genie-dndscv-influence.md.
 
 ## [t174] Normalize dNdScv isoform-level symbols (CDKN2A.p16INK4a etc.) prior to overlay joins
 - priority: P3

@@ -107,7 +107,7 @@ For all projects:
 ```yaml
 id: cbioportal              # stable short identifier; defaults to dirname; never reused
 role: data-source           # free-form string (current vocabulary: meta | cancer-type | data-source | mechanism | condition | standalone)
-parent: ~/d/cancer/meta     # optional; absolute path to umbrella's meta project (back-reference, not authoritative)
+parent: ~/d/cancer/meta     # optional; tilde-prefixed path to umbrella meta (see "Canonical path rule" below)
 ```
 
 For `meta` projects only, an additional manifest:
@@ -131,6 +131,24 @@ children:
 Authoritative source-of-truth for federation membership is meta's `children:`. Each
 sub-project's `parent:` field is a back-reference, validated by `science:sync` but not
 authoritative.
+
+**Canonical path rule.** All paths in `science.yaml` (both `parent:` and the children
+manifest) are stored as **tilde-prefixed home-relative paths** (e.g.,
+`~/d/cancer/data-sources/cbioportal`). Reasons: portable across users on the same
+machine; readable; survives Dropbox-root changes; doesn't bake in a symlink choice.
+
+`science:sync` is responsible for resolving each path to a real project via
+`os.path.expanduser` + `os.path.realpath`, validating that the resolved path contains
+a `science.yaml` whose `id`/`role` agree with the manifest entry, and (for
+back-references) that the child's `parent:` resolves to the meta project.
+
+Shell commands in implementation plans may use any equivalent form
+(`~/d/cancer/...`, `/home/keith/d/cancer/...`, or
+`/mnt/ssd/Dropbox/cancer/...`) — all three resolve to the same project after symlink
+expansion. `science.yaml` itself is the only place where the form is constrained.
+
+Markdown documents (READMEs, plans, designs) may use any of the equivalent forms;
+science skills MUST resolve before comparing.
 
 ### 3.2 Cross-project addressing (convention)
 
@@ -203,8 +221,14 @@ per-project until we feel pain.
 
 ### 4.1 Order
 
-1. **mm30 first** — smaller, lower-risk, shakedown for the procedure.
-2. **cbioportal second** — heavier hardcoded path footprint and a working pipeline to
+1. **Bootstrap minimal `meta/` first.** Before any move, create
+   `/mnt/ssd/Dropbox/cancer/meta/` with just `science.yaml` (`id: meta`, `role: meta`,
+   empty `children: []`) and an empty `knowledge/graph.trig`. This gives migration a
+   live registration target so each child can be appended to `children:` as it lands.
+   Without this, Phase 2 validation (which needs `science:sync`) has nowhere to
+   register against.
+2. **mm30 second** — smaller, lower-risk, shakedown for the procedure.
+3. **cbioportal third** — heavier hardcoded path footprint and a working pipeline to
    validate post-move.
 
 ### 4.2 Per-project move sequence
@@ -228,17 +252,38 @@ For each migrating project:
    - `/home/keith/.claude/projects/-mnt-ssd-Dropbox-r-cbioportal/` →
      `/home/keith/.claude/projects/-mnt-ssd-Dropbox-cancer-data-sources-cbioportal/`
    Without this, auto-memory is orphaned.
-7. **Validate**:
+7. **Append to meta's `children:` manifest** (in `meta/science.yaml`).
+8. **Validate**:
    - cbioportal: `uv run snakemake -s code/workflows/Snakefile -j1 --configfile code/config/config-10k-genes.yml` plus `bash validate.sh --verbose`
    - mm30: equivalent project-specific validation
-   - `science:sync` and `science:status --federated` from `meta/`
-8. **Commit** the move + path updates as one atomic commit per project.
+   - `science:sync` from each child confirms the parent/children round-trip resolves.
+   - `science:status --federated` from `meta/` is **deferred to Phase 3** (meta has
+     no content beyond the registry until then; running it now would just echo the
+     manifest).
+9. **Commit** the move + path updates + meta manifest append as one atomic commit per
+   project.
 
-### 4.3 Backwards-compatibility symlinks
+### 4.3 Backwards-compatibility symlinks (named exception)
 
-Keep `~/d/r/cbioportal → ~/d/cancer/data-sources/cbioportal` and equivalent for mm30
-for **1–2 months** to absorb muscle memory, missed external references, and scheduled
-agents. Remove once we're confident nothing depends on the old paths.
+This is an **explicit, time-bounded exception** to the project rule against
+compatibility layers (`AGENTS.md` §"Refactoring"). Keep
+`~/d/r/cbioportal → ~/d/cancer/data-sources/cbioportal` and equivalent for mm30 for
+two months — **expires 2026-06-30** — to absorb muscle memory, missed external
+references, and scheduled agents.
+
+Constraints during the exception window:
+
+- **Repo-internal references (in code, configs, AGENTS.md, CLAUDE.md, run configs,
+  Snakefile, `.env` files, `pyproject.toml`) MUST use the new paths.** The symlinks
+  exist only to catch *external* references (e.g., user shell history, scheduled
+  agents in `~/.config/`, bookmarks).
+- A grep-based check is added to each migrated project: any commit reintroducing
+  `~/d/r/cbioportal` or `~/d/r/mm30` inside the repo fails CI / `validate.sh`.
+- On 2026-06-30: remove the symlinks; if anything breaks, fix the offender to use the
+  new path rather than restoring the symlink.
+
+If we hit 2026-06-30 and don't have time to remove cleanly, the renewal is a
+deliberate decision (re-asked of the user), not a default.
 
 ## 5. Day-1 sub-project materialization
 
@@ -289,12 +334,47 @@ greatest number of existing topics and incoming literature.
 
 56 PDFs in `papers/pdfs/`. Two-pass plan:
 
-### 7.1 Pass 1 — Triage (single sitting)
+### 7.1 Pre-flight — Corpus reconciliation
 
-- Per paper: title + abstract + (if uncertain) brief intro/discussion skim
+Before triage starts, the corpus must be made explicit. The 56 filenames listed during
+the brainstorming conversation **do not match** the current `papers/pdfs/` checkout
+(which has 11 unrelated files about gene-regulatory canalization). PDFs are
+gitignored (`.gitignore:7`), so the corpus state is not git-tracked.
+
+Required pre-flight artifact: a **PDF manifest** at
+`meta/doc/searches/2026-04-30-pdf-pile-manifest.md`, listing for each PDF:
+
+- filename
+- sha256
+- file size (bytes)
+- expected citation (author, year, title, journal/preprint, DOI/URL)
+- source-of-acquisition (where it was downloaded from; one of: cBioPortal-citation,
+  Synapse, NCBI/PMC, manual journal, preprint server, etc.)
+- staging location (which directory the file currently lives in on disk)
+
+The manifest is **committed to git** even though the PDFs aren't. It defines the
+corpus the lap operates against.
+
+Reconciliation steps:
+
+1. Confirm where the user's intended 56 PDFs are staged on disk.
+2. Decide pile location: keep at `cbioportal/papers/pdfs/` for Phase 4 (low-risk;
+   path is stable), or move to `meta/papers/pdfs/` once meta exists.
+   Recommendation: **move to `meta/papers/pdfs/`** since the corpus spans the
+   umbrella and several papers will land in non-cbioportal sub-projects.
+3. Generate the manifest; verify all 56 files present with matching hashes.
+4. Resolve discrepancies (missing files re-downloaded, duplicate hashes deduped) and
+   commit the manifest.
+
+Only then does triage begin.
+
+### 7.2 Pass 1 — Triage (single sitting)
+
+- Per paper (using the manifest's filenames as the canonical list): title + abstract
+  + (if uncertain) brief intro/discussion skim
 - Output: a single triage table at `meta/doc/searches/2026-04-30-pdf-pile-triage.md`
   with columns:
-  - filename
+  - filename (matching the manifest)
   - citation (author year, title, journal/preprint, DOI)
   - proposed role-assignment (cancer-type / mechanism / condition / data-source / methodology / theory)
   - target sub-project
@@ -305,17 +385,34 @@ greatest number of existing topics and incoming literature.
 - Triage performed by main agent (not delegated), since it's the cheapest way to keep
   judgment consistent across the pile.
 
-### 7.2 Pass 2 — Deep read (batched, parallel)
+### 7.3 Pass 2 — Deep read (batched, parallel)
 
-- Group triaged papers into batches of ~5–8 by target sub-project.
+- Group triaged papers into batches of ~5–8. Batches may target the same sub-project
+  if it has many incoming papers (e.g., two batches of evolution papers); the merge
+  protocol below handles concurrent updates.
 - For each batch, dispatch a `science:paper-researcher` sub-agent in parallel
   (`superpowers:dispatching-parallel-agents` skill). Each sub-agent:
   - Reads its assigned papers
-  - Writes summaries into the target sub-project's `papers/` dir
-  - Adds triples to that sub-project's `graph.trig`
+  - Writes paper summaries into the target sub-project's `doc/background/papers/`
+    (one file per paper, conforming to the validated section structure required by
+    `validate.sh`: `## Key Contribution`, `## Methods`, `## Key Findings`,
+    `## Relevance`). One file per paper means no write contention.
+  - Writes a single batch-local graph fragment to
+    `<sub-project>/.worktrees/lit-batch-<id>/graph-fragment.trig` (or equivalent
+    scratch path); **does not** write directly to the sub-project's
+    `knowledge/graph.trig`.
   - Proposes new questions / hypotheses / tasks (some may target other sub-projects via
-    cross-project addresses)
-  - Returns a short batch-level synthesis to the main agent
+    cross-project addresses); these are returned to the main agent as structured
+    suggestions, not committed by the sub-agent.
+  - Returns a short batch-level synthesis (markdown text) to the main agent.
+- **Serialization step (main agent only):** After all batch agents return, the main
+  agent merges fragments into each affected sub-project's `knowledge/graph.trig`
+  serially (one sub-project at a time, one fragment at a time). Conflicts (same
+  subject-predicate from two batches with different objects) are surfaced for
+  resolution rather than silently overwritten.
+- The main agent also commits sub-agent-proposed questions/hypotheses/tasks to their
+  target locations after a quick consistency check (no duplicate ids, addresses
+  resolve, etc.).
 - After all batches: main agent writes a meta-level synthesis pulling threads together,
   posted as `meta/doc/reports/2026-05-XX-first-literature-lap.md`.
 
@@ -349,8 +446,8 @@ priorities-for-lap-2. Roughly 2–4 sittings stretched over a few weeks.
 |---|---|---|
 | **Phase 0** | Brainstorm → spec doc → implementation plan(s) (this document is Phase 0 output) | done / in-progress |
 | **Phase 1** | Federation v1.0 in `~/d/science/` (schema + manifest + addressing + federated graph reads + `status --federated`) | ~4.5 days focused |
-| **Phase 2** | Migration: mm30 first, cbioportal second; backwards-compat symlinks; memory dir renames; validation | ~1 day |
-| **Phase 3** | Day-1 scaffolding: `meta/`, `mechanisms/evolution/`, `conditions/pre-cancer/`; foundational questions; cbioportal/MM `science.yaml` + README/AGENTS updates | ~1–2 days |
+| **Phase 2** | Bootstrap minimal `meta/` (registry-only); migrate mm30; migrate cbioportal; backwards-compat symlinks; memory dir renames; per-child validation | ~1 day |
+| **Phase 3** | Day-1 scaffolding: flesh out `meta/` (vision, foundational questions, README, AGENTS); create `mechanisms/evolution/` and `conditions/pre-cancer/`; cbioportal/MM `science.yaml` + README/AGENTS updates; first `science:status --federated` run | ~1–2 days |
 | **Phase 4** | First literature lap: triage all 56 → batched deep read → lap-1 synthesis | spread over weeks |
 | **Phase 5+** | Subsequent laps: analyses, more literature, new sub-projects as promoted | ongoing |
 

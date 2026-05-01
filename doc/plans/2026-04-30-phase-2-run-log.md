@@ -128,3 +128,14 @@ work was dirty before migration. After that work is committed, plan a follow-up 
 
 This run log moved with cbioportal and now lives at
 `/mnt/ssd/Dropbox/cancer/data-sources/cbioportal/doc/plans/2026-04-30-phase-2-run-log.md`.
+
+## Completion
+
+- mm30 migrated to `/mnt/ssd/Dropbox/cancer/cancer-types/multiple-myeloma`
+- cbioportal migrated to `/mnt/ssd/Dropbox/cancer/data-sources/cbioportal`
+- compatibility symlinks created under `/mnt/ssd/Dropbox/r/`
+- symlink expiry date: 2026-06-30
+- final federation validate: passed
+- final child graph builds: passed
+- final federated graph build: passed
+- final meta graph commit: completed

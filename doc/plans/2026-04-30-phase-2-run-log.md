@@ -47,6 +47,44 @@
 - `SCIENCE_CONFIG_DIR=/tmp/science-phase2-mm30 uv run science-tool graph build`: passed and materialized `knowledge/graph.trig`
 - `bash validate.sh --verbose`: passed with existing non-blocking warnings
 
+## mm30 Migration
+
+- pre-move status: clean `main`
+- old-path inventory command:
+  `rg -n "/mnt/ssd/Dropbox/r/mm30|/home/keith/d/r/mm30|~/d/r/mm30|\\.\\./\\.\\./science/science-tool" .`
+- old-path inventory result: 327 matches before the move, mostly historical plans, handoffs, generated evidence fragments,
+  and the editable `science-tool` path
+- moved from `/mnt/ssd/Dropbox/r/mm30` to `/mnt/ssd/Dropbox/cancer/cancer-types/multiple-myeloma`
+- set child identity fields: `id: multiple-myeloma`, `role: cancer-type`, `parent: ~/d/cancer/meta`
+- updated editable `science-tool` path to `../../../science/science-tool`
+- path rewrite note: actual old mm30 repo-root references were rewritten to the new cancer path. Two historical external
+  worktree references, `/mnt/ssd/Dropbox/r/mm30-t277` and `/mnt/ssd/Dropbox/r/mm30-t278`, were not rewritten because
+  they do not refer to the moved repository root.
+- plan edge-case note: the original post-rewrite `rg` pattern for `../../science/science-tool` also matches inside the
+  correct new `../../../science/science-tool` path, so verification used a boundary-aware old-root check plus explicit
+  `pyproject.toml`, `uv.lock`, and `validate.sh` path inspection.
+- renamed Claude memory directory from `-mnt-ssd-Dropbox-r-mm30` to
+  `-mnt-ssd-Dropbox-cancer-cancer-types-multiple-myeloma`
+- registered `multiple-myeloma` as the first meta child
+
+## mm30 Moved Verification
+
+- `uv sync`: passed
+- `uv sync --reinstall-package science-tool`: regenerated a stale console-script shebang that still pointed at the old
+  `.venv` location after the physical move
+- `SCIENCE_CONFIG_DIR=/tmp/science-phase2-mm30-moved uv run science-tool graph build`: passed and materialized
+  `knowledge/graph.trig`
+- `SCIENCE_CONFIG_DIR=/tmp/science-phase2-mm30-moved uv run science-tool sync run`: passed with `Entities: 1316`
+- `bash validate.sh --verbose`: passed with existing non-blocking warnings
+- `uv run --project /home/keith/d/science/science-tool science-tool federation validate` from meta: passed with
+  `ok: federation consistent`
+
+## Deferred mm30 Execution Root Cleanup
+
+Phase 2 created `code/` as the canonical execution root but left legacy `scripts/` in place because progression-script
+work was dirty before migration. After that work is committed, plan a follow-up to consolidate executable code under
+`code/` and remove the legacy `scripts/` root from validation warnings.
+
 ## Move Notes
 
 This run log is still at `/home/keith/d/r/cbioportal/doc/plans/2026-04-30-phase-2-run-log.md`. During the cbioportal

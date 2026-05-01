@@ -300,8 +300,8 @@ Original concept, now superseded for execution sequencing:
 | Project | Day-1 contents |
 |---|---|
 | `meta/` | `science.yaml` (with `children:` manifest); `README.md` establishing vision; `AGENTS.md`; standard `doc/` structure (questions, hypotheses, topics, papers, plans, methods, datasets, discussions, interpretations, reports, searches, audits, background, meta, guides); 10 foundational questions (§6); empty `knowledge/graph.trig` |
-| `mechanisms/evolution/` | `science.yaml`; README; AGENTS; standard `doc/`; 3–5 seed questions on evolutionary dynamics; topic stubs (`selection`, `plasticity`, `multiscale-evolution`, `drug-resistance-as-evolution`) |
-| `conditions/pre-cancer/` | `science.yaml`; promoted/expanded from `cbioportal:topics/pre-cancer-prevalence-and-impact`; README; AGENTS; standard `doc/`; 3–5 questions about progression, prevalence, and clonal trajectories |
+| `mechanisms/evolution/` | `science.yaml`; README; AGENTS; standard `doc/`; 3–5 scoped foundational questions on evolutionary dynamics; topic stubs (`selection`, `plasticity`, `multiscale-evolution`, `drug-resistance-as-evolution`) |
+| `conditions/pre-cancer/` | `science.yaml`; promoted/expanded from `cbioportal:topics/pre-cancer-prevalence-and-impact`; README; AGENTS; standard `doc/`; 3–5 scoped foundational questions about progression, prevalence, and clonal trajectories |
 | `cbioportal/` (updates) | `id`/`role`/`parent` added to `science.yaml`; README and AGENTS get a top-of-file pointer to the umbrella; `doc/topics/pre-cancer-prevalence-and-impact.md` moved out (replaced with a redirect note pointing to `conditions/pre-cancer/`) |
 | `multiple-myeloma/` (updates) | `id`/`role`/`parent` added; README/AGENTS pointer to umbrella |
 

@@ -91,6 +91,7 @@ resolve_science_tool() {
     if command -v uv &>/dev/null; then
         for candidate in \
             "./science-tool" \
+            "../../../science/science-tool" \
             "../science/science-tool" \
             "../science-tool"
         do

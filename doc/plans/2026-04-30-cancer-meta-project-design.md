@@ -243,7 +243,7 @@ For each migrating project:
    - Snakefile / run config paths (`code/config/*.yml`)
    - External scripts in `~/bin/`, `~/.zshrc`, `~/.config/`, scheduled agents, etc.
 3. **Move on Dropbox** (atomic):
-   - cbioportal: `mv /mnt/ssd/Dropbox/r/cbioportal /mnt/ssd/Dropbox/cancer/data-sources/cbioportal`
+   - cbioportal: `mv /mnt/ssd/Dropbox/cancer/data-sources/cbioportal /mnt/ssd/Dropbox/cancer/data-sources/cbioportal`
    - mm30: equivalent into `cancer/cancer-types/multiple-myeloma/`
    Git follows the move; remote URLs are unaffected.
 4. **Update path references** found in step 2.
@@ -267,7 +267,7 @@ For each migrating project:
 
 This is an **explicit, time-bounded exception** to the project rule against
 compatibility layers (`AGENTS.md` §"Refactoring"). Keep
-`~/d/r/cbioportal → ~/d/cancer/data-sources/cbioportal` and equivalent for mm30 for
+`~/d/cancer/data-sources/cbioportal → ~/d/cancer/data-sources/cbioportal` and equivalent for mm30 for
 two months — **expires 2026-06-30** — to absorb muscle memory, missed external
 references, and scheduled agents.
 
@@ -278,7 +278,7 @@ Constraints during the exception window:
   exist only to catch *external* references (e.g., user shell history, scheduled
   agents in `~/.config/`, bookmarks).
 - A grep-based check is added to each migrated project: any commit reintroducing
-  `~/d/r/cbioportal` or `~/d/r/mm30` inside the repo fails CI / `validate.sh`.
+  `~/d/cancer/data-sources/cbioportal` or `~/d/r/mm30` inside the repo fails CI / `validate.sh`.
 - On 2026-06-30: remove the symlinks; if anything breaks, fix the offender to use the
   new path rather than restoring the symlink.
 

@@ -85,8 +85,46 @@ Phase 2 created `code/` as the canonical execution root but left legacy `scripts
 work was dirty before migration. After that work is committed, plan a follow-up to consolidate executable code under
 `code/` and remove the legacy `scripts/` root from validation warnings.
 
+## cbioportal Migration
+
+- pre-move status: clean `main`, ahead of `origin/main`
+- old-path inventory command:
+  `rg -n "/mnt/ssd/Dropbox/r/cbioportal|/home/keith/d/r/cbioportal|~/d/r/cbioportal|\\.\\./\\.\\./science/science-tool" .`
+- old-path inventory result: 58 matches before the move, mostly Phase 2/federation plan documentation plus the editable
+  `science-tool` path and a few older plan/data references
+- moved from `/mnt/ssd/Dropbox/r/cbioportal` to `/mnt/ssd/Dropbox/cancer/data-sources/cbioportal`
+- set child identity fields: `id: cbioportal`, `role: data-source`, `parent: ~/d/cancer/meta`
+- updated editable `science-tool` path to `../../../science/science-tool`
+- updated `validate.sh` so it resolves `../../../science/science-tool` from the moved layout
+- non-Phase-2 old cbioportal root references were rewritten to the new cancer path
+- renamed Claude memory directory from `-mnt-ssd-Dropbox-r-cbioportal` to
+  `-mnt-ssd-Dropbox-cancer-data-sources-cbioportal`
+- registered `cbioportal` as the second meta child
+
+## cbioportal Moved Verification
+
+- `uv sync`: passed
+- `uv sync --reinstall-package science-tool`: regenerated a stale console-script shebang that still pointed at the old
+  `.venv` location after the physical move
+- `SCIENCE_CONFIG_DIR=/tmp/science-phase2-cbioportal-moved uv run science-tool graph build`: passed and materialized
+  `knowledge/graph.trig`
+- `SCIENCE_CONFIG_DIR=/tmp/science-phase2-cbioportal-moved uv run science-tool sync run`: passed with `Entities: 341`
+- `bash validate.sh --verbose`: passed with the existing single unverified-source warning
+- `test -f code/workflows/Snakefile` and `test -f code/config/config-10k-genes.yml`: passed
+- `uv sync --reinstall-package snakemake`: regenerated a stale Snakemake console-script shebang that still pointed at
+  the old `.venv` location after the physical move
+- `uv run snakemake -s code/workflows/Snakefile -j1 --configfile code/config/config-10k-genes.yml`: attempted. The
+  first run exposed a pre-existing 10k fixture gap: `data/study_panels.tsv` lacked the seven studies in
+  `code/config/config-10k-genes.yml`. Added those seven studies as `wes` entries. The resumed run then progressed into
+  `create_correlation_matrices`, but that job ran for more than 30 minutes at full CPU, showing that this command is a
+  heavy 10k build rather than a short migration smoke. It was intentionally terminated and recorded as a follow-up
+  build gate.
+- `uv run snakemake -n -s code/workflows/Snakefile -j1 --configfile code/config/config-10k-genes.yml`: passed. The DAG
+  resolves under the moved path, with 38 jobs remaining after the interrupted real build.
+- `uv run --project /home/keith/d/science/science-tool science-tool federation validate` from meta: passed with
+  `ok: federation consistent`
+
 ## Move Notes
 
-This run log is still at `/home/keith/d/r/cbioportal/doc/plans/2026-04-30-phase-2-run-log.md`. During the cbioportal
-move it should travel with the repository to
+This run log moved with cbioportal and now lives at
 `/mnt/ssd/Dropbox/cancer/data-sources/cbioportal/doc/plans/2026-04-30-phase-2-run-log.md`.

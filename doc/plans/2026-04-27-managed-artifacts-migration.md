@@ -3,7 +3,7 @@
 **Status:** Draft (ready for execution)
 **Target version:** validate.sh @ 2026.04.26.2
 **Migration path:** Path 1 (effectively pure-lag — only customization is in `drop` bucket)
-**Final placement:** `~/d/r/cbioportal/doc/plans/2026-04-27-managed-artifacts-migration.md`
+**Final placement:** `~/d/cancer/data-sources/cbioportal/doc/plans/2026-04-27-managed-artifacts-migration.md`
 
 ---
 
@@ -48,7 +48,7 @@ These are unrelated to this migration and MUST NOT be entangled with the migrati
 ## Migration plan (Path 1)
 
 ```bash
-cd ~/d/r/cbioportal
+cd ~/d/cancer/data-sources/cbioportal
 
 # 0. Verify the in-progress work I won't touch.
 git status --short
@@ -132,7 +132,7 @@ Once the canonical runs, expect surfaces cbioportal's old `validate.sh` did not 
 ## Rollback procedure
 
 ```bash
-cd ~/d/r/cbioportal
+cd ~/d/cancer/data-sources/cbioportal
 
 # Revert the migration commit (does not touch unrelated in-progress files).
 git revert HEAD

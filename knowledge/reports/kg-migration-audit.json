@@ -931,7 +931,7 @@
   "apply": true,
   "has_failures": false,
   "layered_claim_migration": {
-    "project_root": "/mnt/ssd/Dropbox/r/cbioportal",
+    "project_root": "/mnt/ssd/Dropbox/cancer/data-sources/cbioportal",
     "rows": [],
     "summary": {
       "authored_claim_layer_count": 0,
@@ -946,7 +946,7 @@
     "topic:cross-study-harmonization": "topic:cross-study-harmonization",
     "topic:pan-cancer-interpretive-frames": "topic:pan-cancer-interpretive-frames"
   },
-  "project_root": "/mnt/ssd/Dropbox/r/cbioportal",
+  "project_root": "/mnt/ssd/Dropbox/cancer/data-sources/cbioportal",
   "rewritten_file_count": 1,
   "rewritten_files": [
     "tasks/active.md"

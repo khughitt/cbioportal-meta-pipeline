@@ -98,7 +98,7 @@ task):
 
 One operational deviation: the design assumed `data/genie/genomic_information.txt` would be
 present in the worktree's `data/` directory. That symlink was absent; the diagnostic was run
-with an absolute path to the file in the main repo (`/mnt/ssd/Dropbox/r/cbioportal/data/genie/
+with an absolute path to the file in the main repo (`/mnt/ssd/Dropbox/cancer/data-sources/cbioportal/data/genie/
 genomic_information.txt`). The data content is identical. No spec thresholds, verdict logic, or
 registry rules were changed. The `prad_tcga_pan_can_atlas_2018` study directory was symlinked
 from `results/t052-validation-2026-04-25/studies/` into the `poc-2026-04-17/studies/` tree to

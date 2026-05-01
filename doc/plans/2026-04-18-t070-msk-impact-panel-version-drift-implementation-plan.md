@@ -79,7 +79,7 @@ def test_normalize_panel_id_unknown_raises() -> None:
 - [ ] **Step 2: Run the test to verify it fails**
 
 ```bash
-cd /mnt/ssd/Dropbox/r/cbioportal
+cd /mnt/ssd/Dropbox/cancer/data-sources/cbioportal
 uv run --frozen pytest code/scripts/tests/test_resolve_panel_id.py -v
 ```
 Expected: ImportError on `resolve_panel_id`.
@@ -616,7 +616,7 @@ uv run --frozen ruff format code/scripts/convert_to_feather.py code/scripts/test
 - [ ] **Step 5: Smoke-test via PoC config (one panel study)**
 
 ```bash
-cd /mnt/ssd/Dropbox/r/cbioportal
+cd /mnt/ssd/Dropbox/cancer/data-sources/cbioportal
 uv run snakemake -s code/workflows/Snakefile -j1 --configfile code/config/config-poc.yml \
   --until convert_to_feather \
   /data/packages/cbioportal/poc-2026-04-17/studies/msk_impact_2017/metadata/samples.feather \

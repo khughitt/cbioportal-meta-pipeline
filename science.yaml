@@ -1,4 +1,7 @@
 name: "cbioportal"
+id: cbioportal
+role: data-source
+parent: ~/d/cancer/meta
 created: "2025-02-21"
 last_modified: "2026-04-12"
 summary: "Snakemake-driven meta-analysis pipeline that aggregates cBioPortal mutation data across studies and cancer types to produce cross-study mutation-frequency tables, gene x cancer matrices, and gene/cancer clusters."

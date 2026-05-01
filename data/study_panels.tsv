@@ -1,4 +1,11 @@
 study_id	panel_id	sequencing_type
+metastatic_solid_tumors_mich_2017	wes	wes
+mixed_allen_2018	wes	wes
+mixed_pipseq_2017	wes	wes
+pancan_pcawg_2020	wes	wes
+pediatric_dkfz_2017	wes	wes
+pog570_bcgsc_2020	wes	wes
+pptc_2019	wes	wes
 brca_tcga	wes	wes
 coadread_tcga	wes	wes
 luad_tcga	wes	wes

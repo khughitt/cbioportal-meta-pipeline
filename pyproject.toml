@@ -25,7 +25,7 @@ dev = [
 ]
 
 [tool.uv.sources]
-science-tool = { path = "../../science/science-tool", editable = true }
+science-tool = { path = "../../../science/science-tool", editable = true }
 
 [tool.pytest.ini_options]
 markers = [

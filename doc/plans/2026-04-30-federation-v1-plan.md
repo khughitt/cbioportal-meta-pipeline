@@ -11,7 +11,7 @@
 
 **Tech Stack:** Python 3.11+ (per `science-tool/pyproject.toml`'s `requires-python = ">=3.11"`), pydantic v2, click (CLI; existing group `main` exposed as the `science-tool` entry point), pyyaml, rdflib (existing dep, already used with named graphs and TriG), pytest. All in `~/d/science/science-tool/`. Do NOT use 3.12/3.13-only APIs (e.g., `typing.Self` is fine; `typing.override` is not).
 
-**Plan location:** This plan lives at `~/d/r/cbioportal/doc/plans/2026-04-30-federation-v1-plan.md` for now (paired with the design doc); it moves to `~/d/cancer/meta/doc/plans/` once the umbrella is materialized in Phase 3.
+**Plan location:** This plan lives at `~/d/cancer/data-sources/cbioportal/doc/plans/2026-04-30-federation-v1-plan.md` for now (paired with the design doc); it moves to `~/d/cancer/meta/doc/plans/` once the umbrella is materialized in Phase 3.
 
 ---
 
@@ -2093,10 +2093,10 @@ git commit -m "chore: science-tool version bump for federation v1.0"
 **Files:**
 - No code changes; this task is a smoke check from inside cbioportal and (if available) mm30.
 
-- [ ] **Step 1: From `~/d/r/cbioportal/`, run `uv sync`** to pick up the new science-tool version (since `pyproject.toml` references it as an editable install at `../../science/science-tool`).
+- [ ] **Step 1: From `~/d/cancer/data-sources/cbioportal/`, run `uv sync`** to pick up the new science-tool version (since `pyproject.toml` references it as an editable install at `../../science/science-tool`).
 
 ```bash
-cd ~/d/r/cbioportal
+cd ~/d/cancer/data-sources/cbioportal
 uv sync
 ```
 

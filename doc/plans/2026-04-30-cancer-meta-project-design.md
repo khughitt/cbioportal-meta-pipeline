@@ -287,7 +287,15 @@ deliberate decision (re-asked of the user), not a default.
 
 ## 5. Day-1 sub-project materialization
 
-After Phase 2 (migration) completes, materialize four sub-projects:
+**2026-05-01 update:** This section records the original scaffolding concept. The
+active roadmap now lives at
+`/mnt/ssd/Dropbox/cancer/meta/doc/plans/2026-05-01-cancer-master-roadmap.md`. After
+Phase 2, the chosen Phase 3 scope is meta-only: write operating docs, foundational
+questions, and project briefs for `mechanisms/evolution` and `conditions/pre-cancer`,
+but do not create those child projects or add them to `meta/science.yaml` until their
+own later design/bootstrap phases.
+
+Original concept, now superseded for execution sequencing:
 
 | Project | Day-1 contents |
 |---|---|
@@ -442,14 +450,20 @@ priorities-for-lap-2. Roughly 2–4 sittings stretched over a few weeks.
 
 ## 9. Sequencing
 
+**2026-05-01 update:** Superseded by the active roadmap in
+`/mnt/ssd/Dropbox/cancer/meta/doc/plans/2026-05-01-cancer-master-roadmap.md`.
+
 | Phase | What | Approx effort |
 |---|---|---|
 | **Phase 0** | Brainstorm → spec doc → implementation plan(s) (this document is Phase 0 output) | done / in-progress |
 | **Phase 1** | Federation v1.0 in `~/d/science/` (schema + manifest + addressing + federated graph reads + `status --federated`) | ~4.5 days focused |
 | **Phase 2** | Bootstrap minimal `meta/` (registry-only); migrate mm30; migrate cbioportal; backwards-compat symlinks; memory dir renames; per-child validation | ~1 day |
-| **Phase 3** | Day-1 scaffolding: flesh out `meta/` (vision, foundational questions, README, AGENTS); create `mechanisms/evolution/` and `conditions/pre-cancer/`; cbioportal/MM `science.yaml` + README/AGENTS updates; first `science:status --federated` run | ~1–2 days |
-| **Phase 4** | First literature lap: triage all 56 → batched deep read → lap-1 synthesis | spread over weeks |
-| **Phase 5+** | Subsequent laps: analyses, more literature, new sub-projects as promoted | ongoing |
+| **Phase 3** | Meta operating layer only: flesh out `meta/` README/AGENTS, foundational questions, project briefs for future `mechanisms/evolution` and `conditions/pre-cancer`, first useful federation status snapshot | ~1 day |
+| **Phase 4** | Design and bootstrap `mechanisms/evolution` as a real child project if its promotion gate is met | ~1 day |
+| **Phase 5** | Design and bootstrap `conditions/pre-cancer` as a real child project if its promotion gate is met | ~1 day |
+| **Phase 6** | First literature lap preflight and triage: explicit PDF manifest, corpus reconciliation, target assignment | 1–2 sittings |
+| **Phase 7** | First batched deep-read lap → lap-1 synthesis | spread over weeks |
+| **Phase 8+** | Subsequent laps; analyses; more literature; new sub-projects as promoted; federation v1.1+ features as real usage pressure justifies | ongoing |
 
 ## 10. Out of scope
 

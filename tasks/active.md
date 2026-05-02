@@ -377,6 +377,8 @@ Extend convert_to_feather.py to retain per-variant allele-count columns alongsid
 
 t078 co-occurrence/mutual-exclusivity landed 2026-04-25 (no longer blocking). Add observation-event Mutual Hazard Network fit (Schill 2024 / Vocht 2026), using the same sample-specific-background-rate null and per-sample callability mask. Report primary results at Sanchez-Vega 10-pathway level; gene-level as drill-down. Stratify per histology and per hypermutator class (t081). Calibrate against PCAWG Gerstung 2020 pan-cancer chronology Table 1 before reporting any novel edges. Do not report classical cMHN-only edges as biological ordering evidence; cMHN is a baseline for bias comparison only.
 
+Implementation plan: `doc/plans/2026-05-02-t135-t152-ordering-validation-plan.md`.
+
 ## [t136] Canonicalize all variant coordinates to GRCh38 at ingestion (liftover from hg19)
 - priority: P2
 - status: proposed
@@ -617,6 +619,8 @@ Acceptance: one tissue-specific interpretation document with effect size, uncert
 Install `mhn` via `uv add mhn`, reproduce the Vocht 2026 GENIE LUAD demonstration as closely as possible on the project's GENIE release, and benchmark runtime / active-event limits. Then generate synthetic tumors from a known MHN, subsample to project-like panel and cohort-size distributions, and test whether the observation-event MHN recovers >=70% of injected pathway-level edges.
 
 Acceptance: `doc/interpretations/<date>-mhn-luad-demo-and-simulation-calibration.md`; explicit decision on whether `h04` can be promoted or remains candidate.
+
+Implementation plan: `doc/plans/2026-05-02-t135-t152-ordering-validation-plan.md`.
 
 ## [t153] CFS overlap annotation and RT-vs-CFS residual regression
 - priority: P2

@@ -819,3 +819,13 @@ t146 (external validation of pan-cancer dNdScv ranking against IntOGen / Martinc
 - created: 2026-04-28
 
 The current ingest uses MC3 v0.2.8 PUBLIC (PASS-only). The controlled-access MC3 tier exposes the non-PASS variants and per-caller filter flags. Motivation specific to h01: when the q008 quantitative contamination-magnitude pass (t127) reports 'this gene shows X% excess SBS1 in unmatched cohorts', a likely critique is 'maybe that excess is low-confidence variants slipping through unmatched-normal filtering'. Having access to per-caller flags lets us stratify the contamination signal by caller-confidence and report which contamination claims are robust to PASS-only restriction. Lower priority because P3 — the public PASS tier should be sufficient for the first contamination magnitude estimate. Access: dbGaP phs000178 (TCGA controlled access), institutional DAR required. Pipeline integration scope: minimal — same MC3 ingest path with an extra column carrying the per-caller filter set. Acceptance: a feasibility memo at doc/feasibility/2026-XX-mc3-controlled-tier.md with go/no-go recommendation. Defer execution until t127 and t146 have produced public-tier results that justify the access friction.
+
+## [t176] Compare driver-gene density on pan-cancer gain arms vs MM hyperdiploidy chromosomes
+- priority: P2
+- status: proposed
+- aspects: [computational-analysis]
+- related: [topic:cancer-driver-genes, topic:pan-cancer-interpretive-frames, topic:pan-cancer-mutation-landscape]
+- group: meta-analysis
+- created: 2026-05-05
+
+Follow-up from MM30 hyperdiploidy mechanism discussion. Test whether common pan-cancer gain arms such as 20q, 7p, 8q, 1q, 7q, and 20p and MM hyperdiploidy chromosomes 3, 5, 7, 9, 11, 15, 19, and 21 are enriched for known cancer drivers or oncogene-dosage targets. Use data/cosmic_cgc.tsv, data/bailey2018_table_s1.tsv, and GRCh37/GRCh38 gene annotations. Compare driver density and aggregate Bailey consensus/frequency scores per arm/chromosome while controlling for gene count and arm size. Deliverable: doc/interpretations/<date>-aneuploidy-driver-dosage-comparison.md with tables separating generic pan-cancer gain targets from plasma-cell/MM-HD-specific dosage-package candidates.

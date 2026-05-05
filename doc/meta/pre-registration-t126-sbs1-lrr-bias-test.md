@@ -1,8 +1,8 @@
 ---
-id: "pre-registration:pre-registration-t126-sbs1-lrr-bias-test"
+id: "pre-registration:t126-sbs1-lrr-bias-test"
 type: "pre-registration"
 title: "Pre-registration: t126 — per-study aggregate SBS1 LRR-bias test"
-status: "active"
+status: "committed"
 committed: "2026-04-24"
 spec: ""
 source_refs:
@@ -19,6 +19,8 @@ related:
   - "interpretation:2026-04-22-t110-sbs1-sbs5-brca-comparison"
   - "interpretation:2026-04-22-t122-rt-brca-pilot"
   - "interpretation:2026-04-22-t123-rt-brca-sbs1-proxy-pilot"
+commits_to:
+  - "question:q009-sbs1-lrr-bias-as-normal-contamination-flag"
 created: "2026-04-24"
 updated: "2026-04-24"
 ---

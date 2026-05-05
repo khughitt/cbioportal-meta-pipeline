@@ -1,14 +1,16 @@
 ---
-id: "pre-registration:pre-registration-t077-glmm-logit-pooling"
+id: "pre-registration:t077-glmm-logit-pooling"
 type: "pre-registration"
 title: "Pre-registration: GLMM-logit random-effects pooling for per-(gene, cancer) mutation rates (t077)"
-status: "active"
+status: "committed"
 committed: "2026-04-14"
 spec: ""
 related:
   - "task:t077"
   - "task:t079"
   - "task:bias-audit-cross-study-aggregation-pipeline"
+  - "spec:research-question"
+  - "hypothesis:h02-cross-study-ranking-divergence-is-structured"
   - "topic:cross-study-meta-analysis-cancer-genomics"
   - "search:2026-04-13-cross-study-meta-analysis-stats"
   - "paper:DerSimonian1986"
@@ -19,6 +21,8 @@ related:
   - "paper:Nyaga2014"
   - "paper:Higgins2002"
   - "paper:IntHout2016"
+commits_to:
+  - "hypothesis:h02-cross-study-ranking-divergence-is-structured"
 created: "2026-04-14"
 updated: "2026-04-22"
 ---

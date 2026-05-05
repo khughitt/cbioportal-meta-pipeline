@@ -7,10 +7,6 @@ entity_kinds:
     canonical_prefix: meta
     layer: layer/local
     description: Project-local meta document.
-  - name: pre-registration
-    canonical_prefix: pre-registration
-    layer: layer/local
-    description: Project-local preregistration document.
   - name: synthesis
     canonical_prefix: synthesis
     layer: layer/local
@@ -23,8 +19,4 @@ entity_kinds:
     canonical_prefix: modality-guide
     layer: layer/local
     description: Project-local modality-specific guide document.
-  - name: curation-sweep
-    canonical_prefix: curation-sweep
-    layer: layer/local
-    description: Project-local curation sweep ledger.
 relation_kinds: []

@@ -1,6 +1,8 @@
 archive/
 logs/
 
+.agents
+
 # Science framework
 .env
 .worktrees/

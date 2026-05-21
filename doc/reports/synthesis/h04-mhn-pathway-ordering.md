@@ -1,6 +1,7 @@
 ---
 id: "synthesis:h04-mhn-pathway-ordering"
 type: "synthesis"
+title: "MHN pathway-level ordering"
 report_kind: "hypothesis-synthesis"
 hypothesis: "hypothesis:h04-mhn-pathway-ordering"
 generated_at: "2026-04-28T03:09:06Z"

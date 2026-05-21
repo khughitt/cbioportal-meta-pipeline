@@ -1,6 +1,7 @@
 ---
 id: "synthesis:emergent-threads"
 type: "synthesis"
+title: "Emergent threads - cbioportal"
 report_kind: "emergent-threads"
 generated_at: "2026-04-28T03:09:06Z"
 source_commit: "c1c6b1f29eef8326e3efde948df540ecc23c95ed"

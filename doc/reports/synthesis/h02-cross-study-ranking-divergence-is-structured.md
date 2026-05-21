@@ -1,6 +1,7 @@
 ---
 id: "synthesis:h02-cross-study-ranking-divergence-is-structured"
 type: "synthesis"
+title: "Cross-study ranking divergence is structured"
 report_kind: "hypothesis-synthesis"
 hypothesis: "hypothesis:h02-cross-study-ranking-divergence-is-structured"
 generated_at: "2026-04-28T03:09:06Z"

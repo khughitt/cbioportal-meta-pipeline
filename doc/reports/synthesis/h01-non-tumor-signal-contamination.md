@@ -1,6 +1,7 @@
 ---
 id: "synthesis:h01-non-tumor-signal-contamination"
 type: "synthesis"
+title: "Non-tumor signal contaminates cBioPortal mutation-frequency estimates"
 report_kind: "hypothesis-synthesis"
 hypothesis: "hypothesis:h01-non-tumor-signal-contamination"
 generated_at: "2026-04-28T03:09:06Z"

@@ -1,6 +1,7 @@
 ---
 id: "synthesis:rollup"
 type: "synthesis"
+title: "Project synthesis - cbioportal"
 report_kind: "synthesis-rollup"
 generated_at: "2026-04-28T03:09:06Z"
 source_commit: "c1c6b1f29eef8326e3efde948df540ecc23c95ed"

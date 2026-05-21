@@ -1,6 +1,7 @@
 ---
 id: "synthesis:h05-healthy-somatic-background-atlas"
 type: "synthesis"
+title: "Healthy somatic background atlas"
 report_kind: "hypothesis-synthesis"
 hypothesis: "hypothesis:h05-healthy-somatic-background-atlas"
 generated_at: "2026-04-28T03:09:06Z"

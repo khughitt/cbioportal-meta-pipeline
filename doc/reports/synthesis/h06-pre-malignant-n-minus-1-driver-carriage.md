@@ -1,6 +1,7 @@
 ---
 id: "synthesis:h06-pre-malignant-n-minus-1-driver-carriage"
 type: "synthesis"
+title: "Pre-malignant n-1 driver carriage"
 report_kind: "hypothesis-synthesis"
 hypothesis: "hypothesis:h06-pre-malignant-n-minus-1-driver-carriage"
 generated_at: "2026-04-28T03:09:06Z"

@@ -1,6 +1,7 @@
 ---
 id: "synthesis:h03-gene-length-confounds-literature-attention"
 type: "synthesis"
+title: "Gene length confounds biomedical-literature attention"
 report_kind: "hypothesis-synthesis"
 hypothesis: "hypothesis:h03-gene-length-confounds-literature-attention"
 generated_at: "2026-04-28T03:09:06Z"

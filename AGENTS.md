@@ -49,7 +49,7 @@ Notes:
 - **R**: one remaining summary.Rmd in `code/scripts/` (planned to be ported to Python/marimo)
 - **Snakemake 9**: workflow orchestration
 - **uv**: Python package management (never pip)
-- **science-tool**: installed as editable dev dependency, resolved via `SCIENCE_TOOL_PATH` in `.env`
+- **science**: installed as editable dev dependency
 
 ## Conventions
 
@@ -152,7 +152,7 @@ Optional (R-dependent):
 
 ```bash
 # Science framework validation
-bash validate.sh --verbose
+uv run --frozen science validate --verbose
 
 # Lint the Snakemake workflow
 uv run snakemake --lint -s code/workflows/Snakefile --configfile code/config/config-10k-genes.yml

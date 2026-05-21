@@ -21,11 +21,11 @@ dependencies = [
 dev = [
     "diptest>=0.10.0",
     "pytest>=9.0.3",
-    "science-tool",
+    "science",
 ]
 
 [tool.uv.sources]
-science-tool = { path = "../../../science/science-tool", editable = true }
+science = { path = "../../../science/science", editable = true }
 
 [tool.pytest.ini_options]
 markers = [

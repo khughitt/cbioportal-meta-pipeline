@@ -1,46 +1,56 @@
-name: "cbioportal"
+name: cbioportal
 id: cbioportal
 role: data-source
-parent: ~/d/cancer/meta
-created: "2025-02-21"
-last_modified: "2026-04-12"
-summary: "Snakemake-driven meta-analysis pipeline that aggregates cBioPortal mutation data across studies and cancer types to produce cross-study mutation-frequency tables, gene x cancer matrices, and gene/cancer clusters."
-status: "active"
-profile: "research"
+created: '2025-02-21'
+last_modified: '2026-04-12'
+summary: Snakemake-driven meta-analysis pipeline that aggregates cBioPortal mutation
+  data across studies and cancer types to produce cross-study mutation-frequency tables,
+  gene x cancer matrices, and gene/cancer clusters.
+status: active
+profile: research
 layout_version: 2
 tags:
-  - bioinformatics
-  - cancer
-  - cbioportal
-  - meta-analysis
-  - mutations
-  - pan-cancer
+- bioinformatics
+- cancer
+- cbioportal
+- meta-analysis
+- mutations
+- pan-cancer
 data_sources:
-  - name: "cBioPortal"
-    description: "Public cancer genomics studies (mutations + clinical data) downloaded via study IDs."
-    url: "https://cbioportal.org"
-  - name: "AACR GENIE"
-    description: "GENIE mutation data; requires synapse.org account; must be downloaded manually into the pipeline input directory."
-    url: "https://www.synapse.org/Synapse:syn21683345"
-  - name: "UniProt"
-    description: "H. sapiens protein-length reference used for normalization (uniprotkb_hsapiens_protein_lengths.tsv.gz)."
-    url: "https://www.uniprot.org"
-  - name: "Ensembl GRCh37/GRCh38"
-    description: "Genome coordinate / gene annotation TSVs (grch37.tsv, grch38.tsv) used for gene mapping."
-    url: "https://www.ensembl.org"
-ontologies: [biology]
+- name: cBioPortal
+  description: Public cancer genomics studies (mutations + clinical data) downloaded
+    via study IDs.
+  url: https://cbioportal.org
+- name: AACR GENIE
+  description: GENIE mutation data; requires synapse.org account; must be downloaded
+    manually into the pipeline input directory.
+  url: https://www.synapse.org/Synapse:syn21683345
+- name: UniProt
+  description: H. sapiens protein-length reference used for normalization (uniprotkb_hsapiens_protein_lengths.tsv.gz).
+  url: https://www.uniprot.org
+- name: Ensembl GRCh37/GRCh38
+  description: Genome coordinate / gene annotation TSVs (grch37.tsv, grch38.tsv) used
+    for gene mapping.
+  url: https://www.ensembl.org
+ontologies:
+- biology
 knowledge_profiles:
   local: local
 aspects:
-  - computational-analysis
-  - software-development
-research_question: "What is the structure of somatic mutations within and across cancer types, and which gene-cancer associations recur across independent cBioPortal studies?"
+- computational-analysis
+- software-development
+research_question: What is the structure of somatic mutations within and across cancer
+  types, and which gene-cancer associations recur across independent cBioPortal studies?
 scope:
   in_scope:
-    - "Somatic mutation data from cBioPortal studies and AACR GENIE."
-    - "Per-study and cross-study aggregation into gene x cancer frequency tables and matrices."
-    - "Clustering of genes and cancer types based on mutation patterns."
+  - Somatic mutation data from cBioPortal studies and AACR GENIE.
+  - Per-study and cross-study aggregation into gene x cancer frequency tables and
+    matrices.
+  - Clustering of genes and cancer types based on mutation patterns.
   out_of_scope:
-    - "Non-mutation modalities (CNV, expression, methylation) for now."
-    - "Background / germline mutation rate modeling in healthy individuals."
-    - "Population-level representativeness adjustments."
+  - Non-mutation modalities (CNV, expression, methylation) for now.
+  - Background / germline mutation rate modeling in healthy individuals.
+  - Population-level representativeness adjustments.
+peers:
+- id: meta
+  path: ~/d/cancer/meta

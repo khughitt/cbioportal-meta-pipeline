@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Tests for ``build_panel_callable_sizes.compute_callable_mb_table``.
 
 Specification is task 1 of the t081 hypermutator / TMB annotation plan at

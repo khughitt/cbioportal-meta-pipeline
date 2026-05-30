@@ -1,3 +1,6 @@
+# science:code
+# status: workflow-owned
+# science:end
 """Rule (4): aggregate per-cell SELECT outputs into headline feathers.
 
 This task implements the B-tier slice. Subsequent tasks add A-tier Stouffer,

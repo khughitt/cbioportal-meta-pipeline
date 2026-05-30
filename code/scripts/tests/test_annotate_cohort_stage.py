@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Tests for annotate_cohort_stage.
 
 Implements the 12 tests pre-registered in

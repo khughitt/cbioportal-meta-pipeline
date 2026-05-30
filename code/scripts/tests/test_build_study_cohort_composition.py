@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Tests for build_study_cohort_composition."""
 
 from __future__ import annotations

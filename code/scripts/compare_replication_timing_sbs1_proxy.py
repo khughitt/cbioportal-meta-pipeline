@@ -1,3 +1,6 @@
+# science:code
+# status: workflow-owned
+# science:end
 """
 compare_replication_timing_sbs1_proxy.py
 

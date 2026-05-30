@@ -1,3 +1,6 @@
+# science:code
+# status: exploratory
+# science:end
 """Compare full-cohort vs leave-one-study-out dNdScv gene rankings.
 
 Task t173 requires real dNdScv reruns per holdout because the canonical

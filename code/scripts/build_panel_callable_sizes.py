@@ -1,3 +1,6 @@
+# science:code
+# status: workflow-owned
+# science:end
 """
 build_panel_callable_sizes.py
 

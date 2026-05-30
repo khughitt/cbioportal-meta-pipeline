@@ -1,3 +1,6 @@
+# science:code
+# status: workflow-owned
+# science:end
 """
 prepare_replication_timing_annotations.py
 

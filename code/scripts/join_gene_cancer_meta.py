@@ -1,3 +1,6 @@
+# science:code
+# status: workflow-owned
+# science:end
 """Join pooled t077 meta-analysis outputs onto the canonical ratio table."""
 
 from pathlib import Path

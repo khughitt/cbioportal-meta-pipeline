@@ -1,3 +1,6 @@
+# science:code
+# status: exploratory
+# science:end
 """Replication-timing residual analysis for pan-cancer dNdScv rankings.
 
 Task t163 tests whether gene-level constitutive late-replication overlap explains

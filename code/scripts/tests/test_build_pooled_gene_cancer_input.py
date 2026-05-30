@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Tests for the long-format pooled-input adapter used by t077."""
 
 import pandas as pd

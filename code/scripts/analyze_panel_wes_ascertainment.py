@@ -1,3 +1,6 @@
+# science:code
+# status: exploratory
+# science:end
 """Panel-vs-WES ascertainment analysis for t154.
 
 This script compares mutation-frequency rankings across assay strata using the

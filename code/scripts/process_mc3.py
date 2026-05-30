@@ -1,3 +1,6 @@
+# science:code
+# status: workflow-owned
+# science:end
 """
 process_mc3.py
 

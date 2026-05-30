@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Biological positive-control regression for the t078 SELECT pipeline.
 
 Run after a full run completes, against

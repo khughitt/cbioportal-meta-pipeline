@@ -1,3 +1,6 @@
+# science:code
+# status: workflow-owned
+# science:end
 """Rule (2): build per-cell SELECT inputs (GAM + sample.class + alteration.class).
 
 See doc/plans/2026-04-25-t078-select-cooccurrence-design.md Section 4.4.

@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Unit tests for build_panel_gene_sets."""
 from __future__ import annotations
 

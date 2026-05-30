@@ -1,3 +1,6 @@
+# science:code
+# status: workflow-owned
+# science:end
 # code/scripts/run_select_pathway_aggregated.R
 #
 # Rule (5): pathway x pathway SELECT on the samples x 10 pathway-aggregated GAM.

@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Unit tests for select_lib helpers."""
 
 from __future__ import annotations

@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# science:code
+# status: exploratory
+# science:end
 # validate_select_run.sh
 #
 # Post-pipeline hook for the t078 SELECT layer. Run this after a full

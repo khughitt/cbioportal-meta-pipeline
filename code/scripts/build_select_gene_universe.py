@@ -1,3 +1,6 @@
+# science:code
+# status: workflow-owned
+# science:end
 """Rule (1b): emit the SELECT gene-universe TSV with provenance columns.
 
 See doc/plans/2026-04-25-t078-select-cooccurrence-design.md Section 4.3.

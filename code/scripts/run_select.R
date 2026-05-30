@@ -1,3 +1,6 @@
+# science:code
+# status: workflow-owned
+# science:end
 # code/scripts/run_select.R
 #
 # Rule (3): per-cell SELECT wrapper.

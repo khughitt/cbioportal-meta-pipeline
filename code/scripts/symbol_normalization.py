@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Gene-symbol normalization helpers for driver-reference overlays."""
 
 from __future__ import annotations

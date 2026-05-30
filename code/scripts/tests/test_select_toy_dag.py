@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Toy fixture must produce a resolvable DAG for the SELECT rules."""
 
 from __future__ import annotations

@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Verifies rule (0) is wired into the Snakefile correctly."""
 from pathlib import Path
 

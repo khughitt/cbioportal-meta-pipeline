@@ -1,3 +1,6 @@
+# science:code
+# status: exploratory
+# science:end
 """Attribute GENIE-driven dNdScv ranking shifts from completed LOSO artifacts."""
 
 from __future__ import annotations

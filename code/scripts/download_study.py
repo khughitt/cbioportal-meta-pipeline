@@ -1,3 +1,6 @@
+# science:code
+# status: workflow-owned
+# science:end
 """Stage a cBioPortal study into ``data_dir`` and write a per-out_dir marker.
 
 The single declared snakemake output is a *marker file* under ``out_dir``,

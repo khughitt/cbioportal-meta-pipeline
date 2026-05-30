@@ -1,3 +1,7 @@
+# science:code
+# status: library
+# decision_bearing: false
+# science:end
 """
 msi_normalization.py
 

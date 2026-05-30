@@ -1,3 +1,6 @@
+# science:code
+# status: workflow-owned
+# science:end
 """annotate_cohort_stage.
 
 Per-study cohort-stage annotation for cBioPortal clinical sample tables. Adds two

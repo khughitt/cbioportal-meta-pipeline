@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 # code/scripts/tests/test_run_select.R
 #
 # testthat tests for run_select.R sentinel handling and column mapping.

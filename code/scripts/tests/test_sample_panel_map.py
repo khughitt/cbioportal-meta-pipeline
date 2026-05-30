@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Tests for the sample_panel_map output of create_combined_sample_table."""
 
 from __future__ import annotations

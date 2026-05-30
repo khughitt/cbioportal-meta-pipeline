@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Tests for resolve_panel_id (t070 spec)."""
 
 import pandas as pd

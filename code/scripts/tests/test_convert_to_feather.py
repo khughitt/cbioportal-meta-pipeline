@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Tests for convert_to_feather panel_id ingestion (t070)."""
 
 from pathlib import Path

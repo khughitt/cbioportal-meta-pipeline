@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Tests for ``compute_per_sample_tmb.compute_tmb_for_study``.
 
 Specification is task 2 of the t081 hypermutator / TMB annotation plan at

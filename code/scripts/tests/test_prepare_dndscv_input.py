@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Tests for ``prepare_dndscv_input.prepare_dndscv_input``.
 
 t131 dndscv chain entry point: per-study mut.feather + samples.feather -> the

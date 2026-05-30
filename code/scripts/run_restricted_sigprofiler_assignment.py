@@ -1,3 +1,6 @@
+# science:code
+# status: workflow-owned
+# science:end
 """
 run_restricted_sigprofiler_assignment.py
 

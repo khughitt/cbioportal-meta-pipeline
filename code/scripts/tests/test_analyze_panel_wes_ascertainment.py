@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 import pandas as pd
 
 from analyze_panel_wes_ascertainment import (

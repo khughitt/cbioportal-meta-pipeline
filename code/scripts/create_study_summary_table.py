@@ -1,3 +1,6 @@
+# science:code
+# status: workflow-owned
+# science:end
 """
 create_study_summary_table.py
 """

@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Tests for ``msi_normalization``.
 
 Specification is task 4 of the t081 hypermutator / TMB annotation plan at

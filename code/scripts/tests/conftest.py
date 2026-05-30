@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Test infrastructure for the cbioportal pipeline scripts.
 
 Adds ``code/scripts/`` to ``sys.path`` so tests can import the script modules under test

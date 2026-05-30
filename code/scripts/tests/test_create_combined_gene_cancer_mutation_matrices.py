@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Tests for ``create_combined_gene_cancer_mutation_matrices._per_study_columns``.
 
 t098 part C: the matrices step must skip the paired ``_exclusive`` per-study

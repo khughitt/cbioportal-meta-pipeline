@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Tests for ``detect_polymerase_hotspots.detect_hotspots_per_sample``.
 
 Specification is task 3 of the t081 hypermutator / TMB annotation plan at

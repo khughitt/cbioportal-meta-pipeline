@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Unit tests for build_select_gam -- core B-tier path."""
 
 from __future__ import annotations

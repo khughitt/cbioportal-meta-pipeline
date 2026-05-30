@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Tests for compare_stage_stratified_gene_rates.
 
 Pre-registered tests from doc/plans/2026-04-24-t052-cohort-stage-descriptor-design.md

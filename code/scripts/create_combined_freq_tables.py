@@ -1,3 +1,6 @@
+# science:code
+# status: workflow-owned
+# science:end
 """
 create_combined_freq_tables
 """

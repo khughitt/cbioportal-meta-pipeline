@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Tests for t083 cancer-type label normalization."""
 
 import logging

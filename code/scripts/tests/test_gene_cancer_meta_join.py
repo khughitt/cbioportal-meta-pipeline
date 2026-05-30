@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Tests for joining pooled t077 outputs onto the canonical ratio table."""
 
 from __future__ import annotations

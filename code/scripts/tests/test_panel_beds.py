@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Sanity checks on vendored panel BEDs."""
 from pathlib import Path
 

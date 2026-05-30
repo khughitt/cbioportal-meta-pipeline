@@ -1,3 +1,6 @@
+# science:code
+# status: workflow-owned
+# science:end
 """
 detect_polymerase_hotspots.py
 

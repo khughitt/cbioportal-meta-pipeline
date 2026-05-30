@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Shared helpers for the t078 SELECT pipeline.
 
 Functions are pure (no I/O) so they are easy to unit-test. I/O lives in the

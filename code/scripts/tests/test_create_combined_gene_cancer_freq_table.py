@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Tests for ``create_combined_gene_cancer_freq_table.combine_paired_pivot``.
 
 Specification is task 7b of the t081 plan at ``doc/plans/2026-04-13-t081-

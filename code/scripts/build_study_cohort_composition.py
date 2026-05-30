@@ -1,3 +1,6 @@
+# science:code
+# status: workflow-owned
+# science:end
 """build_study_cohort_composition.
 
 Summary-level rollup of per-study cohort-stage annotations into composition

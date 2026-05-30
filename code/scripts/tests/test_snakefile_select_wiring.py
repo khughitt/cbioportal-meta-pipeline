@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Verify all SELECT rules are present in the Snakefile under the opt-in gate."""
 
 from pathlib import Path

@@ -1,3 +1,6 @@
+# science:code
+# status: workflow-owned
+# science:end
 """
 check_gene_coverage.py - creates a table indicating how many studies each gene appears in.
 """

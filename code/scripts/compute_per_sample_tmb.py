@@ -1,3 +1,6 @@
+# science:code
+# status: workflow-owned
+# science:end
 """
 compute_per_sample_tmb.py
 

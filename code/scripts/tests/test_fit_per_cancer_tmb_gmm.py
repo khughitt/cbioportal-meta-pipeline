@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Tests for ``fit_per_cancer_tmb_gmm.fit_gmm_per_cancer``.
 
 Specification is task 5 of the t081 hypermutator / TMB annotation plan at

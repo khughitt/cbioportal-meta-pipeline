@@ -1,3 +1,6 @@
+# science:code
+# status: workflow-owned
+# science:end
 # code/scripts/preflight_select_env.R
 #
 # Rule (0) for the t078 SELECT pipeline. See

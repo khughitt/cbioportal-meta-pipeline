@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 from __future__ import annotations
 
 import pandas as pd

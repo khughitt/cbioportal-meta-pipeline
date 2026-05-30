@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Per-sample panel-version resolution for MSK-IMPACT and related cBioPortal studies.
 
 Implements t070 (see ``doc/plans/2026-04-18-t070-msk-impact-panel-version-drift-design.md``).

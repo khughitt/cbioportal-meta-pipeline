@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Tests for ``combine_samples_tmb.combine_samples_tmb``.
 
 Small glue step consumed by the GMM fit (task 5) — concatenates per-study

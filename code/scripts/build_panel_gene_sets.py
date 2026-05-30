@@ -1,3 +1,6 @@
+# science:code
+# status: workflow-owned
+# science:end
 """Rule (1a): emit per-panel callable-gene feathers.
 
 Per design Section 4.2: scatter is per panel_id (NOT per study). Reads a

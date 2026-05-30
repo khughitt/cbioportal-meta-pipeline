@@ -1,3 +1,6 @@
+# science:code
+# status: exploratory
+# science:end
 """Build isolated Snakemake commands for t173 dNdScv LOSO reruns."""
 
 from __future__ import annotations

@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Smoke tests for the SELECT conda env file."""
 from pathlib import Path
 

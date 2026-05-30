@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Unit tests for aggregate_select_results."""
 
 from __future__ import annotations

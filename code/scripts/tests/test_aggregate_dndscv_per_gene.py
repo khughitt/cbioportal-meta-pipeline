@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Tests for ``aggregate_dndscv_per_gene.aggregate_dndscv_per_gene``.
 
 Per-gene pan-cancer rollup of dNdScv outputs (t131). Covers:

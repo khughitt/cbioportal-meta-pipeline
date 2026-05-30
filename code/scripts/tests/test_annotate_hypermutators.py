@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Tests for ``annotate_hypermutators.annotate_hypermutators``.
 
 Specification is task 6 of the t081 hypermutator / TMB annotation plan at

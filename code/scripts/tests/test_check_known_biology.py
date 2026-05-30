@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Unit tests for the biological positive-control regression check."""
 
 import pandas as pd

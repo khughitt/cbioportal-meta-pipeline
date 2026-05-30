@@ -1,3 +1,6 @@
+# science:code
+# status: exploratory
+# science:end
 """compare_stage_stratified_gene_rates.
 
 Diagnostic for t052: stratify per-(study, cancer_type, gene) mutation rates by

@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Cancer-type label normalization for convert_to_feather.py.
 
 Implements t083: deterministic whitespace/case cleanup plus optional config-driven

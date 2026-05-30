@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Tests for ``create_freq_tables.compute_freq_tables``.
 
 Specification is task 7a of the t081 hypermutator / TMB annotation plan at

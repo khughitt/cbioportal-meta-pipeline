@@ -1,3 +1,6 @@
+# science:code
+# status: workflow-owned
+# science:end
 """
 extract_normal_tissue_spectra.py
 

@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """Tests for compute_sbs1_lrr_bias_per_study.
 
 The three regression checks pre-registered in

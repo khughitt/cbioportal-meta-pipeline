@@ -1,3 +1,6 @@
+# science:code
+# status: exploratory
+# science:end
 """compute_sbs1_lrr_bias_per_study.
 
 Per-study aggregate SBS1 late-replicating-region (LRR) bias test for q009.

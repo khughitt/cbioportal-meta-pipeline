@@ -1,3 +1,6 @@
+# science:code
+# status: workflow-owned
+# science:end
 """Derive per-panel BED files from the GENIE consolidated genomic_information.txt.
 
 Snakemake-driven: input is the GENIE consolidated assay BED, output is one BED

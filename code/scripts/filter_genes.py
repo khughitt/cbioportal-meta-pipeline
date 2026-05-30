@@ -1,3 +1,6 @@
+# science:code
+# status: workflow-owned
+# science:end
 #
 # filter_genes.py - filters genes which don't appear in a sufficient number of studies
 #

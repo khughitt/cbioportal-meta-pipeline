@@ -1,3 +1,6 @@
+# science:code
+# status: library
+# science:end
 """CLI tests for the t077 R meta-analysis runner skeleton."""
 
 from __future__ import annotations

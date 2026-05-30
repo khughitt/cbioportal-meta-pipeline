@@ -176,3 +176,13 @@ uv run --frozen ruff format --check code/
 - Preserve 100% of pipeline functionality when refactoring unless explicitly told otherwise.
 - Document desired structure + clean-up lists in `doc/plans/` before large refactors.
 - Use `uv add` / `uv run`; never `pip install`.
+
+<!-- BEGIN: load-bearing-constraints (managed by /science:curate; edit core/decisions.md instead) -->
+## Load-bearing constraints
+
+<!-- One bullet per active decision in core/decisions.md, phrased as an
+imperative rule. The "why" stays in core/decisions.md. -->
+
+- _none yet — populated by `/science:curate` once `core/decisions.md` has entries._
+
+<!-- END: load-bearing-constraints -->

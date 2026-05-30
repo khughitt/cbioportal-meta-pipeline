@@ -68,15 +68,17 @@ def _intro():
 
 @app.cell
 def _load(mo):
+    import os
     from pathlib import Path
 
     import altair as alt
     import polars as pl
 
-    # Default to a config-pan-cancer-dndscv run; user can override by editing
-    # this path or running the cell with a different out_dir.
+    # Set CBIO_PKG_ROOT to a package dir (e.g. /data/packages/cbioportal) to read a
+    # config-pan-cancer-dndscv run; otherwise falls back to in-repo results/.
+    _pkg_root = os.environ.get("CBIO_PKG_ROOT")
     candidates = [
-        Path("/data/packages/cbioportal/pan-cancer-dndscv"),
+        *([Path(_pkg_root) / "pan-cancer-dndscv"] if _pkg_root else []),
         Path("results/poc-2026-04-17"),
     ]
     out_dir = next((p for p in candidates if p.exists()), candidates[0])

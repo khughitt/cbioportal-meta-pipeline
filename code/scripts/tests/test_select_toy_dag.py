@@ -74,8 +74,11 @@ def test_dag_resolves_with_dry_run():
     result = subprocess.run(cmd, capture_output=True, text=True, cwd=REPO, timeout=120)
     if result.returncode != 0:
         pytest.skip(
+            # newline kept separate from the trailing colon so the literal does not
+            # read as a `<letter>:\` Windows-drive path to the hardcoded-path check.
             "snakemake -n failed for the toy fixture (likely an unsatisfied upstream "
-            "rule; this is a known-soft test). stdout/stderr tail:\n"
+            "rule; this is a known-soft test). stdout/stderr tail:"
+            + "\n"
             + "\n".join(
                 result.stdout.splitlines()[-10:] + result.stderr.splitlines()[-5:]
             )

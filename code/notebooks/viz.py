@@ -15,7 +15,6 @@ import marimo
 
 __generated_with = "0.13.0"
 app = marimo.App(width="medium")
-SCIENCE_TOOL_IMPORT_ROOT = "/mnt/ssd/Dropbox/science/science-tool/src"
 
 
 # ── Config & data loading ────────────────────────────────────────────
@@ -140,13 +139,10 @@ def load_graph(graph_path_input, mo):
 
 @app.cell
 def dashboard_summary_data(graph_path_input):
-    import sys
     from pathlib import Path
 
+    # science_tool is an editable dev dependency and imports directly below.
     _graph_path = Path(graph_path_input.value)
-    _science_tool_import_root = Path(SCIENCE_TOOL_IMPORT_ROOT)
-    if _science_tool_import_root.exists() and str(_science_tool_import_root) not in sys.path:
-        sys.path.insert(0, str(_science_tool_import_root))
 
     _dashboard_rows: list[dict[str, str]] = []
     _neighborhood_rows: list[dict[str, str]] = []

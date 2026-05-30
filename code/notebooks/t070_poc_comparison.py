@@ -33,12 +33,16 @@ app = marimo.App(width="medium")
 
 @app.cell
 def _():
+    import os
     import marimo as mo
     import polars as pl
     import altair as alt
     from pathlib import Path
 
-    pre_dir = Path("/data/packages/cbioportal/poc-pre-t070")
+    # Set CBIO_PKG_ROOT to your package dir (e.g. /data/packages/cbioportal) to
+    # compare against a pipeline run; defaults to in-repo results/.
+    pkg_root = Path(os.environ.get("CBIO_PKG_ROOT", "results"))
+    pre_dir = pkg_root / "poc-pre-t070"
     post_dir = Path("results/poc-2026-04-17")
     study_id = "msk_impact_2017"
 

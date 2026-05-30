@@ -1173,11 +1173,12 @@ rule fetch_select_tarball:
 #
 # t078 SELECT pipeline - vendored COSMIC Cancer Gene Census snapshot.
 #
-# Manual prereq: the Sanger CGC TSV at config["cosmic_cgc_raw_path"] (default
-# /data/raw/cosmic/v100/Cosmic_CancerGeneCensus_v100_GRCh38.tsv -- auth-gated,
-# download with a free academic COSMIC account). The artifact data/cosmic_cgc.tsv
-# is committed; this rule documents the copy recipe and verifies the sha256
-# prefix to flag silent upstream substitution.
+# Manual prereq: the Sanger CGC TSV (auth-gated, download with a free academic
+# COSMIC account, e.g. Cosmic_CancerGeneCensus_v100_GRCh38.tsv). Point
+# config["cosmic_cgc_raw_path"] at wherever you staged it (e.g. an absolute
+# /data/raw/cosmic/v100/... path); the default below is repo-relative. The
+# artifact data/cosmic_cgc.tsv is committed; this rule documents the copy recipe
+# and verifies the sha256 prefix to flag silent upstream substitution.
 #
 COSMIC_CGC_SHA256_PREFIX = "abf3681d6d01"   # 12-char prefix
 
@@ -1185,7 +1186,7 @@ rule vendor_cosmic_cgc:
   input:
     config.get(
       "cosmic_cgc_raw_path",
-      "/data/raw/cosmic/v100/Cosmic_CancerGeneCensus_v100_GRCh38.tsv",
+      "data/raw/cosmic/Cosmic_CancerGeneCensus_v100_GRCh38.tsv",
     )
   output:
     "data/cosmic_cgc.tsv"

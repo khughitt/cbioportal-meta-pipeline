@@ -11,6 +11,17 @@ update_cadence: "static"
 ontology_terms: []
 datapackage: "results/brca-cmag/studies/brca_tcga_pan_can_atlas_2018/expression/datapackage.json"
 local_path: ""
+# bio.matrix extension (expression.parquet, genes on rows)
+n_rows: 20511
+n_cols: 1082
+value_dtype: "float32"
+feature_axis: "rows"
+row_kind: "gene"
+col_kind: "sample"
+# bio.rnaseq extension
+species:
+  - "Homo sapiens"
+assay: "polya-rnaseq"
 accessions:
   - "cBioPortal: brca_tcga_pan_can_atlas_2018"
 access:
@@ -29,7 +40,6 @@ access:
     followup_task: ""
     superseded_by_dataset: ""
     rationale: ""
-parent_dataset: ""
 siblings: []
 consumed_by: []
 source_refs:
@@ -51,7 +61,7 @@ generic pipeline). Tidy products: **20,511 genes × 1,082 samples** (RNA-seq RSE
 `data_mrna_seq_v2_rsem.txt`; 0 missing cells) and a merged sample-level clinical table
 (1,084 rows, 57 fields incl. `OS_MONTHS`/`OS_STATUS`, `DSS_*`, `AGE`,
 `AJCC_PATHOLOGIC_TUMOR_STAGE`, PAM50 `SUBTYPE`). PAM50 luminal A n = 499. The paired
-`datapackage.yaml` records both parquet resources with byte sizes, SHA-256 hashes, and
+`datapackage.json` records both parquet resources with byte sizes, SHA-256 hashes, and
 shapes.
 
 ## Access verification log

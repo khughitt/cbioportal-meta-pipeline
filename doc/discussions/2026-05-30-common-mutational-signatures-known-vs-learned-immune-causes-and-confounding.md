@@ -8,7 +8,7 @@ related:
 created: 2026-05-30
 updated: '2026-05-30'
 source_refs:
-- Alexandrov2020
+- paper:Alexandrov2020
 focus_type: topic
 focus_ref: topic:mutational-signatures
 mode: qa

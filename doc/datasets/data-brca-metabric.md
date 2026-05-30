@@ -11,6 +11,14 @@ update_cadence: "static"
 ontology_terms: []
 datapackage: "results/brca-cmag/studies/brca_metabric/expression/datapackage.json"
 local_path: ""
+# bio.matrix extension (expression.parquet, genes on rows; Illumina HT-12 v3 microarray —
+# not RNA-seq, so no bio.rnaseq domain extension applies)
+n_rows: 20385
+n_cols: 1980
+value_dtype: "float32"
+feature_axis: "rows"
+row_kind: "gene"
+col_kind: "sample"
 accessions:
   - "cBioPortal: brca_metabric"
 access:
@@ -29,7 +37,6 @@ access:
     followup_task: ""
     superseded_by_dataset: ""
     rationale: ""
-parent_dataset: ""
 siblings: []
 consumed_by: []
 source_refs:
@@ -52,7 +59,7 @@ across 11 genes** — genuine source NAs, flagged for WP2 to resolve before Juli
 merged sample-level clinical table (2,509 rows — 1,980 with matched expression, 529
 clinical-only — 37 fields incl. `OS_MONTHS`/`OS_STATUS`, `RFS_*`, `AGE_AT_DIAGNOSIS`,
 `CLAUDIN_SUBTYPE`, `ER_STATUS`). PAM50/claudin luminal A n = 700; long follow-up
-supports independent survival validation. The paired `datapackage.yaml` records both
+supports independent survival validation. The paired `datapackage.json` records both
 parquet resources with byte sizes, SHA-256 hashes, shapes, and the missing-cell count.
 
 ## Access verification log

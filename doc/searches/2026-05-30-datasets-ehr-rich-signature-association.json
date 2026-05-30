@@ -1,0 +1,105 @@
+{
+  "search_id": "2026-05-30-datasets-ehr-rich-signature-association",
+  "date": "2026-05-30",
+  "focus": "hypothesis:h07-agnostic-covariate-association-recovers-known-signature-aetiologies-and",
+  "query": "EHR-rich oncology datasets with co-measured somatic mutations + clinical/EHR-like metadata, usable as agnostic covariate source for mutational-signature aetiology association",
+  "adapter_search": {
+    "tool": "science datasets search",
+    "result": "empty",
+    "note": "BPC / MSK-CHORD live on Synapse behind DUAs and are not indexed by the zenodo/GEO/etc. adapters; ranking is LLM-knowledge-driven and cross-referenced against existing doc/datasets notes."
+  },
+  "selection_criteria": [
+    "co-measured somatic mutations (so signature exposures H derivable)",
+    "per-sample signature feasibility prefers WES/WGS; panels => cohort-pooled/refit only (q018)",
+    "rich clinical / EHR-like metadata (treatment, ICD-O/ICD-10, histology, outcomes, vital status)"
+  ],
+  "candidates": [
+    {
+      "name": "AACR GENIE BPC (Biopharma Collaborative, PRISSMM)",
+      "entity": "dataset:aacr-genie-bpc",
+      "status": "new",
+      "tier": "evaluate-next",
+      "mutations": "panel",
+      "signature_grade": "pooled/refit only",
+      "ehr_richness": "highest public: PRISSMM treatment/ICD-O/RECIST/outcomes",
+      "access": "controlled (Synapse + DUA)",
+      "verdict": "best EHR-covariate source; panel caps to cohort-level signatures"
+    },
+    {
+      "name": "TCGA MC3 unified MAF",
+      "entity": "dataset:tcga-mc3",
+      "status": "existing",
+      "tier": "use-now",
+      "mutations": "WES (7-caller consensus)",
+      "signature_grade": "per-sample de-novo OK (2.9M PASS / 9,104 samples / 32 types)",
+      "ehr_richness": "structured clinical only",
+      "access": "public",
+      "verdict": "signature engine for h07; already ingested as pseudo-study tcga_mc3"
+    },
+    {
+      "name": "TCGA PanCanAtlas",
+      "entity": "dataset:tcga-pancanatlas",
+      "status": "existing",
+      "tier": "evaluate-next",
+      "mutations": "WES",
+      "signature_grade": "per-sample OK",
+      "ehr_richness": "structured clinical + co-measured mRNA expression",
+      "access": "public",
+      "verdict": "co-expression covariate source; pairs with MC3 for signature-grade track"
+    },
+    {
+      "name": "MSK-CHORD",
+      "entity": "dataset:msk-chord",
+      "status": "existing",
+      "tier": "track",
+      "mutations": "panel (MSK-IMPACT)",
+      "signature_grade": "pooled/refit only",
+      "ehr_richness": "NLP-extracted EHR features on ~24,950 patients",
+      "access": "controlled",
+      "verdict": "secondary EHR-covariate candidate; verify NLP field + license terms"
+    },
+    {
+      "name": "AACR GENIE (main registry)",
+      "entity": "dataset:aacr-genie",
+      "status": "existing",
+      "tier": "evaluate-next",
+      "mutations": "panel",
+      "signature_grade": "pooled only",
+      "ehr_richness": "thin (OncoTree, age, sex, sample type; no treatment/outcome)",
+      "access": "controlled",
+      "verdict": "covariate-thin; main value is panel-coverage BEDs already used"
+    },
+    {
+      "name": "METABRIC",
+      "entity": "dataset:data-brca-metabric",
+      "status": "existing",
+      "tier": "track",
+      "mutations": "targeted + CNA",
+      "signature_grade": "pooled only",
+      "ehr_richness": "co-measured microarray expression + clinical + long survival (breast)",
+      "access": "public",
+      "verdict": "single-tissue expression-vs-signature pilot"
+    },
+    {
+      "name": "PCAWG",
+      "entity": "dataset:pcawg",
+      "status": "existing",
+      "tier": "track",
+      "mutations": "WGS",
+      "signature_grade": "best per-sample (incl. SV/CNV signatures)",
+      "ehr_richness": "sparse clinical",
+      "access": "controlled",
+      "verdict": "signature-ideal but covariate-poor; reference for spectra not association"
+    }
+  ],
+  "two_track_plan": {
+    "signature_grade_track": "tcga-mc3 (per-sample de-novo) x tcga-pancanatlas expression + structured clinical -> H07a positive control + H07b expression discovery",
+    "ehr_covariate_track": "aacr-genie-bpc / msk-chord (cohort-pooled signatures) x rich EHR terms -> tests whether EHR covariates add aetiology signal beyond structured fields"
+  },
+  "data_gaps": [
+    "free-text symptom/bigram data is not public (IRB-gated); coded ICD-O + regimen vocabularies in BPC/CHORD are the realistic stand-in",
+    "SV/CNV signatures (PCAWG) out of scope: CNV not ingested (blocked t055)",
+    "MSK-CHORD NLP field availability + license terms unverified",
+    "BPC top-level Synapse accession + per-cohort signature-usable variant availability unverified"
+  ]
+}

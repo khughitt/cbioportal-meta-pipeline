@@ -1108,8 +1108,10 @@ rule export_study_expression:
   input:
     staged = out_dir.joinpath("metadata/raw_studies/{id}.staged")
   output:
-    expression = out_dir.joinpath("studies/{id}/expression/expression.parquet"),
-    clinical   = out_dir.joinpath("studies/{id}/expression/clinical.parquet")
+    expression  = out_dir.joinpath("studies/{id}/expression/expression.parquet"),
+    clinical    = out_dir.joinpath("studies/{id}/expression/clinical.parquet"),
+    datapackage = out_dir.joinpath("studies/{id}/expression/datapackage.json"),
+    qa          = out_dir.joinpath("studies/{id}/expression/qa_report.md")
   script:
     "../scripts/export_study_expression.py"
 

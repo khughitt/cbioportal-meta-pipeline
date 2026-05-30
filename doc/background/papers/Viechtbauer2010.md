@@ -50,7 +50,10 @@ Software paper. Describes:
 - Diagnostic and plotting functions: `forest()`, `funnel()`, `trimfill()`,
   `regtest()`, `ranktest()`, `predict()` (including prediction intervals).
 
-## Key Findings (tooling-centric)
+## Key Findings
+
+_Tooling-centric: this is a software paper, so the findings below describe `metafor`'s
+capabilities rather than an empirical result._
 
 - Unified API across measure types — the same `rma()` call handles binary, continuous,
   correlation, and proportion effect sizes with measure-specific variance computation.

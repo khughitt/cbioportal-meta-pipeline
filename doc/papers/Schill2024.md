@@ -29,7 +29,7 @@ dataset_usage:
 - **PMID:** 39480133
 - **Conference version DOI:** 10.1007/978-1-0716-3989-4_14 (RECOMB 2024, Lecture Notes in Computer Science)
 - **BibTeX key:** Schill2024
-- **Source:** Paywalled (no OA copy per Unpaywall); summary based on PubMed abstract, Crossref metadata, and detailed description in the open-access Vocht et al. 2026 (PMC12776348) which was co-authored by Schill and explicitly describes the Schill 2024 model. All mechanistic claims are author-attributed to that companion paper. Quantitative results marked [UNVERIFIED] where not directly stated in available sources.
+- **Source:** Paywalled (no OA copy per Unpaywall); summary based on PubMed abstract, Crossref metadata, and detailed description in the open-access Vocht et al. 2026 (PMC12776348) which was co-authored by Schill and explicitly describes the Schill 2024 model. All mechanistic claims are author-attributed to that companion paper. Quantitative results carry an inline `[UNVERIFIED: …]` caveat where not directly stated in available sources.
 
 ## Key Contribution
 

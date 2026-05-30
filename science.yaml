@@ -52,5 +52,5 @@ scope:
   - Background / germline mutation rate modeling in healthy individuals.
   - Population-level representativeness adjustments.
 peers:
-- id: meta
+- id: cancer-meta
   path: ~/d/cancer/meta

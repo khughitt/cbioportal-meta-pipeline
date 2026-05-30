@@ -1,52 +1,13 @@
 ---
-id: "dataset:brca-metabric"
-type: "dataset"
-title: "METABRIC — mRNA expression + clinical"
-status: "active"
-origin: "external"
-source_class: "observational"
-tier: "use-now"
-license: "custom"
-update_cadence: "static"
-ontology_terms: []
-datapackage: "results/brca-cmag/studies/brca_metabric/expression/datapackage.json"
-local_path: ""
-# bio.matrix extension (expression.parquet, genes on rows; Illumina HT-12 v3 microarray —
-# not RNA-seq, so no bio.rnaseq domain extension applies)
-n_rows: 20385
-n_cols: 1980
-value_dtype: "float32"
-feature_axis: "rows"
-row_kind: "gene"
-col_kind: "sample"
-accessions:
-  - "cBioPortal: brca_metabric"
-access:
-  level: "public"
-  availability: "available"
-  available_after: ""
-  verified: true
-  verification_method: "retrieved"
-  last_reviewed: "2026-05-30"
-  verified_by: "claude"
-  source_url: "https://www.cbioportal.org/study/summary?id=brca_metabric"
-  credentials_required: "primary data EGA-gated; cBioPortal redistributes the processed study"
-  exception:
-    mode: ""
-    decision_date: ""
-    followup_task: ""
-    superseded_by_dataset: ""
-    rationale: ""
-siblings: []
-consumed_by: []
+id: dataset:brca-metabric
+overlay_of: dataset:brca-metabric
+pin_version: "1.0.0"
 source_refs:
-  - "cite:Curtis2012"
-  - "cite:Pereira2016"
+- cite:Curtis2012
+- cite:Pereira2016
 related: []
-created: "2026-05-30"
-updated: "2026-05-30"
+source: results/brca-cmag/studies/brca_metabric/expression/datapackage.json
 ---
-
 # METABRIC — mRNA expression + clinical
 
 ## Summary

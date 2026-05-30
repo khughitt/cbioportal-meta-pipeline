@@ -1,55 +1,13 @@
 ---
-id: "dataset:brca-tcga-pancanatlas"
-type: "dataset"
-title: "TCGA-BRCA (PanCancer Atlas) — mRNA expression + clinical"
-status: "active"
-origin: "external"
-source_class: "observational"
-tier: "use-now"
-license: "custom"
-update_cadence: "static"
-ontology_terms: []
-datapackage: "results/brca-cmag/studies/brca_tcga_pan_can_atlas_2018/expression/datapackage.json"
-local_path: ""
-# bio.matrix extension (expression.parquet, genes on rows)
-n_rows: 20511
-n_cols: 1082
-value_dtype: "float32"
-feature_axis: "rows"
-row_kind: "gene"
-col_kind: "sample"
-# bio.rnaseq extension
-species:
-  - "Homo sapiens"
-assay: "polya-rnaseq"
-accessions:
-  - "cBioPortal: brca_tcga_pan_can_atlas_2018"
-access:
-  level: "public"
-  availability: "available"
-  available_after: ""
-  verified: true
-  verification_method: "retrieved"
-  last_reviewed: "2026-05-30"
-  verified_by: "claude"
-  source_url: "https://www.cbioportal.org/study/summary?id=brca_tcga_pan_can_atlas_2018"
-  credentials_required: ""
-  exception:
-    mode: ""
-    decision_date: ""
-    followup_task: ""
-    superseded_by_dataset: ""
-    rationale: ""
-siblings: []
-consumed_by: []
+id: dataset:brca-tcga-pancanatlas
+overlay_of: dataset:brca-tcga-pancanatlas
+pin_version: "1.0.0"
 source_refs:
-  - "cite:Koboldt2012"
-  - "cite:Liu2018TCGACDR"
+- cite:Koboldt2012
+- cite:Liu2018TCGACDR
 related: []
-created: "2026-05-30"
-updated: "2026-05-30"
+source: results/brca-cmag/studies/brca_tcga_pan_can_atlas_2018/expression/datapackage.json
 ---
-
 # TCGA-BRCA (PanCancer Atlas) — mRNA expression + clinical
 
 ## Summary

@@ -1100,6 +1100,29 @@ rule download_study:
   script:
     "../scripts/download_study.py"
 
+# Surface a study's mRNA expression matrix + merged clinical table as tidy parquet.
+# Opt-in expression arm — consumed by external expression analyses (e.g. the
+# health-cycles tumor-CMag prognostic validation, t046). The .staged marker gates
+# this so the raw study is present before export.
+rule export_study_expression:
+  input:
+    staged = out_dir.joinpath("metadata/raw_studies/{id}.staged")
+  output:
+    expression = out_dir.joinpath("studies/{id}/expression/expression.parquet"),
+    clinical   = out_dir.joinpath("studies/{id}/expression/clinical.parquet")
+  script:
+    "../scripts/export_study_expression.py"
+
+# Opt-in target: expression + clinical parquets for every study in config["studies"].
+# Separate from the default `rule all` (mutation pipeline) so an expression run never
+# triggers the mutation DAG. Invoke explicitly, e.g.:
+#   uv run snakemake -s code/workflows/Snakefile -j2 \
+#     --configfile code/config/config-brca-cmag.yml all_expression
+rule all_expression:
+  input:
+    expand(out_dir.joinpath("studies/{id}/expression/expression.parquet"), id=ids),
+    expand(out_dir.joinpath("studies/{id}/expression/clinical.parquet"), id=ids)
+
 #
 # MC3 TCGA pan-cancer unified-MAF ingestion (Ellrott 2018). Produces a `tcga_mc3`
 # pseudo-study that matches the existing per-study feather schema, so downstream rules

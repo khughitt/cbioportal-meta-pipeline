@@ -1,0 +1,23 @@
+# Expression export for the health-cycles tumor-CMag prognostic validation (t046).
+# Surfaces mRNA expression + merged clinical as tidy parquet for two breast-cancer
+# cohorts. Invoke the OPT-IN expression target (not the default mutation `rule all`):
+#
+#   uv run snakemake -s code/workflows/Snakefile -j2 \
+#     --configfile code/config/config-brca-cmag.yml all_expression
+#
+# Both studies are already staged under data_dir (236-study cache); download_study
+# is a no-op marker touch, so this runs offline.
+
+data_dir: "/data/raw/cbioportal"
+out_dir: "results/brca-cmag"
+
+studies:
+  - brca_tcga_pan_can_atlas_2018   # TCGA-BRCA, RNA-seq RSEM (luminal-A reproduction)
+  - brca_metabric                  # METABRIC, Illumina microarray (independent validation)
+
+# Per-study mRNA matrix selection (platforms differ). Omit to auto-detect by priority.
+expression:
+  enabled: true
+  mrna_file:
+    brca_tcga_pan_can_atlas_2018: data_mrna_seq_v2_rsem.txt
+    brca_metabric: data_mrna_illumina_microarray.txt

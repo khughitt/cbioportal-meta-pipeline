@@ -1,19 +1,18 @@
 ---
-id: "paper:IntHout2016"
-type: "paper"
-title: "Plea for routinely presenting prediction intervals in meta-analysis"
-status: "active"
+id: paper:IntHout2016
+type: paper
+title: Plea for routinely presenting prediction intervals in meta-analysis
+status: active
 ontology_terms: []
-datasets: []
 source_refs:
-  - "paper:IntHout2016"
+- paper:IntHout2016
 related:
-  - "paper:Higgins2002"
-  - "paper:Langan2018"
-  - "paper:Viechtbauer2010"
-  - "topic:cross-study-meta-analysis-cancer-genomics"
-created: "2026-04-21"
-updated: "2026-04-21"
+- paper:Higgins2002
+- paper:Langan2018
+- paper:Viechtbauer2010
+- topic:cross-study-meta-analysis-cancer-genomics
+created: '2026-04-21'
+updated: '2026-04-21'
 ---
 
 # Plea for routinely presenting prediction intervals in meta-analysis

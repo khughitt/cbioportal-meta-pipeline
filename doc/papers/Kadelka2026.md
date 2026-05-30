@@ -1,15 +1,15 @@
 ---
-id: "paper:Kadelka2026"
-type: "paper"
-title: "Canalization as a stabilizing principle of gene regulatory networks: a discrete dynamical systems perspective"
-status: "active"
+id: paper:Kadelka2026
+type: paper
+title: 'Canalization as a stabilizing principle of gene regulatory networks: a discrete
+  dynamical systems perspective'
+status: active
 ontology_terms: []
-datasets: []
 source_refs:
-  - "cite:Kadelka2026"
+- cite:Kadelka2026
 related: []
-created: "2026-04-25"
-updated: "2026-04-25"
+created: '2026-04-25'
+updated: '2026-04-25'
 ---
 
 # Canalization as a stabilizing principle of gene regulatory networks: a discrete dynamical systems perspective

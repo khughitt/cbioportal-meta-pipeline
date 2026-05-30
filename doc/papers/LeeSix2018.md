@@ -1,19 +1,18 @@
 ---
-id: "paper:LeeSix2018"
-type: "paper"
-title: "Population dynamics of normal human blood inferred from somatic mutations"
-status: "active"
+id: paper:LeeSix2018
+type: paper
+title: Population dynamics of normal human blood inferred from somatic mutations
+status: active
 ontology_terms: []
-datasets: []
 source_refs:
-  - "paper:LeeSix2018"
+- paper:LeeSix2018
 related:
-  - "topic:clonal-hematopoiesis-contamination"
-  - "paper:Poon2021"
-  - "paper:Yoshida2026"
-  - "question:q006-ch-priority-gene-completeness"
-created: "2026-04-18"
-updated: "2026-04-18"
+- topic:clonal-hematopoiesis-contamination
+- paper:Poon2021
+- paper:Yoshida2026
+- question:q006-ch-priority-gene-completeness
+created: '2026-04-18'
+updated: '2026-04-18'
 ---
 
 # Population dynamics of normal human blood inferred from somatic mutations

@@ -1,18 +1,18 @@
 ---
-id: "paper:Babur2015"
-type: "paper"
-title: "Systematic identification of cancer driving signaling pathways based on mutual exclusivity of genomic alterations"
-status: "active"
+id: paper:Babur2015
+type: paper
+title: Systematic identification of cancer driving signaling pathways based on mutual
+  exclusivity of genomic alterations
+status: active
 ontology_terms: []
-datasets: []
 source_refs:
-  - "paper:Babur2015"
+- paper:Babur2015
 related:
-  - "paper:Ciriello2012"
-  - "paper:Leiserson2015"
-  - "topic:co-occurrence-and-mutual-exclusivity"
-created: "2026-04-21"
-updated: "2026-04-21"
+- paper:Ciriello2012
+- paper:Leiserson2015
+- topic:co-occurrence-and-mutual-exclusivity
+created: '2026-04-21'
+updated: '2026-04-21'
 ---
 
 # Systematic identification of cancer driving signaling pathways based on mutual exclusivity of genomic alterations

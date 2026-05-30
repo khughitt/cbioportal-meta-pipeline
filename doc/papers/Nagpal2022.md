@@ -1,15 +1,15 @@
 ---
-id: "paper:Nagpal2022"
-type: "paper"
-title: "Canalization of the Polygenic Risk for Common Diseases and Traits in the UK Biobank Cohort"
-status: "active"
+id: paper:Nagpal2022
+type: paper
+title: Canalization of the Polygenic Risk for Common Diseases and Traits in the UK
+  Biobank Cohort
+status: active
 ontology_terms: []
-datasets: []
 source_refs:
-  - "cite:Nagpal2022"
+- cite:Nagpal2022
 related: []
-created: "2026-04-25"
-updated: "2026-04-25"
+created: '2026-04-25'
+updated: '2026-04-25'
 ---
 
 # Canalization of the Polygenic Risk for Common Diseases and Traits in the UK Biobank Cohort

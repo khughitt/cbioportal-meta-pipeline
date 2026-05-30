@@ -1,19 +1,19 @@
 ---
-id: "paper:LinXu2020"
-type: "paper"
-title: "Arcsine-based transformations for meta-analysis of proportions: Pros, cons, and alternatives"
-status: "active"
+id: paper:LinXu2020
+type: paper
+title: 'Arcsine-based transformations for meta-analysis of proportions: Pros, cons,
+  and alternatives'
+status: active
 ontology_terms: []
-datasets: []
 source_refs:
-  - "paper:LinXu2020"
+- paper:LinXu2020
 related:
-  - "paper:Barendregt2013"
-  - "paper:Stijnen2010"
-  - "paper:Nyaga2014"
-  - "topic:cross-study-meta-analysis-cancer-genomics"
-created: "2026-04-13"
-updated: "2026-04-13"
+- paper:Barendregt2013
+- paper:Stijnen2010
+- paper:Nyaga2014
+- topic:cross-study-meta-analysis-cancer-genomics
+created: '2026-04-13'
+updated: '2026-04-13'
 ---
 
 # Arcsine-based transformations for meta-analysis of proportions: Pros, cons, and alternatives

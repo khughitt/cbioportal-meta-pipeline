@@ -1,15 +1,15 @@
 ---
-id: "paper:Bavisetty2025"
-type: "paper"
-title: "Attractors are less stable than their basins: Canalization creates a coherence gap in gene regulatory networks"
-status: "active"
+id: paper:Bavisetty2025
+type: paper
+title: 'Attractors are less stable than their basins: Canalization creates a coherence
+  gap in gene regulatory networks'
+status: active
 ontology_terms: []
-datasets: []
 source_refs:
-  - "cite:Bavisetty2025"
+- cite:Bavisetty2025
 related: []
-created: "2026-04-25"
-updated: "2026-04-25"
+created: '2026-04-25'
+updated: '2026-04-25'
 ---
 
 # Attractors are less stable than their basins: Canalization creates a coherence gap in gene regulatory networks

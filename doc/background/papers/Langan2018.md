@@ -1,19 +1,19 @@
 ---
-id: "paper:Langan2018"
-type: "paper"
-title: "A comparison of heterogeneity variance estimators in simulated random-effects meta-analyses"
-status: "active"
+id: paper:Langan2018
+type: paper
+title: A comparison of heterogeneity variance estimators in simulated random-effects
+  meta-analyses
+status: active
 ontology_terms: []
-datasets: []
 source_refs:
-  - "paper:Langan2018"
+- paper:Langan2018
 related:
-  - "paper:Viechtbauer2010"
-  - "paper:DerSimonian1986"
-  - "paper:IntHout2016"
-  - "topic:cross-study-meta-analysis-cancer-genomics"
-created: "2026-04-13"
-updated: "2026-04-13"
+- paper:Viechtbauer2010
+- paper:DerSimonian1986
+- paper:IntHout2016
+- topic:cross-study-meta-analysis-cancer-genomics
+created: '2026-04-13'
+updated: '2026-04-13'
 ---
 
 # A comparison of heterogeneity variance estimators in simulated random-effects meta-analyses

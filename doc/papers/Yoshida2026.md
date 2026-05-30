@@ -1,20 +1,19 @@
 ---
-id: "paper:Yoshida2026"
-type: "paper"
-title: "Somatic mutations and clonal evolution in normal tissues and cancer development"
-status: "active"
+id: paper:Yoshida2026
+type: paper
+title: Somatic mutations and clonal evolution in normal tissues and cancer development
+status: active
 ontology_terms: []
-datasets: []
 source_refs:
-  - "paper:Yoshida2026"
+- paper:Yoshida2026
 related:
-  - "topic:clonal-hematopoiesis-contamination"
-  - "paper:Bolton2020"
-  - "paper:Martincorena2017"
-  - "topic:pan-cancer-mutation-landscape"
-  - "topic:mutation-rate-normalization"
-created: "2026-04-18"
-updated: "2026-04-18"
+- topic:clonal-hematopoiesis-contamination
+- paper:Bolton2020
+- paper:Martincorena2017
+- topic:pan-cancer-mutation-landscape
+- topic:mutation-rate-normalization
+created: '2026-04-18'
+updated: '2026-04-18'
 ---
 
 <!-- 2026-04-18: revised against full-text PDF; prior unresolved verification markers cleared, per-tissue mutation rates now sourced from Table 1, several secondary-source numbers corrected or removed. -->

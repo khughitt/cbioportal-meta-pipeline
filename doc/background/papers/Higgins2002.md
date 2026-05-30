@@ -1,18 +1,17 @@
 ---
-id: "paper:Higgins2002"
-type: "paper"
-title: "Quantifying heterogeneity in a meta-analysis"
-status: "active"
+id: paper:Higgins2002
+type: paper
+title: Quantifying heterogeneity in a meta-analysis
+status: active
 ontology_terms: []
-datasets: []
 source_refs:
-  - "paper:Higgins2002"
+- paper:Higgins2002
 related:
-  - "paper:IntHout2016"
-  - "paper:Langan2018"
-  - "topic:cross-study-meta-analysis-cancer-genomics"
-created: "2026-04-21"
-updated: "2026-04-21"
+- paper:IntHout2016
+- paper:Langan2018
+- topic:cross-study-meta-analysis-cancer-genomics
+created: '2026-04-21'
+updated: '2026-04-21'
 ---
 
 # Quantifying heterogeneity in a meta-analysis

@@ -1,17 +1,16 @@
 ---
-id: "paper:Smith2022"
-type: "paper"
-title: "Mitochondrial DNA mutations in ageing and cancer"
-status: "active"
+id: paper:Smith2022
+type: paper
+title: Mitochondrial DNA mutations in ageing and cancer
+status: active
 ontology_terms: []
-datasets: []
 source_refs:
-  - "cite:Smith2022"
+- cite:Smith2022
 related:
-  - "topic:tumor-mutational-burden"
-  - "topic:pan-cancer-mutation-landscape"
-created: "2026-04-25"
-updated: "2026-04-25"
+- topic:tumor-mutational-burden
+- topic:pan-cancer-mutation-landscape
+created: '2026-04-25'
+updated: '2026-04-25'
 ---
 
 # Mitochondrial DNA mutations in ageing and cancer

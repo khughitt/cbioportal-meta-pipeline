@@ -1,18 +1,17 @@
 ---
-id: "paper:Barendregt2013"
-type: "paper"
-title: "Meta-analysis of prevalence"
-status: "active"
+id: paper:Barendregt2013
+type: paper
+title: Meta-analysis of prevalence
+status: active
 ontology_terms: []
-datasets: []
 source_refs:
-  - "paper:Barendregt2013"
+- paper:Barendregt2013
 related:
-  - "paper:Nyaga2014"
-  - "paper:LinXu2020"
-  - "topic:cross-study-meta-analysis-cancer-genomics"
-created: "2026-04-21"
-updated: "2026-04-21"
+- paper:Nyaga2014
+- paper:LinXu2020
+- topic:cross-study-meta-analysis-cancer-genomics
+created: '2026-04-21'
+updated: '2026-04-21'
 ---
 
 # Meta-analysis of prevalence

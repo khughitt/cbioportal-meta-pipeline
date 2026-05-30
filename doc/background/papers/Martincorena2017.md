@@ -1,14 +1,17 @@
 ---
-id: "paper:Martincorena2017"
-type: "paper"
-title: "Universal Patterns of Selection in Cancer and Somatic Tissues"
-status: "read"
+id: paper:Martincorena2017
+type: paper
+title: Universal Patterns of Selection in Cancer and Somatic Tissues
+status: read
 ontology_terms: []
-datasets: []
-source_refs: ["article:Martincorena2017"]
-related: ["paper:Lawrence2014", "paper:Bailey2018", "topic:cancer-driver-genes"]
-created: "2026-04-13"
-updated: "2026-04-13"
+source_refs:
+- article:Martincorena2017
+related:
+- paper:Lawrence2014
+- paper:Bailey2018
+- topic:cancer-driver-genes
+created: '2026-04-13'
+updated: '2026-04-13'
 ---
 
 # Universal Patterns of Selection in Cancer and Somatic Tissues

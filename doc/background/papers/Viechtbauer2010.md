@@ -1,19 +1,18 @@
 ---
-id: "paper:Viechtbauer2010"
-type: "paper"
-title: "Conducting Meta-Analyses in R with the metafor Package"
-status: "active"
+id: paper:Viechtbauer2010
+type: paper
+title: Conducting Meta-Analyses in R with the metafor Package
+status: active
 ontology_terms: []
-datasets: []
 source_refs:
-  - "paper:Viechtbauer2010"
+- paper:Viechtbauer2010
 related:
-  - "paper:Langan2018"
-  - "paper:DerSimonian1986"
-  - "paper:Stijnen2010"
-  - "topic:cross-study-meta-analysis-cancer-genomics"
-created: "2026-04-13"
-updated: "2026-04-13"
+- paper:Langan2018
+- paper:DerSimonian1986
+- paper:Stijnen2010
+- topic:cross-study-meta-analysis-cancer-genomics
+created: '2026-04-13'
+updated: '2026-04-13'
 ---
 
 # Conducting Meta-Analyses in R with the metafor Package

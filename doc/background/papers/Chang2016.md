@@ -1,14 +1,20 @@
 ---
-id: "paper:Chang2016"
-type: "paper"
-title: "Identifying recurrent mutations in cancer reveals widespread lineage diversity and mutational specificity"
-status: "read"
+id: paper:Chang2016
+type: paper
+title: Identifying recurrent mutations in cancer reveals widespread lineage diversity
+  and mutational specificity
+status: read
 ontology_terms: []
-datasets: []
-source_refs: ["article:Chang2016"]
-related: ["paper:Cerami2012", "paper:Chakravarty2017", "topic:hotspot-based-driver-detection", "topic:cancer-driver-genes", "topic:mutation-rate-normalization"]
-created: "2026-04-13"
-updated: "2026-04-13"
+source_refs:
+- article:Chang2016
+related:
+- paper:Cerami2012
+- paper:Chakravarty2017
+- topic:hotspot-based-driver-detection
+- topic:cancer-driver-genes
+- topic:mutation-rate-normalization
+created: '2026-04-13'
+updated: '2026-04-13'
 ---
 
 # Identifying recurrent mutations in cancer reveals widespread lineage diversity and mutational specificity

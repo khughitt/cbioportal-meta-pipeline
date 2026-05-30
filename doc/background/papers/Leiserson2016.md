@@ -1,18 +1,17 @@
 ---
-id: "paper:Leiserson2016"
-type: "paper"
-title: "A weighted exact test for mutually exclusive mutations in cancer"
-status: "active"
+id: paper:Leiserson2016
+type: paper
+title: A weighted exact test for mutually exclusive mutations in cancer
+status: active
 ontology_terms: []
-datasets: []
 source_refs:
-  - "paper:Leiserson2016"
+- paper:Leiserson2016
 related:
-  - "paper:Leiserson2015"
-  - "paper:Kim2017"
-  - "topic:co-occurrence-and-mutual-exclusivity"
-created: "2026-04-21"
-updated: "2026-04-21"
+- paper:Leiserson2015
+- paper:Kim2017
+- topic:co-occurrence-and-mutual-exclusivity
+created: '2026-04-21'
+updated: '2026-04-21'
 ---
 
 # A weighted exact test for mutually exclusive mutations in cancer

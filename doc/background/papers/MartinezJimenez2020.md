@@ -1,18 +1,17 @@
 ---
-id: "paper:MartinezJimenez2020"
-type: "paper"
-title: "A compendium of mutational cancer driver genes"
-status: "active"
+id: paper:MartinezJimenez2020
+type: paper
+title: A compendium of mutational cancer driver genes
+status: active
 ontology_terms: []
-datasets: []
 source_refs:
-  - "paper:MartinezJimenez2020"
+- paper:MartinezJimenez2020
 related:
-  - "paper:Bailey2018"
-  - "topic:cross-study-meta-analysis-cancer-genomics"
-  - "topic:cancer-driver-genes"
-created: "2026-04-21"
-updated: "2026-04-21"
+- paper:Bailey2018
+- topic:cross-study-meta-analysis-cancer-genomics
+- topic:cancer-driver-genes
+created: '2026-04-21'
+updated: '2026-04-21'
 ---
 
 # A compendium of mutational cancer driver genes

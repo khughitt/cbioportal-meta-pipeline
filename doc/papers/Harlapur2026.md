@@ -1,15 +1,15 @@
 ---
-id: "paper:Harlapur2026"
-type: "paper"
-title: "Hierarchical organization in sparse gene regulatory networks shapes structural coherence and emergent regulatory coordination"
-status: "active"
+id: paper:Harlapur2026
+type: paper
+title: Hierarchical organization in sparse gene regulatory networks shapes structural
+  coherence and emergent regulatory coordination
+status: active
 ontology_terms: []
-datasets: []
 source_refs:
-  - "cite:Harlapur2026"
+- cite:Harlapur2026
 related: []
-created: "2026-04-25"
-updated: "2026-04-25"
+created: '2026-04-25'
+updated: '2026-04-25'
 ---
 
 # Hierarchical organization in sparse gene regulatory networks shapes structural coherence and emergent regulatory coordination

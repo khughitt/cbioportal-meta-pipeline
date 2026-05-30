@@ -1,21 +1,20 @@
 ---
-id: "paper:Rashid2025"
-type: "paper"
-title: "Operating principles of interconnected feedback loops driving cell fate transitions"
-status: "active"
+id: paper:Rashid2025
+type: paper
+title: Operating principles of interconnected feedback loops driving cell fate transitions
+status: active
 ontology_terms:
-  - gene-regulatory-network
-  - feedback-loop
-  - multistability
-  - cell-fate
-  - canalization
-  - epithelial-mesenchymal-transition
-datasets: []
+- gene-regulatory-network
+- feedback-loop
+- multistability
+- cell-fate
+- canalization
+- epithelial-mesenchymal-transition
 source_refs:
-  - "cite:Rashid2025"
+- cite:Rashid2025
 related: []
-created: "2026-04-25"
-updated: "2026-04-25"
+created: '2026-04-25'
+updated: '2026-04-25'
 ---
 
 # Operating principles of interconnected feedback loops driving cell fate transitions

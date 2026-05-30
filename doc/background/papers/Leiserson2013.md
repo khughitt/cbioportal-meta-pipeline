@@ -1,18 +1,17 @@
 ---
-id: "paper:Leiserson2013"
-type: "paper"
-title: "Simultaneous Identification of Multiple Driver Pathways in Cancer"
-status: "active"
+id: paper:Leiserson2013
+type: paper
+title: Simultaneous Identification of Multiple Driver Pathways in Cancer
+status: active
 ontology_terms: []
-datasets: []
 source_refs:
-  - "paper:Leiserson2013"
+- paper:Leiserson2013
 related:
-  - "paper:Vandin2012"
-  - "paper:Leiserson2015"
-  - "topic:co-occurrence-and-mutual-exclusivity"
-created: "2026-04-21"
-updated: "2026-04-21"
+- paper:Vandin2012
+- paper:Leiserson2015
+- topic:co-occurrence-and-mutual-exclusivity
+created: '2026-04-21'
+updated: '2026-04-21'
 ---
 
 # Simultaneous Identification of Multiple Driver Pathways in Cancer

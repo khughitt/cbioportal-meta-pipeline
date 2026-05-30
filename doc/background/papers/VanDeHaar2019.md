@@ -1,26 +1,25 @@
 ---
-id: "paper:VanDeHaar2019"
-type: "paper"
-title: "Identifying Epistasis in Cancer Genomes: A Delicate Affair"
-status: "active"
+id: paper:VanDeHaar2019
+type: paper
+title: 'Identifying Epistasis in Cancer Genomes: A Delicate Affair'
+status: active
 tags:
-  - perspective
-  - methodology-critique
-  - epistasis
-  - confounding
-  - mutual-exclusivity
+- perspective
+- methodology-critique
+- epistasis
+- confounding
+- mutual-exclusivity
 ontology_terms:
-  - "MeSH:D015972"
-datasets: []
+- MeSH:D015972
 source_refs:
-  - "paper:VanDeHaar2019"
+- paper:VanDeHaar2019
 related:
-  - "paper:Canisius2016"
-  - "paper:Mina2020"
-  - "paper:Ciriello2012"
-  - "paper:Leiserson2015"
-created: "2026-04-13"
-updated: "2026-04-13"
+- paper:Canisius2016
+- paper:Mina2020
+- paper:Ciriello2012
+- paper:Leiserson2015
+created: '2026-04-13'
+updated: '2026-04-13'
 ---
 
 # Identifying Epistasis in Cancer Genomes: A Delicate Affair

@@ -1,15 +1,14 @@
 ---
-id: "paper:Kadelka2024"
-type: "paper"
-title: "Canalization reduces the nonlinearity of regulation in biological networks"
-status: "active"
+id: paper:Kadelka2024
+type: paper
+title: Canalization reduces the nonlinearity of regulation in biological networks
+status: active
 ontology_terms: []
-datasets: []
 source_refs:
-  - "cite:Kadelka2024"
+- cite:Kadelka2024
 related: []
-created: "2026-04-25"
-updated: "2026-04-25"
+created: '2026-04-25'
+updated: '2026-04-25'
 ---
 
 # Canalization reduces the nonlinearity of regulation in biological networks

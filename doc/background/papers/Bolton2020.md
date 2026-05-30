@@ -1,14 +1,16 @@
 ---
-id: "paper:Bolton2020"
-type: "paper"
-title: "Cancer therapy shapes the fitness landscape of clonal hematopoiesis"
-status: "read"
+id: paper:Bolton2020
+type: paper
+title: Cancer therapy shapes the fitness landscape of clonal hematopoiesis
+status: read
 ontology_terms: []
-datasets: []
-source_refs: ["article:Bolton2020"]
-related: ["topic:clonal-hematopoiesis-contamination", "topic:targeted-panel-sequencing-bias"]
-created: "2026-04-13"
-updated: "2026-04-13"
+source_refs:
+- article:Bolton2020
+related:
+- topic:clonal-hematopoiesis-contamination
+- topic:targeted-panel-sequencing-bias
+created: '2026-04-13'
+updated: '2026-04-13'
 ---
 
 # Cancer therapy shapes the fitness landscape of clonal hematopoiesis

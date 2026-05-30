@@ -1,18 +1,17 @@
 ---
-id: "paper:DerSimonian1986"
-type: "paper"
-title: "Meta-analysis in clinical trials"
-status: "active"
+id: paper:DerSimonian1986
+type: paper
+title: Meta-analysis in clinical trials
+status: active
 ontology_terms: []
-datasets: []
 source_refs:
-  - "paper:DerSimonian1986"
+- paper:DerSimonian1986
 related:
-  - "paper:Viechtbauer2010"
-  - "paper:Langan2018"
-  - "topic:cross-study-meta-analysis-cancer-genomics"
-created: "2026-04-21"
-updated: "2026-04-21"
+- paper:Viechtbauer2010
+- paper:Langan2018
+- topic:cross-study-meta-analysis-cancer-genomics
+created: '2026-04-21'
+updated: '2026-04-21'
 ---
 
 # Meta-analysis in clinical trials

@@ -1,20 +1,25 @@
 ---
-id: "paper:Yaacov2023"
-type: "paper"
-title: "Mutational signatures association with replication timing in normal cells reveals similarities and differences with matched cancer tissues"
-status: "active"
+id: paper:Yaacov2023
+type: paper
+title: Mutational signatures association with replication timing in normal cells reveals
+  similarities and differences with matched cancer tissues
+status: active
 ontology_terms: []
-datasets:
-  - SomaMutDB
-  - PCAWG
 source_refs:
-  - "paper:Yaacov2023"
+- paper:Yaacov2023
 related:
-  - "paper:Yoshida2026"
-  - "topic:mutation-rate-normalization"
-  - "topic:pan-cancer-mutation-landscape"
-created: "2026-04-18"
-updated: "2026-04-18"
+- paper:Yoshida2026
+- topic:mutation-rate-normalization
+- topic:pan-cancer-mutation-landscape
+created: '2026-04-18'
+updated: '2026-04-18'
+dataset_usage:
+- ref: dataset:somamutdb
+  role: analyzed
+  overlap: unknown
+- ref: dataset:pcawg
+  role: analyzed
+  overlap: unknown
 ---
 
 # Mutational signatures association with replication timing in normal cells reveals similarities and differences with matched cancer tissues

@@ -1,26 +1,29 @@
 ---
-id: "paper:Leiserson2015"
-type: "paper"
-title: "CoMEt: a statistical approach to identify combinations of mutually exclusive alterations in cancer"
-status: "active"
+id: paper:Leiserson2015
+type: paper
+title: 'CoMEt: a statistical approach to identify combinations of mutually exclusive
+  alterations in cancer'
+status: active
 tags:
-  - mutual-exclusivity
-  - set-level-testing
-  - combinatorial
-  - exact-test
+- mutual-exclusivity
+- set-level-testing
+- combinatorial
+- exact-test
 ontology_terms:
-  - "MeSH:D015972"
-datasets:
-  - "TCGA"
+- MeSH:D015972
 source_refs:
-  - "paper:Leiserson2015"
+- paper:Leiserson2015
 related:
-  - "paper:Vandin2012"
-  - "paper:Leiserson2013"
-  - "paper:Leiserson2016"
-  - "paper:Ciriello2012"
-created: "2026-04-13"
-updated: "2026-04-13"
+- paper:Vandin2012
+- paper:Leiserson2013
+- paper:Leiserson2016
+- paper:Ciriello2012
+created: '2026-04-13'
+updated: '2026-04-13'
+dataset_usage:
+- ref: dataset:tcga
+  role: analyzed
+  overlap: unknown
 ---
 
 # CoMEt: a statistical approach to identify combinations of mutually exclusive alterations in cancer

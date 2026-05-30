@@ -1,14 +1,26 @@
 ---
-id: "paper:Suehnholz2024"
-type: "paper"
-title: "Quantifying the Expanding Landscape of Clinical Actionability for Patients with Cancer"
-status: "read"
+id: paper:Suehnholz2024
+type: paper
+title: Quantifying the Expanding Landscape of Clinical Actionability for Patients
+  with Cancer
+status: read
 ontology_terms: []
-datasets: ["msk-impact", "oncokb"]
-source_refs: ["article:Suehnholz2024"]
-related: ["paper:Chakravarty2017", "paper:Zehir2017", "topic:variant-interpretation-oncokb-vus", "topic:cross-study-harmonization"]
-created: "2026-04-13"
-updated: "2026-04-13"
+source_refs:
+- article:Suehnholz2024
+related:
+- paper:Chakravarty2017
+- paper:Zehir2017
+- topic:variant-interpretation-oncokb-vus
+- topic:cross-study-harmonization
+created: '2026-04-13'
+updated: '2026-04-13'
+dataset_usage:
+- ref: dataset:msk-impact
+  role: analyzed
+  overlap: unknown
+- ref: dataset:oncokb
+  role: analyzed
+  overlap: unknown
 ---
 
 # Quantifying the Expanding Landscape of Clinical Actionability for Patients with Cancer

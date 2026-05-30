@@ -1,14 +1,21 @@
 ---
-id: "paper:Kandoth2013"
-type: "paper"
-title: "Mutational landscape and significance across 12 major cancer types"
-status: "read"
+id: paper:Kandoth2013
+type: paper
+title: Mutational landscape and significance across 12 major cancer types
+status: read
 ontology_terms: []
-datasets: ["tcga-pancanatlas"]
-source_refs: ["article:Kandoth2013"]
-related: ["paper:Bailey2018", "paper:Lawrence2014", "topic:pan-cancer-mutation-landscape"]
-created: "2026-04-13"
-updated: "2026-04-13"
+source_refs:
+- article:Kandoth2013
+related:
+- paper:Bailey2018
+- paper:Lawrence2014
+- topic:pan-cancer-mutation-landscape
+created: '2026-04-13'
+updated: '2026-04-13'
+dataset_usage:
+- ref: dataset:tcga-pancanatlas
+  role: analyzed
+  overlap: unknown
 ---
 
 # Mutational landscape and significance across 12 major cancer types

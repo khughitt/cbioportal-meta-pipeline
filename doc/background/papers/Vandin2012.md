@@ -1,25 +1,27 @@
 ---
-id: "paper:Vandin2012"
-type: "paper"
-title: "De novo discovery of mutated driver pathways in cancer"
-status: "active"
+id: paper:Vandin2012
+type: paper
+title: De novo discovery of mutated driver pathways in cancer
+status: active
 tags:
-  - driver-pathway
-  - mutual-exclusivity
-  - coverage
-  - combinatorial-optimization
+- driver-pathway
+- mutual-exclusivity
+- coverage
+- combinatorial-optimization
 ontology_terms:
-  - "MeSH:D015972"
-datasets:
-  - "TCGA"
+- MeSH:D015972
 source_refs:
-  - "paper:Vandin2012"
+- paper:Vandin2012
 related:
-  - "paper:Ciriello2012"
-  - "paper:Leiserson2013"
-  - "paper:Leiserson2015"
-created: "2026-04-13"
-updated: "2026-04-13"
+- paper:Ciriello2012
+- paper:Leiserson2013
+- paper:Leiserson2015
+created: '2026-04-13'
+updated: '2026-04-13'
+dataset_usage:
+- ref: dataset:tcga
+  role: analyzed
+  overlap: unknown
 ---
 
 # De novo discovery of mutated driver pathways in cancer

@@ -1,0 +1,32 @@
+---
+id: "dataset:gtex"
+type: "dataset"
+title: "GTEx"
+status: "active"
+source_class: "observational"
+source_refs:
+  - "paper:Gao2023"
+  - "paper:Xu2025"
+related: []
+created: "2026-05-30"
+updated: "2026-05-30"
+---
+
+# GTEx
+
+## Summary
+
+Genotype-Tissue Expression project — multi-tissue normal reference. Covers the v8 RNA-seq resource (~948 donors, ~17k samples, 54 tissues; Gao 2023) and the multi-tissue normal exome / somatic-mosaicism cohort (Xu 2025, dbGaP phs000424). Used here as a normal-tissue mutation-rate background.
+
+## Access and Scope
+
+- Accessions: phs000424 (dbGaP); GTEx v8
+- Source URL: https://gtexportal.org/
+- Organism/population: Homo sapiens (normal tissue)
+- Modality: RNA-seq + WES/WGS across tissues
+- Sample size: ~948 donors, ~17,000 samples, 54 tissues
+
+## Connections to Project
+
+- Referenced by: `paper:Gao2023`, `paper:Xu2025`
+- Role: external dataset cited in the project literature; see referencing papers for usage.

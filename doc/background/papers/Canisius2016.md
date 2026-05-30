@@ -1,29 +1,32 @@
 ---
-id: "paper:Canisius2016"
-type: "paper"
-title: "A novel independence test for somatic alterations in cancer shows that biology drives mutual exclusivity but chance explains most co-occurrence"
-status: "active"
+id: paper:Canisius2016
+type: paper
+title: A novel independence test for somatic alterations in cancer shows that biology
+  drives mutual exclusivity but chance explains most co-occurrence
+status: active
 tags:
-  - mutual-exclusivity
-  - co-occurrence
-  - statistical-method
-  - null-model
-  - pan-cancer
+- mutual-exclusivity
+- co-occurrence
+- statistical-method
+- null-model
+- pan-cancer
 ontology_terms:
-  - "MeSH:D009154"
-  - "MeSH:D015972"
-datasets:
-  - "TCGA"
+- MeSH:D009154
+- MeSH:D015972
 source_refs:
-  - "paper:Canisius2016"
+- paper:Canisius2016
 related:
-  - "paper:Ciriello2012"
-  - "paper:Leiserson2015"
-  - "paper:Kim2017"
-  - "paper:Mina2020"
-  - "paper:VanDeHaar2019"
-created: "2026-04-13"
-updated: "2026-04-13"
+- paper:Ciriello2012
+- paper:Leiserson2015
+- paper:Kim2017
+- paper:Mina2020
+- paper:VanDeHaar2019
+created: '2026-04-13'
+updated: '2026-04-13'
+dataset_usage:
+- ref: dataset:tcga
+  role: analyzed
+  overlap: unknown
 ---
 
 # A novel independence test for somatic alterations in cancer shows that biology drives mutual exclusivity but chance explains most co-occurrence

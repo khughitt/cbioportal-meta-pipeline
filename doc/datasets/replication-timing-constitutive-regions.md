@@ -3,6 +3,7 @@ id: "dataset:replication-timing-constitutive-regions"
 type: "dataset"
 title: "Constitutive replication-timing regions (human hg19 / GRCh37)"
 status: "active"
+source_class: "reference"
 source_refs:
   - "paper:Yaacov2023"
 related:

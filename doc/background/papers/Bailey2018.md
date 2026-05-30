@@ -1,14 +1,21 @@
 ---
-id: "paper:Bailey2018"
-type: "paper"
-title: "Comprehensive Characterization of Cancer Driver Genes and Mutations"
-status: "read"
+id: paper:Bailey2018
+type: paper
+title: Comprehensive Characterization of Cancer Driver Genes and Mutations
+status: read
 ontology_terms: []
-datasets: ["tcga-pancanatlas"]
-source_refs: ["article:Bailey2018"]
-related: ["paper:Ellrott2018", "topic:cancer-driver-genes", "topic:pan-cancer-mutation-landscape"]
-created: "2026-04-13"
-updated: "2026-04-13"
+source_refs:
+- article:Bailey2018
+related:
+- paper:Ellrott2018
+- topic:cancer-driver-genes
+- topic:pan-cancer-mutation-landscape
+created: '2026-04-13'
+updated: '2026-04-13'
+dataset_usage:
+- ref: dataset:tcga-pancanatlas
+  role: analyzed
+  overlap: unknown
 ---
 
 # Comprehensive Characterization of Cancer Driver Genes and Mutations

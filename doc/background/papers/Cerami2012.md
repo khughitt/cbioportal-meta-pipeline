@@ -1,14 +1,20 @@
 ---
-id: "paper:Cerami2012"
-type: "paper"
-title: "The cBio cancer genomics portal: an open platform for exploring multidimensional cancer genomics data"
-status: "read"
+id: paper:Cerami2012
+type: paper
+title: 'The cBio cancer genomics portal: an open platform for exploring multidimensional
+  cancer genomics data'
+status: read
 ontology_terms: []
-datasets: ["cbioportal"]
-source_refs: ["article:Cerami2012"]
-related: ["paper:Gao2013"]
-created: "2026-04-13"
-updated: "2026-04-13"
+source_refs:
+- article:Cerami2012
+related:
+- paper:Gao2013
+created: '2026-04-13'
+updated: '2026-04-13'
+dataset_usage:
+- ref: dataset:cbioportal
+  role: analyzed
+  overlap: unknown
 ---
 
 # The cBio cancer genomics portal: an open platform for exploring multidimensional cancer genomics data

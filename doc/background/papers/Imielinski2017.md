@@ -1,27 +1,29 @@
 ---
-id: "paper:Imielinski2017"
-type: "paper"
-title: "Insertions and Deletions Target Lineage-Defining Genes in Human Cancers"
-status: "active"
+id: paper:Imielinski2017
+type: paper
+title: Insertions and Deletions Target Lineage-Defining Genes in Human Cancers
+status: active
 tags:
-  - background-mutation-rate
-  - driver-detection
-  - covariate-regression
-  - indel
-  - lineage
+- background-mutation-rate
+- driver-detection
+- covariate-regression
+- indel
+- lineage
 ontology_terms:
-  - "MeSH:D009154"
-datasets:
-  - "TCGA"
+- MeSH:D009154
 source_refs:
-  - "paper:Imielinski2017"
+- paper:Imielinski2017
 related:
-  - "paper:Lawrence2014"
-  - "paper:Martincorena2017"
-  - "paper:Bailey2018"
-  - "paper:Canisius2016"
-created: "2026-04-13"
-updated: "2026-04-13"
+- paper:Lawrence2014
+- paper:Martincorena2017
+- paper:Bailey2018
+- paper:Canisius2016
+created: '2026-04-13'
+updated: '2026-04-13'
+dataset_usage:
+- ref: dataset:tcga
+  role: analyzed
+  overlap: unknown
 ---
 
 # Insertions and Deletions Target Lineage-Defining Genes in Human Cancers

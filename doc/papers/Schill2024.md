@@ -1,20 +1,22 @@
 ---
-id: "paper:Schill2024"
-type: "paper"
-title: "Correcting for Observation Bias in Cancer Progression Modeling"
-status: "active"
+id: paper:Schill2024
+type: paper
+title: Correcting for Observation Bias in Cancer Progression Modeling
+status: active
 ontology_terms: []
-datasets:
-  - MSK-IMPACT (AACR GENIE)
 source_refs:
-  - "cite:Schill2024"
+- cite:Schill2024
 related:
-  - "paper:Vocht2026"
-  - "question:q012-mutation-ordering-cross-sectional-inference"
-  - "topic:co-occurrence-and-mutual-exclusivity"
-  - "discussion:2026-04-24-mutation-ordering-and-path-dependency"
-created: "2026-04-27"
-updated: "2026-04-27"
+- paper:Vocht2026
+- question:q012-mutation-ordering-cross-sectional-inference
+- topic:co-occurrence-and-mutual-exclusivity
+- discussion:2026-04-24-mutation-ordering-and-path-dependency
+created: '2026-04-27'
+updated: '2026-04-27'
+dataset_usage:
+- ref: dataset:msk-impact
+  role: analyzed
+  overlap: unknown
 ---
 
 # Correcting for Observation Bias in Cancer Progression Modeling

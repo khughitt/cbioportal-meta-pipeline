@@ -1,14 +1,21 @@
 ---
-id: "paper:Alexandrov2020"
-type: "paper"
-title: "The repertoire of mutational signatures in human cancer"
-status: "read"
+id: paper:Alexandrov2020
+type: paper
+title: The repertoire of mutational signatures in human cancer
+status: read
 ontology_terms: []
-datasets: ["cosmic-signatures"]
-source_refs: ["article:Alexandrov2020"]
-related: ["paper:Tate2019", "paper:PCAWG2020", "topic:mutational-signatures"]
-created: "2026-04-13"
-updated: "2026-04-12"
+source_refs:
+- article:Alexandrov2020
+related:
+- paper:Tate2019
+- paper:PCAWG2020
+- topic:mutational-signatures
+created: '2026-04-13'
+updated: '2026-04-12'
+dataset_usage:
+- ref: dataset:cosmic-signatures
+  role: analyzed
+  overlap: unknown
 ---
 
 # The repertoire of mutational signatures in human cancer

@@ -1,26 +1,28 @@
 ---
-id: "paper:Ciriello2012"
-type: "paper"
-title: "Mutual exclusivity analysis identifies oncogenic network modules"
-status: "active"
+id: paper:Ciriello2012
+type: paper
+title: Mutual exclusivity analysis identifies oncogenic network modules
+status: active
 tags:
-  - mutual-exclusivity
-  - network-module
-  - oncogenic-module
-  - seminal
+- mutual-exclusivity
+- network-module
+- oncogenic-module
+- seminal
 ontology_terms:
-  - "MeSH:D015972"
-datasets:
-  - "TCGA"
+- MeSH:D015972
 source_refs:
-  - "paper:Ciriello2012"
+- paper:Ciriello2012
 related:
-  - "paper:Ciriello2013"
-  - "paper:Canisius2016"
-  - "paper:Leiserson2015"
-  - "paper:Babur2015"
-created: "2026-04-13"
-updated: "2026-04-13"
+- paper:Ciriello2013
+- paper:Canisius2016
+- paper:Leiserson2015
+- paper:Babur2015
+created: '2026-04-13'
+updated: '2026-04-13'
+dataset_usage:
+- ref: dataset:tcga
+  role: analyzed
+  overlap: unknown
 ---
 
 # Mutual exclusivity analysis identifies oncogenic network modules

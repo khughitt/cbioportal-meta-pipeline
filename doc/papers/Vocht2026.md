@@ -1,20 +1,23 @@
 ---
-id: "paper:Vocht2026"
-type: "paper"
-title: "mhn: a Python package for analyzing cancer progression with Mutual Hazard Networks"
-status: "active"
+id: paper:Vocht2026
+type: paper
+title: 'mhn: a Python package for analyzing cancer progression with Mutual Hazard
+  Networks'
+status: active
 ontology_terms: []
-datasets:
-  - AACR-GENIE
 source_refs:
-  - "cite:Vocht2026"
+- cite:Vocht2026
 related:
-  - "paper:Schill2024"
-  - "question:q012-mutation-ordering-cross-sectional-inference"
-  - "topic:co-occurrence-and-mutual-exclusivity"
-  - "discussion:2026-04-24-mutation-ordering-and-path-dependency"
-created: "2026-04-27"
-updated: "2026-04-27"
+- paper:Schill2024
+- question:q012-mutation-ordering-cross-sectional-inference
+- topic:co-occurrence-and-mutual-exclusivity
+- discussion:2026-04-24-mutation-ordering-and-path-dependency
+created: '2026-04-27'
+updated: '2026-04-27'
+dataset_usage:
+- ref: dataset:aacr-genie
+  role: analyzed
+  overlap: unknown
 ---
 
 # mhn: a Python package for analyzing cancer progression with Mutual Hazard Networks

@@ -3,6 +3,8 @@ id: "dataset:gene-cancer-study-ratio-annotated-product"
 type: "dataset"
 title: "Canonical annotated gene-cancer study ratio product"
 status: "active"
+source_class: "derived"
+derived_kind: "aggregate"
 ontology_terms:
   - "somatic mutation"
   - "mutation frequency"

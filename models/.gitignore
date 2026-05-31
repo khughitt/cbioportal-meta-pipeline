@@ -1,0 +1,4 @@
+
+# Track hand-authored causal-DAG sources (Science convention: DAGs live in models/)
+!*.dot
+!*.json

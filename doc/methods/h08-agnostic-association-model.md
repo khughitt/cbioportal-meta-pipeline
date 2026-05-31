@@ -67,9 +67,29 @@ Before trusting any novel edge, the scan must **recover the textbook edges unpro
 (H08a falsified) means the method is underpowered or confounded beyond rescue and the discovery
 prong is void.
 
+## Prior art (t177 literature scan, 2026-05-31)
+
+The agnostic covariate↔signature-activity association is **not novel** — see
+`search:2026-05-31-prior-agnostic-signature-aetiology-association`. The direct method predecessor is
+**TCSM** (`paper:Robinson2019`), which already models tumor covariates of signature exposure to infer
+etiology and validates by recovering UV/smoking/APOBEC/MMR. Related tools: signeR 2.0
+(`paper:Drummond2023`), Diffsig (`paper:Park2023`), PPF (`paper:Zito2025`); the supervised inverse is
+SuperSigs (`paper:Afsari2021`). The closest large systematic scans are `paper:Sorensen2023`
+(DNA-repair-gene deficiencies, the best design template for our scan shape) and `paper:ValiPour2022`
+(germline variants); `paper:Luo2023` covers the immune/TME axis but with deconvolution features, not
+de-novo expression modules.
+
+**Consequence for the design:** H08a (positive control) is a *pre-registered re-validation* of the
+TCSM logic on MC3 — reproducible and feasible (multiple papers recover the textbook map unprompted),
+but it should be stated as confirmatory-of-method, not as novelty. H08b's defensible delta is
+narrowed to **unsupervised co-expression *modules* as the agnostic covariate set + cross-decomposition
+concordance (latent `H` ↔ latent expression module) + pre-registered positive-control gating** — none
+of which is the stated primary design of the prior work. A generic "associate signatures with
+covariates" discovery claim would be scooped.
+
 ## Next steps
 
-- Literature gate: `task:t177` (what agnostic/PheWAS signature-aetiology work already exists).
+- Literature gate: `task:t177` — **DONE** (see prior-art section above); H08b scope narrowed accordingly.
 - `science:pre-register` the positive-control + discovery design once `q018` confirms downstream
   signature feasibility + panel adequacy.
 - Two-track substrate plan per `search:2026-05-30-ehr-rich-substrates-for-agnostic-signature-association`:

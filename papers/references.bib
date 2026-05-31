@@ -1286,3 +1286,103 @@
   year = {2018},
   doi = {10.1016/j.cell.2018.02.052}
 }
+
+@article{Robinson2019,
+  author = {Robinson, Welles and Sharan, Roded and Leiserson, Mark D. M.},
+  title = {Modeling clinical and molecular covariates of mutational process activity in cancer},
+  journal = {Bioinformatics},
+  volume = {35},
+  number = {14},
+  pages = {i492--i500},
+  year = {2019},
+  doi = {10.1093/bioinformatics/btz340},
+  note = {TCSM (Tumor Covariate Signature Model): first method to directly model the effect of tumor-level clinical/molecular covariates on mutation-signature exposures. Positive-control recovery of HR-deficiency, UV (melanoma), smoking (lung), APOBEC and MMR as validation. Direct method predecessor of the h08 agnostic-association idea.}
+}
+@article{Drummond2023,
+  author = {Drummond, Rodrigo D. and others},
+  title = {Relating mutational signature exposures to clinical data in cancers via signeR 2.0},
+  journal = {BMC Bioinformatics},
+  volume = {24},
+  pages = {439},
+  year = {2023},
+  doi = {10.1186/s12859-023-05550-3},
+  note = {signeR 2.0: relates each signature exposure to clinical covariates (survival, staging, subtype) via Wilcoxon-Mann-Whitney / Kruskal-Wallis differential-exposure testing. Established tool for the signature-exposure x covariate association layer h08 proposes.}
+}
+@article{Park2023,
+  author = {Park, Jennifer and others},
+  title = {Diffsig: Associating Risk Factors With Mutational Signatures},
+  journal = {bioRxiv},
+  year = {2023},
+  doi = {10.1101/2023.02.09.527740},
+  note = {Bayesian Dirichlet-multinomial hierarchical model associating clinical/exposure risk factors (continuous, binary, categorical) with predefined mutational signatures while accounting for sampling uncertainty. Preprint; no OA PDF available (bioRxiv only, blocks automated download).}
+}
+@article{Sorensen2023,
+  author = {S{\o}rensen, Simon G. and others},
+  title = {Pan-cancer association of DNA repair deficiencies with whole-genome mutational patterns},
+  journal = {eLife},
+  volume = {12},
+  pages = {e81224},
+  year = {2023},
+  doi = {10.7554/eLife.81224},
+  note = {Systematic predictive scan: 736 DDR-gene deficiencies vs genome-wide mutational summaries (SBS, indels, SVs) across 6065 genomes / 32 cancer types. Recovers BRCA1/2->microhomology deletions, MMR->microsatellite indels, TP53->SVs as positive controls; novel ATRX/IDH1/PTEN/SMARCA4 hits. Closest published analogue to the h08 agnostic scan shape.}
+}
+@article{ValiPour2022,
+  author = {Vali-Pour, Mischan and Park, Solip and Espinosa-Carrasco, Jordi and Ortiz-Mart{\'i}nez, Daniel and Lehner, Ben and Supek, Fran},
+  title = {The impact of rare germline variants on human somatic mutation processes},
+  journal = {Nature Communications},
+  volume = {13},
+  pages = {3724},
+  year = {2022},
+  doi = {10.1038/s41467-022-31483-1},
+  note = {Rare-variant association study of germline variants vs somatic mutational-signature activity. Reports MBD4->SBS1 (novel), BRCA1/2->SBS3, and APOBEC3 deletion polymorphism->SBS2/13. Agnostic association on the germline-covariate axis.}
+}
+@article{Afsari2021,
+  author = {Afsari, Bahman and others},
+  title = {Supervised mutational signatures for obesity and other tissue-specific etiological factors in cancer},
+  journal = {eLife},
+  volume = {10},
+  pages = {e61082},
+  year = {2021},
+  doi = {10.7554/eLife.61082},
+  note = {SuperSigs: SUPERVISED signatures built from etiology metadata (aging, obesity, smoking) via negative-binomial NMF + SVM, contrasted with unsupervised NMF. The supervised-attribution alternative to the h08 agnostic framing; obesity surfaced as a lifestyle factor.}
+}
+@article{Zito2025,
+  author = {Zito, Alessandro and others},
+  title = {Poisson process factorization for mutational signature analysis with genomic covariates},
+  journal = {arXiv},
+  volume = {2510.26090},
+  year = {2025},
+  doi = {10.48550/arXiv.2510.26090},
+  note = {PPF: inhomogeneous Poisson point-process generalization of NMF where per-patient signature exposure is a locus-specific log-linear function of genomic covariates (incl. CNV). Recent methodological prior art for covariate-conditioned exposure modeling.}
+}
+@article{Luo2023,
+  author = {Luo, Yi and others},
+  title = {Unveiling the interplay between mutational signatures and tumor microenvironment: a pan-cancer analysis},
+  journal = {Frontiers in Immunology},
+  volume = {14},
+  pages = {1186357},
+  year = {2023},
+  doi = {10.3389/fimmu.2023.1186357},
+  note = {Machine-learning scan of mutational signatures vs tumor-microenvironment/immune features over 8000+ TCGA tumors. Clock-like and AID/APOBEC signatures had the most widespread TME associations. The expression/immune-covariate axis h08 flags as a candidate blind spot (discussion Q2); uses deconvolution features, not de-novo expression modules.}
+}
+@article{Kim2016,
+  author = {Kim, Jaegil and others},
+  title = {Somatic ERCC2 mutations are associated with a distinct genomic signature in urothelial tumors},
+  journal = {Nature Genetics},
+  volume = {48},
+  number = {6},
+  pages = {600--606},
+  year = {2016},
+  doi = {10.1038/ng.3557},
+  note = {First NER-deficiency mutational signature: somatic ERCC2 mutations <-> broad-spectrum signature in urothelial/bladder cancer; signature activity also associated with smoking independent of ERCC2 status. Classic single-covariate signature-association exemplar.}
+}
+@article{Adler2023,
+  author = {Adler, Nina and others},
+  title = {Mutational processes of tobacco smoking and APOBEC activity generate protein-truncating mutations in cancer genomes},
+  journal = {Science Advances},
+  volume = {9},
+  pages = {eadh3083},
+  year = {2023},
+  doi = {10.1126/sciadv.adh3083},
+  note = {Links smoking (SBS4) and APOBEC (SBS2/13) mutational processes to functional protein-truncating-variant generation. Supports functional interpretation of recovered signature-etiology links; relevant to h08 positive-control arms B and C.}
+}

@@ -830,52 +830,6 @@ The current ingest uses MC3 v0.2.8 PUBLIC (PASS-only). The controlled-access MC3
 
 Follow-up from MM30 hyperdiploidy mechanism discussion. Test whether common pan-cancer gain arms such as 20q, 7p, 8q, 1q, 7q, and 20p and MM hyperdiploidy chromosomes 3, 5, 7, 9, 11, 15, 19, and 21 are enriched for known cancer drivers or oncogene-dosage targets. Use data/cosmic_cgc.tsv, data/bailey2018_table_s1.tsv, and GRCh37/GRCh38 gene annotations. Compare driver density and aggregate Bailey consensus/frequency scores per arm/chromosome while controlling for gene count and arm size. Deliverable: doc/interpretations/<date>-aneuploidy-driver-dosage-comparison.md with tables separating generic pan-cancer gain targets from plasma-cell/MM-HD-specific dosage-package candidates.
 
-## [t177] Literature scan: prior agnostic / unsupervised mutational-signature aetiology association (signature-PheWAS, signature x expression association, signature x clinical-covariate scans). Catalog what has been claimed/done, with which datasets and methods, and whether positive-control recovery of known aetiologies was demonstrated. Gates hypothesis h08.
-- priority: P2
-- status: done
-- aspects: [computational-analysis]
-- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, topic:signature-decomposition-unmatched-normal, search:2026-05-31-prior-agnostic-signature-aetiology-association]
-- group: searches
-- created: 2026-05-30
-- completed: 2026-05-31
-
-
-
-## [t178] Audit signature-reference + caller provenance for the h08 decomposition rule
-- priority: P2
-- status: proposed
-- aspects: [computational-analysis]
-- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, method:h08-agnostic-association-model, question:q020-minimum-sample-size-and-caller-provenance-for, question:q021-positive-control-signature-set-expansion-sbs9]
-- group: hypothesis-h08
-- created: 2026-05-31
-
-Confirm the COSMIC SBS version loaded by `run_restricted_sigprofiler_assignment.py`, check
-whether SBS9 and SBS54 (and Degasperi2022/Everall2026 additions) are present or absorbed by
-nearest neighbours, and add a per-study variant-caller-consensus flag (single-caller studies
-risk artefactual de novo signatures per paper:Jiang2025). Sources: paper:Jiang2025,
-paper:Ji2023, paper:Degasperi2022, paper:Everall2026, paper:Otlu2023.
-
-## [t179] Add per-sample mutation-count floor + extraction-vs-refit rule to h08 signature step
-- priority: P2
-- status: proposed
-- aspects: [computational-analysis]
-- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, question:q020-minimum-sample-size-and-caller-provenance-for, question:q018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross]
-- group: hypothesis-h08
-- created: 2026-05-31
-
-Implement a per-sample mutation-count filter (literature guide: ~>=383 SBS for WES; lower with
-matched normal) and a de-novo-vs-refit decision keyed on per-cancer-type sample size and caller
-provenance, before per-sample exposures feed the h08 scan. Sources: paper:Islam2022,
-paper:Medo2024, paper:DiazGay2023, paper:Pancotti2023.
-
-**Done 2026-05-31 (commit 02a0b4a):** per-sample SBS count floor (`signature_min_sbs_count_wes`
-383 / `signature_min_sbs_count_matched_normal` 100) adds `total_sbs_count` / `count_floor` /
-`passes_count_floor` columns + a low-count audit helper — sub-floor samples flagged, not
-silently dropped (loud missingness). Per-cancer-type {de_novo, refit} decision table
-(`*.denovo_decision.feather`) keyed on sample size (`signature_denovo_min_samples` 200) AND
-caller consensus (unknown provenance → refit). Decision is recorded only; no de-novo extractor
-is run. 8 new unit tests.
-
 ## [t180] Specify APOBEC (A3A+A3B joint) + MMR-omikli covariates for h08 Arm C
 - priority: P2
 - status: proposed
@@ -927,24 +881,6 @@ Two exploratory secondary checks: (1) ERCC2 somatic-mutation status as a bladder
 positive-control covariate targeting SBS5 (paper:Kim2016 ground truth); (2) after any confirmed
 SBS4/SBS13 hit, verify elevated nonsense burden in the Adler2023 protein-truncation gene set via
 the existing Bailey2018 driver overlay. Sources: paper:Kim2016, paper:Adler2023.
-
-## [t184] Re-acquire 36 mutational-signature PDFs lost to dedup bug
-- priority: P3
-- status: done
-- aspects: [computational-analysis]
-- related: [search:2026-05-31-prior-agnostic-signature-aetiology-association]
-- group: literature
-- created: 2026-05-31
-- completed: 2026-05-31
-
-A fuzzy-dedup bug during the 2026-05-31 paper batch deleted 36 user-downloaded PDFs without
-filing them (summaries + bib survived). List at ~/downloads/sigs-redrop/REDROP_LIST.txt. Blocked
-on user re-dropping originals into ~/downloads/sigs-redrop/, after which rename+file into
-papers/pdfs/. Automated OA re-fetch recovered 0/34.
-
-**Resolved 2026-05-31:** sift-and-file agent DOI-matched and copied all 36/36 PDFs into
-papers/pdfs/ (0 missing, 0 ambiguous); all 74 source PDFs left intact in the redrop dir.
-papers/pdfs/ now holds 151 PDFs, zero zero-byte files.
 
 ## [t185] commons-hygiene: fix pre-existing doc/datasets dataset-promotion validation errors
 - priority: P3
@@ -1021,3 +957,13 @@ redefined indel taxonomy (paper:Koh2025) and multimodal catalogue (paper:FerrerT
 Evaluate adding copy-number and doublet-base-substitution (DBS) signatures (paper:Everall2026,
 paper:Steele2022). Blocked on CNA ingestion (cross-ref t055 — no CNA modality in the pipeline yet);
 DBS is feasible on WGS/WES substrates sooner. Forward-looking.
+
+## [t195] Pre-register and run first h08 positive-control signature-aetiology scan on MC3 + existing exposures
+- priority: P1
+- status: proposed
+- aspects: [computational-analysis]
+- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, method:h08-agnostic-association-model, task:t178, task:t179, task:t180, task:t181, question:q021-positive-control-signature-set-expansion-sbs9, question:q022-apobec-a3a-a3b-joint-expression-and-mmr-omikli]
+- group: hypothesis-h08
+- created: 2026-05-31
+
+The h08 decomposition/exposure layer is now hardened (t178 version-pin+caller-flag+audit, t179 count-floor+refit-decision) but the agnostic covariate-association SCAN has never run — no interpretation reports positive-control recovery of any known aetiology. Cheapest highest-information move: it needs no new data (MC3 + existing per-sample exposures are on disk). Scope: (1) /science:plan-analysis + /science:pre-register the positive-control arm — pre-specify which known aetiology->signature pairs constitute PASS (e.g. APOBEC3A/3B expr -> SBS2/13; smoking/tissue -> SBS4; UV/melanoma -> SBS7; MSI/MMR -> SBS6/15/etc), the association model, multiple-testing control, and the recovery threshold that would promote h08 from proposed. (2) Run the scan on the hardened exposures. (3) Write doc/interpretations/<date>-h08-positive-control-scan.md with recovery results and a promotion recommendation. Surfaced as Gap 1 / the Strategic Decision Point in meta:next-steps-2026-05-31 (built-but-unexploited, mirroring the April t111 pattern). Covariate inputs t180 (joint APOBEC+MMR-omikli) and t181 (treatment-exposed flag) strengthen the scan beyond positive controls but are not prerequisites for the positive-control arm.

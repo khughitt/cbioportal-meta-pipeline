@@ -66,3 +66,23 @@ signature_denovo_min_samples: 200
 
 signature_ratio_min_samples_per_group: 25
 signature_ratio_pseudocount: 0.5
+
+# t198 — h08 expression-module substrate. Per-arm NMF module derivation (frozen rule,
+# pre-registration:h08-positive-control § Total Comparison Count + Amendment 001) runs on the
+# per-study cBioPortal PanCanAtlas RNA-seq RSEM matrices, restricted to MC3-overlapping samples
+# per arm. Maps each arm stratum to its cBioPortal study dir under data_dir.
+h08_arm_studies:
+  SKCM: skcm_tcga_pan_can_atlas_2018
+  LUAD: luad_tcga_pan_can_atlas_2018
+  LUSC: lusc_tcga_pan_can_atlas_2018
+  BLCA: blca_tcga_pan_can_atlas_2018
+  BRCA: brca_tcga_pan_can_atlas_2018
+  CESC: cesc_tcga_pan_can_atlas_2018
+  HNSC: hnsc_tcga_pan_can_atlas_2018
+
+# Reproducibility covenant (plan review finding #1): NMF random restarts + final fit are seeded
+# deterministically from this base.
+random_seed: 0
+# Parallelism for the 50 NMF restarts per K (each restart has a fixed seed, so n_jobs does not
+# change results — only wall-clock). Good-neighbour default given other pipelines may share the box.
+nmf_n_jobs: 8

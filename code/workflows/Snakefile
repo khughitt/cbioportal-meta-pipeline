@@ -1076,6 +1076,50 @@ rule compare_replication_timing_burden_sbs1_proxy:
     "../scripts/compare_replication_timing_sbs1_proxy.py"
 
 #
+# h08 expression-module substrate (t198).
+#
+# Per-arm NMF module derivation for the h08 positive-control scan. Implements the frozen rule
+# in `pre-registration:h08-positive-control` § Total Comparison Count, as clarified by
+# Amendment 001 (realized unit log2(RSEM_V2+1) on per-study cBioPortal PanCanAtlas RNA-seq —
+# TCGA PanCanAtlas ships RSEM, not TPM). For each arm stratum: restrict the study's RSEM matrix
+# to MC3-overlapping samples, drop genes expressed in <10% of samples, keep the top-2,000 MAD
+# genes, log2(RSEM+1), then NMF for K in {5..50} x 50 restarts and select the largest K before
+# the Brunet cophenetic correlation drops below 0.90 (ties -> smaller K).
+#
+# LEAKAGE FIREWALL: the rule reads only the expression matrix and MC3 sample IDENTITY
+# (tcga_mc3 samples.feather: sample_id + cancer_type, to enumerate arm membership) — never
+# signature exposures, mutations, or covariates. K is therefore selected before, and
+# independently of, any covariate<->signature association.
+#
+# Not in `rule all` — opt-in h08 surface. Target `all_h08_expression_modules` (or a single
+# arm's module_selection.json). Arm->study map + random_seed come from the run config.
+#
+rule build_expression_nmf_modules:
+  input:
+    rsem = lambda wc: data_dir.joinpath(config["h08_arm_studies"][wc.arm], "data_mrna_seq_v2_rsem.txt"),
+    mc3_samples = out_dir.joinpath("studies/tcga_mc3/metadata/samples.feather")
+  output:
+    modules = out_dir.joinpath("expression_modules/{arm}/nmf_gene_modules.feather"),
+    loadings = out_dir.joinpath("expression_modules/{arm}/nmf_sample_loadings.feather"),
+    cophenetic = out_dir.joinpath("expression_modules/{arm}/cophenetic_curve.feather"),
+    selection = out_dir.joinpath("expression_modules/{arm}/module_selection.json")
+  params:
+    arm = lambda wc: wc.arm
+  log:
+    out_dir.joinpath("logs/build_expression_nmf_modules/{arm}.log")
+  conda:
+    "../envs/project-python.yml"
+  script:
+    "../scripts/build_expression_nmf_modules.py"
+
+rule all_h08_expression_modules:
+  input:
+    expand(
+      out_dir.joinpath("expression_modules/{arm}/module_selection.json"),
+      arm=list(config.get("h08_arm_studies", {}).keys())
+    )
+
+#
 # AACR Project GENIE per-panel coverage mask.
 #
 # Manual prerequisite: download a GENIE release from Synapse (Synapse account + GENIE Data

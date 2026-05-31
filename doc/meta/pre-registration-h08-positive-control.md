@@ -16,8 +16,21 @@ related:
   - "discussion:2026-05-30-common-mutational-signatures-known-vs-learned-immune-causes-and-confounding"
 commits_to:
   - "hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and"
+amendments:
+  - id: "amendment-001"
+    date: "2026-05-31"
+    label: "amendment_before_results"
+    summary: >-
+      Expression-substrate unit clarification (t198). The frozen NMF rule named
+      log2(TPM+1) on TCGA PanCanAtlas RNA-seq, but TCGA PanCanAtlas distributes
+      RSEM (no native TPM). Realized substrate = per-study cBioPortal PanCanAtlas
+      RSEM (data_mrna_seq_v2_rsem.txt) for the 7 arm tissues; realized unit =
+      log2(RSEM_V2 + 1). Per-arm NMF makes cross-tissue batch correction moot.
+      No change to hypothesis, arms, cohort, adjustment set, rank gate, 2-of-3
+      rule, K-selection procedure, MAD/<10%-expressed filters, or active-signature
+      rule. Recorded before any association run (no parent verdict known).
 created: "2026-05-30"
-updated: "2026-05-30"
+updated: "2026-05-31"
 ---
 
 # Pre-registration: h08 positive control — agnostic association must recover known signature aetiologies unprompted
@@ -346,3 +359,43 @@ counts) is **reported at run time as an output, not a free parameter** — with 
 | Confirmatory tests | 3 (arms A/B/C) | FDR (Benjamini–Hochberg) within the full grid; arm verdicts read at q < 0.05 |
 | Exploratory tests | full grid minus 3 (≈ thousands; exact count reported at run time) | FDR (BH) across the full covariate×signature×stratum family; grid size reported |
 | **Total** | **full grid (reported at run time)** | **BH-FDR, family = full grid; per-stratum rank denominators reported** |
+
+## Amendments
+
+### Amendment 001 — expression-substrate unit clarification (2026-05-31)
+
+**Label:** `amendment_before_results`. Recorded while building the expression-module substrate
+(`task:t198`), **before** any covariate↔`H` association has been run — no parent verdict is known.
+
+**Trigger.** The frozen rule in *Total Comparison Count* specified NMF on the **`log2(TPM+1)`**
+expression matrix of "TCGA PanCanAtlas RNA-seq." TCGA PanCanAtlas RNA-seq is distributed as
+**RSEM-V2**, not TPM — neither the per-study cBioPortal matrices nor the EBPlusPlus batch-corrected
+pan-cancer matrix carry native TPM. The literal wording is therefore unsatisfiable against the
+named substrate.
+
+**Resolution.** Realized substrate = the per-study cBioPortal PanCanAtlas matrices
+(`data_mrna_seq_v2_rsem.txt`) for the seven arm tissues, restricted to MC3-overlapping samples per
+arm; realized unit = **`log2(RSEM_V2 + 1)`**. Because the K-selection NMF runs **per arm** (one
+tissue stratum at a time), the cross-tissue batch correction of the single EBPlusPlus file confers
+no benefit here, so the per-study (per-arm) RSEM matrices are the faithful and lower-cost substrate.
+
+| Parent section | Status | Notes |
+|---|---|---|
+| Scope / hypothesis / arms (A/B/C) | inherited | unchanged |
+| Cohort (7 MC3 arm strata; MC3-overlapping samples) | inherited | unchanged; realized expression∩MC3 n reported at run time |
+| Estimand / contrast (within-tissue covariate↔`H`) | inherited | unchanged |
+| Model / adjustment set | inherited | unchanged |
+| Metric (rank ≤3, positive, q<0.05; 2-of-3 gate) | inherited | unchanged |
+| Active-signature rule (≥5%), COSMIC v3.4 | inherited | unchanged |
+| K-selection (NMF K∈{5..50}×50 restarts, cophenetic≥0.90, ties→smaller; leakage firewall) | inherited | unchanged |
+| Gene filters (drop <10% expressed, top-2,000 MAD) | inherited | unchanged |
+| **Expression substrate + unit** | **revised** | `log2(TPM+1)` on "PanCanAtlas RNA-seq" → `log2(RSEM_V2+1)` on per-study cBioPortal PanCanAtlas RSEM (the form PanCanAtlas actually distributes) |
+| Sensitivity panel (K±5, lung pooling, frozen APOBEC set, permutation null) | inherited | unchanged |
+| Verdict rule / output artifacts | inherited | unchanged |
+
+**Power.** No power-floor change: the amendment does not alter any arm's sample size, the
+contrast, or the estimator — only the expression unit label and the per-arm sharding of an
+otherwise-identical RSEM matrix.
+
+**Scope of override.** This amendment only *contextualizes* the substrate; it cannot narrow or
+override any verdict-bearing decision. All decision criteria remain locked.

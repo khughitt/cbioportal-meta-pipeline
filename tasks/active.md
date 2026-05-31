@@ -977,16 +977,6 @@ The h08 decomposition/exposure layer is now hardened (t178 version-pin+caller-fl
 
 - 2026-05-31: Plan landed: analysis-plan:h08-positive-control-scan (2026-05-31). Verdict NOT-READY — engineering-gated, NOT data-gated/methodology-gated. Correction: the 'pre-register' half of this task is ALREADY DONE — pre-registration:h08-positive-control was committed 2026-05-30 (3 arms, top-3/positive/q<0.05, 2-of-3 gate, COSMIC v3.4, NMF-K rule, compositional+permutation guards all locked). t195 is now the umbrella 'run H08a' task, blocked by 4 implementation checks: (1) q018 verdict, (2) full-MC3 7-strata refit, (3) PanCanAtlas RNA-seq + NMF module layer, (4) the association-layer core. None require gated data.
 
-## [t198] Build h08 expression-module substrate: stage PanCanAtlas RNA-seq + frozen NMF-K module derivation
-- priority: P1
-- status: proposed
-- aspects: [computational-analysis, software-development]
-- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, method:h08-agnostic-association-model, pre-registration:h08-positive-control, task:t195]
-- group: hypothesis-h08
-- created: 2026-05-31
-
-The NMF expression-module covariate set is unbuilt: data/ has no PanCanAtlas RNA-seq matrix and export_study_expression.py reads per-study cBioPortal mRNA, not the PanCanAtlas batch-corrected matrix. PanCanAtlas RNA-seq is PUBLIC (not gated). Stage it for MC3-overlapping samples per arm (record the realized MC3 Tumor_Sample_Barcode <-> aliquot intersection — sets effective n), then build the frozen module pipeline EXACTLY per pre-registration §Total Comparison Count: log2(TPM+1); drop genes expressed in <10% of samples; retain top-2000 MAD genes; NMF for K in {5,10,...,50} x 50 restarts; select largest K before Brunet cophenetic correlation < 0.90 (ties -> smaller K). Selection runs on the expression matrix ALONE (never sees H, mutations, or the covariate-association) — leakage firewall. Write selected K + per-K cophenetic curve BEFORE any covariate-signature rank. analysis-plan:h08-positive-control-scan check 3.
-
 ## [t199] Build h08 within-tissue covariate-H association layer (the H08a scan core)
 - priority: P1
 - status: proposed

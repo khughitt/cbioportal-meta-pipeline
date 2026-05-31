@@ -76,10 +76,15 @@ POSITIVE_CONTROL_SIGNATURES: tuple[str, ...] = (
     "SBS54",
 )
 
-# t178: explicit default COSMIC SBS catalog version. Kept identical to the historical
-# implicit default so behaviour does not silently change; surfaced as a config key
+# t178: explicit default COSMIC SBS catalog version, surfaced as a config key
 # (`signature_assignment_cosmic_version`) and logged + asserted at run time.
-DEFAULT_COSMIC_VERSION: str = "3.5"
+# Pinned to v3.4 — the version frozen by `pre-registration:h08-positive-control`
+# (§ Total Comparison Count, "COSMIC v3.4 SBS reference"). NOTE: this is an intentional
+# change from the script's historical implicit default of v3.5; both catalogs are shipped
+# by SigProfilerAssignment, so set `signature_assignment_cosmic_version: "3.5"` in a run
+# config to restore the old behaviour. resolve_cosmic_reference() fails loudly if the
+# requested catalog is not shipped (no silent fallback to a different version).
+DEFAULT_COSMIC_VERSION: str = "3.4"
 
 # t179: per-sample SBS-count floors below which a sample's refit exposures are not trusted.
 # WES floor ~383 SBS follows the SigProfilerAssignment / extraction-reliability literature

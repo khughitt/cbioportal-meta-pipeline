@@ -14,10 +14,11 @@ panel_bearing_studies:
 study_panel_map: {}
 
 signature_assignment_genome_build: "GRCh37"
-# COSMIC SBS reference version (t178). Pinned to v3.4: it is the catalog SigProfilerAssignment
-# currently ships AND the version frozen by `pre-registration:h08-positive-control`
-# (§ Total Comparison Count). resolve_cosmic_reference() fails loudly if this names a catalog
-# the installed package does not ship, rather than silently falling back to another reference.
+# COSMIC SBS reference version (t178). Pinned to v3.4 — the version frozen by
+# `pre-registration:h08-positive-control` (§ Total Comparison Count, "COSMIC v3.4 SBS
+# reference"). SigProfilerAssignment ships v1–v3.5; resolve_cosmic_reference() fails loudly
+# if this names a catalog the installed package does not ship, rather than silently falling
+# back to another reference.
 signature_assignment_cosmic_version: "3.4"
 signature_assignment_exome: true
 signature_assignment_lookup_keys:

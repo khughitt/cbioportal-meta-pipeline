@@ -11,10 +11,7 @@ ontology_terms:
   - protein truncation
   - tumor suppressor genes
   - pan-cancer
-datasets:
-  - "TCGA PanCanAtlas (WES, 6509 exomes)"
-  - "PCAWG (WGS, 2360 whole genomes)"
-  - "Hartwig Medical Foundation HMF (WGS, 3472 whole genomes)"
+datasets: []
 source_refs:
   - "cite:Adler2023"
 related: []

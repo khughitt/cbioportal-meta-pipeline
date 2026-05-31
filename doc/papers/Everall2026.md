@@ -10,8 +10,7 @@ ontology_terms:
   - COSMIC
   - whole-genome sequencing
   - pan-cancer
-datasets:
-  - "100,000 Genomes Project (10,983 patients, 16 tumor types)"
+datasets: []
 source_refs:
   - "cite:Everall2026"
 related:

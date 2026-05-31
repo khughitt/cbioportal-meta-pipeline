@@ -10,8 +10,7 @@ ontology_terms:
   - epigenetics
   - DNMT1
   - CRISPRi
-datasets:
-  - "hTERT RPE-1 CRISPRi DNMT1-knockdown cell line (in vitro, 3 clones)"
+datasets: []
 source_refs:
   - "cite:Besselink2023"
 related: []

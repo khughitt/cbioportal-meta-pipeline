@@ -10,11 +10,7 @@ ontology_terms:
   - single base substitution
   - NMF
   - de novo signature extraction
-datasets:
-  - "TCGA MC3 (8,908 WES tumors)"
-  - "TCGA GDC Harmonized (8,908 WES tumors)"
-  - "PCAWG WGS (1,857 tumors, 15 cancer subtypes)"
-  - "PCAWG Breast-AdenoCA (185 WGS tumors)"
+datasets: []
 source_refs:
   - "cite:Jiang2025"
 related: []

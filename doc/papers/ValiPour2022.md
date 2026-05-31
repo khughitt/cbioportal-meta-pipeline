@@ -4,9 +4,7 @@ type: "paper"
 title: "The impact of rare germline variants on human somatic mutation processes"
 status: "active"
 ontology_terms: []
-datasets:
-  - "TCGA WES (~6,800 samples; discovery)"
-  - "PCAWG + Hartwig WGS (~4,600 samples; validation)"
+datasets: []
 source_refs:
   - "cite:ValiPour2022"
 related: []

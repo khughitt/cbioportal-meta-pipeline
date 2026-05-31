@@ -9,8 +9,7 @@ ontology_terms:
   - COSMIC
   - somatic mutation
   - software
-datasets:
-  - "TCGA Acute Myeloid Leukemia (LAML) cohort (n=188, GDAC Firehose Legacy)"
+datasets: []
 source_refs:
   - "cite:Pandey2022"
 related: []

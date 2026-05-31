@@ -10,8 +10,7 @@ ontology_terms:
   - DNA repair
   - iPSC
   - whole-genome sequencing
-datasets:
-  - "WGS of 324 human iPSC subclones (128 treatment conditions, 79 agents)"
+datasets: []
 source_refs:
   - "cite:Kucab2019"
 related: []

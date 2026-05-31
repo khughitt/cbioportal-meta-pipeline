@@ -11,10 +11,7 @@ ontology_terms:
   - DNA repair
   - DNA damage
   - somatic mutation
-datasets:
-  - "PCAWG (Pan-Cancer Analysis of Whole Genomes)"
-  - "non-cancerous somatic cell datasets (neurons, glia, bronchial epithelium, colon, skin microbiopsies)"
-  - "human germline pedigree sequencing"
+datasets: []
 source_refs:
   - "cite:Spisak2025"
 related: []

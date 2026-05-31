@@ -10,10 +10,7 @@ ontology_terms:
   - SigProfilerExtractor
   - COSMIC signatures
   - benchmarking
-datasets:
-  - "PCAWG WGS cohort (4,643 whole-genome-sequenced cancers)"
-  - "Extended WES cohort (19,184 whole-exome-sequenced cancers)"
-  - "Synthetic benchmarking corpus (>80,000 simulated cancer samples)"
+datasets: []
 source_refs:
   - "cite:Islam2022"
 related: []

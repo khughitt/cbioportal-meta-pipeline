@@ -9,9 +9,7 @@ ontology_terms:
   - signature refitting
   - non-negative matrix factorization
   - non-convex optimization
-datasets:
-  - "ICGC PCAWG WGS (nine cancer types)"
-  - "COSMIC v3.4 signature catalogue"
+datasets: []
 source_refs:
   - "cite:Kesimoglu2026"
 related: []

@@ -12,10 +12,7 @@ ontology_terms:
   - COSMIC v3
   - whole-genome sequencing
   - homologous recombination deficiency
-datasets:
-  - "PedPanCan PPC-WGS cohort (785 WGS tumor-normal pairs, 27 pediatric cancer subtypes)"
-  - "INF-WGS (5 INFORM pediatric tumors with BRCA1/2 germline mutations)"
-  - "St. Jude Cloud WGS data (149 pediatric patients)"
+datasets: []
 source_refs:
   - "cite:Thatikonda2023"
 related: []

@@ -10,9 +10,7 @@ ontology_terms:
   - whole-genome sequencing
   - LASSO regression
   - homologous recombination deficiency
-datasets:
-  - "PCAWG (n=2568 WGS, 32 cancer types)"
-  - "Hartwig Medical Foundation HMF (n=3497 WGS, 32 cancer types)"
+datasets: []
 source_refs:
   - "cite:Sorensen2023"
 related:

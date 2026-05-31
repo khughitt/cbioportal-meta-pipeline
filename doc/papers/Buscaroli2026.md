@@ -10,9 +10,7 @@ ontology_terms:
   - patient clustering
   - de novo signature discovery
   - COSMIC
-datasets:
-  - "Genomics England 100,000 Genomes Project (via Degasperi et al. 2022; ~6923 breast/lung/colorectal WGS samples)"
-  - "ICGC cohort (skin n=259, pancreatic n=343, esophageal n=315)"
+datasets: []
 source_refs:
   - "cite:Buscaroli2026"
 related: []

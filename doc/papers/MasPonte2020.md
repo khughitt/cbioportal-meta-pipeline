@@ -12,10 +12,7 @@ ontology_terms:
   - somatic mutation clustering
   - single-stranded DNA
   - cancer genomics
-datasets:
-  - "TCGA WGS (699 tumors, 22 cancer types)"
-  - "Hartwig Medical Foundation WGS (2,304 tumors, validation)"
-  - "TCGA MC3 WES (~5,831 tumors, 16 cancer types)"
+datasets: []
 source_refs:
   - "cite:MasPonte2020"
 related:

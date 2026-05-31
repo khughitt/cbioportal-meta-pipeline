@@ -12,10 +12,7 @@ ontology_terms:
   - single-cell RNA sequencing
   - minimal residual disease
   - immunotherapy
-datasets:
-  - "MANHATTAN trial cohort (NCT03290950, n=49 NDMM)"
-  - "CoMMpass trial (IA15, n=752 NDMM, WGS validation)"
-  - "Kydar scRNA study (n=24 relapsed MM)"
+datasets: []
 source_refs:
   - "cite:Maura2023"
 related: []

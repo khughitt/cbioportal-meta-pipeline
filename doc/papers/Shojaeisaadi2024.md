@@ -11,8 +11,7 @@ ontology_terms:
   - SigProfiler
   - whole-genome sequencing
   - Mexican-American cohort
-datasets:
-  - "IRASFS (Insulin Resistance Atherosclerosis Family Study) — 13 multi-child Mexican-American families; 26 parents + 48 offspring; WGS ~30x"
+datasets: []
 source_refs:
   - "cite:Shojaeisaadi2024"
 related:

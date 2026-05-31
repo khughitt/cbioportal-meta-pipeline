@@ -4,12 +4,7 @@ type: "paper"
 title: "Mutational signatures of colorectal cancers according to distinct computational workflows"
 status: "active"
 ontology_terms: []
-datasets:
-  - "CRC cell lines (230 lines, preclinical dataset)"
-  - "TCGA-COAD (152 CRC patients)"
-  - "TCGA-UCEC (483 endometrial cancer patients)"
-  - "TCGA-LUAD/LUSC (35 lung cancer patients)"
-  - "Patient-derived organoids (12 PDOs, colibactin exposure)"
+datasets: []
 source_refs:
   - "cite:Battuello2024"
 related: []

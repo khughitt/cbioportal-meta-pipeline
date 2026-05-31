@@ -9,11 +9,7 @@ ontology_terms:
   - clonal hematopoiesis
   - whole genome sequencing
   - chromothripsis
-datasets:
-  - "tMN WGS cohort (39 patients, MSKCC + public)"
-  - "TCGA de novo AML WGS (21 samples, dbGaP phs000178)"
-  - "Beat AML WES (298 de novo AML exomes, dbGaP phs001657)"
-  - "Bolton 2020 post-platinum CH cohort (749 mutations, 655 patients)"
+datasets: []
 source_refs:
   - "cite:Diamond2023"
 related: []

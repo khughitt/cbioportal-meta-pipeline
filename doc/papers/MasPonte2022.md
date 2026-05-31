@@ -10,9 +10,7 @@ ontology_terms:
   - MMR deficiency
   - cancer genomics
   - immunotherapy
-datasets:
-  - "TCGA (referenced)"
-  - "PCAWG (referenced)"
+datasets: []
 source_refs:
   - "cite:MasPonte2022"
 related:

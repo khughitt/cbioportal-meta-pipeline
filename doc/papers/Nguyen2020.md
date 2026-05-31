@@ -11,10 +11,7 @@ ontology_terms:
   - BRCA1
   - BRCA2
   - pan-cancer
-datasets:
-  - "Hartwig Medical Foundation (HMF) metastatic cohort (n=3,504 patients)"
-  - "PCAWG primary pan-cancer cohort (n=1,854 tumors)"
-  - "BRCA-EU primary breast cancer dataset (n=543 tumors)"
+datasets: []
 source_refs:
   - "cite:Nguyen2020"
 related: []

@@ -10,9 +10,7 @@ ontology_terms:
   - epigenomics
   - heterochromatin
   - cancer genomics
-datasets:
-  - "ICGC (18 cancer cohorts, WGS, release 28)"
-  - "250 Dutch parent-offspring trios (de novo germline mutations)"
+datasets: []
 source_refs:
   - "cite:Singh2020"
 related: []

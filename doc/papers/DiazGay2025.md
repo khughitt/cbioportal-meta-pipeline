@@ -13,8 +13,7 @@ ontology_terms:
   - ID18
   - geographic variation
   - whole-genome sequencing
-datasets:
-  - "981 colorectal cancer whole genomes from 11 countries (Mutographs)"
+datasets: []
 source_refs:
   - "cite:DiazGay2025"
 related:

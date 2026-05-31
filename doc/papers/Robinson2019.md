@@ -10,10 +10,7 @@ ontology_terms:
   - somatic mutation
   - tumor covariates
   - homologous recombination deficiency
-datasets:
-  - "TCGA BRCA cohort (760 breast cancer exomes)"
-  - "TCGA PanCanAtlas SKCM (418 melanoma exomes)"
-  - "TCGA PanCanAtlas LUSC (485 lung squamous cell carcinoma exomes)"
+datasets: []
 source_refs:
   - "cite:Robinson2019"
 related: []

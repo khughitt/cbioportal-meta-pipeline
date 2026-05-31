@@ -9,8 +9,7 @@ ontology_terms:
   - tumor evolution
   - COSMIC signatures
   - somatic mutation
-datasets:
-  - "TRACERx Lung Cancer Study (CRUK0025 + 60 additional NSCLC patients)"
+datasets: []
 source_refs:
   - "cite:Miura2022"
 related: []

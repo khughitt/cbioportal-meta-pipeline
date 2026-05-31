@@ -14,9 +14,7 @@ ontology_terms:
   - COSMIC
   - cancer genomics
   - DNA damage and repair
-datasets:
-  - "PCAWG (84,729,690 somatic mutations; 4,645 whole genomes; 19,184 exomes)"
-  - "COSMIC v3 signatures (https://cancer.sanger.ac.uk/cosmic/signatures/)"
+datasets: []
 source_refs:
   - "cite:Alexandrov2020"
 related:

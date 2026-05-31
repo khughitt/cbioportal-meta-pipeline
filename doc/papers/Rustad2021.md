@@ -11,10 +11,7 @@ ontology_terms:
   - chronic lymphocytic leukemia
   - APOBEC
   - COSMIC
-datasets:
-  - "Multiple myeloma WGS cohort (n=82 MM, EGAD00001003309)"
-  - "CLL WGS cohort (n=142 CLL, EGAS00000000092)"
-  - "AML cohort (n=49 de novo + 2 therapy-related, EGAD00001003309 / phs000178.v2.p1)"
+datasets: []
 source_refs:
   - "cite:Rustad2021"
 related: []

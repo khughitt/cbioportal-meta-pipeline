@@ -9,10 +9,7 @@ ontology_terms:
   - COSMIC signatures
   - guilt-by-association
   - NMF
-datasets:
-  - COSMIC v3.4 signatures
-  - "Kucab 2019 environmental mutagen signatures"
-  - "Zou 2021 CRISPR-Cas9 DNA repair gene knockout signatures"
+datasets: []
 source_refs:
   - "cite:Wojtowicz2026"
 related: []

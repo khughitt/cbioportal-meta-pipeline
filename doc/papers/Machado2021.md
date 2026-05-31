@@ -4,8 +4,7 @@ type: "paper"
 title: "Genome-wide mutational signatures of immunological diversification in normal lymphocytes"
 status: "active"
 ontology_terms: []
-datasets:
-  - "717 whole genomes from normal naive/memory B and T lymphocytes and HSPCs (peripheral blood, spleen, bone marrow, tonsil, cord blood; 6 donors aged 0–81)"
+datasets: []
 source_refs:
   - "cite:Machado2021"
 related: []

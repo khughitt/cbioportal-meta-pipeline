@@ -11,10 +11,7 @@ ontology_terms:
   - nucleotide excision repair
   - C. elegans
   - somatic mutation
-datasets:
-  - "C. elegans whole-genome sequencing (2717 genomes; ENA ERP000975 / ERP004086)"
-  - "TCGA cancer cohorts (NCI GDC)"
-  - "XP patient skin tumours (dbGaP phs000830.v1.p1)"
+datasets: []
 source_refs:
   - "cite:Volkova2020"
 related: []

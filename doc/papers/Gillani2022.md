@@ -10,12 +10,7 @@ ontology_terms:
   - Fanconi anemia
   - pediatric cancer
   - case-control study
-datasets:
-  - "St. Jude Cloud (Pediatric Cancer Genome Project, St. Jude Lifetime, Genomes for Kids, Childhood Cancer Survivor Study; n=1,033)"
-  - "dbGaP phs000804.v1.p1 — Genomic Sequencing of Ewing Sarcoma (n=26)"
-  - "dbGaP phs000699.v1.p1 — Osteosarcoma Genomics (n=58)"
-  - "dbGaP phs000699.v1.p1 — Bone Cancer UK / BOCA-UK (n=63)"
-  - "Gabriella Miller Kids First Ewing Sarcoma Genetic Risk study (dbGaP phs001228.v1.p1) — validation + trio cohort"
+datasets: []
 source_refs:
   - "cite:Gillani2022"
 related: []

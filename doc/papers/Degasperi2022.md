@@ -12,10 +12,7 @@ ontology_terms:
   - signature extraction
   - NMF
   - COSMIC
-datasets:
-  - "Genomics England 100,000 Genomes Project (GEL v8; 12,222 WGS tumor-normal pairs)"
-  - "ICGC (3,001 WGS primary cancers)"
-  - "Hartwig Medical Foundation (3,417 WGS metastatic cancers)"
+datasets: []
 source_refs:
   - "cite:Degasperi2022"
 related:

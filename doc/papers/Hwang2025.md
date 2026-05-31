@@ -11,9 +11,7 @@ ontology_terms:
   - translesion synthesis
   - whole-genome sequencing
   - SBS signatures
-datasets:
-  - "TK6 TSCER2 isogenic DNA repair knockout cell lines (~40 lines, 427 genomes)"
-  - "HAP1 cell lines (WT, MGMT-, MSH2-)"
+datasets: []
 source_refs:
   - "cite:Hwang2025"
 related: []

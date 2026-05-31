@@ -11,12 +11,7 @@ ontology_terms:
   - prognostic biomarker
   - ovarian cancer
   - mismatch repair deficiency
-datasets:
-  - "DECIDER cohort (HGSOC WGS, n=100)"
-  - "PCAWG ovarian cohort (n=110)"
-  - "Hartwig Medical Foundation (n=124)"
-  - "OVCARE cohort (n=52)"
-  - "Uppsala University colorectal WGS (n=1063)"
+datasets: []
 source_refs:
   - "cite:FerrerTorres2025"
 related: []

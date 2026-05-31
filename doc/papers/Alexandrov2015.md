@@ -12,9 +12,7 @@ ontology_terms:
   - BRCA2
   - platinum therapy
   - PARP inhibitors
-datasets:
-  - "10,250 cancer-normal genome pairs across 36 cancer types (TCGA, ICGC, published cohorts)"
-  - "472 gastric cancer genomes (372 WES + 100 WGS)"
+datasets: []
 source_refs:
   - "cite:Alexandrov2015"
 related: []

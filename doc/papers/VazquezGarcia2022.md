@@ -11,9 +11,7 @@ ontology_terms:
   - high-grade serous ovarian cancer
   - single-cell RNA sequencing
   - whole-genome sequencing
-datasets:
-  - "HGSOC multi-site biopsy cohort (42 patients, 160 tumour sites; MSK)"
-  - "MSK-IMPACT HGSOC validation cohort (n=1,298 patients)"
+datasets: []
 source_refs:
   - "cite:VazquezGarcia2022"
 related: []

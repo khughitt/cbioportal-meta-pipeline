@@ -4,8 +4,7 @@ type: "paper"
 title: "Diverse mutational landscapes in human lymphocytes"
 status: "active"
 ontology_terms: []
-datasets:
-  - "717 whole genomes from normal naive and memory B and T lymphocytes and HSPCs (peripheral blood, spleen, bone marrow, tonsil, cord blood; donors aged 0–81 years)"
+datasets: []
 source_refs:
   - "cite:Machado2022"
 related:

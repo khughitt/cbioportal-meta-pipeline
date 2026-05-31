@@ -10,10 +10,7 @@ ontology_terms:
   - attention mechanism
   - COSMIC
   - single-sample inference
-datasets:
-  - "PCAWG (2,658 whole genomes)"
-  - "COSMIC v3.4 SBS catalogue"
-  - "Six normal-tissue clonal expansion / microdissection datasets (blood, bone marrow, breast, colon, intestine, liver, spleen, tonsil)"
+datasets: []
 source_refs:
   - "cite:Zhang2026"
 related: []

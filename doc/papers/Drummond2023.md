@@ -10,8 +10,7 @@ ontology_terms:
   - clinical covariates
   - survival analysis
   - microsatellite instability
-datasets:
-  - "TCGA-STAD (stomach adenocarcinoma, 439 samples)"
+datasets: []
 source_refs:
   - "cite:Drummond2023"
 related:

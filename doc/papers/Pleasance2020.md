@@ -11,8 +11,7 @@ ontology_terms:
   - immune microenvironment
   - DNA damage response
   - treatment-associated mutagenesis
-datasets:
-  - "POG570 cohort (BC Cancer Personalized OncoGenomics)"
+datasets: []
 source_refs:
   - "cite:Pleasance2020"
 related: []

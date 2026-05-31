@@ -11,8 +11,7 @@ ontology_terms:
   - neoantigen burden
   - pembrolizumab
   - biomarker
-datasets:
-  - "TCGA pan-cancer cohort"
+datasets: []
 source_refs:
   - "cite:Budczies2024"
 related: []

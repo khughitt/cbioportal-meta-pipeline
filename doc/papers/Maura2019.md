@@ -14,10 +14,7 @@ ontology_terms:
   - signature fitting
   - inter-sample bleeding
   - AID activity
-datasets:
-  - "143 CLL WGS (EGAS00000000092)"
-  - "30 MM WGS (EGAD00001003309)"
-  - "50 AML WGS (phs000178.v1.p1 + 2 unpublished t-AML)"
+datasets: []
 source_refs:
   - "cite:Maura2019"
 related: []

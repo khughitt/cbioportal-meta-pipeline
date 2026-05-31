@@ -10,9 +10,7 @@ ontology_terms:
   - MCMC
   - model selection
   - somatic mutation
-datasets:
-  - "21 breast cancer WGS (Nik-Zainal 2012)"
-  - "114 gastric cancer TCGA WGS"
+datasets: []
 source_refs:
   - "cite:Rosales2017"
 related:

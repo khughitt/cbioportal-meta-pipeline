@@ -9,11 +9,7 @@ ontology_terms:
   - cancer cell lines
   - DNA repair
   - germline correction
-datasets:
-  - "GDSC (Genomics of Drug Sensitivity in Cancer) — 930 cell lines, 518 drugs"
-  - "PRISM drug screen — 348 cell lines, 178 drugs overlapping with GDSC"
-  - "Project SCORE genetic screen — CRISPR/Cas9, 517 cell lines"
-  - "TCGA normal exomes (n=6154, ancestry matching)"
+datasets: []
 source_refs:
   - "cite:Levatic2022"
 related: []

@@ -4,8 +4,7 @@ type: "paper"
 title: "Temozolomide Treatment Alters Mismatch Repair and Boosts Mutational Burden in Tumor and Blood of Colorectal Cancer Patients"
 status: "active"
 ontology_terms: []
-datasets:
-  - "ARETHUSA clinical trial cohort (NCT03519412) — 21 mCRC patients, WES + ctDNA"
+datasets: []
 source_refs:
   - "cite:Crisafulli2022"
 related: []

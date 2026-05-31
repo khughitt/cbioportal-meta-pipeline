@@ -12,11 +12,7 @@ ontology_terms:
   - reactive oxygen species
   - SBS18
   - SBS36
-datasets:
-  - "10 MAP individuals — 144 normal intestinal crypts (LI n=107, SI n=37), laser-capture microdissected; WGS ~28x"
-  - "13 adenoma glands (5 MAP individuals)"
-  - "Peripheral blood and tissue lymphocytes from MUTYH mutation carriers"
-  - "Wild-type healthy control crypts (n=445) from Lee-Six et al. 2018"
+datasets: []
 source_refs:
   - "cite:Robinson2022"
 related:

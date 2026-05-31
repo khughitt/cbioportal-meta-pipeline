@@ -10,8 +10,7 @@ ontology_terms:
   - nonnegative least squares
   - somatic mutation
   - copy number signatures
-datasets:
-  - "2700 synthetic cancer genomes (21 COSMIC SBS signatures, 9 cancer types)"
+datasets: []
 source_refs:
   - "cite:DiazGay2023"
 related: []

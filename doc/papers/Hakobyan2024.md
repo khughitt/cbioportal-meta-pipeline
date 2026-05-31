@@ -9,9 +9,7 @@ ontology_terms:
   - pan-cancer analysis
   - signature interactions
   - patient survival
-datasets:
-  - "TCGA (multi-tissue, 3,132 samples, 12 tissues)"
-  - "PCAWG (multi-tissue, 1,471 samples, 14 tissues)"
+datasets: []
 source_refs:
   - "cite:Hakobyan2024"
 related: []

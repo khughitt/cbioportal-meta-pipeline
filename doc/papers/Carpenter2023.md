@@ -14,10 +14,7 @@ ontology_terms:
   - single base substitution
   - kataegis
   - trinucleotide context
-datasets:
-  - "HAP1-TK-M9 human cell line (this study)"
-  - "ICGC breast tumor WGS (n=784)"
-  - "TCGA breast cancer RNA-seq + WES"
+datasets: []
 source_refs:
   - "cite:Carpenter2023"
 related: []

@@ -4,9 +4,7 @@ type: "paper"
 title: "Supervised mutational signatures for obesity and other tissue-specific etiological factors in cancer"
 status: "active"
 ontology_terms: []
-datasets:
-  - "TCGA (30 cancer types, somatic exome mutations)"
-  - "ICGC PCAWG (external validation, whole-genome sequencing)"
+datasets: []
 source_refs:
   - "cite:Afsari2021"
 related: []

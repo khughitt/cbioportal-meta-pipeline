@@ -10,10 +10,7 @@ ontology_terms:
   - COSMIC
   - PCAWG
   - bioinformatics
-datasets:
-  - "PCAWG (training data for cutoffs)"
-  - "Ovarian cancer ICGC cohort (OV-AU)"
-  - "MASTER precision oncology program (2 WGS cases)"
+datasets: []
 source_refs:
   - "cite:Hubschmann2021"
 related: []

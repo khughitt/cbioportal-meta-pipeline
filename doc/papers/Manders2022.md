@@ -12,10 +12,7 @@ ontology_terms:
   - double base substitutions
   - lesion segregation
   - R/Bioconductor
-datasets:
-  - "HMF melanoma cohort (276 samples)"
-  - "AHH-1 lymphoblastoid CRISPR-Cas9 DNA repair knockout cell lines"
-  - "217 pediatric B-ALL WGS samples"
+datasets: []
 source_refs:
   - "cite:Manders2022"
 related: []

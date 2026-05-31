@@ -10,10 +10,7 @@ ontology_terms:
   - CRISPR knockout
   - somatic mutation
   - microsatellite instability
-datasets:
-  - "HAP1 CRISPR MMR knockout cell lines (in vitro, this study)"
-  - "PCAWG pan-cancer whole-genome cohort"
-  - "Hartwig Medical Foundation (HMF) metastatic tumour cohort"
+datasets: []
 source_refs:
   - "cite:Owusu2025"
 related: []

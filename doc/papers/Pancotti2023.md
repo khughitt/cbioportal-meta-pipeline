@@ -10,8 +10,7 @@ ontology_terms:
   - archetypal analysis
   - de novo extraction
   - signature stability
-datasets:
-  - "COSMIC SBS v3.3 (60 non-artefactual signatures)"
+datasets: []
 source_refs:
   - "cite:Pancotti2023"
 related:

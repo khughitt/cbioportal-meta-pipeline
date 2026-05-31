@@ -830,11 +830,11 @@ The current ingest uses MC3 v0.2.8 PUBLIC (PASS-only). The controlled-access MC3
 
 Follow-up from MM30 hyperdiploidy mechanism discussion. Test whether common pan-cancer gain arms such as 20q, 7p, 8q, 1q, 7q, and 20p and MM hyperdiploidy chromosomes 3, 5, 7, 9, 11, 15, 19, and 21 are enriched for known cancer drivers or oncogene-dosage targets. Use data/cosmic_cgc.tsv, data/bailey2018_table_s1.tsv, and GRCh37/GRCh38 gene annotations. Compare driver density and aggregate Bailey consensus/frequency scores per arm/chromosome while controlling for gene count and arm size. Deliverable: doc/interpretations/<date>-aneuploidy-driver-dosage-comparison.md with tables separating generic pan-cancer gain targets from plasma-cell/MM-HD-specific dosage-package candidates.
 
-## [t177] Literature scan: prior agnostic / unsupervised mutational-signature aetiology association (signature-PheWAS, signature x expression association, signature x clinical-covariate scans). Catalog what has been claimed/done, with which datasets and methods, and whether positive-control recovery of known aetiologies was demonstrated. Gates hypothesis h07.
+## [t177] Literature scan: prior agnostic / unsupervised mutational-signature aetiology association (signature-PheWAS, signature x expression association, signature x clinical-covariate scans). Catalog what has been claimed/done, with which datasets and methods, and whether positive-control recovery of known aetiologies was demonstrated. Gates hypothesis h08.
 - priority: P2
 - status: proposed
 - aspects: [computational-analysis]
-- related: [hypothesis:h07-agnostic-covariate-association-recovers-known-signature-aetiologies-and, topic:signature-decomposition-unmatched-normal]
+- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, topic:signature-decomposition-unmatched-normal]
 - group: searches
 - created: 2026-05-30
 

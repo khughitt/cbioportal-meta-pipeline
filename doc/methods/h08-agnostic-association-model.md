@@ -1,22 +1,22 @@
 ---
-id: "method:h07-agnostic-association-model"
+id: "method:h08-agnostic-association-model"
 type: "method"
-title: "Agnostic covariate–signature-exposure association model (h07)"
+title: "Agnostic covariate–signature-exposure association model (h08)"
 status: "active"
 created: "2026-05-30"
 updated: "2026-05-30"
 related:
-  - "hypothesis:h07-agnostic-covariate-association-recovers-known-signature-aetiologies-and"
+  - "hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and"
   - "topic:signature-decomposition-unmatched-normal"
   - "discussion:2026-05-30-common-mutational-signatures-known-vs-learned-immune-causes-and-confounding"
   - "search:2026-05-30-ehr-rich-substrates-for-agnostic-signature-association"
 ---
 
-# Agnostic covariate–signature-exposure association model (h07)
+# Agnostic covariate–signature-exposure association model (h08)
 
-A causal-DAG sketch for the agnostic association proposed in `hypothesis:h07`. DAG source:
-`models/h07-agnostic-signature-association.dot` (render with
-`dot -Tsvg models/h07-agnostic-signature-association.dot`).
+A causal-DAG sketch for the agnostic association proposed in `hypothesis:h08`. DAG source:
+`models/h08-agnostic-signature-association.dot` (render with
+`dot -Tsvg models/h08-agnostic-signature-association.dot`).
 
 ## The estimand
 
@@ -42,7 +42,7 @@ Q2).
 
 - **Adjustment set:** {tissue, treatment, study/assay, ancestry}; run **within tissue strata**,
   reporting the unconditioned version *only* to quantify how much of a naive association is tissue
-  collinearity (Prediction 4 of h07).
+  collinearity (Prediction 4 of h08).
 - **The expression→`H` edge is NOT identified by adjustment alone.** It shares a bidirected edge
   with `H` (reverse causation R2: a driver mutation can remodel its own expression module). An
   expression↔signature hit is a **ranked hypothesis**, requiring mediation logic and, where
@@ -50,7 +50,7 @@ Q2).
 
 ## Rival explanations encoded in the DAG
 
-Co-equal, data-adjudicated (1:1 with h07's Alternative Explanations):
+Co-equal, data-adjudicated (1:1 with h08's Alternative Explanations):
 
 | Rival | DAG mechanism | Discriminating test |
 |---|---|---|
@@ -64,7 +64,7 @@ Co-equal, data-adjudicated (1:1 with h07's Alternative Explanations):
 
 Before trusting any novel edge, the scan must **recover the textbook edges unprompted**: UV↔SBS7
 (skin), smoking↔SBS4 (lung), APOBEC3 expr↔SBS2/13, MMR/MSI↔SBS6/15/26, POLE↔SBS10. Failure here
-(H07a falsified) means the method is underpowered or confounded beyond rescue and the discovery
+(H08a falsified) means the method is underpowered or confounded beyond rescue and the discovery
 prong is void.
 
 ## Next steps

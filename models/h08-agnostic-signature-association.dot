@@ -1,9 +1,9 @@
-// Causal DAG sketch for hypothesis h07 — agnostic covariate <-> signature-exposure association.
+// Causal DAG sketch for hypothesis h08 — agnostic covariate <-> signature-exposure association.
 // Outcome: signature exposure H (per-sample burden of a latent mutational process).
 // Spectrum W (which process) is kept separate from exposure H (how much), because
 // selection/immunoediting acts on H, not W (discussion 2026-05-30, Q2).
-// Render: dot -Tsvg models/h07-agnostic-signature-association.dot -o h07.svg
-digraph h07_agnostic_signature_association {
+// Render: dot -Tsvg models/h08-agnostic-signature-association.dot -o h08.svg
+digraph h08_agnostic_signature_association {
   rankdir=LR;
   node [shape=box, style=rounded, fontname="Helvetica"];
 
@@ -28,7 +28,7 @@ digraph h07_agnostic_signature_association {
   RepairCap -> Wspectrum;
   RepairCap -> Hexposure;
 
-  ExprModule -> Hexposure [label="H07b: candidate\nupstream (TEST)", color="#1a73e8", fontcolor="#1a73e8"];
+  ExprModule -> Hexposure [label="H08b: candidate\nupstream (TEST)", color="#1a73e8", fontcolor="#1a73e8"];
   Hexposure  -> ExprModule [label="R2: reverse\n(consequence)", style=dashed, color="#d93025", fontcolor="#d93025"];
   Enzyme     -> ExprModule [label="mediator\n(e.g. APOBEC3 expr)", style=dotted];
 

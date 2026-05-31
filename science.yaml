@@ -39,6 +39,7 @@ knowledge_profiles:
 aspects:
 - computational-analysis
 - software-development
+- causal-modeling
 research_question: What is the structure of somatic mutations within and across cancer
   types, and which gene-cancer associations recur across independent cBioPortal studies?
 scope:

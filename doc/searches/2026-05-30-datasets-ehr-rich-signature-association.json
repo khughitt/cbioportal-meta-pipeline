@@ -1,7 +1,7 @@
 {
   "search_id": "2026-05-30-datasets-ehr-rich-signature-association",
   "date": "2026-05-30",
-  "focus": "hypothesis:h07-agnostic-covariate-association-recovers-known-signature-aetiologies-and",
+  "focus": "hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and",
   "query": "EHR-rich oncology datasets with co-measured somatic mutations + clinical/EHR-like metadata, usable as agnostic covariate source for mutational-signature aetiology association",
   "adapter_search": {
     "tool": "science datasets search",
@@ -34,7 +34,7 @@
       "signature_grade": "per-sample de-novo OK (2.9M PASS / 9,104 samples / 32 types)",
       "ehr_richness": "structured clinical only",
       "access": "public",
-      "verdict": "signature engine for h07; already ingested as pseudo-study tcga_mc3"
+      "verdict": "signature engine for h08; already ingested as pseudo-study tcga_mc3"
     },
     {
       "name": "TCGA PanCanAtlas",
@@ -93,7 +93,7 @@
     }
   ],
   "two_track_plan": {
-    "signature_grade_track": "tcga-mc3 (per-sample de-novo) x tcga-pancanatlas expression + structured clinical -> H07a positive control + H07b expression discovery",
+    "signature_grade_track": "tcga-mc3 (per-sample de-novo) x tcga-pancanatlas expression + structured clinical -> H08a positive control + H08b expression discovery",
     "ehr_covariate_track": "aacr-genie-bpc / msk-chord (cohort-pooled signatures) x rich EHR terms -> tests whether EHR covariates add aetiology signal beyond structured fields"
   },
   "data_gaps": [

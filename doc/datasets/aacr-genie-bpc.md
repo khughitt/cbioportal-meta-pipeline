@@ -9,7 +9,7 @@ source_refs:
 related:
   - "dataset:aacr-genie"
   - "dataset:msk-chord"
-  - "hypothesis:h07-agnostic-covariate-association-recovers-known-signature-aetiologies-and"
+  - "hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and"
   - "topic:signature-decomposition-unmatched-normal"
 created: "2026-05-30"
 updated: "2026-05-30"
@@ -25,7 +25,7 @@ augmented with **PRISSMM-curated clinical data abstracted from the electronic he
 treatment regimens/lines, ICD-O histology + site coding, RECIST + imaging/pathology/med-onc event
 timelines, and outcomes/vital status. It is the richest *public* source of EHR-like coded clinical
 terms co-measured with somatic mutations, and the **EHR-covariate track** for
-`hypothesis:h07`. Limitation: mutations are **targeted-panel** (tens of mutations/sample), so
+`hypothesis:h08`. Limitation: mutations are **targeted-panel** (tens of mutations/sample), so
 signatures can only be derived **cohort-pooled / refit**, never per-sample (the binding
 mutation-count constraint, `question:q018`).
 
@@ -40,7 +40,7 @@ mutation-count constraint, `question:q018`).
 
 ## Connections to Project
 
-- Questions/hypotheses it can inform: `hypothesis:h07` (EHR-covariate track),
+- Questions/hypotheses it can inform: `hypothesis:h08` (EHR-covariate track),
   `question:q018` (panel signature feasibility constraint).
 - Variables likely available: panel mutations; treatment regimen/line, drug names, ICD-O
   histology + primary site, stage, RECIST response, sites of progression/metastasis, OS/PFS,

@@ -1,9 +1,18 @@
 ---
-id: hypothesis:h07-agnostic-covariate-association-recovers-known-signature-aetiologies-and
+id: hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and
 type: hypothesis
 title: Agnostic covariate association recovers known signature aetiologies and surfaces novel upstream causes
 status: proposed
 phase: active
+ontology_terms:
+  - mutational signatures
+  - somatic mutation
+  - gene expression
+  - tumor mutational burden
+datasets:
+  - cBioPortal (~300 studies)
+  - TCGA MC3 (tcga_mc3)
+  - AACR GENIE
 source_refs:
 - paper:Alexandrov2020
 - paper:Degasperi2022
@@ -35,11 +44,11 @@ associations rather than a curator.
 
 The hypothesis is **two-pronged and explicitly falsifiable on the positive-control prong**:
 
-- **H07a (recovery / positive control):** an agnostic association recovers the textbook
+- **H08a (recovery / positive control):** an agnostic association recovers the textbook
   exposure→signature links *without being told them* — UV↔SBS7 in skin, smoking↔SBS4 in lung,
   APOBEC3 expression↔SBS2/13, MMR-loss/MSI↔SBS6/15/26, POLE↔SBS10. If it cannot reproduce the
   known map, its novel hits are not trustworthy.
-- **H07b (discovery):** beyond the known map, the same scan surfaces covariates — especially
+- **H08b (discovery):** beyond the known map, the same scan surfaces covariates — especially
   expression modules (immune/inflammation, a candidate blind spot per the discussion's Q2) —
   associated with signatures whose aetiology is unknown or only labelled clock-like (SBS5,
   SBS40), generating ranked candidate upstream causes.
@@ -61,22 +70,22 @@ The hypothesis is **two-pronged and explicitly falsifiable on the positive-contr
 ## Predictions
 
 1. Within-tissue, FDR-controlled association recovers ≥ the canonical exposure→signature links
-   at effect sizes clearly above the null (H07a).
+   at effect sizes clearly above the null (H08a).
 2. APOBEC signatures (SBS2/13) associate with *APOBEC3A/B expression* more strongly than with
    any single clinical label — demonstrating expression resolves a mediator the clinical
    covariates cannot.
 3. At least one clock-like / unexplained signature (SBS5 or SBS40) shows a reproducible
    association with an expression module not currently in its COSMIC aetiology — a ranked novel
-   candidate (H07b).
+   candidate (H08b).
 4. Associations attenuate or reverse sign when tissue is *not* conditioned on — quantifying how
    much of the naive "exposure→signature" story is tissue collinearity.
 
 ## Falsifiability
 
-- **Falsifies H07a (and undermines the whole approach):** the scan fails to recover the
+- **Falsifies H08a (and undermines the whole approach):** the scan fails to recover the
   well-supported exposure→signature links within tissue at any reasonable FDR — i.e. the method
   is underpowered or confounded beyond rescue on cBioPortal/MC3-scale data.
-- **Falsifies H07b:** after positive-control recovery succeeds, no novel covariate↔signature
+- **Falsifies H08b:** after positive-control recovery succeeds, no novel covariate↔signature
   association survives FDR + reverse-causation screening + a held-out-cohort replication — i.e.
   the agnostic scan adds nothing beyond the known map.
 - **Design guards (pre-registration material for `science:pre-register`):**
@@ -106,7 +115,7 @@ hypothesis's own framing:
   panel-coverage proxy. Adjudicated by including study/assay as nuisance covariates and by the
   artifact-signature flag (SBS27/43/45–60).
 - **R5 — The hand-labelled map is already optimal.** The agnostic scan recovers exactly the
-  known map and nothing reproducible beyond it (= H07b falsified). A legitimate, data-decided
+  known map and nothing reproducible beyond it (= H08b falsified). A legitimate, data-decided
   outcome, not a failure of execution.
 
 ## Status & Next Steps
@@ -115,15 +124,15 @@ hypothesis's own framing:
   signature-PheWAS work (`task:t177`), and (b) q018's feasibility verdict on downstream
   signature extraction + panel adequacy.
 - Next: literature review (what has been claimed/done), `science:sketch-model` of the
-  association DAG (`models/h07-agnostic-signature-association.dot`,
-  `method:h07-agnostic-association-model`), `science:find-datasets` for EHR-rich substrates
+  association DAG (`models/h08-agnostic-signature-association.dot`,
+  `method:h08-agnostic-association-model`), `science:find-datasets` for EHR-rich substrates
   (GENIE BPC — `search:2026-05-30-ehr-rich-substrates-for-agnostic-signature-association`),
   then `science:pre-register` the positive-control + discovery design.
 
 ## Related
 
 - Topic notes: `topic:signature-decomposition-unmatched-normal`
-- Method/model: `method:h07-agnostic-association-model`, `models/h07-agnostic-signature-association.dot`
+- Method/model: `method:h08-agnostic-association-model`, `models/h08-agnostic-signature-association.dot`
 - Discussion: `discussion:2026-05-30-common-mutational-signatures-known-vs-learned-immune-causes-and-confounding`
 - Questions: `question:q018-...`, `question:q019-...`
 - Code substrate: `code/scripts/export_study_expression.py`, `code/scripts/convert_to_feather.py`,

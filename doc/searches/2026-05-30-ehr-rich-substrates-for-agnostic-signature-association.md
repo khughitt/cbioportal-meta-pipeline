@@ -6,7 +6,7 @@ status: "active"
 created: "2026-05-30"
 updated: "2026-05-30"
 related:
-  - "hypothesis:h07-agnostic-covariate-association-recovers-known-signature-aetiologies-and"
+  - "hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and"
   - "topic:signature-decomposition-unmatched-normal"
   - "question:q018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross"
   - "dataset:aacr-genie-bpc"
@@ -18,7 +18,7 @@ related:
 ## Scope
 
 A scan of public oncology substrates usable as the **covariate side** of an agnostic
-signature-aetiology association (`hypothesis:h07`). Selection criteria, in priority order:
+signature-aetiology association (`hypothesis:h08`). Selection criteria, in priority order:
 
 1. **Co-measured somatic mutations** (so signature exposures `H` can be derived).
 2. **Per-sample signature feasibility** — WES/WGS preferred; gene panels give too few mutations
@@ -33,7 +33,7 @@ by the zenodo/GEO adapters — so ranking is LLM-knowledge-driven, cross-referen
 
 ## Candidate substrates
 
-| Substrate | Mutations | Signature-grade? | Clinical / EHR richness | Access | Verdict for h07 |
+| Substrate | Mutations | Signature-grade? | Clinical / EHR richness | Access | Verdict for h08 |
 |---|---|---|---|---|---|
 | **GENIE BPC** (`dataset:aacr-genie-bpc`) | Panel | Pooled/refit only | **Highest public EHR-adjacency:** PRISSMM treatment, ICD-O, RECIST timelines, outcomes | Synapse + DUA | **Best EHR covariate source**; panel caps to cohort-level signatures |
 | **TCGA MC3** (`dataset:tcga-mc3`) | WES consensus | **Per-sample de-novo OK** (2.9M PASS / 9,104 samples / 32 types) | Structured clinical + (via PanCanAtlas) co-measured mRNA | Public | **Best signature engine**; already ingested as `tcga_mc3` |
@@ -50,9 +50,9 @@ by the zenodo/GEO adapters — so ranking is LLM-knowledge-driven, cross-referen
   **MSK-CHORD** (NLP-derived EHR features) — structured *derivatives* of EHR text, not the text.
 - **Fundamental tension** between the two selection axes: the EHR-richest substrates (BPC, CHORD)
   are **panel-sequenced** (weak per-sample signatures), while the best per-sample substrate (MC3
-  WES + co-expression) carries only structured clinical metadata. → h07 runs on **two tracks**:
+  WES + co-expression) carries only structured clinical metadata. → h08 runs on **two tracks**:
   - *Signature-grade:* MC3 (per-sample de-novo) × PanCanAtlas expression + structured clinical →
-    positive-control + expression-discovery prong (H07a/b).
+    positive-control + expression-discovery prong (H08a/b).
   - *EHR-covariate:* GENIE BPC / MSK-CHORD with **cohort-pooled** signatures × rich EHR terms →
     tests whether EHR-like covariates add aetiology signal the structured fields cannot.
 - Expression as covariate is **already exported** for cBioPortal studies carrying mRNA

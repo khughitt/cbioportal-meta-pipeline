@@ -11,7 +11,7 @@ source_refs:
   - "paper:Kandoth2013"
   - "paper:SanchezVega2018"
 related:
-  - "hypothesis:h07-agnostic-covariate-association-recovers-known-signature-aetiologies-and"
+  - "hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and"
 created: "2026-05-30"
 updated: "2026-05-30"
 ---

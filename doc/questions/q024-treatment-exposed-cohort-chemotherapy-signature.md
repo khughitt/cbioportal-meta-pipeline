@@ -1,5 +1,5 @@
 ---
-id: question:024-treatment-exposed-cohort-chemotherapy-signature
+id: question:q024-treatment-exposed-cohort-chemotherapy-signature
 type: question
 title: Which cBioPortal studies carry treatment-induced signatures (SBS11/SBS31/SBS35/SBS87)
   that must be flagged as a confound stratum before the h08 positive-control scan?

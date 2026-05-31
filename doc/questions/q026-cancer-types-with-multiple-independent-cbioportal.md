@@ -1,5 +1,5 @@
 ---
-id: question:026-cancer-types-with-multiple-independent-cbioportal
+id: question:q026-cancer-types-with-multiple-independent-cbioportal
 type: question
 title: Which cancer types have >=2 independent cBioPortal/MC3 studies with adequate
   depth to test cross-study signature-exposure replication?

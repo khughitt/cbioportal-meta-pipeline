@@ -1,5 +1,5 @@
 ---
-id: question:022-apobec-a3a-a3b-joint-expression-and-mmr-omikli
+id: question:q022-apobec-a3a-a3b-joint-expression-and-mmr-omikli
 type: question
 title: Does a joint APOBEC3A+APOBEC3B expression score (and intact-MMR expression
   in MSS tumors) predict SBS2/SBS13 burden better than single covariates?

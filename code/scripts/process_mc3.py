@@ -79,8 +79,8 @@ print(
 # ---------------------------------------------------------------------------
 # Gene-symbol reference (matches convert_to_feather.py's filter).
 # ---------------------------------------------------------------------------
-grch37 = pd.read_csv("data/grch37.tsv", sep="\t")
-grch38 = pd.read_csv("data/grch38.tsv", sep="\t")
+grch37 = pd.read_csv(snek.input.grch37, sep="\t")
+grch38 = pd.read_csv(snek.input.grch38, sep="\t")
 valid_symbols: set[str] = set(grch37.symbol).union(grch38.symbol)
 print(
     f"Reference gene set: {len(valid_symbols)} symbols (GRCh37 ∪ GRCh38)",

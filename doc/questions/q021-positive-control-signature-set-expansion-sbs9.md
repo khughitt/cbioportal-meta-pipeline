@@ -1,5 +1,5 @@
 ---
-id: question:021-positive-control-signature-set-expansion-sbs9
+id: question:q021-positive-control-signature-set-expansion-sbs9
 type: question
 title: Should the h08 positive-control signature set be expanded to include SBS9 (germinal-centre)
   and SBS54, and which MMR signatures are the canonical MSI discriminators?

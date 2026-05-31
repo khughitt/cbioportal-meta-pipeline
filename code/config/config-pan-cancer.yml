@@ -43,6 +43,8 @@ panel_bearing_studies:
 # instead.
 study_panel_map: {}
 
+cosmic_cgc_path: "/data/raw/cosmic/v100/Cosmic_CancerGeneCensus_v100_GRCh38.tsv"
+
 # Panel callable-Mb registry defaults (t092 / t081 plan task 1). Populate
 # `panel_callable_mb_override` with per-panel published Mb values when those studies
 # are in the run.

@@ -1,5 +1,5 @@
 ---
-id: question:020-minimum-sample-size-and-caller-provenance-for
+id: question:q020-minimum-sample-size-and-caller-provenance-for
 type: question
 title: What minimum per-cancer-type sample size and variant-caller provenance does
   the cross-study cohort need for reliable signature extraction/fitting?

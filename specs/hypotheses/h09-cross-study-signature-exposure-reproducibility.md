@@ -24,7 +24,7 @@ related:
   - topic:signature-extraction-fitting-methods
   - topic:aetiology-covariate-association
   - question:q020-minimum-sample-size-and-caller-provenance-for
-  - question:q021-how-should-single-caller-cbioportal-studies-be-flagged-and-handled-in-signature-analysis
+  - question:q021-positive-control-signature-set-expansion-sbs9
 ---
 
 # Hypothesis: Per-cancer-type mutational-signature exposures reproduce across independent cBioPortal studies, and divergences are explained by technical batch

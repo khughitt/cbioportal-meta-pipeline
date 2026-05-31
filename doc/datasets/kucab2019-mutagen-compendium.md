@@ -3,14 +3,12 @@ id: "dataset:kucab2019-mutagen-compendium"
 type: "dataset"
 title: "Kucab 2019 environmental-mutagen reference signature compendium (iPSC)"
 status: "active"
-profiles: ["science-pkg-entity-1.0"]
+source_class: "reference"
 origin: "external"
 tier: "evaluate-next"
 license: "CC-BY-4.0"
 update_cadence: "static"
 ontology_terms: []
-datapackage: ""
-local_path: ""
 accessions:
   - "Kucab 2019 Cell supplementary signatures (DOI 10.1016/j.cell.2019.03.001)"
 access:

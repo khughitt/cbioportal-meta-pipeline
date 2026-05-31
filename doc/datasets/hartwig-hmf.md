@@ -3,14 +3,12 @@ id: "dataset:hartwig-hmf"
 type: "dataset"
 title: "Hartwig Medical Foundation (HMF) metastatic pan-cancer WGS"
 status: "active"
-profiles: ["science-pkg-entity-1.0"]
+source_class: "observational"
 origin: "external"
 tier: "evaluate-next"
 license: "custom"
 update_cadence: "versioned-releases"
 ontology_terms: []
-datapackage: ""
-local_path: ""
 accessions:
   - "Hartwig Medical Foundation DR-series (https://www.hartwigmedicalfoundation.nl/en/data/data-access-request/)"
 access:

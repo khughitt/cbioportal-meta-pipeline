@@ -1,5 +1,5 @@
 ---
-id: question:025-causal-direction-guard-for-expression-signature
+id: question:q025-causal-direction-guard-for-expression-signature
 type: question
 title: What operationalisable causality guard (mediation, clonal timing, cross-study
   replication) should gate h08b expression-to-signature discovery hits before any

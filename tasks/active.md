@@ -838,18 +838,16 @@ Follow-up from MM30 hyperdiploidy mechanism discussion. Test whether common pan-
 - group: searches
 - created: 2026-05-30
 - completed: 2026-05-31
-- outcome: Agnostic covariate-signature association is an established sub-field (TCSM/Robinson2019, signeR 2.0, Diffsig, PPF) with two large systematic scans (Sorensen2023 DNA-repair, ValiPour2022 germline). H08a positive control feasible/corroborated but confirmatory-of-method; H08b discovery scope narrowed to the unsupervised expression-module + cross-decomposition-concordance delta (else scooped). 10 papers in references.bib; 4/10 PDFs acquired (Drummond, ValiPour, Zito, Luo), 6 need manual retrieval (Robinson2019, Sorensen2023, Afsari2021, Kim2016, Adler2023, Park2023).
 
 
 
 ## [t178] Audit signature-reference + caller provenance for the h08 decomposition rule
-
 - priority: P2
 - status: proposed
 - aspects: [computational-analysis]
+- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, method:h08-agnostic-association-model, question:q020-minimum-sample-size-and-caller-provenance-for, question:q021-positive-control-signature-set-expansion-sbs9]
 - group: hypothesis-h08
 - created: 2026-05-31
-- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, method:h08-agnostic-association-model, question:q020-minimum-sample-size-and-caller-provenance-for, question:q021-positive-control-signature-set-expansion-sbs9]
 
 Confirm the COSMIC SBS version loaded by `run_restricted_sigprofiler_assignment.py`, check
 whether SBS9 and SBS54 (and Degasperi2022/Everall2026 additions) are present or absorbed by
@@ -858,13 +856,12 @@ risk artefactual de novo signatures per paper:Jiang2025). Sources: paper:Jiang20
 paper:Ji2023, paper:Degasperi2022, paper:Everall2026, paper:Otlu2023.
 
 ## [t179] Add per-sample mutation-count floor + extraction-vs-refit rule to h08 signature step
-
 - priority: P2
 - status: proposed
 - aspects: [computational-analysis]
+- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, question:q020-minimum-sample-size-and-caller-provenance-for, question:q018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross]
 - group: hypothesis-h08
 - created: 2026-05-31
-- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, question:q020-minimum-sample-size-and-caller-provenance-for, question:q018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross]
 
 Implement a per-sample mutation-count filter (literature guide: ~>=383 SBS for WES; lower with
 matched normal) and a de-novo-vs-refit decision keyed on per-cancer-type sample size and caller
@@ -880,13 +877,12 @@ caller consensus (unknown provenance → refit). Decision is recorded only; no d
 is run. 8 new unit tests.
 
 ## [t180] Specify APOBEC (A3A+A3B joint) + MMR-omikli covariates for h08 Arm C
-
 - priority: P2
 - status: proposed
 - aspects: [causal-modeling, computational-analysis]
+- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, method:h08-agnostic-association-model, question:q022-apobec-a3a-a3b-joint-expression-and-mmr-omikli]
 - group: hypothesis-h08
 - created: 2026-05-31
-- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, method:h08-agnostic-association-model, question:q022-apobec-a3a-a3b-joint-expression-and-mmr-omikli]
 
 Replace single-paralog APOBEC covariate with a joint A3A+A3B expression score; add MMR-expression
 as a positive co-predictor of SBS2/13 within MSS-restricted strata (MMR-omikli coupling); stratify
@@ -894,13 +890,12 @@ APOBEC analysis by assay type (WGS/WES/panel) for coding-context inflation. Sour
 paper:Carpenter2023, paper:MasPonte2020.
 
 ## [t181] Build treatment-exposed study flag as an h08 confound stratum
-
 - priority: P2
 - status: proposed
 - aspects: [computational-analysis]
+- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, question:q024-treatment-exposed-cohort-chemotherapy-signature]
 - group: hypothesis-h08
 - created: 2026-05-31
-- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, question:q024-treatment-exposed-cohort-chemotherapy-signature]
 
 Audit cBioPortal study metadata for treatment-exposed / relapsed cohorts carrying iatrogenic
 signatures (SBS11/SBS31/SBS35/SBS87) and add a treatment-exposed flag (and fraction-treated field)
@@ -908,13 +903,12 @@ parallel to `matched_normal_studies`, to stratify before the positive-control sc
 paper:Diamond2023, paper:Crisafulli2022, paper:Pleasance2020, paper:Maura2023.
 
 ## [t182] Prototype SBS40-vs-SBS5 expression-module separation (h08b flagship test)
-
 - priority: P3
 - status: proposed
 - aspects: [causal-modeling, computational-analysis]
+- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, question:q023-sbs40-vs-sbs5-clocklike-expression-module, question:q025-causal-direction-guard-for-expression-signature]
 - group: hypothesis-h08
 - created: 2026-05-31
-- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, question:q023-sbs40-vs-sbs5-clocklike-expression-module, question:q025-causal-direction-guard-for-expression-signature]
 
 Prototype the h08b discovery headline: unsupervised co-expression modules (NMF) on MC3 RNA-seq vs
 age-conditioned within-tissue SBS40/SBS5 burden; also test POLZ/REV3L expression vs SBS5 in MC3
@@ -922,13 +916,12 @@ LUAD. Apply the causal-direction guard before any upstream claim. Sources: paper
 paper:Luo2023, paper:Spisak2025.
 
 ## [t183] Add ERCC2 + stop-gain-enrichment exploratory cross-checks to h08
-
 - priority: P3
 - status: proposed
 - aspects: [computational-analysis]
+- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, method:h08-agnostic-association-model, question:q021-positive-control-signature-set-expansion-sbs9]
 - group: hypothesis-h08
 - created: 2026-05-31
-- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, method:h08-agnostic-association-model, question:q021-positive-control-signature-set-expansion-sbs9]
 
 Two exploratory secondary checks: (1) ERCC2 somatic-mutation status as a bladder/urothelial
 positive-control covariate targeting SBS5 (paper:Kim2016 ground truth); (2) after any confirmed
@@ -936,14 +929,13 @@ SBS4/SBS13 hit, verify elevated nonsense burden in the Adler2023 protein-truncat
 the existing Bailey2018 driver overlay. Sources: paper:Kim2016, paper:Adler2023.
 
 ## [t184] Re-acquire 36 mutational-signature PDFs lost to dedup bug
-
 - priority: P3
 - status: done
 - aspects: [computational-analysis]
+- related: [search:2026-05-31-prior-agnostic-signature-aetiology-association]
 - group: literature
 - created: 2026-05-31
 - completed: 2026-05-31
-- related: [search:2026-05-31-prior-agnostic-signature-aetiology-association]
 
 A fuzzy-dedup bug during the 2026-05-31 paper batch deleted 36 user-downloaded PDFs without
 filing them (summaries + bib survived). List at ~/downloads/sigs-redrop/REDROP_LIST.txt. Blocked
@@ -955,7 +947,6 @@ papers/pdfs/ (0 missing, 0 ambiguous); all 74 source PDFs left intact in the red
 papers/pdfs/ now holds 151 PDFs, zero zero-byte files.
 
 ## [t185] commons-hygiene: fix pre-existing doc/datasets dataset-promotion validation errors
-
 - priority: P3
 - status: proposed
 - aspects: [software-development]
@@ -969,13 +960,12 @@ refs so the dataset entities validate. Unrelated to the 2026-05-31 paper batch; 
 finishing commons promotion.
 
 ## [t186] commons-hygiene: finish topic datasets-field cleanup so topic promotion passes
-
 - priority: P3
 - status: proposed
 - aspects: [software-development]
+- related: [topic:normal-tissue-mutation-atlas, topic:pre-cancer-prevalence-and-impact, topic:signatures-expression-microenvironment]
 - group: commons-hygiene
 - created: 2026-05-31
-- related: [topic:normal-tissue-mutation-atlas, topic:pre-cancer-prevalence-and-impact, topic:signatures-expression-microenvironment]
 
 Several topics carried free-text `datasets:` frontmatter (not `^dataset:` refs); fixed for
 normal-tissue-mutation-atlas, signature-decomposition-unmatched-normal, pre-cancer-prevalence-and-impact,
@@ -984,7 +974,6 @@ and signatures-expression-microenvironment this session. Verify all 28 topics pa
 remaining free-text dataset names to `dataset:` refs or relocate them to a body section.
 
 ## [t187] commons-hygiene: re-run commons promotion after promote-paper tool bug is fixed
-
 - priority: P3
 - status: blocked
 - aspects: [software-development]
@@ -998,40 +987,56 @@ upstream, re-run paper + topic promotion to publish the reusable mutational-sign
 (catalogs, methods, aetiology papers + topics) to the commons store. Blocked on the upstream fixes.
 
 ## [t188] signature-modality-expansion: indel-call availability census across cBioPortal/MC3
-
 - priority: P3
 - status: proposed
 - aspects: [computational-analysis]
+- related: [hypothesis:h11-joint-indel-sbs-improves-aetiology-discrimination, question:q028-indel-call-availability-across-cbioportal-studies]
 - group: signature-modality-expansion
 - created: 2026-05-31
-- related: [hypothesis:h11-joint-indel-sbs-improves-aetiology-discrimination, question:q028-indel-call-availability-across-cbioportal-studies-for-joint-sbs-id]
 
 Execution arm of `question:q028`: census per-study indel-call presence and depth across the
 cBioPortal/MC3 corpus to determine where joint SBS+ID decomposition is feasible (expected: WGS/MC3
 yes, most panels no). Deliverable: a per-study indel-feasibility flag.
 
 ## [t189] signature-modality-expansion: pilot joint SBS+ID decomposition on MC3 MMRd-vs-MSS
-
 - priority: P3
 - status: proposed
 - aspects: [computational-analysis]
+- related: [hypothesis:h11-joint-indel-sbs-improves-aetiology-discrimination, paper:FerrerTorres2025, paper:Koh2025, paper:Owusu2025]
 - group: signature-modality-expansion
 - created: 2026-05-31
-- related: [hypothesis:h11-joint-indel-sbs-improves-aetiology-discrimination, paper:FerrerTorres2025, paper:Koh2025, paper:Owusu2025]
 
 Cleanest test of `hypothesis:h11`: on MC3 (consensus, indel-bearing), compare aetiology
 discrimination (MMRd vs MSS / dMMR status) of SBS-only vs joint SBS+ID assignment using the
 redefined indel taxonomy (paper:Koh2025) and multimodal catalogue (paper:FerrerTorres2025).
 
 ## [t190] signature-modality-expansion: evaluate copy-number / DBS signatures
-
 - priority: P3
 - status: deferred
 - aspects: [computational-analysis]
+- related: [topic:pan-cancer-signature-catalogs, paper:Everall2026, paper:Steele2022]
 - group: signature-modality-expansion
 - created: 2026-05-31
-- related: [topic:pan-cancer-signature-catalogs, paper:Everall2026, paper:Steele2022]
 
 Evaluate adding copy-number and doublet-base-substitution (DBS) signatures (paper:Everall2026,
 paper:Steele2022). Blocked on CNA ingestion (cross-ref t055 — no CNA modality in the pipeline yet);
 DBS is feasible on WGS/WES substrates sooner. Forward-looking.
+
+## [t193] Create clean-base datapackages and dataset entities for reusable pipeline substrates
+- priority: P2
+- status: proposed
+- aspects: [software-development]
+- related: [task:t185]
+- group: pipeline-refactor
+- created: 2026-05-31
+
+Pipeline-refactor audit finding. For reusable clean-base substrates, create or verify datapackage manifests and doc/datasets/data-*.md entities: cBioPortal per-study mutation+clinical feathers, tcga_mc3 pseudo-study, GENIE panel coverage/callable-size registry, Bailey/CGC/Sanchez-Vega overlays, Li2021 normal-tissue spectra, replication-timing annotations, and canonical gene_cancer_study_ratio_annotated product. Keep project-specific downstream outputs out of base datasets and record license/access restrictions.
+
+## [t194] Normalize workflow logging and execution environments across active Snakemake rules
+- priority: P2
+- status: proposed
+- aspects: [software-development]
+- group: pipeline-refactor
+- created: 2026-05-31
+
+Pipeline-refactor audit finding. Address snakemake --lint findings by adding log directives to active rules and declaring a shared project Python env/container for Python script rules, while preserving specialized R/conda envs for dNdScv, SELECT, and meta-analysis. This should make failures discoverable in concurrent runs and make workflow execution requirements explicit.

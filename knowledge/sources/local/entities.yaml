@@ -22,7 +22,7 @@ entities:
     Undergoing Unpaired Next-Generation Sequencing Assays
   profile: local
   source_path: knowledge/sources/local/entities.yaml
-- canonical_id: paper:Degasperi2022
+- canonical_id: paper:Degasperi2020
   kind: paper
   title: A practical framework and online tool for mutational signature analyses show
     intertissue variation and driver dependencies
@@ -32,11 +32,6 @@ entities:
   kind: paper
   title: Pathway-based dissection of the genomic heterogeneity of cancer hallmarks'
     acquisition with SLAPenrich
-  profile: local
-  source_path: knowledge/sources/local/entities.yaml
-- canonical_id: paper:Jin2024
-  kind: paper
-  title: Accurate and sensitive mutational signature analysis with MuSiCal
   profile: local
   source_path: knowledge/sources/local/entities.yaml
 - canonical_id: paper:Nguyen2022CUPLR

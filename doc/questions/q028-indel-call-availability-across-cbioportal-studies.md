@@ -1,5 +1,5 @@
 ---
-id: question:028-indel-call-availability-across-cbioportal-studies
+id: question:q028-indel-call-availability-across-cbioportal-studies
 type: question
 title: What fraction of cBioPortal/MC3 studies carry indel calls at sufficient depth
   for joint SBS+ID signature decomposition?

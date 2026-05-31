@@ -22,8 +22,8 @@ from resolve_panel_id import resolve_panel_ids  # type: ignore[import-not-found]
 snek = snakemake  # type: ignore[name-defined]  # noqa: F821
 
 # load GRCh37 / GRCh38 gene metadata
-grch37 = pd.read_csv("data/grch37.tsv", sep="\t")
-grch38 = pd.read_csv("data/grch38.tsv", sep="\t")
+grch37 = pd.read_csv(snek.input.grch37, sep="\t")
+grch38 = pd.read_csv(snek.input.grch38, sep="\t")
 
 # fields to encode as categoricals
 cat_fields = [

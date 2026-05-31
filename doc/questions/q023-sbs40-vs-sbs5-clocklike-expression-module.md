@@ -1,5 +1,5 @@
 ---
-id: question:023-sbs40-vs-sbs5-clocklike-expression-module
+id: question:q023-sbs40-vs-sbs5-clocklike-expression-module
 type: question
 title: Can unsupervised co-expression modules distinguish SBS40 from SBS5 clock-like
   activity within-tissue after conditioning on age (the core h08b discovery target)?

@@ -1,0 +1,129 @@
+[
+  {
+    "chain": "cBioPortal study mutation+clinical ingest",
+    "source": "Public cBioPortal study directories under data_dir",
+    "substrate_kind": "tables",
+    "ingest_rules": ["download_study", "convert_to_feather"],
+    "clean_base_substrate": [
+      "studies/{id}/mut/table/mut.feather",
+      "studies/{id}/metadata/samples.feather",
+      "studies/{id}/metadata/patients.feather",
+      "studies/{id}/metadata/study.feather",
+      "studies/{id}/metadata/study_build.txt"
+    ],
+    "base_config": ["studies", "data_dir", "out_dir", "panel_bearing_studies", "study_panel_map", "label alias maps"],
+    "downstream": ["filter_genes", "per-study matrices", "create_freq_tables", "TMB", "dNdScv", "signatures", "expression export"]
+  },
+  {
+    "chain": "TCGA MC3 pseudo-study ingest",
+    "source": "MC3 public MAF plus TCGA case-to-project map",
+    "substrate_kind": "tables",
+    "ingest_rules": ["process_mc3"],
+    "clean_base_substrate": ["studies/tcga_mc3/*"],
+    "base_config": ["studies", "matched_normal_studies"],
+    "downstream": ["same downstream as cBioPortal studies"]
+  },
+  {
+    "chain": "Driver and pathway overlays",
+    "source": "Bailey 2018, COSMIC CGC, Sanchez-Vega 2018",
+    "substrate_kind": "tables",
+    "ingest_rules": ["process_bailey2018_drivers", "process_cgc", "process_sanchez_vega_pathways"],
+    "clean_base_substrate": [
+      "metadata/bailey2018_drivers.feather",
+      "metadata/cgc_drivers.feather",
+      "metadata/sanchez_vega_pathways.feather"
+    ],
+    "base_config": ["cosmic_cgc_path", "select.sources"],
+    "downstream": ["annotate.py", "build_select_gene_universe", "canonical annotated outputs"]
+  },
+  {
+    "chain": "GENIE panel coverage and callable size registry",
+    "source": "GENIE genomic information plus panel BEDs/overrides",
+    "substrate_kind": "tables/bed package",
+    "ingest_rules": ["process_genie_panel_coverage", "build_panel_callable_sizes", "build_panel_beds"],
+    "clean_base_substrate": ["metadata/genie_panel_coverage.feather", "metadata/panel_callable_mb.tsv", "data/panels/*.bed"],
+    "base_config": ["panel_callable_mb_override", "wes_default_callable_mb", "panel_callable_mb_tolerance", "select.panel_beds"],
+    "downstream": ["panel callability", "per-sample TMB", "SELECT"]
+  },
+  {
+    "chain": "Hypermutator / TMB sample annotation",
+    "source": "Per-study mutation and sample feathers plus panel callable registry",
+    "substrate_kind": "table bundle",
+    "ingest_rules": ["compute_per_sample_tmb", "detect_polymerase_hotspots", "combine_samples_tmb", "fit_per_cancer_tmb_gmm", "annotate_hypermutators"],
+    "clean_base_substrate": ["metadata/samples_annotated.feather"],
+    "base_config": ["random_seed", "gmm_min_samples", "panel callable config"],
+    "downstream": ["create_freq_tables", "SELECT", "CH/TMB-aware analyses"]
+  },
+  {
+    "chain": "Per-study mutation-derived tables and matrices",
+    "source": "Clean per-study mutation+sample feathers",
+    "substrate_kind": "tables/matrices",
+    "ingest_rules": ["filter_genes", "create_gene_patient_mutation_count_matrix", "create_gene_cancer_mutation_count_matrix", "create_freq_tables", "create_correlation_matrices"],
+    "clean_base_substrate": ["studies/{id}/mut/table/*_study.feather", "studies/{id}/mut/matrix/*.feather"],
+    "base_config": ["filtering", "subsampling", "panel callability config"],
+    "downstream": ["cross-study summaries", "clusters", "interpretation"]
+  },
+  {
+    "chain": "Cross-study mutation aggregation and meta-analysis",
+    "source": "Per-study frequency tables, samples, overlays, pooled meta inputs",
+    "substrate_kind": "tables/matrices/result bundle",
+    "ingest_rules": ["create_combined_freq_tables", "create_combined_gene_cancer_freq_table", "build_pooled_gene_cancer_input", "run_gene_cancer_meta_analysis", "annotate_*", "join_gene_cancer_meta_in_ratio_table"],
+    "clean_base_substrate": ["summary/mut/table/gene_cancer_study_ratio_annotated.feather"],
+    "base_config": ["matched_normal_studies", "study_panel_map", "meta_analysis_threads", "saturation overrides"],
+    "downstream": ["primary mutation-frequency and pooled-rate claims"]
+  },
+  {
+    "chain": "dNdScv selection scan",
+    "source": "Per-study mutation feathers plus genome build metadata",
+    "substrate_kind": "table/result bundle",
+    "ingest_rules": ["prepare_dndscv_input", "combine_mut_per_cancer_type", "run_dndscv_per_cancer", "reconcile_dndscv_per_cancer", "aggregate_dndscv_per_gene", "join_dndscv_into_annotated", "compare_three_way_rankings"],
+    "clean_base_substrate": ["summary/mut/table/dndscv_pooled.feather", "summary/mut/table/gene_cancer_study_ratio_annotated_dndscv.feather"],
+    "base_config": ["config-pan-cancer-dndscv.yml", "dNdScv conda env", "random_seed"],
+    "downstream": ["opt-in driver-ranking comparison"]
+  },
+  {
+    "chain": "Restricted mutational-signature assignment",
+    "source": "Per-study mutation+sample feathers plus COSMIC cancer-type signature lookup",
+    "substrate_kind": "table/result bundle",
+    "ingest_rules": ["run_restricted_sigprofiler_assignment", "run_restricted_sigprofiler_assignment_per_sample", "compare_sbs1_sbs5_ratio"],
+    "clean_base_substrate": ["studies/{id}/mut/signatures/restricted_assignment*.feather"],
+    "base_config": ["signature COSMIC version", "caller provenance lists", "count floors", "de-novo threshold"],
+    "downstream": ["h08 signature-aetiology covariate work", "SBS1/SBS5 checks"]
+  },
+  {
+    "chain": "Replication-timing reference and burden comparisons",
+    "source": "Public replication-timing bins plus gene coordinates; signature outputs",
+    "substrate_kind": "tables",
+    "ingest_rules": ["prepare_replication_timing_annotations", "compare_replication_timing_burden", "compare_replication_timing_burden_sbs1_proxy"],
+    "clean_base_substrate": ["data/gene_replication_timing.feather", "data/replication_timing_constitutive_bins.feather", "summary/signatures/rt_*"],
+    "base_config": ["replication-timing source paths"],
+    "downstream": ["q003/q009 burden comparisons"]
+  },
+  {
+    "chain": "SELECT co-occurrence / mutual-exclusivity",
+    "source": "Clean sample annotation, gene-sample long table, panel gene sets, driver/pathway references",
+    "substrate_kind": "directory package/result tables",
+    "ingest_rules": ["preflight_select_env", "build_panel_gene_sets", "build_select_gene_universe", "build_select_gam*", "run_select*", "aggregate_select_results"],
+    "clean_base_substrate": ["select/inputs/*", "select/gene_pair_select.feather", "select/pathway_rollup_gene_pairs.feather", "select/gene_cancer_study_select_annotation.feather"],
+    "base_config": ["select.*"],
+    "downstream": ["opt-in t078 co-occurrence layer"]
+  },
+  {
+    "chain": "Expression export",
+    "source": "cBioPortal raw expression and clinical files",
+    "substrate_kind": "parquet package",
+    "ingest_rules": ["export_study_expression", "all_expression"],
+    "clean_base_substrate": ["studies/{id}/expression/expression.parquet", "studies/{id}/expression/clinical.parquet", "studies/{id}/expression/datapackage.json", "studies/{id}/expression/qa_report.md"],
+    "base_config": ["expression.mrna_file", "studies", "data_dir"],
+    "downstream": ["external expression analyses"]
+  },
+  {
+    "chain": "Normal-tissue spectra reference",
+    "source": "Li 2021 somatic mutations plus tissue mapping",
+    "substrate_kind": "tables",
+    "ingest_rules": ["extract_normal_tissue_spectra"],
+    "clean_base_substrate": ["data/normal_tissue_spectra.tsv", "data/normal_tissue_burden.tsv"],
+    "base_config": ["Li2021/mapping input paths"],
+    "downstream": ["q007/q008 normal-background and signature-contamination analyses"]
+  }
+]

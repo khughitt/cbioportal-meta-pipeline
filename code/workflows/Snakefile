@@ -16,6 +16,25 @@ ids = config["studies"]
 
 entities = ['cancer', 'cancer_detailed', 'gene']
 
+mutation_qa_reports = [
+  *expand(out_dir.joinpath("studies/{id}/qa/mutation_substrates.qa_report.md"), id=ids),
+  out_dir.joinpath("qa/mutation/samples_annotated.qa_report.md"),
+  out_dir.joinpath("qa/mutation/gene_cancer_pooled_input.qa_report.md"),
+  out_dir.joinpath("qa/mutation/gene_cancer_pooled_bundle.qa_report.md"),
+  out_dir.joinpath("qa/mutation/gene_cancer_study_annotated.qa_report.md"),
+  out_dir.joinpath("qa/mutation/gene_cancer_study_ratio_annotated.qa_report.md"),
+]
+
+workflow_dag_configfiles = [
+  "code/config/config-10k-genes.yml",
+  "code/config/config-poc.yml",
+  "code/config/config-pan-cancer.yml",
+]
+
+workflow_qa_reports = [
+  out_dir.joinpath("qa/workflow/dag_contract.qa_report.md"),
+]
+
 rule all:
   input:
     expand(out_dir.joinpath("summary/mut/table/{entity}_study.feather"), entity=entities),
@@ -32,7 +51,8 @@ rule all:
     out_dir.joinpath("summary/mut/clusters/cancer.feather"),
     out_dir.joinpath("summary/mut/clusters/gene.feather"),
     out_dir.joinpath("summary/mut/table/gene_cancer_study_annotated.feather"),
-    out_dir.joinpath("summary/mut/table/gene_cancer_study_ratio_annotated.feather")
+    out_dir.joinpath("summary/mut/table/gene_cancer_study_ratio_annotated.feather"),
+    mutation_qa_reports
     # summary/summary.html target removed — producing rule (R Rmd) is commented
     # out pending Python/marimo port. Reinstate once the port lands.
 
@@ -420,6 +440,96 @@ rule join_gene_cancer_meta_in_ratio_table:
     out_dir.joinpath("summary/mut/table/gene_cancer_study_ratio_annotated.feather")
   script:
     "../scripts/join_gene_cancer_meta.py"
+
+#
+# Build-visible mutation pipeline QA (task t191).
+# These rules validate clean-base per-study substrates and the canonical
+# cross-study artifacts that downstream interpretation code consumes.
+#
+rule qa_per_study_mutation_substrates:
+  input:
+    mutations = out_dir.joinpath("studies/{id}/mut/table/mut.feather"),
+    samples = out_dir.joinpath("studies/{id}/metadata/samples.feather")
+  output:
+    out_dir.joinpath("studies/{id}/qa/mutation_substrates.qa_report.md")
+  params:
+    artifact_kind = "per_study_mutation_substrates"
+  script:
+    "../scripts/validate_mutation_pipeline_artifacts.py"
+
+rule qa_samples_annotated:
+  input:
+    samples_annotated = out_dir.joinpath("metadata/samples_annotated.feather")
+  output:
+    out_dir.joinpath("qa/mutation/samples_annotated.qa_report.md")
+  params:
+    artifact_kind = "samples_annotated"
+  script:
+    "../scripts/validate_mutation_pipeline_artifacts.py"
+
+rule qa_gene_cancer_pooled_input:
+  input:
+    pooled_input = out_dir.joinpath("summary/mut/table/gene_cancer_pooled_input.feather")
+  output:
+    out_dir.joinpath("qa/mutation/gene_cancer_pooled_input.qa_report.md")
+  params:
+    artifact_kind = "gene_cancer_pooled_input"
+  script:
+    "../scripts/validate_mutation_pipeline_artifacts.py"
+
+rule qa_gene_cancer_pooled_bundle:
+  input:
+    pooled = out_dir.joinpath("summary/mut/table/gene_cancer_pooled.feather"),
+    diagnostics = out_dir.joinpath("summary/mut/table/gene_cancer_pooled_diagnostics.feather"),
+    leave_one_out = out_dir.joinpath("summary/mut/table/gene_cancer_pooled_leave_one_out.feather"),
+    panel_sensitivity = out_dir.joinpath("summary/mut/table/gene_cancer_pooled_panel_sensitivity.feather"),
+    placebo = out_dir.joinpath("summary/mut/table/gene_cancer_pooled_placebo.feather")
+  output:
+    out_dir.joinpath("qa/mutation/gene_cancer_pooled_bundle.qa_report.md")
+  params:
+    artifact_kind = "gene_cancer_pooled_bundle"
+  script:
+    "../scripts/validate_mutation_pipeline_artifacts.py"
+
+rule qa_gene_cancer_study_annotated:
+  input:
+    table = out_dir.joinpath("summary/mut/table/gene_cancer_study_annotated.feather")
+  output:
+    out_dir.joinpath("qa/mutation/gene_cancer_study_annotated.qa_report.md")
+  params:
+    artifact_kind = "gene_cancer_study_annotated"
+  script:
+    "../scripts/validate_mutation_pipeline_artifacts.py"
+
+rule qa_gene_cancer_study_ratio_annotated:
+  input:
+    table = out_dir.joinpath("summary/mut/table/gene_cancer_study_ratio_annotated.feather")
+  output:
+    out_dir.joinpath("qa/mutation/gene_cancer_study_ratio_annotated.qa_report.md")
+  params:
+    artifact_kind = "gene_cancer_study_ratio_annotated"
+  script:
+    "../scripts/validate_mutation_pipeline_artifacts.py"
+
+rule all_qa:
+  input:
+    mutation_qa_reports,
+    workflow_qa_reports
+
+rule all_workflow_qa:
+  input:
+    workflow_qa_reports
+
+rule validate_workflow_dag_contract:
+  input:
+    snakefile = "code/workflows/Snakefile",
+    configfiles = workflow_dag_configfiles
+  output:
+    out_dir.joinpath("qa/workflow/dag_contract.qa_report.md")
+  params:
+    target = "all"
+  script:
+    "../scripts/validate_snakemake_dag_contract.py"
 
 #
 # dNdScv per-study selection-based driver detection (Martincorena 2017).
@@ -1068,6 +1178,8 @@ def _convert_to_feather_inputs(wildcards):
         "mutations": data_dir.joinpath(f"{wildcards.id}/data_mutations.txt"),
         "samples":   data_dir.joinpath(f"{wildcards.id}/data_clinical_sample.txt"),
         "patients":  data_dir.joinpath(f"{wildcards.id}/data_clinical_patient.txt"),
+        "grch37":    "data/grch37.tsv",
+        "grch38":    "data/grch38.tsv",
         "_staged":   out_dir.joinpath(f"metadata/raw_studies/{wildcards.id}.staged"),
     }
     if wildcards.id in config.get("panel_bearing_studies", []):
@@ -1158,7 +1270,9 @@ ruleorder: process_mc3 > convert_to_feather
 rule process_mc3:
   input:
     mc3_maf = "data/mc3.v0.2.8.PUBLIC.maf.gz",
-    case_to_project = "data/tcga_case_to_project.tsv"
+    case_to_project = "data/tcga_case_to_project.tsv",
+    grch37 = "data/grch37.tsv",
+    grch38 = "data/grch38.tsv"
   output:
     out_dir.joinpath("studies/tcga_mc3/mut/table/mut.feather"),
     out_dir.joinpath("studies/tcga_mc3/metadata/samples.feather"),

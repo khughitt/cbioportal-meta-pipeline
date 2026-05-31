@@ -21,6 +21,7 @@ models/*
 !models/README.md
 !models/*.dot
 .snakemake/
+tasks/.tasks.lock
 .venv/
 
 # Python

@@ -81,6 +81,33 @@ as nuisance, not discovery targets; **SBS5 is an expected true-negative** for an
 covariate (`paper:Spisak2025`). Treatment-induced signatures (SBS11/SBS31/SBS35/SBS87) must be
 flagged as a confound stratum, not read as covariate hits (`question:q024`).
 
+## Signature-exposure substrate hardening (t178 / t179)
+
+The per-sample exposures `H` consumed by this scan are produced by
+`code/scripts/run_restricted_sigprofiler_assignment.py`, hardened by two passes so the
+positive-control gate is not corrupted by reference or provenance artefacts:
+
+- **COSMIC version pinning.** The reference SBS catalog version is explicit, logged, and
+  asserted at run time (`signature_assignment_cosmic_version`, default v3.5 GRCh37 exome) —
+  no silent fallback.
+- **Positive-control presence audit.** SBS9 (lymphoid germinal-centre) and SBS54 (candidate
+  MSI discriminator, `question:q021`) plus the textbook controls are audited against the
+  loaded reference at load time; an absent signature is loudly warned (it would otherwise be
+  "absorbed by nearest neighbours") and recorded in a `*.signature_audit.feather` sidecar.
+- **Caller-consensus stratification.** A per-study `caller_consensus` flag (config
+  `multi_caller_consensus_studies` / `single_caller_studies`; safe default = unknown) is
+  carried on every exposure row so the scan can guard/stratify on single-caller artefacts
+  (`paper:Jiang2025`).
+- **Per-sample count floor.** Samples below the applicable SBS-count floor (~383 WES, lower
+  for matched-normal/WGS) are flagged `passes_count_floor=False` (loud missingness) rather
+  than silently dropped, so the scan uses only trusted exposures.
+- **De-novo-vs-refit rule.** A per-cancer-type {`de_novo`, `refit`} decision keyed on sample
+  size + caller provenance is recorded in a `*.denovo_decision.feather` sidecar; this scan
+  is refit/assignment-based and de-novo extraction is only flagged as warranted, not run.
+
+See `question:q020` (sample-size / caller-provenance floor) and `question:q021` (SBS9/SBS54
+set expansion).
+
 ## Prior art (t177 literature scan, 2026-05-31)
 
 The agnostic covariate↔signature-activity association is **not novel** — see

@@ -600,13 +600,26 @@ rule all_with_dndscv:
 #
 # Not part of `rule all` yet: this is an opt-in surface for the t109/t110 branch.
 #
+#
+# t178 / t179 hardening: the script also emits two sidecars next to the main feather —
+# `*.signature_audit.feather` (which positive-control / requested signatures are present in
+# the loaded COSMIC reference; loud warning on absent ones) and `*.denovo_decision.feather`
+# (per-cancer-type {de_novo, refit} decision keyed on sample size + caller provenance). The
+# main feather gains the `caller_consensus`, `total_sbs_count`, `count_floor`,
+# `passes_count_floor` columns. Config keys: `signature_assignment_cosmic_version` (pinned,
+# logged), `multi_caller_consensus_studies` / `single_caller_studies` (provenance; safe
+# default = unknown), `signature_min_sbs_count_wes` / `signature_min_sbs_count_matched_normal`
+# (per-sample count floors), `signature_denovo_min_samples` (de-novo threshold).
+#
 rule run_restricted_sigprofiler_assignment:
   input:
     mutations = out_dir.joinpath("studies/{id}/mut/table/mut.feather"),
     samples = out_dir.joinpath("studies/{id}/metadata/samples.feather"),
     lookup = "data/cosmic_cancer_type_signatures.tsv"
   output:
-    out_dir.joinpath("studies/{id}/mut/signatures/restricted_assignment.feather")
+    out_dir.joinpath("studies/{id}/mut/signatures/restricted_assignment.feather"),
+    out_dir.joinpath("studies/{id}/mut/signatures/restricted_assignment.signature_audit.feather"),
+    out_dir.joinpath("studies/{id}/mut/signatures/restricted_assignment.denovo_decision.feather")
   params:
     assignment_unit = "study"
   script:
@@ -618,7 +631,9 @@ rule run_restricted_sigprofiler_assignment_per_sample:
     samples = out_dir.joinpath("studies/{id}/metadata/samples.feather"),
     lookup = "data/cosmic_cancer_type_signatures.tsv"
   output:
-    out_dir.joinpath("studies/{id}/mut/signatures/restricted_assignment_per_sample.feather")
+    out_dir.joinpath("studies/{id}/mut/signatures/restricted_assignment_per_sample.feather"),
+    out_dir.joinpath("studies/{id}/mut/signatures/restricted_assignment_per_sample.signature_audit.feather"),
+    out_dir.joinpath("studies/{id}/mut/signatures/restricted_assignment_per_sample.denovo_decision.feather")
   params:
     assignment_unit = "sample"
   script:

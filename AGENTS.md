@@ -109,6 +109,31 @@ Run configs may provide `cancer_type_alias_map`, `cancer_type_detailed_alias_map
 `primary_site_alias_map`, and `oncotree_code_alias_map` to collapse known study-specific labels
 without adding an external OncoTree table.
 
+### Mutational-signature exposure hardening (t178 / t179)
+
+`code/scripts/run_restricted_sigprofiler_assignment.py` (rules
+`run_restricted_sigprofiler_assignment` + `..._per_sample`) feeds per-sample signature
+exposures into the h08 agnostic covariate-association scan
+(`method:h08-agnostic-association-model`). Two audit/guard passes harden those exposures:
+
+- **t178 — signature-reference + caller provenance.** The COSMIC SBS catalog version is
+  pinned + logged at run time and asserted to exist (`signature_assignment_cosmic_version`,
+  default `3.5` GRCh37 exome — no silent fallback). At load time each requested + positive-
+  control signature (notably SBS9 / SBS54) is audited against the loaded reference; absent
+  signatures emit a loud "would be absorbed by nearest neighbours" warning and are recorded
+  in the `*.signature_audit.feather` sidecar. A per-study caller-consensus flag
+  (`caller_consensus` column) is propagated from `multi_caller_consensus_studies` /
+  `single_caller_studies` config lists — safe default = **unknown** (`None`), never assumed
+  consensus (single-caller studies risk artefactual de-novo signatures, Jiang2025).
+- **t179 — per-sample count floor + de-novo-vs-refit decision.** A configurable per-sample
+  SBS-count floor (`signature_min_sbs_count_wes` default 383;
+  `signature_min_sbs_count_matched_normal` default 100) adds `total_sbs_count`,
+  `count_floor`, `passes_count_floor` columns; sub-floor samples are flagged (loud
+  missingness), not silently dropped. A per-cancer-type {`de_novo`, `refit`} decision keyed
+  on sample size (`signature_denovo_min_samples`, default 200) + caller provenance is
+  recorded in the `*.denovo_decision.feather` sidecar. The script only *records* the
+  decision; it remains assignment/refit-based and does not run a de-novo extractor.
+
 The final ratio output `gene_cancer_study_ratio_annotated.feather` carries the gene-level
 overlays, the CH-aware annotations, and the joined t077 pooled meta-analysis columns
 (`pooled_*_{inclusive,exclusive}`, `k_studies_{inclusive,exclusive}`,

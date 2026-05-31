@@ -14,10 +14,33 @@ panel_bearing_studies:
 study_panel_map: {}
 
 signature_assignment_genome_build: "GRCh37"
-signature_assignment_cosmic_version: "3.5"
+# COSMIC SBS reference version (t178). Pinned to v3.4: it is the catalog SigProfilerAssignment
+# currently ships AND the version frozen by `pre-registration:h08-positive-control`
+# (§ Total Comparison Count). resolve_cosmic_reference() fails loudly if this names a catalog
+# the installed package does not ship, rather than silently falling back to another reference.
+signature_assignment_cosmic_version: "3.4"
 signature_assignment_exome: true
 signature_assignment_lookup_keys:
   - breast
+
+# t178 — per-study variant-caller-consensus provenance. Single-caller studies risk
+# artefactual de-novo signatures (Jiang2025); studies absent from BOTH lists are treated as
+# UNKNOWN (caller_consensus=None) and never assumed to be consensus. MC3 is multi-caller
+# consensus by construction (Ellrott 2018, 7-caller union).
+multi_caller_consensus_studies:
+  - tcga_mc3
+single_caller_studies: []
+
+# t179 — per-sample SBS count floor before a sample's exposures are trusted. ~>=383 SBS for
+# WES (literature guide); lower for matched-normal / WGS where calls are cleaner. Sub-floor
+# samples are flagged (passes_count_floor=False) + audited, never silently dropped.
+signature_min_sbs_count_wes: 383
+signature_min_sbs_count_matched_normal: 100
+
+# t179 — per-cancer-type sample-size floor for de-novo extraction. Below this (or without
+# caller consensus) the rule records `refit` rather than `de_novo` (Islam2022/Medo2024/
+# DiazGay2023/Pancotti2023: de-novo extraction needs adequate n + consensus calls).
+signature_denovo_min_samples: 200
 
 signature_ratio_min_samples_per_group: 25
 signature_ratio_pseudocount: 0.5

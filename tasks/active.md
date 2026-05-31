@@ -841,3 +841,102 @@ Follow-up from MM30 hyperdiploidy mechanism discussion. Test whether common pan-
 - outcome: Agnostic covariate-signature association is an established sub-field (TCSM/Robinson2019, signeR 2.0, Diffsig, PPF) with two large systematic scans (Sorensen2023 DNA-repair, ValiPour2022 germline). H08a positive control feasible/corroborated but confirmatory-of-method; H08b discovery scope narrowed to the unsupervised expression-module + cross-decomposition-concordance delta (else scooped). 10 papers in references.bib; 4/10 PDFs acquired (Drummond, ValiPour, Zito, Luo), 6 need manual retrieval (Robinson2019, Sorensen2023, Afsari2021, Kim2016, Adler2023, Park2023).
 
 
+
+## [t178] Audit signature-reference + caller provenance for the h08 decomposition rule
+
+- priority: P2
+- status: proposed
+- aspects: [computational-analysis]
+- group: hypothesis-h08
+- created: 2026-05-31
+- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, method:h08-agnostic-association-model, question:q020-minimum-sample-size-and-caller-provenance-for, question:q021-positive-control-signature-set-expansion-sbs9]
+
+Confirm the COSMIC SBS version loaded by `run_restricted_sigprofiler_assignment.py`, check
+whether SBS9 and SBS54 (and Degasperi2022/Everall2026 additions) are present or absorbed by
+nearest neighbours, and add a per-study variant-caller-consensus flag (single-caller studies
+risk artefactual de novo signatures per paper:Jiang2025). Sources: paper:Jiang2025,
+paper:Ji2023, paper:Degasperi2022, paper:Everall2026, paper:Otlu2023.
+
+## [t179] Add per-sample mutation-count floor + extraction-vs-refit rule to h08 signature step
+
+- priority: P2
+- status: proposed
+- aspects: [computational-analysis]
+- group: hypothesis-h08
+- created: 2026-05-31
+- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, question:q020-minimum-sample-size-and-caller-provenance-for, question:q018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross]
+
+Implement a per-sample mutation-count filter (literature guide: ~>=383 SBS for WES; lower with
+matched normal) and a de-novo-vs-refit decision keyed on per-cancer-type sample size and caller
+provenance, before per-sample exposures feed the h08 scan. Sources: paper:Islam2022,
+paper:Medo2024, paper:DiazGay2023, paper:Pancotti2023.
+
+## [t180] Specify APOBEC (A3A+A3B joint) + MMR-omikli covariates for h08 Arm C
+
+- priority: P2
+- status: proposed
+- aspects: [causal-modeling, computational-analysis]
+- group: hypothesis-h08
+- created: 2026-05-31
+- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, method:h08-agnostic-association-model, question:q022-apobec-a3a-a3b-joint-expression-and-mmr-omikli]
+
+Replace single-paralog APOBEC covariate with a joint A3A+A3B expression score; add MMR-expression
+as a positive co-predictor of SBS2/13 within MSS-restricted strata (MMR-omikli coupling); stratify
+APOBEC analysis by assay type (WGS/WES/panel) for coding-context inflation. Sources:
+paper:Carpenter2023, paper:MasPonte2020.
+
+## [t181] Build treatment-exposed study flag as an h08 confound stratum
+
+- priority: P2
+- status: proposed
+- aspects: [computational-analysis]
+- group: hypothesis-h08
+- created: 2026-05-31
+- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, question:q024-treatment-exposed-cohort-chemotherapy-signature]
+
+Audit cBioPortal study metadata for treatment-exposed / relapsed cohorts carrying iatrogenic
+signatures (SBS11/SBS31/SBS35/SBS87) and add a treatment-exposed flag (and fraction-treated field)
+parallel to `matched_normal_studies`, to stratify before the positive-control scan. Sources:
+paper:Diamond2023, paper:Crisafulli2022, paper:Pleasance2020, paper:Maura2023.
+
+## [t182] Prototype SBS40-vs-SBS5 expression-module separation (h08b flagship test)
+
+- priority: P3
+- status: proposed
+- aspects: [causal-modeling, computational-analysis]
+- group: hypothesis-h08
+- created: 2026-05-31
+- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, question:q023-sbs40-vs-sbs5-clocklike-expression-module, question:q025-causal-direction-guard-for-expression-signature]
+
+Prototype the h08b discovery headline: unsupervised co-expression modules (NMF) on MC3 RNA-seq vs
+age-conditioned within-tissue SBS40/SBS5 burden; also test POLZ/REV3L expression vs SBS5 in MC3
+LUAD. Apply the causal-direction guard before any upstream claim. Sources: paper:Hakobyan2024,
+paper:Luo2023, paper:Spisak2025.
+
+## [t183] Add ERCC2 + stop-gain-enrichment exploratory cross-checks to h08
+
+- priority: P3
+- status: proposed
+- aspects: [computational-analysis]
+- group: hypothesis-h08
+- created: 2026-05-31
+- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, method:h08-agnostic-association-model, question:q021-positive-control-signature-set-expansion-sbs9]
+
+Two exploratory secondary checks: (1) ERCC2 somatic-mutation status as a bladder/urothelial
+positive-control covariate targeting SBS5 (paper:Kim2016 ground truth); (2) after any confirmed
+SBS4/SBS13 hit, verify elevated nonsense burden in the Adler2023 protein-truncation gene set via
+the existing Bailey2018 driver overlay. Sources: paper:Kim2016, paper:Adler2023.
+
+## [t184] Re-acquire 36 mutational-signature PDFs lost to dedup bug
+
+- priority: P3
+- status: blocked
+- aspects: [computational-analysis]
+- group: literature
+- created: 2026-05-31
+- related: [search:2026-05-31-prior-agnostic-signature-aetiology-association]
+
+A fuzzy-dedup bug during the 2026-05-31 paper batch deleted 36 user-downloaded PDFs without
+filing them (summaries + bib survived). List at ~/downloads/sigs-redrop/REDROP_LIST.txt. Blocked
+on user re-dropping originals into ~/downloads/sigs-redrop/, after which rename+file into
+papers/pdfs/. Automated OA re-fetch recovered 0/34.

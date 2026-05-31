@@ -4,12 +4,18 @@ type: "method"
 title: "Agnostic covariate–signature-exposure association model (h08)"
 status: "active"
 created: "2026-05-30"
-updated: "2026-05-30"
+updated: "2026-05-31"
 related:
   - "hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and"
   - "topic:signature-decomposition-unmatched-normal"
   - "discussion:2026-05-30-common-mutational-signatures-known-vs-learned-immune-causes-and-confounding"
   - "search:2026-05-30-ehr-rich-substrates-for-agnostic-signature-association"
+  - "search:2026-05-31-prior-agnostic-signature-aetiology-association"
+  - "topic:aetiology-covariate-association"
+  - "topic:signature-extraction-fitting-methods"
+  - "topic:dna-damage-repair-signature-mechanisms"
+  - "topic:apobec-mutagenesis"
+  - "topic:signatures-expression-microenvironment"
 ---
 
 # Agnostic covariate–signature-exposure association model (h08)
@@ -66,6 +72,14 @@ Before trusting any novel edge, the scan must **recover the textbook edges unpro
 (skin), smoking↔SBS4 (lung), APOBEC3 expr↔SBS2/13, MMR/MSI↔SBS6/15/26, POLE↔SBS10. Failure here
 (H08a falsified) means the method is underpowered or confounded beyond rescue and the discovery
 prong is void.
+
+**Set extensions (2026-05-31 batch; see `hypothesis:h08` design-refinements section):** add
+**SBS9** (germinal-centre/AID) as a *tissue-restricted* positive control in lymphoid strata
+(`paper:Machado2022`); evaluate **SBS54** as an MSI discriminator (`paper:Ji2023`) pending a
+germline-artefact check (`question:q021`). **SBS5/SBS1 are clock-like by construction** — pre-classify
+as nuisance, not discovery targets; **SBS5 is an expected true-negative** for any single exogenous
+covariate (`paper:Spisak2025`). Treatment-induced signatures (SBS11/SBS31/SBS35/SBS87) must be
+flagged as a confound stratum, not read as covariate hits (`question:q024`).
 
 ## Prior art (t177 literature scan, 2026-05-31)
 

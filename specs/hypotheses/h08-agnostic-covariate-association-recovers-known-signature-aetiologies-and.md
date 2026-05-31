@@ -142,3 +142,32 @@ hypothesis's own framing:
 - Questions: `question:q018-...`, `question:q019-...`
 - Code substrate: `code/scripts/export_study_expression.py`, `code/scripts/convert_to_feather.py`,
   `code/scripts/run_restricted_sigprofiler_assignment.py`
+
+## Literature-informed design refinements (2026-05-31 paper batch)
+
+A ~80-paper mutational-signature literature batch (summaries in `doc/papers/`, syntheses in the
+`topic:*` notes linked above) sharpened the h08 design. Key consequences:
+
+- **Positive-control set extended.** Beyond UV/SBS7, smoking/SBS4, APOBEC/SBS2-13, MMR/SBS6-15-26,
+  POLE/SBS10: add **SBS9** (germinal-centre/AID) as a *tissue-restricted* positive control in
+  lymphoid strata (`paper:Machado2022`), and evaluate **SBS54** as an MSI discriminator
+  (`paper:Ji2023`) pending a germline-artefact check. See `question:q021`.
+- **APOBEC Arm C respecified** to a joint A3A+A3B expression score, with MMR expression as a
+  positive co-predictor of SBS2/13 in MSS strata (MMR-omikli coupling; `paper:Carpenter2023`,
+  `paper:MasPonte2020`). See `question:q022`.
+- **Clock-like confounders.** SBS1/SBS5 are clock-like by construction (age must be a pre-specified
+  nuisance covariate); **SBS5 is an expected true-negative** for single exogenous covariates
+  (`paper:Spisak2025`). The flagship h08b discovery test is **SBS40-vs-SBS5 separation via
+  age-conditioned expression modules** (`question:q023`).
+- **Reliability gates.** De novo extraction needs consensus-called studies and adequate per-sample
+  counts (`paper:Jiang2025`, `paper:Islam2022`, `paper:Medo2024`); single-caller studies are flagged.
+  See `question:q020`, `task:t178`, `task:t179`.
+- **Treatment confound.** Iatrogenic signatures (SBS11/SBS31/SBS35/SBS87) must be flagged as a
+  confound stratum before the scan (`paper:Diamond2023`, `paper:Crisafulli2022`). See `question:q024`,
+  `task:t181`.
+- **Causal-direction guard.** The expression→`H` edge remains unidentified by adjustment; h08b hits
+  require a pre-specified guard (mediation / clonal timing / cross-study replication) before any
+  upstream claim. See `question:q025`.
+
+These refinements are tracked as `task:t178`–`task:t183`; they do not change the committed H08a
+positive-control gate in `pre-registration:h08-positive-control` (they extend and operationalise it).

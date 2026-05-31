@@ -14,9 +14,8 @@ ontology_terms:
   - clock-like signatures
   - compositional data analysis
 datasets:
-  - "TCGA pan-cancer (Luo2023: n=9,807 samples, 32 cancer types)"
-  - "TCGA multi-tissue (Hakobyan2024: n=3,132 samples, 12 tissues)"
-  - "PCAWG (Hakobyan2024: n=1,471 samples, 14 tissues)"
+  - dataset:tcga
+  - dataset:pcawg
 source_refs:
   - "paper:Hakobyan2024"
   - "paper:Luo2023"
@@ -272,3 +271,9 @@ informative secondary finding beyond the primary positive-control test.
 - paper:Luo2023 — Pan-cancer TCGA map of 13 etiology groups × 21 TME cell types; documents
   Clock-like as the broadest-impact signature class; builds immune-based LASSO risk score;
   identifies APOBEC direction-reversal across cancer types.
+
+## Datasets referenced
+
+Resources discussed (not yet first-class `dataset:` entities):
+
+- "TCGA multi-tissue (Hakobyan2024: n=3,132 samples, 12 tissues)"

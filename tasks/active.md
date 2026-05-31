@@ -940,3 +940,85 @@ A fuzzy-dedup bug during the 2026-05-31 paper batch deleted 36 user-downloaded P
 filing them (summaries + bib survived). List at ~/downloads/sigs-redrop/REDROP_LIST.txt. Blocked
 on user re-dropping originals into ~/downloads/sigs-redrop/, after which rename+file into
 papers/pdfs/. Automated OA re-fetch recovered 0/34.
+
+## [t185] commons-hygiene: fix pre-existing doc/datasets dataset-promotion validation errors
+
+- priority: P3
+- status: proposed
+- aspects: [software-development]
+- group: commons-hygiene
+- created: 2026-05-31
+
+`science validate` reports ~57 pre-existing errors, all `dataset-promotion.required-field-missing`
+and `dataset-promotion.datapackage-unresolved` on `doc/datasets/*.md` (e.g. aacr-genie, cbioportal,
+cosmic, gtex, msk-*, pcawg, tcga*). Populate the required promotion fields / resolve datapackage
+refs so the dataset entities validate. Unrelated to the 2026-05-31 paper batch; surfaced while
+finishing commons promotion.
+
+## [t186] commons-hygiene: finish topic datasets-field cleanup so topic promotion passes
+
+- priority: P3
+- status: proposed
+- aspects: [software-development]
+- group: commons-hygiene
+- created: 2026-05-31
+- related: [topic:normal-tissue-mutation-atlas, topic:pre-cancer-prevalence-and-impact, topic:signatures-expression-microenvironment]
+
+Several topics carried free-text `datasets:` frontmatter (not `^dataset:` refs); fixed for
+normal-tissue-mutation-atlas, signature-decomposition-unmatched-normal, pre-cancer-prevalence-and-impact,
+and signatures-expression-microenvironment this session. Verify all 28 topics pass
+`uv run --frozen science commons promote topic --from cbioportal` (dry-run) and convert any
+remaining free-text dataset names to `dataset:` refs or relocate them to a body section.
+
+## [t187] commons-hygiene: re-run commons promotion after promote-paper tool bug is fixed
+
+- priority: P3
+- status: blocked
+- aspects: [software-development]
+- group: commons-hygiene
+- created: 2026-05-31
+
+`science commons promote paper --from cbioportal --apply` crashes with `TypeError: unhashable type:
+'dict'` (commons/promote.py:2810) — filed as science feedback fb-2026-05-31-001. `promote topic`
+aborts the whole run on one schema-invalid entity (fb-2026-05-31-002). Once both are resolved
+upstream, re-run paper + topic promotion to publish the reusable mutational-signature corpus
+(catalogs, methods, aetiology papers + topics) to the commons store. Blocked on the upstream fixes.
+
+## [t188] signature-modality-expansion: indel-call availability census across cBioPortal/MC3
+
+- priority: P3
+- status: proposed
+- aspects: [computational-analysis]
+- group: signature-modality-expansion
+- created: 2026-05-31
+- related: [hypothesis:h11-joint-indel-sbs-improves-aetiology-discrimination, question:q028-indel-call-availability-across-cbioportal-studies-for-joint-sbs-id]
+
+Execution arm of `question:q028`: census per-study indel-call presence and depth across the
+cBioPortal/MC3 corpus to determine where joint SBS+ID decomposition is feasible (expected: WGS/MC3
+yes, most panels no). Deliverable: a per-study indel-feasibility flag.
+
+## [t189] signature-modality-expansion: pilot joint SBS+ID decomposition on MC3 MMRd-vs-MSS
+
+- priority: P3
+- status: proposed
+- aspects: [computational-analysis]
+- group: signature-modality-expansion
+- created: 2026-05-31
+- related: [hypothesis:h11-joint-indel-sbs-improves-aetiology-discrimination, paper:FerrerTorres2025, paper:Koh2025, paper:Owusu2025]
+
+Cleanest test of `hypothesis:h11`: on MC3 (consensus, indel-bearing), compare aetiology
+discrimination (MMRd vs MSS / dMMR status) of SBS-only vs joint SBS+ID assignment using the
+redefined indel taxonomy (paper:Koh2025) and multimodal catalogue (paper:FerrerTorres2025).
+
+## [t190] signature-modality-expansion: evaluate copy-number / DBS signatures
+
+- priority: P3
+- status: deferred
+- aspects: [computational-analysis]
+- group: signature-modality-expansion
+- created: 2026-05-31
+- related: [topic:pan-cancer-signature-catalogs, paper:Everall2026, paper:Steele2022]
+
+Evaluate adding copy-number and doublet-base-substitution (DBS) signatures (paper:Everall2026,
+paper:Steele2022). Blocked on CNA ingestion (cross-ref t055 — no CNA modality in the pipeline yet);
+DBS is feasible on WGS/WES substrates sooner. Forward-looking.

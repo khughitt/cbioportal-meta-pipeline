@@ -1,0 +1,51 @@
+---
+id: question:028-indel-call-availability-across-cbioportal-studies
+type: question
+title: What fraction of cBioPortal/MC3 studies carry indel calls at sufficient depth
+  for joint SBS+ID signature decomposition?
+status: active
+ontology_terms: []
+datasets: []
+source_refs:
+- paper:Koh2025
+- paper:FerrerTorres2025
+related:
+- hypothesis:h11-joint-indel-sbs-improves-aetiology-discrimination
+- topic:signature-extraction-fitting-methods
+- question:q020-minimum-sample-size-and-caller-provenance-for
+created: '2026-05-31'
+updated: '2026-05-31'
+---
+
+# What fraction of cBioPortal/MC3 studies carry indel calls at sufficient depth for joint SBS+ID signature decomposition?
+
+## Summary
+
+`hypothesis:h11` is gated by indel-call availability. This question quantifies, across the corpus, which studies report indels at usable depth for joint SBS+ID decomposition (expected: WGS/MC3 yes, most panels no).
+
+## Why It Matters
+
+- Decision: realistic scope of any joint SBS+ID analysis and whether h11 can be tested beyond MC3/PCAWG.
+- Risk: effort on a modality only a few studies support.
+
+## Current Evidence
+
+- `paper:Koh2025` (indel taxonomy) and `paper:FerrerTorres2025` (multimodal SBS+ID) define what adequate indel data enables.
+- MC3 is consensus + indel-bearing; panels under-call indels.
+
+## Thoughts
+
+- Feasibility likely binary by assay class.
+- Uncertainty: indel call-quality heterogeneity within the WES tier.
+
+## Connections to Project
+
+- Hypotheses: `hypothesis:h11-...`.
+- Analyses: per-study indel-count/depth census; ties q020.
+- Priority: P3.
+
+## Related
+
+- Hypotheses: `hypothesis:h11-joint-indel-sbs-improves-aetiology-discrimination`
+- Topics: `topic:signature-extraction-fitting-methods`
+- Questions: `question:q020-...`

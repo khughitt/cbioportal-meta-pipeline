@@ -9,8 +9,8 @@ ontology_terms:
   - field cancerization
   - clonal expansion
 datasets:
-  - "cBioPortal pre-malignant subsets where study metadata supports precursor-state identification"
-  - "AACR GENIE subsets where sample metadata supports precursor-state identification"
+  - dataset:cbioportal
+  - dataset:aacr-genie
 source_refs: []
 related:
   - "hypothesis:h06-pre-malignant-n-minus-1-driver-carriage"

@@ -871,6 +871,14 @@ matched normal) and a de-novo-vs-refit decision keyed on per-cancer-type sample 
 provenance, before per-sample exposures feed the h08 scan. Sources: paper:Islam2022,
 paper:Medo2024, paper:DiazGay2023, paper:Pancotti2023.
 
+**Done 2026-05-31 (commit 02a0b4a):** per-sample SBS count floor (`signature_min_sbs_count_wes`
+383 / `signature_min_sbs_count_matched_normal` 100) adds `total_sbs_count` / `count_floor` /
+`passes_count_floor` columns + a low-count audit helper — sub-floor samples flagged, not
+silently dropped (loud missingness). Per-cancer-type {de_novo, refit} decision table
+(`*.denovo_decision.feather`) keyed on sample size (`signature_denovo_min_samples` 200) AND
+caller consensus (unknown provenance → refit). Decision is recorded only; no de-novo extractor
+is run. 8 new unit tests.
+
 ## [t180] Specify APOBEC (A3A+A3B joint) + MMR-omikli covariates for h08 Arm C
 
 - priority: P2

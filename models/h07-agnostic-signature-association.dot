@@ -1,0 +1,52 @@
+// Causal DAG sketch for hypothesis h07 — agnostic covariate <-> signature-exposure association.
+// Outcome: signature exposure H (per-sample burden of a latent mutational process).
+// Spectrum W (which process) is kept separate from exposure H (how much), because
+// selection/immunoediting acts on H, not W (discussion 2026-05-30, Q2).
+// Render: dot -Tsvg models/h07-agnostic-signature-association.dot -o h07.svg
+digraph h07_agnostic_signature_association {
+  rankdir=LR;
+  node [shape=box, style=rounded, fontname="Helvetica"];
+
+  Wspectrum  [label="Signature spectrum W\n(which process)", style="rounded,filled", fillcolor="#e8f0fe"];
+  Hexposure  [label="Signature exposure H\n(OUTCOME: how much)", style="rounded,filled", fillcolor="#fce8e6"];
+
+  Exposure   [label="Exogenous exposure\n(UV, tobacco, AA...)\n[proxy / behavioral]"];
+  Enzyme     [label="Endogenous enzyme activity\n(APOBEC3, POLE)"];
+  ExprModule [label="Expression module\n(immune/inflammation, repair...)\n[co-measured mRNA]"];
+  RepairCap  [label="DNA-repair capacity\n(MMR, HRD)"];
+
+  Tissue     [label="Tissue of origin", style="rounded,filled", fillcolor="#fef7e0"];
+  Ancestry   [label="Ancestry / germline", style="rounded,filled", fillcolor="#fef7e0"];
+  Treatment  [label="Treatment history\n(chemo/radio/PARP)", style="rounded,filled", fillcolor="#fef7e0"];
+  StudyAssay [label="Study / panel / assay\n(batch, callable bp)", style="rounded,filled", fillcolor="#fef7e0"];
+  Selection  [label="Selection / immunoediting", style="rounded,filled", fillcolor="#e6f4ea"];
+
+  Exposure  -> Wspectrum;
+  Exposure  -> Hexposure;
+  Enzyme    -> Wspectrum;
+  Enzyme    -> Hexposure;
+  RepairCap -> Wspectrum;
+  RepairCap -> Hexposure;
+
+  ExprModule -> Hexposure [label="H07b: candidate\nupstream (TEST)", color="#1a73e8", fontcolor="#1a73e8"];
+  Hexposure  -> ExprModule [label="R2: reverse\n(consequence)", style=dashed, color="#d93025", fontcolor="#d93025"];
+  Enzyme     -> ExprModule [label="mediator\n(e.g. APOBEC3 expr)", style=dotted];
+
+  Tissue     -> Exposure;
+  Tissue     -> Wspectrum;
+  Tissue     -> Hexposure;
+  Tissue     -> ExprModule;
+  Ancestry   -> Exposure;
+  Ancestry   -> RepairCap;
+  Treatment  -> Wspectrum;
+  Treatment  -> Hexposure;
+  StudyAssay -> Hexposure [label="R4: artifact", color="#d93025", fontcolor="#d93025"];
+  StudyAssay -> ExprModule;
+
+  Selection  -> Hexposure [label="R3: acts on H\nnot W", color="#188038", fontcolor="#188038"];
+  Hexposure  -> Selection [style=dashed];
+
+  // Adjustment set to identify a covariate -> H effect:
+  // condition on {Tissue, Treatment, StudyAssay, Ancestry}; analyze WITHIN tissue strata.
+  // ExprModule->H is NOT identified without ruling out R2 (mediation/temporality needed).
+}

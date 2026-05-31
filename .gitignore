@@ -13,7 +13,13 @@ papers/pdfs/
 
 # Pipeline outputs / caches (not committed)
 results/
-models/
+# models/ holds both regenerable model dumps (ignored) and hand-authored causal-DAG
+# sources (tracked, Science causal-modeling convention). Exclude contents, then
+# re-include the DAGs + docs. Must be `models/*` not `models/`: git won't descend into
+# a wholly-excluded dir, so negations under it would have no effect.
+models/*
+!models/README.md
+!models/*.dot
 .snakemake/
 .venv/
 

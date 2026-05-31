@@ -132,8 +132,8 @@ status for the retightened arm.
 - parameter: "rank of APOBEC3A/B mRNA among covariates tested vs SBS2/13 exposure, within tissue (APOBEC-prevalent strata)"
   scope: confirmatory
   expected:
-    central: "rank [1, 3]"
-    range:   "rank [1, 5]"
+    central: "rank [1, 3]"          # best guess
+    range:   "rank [1, 5]"          # plausible expectation band — NOT the gate (gate is rank<=3)
     direction: positive
   evidence_tier: hint
   provenance:
@@ -146,7 +146,7 @@ status for the retightened arm.
     - "MC3 mutation samples ∩ PanCanAtlas RNA-seq samples is <100%; effective n per stratum is smaller than raw cohort n"
     - "APOBEC mutagenesis is episodic (kataegis); steady-state mRNA may decorrelate from accumulated SBS2/13 burden"
     - "APOBEC3A vs APOBEC3B contribution differs by tissue; which transcript(s) to use is a design choice"
-  gate_use: "Anchors the §Decision Criteria top-3 rank gate for arm C; soft gate, widest band [1,5] (noisiest arm, expected to be the tolerated miss under 2-of-3)."
+  gate_use: "Anchors the §Decision Criteria rank gate for arm C. Expected plausible band: top-5 (this is the noisiest arm, the likely tolerated miss under 2-of-3). Confirmatory PASS threshold: top-3 — the [1,5] band is the honest pre-data expectation, the gate is rank<=3 per §Decision Criteria; the two are deliberately distinct. Soft gate (literature-only)."
   gate_limitations:
     - alternative: "R2 reverse causation — SBS2/13-causing driver events remodel APOBEC3 expression, so high expr is a consequence not a cause"
       region: "any positive APOBEC3-expr↔SBS2/13 association in the top-3 band"
@@ -165,9 +165,19 @@ signature, with the **expected (positive) sign**, at **FDR q < 0.05**.
 |---|---|---|---|---|
 | A | UV proxy = sun-exposed anatomic site | SBS7 | SKCM | rank ≤ 3, positive, q < 0.05 |
 | B | smoking (pack-years / history) | SBS4 | LUAD+LUSC | rank ≤ 3, positive, q < 0.05 |
-| C | APOBEC3A/B mRNA | SBS2/13 | APOBEC-prevalent tissue strata | rank ≤ 3, positive, q < 0.05 |
+| C | APOBEC3A/B mRNA | SBS2/13 | BLCA·BRCA·CESC·HNSC·LUAD·LUSC (pooled, within-tissue) | pooled rank ≤ 3, positive, q < 0.05 |
 
 **Gate (user-committed): 2 of 3 arms must pass.**
+
+**Arm C aggregation rule (frozen).** The eligible APOBEC-prevalent strata are exactly
+**{BLCA, BRCA, CESC, HNSC, LUAD, LUSC}** — the canonical APOBEC-enriched TCGA tissues (Alexandrov
+2020; Roberts 2013) — frozen here and not expanded or substituted post-hoc. Arm C is evaluated as a
+**single pooled within-tissue model** across these six strata (tissue entered as a fixed-effect
+stratifier so the estimand stays within-tissue per `method:h08-agnostic-association-model`), yielding
+**one** rank for APOBEC3A/B mRNA against SBS2/13. The arm passes iff that **pooled** rank ≤ 3 with
+positive sign at q < 0.05. Per-stratum ranks are reported as **sensitivity / exploratory only** and
+do **not** constitute an alternative pass route — in particular, "APOBEC3 ranks top-3 in *some*
+eligible tissue" is explicitly **not** a pass, removing tissue-cherry-picking flexibility.
 
 Mapped to the canonical verdict vocabulary on **H08a**:
 
@@ -248,7 +258,10 @@ surface the right covariate *near the top* without being told to?" — not "is t
 magnitude?". A magnitude gate would require a `calibrated`-tier effect-size prior this project does
 not yet have; a rank gate is the honest instrument for a hint-tier, literature-only expectation.
 Known limitation: rank is sensitive to the size/composition of the covariate set, so the realized
-covariate-count denominator is reported alongside each arm's verdict.
+covariate-count denominator is reported alongside each arm's verdict — and the covariate universe and
+active-signature inclusion rule that *determine* that denominator are frozen in § Total Comparison
+Count before any rank is computed, so the top-3 threshold cannot be moved by post-hoc denominator
+changes.
 
 ## Exploratory vs. Confirmatory
 
@@ -263,9 +276,24 @@ Per-block `scope:` is authoritative (see § Expectations).
 ## Total Comparison Count
 
 The agnostic scan is the full grid: (covariates) × (active COSMIC SBS signatures) × (tissue strata).
-With ~tens of covariates (structured clinical + derived molecular + N expression modules) × ~30–50
-active SBS × ~32 strata, the exploratory grid is in the **thousands** of cells; the exact denominator
-is reported at run time (it determines the rank metric and the FDR family).
+For a rank-position gate the denominator must be **fixed by rule before any rank is computed**, even
+though its realized integer is only known at run time. The following are **frozen here**:
+
+- **Covariate universe** — the union of (a) the structured clinical fields enumerated in
+  `method:h08-agnostic-association-model` (age, sex, race, stage, MSI, primary_site / anatomic-site,
+  oncotree_code, treatment history where available); (b) the derived molecular features already in
+  the pipeline (TMB, hypermutator class / flags, POLE/POLD1 hotspot, MSI status); and (c) K
+  expression modules. No covariate outside this enumerated union enters the denominator.
+- **Expression-module count K** — fixed by a frozen unsupervised rule (the module-derivation method
+  and its K-selection criterion are specified in the paired analysis plan) and recorded **before**
+  any covariate↔signature rank is computed; K is not tuned against results.
+- **Active-signature inclusion rule** — COSMIC v3.4 SBS reference; a signature enters a stratum's
+  denominator iff it receives non-zero assigned exposure in **≥ 5%** of that stratum's samples
+  (frozen threshold). The reference version and the 5% rule are fixed here.
+
+Under these frozen rules the realized integer denominator (and per-stratum covariate / signature
+counts) is **reported at run time as an output, not a free parameter** — with ~tens of covariates ×
+~30–50 active SBS × ~32 strata, the exploratory grid is in the **thousands** of cells.
 
 | Category | Count | Correction |
 |---|---|---|

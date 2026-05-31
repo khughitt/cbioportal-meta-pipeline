@@ -930,16 +930,21 @@ the existing Bailey2018 driver overlay. Sources: paper:Kim2016, paper:Adler2023.
 ## [t184] Re-acquire 36 mutational-signature PDFs lost to dedup bug
 
 - priority: P3
-- status: blocked
+- status: done
 - aspects: [computational-analysis]
 - group: literature
 - created: 2026-05-31
+- completed: 2026-05-31
 - related: [search:2026-05-31-prior-agnostic-signature-aetiology-association]
 
 A fuzzy-dedup bug during the 2026-05-31 paper batch deleted 36 user-downloaded PDFs without
 filing them (summaries + bib survived). List at ~/downloads/sigs-redrop/REDROP_LIST.txt. Blocked
 on user re-dropping originals into ~/downloads/sigs-redrop/, after which rename+file into
 papers/pdfs/. Automated OA re-fetch recovered 0/34.
+
+**Resolved 2026-05-31:** sift-and-file agent DOI-matched and copied all 36/36 PDFs into
+papers/pdfs/ (0 missing, 0 ambiguous); all 74 source PDFs left intact in the redrop dir.
+papers/pdfs/ now holds 151 PDFs, zero zero-byte files.
 
 ## [t185] commons-hygiene: fix pre-existing doc/datasets dataset-promotion validation errors
 

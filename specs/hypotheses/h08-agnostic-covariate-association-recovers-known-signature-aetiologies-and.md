@@ -123,11 +123,16 @@ hypothesis's own framing:
 - **status: proposed.** Gated on (a) a literature scan of prior agnostic signature-etiology /
   signature-PheWAS work (`task:t177`), and (b) q018's feasibility verdict on downstream
   signature extraction + panel adequacy.
-- Next: literature review (what has been claimed/done), `science:sketch-model` of the
-  association DAG (`models/h08-agnostic-signature-association.dot`,
-  `method:h08-agnostic-association-model`), `science:find-datasets` for EHR-rich substrates
-  (GENIE BPC — `search:2026-05-30-ehr-rich-substrates-for-agnostic-signature-association`),
-  then `science:pre-register` the positive-control + discovery design.
+- **Positive control (H08a) is now pre-registered:**
+  `pre-registration:h08-positive-control` (committed 2026-05-30). It locks the recovery design —
+  three confirmatory arms (UV→SBS7 / smoking→SBS4 / APOBEC3-expr→SBS2/13), a **2-of-3** pass gate,
+  a **top-3 rank + FDR q<0.05** per-arm criterion, anatomic-site UV proxy, and the rule that a
+  `[-]` (0/3) verdict voids the H08b discovery prong. H08b (discovery) remains **unregistered** and
+  is gated behind a passing H08a verdict — author its own pre-reg once H08a passes and t177 fixes
+  the novelty bar.
+- Next: complete the `task:t177` literature scan + q018 feasibility verdict (both activation gates
+  for the registered analysis), build the per-sample refit + within-tissue association layer, then
+  run the H08a positive control.
 
 ## Related
 

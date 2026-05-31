@@ -1,0 +1,68 @@
+# t197 — full-MC3 per-sample SBS refit across the 7 h08 positive-control arm strata.
+#
+# Produces the per-sample exposure table `H` that the h08 agnostic covariate-association
+# scan (`method:h08-agnostic-association-model`, `pre-registration:h08-positive-control`)
+# consumes. Substrate is the MC3 TCGA pan-cancer unified MAF only (`tcga_mc3`) — WES,
+# 7-caller consensus, matched-normal by construction (Ellrott 2018). Panels are excluded
+# from per-sample H by the q018 feasibility verdict (panel median ~3 SBS/sample vs WES ~52).
+#
+# The 7 arm strata map onto 5 distinct COSMIC restriction families (see TCGA_CANCER_TYPE_MAP
+# in run_restricted_sigprofiler_assignment.py):
+#   SKCM        -> melanoma   (Arm A: UV -> SBS7a/b/c/d)
+#   LUAD, LUSC  -> lung       (Arm B: smoking -> SBS4)
+#   BLCA        -> bladder    (Arm C: APOBEC -> SBS2/13)
+#   BRCA        -> breast     (Arm C)
+#   CESC, HNSC  -> head_neck  (Arm C)
+# `signature_assignment_lookup_keys` is the allow-list of families to assign; samples whose
+# normalized cancer family is not listed are not assigned (keeps the run to the 7 arm strata).
+
+data_dir: "/data/raw/cbioportal"
+out_dir: "results/signature-h08-arms-2026-05-31"
+
+studies:
+  - tcga_mc3
+
+matched_normal_studies:
+  - tcga_mc3
+
+panel_bearing_studies: []
+study_panel_map: {}
+
+signature_assignment_genome_build: "GRCh37"
+# COSMIC SBS reference version (t178). Pinned to v3.4 — the version frozen by
+# `pre-registration:h08-positive-control` (§ Total Comparison Count, "COSMIC v3.4 SBS
+# reference"). SigProfilerAssignment ships v1-v3.5; resolve_cosmic_reference() fails loudly
+# if this names a catalog the installed package does not ship (no silent fallback).
+signature_assignment_cosmic_version: "3.4"
+signature_assignment_exome: true
+
+# The 5 restriction families covering the 7 h08 arm strata (see header).
+signature_assignment_lookup_keys:
+  - melanoma
+  - lung
+  - bladder
+  - breast
+  - head_neck
+
+# t178 — per-study variant-caller-consensus provenance. MC3 is multi-caller consensus by
+# construction (Ellrott 2018, 7-caller union). Single-caller studies risk artefactual de-novo
+# signatures (Jiang2025); studies absent from BOTH lists are treated as UNKNOWN
+# (caller_consensus=None) and never assumed consensus.
+multi_caller_consensus_studies:
+  - tcga_mc3
+single_caller_studies: []
+
+# t179 — per-sample SBS count floor before a sample's exposures are trusted. ~>=383 SBS for
+# WES (literature guide); lower for matched-normal / WGS where calls are cleaner. MC3 is
+# matched-normal, so the matched-normal floor (100) applies. Sub-floor samples are flagged
+# (passes_count_floor=False) + audited, never silently dropped (loud missingness).
+signature_min_sbs_count_wes: 383
+signature_min_sbs_count_matched_normal: 100
+
+# t179 — per-cancer-type sample-size floor for de-novo extraction. Below this (or without
+# caller consensus) the rule records `refit` rather than `de_novo`. Decision recorded only;
+# no de-novo extractor is run.
+signature_denovo_min_samples: 200
+
+signature_ratio_min_samples_per_group: 25
+signature_ratio_pseudocount: 0.5

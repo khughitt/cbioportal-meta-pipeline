@@ -977,16 +977,6 @@ The h08 decomposition/exposure layer is now hardened (t178 version-pin+caller-fl
 
 - 2026-05-31: Plan landed: analysis-plan:h08-positive-control-scan (2026-05-31). Verdict NOT-READY — engineering-gated, NOT data-gated/methodology-gated. Correction: the 'pre-register' half of this task is ALREADY DONE — pre-registration:h08-positive-control was committed 2026-05-30 (3 arms, top-3/positive/q<0.05, 2-of-3 gate, COSMIC v3.4, NMF-K rule, compositional+permutation guards all locked). t195 is now the umbrella 'run H08a' task, blocked by 4 implementation checks: (1) q018 verdict, (2) full-MC3 7-strata refit, (3) PanCanAtlas RNA-seq + NMF module layer, (4) the association-layer core. None require gated data.
 
-## [t197] Run full-MC3 per-sample SBS refit across the 7 h08 arm strata (COSMIC v3.4, t178/t179-hardened)
-- priority: P1
-- status: proposed
-- aspects: [computational-analysis, software-development]
-- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, method:h08-agnostic-association-model, pre-registration:h08-positive-control, task:t178, task:t179, task:t195]
-- group: hypothesis-h08
-- created: 2026-05-31
-
-Today only the brca-2026-04-22 subset has a tcga_mc3 per-sample refit. The h08 positive-control scan needs per-sample exposures H across all 7 arm strata: SKCM, LUAD, LUSC, BLCA, BRCA, CESC, HNSC. Run run_restricted_sigprofiler_assignment.py (t178/t179-hardened: COSMIC v3.4 pin, presence audit, caller-consensus flag, count floor, de-novo decision sidecar) across these strata; materialize one joined per-sample H table + the *.signature_audit.feather / *.denovo_decision.feather sidecars. Pre-flight: data-genomics-somatic-mutation-qa on MC3 (PASS handling, dedup Tumor_Sample_Barcode, GRCh37 build, WES opportunity model) and reproduce the prereg §1b PASS-bearing counts (SKCM 466 / LUAD 513 / LUSC 480 / BLCA 411 / BRCA 791 / CESC 289 / HNSC 507). analysis-plan:h08-positive-control-scan check 2 (near-term unblocker).
-
 ## [t198] Build h08 expression-module substrate: stage PanCanAtlas RNA-seq + frozen NMF-K module derivation
 - priority: P1
 - status: proposed

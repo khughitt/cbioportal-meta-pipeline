@@ -832,10 +832,12 @@ Follow-up from MM30 hyperdiploidy mechanism discussion. Test whether common pan-
 
 ## [t177] Literature scan: prior agnostic / unsupervised mutational-signature aetiology association (signature-PheWAS, signature x expression association, signature x clinical-covariate scans). Catalog what has been claimed/done, with which datasets and methods, and whether positive-control recovery of known aetiologies was demonstrated. Gates hypothesis h08.
 - priority: P2
-- status: proposed
+- status: done
 - aspects: [computational-analysis]
-- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, topic:signature-decomposition-unmatched-normal]
+- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, topic:signature-decomposition-unmatched-normal, search:2026-05-31-prior-agnostic-signature-aetiology-association]
 - group: searches
 - created: 2026-05-30
+- completed: 2026-05-31
+- outcome: Agnostic covariate-signature association is an established sub-field (TCSM/Robinson2019, signeR 2.0, Diffsig, PPF) with two large systematic scans (Sorensen2023 DNA-repair, ValiPour2022 germline). H08a positive control feasible/corroborated but confirmatory-of-method; H08b discovery scope narrowed to the unsupervised expression-module + cross-decomposition-concordance delta (else scooped). 10 papers in references.bib; 4/10 PDFs acquired (Drummond, ValiPour, Zito, Luo), 6 need manual retrieval (Robinson2019, Sorensen2023, Afsari2021, Kim2016, Adler2023, Park2023).
 
 

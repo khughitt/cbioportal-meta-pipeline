@@ -10,23 +10,119 @@
     "H08b_discovery": "must narrow to expression-module / cross-decomposition niche; generic covariate-signature discovery is scooped by Robinson2019 / Sorensen2023."
   },
   "papers": [
-    {"key": "Robinson2019", "title": "Modeling clinical and molecular covariates of mutational process activity in cancer (TCSM)", "doi": "10.1093/bioinformatics/btz340", "axis": "clinical+molecular covariates", "positive_control": "UV, smoking, APOBEC, MMR, HRD", "role": "direct method predecessor of h08", "pdf": true},
-    {"key": "Drummond2023", "title": "signeR 2.0: relating signature exposures to clinical data", "doi": "10.1186/s12859-023-05550-3", "axis": "clinical covariates (differential exposure)", "positive_control": "n/a (tool)", "role": "established association tool", "pdf": true},
-    {"key": "Park2023", "title": "Diffsig: associating risk factors with mutational signatures", "doi": "10.1101/2023.02.09.527740", "axis": "risk factors (Bayesian Dirichlet-multinomial)", "positive_control": "n/a (tool/preprint)", "role": "association tool", "pdf": false, "pdf_gap_reason": "bioRxiv-only preprint, no OA repo, bioRxiv blocks automated download"},
-    {"key": "Sorensen2023", "title": "Pan-cancer association of DNA repair deficiencies with whole-genome mutational patterns", "doi": "10.7554/eLife.81224", "axis": "736 DDR-gene deficiencies", "scale": "6065 WGS / 32 types", "positive_control": "BRCA1/2, MMR, TP53; +novel ATRX/IDH1/PTEN/SMARCA4", "role": "closest design template for the scan shape", "pdf": true},
-    {"key": "ValiPour2022", "title": "The impact of rare germline variants on human somatic mutation processes", "doi": "10.1038/s41467-022-31483-1", "axis": "rare germline variants", "positive_control": "MBD4->SBS1 (novel), BRCA->SBS3, APOBEC3del->SBS2/13", "role": "germline-covariate axis", "pdf": true},
-    {"key": "Afsari2021", "title": "Supervised mutational signatures for obesity and other tissue-specific etiological factors (SuperSigs)", "doi": "10.7554/eLife.61082", "axis": "supervised etiology metadata (aging/obesity/smoking)", "positive_control": "builds signatures from etiology (opposite framing)", "role": "supervised alternative to agnostic framing", "pdf": true},
-    {"key": "Zito2025", "title": "Poisson process factorization for mutational signature analysis with genomic covariates (PPF)", "doi": "10.48550/arXiv.2510.26090", "axis": "locus-specific genomic covariates", "positive_control": "n/a (methods)", "role": "recent covariate-conditioned exposure model", "pdf": true},
-    {"key": "Luo2023", "title": "Interplay between mutational signatures and tumor microenvironment: a pan-cancer analysis", "doi": "10.3389/fimmu.2023.1186357", "axis": "TME / immune deconvolution", "scale": "8000+ TCGA", "positive_control": "clock-like + AID/APOBEC most widespread", "role": "closest to expression/immune axis; not de-novo modules", "pdf": true},
-    {"key": "Kim2016", "title": "Somatic ERCC2 mutations are associated with a distinct genomic signature in urothelial tumors", "doi": "10.1038/ng.3557", "axis": "single somatic covariate (ERCC2)", "positive_control": "ERCC2->NER signature; smoking-associated", "role": "classic single-covariate exemplar", "pdf": true},
-    {"key": "Adler2023", "title": "Mutational processes of tobacco smoking and APOBEC activity generate protein-truncating mutations", "doi": "10.1126/sciadv.adh3083", "axis": "smoking + APOBEC functional consequence", "positive_control": "SBS4, SBS2/13", "role": "functional interpretation support for arms B/C", "pdf": true}
+    {
+      "key": "Robinson2019",
+      "title": "Modeling clinical and molecular covariates of mutational process activity in cancer (TCSM)",
+      "doi": "10.1093/bioinformatics/btz340",
+      "axis": "clinical+molecular covariates",
+      "positive_control": "UV, smoking, APOBEC, MMR, HRD",
+      "role": "direct method predecessor of h08",
+      "pdf": false,
+      "pdf_gap_reason": "automated download failed this session (publisher/eLife/EuropePMC/scihub); needs manual retrieval"
+    },
+    {
+      "key": "Drummond2023",
+      "title": "signeR 2.0: relating signature exposures to clinical data",
+      "doi": "10.1186/s12859-023-05550-3",
+      "axis": "clinical covariates (differential exposure)",
+      "positive_control": "n/a (tool)",
+      "role": "established association tool",
+      "pdf": true
+    },
+    {
+      "key": "Park2023",
+      "title": "Diffsig: associating risk factors with mutational signatures",
+      "doi": "10.1101/2023.02.09.527740",
+      "axis": "risk factors (Bayesian Dirichlet-multinomial)",
+      "positive_control": "n/a (tool/preprint)",
+      "role": "association tool",
+      "pdf": false,
+      "pdf_gap_reason": "bioRxiv-only preprint, no OA repo, bioRxiv blocks automated download"
+    },
+    {
+      "key": "Sorensen2023",
+      "title": "Pan-cancer association of DNA repair deficiencies with whole-genome mutational patterns",
+      "doi": "10.7554/eLife.81224",
+      "axis": "736 DDR-gene deficiencies",
+      "scale": "6065 WGS / 32 types",
+      "positive_control": "BRCA1/2, MMR, TP53; +novel ATRX/IDH1/PTEN/SMARCA4",
+      "role": "closest design template for the scan shape",
+      "pdf": false,
+      "pdf_gap_reason": "automated download failed this session (publisher/eLife/EuropePMC/scihub); needs manual retrieval"
+    },
+    {
+      "key": "ValiPour2022",
+      "title": "The impact of rare germline variants on human somatic mutation processes",
+      "doi": "10.1038/s41467-022-31483-1",
+      "axis": "rare germline variants",
+      "positive_control": "MBD4->SBS1 (novel), BRCA->SBS3, APOBEC3del->SBS2/13",
+      "role": "germline-covariate axis",
+      "pdf": true
+    },
+    {
+      "key": "Afsari2021",
+      "title": "Supervised mutational signatures for obesity and other tissue-specific etiological factors (SuperSigs)",
+      "doi": "10.7554/eLife.61082",
+      "axis": "supervised etiology metadata (aging/obesity/smoking)",
+      "positive_control": "builds signatures from etiology (opposite framing)",
+      "role": "supervised alternative to agnostic framing",
+      "pdf": false,
+      "pdf_gap_reason": "automated download failed this session (publisher/eLife/EuropePMC/scihub); needs manual retrieval"
+    },
+    {
+      "key": "Zito2025",
+      "title": "Poisson process factorization for mutational signature analysis with genomic covariates (PPF)",
+      "doi": "10.48550/arXiv.2510.26090",
+      "axis": "locus-specific genomic covariates",
+      "positive_control": "n/a (methods)",
+      "role": "recent covariate-conditioned exposure model",
+      "pdf": true
+    },
+    {
+      "key": "Luo2023",
+      "title": "Interplay between mutational signatures and tumor microenvironment: a pan-cancer analysis",
+      "doi": "10.3389/fimmu.2023.1186357",
+      "axis": "TME / immune deconvolution",
+      "scale": "8000+ TCGA",
+      "positive_control": "clock-like + AID/APOBEC most widespread",
+      "role": "closest to expression/immune axis; not de-novo modules",
+      "pdf": true
+    },
+    {
+      "key": "Kim2016",
+      "title": "Somatic ERCC2 mutations are associated with a distinct genomic signature in urothelial tumors",
+      "doi": "10.1038/ng.3557",
+      "axis": "single somatic covariate (ERCC2)",
+      "positive_control": "ERCC2->NER signature; smoking-associated",
+      "role": "classic single-covariate exemplar",
+      "pdf": false,
+      "pdf_gap_reason": "automated download failed this session (publisher/eLife/EuropePMC/scihub); needs manual retrieval"
+    },
+    {
+      "key": "Adler2023",
+      "title": "Mutational processes of tobacco smoking and APOBEC activity generate protein-truncating mutations",
+      "doi": "10.1126/sciadv.adh3083",
+      "axis": "smoking + APOBEC functional consequence",
+      "positive_control": "SBS4, SBS2/13",
+      "role": "functional interpretation support for arms B/C",
+      "pdf": false,
+      "pdf_gap_reason": "automated download failed this session (publisher/eLife/EuropePMC/scihub); needs manual retrieval"
+    }
   ],
-  "pdf_gaps": ["Park2023 (Diffsig) — DOI 10.1101/2023.02.09.527740 — needs manual retrieval (bioRxiv-only)"],
+  "pdf_gaps": [
+    "Robinson2019 (DOI 10.1093/bioinformatics/btz340)",
+    "Park2023 (DOI 10.1101/2023.02.09.527740)",
+    "Sorensen2023 (DOI 10.7554/eLife.81224)",
+    "Afsari2021 (DOI 10.7554/eLife.61082)",
+    "Kim2016 (DOI 10.1038/ng.3557)",
+    "Adler2023 (DOI 10.1126/sciadv.adh3083)"
+  ],
   "action_items": [
     "Narrow H08b scope to expression-module / cross-decomposition delta before its pre-registration",
     "Cite Robinson2019 (TCSM) as method predecessor in method:h08-agnostic-association-model",
     "Use Sorensen2023 as the scan-shape design template",
     "Record H08a feasibility corroboration against pre-registration:h08-positive-control",
     "t177 done; future H08b pre-reg must claim only the expression-module niche"
-  ]
+  ],
+  "pdf_acquired": "4 of 10 (Drummond2023, ValiPour2022, Zito2025, Luo2023); 6 need manual retrieval"
 }

@@ -977,21 +977,11 @@ The h08 decomposition/exposure layer is now hardened (t178 version-pin+caller-fl
 
 - 2026-05-31: Plan landed: analysis-plan:h08-positive-control-scan (2026-05-31). Verdict NOT-READY — engineering-gated, NOT data-gated/methodology-gated. Correction: the 'pre-register' half of this task is ALREADY DONE — pre-registration:h08-positive-control was committed 2026-05-30 (3 arms, top-3/positive/q<0.05, 2-of-3 gate, COSMIC v3.4, NMF-K rule, compositional+permutation guards all locked). t195 is now the umbrella 'run H08a' task, blocked by 4 implementation checks: (1) q018 verdict, (2) full-MC3 7-strata refit, (3) PanCanAtlas RNA-seq + NMF module layer, (4) the association-layer core. None require gated data.
 
-## [t196] Write q018 feasibility verdict: per-sample SBS refit soundness + panel-adequacy rule (h08 activation gate)
-- priority: P1
-- status: proposed
-- aspects: [computational-analysis]
-- related: [question:q018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross, hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, pre-registration:h08-positive-control, analysis-plan:h08-positive-control-scan, task:t178, task:t179, task:t195]
-- group: hypothesis-h08
-- created: 2026-05-31
-
-pre-registration:h08-positive-control conditions activation on a q018 feasibility verdict, but doc/questions/q018*.md is currently an empty template stub. Write the verdict: (1) is the per-sample SBS refit sound on the MC3 WES substrate (largely answered by t178 COSMIC-v3.4 pin + presence audit and t179 count-floor + refit/de-novo decision), and (2) the panel-adequacy exclusion rule (panels enter cohort-pooled/refit only, never per-sample). Commit q018 as status: resolved with the rule stated. This is the cheapest of the 4 h08-run blocking checks (analysis-plan:h08-positive-control-scan check 1) and one of two near-term unblockers.
-
 ## [t197] Run full-MC3 per-sample SBS refit across the 7 h08 arm strata (COSMIC v3.4, t178/t179-hardened)
 - priority: P1
 - status: proposed
 - aspects: [computational-analysis, software-development]
-- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, method:h08-agnostic-association-model, pre-registration:h08-positive-control, analysis-plan:h08-positive-control-scan, task:t178, task:t179, task:t195]
+- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, method:h08-agnostic-association-model, pre-registration:h08-positive-control, task:t178, task:t179, task:t195]
 - group: hypothesis-h08
 - created: 2026-05-31
 
@@ -1001,7 +991,7 @@ Today only the brca-2026-04-22 subset has a tcga_mc3 per-sample refit. The h08 p
 - priority: P1
 - status: proposed
 - aspects: [computational-analysis, software-development]
-- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, method:h08-agnostic-association-model, pre-registration:h08-positive-control, analysis-plan:h08-positive-control-scan, task:t195]
+- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, method:h08-agnostic-association-model, pre-registration:h08-positive-control, task:t195]
 - group: hypothesis-h08
 - created: 2026-05-31
 
@@ -1011,7 +1001,7 @@ The NMF expression-module covariate set is unbuilt: data/ has no PanCanAtlas RNA
 - priority: P1
 - status: proposed
 - aspects: [computational-analysis, software-development, causal-modeling]
-- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, method:h08-agnostic-association-model, pre-registration:h08-positive-control, analysis-plan:h08-positive-control-scan, question:q025-causal-direction-guard-for-expression-signature, task:t180, task:t181, task:t195]
+- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, method:h08-agnostic-association-model, pre-registration:h08-positive-control, question:q025-causal-direction-guard-for-expression-signature, task:t180, task:t181, task:t195]
 - blocked-by: [task:t197, task:t198]
 - group: hypothesis-h08
 - created: 2026-05-31

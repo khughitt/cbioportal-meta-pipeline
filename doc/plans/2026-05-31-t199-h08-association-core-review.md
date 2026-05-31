@@ -4,11 +4,14 @@
 - **Task:** t199 (analysis-plan check 4; pre-reg-already-exists mode)
 - **Date:** 2026-05-31
 - **Overall:** **WARN** — structurally sound and correctly avoids relitigating locked criteria, but
-  carries **two FAIL-level implementation defects** (Arm-C module commensurability; the smoking
-  source's access tier + route) and **one undefined verdict-bearing quantity** (the rank statistic)
-  that must be fixed/frozen *before* WP1 ranks. None require a pre-reg amendment — all three are
-  run-time specifications the pre-reg explicitly delegated — but all three are verdict-bearing and
-  must be frozen before any rank is computed.
+  carries **one FAIL-level implementation defect** (Arm-C module commensurability) and **one
+  undefined verdict-bearing quantity** (the rank statistic) that must be fixed/frozen *before* WP1
+  ranks. Neither requires a pre-reg amendment — both are run-time specifications the pre-reg
+  explicitly delegated. **Update (2026-05-31, post-review correction):** the original F2 finding
+  (smoking source "Synapse-gated") was **overclaimed and is retracted** — the file is served
+  open-access from the GDC `/data` endpoint with no auth (verified). F2 is reframed as a
+  plan-precision fix (name the concrete endpoint + verification), and all findings are now patched
+  into the plan (commits below).
 
 > Sub-plan handling: this plan sits under `pre-registration:h08-positive-control` +
 > `analysis-plan:h08-positive-control-scan`, which already passed methodological review.
@@ -20,11 +23,12 @@
 The plan is the right shape (design-mode, pre-reg-already-exists) and its standout strength is that
 it surfaced three real provenance facts at plan time (smoking absent from cBioPortal clinical, UV
 proxy coarse + 82% metastatic, no `samples_annotated` for this run). But three issues survived,
-two of them verified against the on-disk artifacts and the web during this review: the **pooled
-Arm-C model cannot carry the NMF expression modules** (they are tissue-specific, non-commensurable,
-and differ in K), the **named smoking file is Synapse-gated** rather than "public GDC" as KD3
-claims, and the **rank statistic itself is never defined**. Because the rank-gate denominator and
-the rank are verdict-bearing, all three must be resolved and frozen before WP1.
+verified against the on-disk artifacts during this review: the **pooled Arm-C model cannot carry the
+NMF expression modules** (they are tissue-specific, non-commensurable, and differ in K — SKCM=5,
+BRCA=10) and the **rank statistic itself is never defined**. Because the rank-gate denominator and
+the rank are verdict-bearing, both must be resolved and frozen before WP1. A third drafted finding
+(smoking source "Synapse-gated") was **wrong and is retracted** — the GDC `/data` endpoint serves
+the file open-access; the residual is a plan-precision fix (concrete endpoint + verification step).
 
 ## Rubric Results
 
@@ -32,7 +36,7 @@ the rank are verdict-bearing, all three must be resolved and frozen before WP1.
 |---|---|---|
 | Evidence coverage | PASS (inherited) | Parent pre-reg sources the gate params; new construction choices (UV ordinal, hypermutator threshold) flagged as open, Campbell-2017 sourced |
 | Assumption audit | **WARN** | CLR sign ≠ unconditional "more signature" (F5); per-arm adjustment-set degeneracy unstated (F10) |
-| Data availability | **FAIL** | Smoking source is Synapse-gated, not public GDC (F2); no dataset backlinks / no smoking entity (F6) |
+| Data availability | **WARN** | F2 retracted — smoking file IS GDC open-access (verified); residual: name concrete endpoint + verify (F2′); no dataset backlinks / no smoking entity (F6) |
 | Identifiability | **WARN** | Arm-B miss collapses the 2-of-3 tolerance to "A∧C", hinging `[+]` on the by-design weakest arm (F3) |
 | Reproducibility | WARN | Permutation seed key, n_permutations, and stats library/version unspecified (F8) |
 | Validation criteria | **WARN** | Rank statistic undefined (F4); "base rate" column ill-defined for continuous covariates (F9) |
@@ -68,26 +72,22 @@ distinct denominators (per-tissue arms vs pooled Arm C) in the plan and report b
 Confirm this does not need an amendment (it does not — it is a run-time denominator rule the pre-reg
 delegated), but record the reasoning in the verdict note.
 
-### F2 — [CRITICAL, Dim 3] The named smoking source is Synapse-gated, not "public GDC"
+### F2′ — [RETRACTED → MINOR, Dim 3] Smoking source is GDC open-access; name the endpoint + verify
 
-**Verified by web search.** KD3 / WP0 name `clinical_PANCAN_patient_with_followup.tsv` and assert it
-is on "the public GDC PanCanAtlas publications page, ungated." It is in fact hosted on **Synapse
-(PanCanAtlas project; survival/clinical resource syn7343873)** and requires a Synapse account +
-acceptance of data-use terms. That is precisely the access-tier ambiguity the standing no-gated
-constraint is meant to avoid — even if these open files need only a free account (no GENIE-style
-DUA), the plan's factual claim is wrong and the route should not be relied on as stated.
+**Original finding RETRACTED.** A review draft claimed `clinical_PANCAN_patient_with_followup.tsv`
+was Synapse-gated. That was **wrong** — it conflated the GDC `/files` *metadata* index (which does
+not carry this legacy supplement object) with the `/data` *download* route (which **does** serve it
+open-access, no auth). **Re-verified this turn:** a `curl` range request to
+`https://api.gdc.cancer.gov/data/0fc78496-818b-4896-bd83-52db1f533c5c` returned the TSV header with
+`tobacco_smoking_history` (col 78) and `number_pack_years_smoked` (col 79), 232 columns, pan-cancer.
+The file is **ungated** and consistent with the no-gated-access constraint.
 
-**A genuinely public, ungated route exists** — but it is a *different* file: (a) the
-**GerkeLab/TCGAclinical** GitHub mirror of the PanCanAtlas clinical-with-followup table (public, no
-account); or (b) **GDC open-access BCR Biotab** per-tumor clinical
-(`nationwidechildrens.org_clinical_patient_{luad,lusc}.txt`), which carry
-`tobacco_smoking_history_indicator` and `number_pack_years_smoked` and download from the GDC public
-portal with no account.
-
-**Recommendation.** Rewrite KD3/WP0 to target one of the ungated routes (recommend GDC BCR Biotab —
-canonical GDC provenance), verify the download on disk (stat + column presence, per the
-PDF-acquisition-verify discipline), and register the chosen source as a `dataset:` entity. Treat
-the access verification as a hard WP0 exit criterion before WP1 consumes it.
+**What survives as a real (minor) finding.** The plan's *prose* mis-described the route ("public GDC
+publications page" browsing) and gave no concrete endpoint or download verification. KD3/WP0 are
+patched to: target the exact GDC `/data` UUID; treat WP0 as a **hard, first-sequenced gate** (F3
+still holds); verify size ≈18,633,685 B + md5 + smoking columns + LUAD/LUSC non-missingness before
+WP1 consumes it; register a `dataset:tcga-pancanatlas-clinical` entity with the backlink. BCR Biotab
+/ GerkeLab mirror are demoted to **fallbacks** used only if the GDC direct file becomes unavailable.
 
 ### F3 — [CRITICAL, Dim 4] An Arm-B miss collapses the 2-of-3 tolerance
 
@@ -98,9 +98,10 @@ becomes untestable and the gate degenerates to **"A and C must both pass"** — 
 on the by-design weakest arm and removing the slack the 2-of-3 rule exists to provide. This makes WP0
 a **hard sequencing gate**, not a parallel nicety.
 
-**Recommendation.** Sequence WP0 first and treat smoking acquisition as blocking. If it genuinely
-cannot be obtained ungated (it can — see F2), that is a `not-runnable` condition to escalate, *not* a
-silent drop to a two-arm gate. Document this coupling in the plan's WP0 definition-of-done.
+**Recommendation.** Sequence WP0 first and treat smoking acquisition as blocking. The covariate **is**
+obtainable ungated (GDC `/data`, verified — F2′), so the expected path is fine; but if the file ever
+becomes unavailable, that is a `not-runnable` condition to escalate, *not* a silent drop to a two-arm
+gate. **Patched** into WP0's definition-of-done.
 
 ### F4 — [MAJOR, Dim 6] The rank statistic is undefined
 
@@ -173,17 +174,19 @@ design.
 **Recommendation.** Note in the plan that the adjustment set is *realized per arm* — constant columns
 dropped — to avoid singular design matrices; this is mechanical, not a criterion change.
 
-## Recommendations (priority order)
+## Recommendations (priority order) — all patched into the plan this turn
 
 1. **F1** — freeze the Arm-C module-exclusion / tissue-nesting rule and the two distinct denominators
-   in WP1, before any rank. (Verdict-bearing; no amendment needed but must be documented.)
-2. **F2 + F3** — switch the smoking source to an ungated route (GDC BCR Biotab recommended), verify
-   on disk, register the entity, and sequence WP0 as a hard blocking gate.
-3. **F4** — define and freeze the rank statistic (per-covariate adjusted CLR-coordinate model, signed
-   standardized coefficient) in WP1.
-4. **F5, F6** — read confirmatory sign on CLR + corroborate with absolute burden; add dataset backlinks.
-5. **F7–F10** — assert the dedup rule, pin permutation seed/count + stats version, define §1b columns
-   per covariate type, realize the adjustment set per arm.
+   in WP1, before any rank. (Verdict-bearing; no amendment needed but must be documented.) **Done.**
+2. **F2′ + F3** — target the concrete GDC `/data` UUID, sequence WP0 as a hard first gate, verify on
+   disk (size + md5 + columns + LUAD/LUSC non-missingness), register the entity; BCR Biotab/GerkeLab
+   as fallbacks only. **Done.**
+3. **F4** — freeze the rank statistic (per-covariate adjusted CLR-coordinate model, signed
+   standardized coefficient) in WP1/WP2. **Done.**
+4. **F5, F6** — read confirmatory sign on CLR + corroborate with absolute burden (sign discordance →
+   `[?]`); add dataset backlinks. **F5 done; F6 folded into WP0/WP1 entity registration.**
+5. **F7–F10** — assert the one-sample-per-case dedup, pin permutation seed/count + stats version,
+   type the §1b columns per covariate, realize the adjustment set per arm. **Done.**
 
 ## Strengths
 
@@ -199,6 +202,13 @@ dropped — to avoid singular design matrices; this is mechanical, not a criteri
 
 ## Sources
 
-- [TCGA PanCan survival data — Synapse syn7343873](https://www.synapse.org/Synapse:syn7343873)
-- [GerkeLab/TCGAclinical (public PanCanAtlas clinical mirror)](https://github.com/GerkeLab/TCGAclinical)
-- [GDC PanCanAtlas Publications](https://gdc.cancer.gov/about-data/publications/pancanatlas)
+- GDC open-access download endpoint (verified, no auth):
+  `https://api.gdc.cancer.gov/data/0fc78496-818b-4896-bd83-52db1f533c5c` — header carries
+  `tobacco_smoking_history` (col 78) + `number_pack_years_smoked` (col 79), 232 cols, pan-cancer.
+- [GDC PanCanAtlas Publications](https://gdc.cancer.gov/about-data/publications/pancanatlas) — lists
+  the clinical-with-followup file under Supplemental Data with open-access instructions.
+- [GerkeLab/TCGAclinical](https://github.com/GerkeLab/TCGAclinical) — public mirror of the same GDC
+  PanCanAtlas clinical file (fallback route).
+- Retraction note: an earlier draft cited [Synapse syn7343873](https://www.synapse.org/Synapse:syn7343873)
+  as the *required* route; that was incorrect — Synapse hosts a copy, but the GDC `/data` route is
+  open-access and is the primary source.

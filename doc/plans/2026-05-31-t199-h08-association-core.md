@@ -127,17 +127,27 @@ doc/interpretations/
   provenance. The composite remains the right path **if h08 becomes recurring** (then wire per
   t175) — recorded as the recurring-path alternative, not built now.
 
-### Key decision 3: smoking covariate comes from the public PanCanAtlas clinical-with-followup file
-- **Chosen approach:** fetch `clinical_PANCAN_patient_with_followup.tsv` from the public GDC
-  PanCanAtlas publications page, join `tobacco_smoking_history` + `number_pack_years_smoked` on
-  the 12-char TCGA patient barcode.
-- **Rejected alternative:** the per-study cBioPortal PanCanAtlas clinical already on disk.
-- **Reason:** **verified absent** — the cBioPortal LUAD/LUSC `data_clinical_patient.txt` carries
-  no smoking/pack-years field at all (confirmed: only stage/sex/race/ancestry/survival). The
-  covariate the pre-reg names for Arm B is *only* in the PanCanAtlas clinical-with-followup file.
-  **It is public and ungated** (GDC PanCanAtlas supplement), so it is consistent with the standing
-  no-gated-access constraint — this is an *un-built*, not an *inaccessible*, input. Data-access
-  gate: PASS (origin external, public; verify on download).
+### Key decision 3: smoking covariate from the GDC open-access PanCanAtlas clinical-with-followup file
+- **Chosen approach:** download `clinical_PANCAN_patient_with_followup.tsv` directly from the
+  **GDC open-access data endpoint** —
+  `https://api.gdc.cancer.gov/data/0fc78496-818b-4896-bd83-52db1f533c5c` (file UUID
+  `0fc78496-818b-4896-bd83-52db1f533c5c`, ~18,633,685 bytes) — and join `tobacco_smoking_history`
+  + `number_pack_years_smoked` on the 12-char TCGA patient barcode.
+- **Rejected alternatives:** (a) the per-study cBioPortal PanCanAtlas clinical already on disk
+  (smoking field absent); (b) GDC BCR Biotab per-tumor clinical / the GerkeLab GitHub mirror
+  (kept as fallbacks only).
+- **Reason:** **both facts verified during plan review (2026-05-31).** The cBioPortal LUAD/LUSC
+  `data_clinical_patient.txt` carries no smoking/pack-years field (only stage/sex/race/ancestry/
+  survival) — the covariate the pre-reg names for Arm B is *only* in the clinical-with-followup
+  file. That file is served **open-access, no authentication** from the GDC `/data` endpoint
+  (a `curl` range request returned the TSV header with `tobacco_smoking_history` at column 78 and
+  `number_pack_years_smoked` at column 79; 232 columns, pan-cancer). It is therefore **ungated**
+  and consistent with the standing no-gated-access constraint — an *un-built*, not *inaccessible*,
+  input. (An earlier review draft mis-stated this as Synapse-gated; the GDC `/files` *metadata*
+  index does not carry this legacy supplement object, but the `/data` *download* route does serve
+  it without auth — corrected.) Data-access gate: PASS (origin external, open-access; verify on
+  download per WP0). Fallbacks (BCR Biotab / GerkeLab mirror) are used **only** if the GDC direct
+  file becomes unavailable.
 
 ### Key decision 4: UV proxy = frozen sun-exposure ordinal from `TUMOR_TISSUE_SITE`, with sample-type carried
 - **Chosen approach:** map SKCM `TUMOR_TISSUE_SITE` body-site labels to a **frozen** sun-exposure
@@ -181,14 +191,28 @@ doc/interpretations/
 
 ## Work packages
 
-### WP0 — acquire the PanCanAtlas smoking covariate (data-access gate)
-- **Depends on:** nothing.
-- **Entry point:** `code/scripts/fetch_pancanatlas_clinical.py` → `data/pancanatlas_clinical_with_followup.tsv`.
-- **Definition of done:** file present and stat-verified (per the PDF-acquisition-verify discipline:
-  verify the actual download, not the HTTP 200); `tobacco_smoking_history` +
-  `number_pack_years_smoked` columns present for LUAD/LUSC patients; row count logged; a
-  `dataset:tcga-pancanatlas-clinical` entity (or an `access.exception`/log note) recorded via
-  `/science:find-datasets` if a fresh entity is warranted. Public/ungated confirmed in the log.
+### WP0 — acquire the PanCanAtlas smoking covariate (hard data-access gate, sequenced first)
+- **Depends on:** nothing. **Sequenced first and treated as blocking** — see the F3 coupling below.
+- **Entry point:** `code/scripts/fetch_pancanatlas_clinical.py` →
+  `data/pancanatlas_clinical_with_followup.tsv` (downloads the GDC `/data` UUID from KD3).
+- **Verification (all required before WP1 may consume the file; fail loudly, do not proceed on a
+  partial download — the PDF-acquisition-verify discipline):**
+  1. **stat** the downloaded file and assert size ≈ **18,633,685 bytes** (not an HTTP-200 stub).
+  2. **md5** the file and check it against the GDC-published checksum for the UUID (record the
+     value in the log; do not invent one).
+  3. confirm `tobacco_smoking_history` + `number_pack_years_smoked` columns are present.
+  4. confirm **LUAD + LUSC** rows are present and report per-histology non-missingness of
+     `number_pack_years_smoked` / `tobacco_smoking_history` (this is the realized Arm-B covariate
+     completeness — feeds the §1b table; loud if either histology is largely missing).
+- **F3 coupling (identifiability).** Arm B is the only arm with a reasonably direct covariate; if
+  smoking cannot be obtained, the 2-of-3 gate degenerates to "A **and** C must both pass," pinning a
+  `[+]` on the by-design weakest arm. So a WP0 failure is a **`not-runnable` escalation**, never a
+  silent drop to a two-arm gate. Fallback order on unavailability: GDC BCR Biotab per-tumor clinical
+  → GerkeLab mirror (both ungated); only then escalate.
+- **Definition of done:** file present + all four verifications logged; a
+  `dataset:tcga-pancanatlas-clinical` entity recorded via `/science:find-datasets` with
+  `access.verified: true`, `verification_method`, `source_url`, and a `consumed_by:
+  plan:2026-05-31-t199-h08-association-core` backlink.
 
 ### WP1 — assemble & freeze the covariate table + denominator (pre-association)
 - **Depends on:** WP0; t197 exposures; t198 module loadings; per-study cBioPortal clinical (on disk).
@@ -201,21 +225,59 @@ doc/interpretations/
   treatment-exposed flag from `HISTORY_NEOADJUVANT_TRTYN`/`PRIOR_DX`/`RADIATION_THERAPY` (t181 —
   expected near-vacuous on MC3 treatment-naive primaries; logged as such), and the K expression
   modules.
+- **Join discipline (F7).** The exposure key is the **28-char MC3 aliquot**
+  (`TCGA-..-....-01A-..-..-..`); modules + clinical use the **15-char** sample barcode. Slice the
+  exposure key to 15 char (sample-type code 01/06 retained, so the join aligns to the *actual
+  MC3-sequenced* sample — critical for SKCM, 82% metastatic). Assert **one MC3 sample per case**
+  after the collapse and **fail loudly** if any case retains >1 sample, for **all 7 arms** (SKCM
+  verified 1:1 at review: 466 rows = 466 b15 = 466 cases). Smoking + ancestry join on the 12-char
+  patient barcode.
+- **Arm-C module-commensurability rule (F1, frozen before ranks).** The K NMF modules are an
+  **independent per-tissue basis with arm-specific K** (six arms K=5, BRCA K=10); `module_01` in
+  SKCM is not `module_01` in LUAD. They are therefore **well-defined covariates only within a single
+  tissue.** Frozen rule: in the **pooled Arm-C model**, expression modules enter only as
+  **tissue-nested nuisance terms and are excluded from the ranked covariate denominator**; the
+  Arm-C ranked set is the **commensurable** covariates (clinical + molecular + the joint APOBEC3A/B
+  expression score). Consequence — **two distinct denominators**: the per-tissue arms (A/B, modules
+  included) and the pooled Arm C (modules excluded). Both are written to
+  `covariate_denominator.json` before any rank. Per-tissue Arm-C runs that *do* carry their tissue's
+  modules remain **sensitivity-only, never a pass route** (pre-reg rule). This is a run-time
+  denominator rule the pre-reg delegated — **not an amendment** — but it is verdict-bearing, so the
+  reasoning is recorded in the verdict note.
+- **Per-arm adjustment realization (F10).** The adjustment set {tissue, treatment, study/assay,
+  ancestry} is realized **per arm with constant columns dropped**: Arm A (single SKCM tissue, single
+  MC3 study) collapses to {ancestry, treatment, sample_type}; tissue + study/assay are constant.
+  This avoids rank-deficient design matrices and is mechanical, not a criterion change.
 - **Definition of done:** `h08_covariates.feather` written; `covariate_denominator.json` written
   with the frozen covariate universe, the frozen UV-ordinal mapping table, the per-stratum
-  active-signature set (≥5% rule, COSMIC v3.4), and the realized per-stratum covariate/signature
-  counts — **before** any association is run. Leakage firewall preserved (no covariate is a
-  function of `H`). Loud missingness for any covariate with low completeness (no silent fill).
+  active-signature set (≥5% rule, COSMIC v3.4), the **two denominators** (per-tissue / pooled-C),
+  **the frozen rank-statistic definition (F4, see WP2)**, and the realized per-stratum
+  covariate/signature counts — **before** any association is run. Leakage firewall preserved (no
+  covariate is a function of `H`). Loud missingness for any covariate with low completeness (no
+  silent fill).
 
 ### WP2 — the within-tissue association grid
 - **Depends on:** WP1.
 - **Entry point:** `run_h08_association_scan.py` (grid stage).
-- **Does:** CLR transform of `H` (KD5); per (covariate, active-signature, stratum) within-tissue
-  model with adjustment set {tissue, treatment, study/assay, ancestry} — tissue as fixed-effect
-  stratifier; **Arm C as a single pooled within-tissue model** across {BLCA,BRCA,CESC,HNSC,LUAD,
-  LUSC} yielding one APOBEC3A/B rank; one BH-FDR pass over the full grid; effect, sign, rank, q
-  per cell; the unconditioned (tissue-pooled) contrast computed alongside for the R1 exploratory
-  readout (Prediction 4). APOBEC3-locus leakage guard applied (KD6).
+- **Frozen rank statistic (F4).** For each (covariate, active-signature, stratum) cell, fit **one
+  adjusted within-tissue model** with the **CLR coordinate of the target signature** as the outcome
+  and {covariate of interest + realized adjustment set (F10)} as predictors. The **ranking statistic
+  is the signed standardized coefficient** of the covariate of interest (magnitude = |standardized
+  β| / Wald |z|; **sign read directly** from β); the cell's BH-q is from that covariate's p-value.
+  One model per covariate (not a single all-covariate multivariable fit) so the rank is interpretable
+  and not distorted by inter-covariate collinearity. This estimator is frozen in
+  `covariate_denominator.json` (WP1) before any rank.
+- **CLR sign reading (F5).** The confirmatory "positive sign" is read on the CLR coordinate, which
+  is *relative* to the per-sample geometric mean of active signatures — usually concordant with
+  "more of the signature" but not guaranteed. It is **corroborated by the absolute-burden
+  sensitivity re-run** (WP3, KD5); a CLR-vs-absolute **sign discordance downgrades that arm to
+  `[?]`**.
+- **Does:** CLR transform of `H` (KD5); the per-cell frozen-statistic model above; **Arm C as a
+  single pooled within-tissue model** across {BLCA,BRCA,CESC,HNSC,LUAD,LUSC} yielding one APOBEC3A/B
+  rank against the modules-excluded Arm-C denominator (F1); one BH-FDR pass over the full grid;
+  effect, signed-standardized β, rank, q per cell; the unconditioned (tissue-pooled) contrast
+  computed alongside for the R1 exploratory readout (Prediction 4). APOBEC3-locus leakage guard
+  applied (KD6).
 - **Definition of done:** `h08_association_grid.feather` with per-cell rank + sign + q and the
   per-stratum covariate-count denominators echoed from WP1; arm A/B/C target cells identified;
   the realized FDR family size logged.
@@ -223,6 +285,10 @@ doc/interpretations/
 ### WP3 — pre-acceptance + registered sensitivity variants
 - **Depends on:** WP2.
 - **Entry point:** `run_h08_association_scan.py` (validation stage).
+- **Reproducibility (F8).** Permutation null uses a frozen `h08_permutation_seed` (derived from
+  `random_seed`) and a fixed **n_permutations = 1000**; the association model library
+  (**statsmodels**) is pinned via `uv.lock`. Seed, permutation count, and library versions are
+  recorded in the datapackage.
 - **Does:** within-stratum **permutation null** (shuffle covariate within tissue, frozen seed,
   refit the association — not the signatures — confirm observed rank exceeds the null) for any arm
   cell landing rank-1 / q≈0; the **absolute-burden compositional re-run** (KD5); **K±5** module
@@ -235,8 +301,11 @@ doc/interpretations/
 ### WP4 — §1b activation fill, verdict read, datapackage, interpretation
 - **Depends on:** WP1 (n / completeness), WP2 (ranks), WP3 (stability).
 - **Entry point:** scan finalize stage + `write_datapackage.py` + interpretation note.
-- **Does:** fill the §1b table (post-join n, covariate completeness, base rate per arm) — **the
-  gate is not read until this is filled**; then read each arm (rank≤3, positive, q<0.05) and the
+- **§1b column typing (F9).** "Base rate" is reported **per covariate type**: prevalence for binary
+  covariates (treatment flag, hypermutator, MSI-H); completeness + a distribution summary
+  (median/IQR, % non-zero) for continuous covariates (pack-years, APOBEC3A/B mRNA, UV ordinal).
+- **Does:** fill the §1b table (post-join n, covariate completeness, per-type base rate per arm) —
+  **the gate is not read until this is filled**; then read each arm (rank≤3, positive, q<0.05) and the
   2-of-3 gate → H08a `[+]`/`[?]`/`[-]`; report the frozen covariate-count denominator alongside
   each verdict; secondary controls (MMR/MSI→SBS6/15/26, POLE→SBS10) as corroboration only;
   emit/extend `datapackage.json` with the association resources + task t199; write the
@@ -281,11 +350,16 @@ doc/interpretations/
 
 ## Acceptance criteria
 
-- [ ] Covariate universe + per-stratum denominator + UV-ordinal mapping written to disk **before**
+- [ ] Covariate universe + UV-ordinal mapping + **both denominators (per-tissue / modules-excluded
+      pooled Arm C, F1)** + **the frozen rank-statistic definition (F4)** written to disk **before**
       any rank (firewall + frozen-denominator discipline verified).
-- [ ] Smoking covariate sourced from the public PanCanAtlas clinical, download stat-verified.
-- [ ] Full grid scanned under one BH-FDR family; Arm C is a single pooled within-tissue rank
-      (per-stratum ranks reported sensitivity-only, never a pass route).
+- [ ] Smoking covariate sourced from the **GDC open-access** clinical-with-followup file (UUID
+      `0fc78496-…`), download verified (size ≈18,633,685 B + md5 + smoking columns + LUAD/LUSC
+      non-missingness); dataset entity + `consumed_by` backlink recorded.
+- [ ] Full grid scanned under one BH-FDR family with the frozen per-cell statistic; Arm C is a
+      single pooled within-tissue rank against the modules-excluded denominator (per-stratum ranks
+      sensitivity-only, never a pass route); CLR sign corroborated by the absolute-burden re-run.
+- [ ] Exposure→covariate join asserts one MC3 sample per case across all 7 arms (F7).
 - [ ] APOBEC3-locus leakage guard applied; permutation null + absolute-burden re-run run for any
       "too good" arm cell as pre-acceptance.
 - [ ] K±5 / lung-pooling / frozen-APOBEC sensitivity executed; flips downgrade the arm to `[?]`.

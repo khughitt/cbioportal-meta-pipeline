@@ -30,6 +30,7 @@ updated: "2026-05-02"
 | `inputs` | cBioPortal study mutation/clinical downloads, AACR GENIE where configured, gene annotation tables, panel metadata, driver overlays, CH annotation inputs |
 | `workflow` | `code/workflows/Snakefile`, canonical ratio path through `annotate.py`, `annotate_ch.py`, and `join_gene_cancer_meta.py` |
 | `tables` | `gene_cancer_study_ratio_annotated.feather` |
+| `datapackage` | `results/.../summary/mut/table/gene_cancer_study_ratio_annotated.datapackage.json` from `rule package_gene_cancer_ratio_product` |
 | `schemas` | One row per gene/cancer/study ratio surface with annotation and pooled meta-analysis columns documented in `doc/guides/canonical-outputs.md` |
 | `qa_status` | Consumer-facing canonical output; consumers should prefer this over unannotated intermediates |
 | `caveats` | cBioPortal/GENIE study composition, panel coverage, matched-normal availability, hypermutator handling, CH annotation, and cancer-label harmonization affect interpretation |

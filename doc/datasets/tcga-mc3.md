@@ -31,3 +31,6 @@ Ellrott 2018 Multi-Center Mutation Calling in Multiple Cancers (MC3) — a singl
 
 - Referenced by: `paper:Ellrott2018`
 - Role: external dataset cited in the project literature; see referencing papers for usage.
+- Generated clean-base package: when `tcga_mc3` is present in a run config,
+  `rule package_per_study_mutation_substrates` writes
+  `results/.../studies/tcga_mc3/datapackage.json`.

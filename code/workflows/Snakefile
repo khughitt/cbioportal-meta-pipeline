@@ -35,6 +35,15 @@ workflow_qa_reports = [
   out_dir.joinpath("qa/workflow/dag_contract.qa_report.md"),
 ]
 
+datapackage_reports = [
+  *expand(out_dir.joinpath("studies/{id}/datapackage.json"), id=ids),
+  out_dir.joinpath("metadata/driver_overlays/datapackage.json"),
+  out_dir.joinpath("metadata/genie_panel_registry/datapackage.json"),
+  "data/normal_tissue_datapackage.json",
+  "data/replication_timing_datapackage.json",
+  out_dir.joinpath("summary/mut/table/gene_cancer_study_ratio_annotated.datapackage.json"),
+]
+
 rule all:
   input:
     expand(out_dir.joinpath("summary/mut/table/{entity}_study.feather"), entity=entities),
@@ -119,6 +128,8 @@ if select_enabled:
       tarball = "data/external/select_v1.6.4.tar.gz"
     output:
       token = out_dir.joinpath("select/.preflight_ok")
+    log:
+      out_dir.joinpath("logs/preflight_select_env.log")
     conda:
       "../envs/select.yml"
     script:
@@ -139,6 +150,10 @@ if select_enabled:
       )
     output:
       out_dir.joinpath("select/panel_gene_sets/{panel_id}.feather")
+    log:
+      out_dir.joinpath("logs/build_panel_gene_sets/{panel_id}.log")
+    conda:
+      "../envs/project-python.yml"
     script:
       "../scripts/build_panel_gene_sets.py"
 
@@ -164,6 +179,10 @@ if select_enabled:
       bailey_version = "2018",
       cgc_version = "2024-09",
       sanchez_vega_version = "2018"
+    log:
+      out_dir.joinpath("logs/build_select_gene_universe.log")
+    conda:
+      "../envs/project-python.yml"
     script:
       "../scripts/build_select_gene_universe.py"
 
@@ -193,6 +212,10 @@ if select_enabled:
         "ch_priority_genes",
         ["DNMT3A", "PPM1D", "TET2", "TP53", "ASXL1", "CHEK2", "PRPF8"],
       )
+    log:
+      out_dir.joinpath("logs/build_select_gam/{cancer_type}__{cohort}__{study}__{tier}.log")
+    conda:
+      "../envs/project-python.yml"
     script:
       "../scripts/build_select_gam.py"
 
@@ -208,6 +231,8 @@ if select_enabled:
     params:
       runtime = config["select"]["runtime"],
       random_seed = config["select"]["random_seed"]
+    log:
+      out_dir.joinpath("logs/run_select_per_cell/{cancer_type}__{cohort}__{study}__{tier}.log")
     conda:
       "../envs/select.yml"
     script:
@@ -245,6 +270,10 @@ if select_enabled:
       ),
       tier = "PA",
       cohort = "exclusive"
+    log:
+      out_dir.joinpath("logs/build_select_gam_pathway_aggregated/{cancer_type}.log")
+    conda:
+      "../envs/project-python.yml"
     script:
       "../scripts/build_select_gam.py"
 
@@ -262,6 +291,8 @@ if select_enabled:
     params:
       runtime = config["select"]["runtime"],
       random_seed = config["select"]["random_seed"]
+    log:
+      out_dir.joinpath("logs/run_select_pathway_aggregated/{cancer_type}.log")
     conda:
       "../envs/select.yml"
     script:
@@ -278,6 +309,10 @@ if select_enabled:
       gene_pair = out_dir.joinpath("select/gene_pair_select.feather"),
       pathway_rollup = out_dir.joinpath("select/pathway_rollup_gene_pairs.feather"),
       annotation = out_dir.joinpath("select/gene_cancer_study_select_annotation.feather")
+    log:
+      out_dir.joinpath("logs/aggregate_select_results.log")
+    conda:
+      "../envs/project-python.yml"
     script:
       "../scripts/aggregate_select_results.py"
 
@@ -294,6 +329,10 @@ rule process_bailey2018_drivers:
     "data/bailey2018_table_s1.tsv"
   output:
     out_dir.joinpath("metadata/bailey2018_drivers.feather")
+  log:
+    out_dir.joinpath("logs/process_bailey2018_drivers.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/process_bailey2018_drivers.py"
 
@@ -307,6 +346,10 @@ rule process_sanchez_vega_pathways:
     "data/sanchez_vega_2018_tables_s3.xlsx"
   output:
     out_dir.joinpath("metadata/sanchez_vega_pathways.feather")
+  log:
+    out_dir.joinpath("logs/process_sanchez_vega_pathways.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/process_sanchez_vega_pathways.py"
 
@@ -323,6 +366,10 @@ rule process_cgc:
     config.get("cosmic_cgc_path", "data/cancer_gene_census.csv")
   output:
     out_dir.joinpath("metadata/cgc_drivers.feather")
+  log:
+    out_dir.joinpath("logs/process_cgc.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/process_cgc.py"
 
@@ -352,6 +399,10 @@ rule extract_normal_tissue_spectra:
   output:
     spectra="data/normal_tissue_spectra.tsv",
     burden="data/normal_tissue_burden.tsv"
+  log:
+    out_dir.joinpath("logs/extract_normal_tissue_spectra.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/extract_normal_tissue_spectra.py"
 
@@ -376,6 +427,10 @@ rule prepare_replication_timing_annotations:
   output:
     bins = "data/replication_timing_constitutive_bins.feather",
     genes = "data/gene_replication_timing.feather"
+  log:
+    out_dir.joinpath("logs/prepare_replication_timing_annotations.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/prepare_replication_timing_annotations.py"
 
@@ -396,6 +451,10 @@ rule annotate_gene_cancer_table:
     out_dir.joinpath("metadata/sanchez_vega_pathways.feather")
   output:
     out_dir.joinpath("summary/mut/table/gene_cancer_study_annotated.feather")
+  log:
+    out_dir.joinpath("logs/annotate_gene_cancer_table.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/annotate.py"
 
@@ -407,6 +466,10 @@ rule annotate_gene_cancer_ratio_table:
     out_dir.joinpath("metadata/sanchez_vega_pathways.feather")
   output:
     out_dir.joinpath("summary/mut/table/gene_cancer_study_ratio_overlay_annotated.feather")
+  log:
+    out_dir.joinpath("logs/annotate_gene_cancer_ratio_table.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/annotate.py"
 
@@ -429,6 +492,10 @@ rule annotate_ch_in_gene_cancer_ratio_table:
     out_dir.joinpath("summary/mut/table/gene_cancer_study_ratio_overlay_annotated.feather")
   output:
     out_dir.joinpath("summary/mut/table/gene_cancer_study_ratio_ch_annotated.feather")
+  log:
+    out_dir.joinpath("logs/annotate_ch_in_gene_cancer_ratio_table.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/annotate_ch.py"
 
@@ -438,6 +505,10 @@ rule join_gene_cancer_meta_in_ratio_table:
     pooled = out_dir.joinpath("summary/mut/table/gene_cancer_pooled.feather")
   output:
     out_dir.joinpath("summary/mut/table/gene_cancer_study_ratio_annotated.feather")
+  log:
+    out_dir.joinpath("logs/join_gene_cancer_meta_in_ratio_table.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/join_gene_cancer_meta.py"
 
@@ -454,6 +525,10 @@ rule qa_per_study_mutation_substrates:
     out_dir.joinpath("studies/{id}/qa/mutation_substrates.qa_report.md")
   params:
     artifact_kind = "per_study_mutation_substrates"
+  log:
+    out_dir.joinpath("logs/qa_per_study_mutation_substrates/{id}.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/validate_mutation_pipeline_artifacts.py"
 
@@ -464,6 +539,10 @@ rule qa_samples_annotated:
     out_dir.joinpath("qa/mutation/samples_annotated.qa_report.md")
   params:
     artifact_kind = "samples_annotated"
+  log:
+    out_dir.joinpath("logs/qa_samples_annotated.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/validate_mutation_pipeline_artifacts.py"
 
@@ -474,6 +553,10 @@ rule qa_gene_cancer_pooled_input:
     out_dir.joinpath("qa/mutation/gene_cancer_pooled_input.qa_report.md")
   params:
     artifact_kind = "gene_cancer_pooled_input"
+  log:
+    out_dir.joinpath("logs/qa_gene_cancer_pooled_input.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/validate_mutation_pipeline_artifacts.py"
 
@@ -488,6 +571,10 @@ rule qa_gene_cancer_pooled_bundle:
     out_dir.joinpath("qa/mutation/gene_cancer_pooled_bundle.qa_report.md")
   params:
     artifact_kind = "gene_cancer_pooled_bundle"
+  log:
+    out_dir.joinpath("logs/qa_gene_cancer_pooled_bundle.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/validate_mutation_pipeline_artifacts.py"
 
@@ -498,6 +585,10 @@ rule qa_gene_cancer_study_annotated:
     out_dir.joinpath("qa/mutation/gene_cancer_study_annotated.qa_report.md")
   params:
     artifact_kind = "gene_cancer_study_annotated"
+  log:
+    out_dir.joinpath("logs/qa_gene_cancer_study_annotated.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/validate_mutation_pipeline_artifacts.py"
 
@@ -508,6 +599,10 @@ rule qa_gene_cancer_study_ratio_annotated:
     out_dir.joinpath("qa/mutation/gene_cancer_study_ratio_annotated.qa_report.md")
   params:
     artifact_kind = "gene_cancer_study_ratio_annotated"
+  log:
+    out_dir.joinpath("logs/qa_gene_cancer_study_ratio_annotated.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/validate_mutation_pipeline_artifacts.py"
 
@@ -520,6 +615,10 @@ rule all_workflow_qa:
   input:
     workflow_qa_reports
 
+rule all_datapackages:
+  input:
+    datapackage_reports
+
 rule validate_workflow_dag_contract:
   input:
     snakefile = "code/workflows/Snakefile",
@@ -528,8 +627,155 @@ rule validate_workflow_dag_contract:
     out_dir.joinpath("qa/workflow/dag_contract.qa_report.md")
   params:
     target = "all"
+  log:
+    out_dir.joinpath("logs/validate_workflow_dag_contract.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/validate_snakemake_dag_contract.py"
+
+#
+# Reusable clean-base datapackage manifests (task t193).
+# These package descriptors sit beside the generated substrate families that can
+# travel outside the immediate analysis run. They intentionally exclude
+# project-specific exploratory branches unless the substrate is a reusable base.
+#
+rule package_per_study_mutation_substrates:
+  input:
+    mutations = out_dir.joinpath("studies/{id}/mut/table/mut.feather"),
+    samples = out_dir.joinpath("studies/{id}/metadata/samples.feather"),
+    patients = out_dir.joinpath("studies/{id}/metadata/patients.feather"),
+    study = out_dir.joinpath("studies/{id}/metadata/study.feather"),
+    build = out_dir.joinpath("studies/{id}/metadata/study_build.txt"),
+    qa = out_dir.joinpath("studies/{id}/qa/mutation_substrates.qa_report.md")
+  output:
+    out_dir.joinpath("studies/{id}/datapackage.json")
+  params:
+    base_dir = lambda wc: out_dir.joinpath(f"studies/{wc.id}"),
+    package_name = lambda wc: f"{wc.id}-mutation-cleanbase",
+    title = lambda wc: f"{wc.id} mutation and clinical clean-base substrate",
+    source_dataset = lambda wc: "dataset:tcga-mc3" if wc.id == "tcga_mc3" else "dataset:cbioportal",
+    generated_by = "rule package_per_study_mutation_substrates",
+    access = lambda wc: (
+      "controlled Synapse/GDC MC3 source staged locally; generated files are local workflow artifacts"
+      if wc.id == "tcga_mc3"
+      else "public cBioPortal source where upstream study permits; generated files are local workflow artifacts"
+    ),
+    license = lambda wc: "see TCGA MC3/GDC terms" if wc.id == "tcga_mc3" else "see upstream cBioPortal study terms",
+    resource_roles = {"qa": "qa"}
+  log:
+    out_dir.joinpath("logs/package_per_study_mutation_substrates/{id}.log")
+  conda:
+    "../envs/project-python.yml"
+  script:
+    "../scripts/write_datapackage.py"
+
+rule package_driver_overlay_registry:
+  input:
+    bailey = out_dir.joinpath("metadata/bailey2018_drivers.feather"),
+    cgc = out_dir.joinpath("metadata/cgc_drivers.feather"),
+    sanchez_vega = out_dir.joinpath("metadata/sanchez_vega_pathways.feather")
+  output:
+    out_dir.joinpath("metadata/driver_overlays/datapackage.json")
+  params:
+    base_dir = out_dir.joinpath("metadata"),
+    package_name = "driver-overlay-registry",
+    title = "Processed driver and pathway overlay registry",
+    source_dataset = "dataset:data-driver-overlay-registry",
+    generated_by = "rule package_driver_overlay_registry",
+    access = "mixed public and account-gated upstream sources; generated overlay files are local workflow artifacts",
+    license = "see Bailey 2018, COSMIC CGC, and Sanchez-Vega 2018 source terms"
+  log:
+    out_dir.joinpath("logs/package_driver_overlay_registry.log")
+  conda:
+    "../envs/project-python.yml"
+  script:
+    "../scripts/write_datapackage.py"
+
+rule package_genie_panel_registry:
+  input:
+    coverage = out_dir.joinpath("metadata/genie_panel_coverage.feather"),
+    callable_mb = out_dir.joinpath("metadata/panel_callable_mb.tsv")
+  output:
+    out_dir.joinpath("metadata/genie_panel_registry/datapackage.json")
+  params:
+    base_dir = out_dir.joinpath("metadata"),
+    package_name = "genie-panel-callable-registry",
+    title = "GENIE panel coverage and callable-size registry",
+    source_dataset = "dataset:data-genie-panel-callable-registry",
+    generated_by = "rule package_genie_panel_registry",
+    access = "GENIE source requires Synapse account and Data Use Agreement; generated registry files are local workflow artifacts",
+    license = "see AACR Project GENIE data-use terms"
+  log:
+    out_dir.joinpath("logs/package_genie_panel_registry.log")
+  conda:
+    "../envs/project-python.yml"
+  script:
+    "../scripts/write_datapackage.py"
+
+rule package_normal_tissue_spectra:
+  input:
+    spectra = "data/normal_tissue_spectra.tsv",
+    burden = "data/normal_tissue_burden.tsv"
+  output:
+    "data/normal_tissue_datapackage.json"
+  params:
+    base_dir = lambda wc, output: pathlib.Path(output[0]).parent,
+    package_name = "normal-tissue-spectra",
+    title = "Li 2021 normal-tissue SBS spectra and burden",
+    source_dataset = "dataset:normal-tissue-spectra",
+    generated_by = "rule package_normal_tissue_spectra",
+    access = "derived from public Li 2021 supplement staged locally",
+    license = "see Li 2021 supplementary data terms"
+  log:
+    out_dir.joinpath("logs/package_normal_tissue_spectra.log")
+  conda:
+    "../envs/project-python.yml"
+  script:
+    "../scripts/write_datapackage.py"
+
+rule package_replication_timing_annotations:
+  input:
+    bins = "data/replication_timing_constitutive_bins.feather",
+    genes = "data/gene_replication_timing.feather"
+  output:
+    "data/replication_timing_datapackage.json"
+  params:
+    base_dir = lambda wc, output: pathlib.Path(output[0]).parent,
+    package_name = "replication-timing-annotations",
+    title = "Constitutive replication-timing bins and gene annotations",
+    source_dataset = "dataset:replication-timing-constitutive-regions",
+    generated_by = "rule package_replication_timing_annotations",
+    access = "derived from public Dileep 2015 supplement staged locally",
+    license = "see Dileep 2015 supplementary data terms"
+  log:
+    out_dir.joinpath("logs/package_replication_timing_annotations.log")
+  conda:
+    "../envs/project-python.yml"
+  script:
+    "../scripts/write_datapackage.py"
+
+rule package_gene_cancer_ratio_product:
+  input:
+    table = out_dir.joinpath("summary/mut/table/gene_cancer_study_ratio_annotated.feather"),
+    qa = out_dir.joinpath("qa/mutation/gene_cancer_study_ratio_annotated.qa_report.md")
+  output:
+    out_dir.joinpath("summary/mut/table/gene_cancer_study_ratio_annotated.datapackage.json")
+  params:
+    base_dir = out_dir,
+    package_name = "gene-cancer-study-ratio-annotated",
+    title = "Canonical annotated gene-cancer study ratio product",
+    source_dataset = "dataset:gene-cancer-study-ratio-annotated-product",
+    generated_by = "rule package_gene_cancer_ratio_product",
+    access = "generated local workflow artifact from public and access-controlled configured inputs",
+    license = "see upstream cBioPortal, GENIE, COSMIC, and driver-overlay source terms",
+    resource_roles = {"qa": "qa"}
+  log:
+    out_dir.joinpath("logs/package_gene_cancer_ratio_product.log")
+  conda:
+    "../envs/project-python.yml"
+  script:
+    "../scripts/write_datapackage.py"
 
 #
 # dNdScv per-study selection-based driver detection (Martincorena 2017).
@@ -563,6 +809,10 @@ rule prepare_dndscv_input:
     build   = out_dir.joinpath("studies/{id}/metadata/study_build.txt")
   output:
     out_dir.joinpath("studies/{id}/mut/dndscv_input.feather")
+  log:
+    out_dir.joinpath("logs/prepare_dndscv_input/{id}.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/prepare_dndscv_input.py"
 
@@ -577,6 +827,10 @@ checkpoint combine_mut_per_cancer_type:
     )
   output:
     directory(out_dir.joinpath("summary/mut/dndscv_input"))
+  log:
+    out_dir.joinpath("logs/combine_mut_per_cancer_type.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/combine_mut_per_cancer_type.py"
 
@@ -599,6 +853,8 @@ rule run_dndscv_per_cancer:
     run   = out_dir.joinpath("summary/mut/dndscv/per_cancer_per_build/{slug}/run.feather")
   params:
     refdb = _refdb_from_slug
+  log:
+    out_dir.joinpath("logs/run_dndscv_per_cancer/{slug}.log")
   conda:
     "../envs/dndscv.yml"
   script:
@@ -648,6 +904,10 @@ rule reconcile_dndscv_per_cancer:
   output:
     genes = out_dir.joinpath("summary/mut/dndscv/per_cancer/{cancer_slug}/genes.feather"),
     run   = out_dir.joinpath("summary/mut/dndscv/per_cancer/{cancer_slug}/run.feather")
+  log:
+    out_dir.joinpath("logs/reconcile_dndscv_per_cancer/{cancer_slug}.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/reconcile_dndscv_per_cancer.py"
 
@@ -657,6 +917,10 @@ rule aggregate_dndscv_per_gene:
     _all_per_cancer_genes
   output:
     out_dir.joinpath("summary/mut/table/dndscv_pooled.feather")
+  log:
+    out_dir.joinpath("logs/aggregate_dndscv_per_gene.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/aggregate_dndscv_per_gene.py"
 
@@ -667,6 +931,10 @@ rule join_dndscv_into_annotated:
     per_cancer = _all_per_cancer_genes
   output:
     out_dir.joinpath("summary/mut/table/gene_cancer_study_ratio_annotated_dndscv.feather")
+  log:
+    out_dir.joinpath("logs/join_dndscv_into_annotated.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/join_dndscv_into_annotated.py"
 
@@ -690,6 +958,10 @@ rule compare_three_way_rankings:
     unpack(_three_way_inputs)
   output:
     out_dir.joinpath("summary/mut/table/three_way_ranking_comparison.feather")
+  log:
+    out_dir.joinpath("logs/compare_three_way_rankings.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/compare_three_way_rankings.py"
 
@@ -732,6 +1004,10 @@ rule run_restricted_sigprofiler_assignment:
     out_dir.joinpath("studies/{id}/mut/signatures/restricted_assignment.denovo_decision.feather")
   params:
     assignment_unit = "study"
+  log:
+    out_dir.joinpath("logs/run_restricted_sigprofiler_assignment/{id}.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/run_restricted_sigprofiler_assignment.py"
 
@@ -746,6 +1022,10 @@ rule run_restricted_sigprofiler_assignment_per_sample:
     out_dir.joinpath("studies/{id}/mut/signatures/restricted_assignment_per_sample.denovo_decision.feather")
   params:
     assignment_unit = "sample"
+  log:
+    out_dir.joinpath("logs/run_restricted_sigprofiler_assignment_per_sample/{id}.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/run_restricted_sigprofiler_assignment.py"
 
@@ -754,6 +1034,10 @@ rule compare_sbs1_sbs5_ratio:
     expand(out_dir.joinpath("studies/{id}/mut/signatures/restricted_assignment_per_sample.feather"), id=ids)
   output:
     out_dir.joinpath("summary/signatures/sbs1_sbs5_proxy_comparison.feather")
+  log:
+    out_dir.joinpath("logs/compare_sbs1_sbs5_ratio.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/compare_sbs1_sbs5_ratio.py"
 
@@ -767,6 +1051,10 @@ rule compare_replication_timing_burden:
     per_sample = out_dir.joinpath("summary/signatures/rt_gene_burden_per_sample.feather")
   params:
     ids = ids
+  log:
+    out_dir.joinpath("logs/compare_replication_timing_burden.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/compare_replication_timing_burden.py"
 
@@ -780,6 +1068,10 @@ rule compare_replication_timing_burden_sbs1_proxy:
     per_sample = out_dir.joinpath("summary/signatures/rt_gene_burden_sbs1_proxy_per_sample.feather")
   params:
     ids = ids
+  log:
+    out_dir.joinpath("logs/compare_replication_timing_burden_sbs1_proxy.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/compare_replication_timing_sbs1_proxy.py"
 
@@ -799,6 +1091,10 @@ rule process_genie_panel_coverage:
     "data/genie/genomic_information.txt"
   output:
     out_dir.joinpath("metadata/genie_panel_coverage.feather")
+  log:
+    out_dir.joinpath("logs/process_genie_panel_coverage.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/process_genie_panel_coverage.py"
 
@@ -826,6 +1122,10 @@ rule build_panel_callable_sizes:
     out_dir.joinpath("metadata/genie_panel_coverage.feather")
   output:
     out_dir.joinpath("metadata/panel_callable_mb.tsv")
+  log:
+    out_dir.joinpath("logs/build_panel_callable_sizes.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/build_panel_callable_sizes.py"
 
@@ -851,6 +1151,10 @@ rule cluster_genes:
     out_dir.joinpath("summary/mut/matrix/gene_cancer.feather")
   output:
     out_dir.joinpath("summary/mut/clusters/gene.feather")
+  log:
+    out_dir.joinpath("logs/cluster_genes.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/cluster_genes.py"
 
@@ -859,6 +1163,10 @@ rule cluster_cancer_types:
     out_dir.joinpath("summary/mut/matrix/gene_cancer.feather")
   output:
     out_dir.joinpath("summary/mut/clusters/cancer.feather")
+  log:
+    out_dir.joinpath("logs/cluster_cancer_types.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/cluster_cancer_types.py"
 
@@ -869,6 +1177,10 @@ rule create_combined_gene_cancer_mutation_matrices:
   output:
     out_dir.joinpath("summary/mut/matrix/gene_cancer.feather"),
     out_dir.joinpath("summary/mut/matrix/gene_cancer_ratio.feather")
+  log:
+    out_dir.joinpath("logs/create_combined_gene_cancer_mutation_matrices.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/create_combined_gene_cancer_mutation_matrices.py"
 
@@ -881,6 +1193,10 @@ rule create_combined_gene_cancer_freq_table:
   output:
     out_dir.joinpath("summary/mut/table/gene_cancer_study.feather"),
     out_dir.joinpath("summary/mut/table/gene_cancer_study_ratio.feather"),
+  log:
+    out_dir.joinpath("logs/create_combined_gene_cancer_freq_table.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/create_combined_gene_cancer_freq_table.py"
 
@@ -891,6 +1207,10 @@ rule build_pooled_gene_cancer_input:
     samples = expand(out_dir.joinpath("studies/{id}/metadata/samples.feather"), id=ids),
   output:
     out_dir.joinpath("summary/mut/table/gene_cancer_pooled_input.feather"),
+  log:
+    out_dir.joinpath("logs/build_pooled_gene_cancer_input.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/build_pooled_gene_cancer_input.py"
 
@@ -904,6 +1224,8 @@ rule run_gene_cancer_meta_analysis:
     panel_sensitivity = out_dir.joinpath("summary/mut/table/gene_cancer_pooled_panel_sensitivity.feather"),
     placebo = out_dir.joinpath("summary/mut/table/gene_cancer_pooled_placebo.feather"),
   threads: config.get("meta_analysis_threads", 1)
+  log:
+    out_dir.joinpath("logs/run_gene_cancer_meta_analysis.log")
   conda:
     "../envs/r-meta.yml"
   shell:
@@ -914,7 +1236,8 @@ rule run_gene_cancer_meta_analysis:
     "--leave-one-out-output {output.leave_one_out} "
     "--panel-sensitivity-output {output.panel_sensitivity} "
     "--placebo-output {output.placebo} "
-    "--threads {threads}"
+    "--threads {threads} "
+    "> {log} 2>&1"
 
 rule create_combined_freq_tables:
   input:
@@ -923,6 +1246,10 @@ rule create_combined_freq_tables:
   output:
     out_dir.joinpath("summary/mut/table/{entity}_study.feather"),
     out_dir.joinpath("summary/mut/table/{entity}_study_ratio.feather")
+  log:
+    out_dir.joinpath("logs/create_combined_freq_tables/{entity}.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/create_combined_freq_tables.py"
 
@@ -931,6 +1258,10 @@ rule create_combined_gene_patient_matrix:
     expand(out_dir.joinpath("studies/{id}/mut/matrix/gene_patient.feather"), id=ids)
   output:
     out_dir.joinpath("summary/mut/matrix/gene_patient.feather"),
+  log:
+    out_dir.joinpath("logs/create_combined_gene_patient_matrix.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/create_combined_gene_patient_matrix.py"
 
@@ -959,6 +1290,10 @@ rule create_combined_sample_table:
   output:
     combined=out_dir.joinpath("metadata/samples.feather"),
     sample_panel_map=out_dir.joinpath("metadata/sample_panel_map.feather"),
+  log:
+    out_dir.joinpath("logs/create_combined_sample_table.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/create_combined_sample_table.py"
 
@@ -969,6 +1304,10 @@ rule create_correlation_matrices:
   output:
     out_dir.joinpath("studies/{id}/mut/matrix/cancer_cor.feather"),
     out_dir.joinpath("studies/{id}/mut/matrix/gene_cor.feather")
+  log:
+    out_dir.joinpath("logs/create_correlation_matrices/{id}.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/create_correlation_matrices.py"
 
@@ -978,6 +1317,10 @@ rule create_gene_patient_mutation_count_matrix:
     out_dir.joinpath("studies/{id}/metadata/samples.feather")
   output:
     out_dir.joinpath("studies/{id}/mut/matrix/gene_patient.feather")
+  log:
+    out_dir.joinpath("logs/create_gene_patient_mutation_count_matrix/{id}.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/create_gene_patient_mutation_count_matrix.py"
 
@@ -987,6 +1330,10 @@ rule create_gene_cancer_mutation_count_matrix:
     out_dir.joinpath("studies/{id}/metadata/samples.feather")
   output:
     out_dir.joinpath("studies/{id}/mut/matrix/gene_cancer.feather")
+  log:
+    out_dir.joinpath("logs/create_gene_cancer_mutation_count_matrix/{id}.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/create_gene_cancer_mutation_count_matrix.py"
 
@@ -1016,6 +1363,10 @@ rule create_freq_tables:
     out_dir.joinpath("studies/{id}/mut/table/cancer_detailed_study.feather"),
     out_dir.joinpath("studies/{id}/mut/table/gene_study.feather"),
     out_dir.joinpath("studies/{id}/mut/table/gene_cancer_study.feather")
+  log:
+    out_dir.joinpath("logs/create_freq_tables/{id}.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/create_freq_tables.py"
 
@@ -1024,6 +1375,10 @@ rule create_protein_length_mapping:
     "data/uniprotkb_hsapiens_protein_lengths.tsv.gz"
   output:
     out_dir.joinpath("metadata/protein_lengths.feather")
+  log:
+    out_dir.joinpath("logs/create_protein_length_mapping.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/create_protein_length_mapping.py"
 
@@ -1034,6 +1389,10 @@ rule filter_genes:
     out_dir.joinpath("metadata/studies.feather")
   output:
     out_dir.joinpath("studies/{id}/mut/table/mut_filtered.feather"),
+  log:
+    out_dir.joinpath("logs/filter_genes/{id}.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/filter_genes.py"
 
@@ -1052,6 +1411,10 @@ rule compute_per_sample_tmb:
     panels = out_dir.joinpath("metadata/panel_callable_mb.tsv")
   output:
     out_dir.joinpath("studies/{id}/metadata/samples_tmb.feather")
+  log:
+    out_dir.joinpath("logs/compute_per_sample_tmb/{id}.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/compute_per_sample_tmb.py"
 
@@ -1072,6 +1435,10 @@ rule detect_polymerase_hotspots:
     out_dir.joinpath("studies/{id}/mut/table/mut.feather")
   output:
     out_dir.joinpath("studies/{id}/metadata/sample_polymerase_hotspots.feather")
+  log:
+    out_dir.joinpath("logs/detect_polymerase_hotspots/{id}.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/detect_polymerase_hotspots.py"
 
@@ -1086,6 +1453,10 @@ rule combine_samples_tmb:
     pole_hotspots = expand(out_dir.joinpath("studies/{id}/metadata/sample_polymerase_hotspots.feather"), id=ids)
   output:
     out_dir.joinpath("metadata/samples_tmb_combined.feather")
+  log:
+    out_dir.joinpath("logs/combine_samples_tmb.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/combine_samples_tmb.py"
 
@@ -1110,6 +1481,10 @@ rule fit_per_cancer_tmb_gmm:
   output:
     per_cancer_fits = out_dir.joinpath("metadata/per_cancer_gmm_fits.feather"),
     samples_flagged = out_dir.joinpath("metadata/samples_gmm_flagged.feather")
+  log:
+    out_dir.joinpath("logs/fit_per_cancer_tmb_gmm.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/fit_per_cancer_tmb_gmm.py"
 
@@ -1127,6 +1502,10 @@ rule annotate_hypermutators:
     samples_flagged = out_dir.joinpath("metadata/samples_gmm_flagged.feather")
   output:
     out_dir.joinpath("metadata/samples_annotated.feather")
+  log:
+    out_dir.joinpath("logs/annotate_hypermutators.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/annotate_hypermutators.py"
 
@@ -1136,6 +1515,10 @@ rule annotate_cohort_stage:
     registry = "data/cbioportal_study_cohort_profiles.tsv"
   output:
     out_dir.joinpath("studies/{id}/metadata/samples_stage_annotated.feather")
+  log:
+    out_dir.joinpath("logs/annotate_cohort_stage/{id}.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/annotate_cohort_stage.py"
 
@@ -1144,6 +1527,10 @@ rule build_study_cohort_composition:
     expand(out_dir.joinpath("studies/{id}/metadata/samples_stage_annotated.feather"), id=ids)
   output:
     out_dir.joinpath("summary/metadata/study_cohort_composition.feather")
+  log:
+    out_dir.joinpath("logs/build_study_cohort_composition.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/build_study_cohort_composition.py"
 
@@ -1152,6 +1539,10 @@ rule check_gene_coverage:
     expand(out_dir.joinpath("studies/{id}/mut/table/mut.feather"), id=ids),
   output:
     out_dir.joinpath("metadata/gene_counts.feather")
+  log:
+    out_dir.joinpath("logs/check_gene_coverage.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/check_gene_coverage.py"
 
@@ -1160,6 +1551,10 @@ rule create_study_summary_table:
     expand(out_dir.joinpath("studies/{id}/metadata/study.feather"), id=ids)
   output:
     out_dir.joinpath("metadata/studies.feather")
+  log:
+    out_dir.joinpath("logs/create_study_summary_table.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/create_study_summary_table.py"
 
@@ -1198,6 +1593,10 @@ rule convert_to_feather:
     out_dir.joinpath("studies/{id}/metadata/patients.feather"),
     out_dir.joinpath("studies/{id}/metadata/study.feather"),
     out_dir.joinpath("studies/{id}/metadata/study_build.txt")
+  log:
+    out_dir.joinpath("logs/convert_to_feather/{id}.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/convert_to_feather.py"
 
@@ -1224,6 +1623,10 @@ rule convert_to_feather:
 rule download_study:
   output:
     out_dir.joinpath("metadata/raw_studies/{id}.staged")
+  log:
+    out_dir.joinpath("logs/download_study/{id}.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/download_study.py"
 
@@ -1239,6 +1642,10 @@ rule export_study_expression:
     clinical    = out_dir.joinpath("studies/{id}/expression/clinical.parquet"),
     datapackage = out_dir.joinpath("studies/{id}/expression/datapackage.json"),
     qa          = out_dir.joinpath("studies/{id}/expression/qa_report.md")
+  log:
+    out_dir.joinpath("logs/export_study_expression/{id}.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/export_study_expression.py"
 
@@ -1279,6 +1686,10 @@ rule process_mc3:
     out_dir.joinpath("studies/tcga_mc3/metadata/patients.feather"),
     out_dir.joinpath("studies/tcga_mc3/metadata/study.feather"),
     out_dir.joinpath("studies/tcga_mc3/metadata/study_build.txt")
+  log:
+    out_dir.joinpath("logs/process_mc3.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/process_mc3.py"
 
@@ -1303,8 +1714,13 @@ rule fetch_select_tarball:
       f"https://github.com/CSOgroup/select/archive/refs/tags/v{SELECT_VERSION}.tar.gz"
     ),
     expected_sha256_prefix=SELECT_SHA256_PREFIX,
+  log:
+    out_dir.joinpath("logs/fetch_select_tarball.log")
+  conda:
+    "../envs/project-python.yml"
   shell:
     r"""
+    exec > {log} 2>&1
     mkdir -p $(dirname {output})
     curl -sSfL {params.url} -o {output}.tmp
     actual=$(sha256sum {output}.tmp | cut -c1-12)
@@ -1346,8 +1762,13 @@ rule vendor_cosmic_cgc:
     "data/cosmic_cgc.tsv"
   params:
     expected_sha256_prefix=COSMIC_CGC_SHA256_PREFIX
+  log:
+    out_dir.joinpath("logs/vendor_cosmic_cgc.log")
+  conda:
+    "../envs/project-python.yml"
   shell:
     r"""
+    exec > {log} 2>&1
     cp {input} {output}.tmp
     actual=$(sha256sum {output}.tmp | cut -c1-12)
     if [ "{params.expected_sha256_prefix}" != "<TBD-after-first-copy>" ] && \
@@ -1378,6 +1799,10 @@ rule build_panel_beds:
     "data/panels/IMPACT505.bed",
     "data/panels/F1CDx.bed",
     "data/panels/F1.bed",
+  log:
+    out_dir.joinpath("logs/build_panel_beds.log")
+  conda:
+    "../envs/project-python.yml"
   script:
     "../scripts/build_panel_beds.py"
 

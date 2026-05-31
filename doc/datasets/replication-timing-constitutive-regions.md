@@ -97,6 +97,8 @@ Generated files:
 
 - `data/replication_timing_constitutive_bins.feather`
 - `data/gene_replication_timing.feather`
+- `data/replication_timing_datapackage.json` from
+  `rule package_replication_timing_annotations`
 
 Observed output summary from the first project run:
 

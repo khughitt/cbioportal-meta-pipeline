@@ -1021,22 +1021,3 @@ redefined indel taxonomy (paper:Koh2025) and multimodal catalogue (paper:FerrerT
 Evaluate adding copy-number and doublet-base-substitution (DBS) signatures (paper:Everall2026,
 paper:Steele2022). Blocked on CNA ingestion (cross-ref t055 — no CNA modality in the pipeline yet);
 DBS is feasible on WGS/WES substrates sooner. Forward-looking.
-
-## [t193] Create clean-base datapackages and dataset entities for reusable pipeline substrates
-- priority: P2
-- status: proposed
-- aspects: [software-development]
-- related: [task:t185]
-- group: pipeline-refactor
-- created: 2026-05-31
-
-Pipeline-refactor audit finding. For reusable clean-base substrates, create or verify datapackage manifests and doc/datasets/data-*.md entities: cBioPortal per-study mutation+clinical feathers, tcga_mc3 pseudo-study, GENIE panel coverage/callable-size registry, Bailey/CGC/Sanchez-Vega overlays, Li2021 normal-tissue spectra, replication-timing annotations, and canonical gene_cancer_study_ratio_annotated product. Keep project-specific downstream outputs out of base datasets and record license/access restrictions.
-
-## [t194] Normalize workflow logging and execution environments across active Snakemake rules
-- priority: P2
-- status: proposed
-- aspects: [software-development]
-- group: pipeline-refactor
-- created: 2026-05-31
-
-Pipeline-refactor audit finding. Address snakemake --lint findings by adding log directives to active rules and declaring a shared project Python env/container for Python script rules, while preserving specialized R/conda envs for dNdScv, SELECT, and meta-analysis. This should make failures discoverable in concurrent runs and make workflow execution requirements explicit.

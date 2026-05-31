@@ -967,7 +967,53 @@ DBS is feasible on WGS/WES substrates sooner. Forward-looking.
 - status: proposed
 - aspects: [computational-analysis]
 - related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, method:h08-agnostic-association-model, task:t178, task:t179, task:t180, task:t181, question:q021-positive-control-signature-set-expansion-sbs9, question:q022-apobec-a3a-a3b-joint-expression-and-mmr-omikli]
+- blocked-by: [task:t196, task:t197, task:t198, task:t199]
 - group: hypothesis-h08
 - created: 2026-05-31
 
 The h08 decomposition/exposure layer is now hardened (t178 version-pin+caller-flag+audit, t179 count-floor+refit-decision) but the agnostic covariate-association SCAN has never run — no interpretation reports positive-control recovery of any known aetiology. Cheapest highest-information move: it needs no new data (MC3 + existing per-sample exposures are on disk). Scope: (1) /science:plan-analysis + /science:pre-register the positive-control arm — pre-specify which known aetiology->signature pairs constitute PASS (e.g. APOBEC3A/3B expr -> SBS2/13; smoking/tissue -> SBS4; UV/melanoma -> SBS7; MSI/MMR -> SBS6/15/etc), the association model, multiple-testing control, and the recovery threshold that would promote h08 from proposed. (2) Run the scan on the hardened exposures. (3) Write doc/interpretations/<date>-h08-positive-control-scan.md with recovery results and a promotion recommendation. Surfaced as Gap 1 / the Strategic Decision Point in meta:next-steps-2026-05-31 (built-but-unexploited, mirroring the April t111 pattern). Covariate inputs t180 (joint APOBEC+MMR-omikli) and t181 (treatment-exposed flag) strengthen the scan beyond positive controls but are not prerequisites for the positive-control arm.
+
+### Notes
+
+- 2026-05-31: Plan landed: analysis-plan:h08-positive-control-scan (2026-05-31). Verdict NOT-READY — engineering-gated, NOT data-gated/methodology-gated. Correction: the 'pre-register' half of this task is ALREADY DONE — pre-registration:h08-positive-control was committed 2026-05-30 (3 arms, top-3/positive/q<0.05, 2-of-3 gate, COSMIC v3.4, NMF-K rule, compositional+permutation guards all locked). t195 is now the umbrella 'run H08a' task, blocked by 4 implementation checks: (1) q018 verdict, (2) full-MC3 7-strata refit, (3) PanCanAtlas RNA-seq + NMF module layer, (4) the association-layer core. None require gated data.
+
+## [t196] Write q018 feasibility verdict: per-sample SBS refit soundness + panel-adequacy rule (h08 activation gate)
+- priority: P1
+- status: proposed
+- aspects: [computational-analysis]
+- related: [question:q018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross, hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, pre-registration:h08-positive-control, analysis-plan:h08-positive-control-scan, task:t178, task:t179, task:t195]
+- group: hypothesis-h08
+- created: 2026-05-31
+
+pre-registration:h08-positive-control conditions activation on a q018 feasibility verdict, but doc/questions/q018*.md is currently an empty template stub. Write the verdict: (1) is the per-sample SBS refit sound on the MC3 WES substrate (largely answered by t178 COSMIC-v3.4 pin + presence audit and t179 count-floor + refit/de-novo decision), and (2) the panel-adequacy exclusion rule (panels enter cohort-pooled/refit only, never per-sample). Commit q018 as status: resolved with the rule stated. This is the cheapest of the 4 h08-run blocking checks (analysis-plan:h08-positive-control-scan check 1) and one of two near-term unblockers.
+
+## [t197] Run full-MC3 per-sample SBS refit across the 7 h08 arm strata (COSMIC v3.4, t178/t179-hardened)
+- priority: P1
+- status: proposed
+- aspects: [computational-analysis, software-development]
+- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, method:h08-agnostic-association-model, pre-registration:h08-positive-control, analysis-plan:h08-positive-control-scan, task:t178, task:t179, task:t195]
+- group: hypothesis-h08
+- created: 2026-05-31
+
+Today only the brca-2026-04-22 subset has a tcga_mc3 per-sample refit. The h08 positive-control scan needs per-sample exposures H across all 7 arm strata: SKCM, LUAD, LUSC, BLCA, BRCA, CESC, HNSC. Run run_restricted_sigprofiler_assignment.py (t178/t179-hardened: COSMIC v3.4 pin, presence audit, caller-consensus flag, count floor, de-novo decision sidecar) across these strata; materialize one joined per-sample H table + the *.signature_audit.feather / *.denovo_decision.feather sidecars. Pre-flight: data-genomics-somatic-mutation-qa on MC3 (PASS handling, dedup Tumor_Sample_Barcode, GRCh37 build, WES opportunity model) and reproduce the prereg §1b PASS-bearing counts (SKCM 466 / LUAD 513 / LUSC 480 / BLCA 411 / BRCA 791 / CESC 289 / HNSC 507). analysis-plan:h08-positive-control-scan check 2 (near-term unblocker).
+
+## [t198] Build h08 expression-module substrate: stage PanCanAtlas RNA-seq + frozen NMF-K module derivation
+- priority: P1
+- status: proposed
+- aspects: [computational-analysis, software-development]
+- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, method:h08-agnostic-association-model, pre-registration:h08-positive-control, analysis-plan:h08-positive-control-scan, task:t195]
+- group: hypothesis-h08
+- created: 2026-05-31
+
+The NMF expression-module covariate set is unbuilt: data/ has no PanCanAtlas RNA-seq matrix and export_study_expression.py reads per-study cBioPortal mRNA, not the PanCanAtlas batch-corrected matrix. PanCanAtlas RNA-seq is PUBLIC (not gated). Stage it for MC3-overlapping samples per arm (record the realized MC3 Tumor_Sample_Barcode <-> aliquot intersection — sets effective n), then build the frozen module pipeline EXACTLY per pre-registration §Total Comparison Count: log2(TPM+1); drop genes expressed in <10% of samples; retain top-2000 MAD genes; NMF for K in {5,10,...,50} x 50 restarts; select largest K before Brunet cophenetic correlation < 0.90 (ties -> smaller K). Selection runs on the expression matrix ALONE (never sees H, mutations, or the covariate-association) — leakage firewall. Write selected K + per-K cophenetic curve BEFORE any covariate-signature rank. analysis-plan:h08-positive-control-scan check 3.
+
+## [t199] Build h08 within-tissue covariate-H association layer (the H08a scan core)
+- priority: P1
+- status: proposed
+- aspects: [computational-analysis, software-development, causal-modeling]
+- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, method:h08-agnostic-association-model, pre-registration:h08-positive-control, analysis-plan:h08-positive-control-scan, question:q025-causal-direction-guard-for-expression-signature, task:t180, task:t181, task:t195]
+- blocked-by: [task:t197, task:t198]
+- group: hypothesis-h08
+- created: 2026-05-31
+
+No association-layer script exists today (the pre-reg's own 'binding constraint'). Build per pre-registration:h08-positive-control + method:h08-agnostic-association-model. (a) covariate join — clinical (SKCM anatomic-site UV proxy; lung pack-years/smoking; APOBEC3A/B mRNA via t180) + derived molecular (TMB, hypermutator class, POLE/POLD1 hotspot, MSI) + treatment-exposed flag (t181); (b) compositional transform of sum-constrained H (CLR/ILR or absolute per-signature burden — document pseudocount + structural-vs-sampling zeros); (c) within-tissue model (tissue fixed-effect; adjustment {tissue, treatment, study/assay, ancestry}); Arm C = SINGLE pooled within-tissue model across {BLCA,BRCA,CESC,HNSC,LUAD,LUSC} -> one APOBEC3A/B rank (per-stratum = sensitivity only, NOT a pass route); (d) BH-FDR over the full covariate x signature x stratum grid; rank+sign+q; report frozen covariate-count denominator BEFORE ranks; (e) APOBEC3-locus LEAKAGE guard; (f) within-stratum permutation null + compositional-basis re-run as pre-acceptance for any 'too good' result; (g) sensitivity K+-5 (flip -> downgrade [?]), lung pooling, frozen APOBEC tissue set; (h) fill prereg §1b activation table (post-join n, completeness, base rate) — gate NOT read until filled. Verdict -> H08a [+]/[?]/[-] per committed 2-of-3 / top-3 / q<0.05. Emit datapackage.json. Route to /science:plan-pipeline before implementing; wire into Snakemake per t175 if recurring. analysis-plan:h08-positive-control-scan check 4.

@@ -57,6 +57,32 @@ pre-registered here — it remains exploratory and is *gated behind* a passing H
 § Null Result Plan). A separate pre-registration should be authored for H08b once H08a passes and
 t177 has fixed the novelty bar.
 
+## Feasibility (§1b — support sets)
+
+Raw per-arm support counted as **distinct TCGA cases per project** from
+`data/tcga_case_to_project.tsv` (deduplicated; **11,428** distinct cases across **33** projects) on
+2026-05-30. This map defines the `tcga_mc3` WES substrate's case identity and is the honest
+computable-today **upper bound** on each arm's n. It is deliberately *not* counted from
+`results/poc-2026-04-17/metadata/samples_annotated.feather` — that POC table is dominated by
+`msk_impact_2017` panel samples, which h08 excludes from per-sample signatures, so it is the wrong
+substrate for this table. The realized per-arm n will differ slightly from these case counts (cases
+vs samples; PASS-variant and signature-refit filtering) and is recorded at activation (below).
+
+| Arm | Stratum (TCGA project) | Raw distinct cases | Post-join n | Covariate completeness | Base rate |
+|---|---|---|---|---|---|
+| A | SKCM | **470** | TBC @ activation | TBC (anatomic-site field) | TBC |
+| B | LUAD + LUSC | **1,089** (585 + 504) | TBC @ activation | TBC (pack-years / smoking history) | TBC |
+| C | BLCA·BRCA·CESC·HNSC·LUAD·LUSC | **3,434** (412·1098·307·528·585·504) | TBC @ activation | TBC (APOBEC3A/B mRNA join) | TBC |
+
+The **post-join n** (signature exposure × covariate, after the signature refit and the MC3∩clinical /
+MC3∩RNA-seq intersections), **covariate completeness**, and **base rates** cannot be computed today:
+the per-sample signature refit, the clinical-covariate join, and the expression export are not yet
+materialized as a single joined table on the MC3 substrate. Recording these three numbers per arm
+against the realized join is an **activation precondition** (alongside t177 / q018) — the gate is
+**not read until they are filled into this table**. Raw n is comfortably powered for arms A and B
+(textbook effects at n ≈ 470–1,089); arm C's effective n is the one most likely eroded by the
+RNA-seq intersection, consistent with it being the tolerated miss under the 2-of-3 rule.
+
 ## Expected Outcomes
 
 The agnostic within-tissue scan, given no aetiology labels, will rank each textbook covariate at or

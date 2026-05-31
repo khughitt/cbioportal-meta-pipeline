@@ -65,14 +65,24 @@ Raw per-arm support counted as **distinct TCGA cases per project** from
 computable-today **upper bound** on each arm's n. It is deliberately *not* counted from
 `results/poc-2026-04-17/metadata/samples_annotated.feather` — that POC table is dominated by
 `msk_impact_2017` panel samples, which h08 excludes from per-sample signatures, so it is the wrong
-substrate for this table. The realized per-arm n will differ slightly from these case counts (cases
-vs samples; PASS-variant and signature-refit filtering) and is recorded at activation (below).
+substrate for this table.
 
-| Arm | Stratum (TCGA project) | Raw distinct cases | Post-join n | Covariate completeness | Base rate |
-|---|---|---|---|---|---|
-| A | SKCM | **470** | TBC @ activation | TBC (anatomic-site field) | TBC |
-| B | LUAD + LUSC | **1,089** (585 + 504) | TBC @ activation | TBC (pack-years / smoking history) | TBC |
-| C | BLCA·BRCA·CESC·HNSC·LUAD·LUSC | **3,434** (412·1098·307·528·585·504) | TBC @ activation | TBC (APOBEC3A/B mRNA join) | TBC |
+**Two computable-today bounds are recorded.** *Raw distinct cases* is the upper bound from the
+case→project map. *PASS-bearing MC3 samples* is the closer pre-refit floor: distinct
+`Tumor_Sample_Barcode` carrying ≥1 `FILTER == PASS` variant in `data/mc3.v0.2.8.PUBLIC.maf.gz`
+(3,600,962 data rows), mapped to project via the case map — i.e. the samples that actually hold
+callable somatic variants and so can receive a per-sample signature refit. This is materially lower
+than the case count (e.g. BRCA 1,098 cases → 791 PASS-bearing samples; APOBEC-six 3,434 → 2,991) and
+is the honest lower bound on each arm's pre-join n. Counted 2026-05-30; an independent reviewer count
+agreed on **every arm** (SKCM 466, LUAD 513, LUSC 480, BLCA 411, BRCA 791, CESC 289, HNSC 507,
+APOBEC-six total 2,991). The realized per-arm n sits between these two bounds and shrinks further at
+the covariate join (clinical / RNA-seq); it is recorded at activation.
+
+| Arm | Stratum (TCGA project) | Raw distinct cases | PASS-bearing MC3 samples | Post-join n | Covariate completeness | Base rate |
+|---|---|---|---|---|---|---|
+| A | SKCM | **470** | **466** | TBC @ activation | TBC (anatomic-site field) | TBC |
+| B | LUAD + LUSC | **1,089** (585 + 504) | **993** (513 + 480) | TBC @ activation | TBC (pack-years / smoking history) | TBC |
+| C | BLCA·BRCA·CESC·HNSC·LUAD·LUSC | **3,434** (412·1098·307·528·585·504) | **2,991** (411·791·289·507·513·480) | TBC @ activation | TBC (APOBEC3A/B mRNA join) | TBC |
 
 The **post-join n** (signature exposure × covariate, after the signature refit and the MC3∩clinical /
 MC3∩RNA-seq intersections), **covariate completeness**, and **base rates** cannot be computed today:
@@ -310,9 +320,19 @@ though its realized integer is only known at run time. The following are **froze
   oncotree_code, treatment history where available); (b) the derived molecular features already in
   the pipeline (TMB, hypermutator class / flags, POLE/POLD1 hotspot, MSI status); and (c) K
   expression modules. No covariate outside this enumerated union enters the denominator.
-- **Expression-module count K** — fixed by a frozen unsupervised rule (the module-derivation method
-  and its K-selection criterion are specified in the paired analysis plan) and recorded **before**
-  any covariate↔signature rank is computed; K is not tuned against results.
+- **Expression-module count K — frozen rule (inlined; no external plan dependency).** Modules are
+  derived by **non-negative matrix factorization (NMF)** on the log2(TPM+1) expression matrix
+  (genes × samples) of the signature-grade substrate (TCGA PanCanAtlas RNA-seq, restricted to the
+  MC3-overlapping samples per arm), after standard filtering: drop genes expressed in < 10% of
+  samples, retain the top 2,000 most-variable genes by median-absolute-deviation. K is selected by
+  the **cophenetic-correlation criterion** of Brunet et al. 2004 — run NMF for K ∈ {5, 10, 15, …, 50}
+  with 50 random restarts each, and choose the **largest K before the cophenetic correlation
+  coefficient drops below 0.90** (ties broken toward the smaller K). This selection runs on the
+  **expression matrix alone** — it never sees signature exposures, mutation data, or the covariate↔H
+  association — so K cannot be tuned against the gate. The selected K and the per-K cophenetic curve
+  are written to the run's output and recorded **before** any covariate↔signature rank is computed.
+  *Sensitivity (exploratory):* the full scan is re-run at K±5 to confirm the H08a arm verdicts are
+  not artifacts of the exact module count; a verdict that flips under K±5 is downgraded to `[?]`.
 - **Active-signature inclusion rule** — COSMIC v3.4 SBS reference; a signature enters a stratum's
   denominator iff it receives non-zero assigned exposure in **≥ 5%** of that stratum's samples
   (frozen threshold). The reference version and the 5% rule are fixed here.

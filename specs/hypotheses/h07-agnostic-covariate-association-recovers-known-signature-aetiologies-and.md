@@ -3,28 +3,19 @@ id: hypothesis:h07-agnostic-covariate-association-recovers-known-signature-aetio
 type: hypothesis
 title: Agnostic covariate association recovers known signature aetiologies and surfaces novel upstream causes
 status: proposed
-ontology_terms:
-  - mutational signatures
-  - somatic mutation
-  - gene expression
-  - tumor mutational burden
-datasets:
-  - cBioPortal (~300 studies)
-  - TCGA MC3 (tcga_mc3)
-  - AACR GENIE
-created: 2026-05-30
-updated: 2026-05-30
-related:
-  - topic:signature-decomposition-unmatched-normal
-  - question:q018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross
-  - question:q019-does-de-novo-extraction-on-the-aggregated-cohort-surface-factors-not-in
-  - discussion:2026-05-30-common-mutational-signatures-known-vs-learned-immune-causes-and-confounding
+phase: active
 source_refs:
-  - paper:Alexandrov2020
-  - paper:Degasperi2022
+- paper:Alexandrov2020
+- paper:Degasperi2022
+related:
+- topic:signature-decomposition-unmatched-normal
+- question:q018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross
+- question:q019-does-de-novo-extraction-on-the-aggregated-cohort-surface-factors-not-in
+- discussion:2026-05-30-common-mutational-signatures-known-vs-learned-immune-causes-and-confounding
+created: '2026-05-30'
+updated: '2026-05-30'
 ---
-
-# Agnostic covariate association recovers known signature aetiologies and surfaces novel upstream causes
+# Hypothesis: Agnostic covariate association recovers known signature aetiologies and surfaces novel upstream causes
 
 ## Summary
 
@@ -80,7 +71,7 @@ The hypothesis is **two-pronged and explicitly falsifiable on the positive-contr
 4. Associations attenuate or reverse sign when tissue is *not* conditioned on — quantifying how
    much of the naive "exposure→signature" story is tissue collinearity.
 
-## Test / Falsification
+## Falsifiability
 
 - **Falsifies H07a (and undermines the whole approach):** the scan fails to recover the
   well-supported exposure→signature links within tissue at any reasonable FDR — i.e. the method
@@ -121,15 +112,18 @@ hypothesis's own framing:
 ## Status & Next Steps
 
 - **status: proposed.** Gated on (a) a literature scan of prior agnostic signature-etiology /
-  signature-PheWAS work (task below), and (b) q018's feasibility verdict on downstream
+  signature-PheWAS work (`task:t177`), and (b) q018's feasibility verdict on downstream
   signature extraction + panel adequacy.
 - Next: literature review (what has been claimed/done), `science:sketch-model` of the
-  association DAG (causal-modeling aspect is enabled), `science:find-datasets` for EHR-rich
-  substrates (GENIE BPC), then `science:pre-register` the positive-control + discovery design.
+  association DAG (`models/h07-agnostic-signature-association.dot`,
+  `method:h07-agnostic-association-model`), `science:find-datasets` for EHR-rich substrates
+  (GENIE BPC — `search:2026-05-30-ehr-rich-substrates-for-agnostic-signature-association`),
+  then `science:pre-register` the positive-control + discovery design.
 
 ## Related
 
 - Topic notes: `topic:signature-decomposition-unmatched-normal`
+- Method/model: `method:h07-agnostic-association-model`, `models/h07-agnostic-signature-association.dot`
 - Discussion: `discussion:2026-05-30-common-mutational-signatures-known-vs-learned-immune-causes-and-confounding`
 - Questions: `question:q018-...`, `question:q019-...`
 - Code substrate: `code/scripts/export_study_expression.py`, `code/scripts/convert_to_feather.py`,

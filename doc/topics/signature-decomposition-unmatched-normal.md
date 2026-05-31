@@ -9,10 +9,7 @@ ontology_terms:
   - tumor purity
   - somatic mutation
   - clonal hematopoiesis
-datasets:
-  - cBioPortal (~300 studies)
-  - PCAWG
-  - COSMIC v3.x
+datasets: []
 source_refs:
   - "paper:Alexandrov2020"
   - "paper:Li2021"
@@ -364,3 +361,11 @@ Papers worth queuing for `/science:research-papers` full summarization:
 4. **Diaz-Gay et al. 2023** (SigProfilerAssignment, Bioinformatics, PMID 38096571) — Current Alexandrov-lab assignment tool; pipeline integration candidate. A summary would clarify the allowed-signature input interface and performance on WES/panel data.
 
 5. **Moore et al. 2022** (Pan-tissue WGS normal-cell reference spectra, referenced in Yaacov2023 as one of the two normal-tissue cohorts) — Provides the large-N per-tissue normal-cell mutation spectra that could serve as background reference. Needed if Intervention 3 is implemented.
+
+## Datasets referenced
+
+Studies/resources discussed in this topic (not yet first-class `dataset:` entities):
+
+- cBioPortal (~300 studies)
+- PCAWG
+- COSMIC v3.x

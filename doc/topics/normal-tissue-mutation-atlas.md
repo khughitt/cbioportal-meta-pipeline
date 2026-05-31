@@ -11,19 +11,8 @@ ontology_terms:
   - aging
   - cross-species mutation rate
 datasets:
-  - "Martincorena 2015 (skin)"
-  - "Martincorena 2018 (esophagus)"
-  - "Yokoyama 2019 (esophagus)"
-  - "Lee-Six 2018 (colon)"
-  - "Lee-Six 2019 (blood, hematopoietic phylogeny)"
-  - "Moore 2020 (endometrium)"
-  - "Brunner 2019 (liver)"
-  - "Yoshida 2020 (lung)"
-  - "Li 2021 (multi-tissue body-map, 9 tissues)"
-  - "Cagan 2022 (cross-species mutation rate scaling)"
-  - "Park 2024 (somatic mutation as biological clocks)"
-  - "GTEx (tissue reference, no somatic-call layer by default)"
-  - "HMF / Hartwig (potential normal-cohort component)"
+  - dataset:li2021-normal-wgs
+  - dataset:gtex
 source_refs:
   - "paper:Martincorena2018"
   - "paper:LeeSix2018"
@@ -145,3 +134,19 @@ instability, with most clonal expansions producing milder or sub-clinical conseq
 - **Cagan 2022** *Nature* 604:517 — cross-species mutation rate scaling with lifespan.
 - **Jaiswal 2014** *NEJM* 371:2488 — clonal hematopoiesis at population scale; the
   blood-specific anchor.
+
+## Datasets referenced
+
+Studies/resources discussed in this topic (not yet first-class `dataset:` entities):
+
+- "Martincorena 2015 (skin)"
+- "Martincorena 2018 (esophagus)"
+- "Yokoyama 2019 (esophagus)"
+- "Lee-Six 2018 (colon)"
+- "Lee-Six 2019 (blood, hematopoietic phylogeny)"
+- "Moore 2020 (endometrium)"
+- "Brunner 2019 (liver)"
+- "Yoshida 2020 (lung)"
+- "Cagan 2022 (cross-species mutation rate scaling)"
+- "Park 2024 (somatic mutation as biological clocks)"
+- "HMF / Hartwig (potential normal-cohort component)"

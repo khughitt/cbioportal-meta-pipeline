@@ -979,7 +979,7 @@ The h08 decomposition/exposure layer is now hardened (t178 version-pin+caller-fl
 
 ## [t199] Build h08 within-tissue covariate-H association layer (the H08a scan core)
 - priority: P1
-- status: proposed
+- status: in_progress
 - aspects: [computational-analysis, software-development, causal-modeling]
 - related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, method:h08-agnostic-association-model, pre-registration:h08-positive-control, question:q025-causal-direction-guard-for-expression-signature, task:t180, task:t181, task:t195]
 - blocked-by: [task:t197, task:t198]
@@ -987,3 +987,7 @@ The h08 decomposition/exposure layer is now hardened (t178 version-pin+caller-fl
 - created: 2026-05-31
 
 No association-layer script exists today (the pre-reg's own 'binding constraint'). Build per pre-registration:h08-positive-control + method:h08-agnostic-association-model. (a) covariate join — clinical (SKCM anatomic-site UV proxy; lung pack-years/smoking; APOBEC3A/B mRNA via t180) + derived molecular (TMB, hypermutator class, POLE/POLD1 hotspot, MSI) + treatment-exposed flag (t181); (b) compositional transform of sum-constrained H (CLR/ILR or absolute per-signature burden — document pseudocount + structural-vs-sampling zeros); (c) within-tissue model (tissue fixed-effect; adjustment {tissue, treatment, study/assay, ancestry}); Arm C = SINGLE pooled within-tissue model across {BLCA,BRCA,CESC,HNSC,LUAD,LUSC} -> one APOBEC3A/B rank (per-stratum = sensitivity only, NOT a pass route); (d) BH-FDR over the full covariate x signature x stratum grid; rank+sign+q; report frozen covariate-count denominator BEFORE ranks; (e) APOBEC3-locus LEAKAGE guard; (f) within-stratum permutation null + compositional-basis re-run as pre-acceptance for any 'too good' result; (g) sensitivity K+-5 (flip -> downgrade [?]), lung pooling, frozen APOBEC tissue set; (h) fill prereg §1b activation table (post-join n, completeness, base rate) — gate NOT read until filled. Verdict -> H08a [+]/[?]/[-] per committed 2-of-3 / top-3 / q<0.05. Emit datapackage.json. Route to /science:plan-pipeline before implementing; wire into Snakemake per t175 if recurring. analysis-plan:h08-positive-control-scan check 4.
+
+### Notes
+
+- 2026-05-31: WP0 done (e094f71): GDC PanCanAtlas smoking covariate fetched+verified (size 18,633,685 B, md5 ffcb35e..., LUAD/LUSC smoking-history 97/98% complete). dataset:tcga-pancanatlas-clinical registered (access.verified). Plan patched from review (F1 Arm-C module exclusion + F4 rank statistic frozen). Next: WP1 covariate assembly.

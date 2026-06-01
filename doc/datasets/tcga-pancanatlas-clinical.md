@@ -5,8 +5,8 @@ title: "TCGA PanCanAtlas clinical-with-followup (smoking / pack-years)"
 status: "active"
 source_class: "observational"
 origin: "external"
-tier: "in-use"
-license: "TCGA open-access (de-identified clinical)"
+tier: "use-now"
+license: "custom"
 update_cadence: "static"
 ontology_terms: []
 accessions:

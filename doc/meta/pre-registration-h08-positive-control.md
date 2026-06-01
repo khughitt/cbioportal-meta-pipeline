@@ -93,9 +93,9 @@ the covariate join (clinical / RNA-seq); it is recorded at activation.
 
 | Arm | Stratum (TCGA project) | Raw distinct cases | PASS-bearing MC3 samples | Post-join n | Covariate completeness | Base rate |
 |---|---|---|---|---|---|---|
-| A | SKCM | **470** | **466** | TBC @ activation | TBC (anatomic-site field) | TBC |
-| B | LUAD + LUSC | **1,089** (585 + 504) | **993** (513 + 480) | TBC @ activation | TBC (pack-years / smoking history) | TBC |
-| C | BLCA·BRCA·CESC·HNSC·LUAD·LUSC | **3,434** (412·1098·307·528·585·504) | **2,991** (411·791·289·507·513·480) | TBC @ activation | TBC (APOBEC3A/B mRNA join) | TBC |
+| A | SKCM | **470** | **466** | **391** (count-floor ∩ arm; fit n 370) | `uv_sun_exposure_ordinal` 370/391 = **94.6%** | site tiers high(2):211 / mid(1):119 / low(0):40 |
+| B | LUAD + LUSC | **1,089** (585 + 504) | **993** (513 + 480) | **859** (count-floor ∩ arm; fit n 703) | `pack_years` 703/859 = **81.8%** | mean 48.2, median 42 pack-years |
+| C | BLCA·BRCA·CESC·HNSC·LUAD·LUSC | **3,434** (412·1098·307·528·585·504) | **2,991** (411·791·289·507·513·480) | **1,934** (count-floor ∩ arm; fit n 1,883) | `apobec3ab_joint` 1,883/1,934 = **97.4%** | mean 9.04, median 9.19 (log2 mRNA) |
 
 The **post-join n** (signature exposure × covariate, after the signature refit and the MC3∩clinical /
 MC3∩RNA-seq intersections), **covariate completeness**, and **base rates** cannot be computed today:
@@ -105,6 +105,14 @@ against the realized join is an **activation precondition** (alongside t177 / q0
 **not read until they are filled into this table**. Raw n is comfortably powered for arms A and B
 (textbook effects at n ≈ 470–1,089); arm C's effective n is the one most likely eroded by the
 RNA-seq intersection, consistent with it being the tolerated miss under the 2-of-3 rule.
+
+**Activation satisfied (2026-05-31, t199 WP4).** The three TBC columns are now filled against the
+realized MC3 ∩ signature-refit ∩ covariate join (count-floor-passing primary grid), so the gate is
+read. All three arms cleared their power floor; arm C's RNA-seq intersection eroded less than feared
+(post-join n 1,934, 97.4% complete) and it is in fact the *only* primary pass — the tolerated miss
+under 2-of-3 turned out to be the two environmental-exposure arms (A, B), not arm C. See
+`doc/interpretations/2026-05-31-t199-h08-association-verdict.md` for the gate read (1/3 → H08a
+`[?]`).
 
 ## Expected Outcomes
 

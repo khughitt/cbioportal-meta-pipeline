@@ -15,6 +15,7 @@ related:
     "task:t202",
     "task:t205",
     "task:t206",
+    "task:t207",
     "discussion:2026-06-01-h08b-gate-handling",
   ]
 ---
@@ -220,3 +221,19 @@ The other no-signal studies are `no_detected_treatment_signal`, not confirmed na
 
 Recommended next move: write the small config/schema plan for H10 denominator handling.
 The design should keep a broad `treatment_exposed_studies` layer separate from a narrower `mutagenic_treatment_signal` study/fraction layer, then implement paired treatment-inclusive/exclusive frequency-table outputs parallel to the existing hypermutator-inclusive/exclusive columns.
+
+## Update — t207 H10 Denominator Schema
+
+The H10 denominator schema is now planned and split from the audit task.
+
+| Prior recommendation | Current status | Evidence |
+|---|---|---|
+| Write the H10 treatment-denominator config/schema plan | Done | `doc/plans/2026-06-01-t207-h10-treatment-denominator-schema.md`. |
+| Separate audit from implementation | Done | `task:t206` is closed as the audit/manual-review slice; `task:t207` is active for executable schema and impact-pass work. |
+
+The design preserves the t206 review's central distinction:
+broad treatment-exposed cohorts are a cohort-composition sensitivity, while primary H10 treatment-signature impact uses a narrower mutagenic-treatment layer.
+It also keeps PDX cohorts sensitivity-only, names the comparator `no_detected_treatment_signal` rather than treatment-naive, and avoids overloading the existing `_exclusive` suffix because canonical frequency tables already use that suffix for hypermutator exclusion.
+
+Recommended next move: implement `t207` WP1-WP2 first.
+That means adding the `h10_treatment_denominator` config schema and `annotate_treatment_exposure.py` with tests before touching frequency-table aggregation.

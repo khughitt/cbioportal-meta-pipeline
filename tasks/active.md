@@ -936,23 +936,15 @@ Evaluate adding copy-number and doublet-base-substitution (DBS) signatures (pape
 paper:Steele2022). Blocked on CNA ingestion (cross-ref t055 — no CNA modality in the pipeline yet);
 DBS is feasible on WGS/WES substrates sooner. Forward-looking.
 
-## [t206] Audit non-TCGA treatment-exposed cBioPortal cohorts for H10 impact test
+## [t207] Implement H10 treatment-denominator schema and frequency impact pass
 - priority: P2
 - status: active
-- aspects: [computational-analysis]
-- related: [hypothesis:h10-treatment-induced-signature-frequency-contamination, question:q024-treatment-exposed-cohort-chemotherapy-signature, question:q027-does-excluding-treatment-signature-high-samples, task:t181]
+- aspects: [computational-analysis, software-development]
+- related: [hypothesis:h10-treatment-induced-signature-frequency-contamination, question:q024-treatment-exposed-cohort-chemotherapy-signature, question:q027-does-excluding-treatment-signature-high-samples, task:t206, plan:2026-06-01-t207-h10-treatment-denominator-schema]
 - group: hypothesis-h10
 - created: 2026-06-01
 
-Extend the t181 H08-facing treatment-exposure stratum into a broader H10 cohort audit: identify non-TCGA cBioPortal studies enriched for pre-treated, relapsed, metastatic, or therapy-specific cohorts; populate treatment_exposed_studies / treatment_exposed_study_fractions in relevant configs; then prepare the frequency-table impact pass comparing treatment-exposed or therapy-signature-high inclusion vs exclusion.
+Implement the post-audit H10 treatment denominator schema: encode broad treatment-exposed study flags separately from mutagenic-treatment study/fraction labels, keep PDX cohorts sensitivity-only, define the no_detected_treatment_signal baseline semantics, and add paired treatment-inclusive/exclusive frequency-table impact outputs without changing the existing hypermutator-exclusive contract.
 
-Analysis-readiness plan: `doc/plans/2026-06-01-t206-h10-treatment-exposure-audit-analysis-plan.md`.
-
-Progress 2026-06-01: audit scaffold and manual-review note landed in
-`doc/interpretations/2026-06-01-t206-treatment-exposure-audit.md`.
-The 11 explicit candidates are confirmed as broad treatment-exposed study candidates, but the
-review separates broad treatment history from a narrower DNA-damaging-therapy/signature-expectation
-layer and marks PDX cohorts sensitivity-only for primary patient-denominator analyses.
-Next step: decide the config/schema shape for broad study flags, mutagenic-treatment study/fraction
-labels, PDX sensitivity handling, and `no_detected_treatment_signal` baseline semantics; then implement
-the paired treatment-inclusive/exclusive frequency-table impact pass.
+Design plan: `doc/plans/2026-06-01-t207-h10-treatment-denominator-schema.md`.
+Next step: implement WP1-WP2 first, with config-schema tests and treatment sample annotation before adding frequency-table outputs.

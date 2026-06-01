@@ -108,3 +108,18 @@ UV repair should stay deferred unless a better exposure substrate appears, and H
 
 **Follow-through:** `task:t202` tracks and closes the smoking-arm repair pre-registration.
 The repair document is `pre-registration:h08-smoking-repair`; the next executable step is a small implementation plan for the repaired Arm-B production rerun, not a broad H08b scan.
+
+## Update — 08:12 EDT
+
+The next executable step is now also tracked and closed.
+
+| Prior recommendation | Current status | Evidence |
+|---|---|---|
+| Plan the repaired Arm-B production rerun | Done | `task:t203` wrote `doc/plans/2026-06-01-h08-smoking-repair-rerun.md`. |
+
+The repaired rerun plan keeps the new Arm-B read separate from the locked t199 artifacts.
+It defines a repair-specific output surface under `association/repairs/smoking_arm/`, derives the repaired denominator from the original manifest without overwriting it, and locks `ever_smoker` as the only primary pass route.
+`pack_years_zero_never`, original `pack_years`, LUAD-only, and LUSC-only remain sensitivity/localization reads.
+
+Recommended next move: implement `run_h08_smoking_repair.py` and the opt-in Snakemake target `all_h08_smoking_repair`, then write the repair interpretation note.
+This is still a repaired positive-control read with limited epistemic weight; it does not change H08a `[?]` and does not make H08b confirmatory.

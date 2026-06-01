@@ -116,6 +116,37 @@ panel_callable_mb_tolerance: 0.05
 random_seed: 0
 gmm_min_samples: 100
 
+# H10 treatment-denominator labels (task:t207).
+# Broad exposure labels support cohort-composition sensitivity. Primary
+# mutagenic labels are the narrow DNA-damaging-therapy layer; PDX cohorts stay
+# sensitivity-only. Empty sample_level_rules is intentional until deterministic
+# raw clinical SAMPLE_ID rules are promoted from the t206 audit.
+h10_treatment_denominator:
+  broad_treatment_exposed_studies:
+    - blca_dfarber_mskcc_2014
+    - brca_dfci_2020
+    - brca_fuscc_2020
+    - brca_mskcc_2019
+    - mel_ucla_2016
+    - mixed_allen_2018
+    - nepc_wcm_2016
+    - nsclc_mskcc_2018
+    - prad_su2c_2019
+    - skcm_mskcc_2014
+  mutagenic_treatment_signal_studies:
+    - blca_dfarber_mskcc_2014
+  mutagenic_treatment_signal_sensitivity_only_studies:
+    - sclc_cancercell_gardner_2017
+    - pptc_2019
+  positive_naive_or_pretreatment_studies:
+    - lung_nci_2022
+    - lusc_cptac_2021
+    - mbl_dkfz_2017
+  unknown_treatment_metadata_studies:
+    - aml_stjude_2024
+    - msk_impact_50k_2026
+  sample_level_rules: {}
+
 # studies to include; this is a subset of the "curated" study list + genie
 studies: [
   "genie",

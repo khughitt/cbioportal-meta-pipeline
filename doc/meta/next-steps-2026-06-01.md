@@ -256,3 +256,15 @@ It also makes `mean_no_detected_treatment_signal` verdict-bearing through `delta
 
 Recommended implementation order remains WP1-WP2 first.
 The annotation tests should specifically prove that positive-naive samples are folded into `no_detected_treatment_signal` and also exposed through the confirmed-naive sensitivity view.
+
+## Update — t207 Annotation Substrate
+
+WP1-WP2 are now implemented as the executable H10 treatment-label substrate.
+`code/config/config-full.yml` carries the curated `h10_treatment_denominator` schema from the t206 audit, and `code/scripts/annotate_treatment_exposure.py` produces `metadata/samples_treatment_exposure.feather` plus `metadata/samples_treatment_exposure_counts.tsv`.
+The Snakemake surface is opt-in through `all_h10_treatment_annotations`, so the canonical mutation-frequency tables remain unchanged.
+
+The tests cover the label semantics that mattered in the plan review:
+primary mutagenic conflicts with positive-naive and sensitivity-only labels hard-fail; positive-naive samples are folded into `no_detected_treatment_signal`; unknown metadata is not silently treated as unexposed; sample-level raw `SAMPLE_ID` joins hard-fail on missing clinical columns or unmatched raw IDs; and the counts sidecar reports per-study label totals.
+
+Recommended next move: implement WP3, the per-study treatment-aware frequency views.
+This should consume `samples_treatment_exposure.feather`, emit a long `cohort_view` table, and keep the hypermutator companion columns explicitly named rather than overloading the existing `_exclusive` suffix.

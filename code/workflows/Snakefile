@@ -23,6 +23,11 @@ h08_configfile = (
   else "code/config/config-signature-h08-arms.yml"
 )
 
+h10_configfile = (
+  workflow.configfiles[-1] if getattr(workflow, "configfiles", None)
+  else "code/config/config-full.yml"
+)
+
 entities = ['cancer', 'cancer_detailed', 'gene']
 
 mutation_qa_reports = [
@@ -1770,6 +1775,35 @@ rule annotate_hypermutators:
     "../envs/project-python.yml"
   script:
     "../scripts/annotate_hypermutators.py"
+
+# t207 H10 treatment-denominator labels. Opt-in substrate for the later
+# treatment-aware frequency views; intentionally separate from samples_annotated
+# so the existing hypermutator-inclusive/exclusive contract is unchanged.
+rule annotate_treatment_exposure:
+  input:
+    samples_annotated = out_dir.joinpath("metadata/samples_annotated.feather")
+  output:
+    labels = out_dir.joinpath("metadata/samples_treatment_exposure.feather"),
+    counts = out_dir.joinpath("metadata/samples_treatment_exposure_counts.tsv")
+  log:
+    out_dir.joinpath("logs/annotate_treatment_exposure.log")
+  params:
+    configfile = h10_configfile,
+    data_dir = data_dir
+  conda:
+    "../envs/project-python.yml"
+  shell:
+    "python code/scripts/annotate_treatment_exposure.py "
+    "--config {params.configfile} "
+    "--samples-annotated {input.samples_annotated} "
+    "--data-dir {params.data_dir} "
+    "--output {output.labels} "
+    "--counts {output.counts} > {log} 2>&1"
+
+rule all_h10_treatment_annotations:
+  input:
+    out_dir.joinpath("metadata/samples_treatment_exposure.feather"),
+    out_dir.joinpath("metadata/samples_treatment_exposure_counts.tsv")
 
 rule annotate_cohort_stage:
   input:

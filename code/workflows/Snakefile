@@ -1292,6 +1292,30 @@ rule run_h08_smoking_repair:
   shell:
     "python code/scripts/run_h08_smoking_repair.py --config {params.configfile} > {log} 2>&1"
 
+#
+# t182 — exploratory H08b SBS40-vs-SBS5 expression-module prototype.
+# Diagnostic / exploratory only: this target does not re-read H08a, does not unlock H08b, and
+# writes under `association/exploratory/`.
+#
+rule run_h08b_sbs40_sbs5_prototype:
+  input:
+    covariates = out_dir.joinpath("association/h08_covariates.feather"),
+    denominator = out_dir.joinpath("association/covariate_denominator.json"),
+    exposures = out_dir.joinpath("studies/tcga_mc3/mut/signatures/restricted_assignment_per_sample.feather"),
+    luad_rsem = data_dir.joinpath(config.get("h08_arm_studies", {}).get("LUAD", ""), "data_mrna_seq_v2_rsem.txt")
+  output:
+    modules = out_dir.joinpath("association/exploratory/h08b_sbs40_sbs5/h08b_sbs40_sbs5_module_contrast.feather"),
+    target_genes = out_dir.joinpath("association/exploratory/h08b_sbs40_sbs5/h08b_sbs40_sbs5_target_genes.feather"),
+    meta = out_dir.joinpath("association/exploratory/h08b_sbs40_sbs5/h08b_sbs40_sbs5.meta.json")
+  params:
+    configfile = h08_configfile
+  log:
+    out_dir.joinpath("logs/run_h08b_sbs40_sbs5_prototype.log")
+  conda:
+    "../envs/project-python.yml"
+  shell:
+    "python code/scripts/run_h08b_sbs40_sbs5_prototype.py --config {params.configfile} > {log} 2>&1"
+
 rule all_h08_association:
   input:
     out_dir.joinpath("association/h08_association_grid.feather"),
@@ -1306,6 +1330,12 @@ rule all_h08_smoking_repair:
     out_dir.joinpath("association/repairs/smoking_arm/h08_smoking_repair_grid.feather"),
     out_dir.joinpath("association/repairs/smoking_arm/h08_smoking_repair_sensitivity.feather"),
     out_dir.joinpath("association/repairs/smoking_arm/h08_smoking_repair.meta.json")
+
+rule all_h08b_sbs40_sbs5_prototype:
+  input:
+    out_dir.joinpath("association/exploratory/h08b_sbs40_sbs5/h08b_sbs40_sbs5_module_contrast.feather"),
+    out_dir.joinpath("association/exploratory/h08b_sbs40_sbs5/h08b_sbs40_sbs5_target_genes.feather"),
+    out_dir.joinpath("association/exploratory/h08b_sbs40_sbs5/h08b_sbs40_sbs5.meta.json")
 
 #
 # AACR Project GENIE per-panel coverage mask.

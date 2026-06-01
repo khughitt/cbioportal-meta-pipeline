@@ -155,3 +155,19 @@ The locked H08a verdict remains `[?]`, the repaired smoking-arm result remains `
 
 Recommended next move: if staying on H08, run only a narrow exploratory t182 feasibility prototype for SBS40/SBS5 expression-module separation, with the causal-direction guard up front.
 Otherwise, shift out of H08 and address broader active-project debt: treatment-exposed cohort flags (`task:t181` / H10), the commons-validation hygiene tasks, or cross-project sync.
+
+## Update — t182 Prototype
+
+The narrow exploratory H08b prototype has now run.
+
+| Prior recommendation | Current status | Evidence |
+|---|---|---|
+| Run only a narrow exploratory t182 feasibility prototype | Done | `doc/interpretations/2026-06-01-t182-h08b-sbs40-sbs5-prototype.md` and `code/scripts/run_h08b_sbs40_sbs5_prototype.py`. |
+
+The result is candidate-bearing but not mechanism-bearing.
+SKCM `module_04` is associated with the SBS40-vs-SBS5 contrast after age conditioning (n = 363, coef = +0.154, BH-q = 0.0348), but the secondary read suggests the contrast is driven mostly by lower SBS5 rather than a strong separate SBS40 increase.
+CESC `module_02` is weaker and points toward higher SBS5 relative to SBS40.
+LUAD `REV3L` is null, and `POLZ` is not evaluable from the LUAD RSEM matrix.
+
+H08b remains exploratory and unpromoted.
+The next H08-specific refinement would be formal module labeling/enrichment, but the broader project may get more value from `task:t181` treatment-exposed cohort flags because those feed H10, H09, and any future signature scan.

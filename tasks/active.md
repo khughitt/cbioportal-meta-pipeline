@@ -860,23 +860,6 @@ signatures (SBS11/SBS31/SBS35/SBS87) and add a treatment-exposed flag (and fract
 parallel to `matched_normal_studies`, to stratify before the positive-control scan. Sources:
 paper:Diamond2023, paper:Crisafulli2022, paper:Pleasance2020, paper:Maura2023.
 
-## [t182] Prototype SBS40-vs-SBS5 expression-module separation (h08b flagship test)
-- priority: P3
-- status: active
-- aspects: [causal-modeling, computational-analysis]
-- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, question:q023-sbs40-vs-sbs5-clocklike-expression-module, question:q025-causal-direction-guard-for-expression-signature]
-- group: hypothesis-h08
-- created: 2026-05-31
-
-Prototype the h08b discovery headline: unsupervised co-expression modules (NMF) on MC3 RNA-seq vs
-age-conditioned within-tissue SBS40/SBS5 burden; also test POLZ/REV3L expression vs SBS5 in MC3
-LUAD. Apply the causal-direction guard before any upstream claim. Sources: paper:Hakobyan2024,
-paper:Luo2023, paper:Spisak2025.
-
-Post-H08a gate note (2026-06-01): H08a remains `[?]` after the t199 primary scan and t204 smoking
-repair. This prototype is allowed only as exploratory feasibility work, not as confirmatory H08b
-evidence or hypothesis promotion. See discussion:2026-06-01-h08b-gate-handling.
-
 ## [t183] Add ERCC2 + stop-gain-enrichment exploratory cross-checks to h08
 - priority: P3
 - status: proposed

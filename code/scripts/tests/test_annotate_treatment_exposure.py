@@ -149,6 +149,94 @@ def test_sample_level_rule_maps_raw_clinical_sample_ids_and_marks_primary_signal
     assert by_sample.loc["D3", "no_detected_treatment_signal"]
 
 
+def test_sample_level_rule_marks_unknown_metadata_and_removes_no_detected(
+    tmp_path: Path,
+) -> None:
+    samples = _samples(
+        [
+            {"study_id": "difg_glass_2019", "sample_id": "D1"},
+            {"study_id": "difg_glass_2019", "sample_id": "D2"},
+        ]
+    )
+    _write_clinical(
+        tmp_path / "difg_glass_2019" / "data_clinical_sample.txt",
+        [
+            {"SAMPLE_ID": "D1", "TMZ_TREATMENT": ""},
+            {"SAMPLE_ID": "D2", "TMZ_TREATMENT": "No"},
+        ],
+    )
+    cfg = load_treatment_config(
+        _base_config(
+            sample_level_rules={
+                "difg_tmz_unknown": {
+                    "study_id": "difg_glass_2019",
+                    "target": "treatment_metadata_unknown",
+                    "clinical_sample_file": "data_clinical_sample.txt",
+                    "sample_id_column": "SAMPLE_ID",
+                    "positive_columns": {"TMZ_TREATMENT": [""]},
+                }
+            }
+        )
+    )
+
+    out = annotate_treatment_exposure(samples, cfg, data_dir=tmp_path)
+
+    by_sample = out.set_index("sample_id")
+    assert by_sample.loc["D1", "treatment_metadata_unknown"]
+    assert not by_sample.loc["D1", "no_detected_treatment_signal"]
+    assert by_sample.loc["D1", "treatment_rule_id"] == "difg_tmz_unknown"
+    assert not by_sample.loc["D2", "treatment_metadata_unknown"]
+    assert by_sample.loc["D2", "no_detected_treatment_signal"]
+
+
+def test_sample_level_rule_marks_positive_naive_and_keeps_no_detected(
+    tmp_path: Path,
+) -> None:
+    samples = _samples(
+        [
+            {"study_id": "blca_cornell_2016", "sample_id": "B1"},
+            {"study_id": "blca_cornell_2016", "sample_id": "B2"},
+        ]
+    )
+    _write_clinical(
+        tmp_path / "blca_cornell_2016" / "data_clinical_sample.txt",
+        [
+            {
+                "SAMPLE_ID": "B1",
+                "SPECIMEN_COLLECTION_PRE_OR_POST_CHEMO": "pre-chemotherapy",
+            },
+            {
+                "SAMPLE_ID": "B2",
+                "SPECIMEN_COLLECTION_PRE_OR_POST_CHEMO": "post-chemotherapy",
+            },
+        ],
+    )
+    cfg = load_treatment_config(
+        _base_config(
+            sample_level_rules={
+                "blca_pre_chemo": {
+                    "study_id": "blca_cornell_2016",
+                    "target": "positive_naive_or_pretreatment",
+                    "clinical_sample_file": "data_clinical_sample.txt",
+                    "sample_id_column": "SAMPLE_ID",
+                    "positive_columns": {
+                        "SPECIMEN_COLLECTION_PRE_OR_POST_CHEMO": ["pre-chemotherapy"]
+                    },
+                }
+            }
+        )
+    )
+
+    out = annotate_treatment_exposure(samples, cfg, data_dir=tmp_path)
+
+    by_sample = out.set_index("sample_id")
+    assert by_sample.loc["B1", "positive_naive_or_pretreatment"]
+    assert by_sample.loc["B1", "no_detected_treatment_signal"]
+    assert by_sample.loc["B1", "treatment_rule_id"] == "blca_pre_chemo"
+    assert not by_sample.loc["B2", "positive_naive_or_pretreatment"]
+    assert by_sample.loc["B2", "no_detected_treatment_signal"]
+
+
 def test_sample_level_rule_hard_fails_on_missing_clinical_column(
     tmp_path: Path,
 ) -> None:

@@ -936,12 +936,14 @@ Evaluate adding copy-number and doublet-base-substitution (DBS) signatures (pape
 paper:Steele2022). Blocked on CNA ingestion (cross-ref t055 — no CNA modality in the pipeline yet);
 DBS is feasible on WGS/WES substrates sooner. Forward-looking.
 
-## [t209] Extend H10 sample-level treatment rules for unknown and confirmed-naive labels
+## [t210] Plan and implement q027 therapy-signature-high exclusion impact arm
 - priority: P2
 - status: proposed
 - aspects: [computational-analysis, software-development]
-- related: [hypothesis:h10-treatment-induced-signature-frequency-contamination, question:q024-treatment-exposed-cohort-chemotherapy-signature, question:q027-does-excluding-treatment-signature-high-samples, task:t206, task:t207, task:t208]
+- related: [hypothesis:h10-treatment-induced-signature-frequency-contamination, question:q027-does-excluding-treatment-signature-high-samples, question:q024-treatment-exposed-cohort-chemotherapy-signature, task:t207, task:t208, task:t209, plan:2026-06-01-t210-q027-therapy-signature-high-exclusion]
 - group: hypothesis-h10
 - created: 2026-06-01
 
-Extend annotate_treatment_exposure.py sample_level_rules beyond positive mutagenic labels so raw clinical sample-level unknowns and confirmed pretreatment samples are not silently folded into no_detected_treatment_signal. Add sample-level treatment_metadata_unknown support for blank DIFG/GLASS TMZ_TREATMENT values and sample-level positive_naive_or_pretreatment support for BLCA Cornell pre-chemotherapy samples; rerun H10 impact and update the interpretation before starting the q027 signature-high arm.
+Define and implement the q027 signature-high arm for H10: derive therapy-signature-high samples from measured SBS11/SBS31/SBS35/SBS87 per-sample exposures, add signature-high-excluded frequency and impact outputs parallel to the t207-t209 exposure-label denominator layer, rerun on an explicitly scoped substrate, and write an interpretation that keeps measured signature exposure separate from clinical treatment labels.
+
+Plan: `doc/plans/2026-06-01-t210-q027-therapy-signature-high-exclusion.md`.

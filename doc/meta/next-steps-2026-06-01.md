@@ -358,3 +358,22 @@ The biological H10 claim remains unresolved because the current pass excludes by
 
 Recommended next move: handle `task:t209` before q027.
 Extend sample-level rules to support sample-level `treatment_metadata_unknown` and `positive_naive_or_pretreatment`, rerun the H10 impact target, and only then file the distinct q027 therapy-signature-high arm.
+
+## Update - t209 Sample-Level Unknown And Confirmed-Naive Rules
+
+The comparator-definition repair has now shipped as `task:t209`.
+
+| Prior recommendation | Current status | Evidence |
+|---|---|---|
+| Support sample-level `treatment_metadata_unknown` and `positive_naive_or_pretreatment` targets | Done | `annotate_treatment_exposure.py` now accepts both targets in `sample_level_rules`, and focused tests cover the new semantics. |
+| Mark DIFG/GLASS blank TMZ values as unknown | Done | `config-full.yml` now defines `difg_glass_2019_tmz_unknown`; the regenerated sidecar reports 161 DIFG samples as `treatment_metadata_unknown` and only 104 as no-detected. |
+| Mark BLCA Cornell pre-chemotherapy samples as confirmed pretreatment | Done | `config-full.yml` now defines `blca_cornell_2016_pre_chemo`; the regenerated sidecar reports 21 BLCA Cornell samples as `positive_naive_or_pretreatment`. |
+| Rerun the H10 impact target and write the interpretation | Done | `all_h10_treatment_impact` reran from `annotate_treatment_exposure`, final no-op check passed, and `doc/interpretations/2026-06-01-t209-h10-sample-level-unknown-naive-rules.md` records the read. |
+
+The repaired counts are now: 280 primary mutagenic-treatment samples, 852 positive-naive/pretreatment samples, 55,379 treatment-metadata-unknown samples, and 326,355 no-detected-treatment-signal samples.
+This fixes the t208 silent-negative behavior but does not make the H10 biological claim arbitrated.
+The primary mutagenic impact contrast remains bladder plus glioma, and the confirmed-naive contrast still has 0 interpretable rows because BLCA Cornell alone is underpowered by the two-study rule.
+
+Recommended next move: start `task:t210`, the distinct q027 therapy-signature-high exclusion arm.
+The plan is `doc/plans/2026-06-01-t210-q027-therapy-signature-high-exclusion.md`.
+It begins with a candidate-study feasibility audit because the current full-config H10 outputs have no SBS exposure layer, and the existing H08 signature assignments do not include SBS11/SBS31/SBS35/SBS87.

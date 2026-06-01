@@ -54,6 +54,13 @@ def test_config_full_defines_curated_h10_treatment_denominator_labels() -> None:
             "sample_id_column": "SAMPLE_ID",
             "positive_columns": {"TMZ_TREATMENT": ["Yes"]},
         },
+        "difg_glass_2019_tmz_unknown": {
+            "study_id": "difg_glass_2019",
+            "target": "treatment_metadata_unknown",
+            "clinical_sample_file": "data_clinical_sample.txt",
+            "sample_id_column": "SAMPLE_ID",
+            "positive_columns": {"TMZ_TREATMENT": [""]},
+        },
         "blca_cornell_2016_post_chemo": {
             "study_id": "blca_cornell_2016",
             "target": "mutagenic_treatment_signal",
@@ -61,6 +68,15 @@ def test_config_full_defines_curated_h10_treatment_denominator_labels() -> None:
             "sample_id_column": "SAMPLE_ID",
             "positive_columns": {
                 "SPECIMEN_COLLECTION_PRE_OR_POST_CHEMO": ["post-chemotherapy"]
+            },
+        },
+        "blca_cornell_2016_pre_chemo": {
+            "study_id": "blca_cornell_2016",
+            "target": "positive_naive_or_pretreatment",
+            "clinical_sample_file": "data_clinical_sample.txt",
+            "sample_id_column": "SAMPLE_ID",
+            "positive_columns": {
+                "SPECIMEN_COLLECTION_PRE_OR_POST_CHEMO": ["pre-chemotherapy"]
             },
         },
     }

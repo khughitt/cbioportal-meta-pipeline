@@ -35,6 +35,8 @@ SAMPLE_LEVEL_TARGETS = {
     "treatment_exposed_broad",
     "mutagenic_treatment_signal",
     "mutagenic_treatment_signal_sensitivity_only",
+    "positive_naive_or_pretreatment",
+    "treatment_metadata_unknown",
 }
 
 

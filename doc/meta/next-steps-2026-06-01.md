@@ -13,6 +13,8 @@ related:
     "task:t200",
     "task:t201",
     "task:t202",
+    "task:t205",
+    "discussion:2026-06-01-h08b-gate-handling",
   ]
 ---
 
@@ -139,3 +141,17 @@ Under `pre-registration:h08-smoking-repair`, the local repaired Arm-B verdict is
 The strongest current read is now stable:
 the frozen Arm-B miss was partly an exposure-operationalization artifact, but the repaired binary smoking proxy still does not produce a clean top-3 positive control on this substrate.
 H08a remains `[?]`, and H08b remains exploratory unless a later gate-bypass decision is explicitly recorded.
+
+## Update — 09:02 EDT
+
+The H08b gate-handling decision is now explicit.
+
+| Prior recommendation | Current status | Evidence |
+|---|---|---|
+| Decide whether H08b can proceed after the repaired smoking result | Done | `discussion:2026-06-01-h08b-gate-handling` records that no confirmatory H08b gate is open; any `task:t182` work is exploratory/prototype only. |
+
+This is intentionally **not** a gate bypass.
+The locked H08a verdict remains `[?]`, the repaired smoking-arm result remains `[?]`, and H08b cannot be used for hypothesis promotion without a future pre-registered gate that passes.
+
+Recommended next move: if staying on H08, run only a narrow exploratory t182 feasibility prototype for SBS40/SBS5 expression-module separation, with the causal-direction guard up front.
+Otherwise, shift out of H08 and address broader active-project debt: treatment-exposed cohort flags (`task:t181` / H10), the commons-validation hygiene tasks, or cross-project sync.

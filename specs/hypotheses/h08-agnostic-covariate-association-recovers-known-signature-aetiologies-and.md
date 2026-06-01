@@ -120,9 +120,8 @@ hypothesis's own framing:
 
 ## Status & Next Steps
 
-- **status: proposed.** Gated on (a) a literature scan of prior agnostic signature-etiology /
-  signature-PheWAS work (`task:t177`), and (b) q018's feasibility verdict on downstream
-  signature extraction + panel adequacy.
+- **status: proposed.** The first H08a positive-control read has now run and remains
+  inconclusive rather than promoted.
 - **Positive control (H08a) is now pre-registered:**
   `pre-registration:h08-positive-control` (committed 2026-05-30). It locks the recovery design —
   three confirmatory arms (UV→SBS7 / smoking→SBS4 / APOBEC3-expr→SBS2/13), a **2-of-3** pass gate,
@@ -130,9 +129,14 @@ hypothesis's own framing:
   `[-]` (0/3) verdict voids the H08b discovery prong. H08b (discovery) remains **unregistered** and
   is gated behind a passing H08a verdict — author its own pre-reg once H08a passes and t177 fixes
   the novelty bar.
-- Next: complete the `task:t177` literature scan + q018 feasibility verdict (both activation gates
-  for the registered analysis), build the per-sample refit + within-tissue association layer, then
-  run the H08a positive control.
+- **2026-06-01 update:** `task:t199` ran the registered H08a scan and produced a `[?]` verdict
+  (1/3 arms passed). `task:t200` diagnosed the failed arms, and `task:t204` ran a repaired
+  smoking-arm read; the repair was positive and significant but still failed the top-3 rank gate.
+  Per `discussion:2026-06-01-h08b-gate-handling`, H08b is not opened as confirmatory work.
+  A narrow SBS40/SBS5 expression-module prototype may proceed only as exploratory analysis.
+- Next: if continuing H08, either run a clearly labeled exploratory `task:t182` prototype or design
+  a new repaired positive-control gate that addresses both the UV proxy and lung burden-dominance
+  issues before any H08b promotion decision.
 
 ## Related
 

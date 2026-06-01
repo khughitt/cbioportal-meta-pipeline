@@ -873,6 +873,10 @@ age-conditioned within-tissue SBS40/SBS5 burden; also test POLZ/REV3L expression
 LUAD. Apply the causal-direction guard before any upstream claim. Sources: paper:Hakobyan2024,
 paper:Luo2023, paper:Spisak2025.
 
+Post-H08a gate note (2026-06-01): H08a remains `[?]` after the t199 primary scan and t204 smoking
+repair. This prototype is allowed only as exploratory feasibility work, not as confirmatory H08b
+evidence or hypothesis promotion. See discussion:2026-06-01-h08b-gate-handling.
+
 ## [t183] Add ERCC2 + stop-gain-enrichment exploratory cross-checks to h08
 - priority: P3
 - status: proposed

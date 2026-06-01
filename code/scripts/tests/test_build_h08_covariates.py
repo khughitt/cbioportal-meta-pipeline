@@ -4,7 +4,10 @@
 
 import pandas as pd
 
-from build_h08_covariates import _derive_smoking_covariates
+from build_h08_covariates import (
+    _derive_smoking_covariates,
+    _derive_treatment_exposure_covariates,
+)
 
 
 def test_derive_smoking_covariates_maps_pancanatlas_text_labels() -> None:
@@ -79,3 +82,37 @@ def test_derive_smoking_covariates_nulls_nonlung_rows() -> None:
     assert (
         out.loc[1, ["pack_years", "ever_smoker", "pack_years_zero_never"]].isna().all()
     )
+
+
+def test_derive_treatment_exposure_covariates_adds_study_flag_and_fraction() -> None:
+    clinical = pd.Series([0.0, pd.NA, 1.0], dtype="Float64")
+
+    out = _derive_treatment_exposure_covariates(
+        clinical,
+        source_study_id="study_a",
+        treatment_exposed_studies={"study_a"},
+        treatment_exposed_fractions={"study_a": 0.75},
+    )
+
+    assert out["treatment_exposed_clinical"].tolist() == [0.0, pd.NA, 1.0]
+    assert out["treatment_exposed_study"].tolist() == [1.0, 1.0, 1.0]
+    assert out["treatment_exposed_fraction"].tolist() == [0.75, 0.75, 0.75]
+    assert out["treatment_exposed"].tolist() == [1.0, 1.0, 1.0]
+
+
+def test_derive_treatment_exposure_covariates_preserves_clinical_positive_in_unflagged_study() -> (
+    None
+):
+    clinical = pd.Series([0.0, pd.NA, 1.0], dtype="Float64")
+
+    out = _derive_treatment_exposure_covariates(
+        clinical,
+        source_study_id="tcga_mc3",
+        treatment_exposed_studies=set(),
+        treatment_exposed_fractions={"tcga_mc3": 0.0},
+    )
+
+    assert out["treatment_exposed_study"].tolist() == [0.0, 0.0, 0.0]
+    assert out["treatment_exposed_fraction"].tolist() == [0.0, 0.0, 0.0]
+    assert out["treatment_exposed"].tolist()[:2] == [0.0, 0.0]
+    assert out.loc[2, "treatment_exposed"] == 1.0

@@ -136,6 +136,9 @@ CONTEXT_COVARIATES = [
     "apobec3b",
     "ever_smoker",
     "pack_years_zero_never",
+    "treatment_exposed_clinical",
+    "treatment_exposed_study",
+    "treatment_exposed_fraction",
 ]
 
 ARM_B_STRATA = [
@@ -172,6 +175,36 @@ def _derive_smoking_covariates(
     nonlung = ~cov["arm"].isin(ARM_B_STRATA)
     out.loc[nonlung, ["pack_years", "ever_smoker", "pack_years_zero_never"]] = np.nan
     return out
+
+
+def _derive_treatment_exposure_covariates(
+    clinical_exposure: pd.Series,
+    *,
+    source_study_id: str,
+    treatment_exposed_studies: set[str],
+    treatment_exposed_fractions: dict[str, float],
+) -> pd.DataFrame:
+    clinical = clinical_exposure.astype("Float64")
+    study_flag = 1.0 if source_study_id in treatment_exposed_studies else 0.0
+    fraction = float(treatment_exposed_fractions.get(source_study_id, study_flag))
+    if not 0.0 <= fraction <= 1.0:
+        raise ValueError(
+            f"treatment_exposed_study_fractions[{source_study_id!r}] must be between 0 and 1"
+        )
+
+    study = pd.Series(study_flag, index=clinical.index, dtype="Float64")
+    combined = clinical.fillna(0.0).where(study != 1.0, other=1.0).astype("Float64")
+
+    return pd.DataFrame(
+        {
+            "treatment_exposed_clinical": clinical,
+            "treatment_exposed_study": study,
+            "treatment_exposed_fraction": pd.Series(
+                fraction, index=clinical.index, dtype="Float64"
+            ),
+            "treatment_exposed": combined,
+        }
+    )
 
 
 def _read_clinical(path: Path) -> pd.DataFrame:
@@ -276,7 +309,7 @@ def build_arm(
     df["ancestry"] = _clean(pat["GENETIC_ANCESTRY_LABEL"])
     df["stage_ordinal"] = _stage_ordinal(pat["AJCC_PATHOLOGIC_TUMOR_STAGE"])
     neoadj = _clean(pat["HISTORY_NEOADJUVANT_TRTYN"]).str.upper()
-    df["treatment_exposed"] = (
+    df["treatment_exposed_clinical"] = (
         neoadj.eq("YES").where(neoadj.notna(), other=pd.NA).astype("float")
     )
 
@@ -314,7 +347,13 @@ def main(config_path: Path, smoking: Path) -> None:
     cfg = yaml.safe_load(config_path.read_text())
     data_dir = Path(cfg["data_dir"])
     out_dir = Path(cfg["out_dir"])
+    source_study_id = "tcga_mc3"
     arm_studies: dict[str, str] = cfg["h08_arm_studies"]
+    treatment_exposed_studies = set(cfg.get("treatment_exposed_studies", []))
+    treatment_exposed_fractions = {
+        str(study): float(fraction)
+        for study, fraction in cfg.get("treatment_exposed_study_fractions", {}).items()
+    }
     assoc_dir = out_dir / "association"
     assoc_dir.mkdir(parents=True, exist_ok=True)
 
@@ -344,6 +383,27 @@ def main(config_path: Path, smoking: Path) -> None:
         for arm, study in arm_studies.items()
     ]
     cov = pd.concat(frames).reset_index()
+    treatment_covariates = _derive_treatment_exposure_covariates(
+        cov["treatment_exposed_clinical"],
+        source_study_id=source_study_id,
+        treatment_exposed_studies=treatment_exposed_studies,
+        treatment_exposed_fractions=treatment_exposed_fractions,
+    )
+    cov[
+        [
+            "treatment_exposed_clinical",
+            "treatment_exposed_study",
+            "treatment_exposed_fraction",
+            "treatment_exposed",
+        ]
+    ] = treatment_covariates[
+        [
+            "treatment_exposed_clinical",
+            "treatment_exposed_study",
+            "treatment_exposed_fraction",
+            "treatment_exposed",
+        ]
+    ]
 
     # --- POLE/POLD1 hotspots from the MC3 MAF (left-join, absent = False) ---
     mut = pd.read_feather(
@@ -460,6 +520,13 @@ def main(config_path: Path, smoking: Path) -> None:
             "uv_rule": "max sun-exposure tier over pipe-delimited TUMOR_TISSUE_SITE tokens (KD4)",
             "clr_pseudocount": cfg.get("signature_ratio_pseudocount", 0.5),
             "pooled_modules_excluded": True,
+            "treatment_exposure_rule": (
+                "treatment_exposed is the OR of patient-level HISTORY_NEOADJUVANT_TRTYN "
+                "and a config-driven study-level treatment_exposed_study flag; "
+                "treatment_exposed_fraction records the audited cohort-level fraction without using H"
+            ),
+            "treatment_exposed_studies": sorted(treatment_exposed_studies),
+            "treatment_exposed_study_fractions": treatment_exposed_fractions,
             "target_signatures": {
                 "arm_A": "SBS7 (sum of active SBS7a/b/c/d)",
                 "arm_B": "SBS4",

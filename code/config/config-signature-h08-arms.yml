@@ -52,6 +52,14 @@ multi_caller_consensus_studies:
   - tcga_mc3
 single_caller_studies: []
 
+# t181 — study-level treatment exposure stratum, parallel to matched_normal_studies.
+# This is a cohort-level audit flag, not inferred from mutational-signature exposures. TCGA MC3 is
+# treated as a primary-treatment-naive baseline for this H08 substrate; patient-level neoadjuvant
+# labels still enter separately through HISTORY_NEOADJUVANT_TRTYN.
+treatment_exposed_studies: []
+treatment_exposed_study_fractions:
+  tcga_mc3: 0.0
+
 # t179 — per-sample SBS count floor before a sample's exposures are trusted. ~>=383 SBS for
 # WES (literature guide); lower for matched-normal / WGS where calls are cleaner. MC3 is
 # matched-normal, so the matched-normal floor (100) applies. Sub-floor samples are flagged

@@ -82,12 +82,13 @@ aggregated frequency tables. This is the signature-era refinement of `hypothesis
 
 ## Status & Next Steps
 
-- **status: proposed.** Directly actionable once the treatment-exposed flag (`question:q024`,
-  `task:t181`) exists; the impact test reuses the existing `create_freq_tables.py` outputs
+- **status: proposed.** The H08 MC3 substrate now has explicit treatment-exposure covariates
+  (`question:q024`, `task:t181`), but the broader H10 impact test still needs a non-TCGA
+  cBioPortal cohort audit. The impact test reuses the existing `create_freq_tables.py` outputs
   (inclusive/exclusive columns already keyed on hypermutator status — a treatment-exposed parallel
   is the natural extension).
-- Next: build the treatment-exposed stratum, then re-run the frequency tables with/without
-  therapy-signature-high samples and diff the driver rankings.
+- Next: audit treatment-exposed non-TCGA cohorts (`task:t206`), then re-run the frequency tables
+  with/without treatment-exposed or therapy-signature-high samples and diff the driver rankings.
 
 ## Related
 

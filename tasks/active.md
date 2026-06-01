@@ -847,19 +847,6 @@ as a positive co-predictor of SBS2/13 within MSS-restricted strata (MMR-omikli c
 APOBEC analysis by assay type (WGS/WES/panel) for coding-context inflation. Sources:
 paper:Carpenter2023, paper:MasPonte2020.
 
-## [t181] Build treatment-exposed study flag as an h08 confound stratum
-- priority: P2
-- status: proposed
-- aspects: [computational-analysis]
-- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, question:q024-treatment-exposed-cohort-chemotherapy-signature]
-- group: hypothesis-h08
-- created: 2026-05-31
-
-Audit cBioPortal study metadata for treatment-exposed / relapsed cohorts carrying iatrogenic
-signatures (SBS11/SBS31/SBS35/SBS87) and add a treatment-exposed flag (and fraction-treated field)
-parallel to `matched_normal_studies`, to stratify before the positive-control scan. Sources:
-paper:Diamond2023, paper:Crisafulli2022, paper:Pleasance2020, paper:Maura2023.
-
 ## [t183] Add ERCC2 + stop-gain-enrichment exploratory cross-checks to h08
 - priority: P3
 - status: proposed
@@ -948,3 +935,13 @@ redefined indel taxonomy (paper:Koh2025) and multimodal catalogue (paper:FerrerT
 Evaluate adding copy-number and doublet-base-substitution (DBS) signatures (paper:Everall2026,
 paper:Steele2022). Blocked on CNA ingestion (cross-ref t055 — no CNA modality in the pipeline yet);
 DBS is feasible on WGS/WES substrates sooner. Forward-looking.
+
+## [t206] Audit non-TCGA treatment-exposed cBioPortal cohorts for H10 impact test
+- priority: P2
+- status: proposed
+- aspects: [computational-analysis]
+- related: [hypothesis:h10-treatment-induced-signature-frequency-contamination, question:q024-treatment-exposed-cohort-chemotherapy-signature, question:q027-does-excluding-treatment-signature-high-samples, task:t181]
+- group: hypothesis-h10
+- created: 2026-06-01
+
+Extend the t181 H08-facing treatment-exposure stratum into a broader H10 cohort audit: identify non-TCGA cBioPortal studies enriched for pre-treated, relapsed, metastatic, or therapy-specific cohorts; populate treatment_exposed_studies / treatment_exposed_study_fractions in relevant configs; then prepare the frequency-table impact pass comparing treatment-exposed or therapy-signature-high inclusion vs exclusion.

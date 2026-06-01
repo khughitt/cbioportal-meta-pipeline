@@ -171,3 +171,18 @@ LUAD `REV3L` is null, and `POLZ` is not evaluable from the LUAD RSEM matrix.
 
 H08b remains exploratory and unpromoted.
 The next H08-specific refinement would be formal module labeling/enrichment, but the broader project may get more value from `task:t181` treatment-exposed cohort flags because those feed H10, H09, and any future signature scan.
+
+## Update — t181 Treatment Exposure
+
+The treatment-exposure stratum has now landed for the H08 MC3 substrate.
+
+| Prior recommendation | Current status | Evidence |
+|---|---|---|
+| Build treatment-exposed cohort flags (`task:t181`) | H08-facing piece done | `code/scripts/build_h08_covariates.py`, `code/config/config-signature-h08-arms.yml`, and `doc/interpretations/2026-06-01-t181-treatment-exposure-stratum.md`. |
+
+The implementation separates patient-level neoadjuvant labels from study-level cohort exposure:
+`treatment_exposed_clinical`, `treatment_exposed_study`, `treatment_exposed_fraction`, and combined `treatment_exposed`.
+For the current MC3-only H08 substrate, `tcga_mc3` is explicitly audited as study-level unexposed (`treatment_exposed_study = 0`, `treatment_exposed_fraction = 0.0`), while 55 samples retain a patient-level neoadjuvant positive label.
+
+This closes the H08 confound-stratum gap but does not yet test H10.
+The next broader H10 step is `task:t206`: a non-TCGA cBioPortal treatment-exposed cohort audit plus a frequency-table impact pass.

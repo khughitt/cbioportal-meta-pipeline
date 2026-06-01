@@ -237,3 +237,13 @@ It also keeps PDX cohorts sensitivity-only, names the comparator `no_detected_tr
 
 Recommended next move: implement `t207` WP1-WP2 first.
 That means adding the `h10_treatment_denominator` config schema and `annotate_treatment_exposure.py` with tests before touching frequency-table aggregation.
+
+## Update — t207 Plan Review
+
+The t207 schema plan review landed at `doc/plans/2026-06-01-t207-h10-treatment-denominator-schema-review.md` and the blocking points have been patched into the plan.
+
+The plan now states that this pass is the H10 exposure-label arm, not the full q027 therapy-signature-high exclusion answer.
+It also defines `no_detected_treatment_signal` as the retained comparator cohort, pins raw clinical `SAMPLE_ID` joins to canonical `samples_annotated.feather`, maps H10 hypermutator companion columns back to canonical `*_inclusive` / `*_exclusive` fields, and requires a datapackage manifest for the new summary outputs.
+
+Recommended next move is unchanged but sharper: implement WP1-WP2 only.
+Do not start the frequency impact pass until the config parser and treatment sample annotation can prove the label schema, raw-clinical joins, and no-detected-signal comparator semantics on tests.

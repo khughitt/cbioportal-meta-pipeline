@@ -947,4 +947,6 @@ DBS is feasible on WGS/WES substrates sooner. Forward-looking.
 Implement the post-audit H10 treatment denominator schema: encode broad treatment-exposed study flags separately from mutagenic-treatment study/fraction labels, keep PDX cohorts sensitivity-only, define the no_detected_treatment_signal baseline semantics, and add paired treatment-inclusive/exclusive frequency-table impact outputs without changing the existing hypermutator-exclusive contract.
 
 Design plan: `doc/plans/2026-06-01-t207-h10-treatment-denominator-schema.md`.
+Review: `doc/plans/2026-06-01-t207-h10-treatment-denominator-schema-review.md`.
+Progress 2026-06-01: review blockers were patched into the plan: q024 exposure-label handling is now separated from the q027 signature-high arm, `no_detected_treatment_signal` is defined as the retained comparator cohort, raw clinical joins are pinned to canonical `samples_annotated.feather`, canonical hypermutator column mappings are explicit, the first no-contrast pass is labelled as a plumbing checkpoint, and datapackage output is required.
 Next step: implement WP1-WP2 first, with config-schema tests and treatment sample annotation before adding frequency-table outputs.

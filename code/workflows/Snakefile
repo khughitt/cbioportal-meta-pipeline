@@ -14,6 +14,15 @@ out_dir = pathlib.Path(config['out_dir'])
 
 ids = config["studies"]
 
+# t199 h08 association surface. The WP1-WP3 scripts are config-driven click CLIs (they read
+# out_dir / h08_arm_studies / the t179 floors directly), so the rules hand them the active
+# configfile rather than the injected `snakemake` object. These rules require the h08-arms
+# config; the fallback names the canonical one for editor/static inspection.
+h08_configfile = (
+  workflow.configfiles[-1] if getattr(workflow, "configfiles", None)
+  else "code/config/config-signature-h08-arms.yml"
+)
+
 entities = ['cancer', 'cancer_detailed', 'gene']
 
 mutation_qa_reports = [
@@ -1118,6 +1127,119 @@ rule all_h08_expression_modules:
       out_dir.joinpath("expression_modules/{arm}/module_selection.json"),
       arm=list(config.get("h08_arm_studies", {}).keys())
     )
+
+#
+# h08 within-tissue covariate<->signature association core (t199 — the H08a positive-control scan).
+#
+# WP0-WP3 of `doc/plans/2026-05-31-t199-h08-association-core.md`, reading the verdict locked in
+# `pre-registration:h08-positive-control` (amendment-001). Opt-in surface; target
+# `all_h08_association`. The four scripts are config-driven click CLIs (not the snakemake
+# `script:` pattern), so they run under `shell:` with the active configfile ({h08_configfile}).
+#
+# WP0 — fetch + verify the PanCanAtlas clinical-with-followup table (the ONLY TCGA source of the
+# Arm-B smoking covariates). Open-access GDC file UUID 0fc78496-...; the script downloads,
+# stat/md5/column/LUAD+LUSC-non-missingness-verifies, exits non-zero on any failure, and writes a
+# `.verification.json` sidecar. See `dataset:tcga-pancanatlas-clinical`.
+#
+rule fetch_pancanatlas_clinical:
+  output:
+    tsv = "data/pancanatlas_clinical_with_followup.tsv",
+    sidecar = "data/pancanatlas_clinical_with_followup.tsv.verification.json"
+  log:
+    out_dir.joinpath("logs/fetch_pancanatlas_clinical.log")
+  conda:
+    "../envs/project-python.yml"
+  shell:
+    "python code/scripts/fetch_pancanatlas_clinical.py --dest {output.tsv} --sidecar {output.sidecar} > {log} 2>&1"
+
+#
+# WP1 — assemble + FREEZE the per-sample covariate table and the per-arm covariate-count
+# denominator (the gate). Joins the t197 per-sample SBS exposures, the t198 NMF module loadings,
+# and clinical / molecular covariates onto the 7 arm strata; emits `covariate_denominator.json`
+# BEFORE any rank is computed. TMB comes from the independent clinical TMB_NONSYNONYMOUS field
+# (burden firewall — H is not read for TMB). Clinical/RSEM inputs resolve under data_dir per
+# `h08_arm_studies` (raw cBioPortal study downloads, like the NMF rule's rsem input).
+#
+rule build_h08_covariates:
+  input:
+    smoking = "data/pancanatlas_clinical_with_followup.tsv",
+    exposures = out_dir.joinpath("studies/tcga_mc3/mut/signatures/restricted_assignment_per_sample.feather"),
+    mutations = out_dir.joinpath("studies/tcga_mc3/mut/table/mut.feather"),
+    loadings = expand(
+      out_dir.joinpath("expression_modules/{arm}/nmf_sample_loadings.feather"),
+      arm=list(config.get("h08_arm_studies", {}).keys())
+    )
+  output:
+    covariates = out_dir.joinpath("association/h08_covariates.feather"),
+    denominator = out_dir.joinpath("association/covariate_denominator.json")
+  params:
+    configfile = h08_configfile
+  log:
+    out_dir.joinpath("logs/build_h08_covariates.log")
+  conda:
+    "../envs/project-python.yml"
+  shell:
+    "python code/scripts/build_h08_covariates.py --config {params.configfile} --smoking {input.smoking} > {log} 2>&1"
+
+#
+# WP2 — the primary association scan. One adjusted within-tissue OLS per (covariate, signature,
+# stratum); outcome = CLR coordinate of the target signature; ranking statistic = signed
+# standardized coefficient; BH-FDR over the full grid. CLR is the FROZEN PRIMARY read. The script
+# treats `covariate_denominator.json` as a read-only input, fails if it is missing, and logs its
+# SHA256 into the grid meta so the gitignored freeze artifact has a durable fingerprint.
+#
+rule run_h08_association_scan:
+  input:
+    covariates = out_dir.joinpath("association/h08_covariates.feather"),
+    denominator = out_dir.joinpath("association/covariate_denominator.json"),
+    exposures = out_dir.joinpath("studies/tcga_mc3/mut/signatures/restricted_assignment_per_sample.feather")
+  output:
+    grid = out_dir.joinpath("association/h08_association_grid.feather"),
+    meta = out_dir.joinpath("association/h08_association_grid.meta.json")
+  params:
+    configfile = h08_configfile
+  log:
+    out_dir.joinpath("logs/run_h08_association_scan.log")
+  conda:
+    "../envs/project-python.yml"
+  shell:
+    "python code/scripts/run_h08_association_scan.py --config {params.configfile} > {log} 2>&1"
+
+#
+# WP3 — pre-acceptance + registered sensitivity DIAGNOSTICS (not a path to a primary PASS).
+# Permutation null (within-tissue shuffle, frozen seed, n=1000), absolute-burden re-rank
+# (is_primary_gate=False), and the lung per-histology variant. Asserts the denominator SHA256
+# equals the WP2 grid's frozen_denominator_manifest.sha256 and refuses to run on a mismatch, so
+# the diagnostics are tied to the exact frozen base the gate was read under.
+#
+rule run_h08_sensitivity:
+  input:
+    covariates = out_dir.joinpath("association/h08_covariates.feather"),
+    denominator = out_dir.joinpath("association/covariate_denominator.json"),
+    grid = out_dir.joinpath("association/h08_association_grid.feather"),
+    grid_meta = out_dir.joinpath("association/h08_association_grid.meta.json"),
+    exposures = out_dir.joinpath("studies/tcga_mc3/mut/signatures/restricted_assignment_per_sample.feather")
+  output:
+    sensitivity = out_dir.joinpath("association/h08_sensitivity.feather"),
+    permutation = out_dir.joinpath("association/h08_permutation_null.feather"),
+    lung = out_dir.joinpath("association/h08_lung_pooling.feather"),
+    meta = out_dir.joinpath("association/h08_sensitivity.meta.json")
+  params:
+    configfile = h08_configfile
+  log:
+    out_dir.joinpath("logs/run_h08_sensitivity.log")
+  conda:
+    "../envs/project-python.yml"
+  shell:
+    "python code/scripts/run_h08_sensitivity.py --config {params.configfile} > {log} 2>&1"
+
+rule all_h08_association:
+  input:
+    out_dir.joinpath("association/h08_association_grid.feather"),
+    out_dir.joinpath("association/h08_sensitivity.feather"),
+    out_dir.joinpath("association/h08_permutation_null.feather"),
+    out_dir.joinpath("association/h08_lung_pooling.feather"),
+    out_dir.joinpath("association/h08_sensitivity.meta.json")
 
 #
 # AACR Project GENIE per-panel coverage mask.

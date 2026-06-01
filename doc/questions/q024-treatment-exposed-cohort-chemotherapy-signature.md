@@ -45,8 +45,12 @@ Treatment-induced and prior-exposure signatures (temozolomide/SBS11, platinum/SB
 - Best current interpretation: build a treatment-exposed study flag (and a per-study fraction-treated field) as a nuisance covariate / exclusion stratum before the positive-control scan.
 - Major uncertainty: completeness of treatment metadata across cBioPortal studies; many lack reliable prior-therapy annotation.
 - H08-facing status: implemented for the MC3-only positive-control substrate.
-  Broader H10 status: still needs a non-TCGA cBioPortal cohort audit and an impact test on
-  frequency tables (`task:t206`).
+- Broader H10 status: `task:t206` has produced a non-TCGA metadata scaffold and manual review.
+  The review confirms 11 broad treatment-exposed study candidates, but separates them from narrower
+  DNA-damaging-therapy expectations because several are ICB, endocrine, targeted, or
+  castration-resistant cohorts.
+  The next unresolved piece is config/schema handling for mixed cohorts with sample-level fractions
+  before the frequency-table impact pass.
 
 ## Connections to Project
 

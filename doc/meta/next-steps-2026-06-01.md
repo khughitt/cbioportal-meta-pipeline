@@ -202,3 +202,17 @@ It scans `config-full.yml` studies against local cBioPortal `meta_study.txt` and
 The current regenerated local table has 167 non-TCGA studies: 11 `flag_exposed`, 42 `review_for_fraction`, 2 `needs_manual_review`, and 112 `do_not_flag`.
 This is not yet the final H10 label set.
 The next step is manual confirmation of the 11 explicit candidates and clinical-field review of the 42 review candidates before writing `treatment_exposed_studies` or building paired treatment-inclusive/exclusive frequency tables.
+
+## Update — t206 Manual Review
+
+The manual-review note for the scaffolded audit has now landed at `doc/interpretations/2026-06-01-t206-treatment-exposure-audit.md`.
+
+The review confirms the 11 `flag_exposed` studies as broad treatment-exposed cohort candidates, but it separates broad treatment history from direct DNA-damaging-therapy expectation.
+Several confirmed studies are ICB, endocrine, targeted, or castration-resistant cohorts; they are useful nuisance strata but should not be overread as expected SBS11/SBS31/SBS35/SBS87 carriers.
+
+The stronger mutagenic-treatment candidates are partly in the mixed/fraction-review bucket:
+`blca_cornell_2016` has 51 / 72 post-chemotherapy samples with platinum-containing labels, and `difg_glass_2019` has explicit TMZ fields.
+`coadread_mskcc`, `coadread_cass_2020`, `brca_mbcproject_wagle_2017`, `mpcproject_broad_2021`, OHSU AML, `brain_cptac_2020`, and `pptc_2019` need sample-level or fraction handling rather than whole-study promotion.
+
+Recommended next move: write the small config/schema plan for H10 denominator handling.
+The design should keep a broad `treatment_exposed_studies` layer separate from a narrower therapy-class or fraction layer, then implement paired treatment-inclusive/exclusive frequency-table outputs parallel to the existing hypermutator-inclusive/exclusive columns.

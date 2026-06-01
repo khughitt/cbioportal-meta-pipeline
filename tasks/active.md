@@ -947,3 +947,11 @@ DBS is feasible on WGS/WES substrates sooner. Forward-looking.
 Extend the t181 H08-facing treatment-exposure stratum into a broader H10 cohort audit: identify non-TCGA cBioPortal studies enriched for pre-treated, relapsed, metastatic, or therapy-specific cohorts; populate treatment_exposed_studies / treatment_exposed_study_fractions in relevant configs; then prepare the frequency-table impact pass comparing treatment-exposed or therapy-signature-high inclusion vs exclusion.
 
 Analysis-readiness plan: `doc/plans/2026-06-01-t206-h10-treatment-exposure-audit-analysis-plan.md`.
+
+Progress 2026-06-01: audit scaffold and manual-review note landed in
+`doc/interpretations/2026-06-01-t206-treatment-exposure-audit.md`.
+The 11 explicit candidates are confirmed as broad treatment-exposed study candidates, but the
+review separates broad treatment history from a narrower DNA-damaging-therapy/signature-expectation
+layer.
+Next step: decide the config/schema shape for broad study flags plus mixed-cohort fractions, then
+implement the paired treatment-inclusive/exclusive frequency-table impact pass.

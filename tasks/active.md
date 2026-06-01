@@ -938,10 +938,12 @@ DBS is feasible on WGS/WES substrates sooner. Forward-looking.
 
 ## [t206] Audit non-TCGA treatment-exposed cBioPortal cohorts for H10 impact test
 - priority: P2
-- status: proposed
+- status: active
 - aspects: [computational-analysis]
 - related: [hypothesis:h10-treatment-induced-signature-frequency-contamination, question:q024-treatment-exposed-cohort-chemotherapy-signature, question:q027-does-excluding-treatment-signature-high-samples, task:t181]
 - group: hypothesis-h10
 - created: 2026-06-01
 
 Extend the t181 H08-facing treatment-exposure stratum into a broader H10 cohort audit: identify non-TCGA cBioPortal studies enriched for pre-treated, relapsed, metastatic, or therapy-specific cohorts; populate treatment_exposed_studies / treatment_exposed_study_fractions in relevant configs; then prepare the frequency-table impact pass comparing treatment-exposed or therapy-signature-high inclusion vs exclusion.
+
+Analysis-readiness plan: `doc/plans/2026-06-01-t206-h10-treatment-exposure-audit-analysis-plan.md`.

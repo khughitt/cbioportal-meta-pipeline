@@ -14,6 +14,7 @@ related:
     "task:t201",
     "task:t202",
     "task:t205",
+    "task:t206",
     "discussion:2026-06-01-h08b-gate-handling",
   ]
 ---
@@ -186,3 +187,18 @@ For the current MC3-only H08 substrate, `tcga_mc3` is explicitly audited as stud
 
 This closes the H08 confound-stratum gap but does not yet test H10.
 The next broader H10 step is `task:t206`: a non-TCGA cBioPortal treatment-exposed cohort audit plus a frequency-table impact pass.
+
+## Update — t206 H10 Treatment-Exposure Audit
+
+The first t206 slice is now planned and scaffolded.
+
+| Prior recommendation | Current status | Evidence |
+|---|---|---|
+| Start the non-TCGA treatment-exposed cohort audit | In progress | `doc/plans/2026-06-01-t206-h10-treatment-exposure-audit-analysis-plan.md` and `code/scripts/audit_treatment_exposed_studies.py`. |
+
+The audit scaffold is deliberately metadata-first.
+It scans `config-full.yml` studies against local cBioPortal `meta_study.txt` and clinical-column names, skips TCGA studies, and separates `flag_exposed` from `review_for_fraction` so metastatic-only cohorts do not automatically become treatment-exposed.
+
+The current regenerated local table has 167 non-TCGA studies: 11 `flag_exposed`, 42 `review_for_fraction`, 2 `needs_manual_review`, and 112 `do_not_flag`.
+This is not yet the final H10 label set.
+The next step is manual confirmation of the 11 explicit candidates and clinical-field review of the 42 review candidates before writing `treatment_exposed_studies` or building paired treatment-inclusive/exclusive frequency tables.

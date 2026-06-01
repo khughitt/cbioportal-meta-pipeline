@@ -862,7 +862,7 @@ paper:Diamond2023, paper:Crisafulli2022, paper:Pleasance2020, paper:Maura2023.
 
 ## [t182] Prototype SBS40-vs-SBS5 expression-module separation (h08b flagship test)
 - priority: P3
-- status: proposed
+- status: active
 - aspects: [causal-modeling, computational-analysis]
 - related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, question:q023-sbs40-vs-sbs5-clocklike-expression-module, question:q025-causal-direction-guard-for-expression-signature]
 - group: hypothesis-h08

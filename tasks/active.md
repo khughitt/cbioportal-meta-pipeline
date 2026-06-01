@@ -935,15 +935,3 @@ redefined indel taxonomy (paper:Koh2025) and multimodal catalogue (paper:FerrerT
 Evaluate adding copy-number and doublet-base-substitution (DBS) signatures (paper:Everall2026,
 paper:Steele2022). Blocked on CNA ingestion (cross-ref t055 — no CNA modality in the pipeline yet);
 DBS is feasible on WGS/WES substrates sooner. Forward-looking.
-
-## [t210] Plan and implement q027 therapy-signature-high exclusion impact arm
-- priority: P2
-- status: proposed
-- aspects: [computational-analysis, software-development]
-- related: [hypothesis:h10-treatment-induced-signature-frequency-contamination, question:q027-does-excluding-treatment-signature-high-samples, question:q024-treatment-exposed-cohort-chemotherapy-signature, task:t207, task:t208, task:t209, plan:2026-06-01-t210-q027-therapy-signature-high-exclusion]
-- group: hypothesis-h10
-- created: 2026-06-01
-
-Define and implement the q027 signature-high arm for H10: derive therapy-signature-high samples from measured SBS11/SBS31/SBS35/SBS87 per-sample exposures, add signature-high-excluded frequency and impact outputs parallel to the t207-t209 exposure-label denominator layer, rerun on an explicitly scoped substrate, and write an interpretation that keeps measured signature exposure separate from clinical treatment labels.
-
-Plan: `doc/plans/2026-06-01-t210-q027-therapy-signature-high-exclusion.md`.

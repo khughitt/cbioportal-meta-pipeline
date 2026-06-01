@@ -47,6 +47,24 @@ def test_load_signature_lookup_groups_signatures(tmp_path: Path) -> None:
     assert lookup["lung"] == ["SBS4"]
 
 
+def test_signature_assignment_extra_signatures_are_appended_stably() -> None:
+    requested = rsa.combine_requested_signatures(
+        lookup_signatures=["SBS1", "SBS5"],
+        extra_signatures=["SBS11", "SBS5", "SBS31"],
+    )
+
+    assert requested == ["SBS1", "SBS5", "SBS11", "SBS31"]
+
+
+def test_assert_requested_signatures_present_fails_on_absent_extra_signature() -> None:
+    with pytest.raises(ValueError, match="SBS31"):
+        rsa.assert_requested_signatures_present(
+            requested_signatures=["SBS1", "SBS31"],
+            reference_columns=["SBS1", "SBS11"],
+            lookup_key="cns",
+        )
+
+
 def test_write_restricted_signature_database_expands_split_aliases(
     tmp_path: Path,
 ) -> None:

@@ -11,8 +11,11 @@ import pandas as pd
 
 data_dir = pathlib.Path(config['data_dir'])
 out_dir = pathlib.Path(config['out_dir'])
+q027_source_out_dir = pathlib.Path(config.get("q027_source_out_dir", config["out_dir"]))
+q027_out_dir = pathlib.Path(config.get("q027_out_dir", config["out_dir"]))
 
 ids = config["studies"]
+q027_ids = list(config.get("q027_therapy_signature_targets", {}).keys()) or ids
 
 # t199 h08 association surface. The WP1-WP3 scripts are config-driven click CLIs (they read
 # out_dir / h08_arm_studies / the t179 floors directly), so the rules hand them the active
@@ -1043,6 +1046,30 @@ rule run_restricted_sigprofiler_assignment_per_sample:
   script:
     "../scripts/run_restricted_sigprofiler_assignment.py"
 
+rule run_q027_restricted_sigprofiler_assignment_per_sample:
+  input:
+    mutations = q027_source_out_dir.joinpath("studies/{id}/mut/table/mut.feather"),
+    samples = q027_source_out_dir.joinpath("studies/{id}/metadata/samples.feather"),
+    lookup = "data/cosmic_cancer_type_signatures.tsv"
+  output:
+    q027_out_dir.joinpath("studies/{id}/mut/signatures/restricted_assignment_q027_per_sample.feather"),
+    q027_out_dir.joinpath("studies/{id}/mut/signatures/restricted_assignment_q027_per_sample.signature_audit.feather"),
+    q027_out_dir.joinpath("studies/{id}/mut/signatures/restricted_assignment_q027_per_sample.denovo_decision.feather")
+  params:
+    assignment_unit = "sample"
+  log:
+    q027_out_dir.joinpath("logs/run_q027_restricted_sigprofiler_assignment_per_sample/{id}.log")
+  conda:
+    "../envs/project-python.yml"
+  script:
+    "../scripts/run_restricted_sigprofiler_assignment.py"
+
+rule all_q027_signature_assignments:
+  input:
+    expand(q027_out_dir.joinpath("studies/{id}/mut/signatures/restricted_assignment_q027_per_sample.feather"), id=q027_ids),
+    expand(q027_out_dir.joinpath("studies/{id}/mut/signatures/restricted_assignment_q027_per_sample.signature_audit.feather"), id=q027_ids),
+    expand(q027_out_dir.joinpath("studies/{id}/mut/signatures/restricted_assignment_q027_per_sample.denovo_decision.feather"), id=q027_ids)
+
 rule compare_sbs1_sbs5_ratio:
   input:
     expand(out_dir.joinpath("studies/{id}/mut/signatures/restricted_assignment_per_sample.feather"), id=ids)
@@ -1633,6 +1660,18 @@ def _create_h10_treatment_freq_tables_inputs(wildcards):
     return base
 
 
+def _create_q027_signature_high_freq_tables_inputs(wildcards):
+    base = {
+        "mutations": q027_source_out_dir.joinpath(f"studies/{wildcards.id}/mut/table/mut_filtered.feather"),
+        "samples": q027_source_out_dir.joinpath(f"studies/{wildcards.id}/metadata/samples.feather"),
+        "signature_labels": q027_out_dir.joinpath("metadata/samples_q027_signature_high.feather"),
+        "hypermutator_annotations": q027_source_out_dir.joinpath("metadata/samples_annotated.feather"),
+    }
+    if config.get("panel_bearing_studies", []):
+        base["panel_coverage"] = q027_source_out_dir.joinpath("metadata/genie_panel_coverage.feather")
+    return base
+
+
 rule create_freq_tables:
   input:
     unpack(_create_freq_tables_inputs)
@@ -1703,6 +1742,80 @@ rule all_h10_treatment_impact:
     out_dir.joinpath("summary/mut/table/gene_cancer_h10_treatment_impact.feather"),
     out_dir.joinpath("summary/mut/table/gene_cancer_h10_treatment_impact_ratio.feather"),
     out_dir.joinpath("summary/mut/table/gene_cancer_h10_treatment_impact.datapackage.json")
+
+rule annotate_q027_signature_high:
+  input:
+    assignments = expand(q027_out_dir.joinpath("studies/{id}/mut/signatures/restricted_assignment_q027_per_sample.feather"), id=q027_ids)
+  output:
+    q027_out_dir.joinpath("metadata/samples_q027_signature_high.feather")
+  log:
+    q027_out_dir.joinpath("logs/annotate_q027_signature_high.log")
+  conda:
+    "../envs/project-python.yml"
+  script:
+    "../scripts/annotate_q027_signature_high.py"
+
+rule all_q027_signature_high_annotations:
+  input:
+    q027_out_dir.joinpath("metadata/samples_q027_signature_high.feather")
+
+rule create_q027_signature_high_freq_tables:
+  input:
+    unpack(_create_q027_signature_high_freq_tables_inputs)
+  output:
+    q027_out_dir.joinpath("studies/{id}/mut/table/gene_cancer_q027_signature_high_views.feather")
+  log:
+    q027_out_dir.joinpath("logs/create_q027_signature_high_freq_tables/{id}.log")
+  conda:
+    "../envs/project-python.yml"
+  script:
+    "../scripts/create_q027_signature_high_freq_tables.py"
+
+rule all_q027_signature_high_freq_tables:
+  input:
+    expand(q027_out_dir.joinpath("studies/{id}/mut/table/gene_cancer_q027_signature_high_views.feather"), id=q027_ids)
+
+rule create_q027_signature_high_impact_table:
+  input:
+    per_study = expand(q027_out_dir.joinpath("studies/{id}/mut/table/gene_cancer_q027_signature_high_views.feather"), id=q027_ids)
+  output:
+    impact = q027_out_dir.joinpath("summary/mut/table/gene_cancer_q027_signature_high_impact.feather"),
+    ratio = q027_out_dir.joinpath("summary/mut/table/gene_cancer_q027_signature_high_impact_ratio.feather")
+  params:
+    study_ids = q027_ids
+  log:
+    q027_out_dir.joinpath("logs/create_q027_signature_high_impact_table.log")
+  conda:
+    "../envs/project-python.yml"
+  script:
+    "../scripts/create_q027_signature_high_impact_table.py"
+
+rule package_q027_signature_high_impact:
+  input:
+    impact = q027_out_dir.joinpath("summary/mut/table/gene_cancer_q027_signature_high_impact.feather"),
+    ratio = q027_out_dir.joinpath("summary/mut/table/gene_cancer_q027_signature_high_impact_ratio.feather")
+  output:
+    q027_out_dir.joinpath("summary/mut/table/gene_cancer_q027_signature_high_impact.datapackage.json")
+  params:
+    base_dir = q027_out_dir,
+    package_name = "gene-cancer-q027-signature-high-impact",
+    title = "q027 therapy-signature-high impact tables",
+    source_dataset = "dataset:cbioportal-q027-therapy-signature-high-diagnostic",
+    generated_by = "rule package_q027_signature_high_impact",
+    access = "generated local diagnostic workflow artifact from configured cBioPortal/GENIE inputs",
+    license = "see upstream cBioPortal, GENIE, and study-specific source terms"
+  log:
+    q027_out_dir.joinpath("logs/package_q027_signature_high_impact.log")
+  conda:
+    "../envs/project-python.yml"
+  script:
+    "../scripts/write_datapackage.py"
+
+rule all_q027_signature_high_impact:
+  input:
+    q027_out_dir.joinpath("summary/mut/table/gene_cancer_q027_signature_high_impact.feather"),
+    q027_out_dir.joinpath("summary/mut/table/gene_cancer_q027_signature_high_impact_ratio.feather"),
+    q027_out_dir.joinpath("summary/mut/table/gene_cancer_q027_signature_high_impact.datapackage.json")
 
 rule create_protein_length_mapping:
   input:

@@ -377,3 +377,27 @@ The primary mutagenic impact contrast remains bladder plus glioma, and the confi
 Recommended next move: start `task:t210`, the distinct q027 therapy-signature-high exclusion arm.
 The plan is `doc/plans/2026-06-01-t210-q027-therapy-signature-high-exclusion.md`.
 It begins with a candidate-study feasibility audit because the current full-config H10 outputs have no SBS exposure layer, and the existing H08 signature assignments do not include SBS11/SBS31/SBS35/SBS87.
+
+## Update - t210 q027 Therapy-Signature-High Arm
+
+The q027 measured-signature arm has now shipped as `task:t210`.
+
+| Prior recommendation | Current status | Evidence |
+|---|---|---|
+| Run a q027 candidate-study feasibility audit | Done | `results/q027-therapy-signature-high-2026-06-01/therapy_signature_substrate_feasibility.md`. |
+| Build q027 signature-high labels and frequency views | Done | `code/scripts/annotate_q027_signature_high.py`, `code/scripts/create_q027_signature_high_freq_tables.py`, and opt-in `all_q027_signature_high_impact`. |
+| Run the q027 impact target and write the interpretation | Done | `/data/packages/cbioportal/q027-therapy-signature-high-2026-06-01/summary/mut/table/gene_cancer_q027_signature_high_impact_ratio.feather` and `doc/interpretations/2026-06-01-t210-q027-therapy-signature-high-exclusion.md`. |
+
+The feasibility audit selected `difg_glass_2019` as the only primary patient substrate passing the first gate.
+BLCA Cornell and BLCA DFCI/MSK were too count-floor or comparator limited for this first pass, and the PDX cohorts remain sensitivity-only rather than primary patient denominator evidence.
+
+The GLASS q027 run found 36 SBS11-high samples among 444 total samples.
+There were 160 count-floor-passing samples, 284 below-floor unevaluable samples, and 124 evaluable samples with no target SBS11 exposure.
+The pre-specified sensitivity thresholds did not broaden the exclusion set: >=20 SBS, fraction >=0.10, and any non-zero SBS11 all selected the same 36 samples.
+
+The impact table is descriptive but non-arbitrating.
+Excluding the 36 SBS11-high samples changes some GLASS glioma gene frequencies by up to about 0.067, but all 20,822 q027 rows are `underpowered_non_arbitrating` because the primary substrate has only one contributing study.
+H10 therefore remains unresolved; this is not a promotion, falsification, or cross-study confirmation.
+
+Recommended next move: either pause H10 after this complete but non-arbitrating q027 pass, or run a narrower GLASS-specific clinical timing audit that asks whether SBS11-high status is separable from recurrence/progression and TMZ episode.
+Do not collapse this measured-signature result back into the t207-t209 clinical-label denominator arm.

@@ -952,6 +952,7 @@ Progress 2026-06-01: audit scaffold and manual-review note landed in
 `doc/interpretations/2026-06-01-t206-treatment-exposure-audit.md`.
 The 11 explicit candidates are confirmed as broad treatment-exposed study candidates, but the
 review separates broad treatment history from a narrower DNA-damaging-therapy/signature-expectation
-layer.
-Next step: decide the config/schema shape for broad study flags plus mixed-cohort fractions, then
-implement the paired treatment-inclusive/exclusive frequency-table impact pass.
+layer and marks PDX cohorts sensitivity-only for primary patient-denominator analyses.
+Next step: decide the config/schema shape for broad study flags, mutagenic-treatment study/fraction
+labels, PDX sensitivity handling, and `no_detected_treatment_signal` baseline semantics; then implement
+the paired treatment-inclusive/exclusive frequency-table impact pass.

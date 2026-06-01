@@ -207,12 +207,16 @@ The next step is manual confirmation of the 11 explicit candidates and clinical-
 
 The manual-review note for the scaffolded audit has now landed at `doc/interpretations/2026-06-01-t206-treatment-exposure-audit.md`.
 
-The review confirms the 11 `flag_exposed` studies as broad treatment-exposed cohort candidates, but it separates broad treatment history from direct DNA-damaging-therapy expectation.
+The review confirms the 11 `flag_exposed` studies as broad treatment-exposed cohort candidates, but it separates broad treatment history from direct DNA-damaging-therapy expectation and keeps PDX cohorts sensitivity-only.
 Several confirmed studies are ICB, endocrine, targeted, or castration-resistant cohorts; they are useful nuisance strata but should not be overread as expected SBS11/SBS31/SBS35/SBS87 carriers.
 
 The stronger mutagenic-treatment candidates are partly in the mixed/fraction-review bucket:
 `blca_cornell_2016` has 51 / 72 post-chemotherapy samples with platinum-containing labels, and `difg_glass_2019` has explicit TMZ fields.
-`coadread_mskcc`, `coadread_cass_2020`, `brca_mbcproject_wagle_2017`, `mpcproject_broad_2021`, OHSU AML, `brain_cptac_2020`, and `pptc_2019` need sample-level or fraction handling rather than whole-study promotion.
+`coadread_mskcc`, `coadread_cass_2020`, `brca_mbcproject_wagle_2017`, `mpcproject_broad_2021`, OHSU AML, and `brain_cptac_2020` need sample-level or fraction handling rather than whole-study promotion.
+`pptc_2019` and `sclc_cancercell_gardner_2017` should stay out of the primary patient denominator unless PDX-specific mutation-call handling is modeled.
+
+The review also names the control-arm limitation: only `lung_nci_2022`, `lusc_cptac_2021`, and `mbl_dkfz_2017` were positively classified as treatment-naive or pretreatment.
+The other no-signal studies are `no_detected_treatment_signal`, not confirmed naive, so audit recall remains unmeasured.
 
 Recommended next move: write the small config/schema plan for H10 denominator handling.
-The design should keep a broad `treatment_exposed_studies` layer separate from a narrower therapy-class or fraction layer, then implement paired treatment-inclusive/exclusive frequency-table outputs parallel to the existing hypermutator-inclusive/exclusive columns.
+The design should keep a broad `treatment_exposed_studies` layer separate from a narrower `mutagenic_treatment_signal` study/fraction layer, then implement paired treatment-inclusive/exclusive frequency-table outputs parallel to the existing hypermutator-inclusive/exclusive columns.

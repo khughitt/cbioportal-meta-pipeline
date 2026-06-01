@@ -1664,6 +1664,46 @@ rule all_h10_treatment_freq_tables:
   input:
     expand(out_dir.joinpath("studies/{id}/mut/table/gene_cancer_h10_treatment_views.feather"), id=ids)
 
+rule create_h10_treatment_impact_table:
+  input:
+    per_study = expand(out_dir.joinpath("studies/{id}/mut/table/gene_cancer_h10_treatment_views.feather"), id=ids)
+  output:
+    impact = out_dir.joinpath("summary/mut/table/gene_cancer_h10_treatment_impact.feather"),
+    ratio = out_dir.joinpath("summary/mut/table/gene_cancer_h10_treatment_impact_ratio.feather")
+  log:
+    out_dir.joinpath("logs/create_h10_treatment_impact_table.log")
+  conda:
+    "../envs/project-python.yml"
+  script:
+    "../scripts/create_h10_treatment_impact_table.py"
+
+rule package_h10_treatment_impact:
+  input:
+    impact = out_dir.joinpath("summary/mut/table/gene_cancer_h10_treatment_impact.feather"),
+    ratio = out_dir.joinpath("summary/mut/table/gene_cancer_h10_treatment_impact_ratio.feather")
+  output:
+    out_dir.joinpath("summary/mut/table/gene_cancer_h10_treatment_impact.datapackage.json")
+  params:
+    base_dir = out_dir,
+    package_name = "gene-cancer-h10-treatment-impact",
+    title = "H10 treatment-denominator impact tables",
+    source_dataset = "dataset:cbioportal-h10-treatment-denominator-diagnostic",
+    generated_by = "rule package_h10_treatment_impact",
+    access = "generated local diagnostic workflow artifact from configured cBioPortal/GENIE inputs",
+    license = "see upstream cBioPortal, GENIE, and study-specific source terms"
+  log:
+    out_dir.joinpath("logs/package_h10_treatment_impact.log")
+  conda:
+    "../envs/project-python.yml"
+  script:
+    "../scripts/write_datapackage.py"
+
+rule all_h10_treatment_impact:
+  input:
+    out_dir.joinpath("summary/mut/table/gene_cancer_h10_treatment_impact.feather"),
+    out_dir.joinpath("summary/mut/table/gene_cancer_h10_treatment_impact_ratio.feather"),
+    out_dir.joinpath("summary/mut/table/gene_cancer_h10_treatment_impact.datapackage.json")
+
 rule create_protein_length_mapping:
   input:
     "data/uniprotkb_hsapiens_protein_lengths.tsv.gz"

@@ -283,3 +283,19 @@ The `all_samples` view reproduces the mapped canonical `gene_cancer_study` inclu
 
 Recommended next move: implement WP4, the cross-study H10 treatment impact table.
 That pass should aggregate the per-study view tables, compute `delta_no_detected_contrast` separately from denominator-dilution deltas, and emit contrast-specific power statuses before any interpretation note is written.
+
+## Update — t207 Treatment Impact Table
+
+WP4 is now implemented as the cross-study H10 treatment-impact aggregation layer.
+
+| Prior recommendation | Current status | Evidence |
+|---|---|---|
+| Implement WP4 cross-study treatment impact table | Done | `code/scripts/create_h10_treatment_impact_table.py`, `code/scripts/tests/test_create_h10_treatment_impact_table.py`, and opt-in `all_h10_treatment_impact`. |
+
+The impact table keeps the plan's two effect-size questions separate.
+`delta_no_detected_contrast` compares the all-sample deliverable against the retained no-detected-treatment comparator, while `delta_mutagenic_primary` measures denominator dilution after primary mutagenic-treatment exclusion.
+The output also carries `delta_confirmed_naive_contrast`, broad-treatment sensitivity, within-cancer ranks, rank deltas, contrast-specific power statuses, and count/audit fields for numerator-vs-denominator changes.
+The opt-in target emits both summary feathers and `gene_cancer_h10_treatment_impact.datapackage.json`.
+
+Recommended next move: run the `all_h10_treatment_impact` target on the configured substrate and write the t207 interpretation note.
+That note should keep the exposure-label pass separate from the q027 therapy-signature-high arm and should treat no-contrast or underpowered rows as a plumbing checkpoint unless deterministic sample-level mutagenic-treatment rules have been added.

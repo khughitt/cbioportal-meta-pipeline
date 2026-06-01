@@ -74,6 +74,22 @@ def test_snakefile_exposes_h10_treatment_frequency_views_target() -> None:
     assert "gene_cancer_h10_treatment_views.feather" in target
 
 
+def test_snakefile_exposes_h10_treatment_impact_target_and_datapackage() -> None:
+    text = SNAKEFILE.read_text()
+    rule = _extract_rule_block(text, "create_h10_treatment_impact_table")
+    package_rule = _extract_rule_block(text, "package_h10_treatment_impact")
+    target = _extract_rule_block(text, "all_h10_treatment_impact")
+
+    assert "gene_cancer_h10_treatment_views.feather" in rule
+    assert "gene_cancer_h10_treatment_impact.feather" in rule
+    assert "gene_cancer_h10_treatment_impact_ratio.feather" in rule
+    assert "create_h10_treatment_impact_table.py" in rule
+    assert "gene_cancer_h10_treatment_impact.datapackage.json" in package_rule
+    assert "write_datapackage.py" in package_rule
+    assert "gene_cancer_h10_treatment_impact_ratio.feather" in target
+    assert "gene_cancer_h10_treatment_impact.datapackage.json" in target
+
+
 def _extract_rule_block(text: str, rule_name: str) -> str:
     lines = text.splitlines()
     out: list[str] = []

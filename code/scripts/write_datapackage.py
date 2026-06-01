@@ -3,8 +3,6 @@
 # science:end
 """Write small Frictionless-style datapackage descriptors for workflow products."""
 
-from __future__ import annotations
-
 import hashlib
 import json
 from datetime import UTC, datetime

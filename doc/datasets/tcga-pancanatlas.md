@@ -5,6 +5,29 @@ title: "TCGA PanCanAtlas"
 status: "active"
 source_class: "derived"
 derived_kind: "aggregate"
+tier: "use-now"
+license: "custom"
+update_cadence: "static"
+accessions:
+  - "GDC PanCanAtlas publication portal"
+  - "cBioPortal TCGA PanCanAtlas 2018 study directories"
+access:
+  level: "public"
+  availability: "available"
+  available_after: ""
+  verified: true
+  verification_method: "retrieved"
+  last_reviewed: "2026-06-01"
+  verified_by: "codex (t201)"
+  source_url: "https://gdc.cancer.gov/about-data/publications/pancanatlas"
+  credentials_required: ""
+  exception:
+    mode: ""
+    decision_date: ""
+    followup_task: ""
+    superseded_by_dataset: ""
+    rationale: ""
+local_path: "/data/raw/cbioportal/*_tcga_pan_can_atlas_2018"
 source_refs:
   - "paper:Bailey2018"
   - "paper:Hoadley2018"
@@ -31,6 +54,13 @@ The PanCanAtlas harmonized re-analysis of the full TCGA cohort — uniformly pro
 - Organism/population: Homo sapiens
 - Modality: harmonized multi-omics consensus
 - Sample size: ~10,000 samples, 33 cancer types
+
+## Access verification log
+
+- 2026-06-01 (codex, t201): verified the PanCanAtlas study directories needed by h08 expression
+  substrates are present under `/data/raw/cbioportal/`, including RSEM files for the h08 arms, and
+  that the child clinical dataset `dataset:tcga-pancanatlas-clinical` was downloaded and verified by
+  t199 WP0.
 
 ## Connections to Project
 

@@ -79,6 +79,14 @@ MISSING = {
     "[Not Reported]",
 }
 
+SMOKING_LABEL_MAP = {
+    "Lifelong Non-smoker": 0.0,
+    "Current smoker": 1.0,
+    "Current reformed smoker for < or = 15 years": 1.0,
+    "Current reformed smoker for > 15 years": 1.0,
+    "Current Reformed Smoker, Duration Not Specified": 1.0,
+}
+
 # Frozen UV sun-exposure ordinal (KD4): max tier over a sample's pipe-delimited TUMOR_TISSUE_SITE.
 UV_SITE_TIER = {
     "Head and Neck": 2,  # high sun
@@ -127,6 +135,7 @@ CONTEXT_COVARIATES = [
     "apobec3a",
     "apobec3b",
     "ever_smoker",
+    "pack_years_zero_never",
 ]
 
 ARM_B_STRATA = [
@@ -143,6 +152,26 @@ def _clean(series: pd.Series) -> pd.Series:
 
 def _to_num(series: pd.Series) -> pd.Series:
     return pd.to_numeric(_clean(series), errors="coerce")
+
+
+def _derive_smoking_covariates(
+    cov: pd.DataFrame, smoking: pd.DataFrame
+) -> pd.DataFrame:
+    sm = smoking.assign(
+        b12=smoking["bcr_patient_barcode"].astype(str).str.slice(0, 12)
+    ).set_index("b12")
+    sm = sm[~sm.index.duplicated(keep="first")]
+
+    out = pd.DataFrame(index=cov.index)
+    out["pack_years"] = _to_num(cov["patient12"].map(sm["number_pack_years_smoked"]))
+    labels = _clean(cov["patient12"].map(sm["tobacco_smoking_history"]))
+    out["ever_smoker"] = labels.map(SMOKING_LABEL_MAP).astype(float)
+    out["pack_years_zero_never"] = out["pack_years"].copy()
+    out.loc[out["ever_smoker"] == 0.0, "pack_years_zero_never"] = 0.0
+
+    nonlung = ~cov["arm"].isin(ARM_B_STRATA)
+    out.loc[nonlung, ["pack_years", "ever_smoker", "pack_years_zero_never"]] = np.nan
+    return out
 
 
 def _read_clinical(path: Path) -> pd.DataFrame:
@@ -339,18 +368,10 @@ def main(config_path: Path, smoking: Path) -> None:
 
     # --- smoking (Arm-B): patient-level join on 12-char barcode (latin-1 TCGA biotab) ---
     sm = pd.read_csv(smoking, sep="\t", dtype=str, low_memory=False, encoding="latin-1")
-    sm = sm.assign(
-        b12=sm["bcr_patient_barcode"].astype(str).str.slice(0, 12)
-    ).set_index("b12")
-    sm = sm[~sm.index.duplicated(keep="first")]
-    cov["pack_years"] = _to_num(cov["patient12"].map(sm["number_pack_years_smoked"]))
-    hist = _to_num(cov["patient12"].map(sm["tobacco_smoking_history"]))
-    cov["ever_smoker"] = (hist >= 2).where(
-        hist.notna(), other=np.nan
-    )  # 1=never; 2-5=ever
-    # pack-years/ever only meaningful in lung; null elsewhere so they don't enter other strata's denominator
-    nonlung = ~cov["arm"].isin(["LUAD", "LUSC"])
-    cov.loc[nonlung, ["pack_years", "ever_smoker"]] = np.nan
+    smoking_covariates = _derive_smoking_covariates(cov, sm)
+    cov[["pack_years", "ever_smoker", "pack_years_zero_never"]] = smoking_covariates[
+        ["pack_years", "ever_smoker", "pack_years_zero_never"]
+    ]
 
     # --- active-signature set per stratum (>=5% of stratum samples with exposure>0) ---
     active: dict[str, list[str]] = {}

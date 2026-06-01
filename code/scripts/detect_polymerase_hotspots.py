@@ -38,7 +38,6 @@ Output
   absence as ``False`` via a left join).
 """
 
-
 import pandas as pd
 
 
@@ -83,7 +82,12 @@ def detect_hotspots_per_sample(mutations: pd.DataFrame) -> pd.DataFrame:
         )
         return empty.reindex(columns=_OUTPUT_COLUMNS)
 
-    aa_change = polymerase_rows["hgvsp_short"].astype("string").str.removeprefix("p.")
+    if "hgvsp_short" in polymerase_rows.columns:
+        aa_change = (
+            polymerase_rows["hgvsp_short"].astype("string").str.removeprefix("p.")
+        )
+    else:
+        aa_change = pd.Series(pd.NA, index=polymerase_rows.index, dtype="string")
     is_pole_hotspot = (
         polymerase_rows["symbol"].astype(str) == "POLE"
     ) & aa_change.isin(list(POLE_HOTSPOTS))

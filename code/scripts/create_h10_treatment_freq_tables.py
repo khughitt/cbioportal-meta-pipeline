@@ -3,8 +3,6 @@
 # science:end
 """Create H10 treatment-aware per-study gene-cancer frequency views."""
 
-from __future__ import annotations
-
 import logging
 from pathlib import Path
 
@@ -68,7 +66,14 @@ def compute_h10_treatment_freq_table(
     all_samples = _canonical_all_samples_view(canonical_gene_cancer)
     base_keys = all_samples[["cancer_type", "symbol"]].drop_duplicates()
 
-    samples_with_treatment = samples_meta.merge(treatment, on="sample_id", how="inner")
+    treatment_join_keys = (
+        ["study_id", "sample_id"]
+        if "study_id" in samples_meta.columns and "study_id" in treatment.columns
+        else ["sample_id"]
+    )
+    samples_with_treatment = samples_meta.merge(
+        treatment, on=treatment_join_keys, how="inner"
+    )
     view_frames = [all_samples]
     for cohort_view, mask in _cohort_masks(samples_with_treatment).items():
         if cohort_view == "all_samples":
@@ -97,10 +102,14 @@ def _prepare_samples(samples: pd.DataFrame) -> pd.DataFrame:
     required = {"sample_id", "cancer_type", "cancer_type_detailed"}
     _require_columns(samples, required, "samples")
     sample_cols = ["sample_id", "cancer_type", "cancer_type_detailed"]
+    if "study_id" in samples.columns:
+        sample_cols.insert(0, "study_id")
     if "panel_id" in samples.columns:
         sample_cols.append("panel_id")
     out = samples[sample_cols].copy()
     out["sample_id"] = out["sample_id"].astype(str)
+    if "study_id" in out.columns:
+        out["study_id"] = out["study_id"].astype(str)
     if out["sample_id"].duplicated().any():
         duplicates = sorted(
             out.loc[out["sample_id"].duplicated(keep=False), "sample_id"].unique()
@@ -111,19 +120,40 @@ def _prepare_samples(samples: pd.DataFrame) -> pd.DataFrame:
     return out
 
 
+def _ensure_study_id(samples: pd.DataFrame, study_id: str) -> pd.DataFrame:
+    out = samples.copy()
+    if "study_id" not in out.columns:
+        out.insert(0, "study_id", str(study_id))
+    return out
+
+
 def _prepare_treatment_annotations(
     treatment_annotations: pd.DataFrame, samples_meta: pd.DataFrame
 ) -> pd.DataFrame:
     required = {"sample_id", "is_hypermutator", *TREATMENT_FLAG_COLUMNS}
     _require_columns(treatment_annotations, required, "samples_treatment_exposure")
-    out = treatment_annotations[list(required)].copy()
+    treatment_cols = list(required)
+    if (
+        "study_id" in treatment_annotations.columns
+        and "study_id" in samples_meta.columns
+    ):
+        treatment_cols.append("study_id")
+    out = treatment_annotations[treatment_cols].copy()
     out["sample_id"] = out["sample_id"].astype(str)
-    if out["sample_id"].duplicated().any():
+    if "study_id" in out.columns:
+        out["study_id"] = out["study_id"].astype(str)
+        study_ids = set(samples_meta["study_id"].astype(str))
+        out = out.loc[out["study_id"].isin(study_ids)].copy()
+        uniqueness_key = ["study_id", "sample_id"]
+    else:
+        uniqueness_key = ["sample_id"]
+    if out.duplicated(uniqueness_key).any():
         duplicates = sorted(
-            out.loc[out["sample_id"].duplicated(keep=False), "sample_id"].unique()
+            out.loc[out.duplicated(uniqueness_key, keep=False), "sample_id"].unique()
         )
         raise ValueError(
-            f"samples_treatment_exposure must be unique on sample_id; duplicates: {duplicates[:10]}"
+            "samples_treatment_exposure must be unique on "
+            f"{uniqueness_key}; duplicates: {duplicates[:10]}"
         )
 
     missing = sorted(set(samples_meta["sample_id"]) - set(out["sample_id"]))
@@ -336,7 +366,7 @@ def _require_columns(df: pd.DataFrame, required: set[str], label: str) -> None:
 def _run_via_snakemake() -> None:
     snek = snakemake  # type: ignore[name-defined]  # noqa: F821
     mutations = pd.read_feather(snek.input.mutations)
-    samples = pd.read_feather(snek.input.samples)
+    samples = _ensure_study_id(pd.read_feather(snek.input.samples), snek.wildcards.id)
     treatment_annotations = pd.read_feather(snek.input.treatment_annotations)
 
     panel_coverage_path = getattr(snek.input, "panel_coverage", None)
@@ -388,7 +418,5 @@ def main(
 
 if "snakemake" in globals():
     _run_via_snakemake()
-
-
-if __name__ == "__main__":
+elif __name__ == "__main__":
     main()

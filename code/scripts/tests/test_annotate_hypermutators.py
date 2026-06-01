@@ -35,6 +35,7 @@ def _samples_tmb(rows: list[dict]) -> pd.DataFrame:
 
 def _samples_gmm(rows: list[dict]) -> pd.DataFrame:
     defaults = {
+        "study_id": "s",
         "cancer_type": "Test Cancer",
         "tmb_log10": math.log10(6.0),
         "tmb_zscore_within_cancer": 0.0,
@@ -77,6 +78,39 @@ def test_row1_pole_hotspot_forces_true_regardless_of_tmb() -> None:
     assert row["is_hypermutator"]
     assert row["hypermutation_score"] == 1.0
     assert row["hypermutator_reason"] == "pole_hotspot"
+
+
+def test_duplicate_sample_ids_across_studies_do_not_create_many_to_many_join() -> None:
+    out = annotate_hypermutators(
+        samples_tmb_combined=_samples_tmb(
+            [
+                {"study_id": "study_a", "sample_id": "S1", "tmb": 1.0},
+                {"study_id": "study_b", "sample_id": "S1", "tmb": 15.0},
+            ]
+        ),
+        samples_gmm_flagged=_samples_gmm(
+            [
+                {
+                    "study_id": "study_a",
+                    "sample_id": "S1",
+                    "gmm_posterior_upper": 0.1,
+                },
+                {
+                    "study_id": "study_b",
+                    "sample_id": "S1",
+                    "gmm_posterior_upper": 0.9,
+                },
+            ]
+        ),
+        per_cancer_gmm_fits=_per_cancer(
+            [{"cancer_type": "Test Cancer", "fit_quality": "bimodal"}]
+        ),
+    )
+
+    assert len(out) == 2
+    by_study = out.set_index("study_id")
+    assert by_study.loc["study_a", "gmm_posterior_upper"] == 0.1
+    assert by_study.loc["study_b", "gmm_posterior_upper"] == 0.9
 
 
 def test_row2_pold1_hotspot_forces_true() -> None:
@@ -595,9 +629,12 @@ def pytest_approx(expected: float, rel: float = 1e-6) -> object:
 # raised KeyError when the column was absent. Fix: treat absence as no MSI-H
 # (msi_h all False).
 
+
 def test_missing_msi_type_column_treats_as_no_msi_h() -> None:
     samples_tmb = _samples_tmb([{"sample_id": "S1", "tmb": 5.0}])
-    samples_tmb = samples_tmb.drop(columns=["msi_type", "msi_score"])  # cBioPortal-old shape
+    samples_tmb = samples_tmb.drop(
+        columns=["msi_type", "msi_score"]
+    )  # cBioPortal-old shape
     out = annotate_hypermutators(
         samples_tmb_combined=samples_tmb,
         samples_gmm_flagged=_samples_gmm([{"sample_id": "S1"}]),

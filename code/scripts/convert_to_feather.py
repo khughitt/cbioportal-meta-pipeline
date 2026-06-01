@@ -16,6 +16,7 @@ from cancer_type_normalization import (
     log_label_normalization_stats,
     normalize_sample_labels,
 )
+from feather_compat import coerce_mixed_object_columns_to_string
 from msi_normalization import log_msi_type_counts, normalize_msi_columns
 from resolve_panel_id import resolve_panel_ids  # type: ignore[import-not-found]
 
@@ -314,6 +315,7 @@ sample_mdat["panel_id"] = resolve_panel_ids(
 ).to_numpy()
 
 # save result
+sample_mdat = coerce_mixed_object_columns_to_string(sample_mdat)
 sample_mdat.to_feather(snek.output[1])
 
 #
@@ -378,6 +380,7 @@ if "age" in patient_mdat.columns:
     patient_mdat.age = patient_mdat.age.astype(age_cat)
 
 # save result
+patient_mdat = coerce_mixed_object_columns_to_string(patient_mdat)
 patient_mdat.to_feather(snek.output[2])
 
 # create study metadata

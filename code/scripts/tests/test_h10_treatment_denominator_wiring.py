@@ -13,6 +13,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[3]
 CONFIG_FULL = ROOT / "code" / "config" / "config-full.yml"
 SNAKEFILE = ROOT / "code" / "workflows" / "Snakefile"
+H10_FREQ_SCRIPT = ROOT / "code" / "scripts" / "create_h10_treatment_freq_tables.py"
 
 
 def test_config_full_defines_curated_h10_treatment_denominator_labels() -> None:
@@ -72,6 +73,13 @@ def test_snakefile_exposes_h10_treatment_frequency_views_target() -> None:
     assert "studies/{wildcards.id}/metadata/samples.feather" in text
     assert "metadata/samples_treatment_exposure.feather" in text
     assert "gene_cancer_h10_treatment_views.feather" in target
+
+
+def test_h10_treatment_frequency_script_is_snakemake_script_compatible() -> None:
+    text = H10_FREQ_SCRIPT.read_text()
+
+    assert "from __future__ import annotations" not in text
+    assert 'elif __name__ == "__main__":' in text
 
 
 def test_snakefile_exposes_h10_treatment_impact_target_and_datapackage() -> None:

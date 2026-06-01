@@ -64,7 +64,6 @@ Output
   with the three composite columns + three dual-flag columns added.
 """
 
-
 import logging
 
 import numpy as np
@@ -108,15 +107,26 @@ def annotate_hypermutators(
     quantities to be at or above this floor. See module docstring for the
     motivating BRCA / SKCM cases (t105).
     """
+    _require_columns(
+        samples_tmb_combined,
+        {"study_id", "sample_id", "cancer_type"},
+        "samples_tmb_combined",
+    )
+    _require_columns(
+        samples_gmm_flagged,
+        {"study_id", "sample_id", "gmm_posterior_upper", "tmb_zscore_within_cancer"},
+        "samples_gmm_flagged",
+    )
     samples = samples_tmb_combined.merge(
         samples_gmm_flagged[
             [
+                "study_id",
                 "sample_id",
                 "gmm_posterior_upper",
                 "tmb_zscore_within_cancer",
             ]
         ],
-        on="sample_id",
+        on=["study_id", "sample_id"],
         how="left",
     )
     samples = samples.merge(
@@ -157,9 +167,11 @@ def _apply_decision_table(
     pole = samples["pole_hotspot_detected"].fillna(False).to_numpy(dtype=bool)
     pold1 = samples["pold1_hotspot_detected"].fillna(False).to_numpy(dtype=bool)
     # `msi_type` is optional — not every study carries an MSI-H call (older
-     # studies pre-date routine MSI testing). Treat absence as no MSI-H.
+    # studies pre-date routine MSI testing). Treat absence as no MSI-H.
     if "msi_type" in samples.columns:
-        msi_h = (samples["msi_type"].fillna("").astype(str) == "MSI-H").to_numpy(dtype=bool)
+        msi_h = (samples["msi_type"].fillna("").astype(str) == "MSI-H").to_numpy(
+            dtype=bool
+        )
     else:
         msi_h = np.zeros(n, dtype=bool)
     is_bimodal = (samples["fit_quality"].fillna("").astype(str) == "bimodal").to_numpy(
@@ -187,8 +199,12 @@ def _apply_decision_table(
     upper_mode_passes = upper_mode_mean >= floor_log10
     sample_tmb_passes = tmb >= composite_min_absolute_tmb
     posterior_says_upper = is_bimodal & (posterior > _GMM_POSTERIOR_FLAG_THRESHOLD)
-    gmm_upper_pass = posterior_says_upper & upper_mode_passes & sample_tmb_passes & (~assigned)
-    gmm_upper_fail = posterior_says_upper & ~(upper_mode_passes & sample_tmb_passes) & (~assigned)
+    gmm_upper_pass = (
+        posterior_says_upper & upper_mode_passes & sample_tmb_passes & (~assigned)
+    )
+    gmm_upper_fail = (
+        posterior_says_upper & ~(upper_mode_passes & sample_tmb_passes) & (~assigned)
+    )
     gmm_lower = is_bimodal & (posterior <= _GMM_POSTERIOR_FLAG_THRESHOLD) & (~assigned)
 
     scores[gmm_upper_pass] = posterior[gmm_upper_pass]
@@ -266,6 +282,12 @@ def _relative_top_quintile_flag(samples: pd.DataFrame) -> pd.Series:
     )
     flag = pct > _RELATIVE_TOP_QUANTILE
     return flag.fillna(False).astype(bool)
+
+
+def _require_columns(df: pd.DataFrame, required: set[str], label: str) -> None:
+    missing = sorted(required - set(df.columns))
+    if missing:
+        raise ValueError(f"{label} missing required columns: {missing}")
 
 
 def _run_via_snakemake() -> None:

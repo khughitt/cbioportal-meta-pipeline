@@ -6,7 +6,10 @@
 from pathlib import Path
 
 import pandas as pd
+import pyarrow as pa
+import pytest
 
+from feather_compat import coerce_mixed_object_columns_to_string
 from resolve_panel_id import resolve_panel_ids
 
 
@@ -44,3 +47,27 @@ def test_resolve_panel_ids_via_matrix(tmp_path: Path) -> None:
         is_panel_study=True,
     )
     assert list(panel_ids) == ["MSK-IMPACT-341", "MSK-IMPACT-468"]
+
+
+def test_coerce_mixed_object_columns_to_string_makes_clinical_metadata_feather_safe(
+    tmp_path: Path,
+) -> None:
+    """Mixed numeric/string clinical fields should not crash Feather serialization."""
+    raw = pd.DataFrame(
+        {
+            "sample_id": ["S1", "S2", "S3"],
+            "TUMOR_PURITY": pd.Series([70.0, "80", None], dtype=object),
+            "FACETS_WGD": pd.Series([True, "False", None], dtype=object),
+            "canonical_numeric": [1.0, 2.0, 3.0],
+        }
+    )
+
+    with pytest.raises((TypeError, ValueError, pa.lib.ArrowInvalid)):
+        raw.to_feather(tmp_path / "raw.feather")
+
+    out = coerce_mixed_object_columns_to_string(raw)
+    out.to_feather(tmp_path / "coerced.feather")
+
+    assert str(out["TUMOR_PURITY"].dtype) == "string"
+    assert str(out["FACETS_WGD"].dtype) == "string"
+    assert str(out["canonical_numeric"].dtype) == "float64"

@@ -24,8 +24,9 @@ Output
 - ``snakemake.output[0]`` : ``out_dir/metadata/samples_tmb_combined.feather``
 """
 
-
 import pandas as pd
+
+from feather_compat import coerce_mixed_object_columns_to_string
 
 
 def combine_samples_tmb(
@@ -59,15 +60,32 @@ def combine_samples_tmb(
     # Some studies (e.g. pog570_bcgsc_2020) store identifier columns as int64;
     # concat across mixed-dtype frames yields an object column that pyarrow
     # cannot serialize. Coerce all known identifier columns to str.
-    for col in ("study_id", "sample_id", "patient_id", "cancer_type", "sample_id_tumor"):
+    for col in (
+        "study_id",
+        "sample_id",
+        "patient_id",
+        "cancer_type",
+        "sample_id_tumor",
+    ):
         if col in tmb.columns:
             tmb[col] = tmb[col].astype(str)
 
     if per_study_hotspots:
-        hotspots = pd.concat(per_study_hotspots, ignore_index=True)
+        if len(per_study_hotspots) != len(per_study_tmb):
+            raise ValueError(
+                "per_study_hotspots must align one-to-one with per_study_tmb"
+            )
+        hotspot_frames = [
+            _attach_study_id_to_hotspots(tmb_frame, hotspot_frame)
+            for tmb_frame, hotspot_frame in zip(
+                per_study_tmb, per_study_hotspots, strict=True
+            )
+        ]
+        hotspots = pd.concat(hotspot_frames, ignore_index=True)
     else:
         hotspots = pd.DataFrame(
             columns=[
+                "study_id",
                 "sample_id_tumor",
                 "pole_hotspot_detected",
                 "pold1_hotspot_detected",
@@ -76,8 +94,10 @@ def combine_samples_tmb(
 
     hotspots = hotspots.rename(columns={"sample_id_tumor": "sample_id"})
     out = tmb.merge(
-        hotspots[["sample_id", "pole_hotspot_detected", "pold1_hotspot_detected"]],
-        on="sample_id",
+        hotspots[
+            ["study_id", "sample_id", "pole_hotspot_detected", "pold1_hotspot_detected"]
+        ],
+        on=["study_id", "sample_id"],
         how="left",
     )
     out["pole_hotspot_detected"] = (
@@ -86,6 +106,25 @@ def combine_samples_tmb(
     out["pold1_hotspot_detected"] = (
         out["pold1_hotspot_detected"].fillna(False).astype(bool)
     )
+    return coerce_mixed_object_columns_to_string(out)
+
+
+def _attach_study_id_to_hotspots(
+    tmb_frame: pd.DataFrame, hotspot_frame: pd.DataFrame
+) -> pd.DataFrame:
+    """Attach the per-study id so recurring sample ids do not cross-join."""
+    out = hotspot_frame.copy()
+    if "study_id" in out.columns:
+        out["study_id"] = out["study_id"].astype(str)
+        return out
+    if "study_id" not in tmb_frame.columns:
+        raise ValueError("per-study TMB frame must include study_id")
+    study_ids = tmb_frame["study_id"].dropna().astype(str).unique()
+    if len(study_ids) != 1:
+        raise ValueError(
+            "cannot infer one study_id for polymerase hotspot frame from TMB frame"
+        )
+    out["study_id"] = study_ids[0]
     return out
 
 

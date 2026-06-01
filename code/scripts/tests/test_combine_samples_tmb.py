@@ -69,6 +69,26 @@ def test_hotspots_left_joined_onto_samples() -> None:
     assert not row_a2["pold1_hotspot_detected"]
 
 
+def test_hotspots_join_by_study_and_sample_id_without_cross_study_duplication() -> None:
+    out = combine_samples_tmb(
+        per_study_tmb=[
+            _tmb("study_a", ["S1"], [1.0]),
+            _tmb("study_b", ["S1"], [2.0]),
+        ],
+        per_study_hotspots=[
+            _hotspots(["S1"], [True], [False]),
+            _hotspots(["S1"], [False], [True]),
+        ],
+    )
+
+    assert len(out) == 2
+    by_study = out.set_index("study_id")
+    assert by_study.loc["study_a", "pole_hotspot_detected"]
+    assert not by_study.loc["study_a", "pold1_hotspot_detected"]
+    assert not by_study.loc["study_b", "pole_hotspot_detected"]
+    assert by_study.loc["study_b", "pold1_hotspot_detected"]
+
+
 def test_samples_with_no_hotspot_row_get_false_not_nan() -> None:
     # Explicit contract: missing hotspot rows map to False, not NaN.
     out = combine_samples_tmb(
@@ -115,12 +135,15 @@ def test_empty_studies_list_returns_empty_dataframe_with_schema() -> None:
 #   ArrowTypeError: Expected bytes, got a 'int' object
 # Fix: coerce all known identifier columns to str inside combine_samples_tmb.
 
-def _tmb_int_ids(study_id: str, sample_ids: list[int], tmb_values: list[float]) -> pd.DataFrame:
+
+def _tmb_int_ids(
+    study_id: str, sample_ids: list[int], tmb_values: list[float]
+) -> pd.DataFrame:
     """Like _tmb but with int64 sample_id and patient_id columns."""
     return pd.DataFrame(
         {
             "study_id": study_id,
-            "sample_id": sample_ids,                # int64
+            "sample_id": sample_ids,  # int64
             "patient_id": [s - 1 for s in sample_ids],  # int64
             "cancer_type": ["Test Cancer"] * len(sample_ids),
             "tmb": tmb_values,
@@ -133,7 +156,9 @@ def _tmb_int_ids(study_id: str, sample_ids: list[int], tmb_values: list[float]) 
     )
 
 
-def _tmb_str_ids(study_id: str, sample_ids: list[str], tmb_values: list[float]) -> pd.DataFrame:
+def _tmb_str_ids(
+    study_id: str, sample_ids: list[str], tmb_values: list[float]
+) -> pd.DataFrame:
     return pd.DataFrame(
         {
             "study_id": study_id,
@@ -157,7 +182,7 @@ def test_mixed_dtype_identifier_columns_serialize() -> None:
             _tmb_str_ids("study_a", ["A1", "A2"], [1.0, 2.0]),
             _tmb_int_ids("pog570_like", [101, 102], [3.0, 4.0]),
         ],
-        per_study_hotspots=[_hotspots([], [], [])],
+        per_study_hotspots=[_hotspots([], [], []), _hotspots([], [], [])],
     )
     # After concat the identifier columns must be all-str so to_feather succeeds.
     # (Pandas may pick StringDtype or object; both serialize cleanly via arrow.)
@@ -167,9 +192,26 @@ def test_mixed_dtype_identifier_columns_serialize() -> None:
     import io
     import pyarrow as pa
     import pyarrow.ipc as ipc
+
     buf = io.BytesIO()
     table = pa.Table.from_pandas(out)
     with ipc.new_file(buf, table.schema) as writer:
         writer.write_table(table)
     # If the cast worked, this is round-trippable; if not, ArrowTypeError fires above.
     assert buf.tell() > 0
+
+
+def test_mixed_dtype_clinical_columns_serialize_after_cross_study_concat(
+    tmp_path,
+) -> None:
+    """Study-specific clinical fields can become mixed-object only after concat."""
+    study_a = _tmb("study_a", ["A1"], [1.0]).assign(GRADE=["2"])
+    study_b = _tmb("study_b", ["B1"], [2.0]).assign(GRADE=[3])
+
+    out = combine_samples_tmb(
+        per_study_tmb=[study_a, study_b],
+        per_study_hotspots=[_hotspots([], [], []), _hotspots([], [], [])],
+    )
+
+    out.to_feather(tmp_path / "samples_tmb_combined.feather")
+    assert str(out["GRADE"].dtype) == "string"

@@ -299,3 +299,39 @@ The opt-in target emits both summary feathers and `gene_cancer_h10_treatment_imp
 
 Recommended next move: run the `all_h10_treatment_impact` target on the configured substrate and write the t207 interpretation note.
 That note should keep the exposure-label pass separate from the q027 therapy-signature-high arm and should treat no-contrast or underpowered rows as a plumbing checkpoint unless deterministic sample-level mutagenic-treatment rules have been added.
+
+## Update - t207 Full-Config Impact Run Attempt
+
+The configured WP4 impact target was attempted against `code/config/config-full.yml`, but it did not reach H10 aggregation.
+Snakemake stopped before `samples_treatment_exposure` or the impact tables because local raw cBioPortal inputs are absent for two configured studies.
+
+| Prior recommendation | Current status | Evidence |
+|---|---|---|
+| Run `all_h10_treatment_impact` on the configured substrate | Blocked | `aml_stjude_2024` is missing the three canonical raw files; `msk_impact_50k_2026` is missing those plus its required panel matrix. |
+| Write the t207 interpretation note | Done as substrate-readiness note | `doc/interpretations/2026-06-01-t207-h10-treatment-impact-target-blocked-by-missing-full-config-raw.md`. |
+
+This is not a null H10 result.
+No `gene_cancer_h10_treatment_impact_ratio.feather` or datapackage was produced for the full configured substrate, so the exposure-label arm remains unadjudicated and q027 remains deferred.
+
+Recommended next move: repair or explicitly resolve the two missing raw study substrates, then rerun `all_h10_treatment_impact`.
+If a temporary available-substrate run is useful for plumbing, label it as partial and do not use it as the full-config H10 impact answer.
+
+## Update - t207 Full-Config Impact Complete
+
+The missing raw substrates were restored locally and the configured WP4 target now completes on `code/config/config-full.yml`.
+
+| Prior recommendation | Current status | Evidence |
+|---|---|---|
+| Restore missing raw studies and rerun `all_h10_treatment_impact` | Done | `/data/packages/cbioportal/full/summary/mut/table/gene_cancer_h10_treatment_impact.feather`, `gene_cancer_h10_treatment_impact_ratio.feather`, and `gene_cancer_h10_treatment_impact.datapackage.json` now exist. |
+| Write the substantive t207 interpretation note | Done | `doc/interpretations/2026-06-01-t207-h10-treatment-impact-full-config.md` supersedes the missing-raw blocker note. |
+
+The full-config output is a successful exposure-label denominator pass, not the q027 therapy-signature-high answer.
+The ratio table has 776,686 gene-cancer rows.
+Power remains the limiting feature: `delta_no_detected_contrast` has 92,990 interpretable rows, `delta_broad` has 60,752, `delta_mutagenic_primary` has 8,834, and `delta_confirmed_naive_contrast` has none.
+The primary mutagenic contrast is almost entirely a bladder-cancer contrast because only `blca_dfarber_mskcc_2014` is in the current whole-study primary mutagenic label set.
+
+The biological H10 claim therefore remains unresolved.
+The useful result is that the H10 denominator machinery now runs on the full configured substrate, emits a manifest, and reports contrast-specific power so thin contrasts are not overread as null effects.
+
+Recommended next move: start a follow-up that adds deterministic sample-level mutagenic-treatment rules for the mixed cohorts already identified in t206, especially `difg_glass_2019` and `blca_cornell_2016`.
+The separate q027 arm should use measured SBS11/SBS31/SBS35/SBS87 exposure and should not be collapsed into the exposure-label pass.

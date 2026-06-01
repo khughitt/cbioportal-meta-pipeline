@@ -11,6 +11,7 @@ import pytest
 from create_freq_tables import compute_freq_tables
 from create_h10_treatment_freq_tables import (
     COHORT_VIEWS,
+    _ensure_study_id,
     compute_h10_treatment_freq_table,
 )
 
@@ -197,6 +198,44 @@ def test_missing_treatment_annotation_for_sample_fails_loud() -> None:
 
     with pytest.raises(ValueError, match="missing treatment annotations"):
         compute_h10_treatment_freq_table(muts, samples, treatment)
+
+
+def test_treatment_annotations_are_filtered_by_study_before_sample_id_join() -> None:
+    muts = _muts([("TP53", "S1")])
+    samples = pd.DataFrame(
+        {
+            "study_id": ["study_a"],
+            "sample_id": ["S1"],
+            "cancer_type": ["Cancer A"],
+            "cancer_type_detailed": ["A"],
+        }
+    )
+    treatment = pd.DataFrame(
+        {
+            "study_id": ["study_a", "study_b"],
+            "sample_id": ["S1", "S1"],
+            "is_hypermutator": [False, True],
+            "treatment_exposed_broad": [False, True],
+            "mutagenic_treatment_signal": [False, True],
+            "mutagenic_treatment_signal_sensitivity_only": [False, False],
+            "positive_naive_or_pretreatment": [False, False],
+            "treatment_metadata_unknown": [False, False],
+        }
+    )
+
+    out = compute_h10_treatment_freq_table(muts, samples, treatment)
+
+    row = _row(out, "Cancer A", "TP53", "broad_treatment_excluded")
+    assert row["n_samples"] == 1
+    assert row["num"] == 1
+
+
+def test_ensure_study_id_adds_per_study_wildcard_when_samples_lack_column() -> None:
+    samples = _samples([("S1", "Cancer A", "A")])
+
+    out = _ensure_study_id(samples, "study_a")
+
+    assert out["study_id"].tolist() == ["study_a"]
 
 
 def _row(

@@ -31,7 +31,6 @@ computed regardless of fit quality — it is the fallback signal consumed by the
 composite flag.
 """
 
-
 import logging
 
 import diptest  # type: ignore[import-untyped]
@@ -69,6 +68,7 @@ _PER_CANCER_FIT_COLUMNS = [
 ]
 
 _SAMPLES_FLAGGED_COLUMNS = [
+    "study_id",
     "sample_id",
     "cancer_type",
     "tmb_log10",
@@ -131,6 +131,7 @@ def _fit_one_cancer(
 
     per_sample_base = pd.DataFrame(
         {
+            "study_id": group["study_id"].astype(str).to_numpy(),
             "sample_id": group["sample_id"].to_numpy(),
             "cancer_type": cancer_type,
             "tmb_log10": tmb_log10,

@@ -120,6 +120,20 @@ def test_missing_hgvsp_short_handled_safely() -> None:
         assert not row["pold1_hotspot_detected"]
 
 
+def test_absent_hgvsp_short_column_handled_like_missing_annotation() -> None:
+    muts = pd.DataFrame(
+        {
+            "sample_id_tumor": ["S1"],
+            "symbol": ["POLE"],
+            "start": [133241028],
+        }
+    )
+    out = detect_hotspots_per_sample(muts)
+    row = out.loc[out["sample_id_tumor"] == "S1"].iloc[0]
+    assert not row["pole_hotspot_detected"]
+    assert not row["pold1_hotspot_detected"]
+
+
 def test_output_has_expected_columns_and_dtypes() -> None:
     muts = _muts([("S1", "POLE", "p.P286R")])
     out = detect_hotspots_per_sample(muts)

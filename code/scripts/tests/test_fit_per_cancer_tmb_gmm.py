@@ -173,6 +173,7 @@ def test_samples_flagged_schema() -> None:
     df = _synthetic_bimodal_cancer("C1")
     _, samples = fit_gmm_per_cancer(df, random_seed=_RNG_SEED)
     for col in (
+        "study_id",
         "sample_id",
         "cancer_type",
         "is_hypermutator_gmm",
@@ -180,6 +181,23 @@ def test_samples_flagged_schema() -> None:
         "tmb_zscore_within_cancer",
     ):
         assert col in samples.columns
+
+
+def test_samples_flagged_preserves_study_id_when_sample_ids_recur() -> None:
+    df = pd.DataFrame(
+        {
+            "study_id": ["study_a", "study_b"],
+            "sample_id": ["S1", "S1"],
+            "cancer_type": ["RARE_CANCER", "RARE_CANCER"],
+            "tmb": [1.0, 15.0],
+            "tmb_log10": [math.log10(2.0), math.log10(16.0)],
+        }
+    )
+
+    _, samples = fit_gmm_per_cancer(df, random_seed=_RNG_SEED, gmm_min_samples=100)
+
+    assert samples[["study_id", "sample_id"]].drop_duplicates().shape[0] == 2
+    assert set(samples["study_id"]) == {"study_a", "study_b"}
 
 
 def test_multiple_cancer_types_fit_independently() -> None:

@@ -247,3 +247,12 @@ It also defines `no_detected_treatment_signal` as the retained comparator cohort
 
 Recommended next move is unchanged but sharper: implement WP1-WP2 only.
 Do not start the frequency impact pass until the config parser and treatment sample annotation can prove the label schema, raw-clinical joins, and no-detected-signal comparator semantics on tests.
+
+## Update — t207 Second-Order Review Fixes
+
+The second-order issues from the t207 review response are now folded into the plan.
+The impact table now uses contrast-specific power statuses rather than one ambiguous `h10_power_status`.
+It also makes `mean_no_detected_treatment_signal` verdict-bearing through `delta_no_detected_contrast`, adds a `confirmed_naive_or_pretreatment` sensitivity/QA view for the three positively clean studies, and fixes status precedence so `no_contrast` wins when both no-contrast and underpowered conditions apply.
+
+Recommended implementation order remains WP1-WP2 first.
+The annotation tests should specifically prove that positive-naive samples are folded into `no_detected_treatment_signal` and also exposed through the confirmed-naive sensitivity view.

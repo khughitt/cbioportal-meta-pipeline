@@ -88,7 +88,8 @@ Required cohort views:
 | Cohort view | Meaning |
 |---|---|
 | `all_samples` | all callable samples; the treatment-inclusive baseline |
-| `no_detected_treatment_signal` | retained comparator group: samples negative for broad, primary mutagenic, sensitivity-only, and unknown treatment labels; not confirmed naive |
+| `no_detected_treatment_signal` | retained comparator group: samples negative for broad, primary mutagenic, sensitivity-only, and unknown treatment labels; includes positive naive/pre-treatment samples but is not limited to them |
+| `confirmed_naive_or_pretreatment` | sensitivity/QA comparator: only samples from positively classified treatment-naive or pre-treatment studies |
 | `broad_treatment_excluded` | excludes broad confirmed treatment-exposed cohorts; cohort-composition sensitivity |
 | `mutagenic_treatment_excluded_primary` | excludes primary DNA-damaging-therapy labels; primary H10 treatment denominator |
 | `mutagenic_treatment_excluded_with_pdx_sensitivity` | additionally excludes PDX sensitivity-only labels; sensitivity only |
@@ -132,7 +133,9 @@ Rejected alternative: calling all unflagged studies treatment-naive.
 Reason: the audit recall is unmeasured for the 109 no-metadata-signal studies, and only `lung_nci_2022`, `lusc_cptac_2021`, and `mbl_dkfz_2017` are positively clean.
 
 `no_detected_treatment_signal` is a retained cohort, not a second spelling of `mutagenic_treatment_excluded_primary`.
-It contains samples with no positive broad, mutagenic, sensitivity-only, or unknown treatment label.
+It contains samples with no positive broad, mutagenic, sensitivity-only, or unknown treatment label, and it folds the positively classified naive/pre-treatment samples into that comparator.
+The `positive_naive_or_pretreatment` flag is still used distinctly through the `confirmed_naive_or_pretreatment` sensitivity/QA view.
+That view is expected to be thin, because only `lung_nci_2022`, `lusc_cptac_2021`, and `mbl_dkfz_2017` are positively clean in the t206 audit.
 The mutagenic primary exclusion view instead starts from `all_samples` and removes only primary mutagenic-treatment labels.
 
 ### Key decision: opt-in H10 impact tables first
@@ -258,6 +261,7 @@ Definition of done:
 - panel-aware callable denominators match the mapped `create_freq_tables.py` columns for `all_samples` on synthetic inputs;
 - excluding treatment-positive samples removes those sample IDs from both numerator and denominator;
 - `no_detected_treatment_signal` includes only samples negative for every treatment flag and is not identical by construction to `mutagenic_treatment_excluded_primary`;
+- `confirmed_naive_or_pretreatment` includes only samples with `positive_naive_or_pretreatment == True`;
 - zero-denominator rows emit `NaN` ratios, not zero;
 - PDX sensitivity-only samples are excluded only in the PDX sensitivity view.
 
@@ -275,17 +279,31 @@ Required summary fields:
 |---|---|
 | `mean_all_samples` | mean ratio across studies in `all_samples` view |
 | `mean_no_detected_treatment_signal` | mean ratio in the retained no-detected-signal comparator cohort |
+| `mean_confirmed_naive_or_pretreatment` | mean ratio in the positively classified naive/pre-treatment sensitivity cohort |
 | `mean_broad_treatment_excluded` | broad treatment-history sensitivity mean |
 | `mean_mutagenic_treatment_excluded_primary` | primary H10 treatment-excluded mean |
 | `mean_mutagenic_treatment_excluded_with_pdx_sensitivity` | PDX sensitivity mean |
+| `delta_no_detected_contrast` | `mean_all_samples - mean_no_detected_treatment_signal`; main comparator contrast for H10 exposure-label enrichment |
+| `delta_confirmed_naive_contrast` | `mean_all_samples - mean_confirmed_naive_or_pretreatment`; clean but usually underpowered sensitivity contrast |
 | `delta_broad` | `mean_all_samples - mean_broad_treatment_excluded` |
 | `delta_mutagenic_primary` | `mean_all_samples - mean_mutagenic_treatment_excluded_primary` |
 | `rank_all_samples` | within-cancer rank by `mean_all_samples` |
+| `rank_no_detected_treatment_signal` | within-cancer rank in the no-detected-signal comparator |
+| `rank_confirmed_naive_or_pretreatment` | within-cancer rank in the positive naive/pre-treatment sensitivity cohort |
 | `rank_broad_treatment_excluded` | within-cancer rank after broad treatment exclusion |
 | `rank_mutagenic_primary` | within-cancer rank after primary exclusion |
+| `rank_delta_no_detected_contrast` | `rank_all_samples - rank_no_detected_treatment_signal` |
+| `rank_delta_confirmed_naive_contrast` | `rank_all_samples - rank_confirmed_naive_or_pretreatment` |
 | `rank_delta_broad` | `rank_all_samples - rank_broad_treatment_excluded` |
 | `rank_delta_mutagenic_primary` | `rank_all_samples - rank_mutagenic_primary` |
-| `h10_power_status` | `interpretable`, `underpowered_non_arbitrating`, or `no_contrast` |
+| `power_status_no_detected_contrast` | `interpretable`, `underpowered_non_arbitrating`, or `no_contrast` for the no-detected comparator contrast |
+| `power_status_confirmed_naive_contrast` | same, for the positive naive/pre-treatment sensitivity contrast |
+| `power_status_broad` | same, for the broad-treatment exclusion contrast |
+| `power_status_mutagenic_primary` | same, for the primary mutagenic-treatment exclusion contrast |
+
+`delta_no_detected_contrast` and `delta_mutagenic_primary` answer different questions.
+`delta_no_detected_contrast` estimates whether the all-sample deliverable is elevated relative to the best available no-detected-treatment comparator.
+`delta_mutagenic_primary` estimates denominator dilution: how much the deliverable changes when primary mutagenic-treatment labels are removed.
 
 With `sample_level_rules: {}` and only `blca_dfarber_mskcc_2014` as a primary study-level mutagenic-treatment label, the first implementation is expected to produce many `no_contrast` or `underpowered_non_arbitrating` rows.
 That first result should be read as a plumbing and denominator-semantics checkpoint, not as a falsification of H10.
@@ -294,8 +312,8 @@ The first biologically informative pass should wait for at least one determinist
 Definition of done:
 
 - rank shifts are computed within cancer type;
-- rows with fewer than two contributing non-excluded studies are `underpowered_non_arbitrating`;
-- rows with zero excluded samples are `no_contrast`;
+- each contrast gets its own power-status column; no single `h10_power_status` is used across broad, no-detected, confirmed-naive, and mutagenic-primary contrasts;
+- status precedence is fixed: `no_contrast` wins when the contrast changes no samples or has no comparator samples; otherwise rows with fewer than two contributing comparator/non-excluded studies are `underpowered_non_arbitrating`;
 - output includes enough counts to audit whether a change is numerator-driven or denominator-driven.
 
 ### WP5: Snakemake integration and interpretation
@@ -337,6 +355,7 @@ Inter-stage invariants:
 - for every `(study, cancer_type, symbol)`, each treatment-excluded denominator is less than or equal to `all_samples`;
 - numerator counts are less than or equal to denominators for every cohort view;
 - `no_detected_treatment_signal` denominators are less than or equal to all explicit exclusion views because it keeps only samples with no detected treatment signal;
+- `confirmed_naive_or_pretreatment` is a subset of `no_detected_treatment_signal`;
 - PDX sensitivity-only exclusions do not affect the primary view.
 
 Sanity checks:
@@ -371,7 +390,7 @@ Failure mode:
 - The H10 config schema encodes broad treatment, mutagenic-treatment, PDX sensitivity-only, positive-naive, and unknown-metadata labels separately.
 - Sample-level mixed-cohort labels are applied only when a deterministic clinical rule maps to sample IDs.
 - Treatment-aware per-study frequency views preserve panel-aware callable denominators.
-- The cross-study impact table reports no-detected-signal comparator means, primary mutagenic exclusion, broad treatment sensitivity, PDX sensitivity, rank shifts, and power status.
+- The cross-study impact table reports no-detected-signal comparator contrast, confirmed-naive sensitivity contrast, primary mutagenic exclusion, broad treatment sensitivity, PDX sensitivity, rank shifts, and contrast-specific power statuses.
 - The final interpretation does not call `no_detected_treatment_signal` a confirmed naive baseline.
 - The final interpretation does not present the exposure-label pass as the q027 signature-high answer unless the signature-high arm is also run.
 - The new summary outputs have a datapackage manifest.

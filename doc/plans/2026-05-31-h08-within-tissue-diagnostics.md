@@ -55,9 +55,11 @@ cov, *, categorical_adjust, numeric_adjust)` is required: it standardizes both `
 control, keeps `C(...)` only for genuine categoricals, does an **explicit `dropna` over every model
 column** (ycol, cov, all adjustments), and reports n *after* that dropna (the frozen `fit_cell`
 drops only on `[ycol, cov]`, which is fine for WP2's NaN-free categorical adjustments but would
-overstate n once a missing-bearing numeric control enters). Every test still pins the CLR transform,
-the count-floor-passing sample set, the per-arm strata, and the frozen denominators. Deterministic
-(no permutation).
+overstate n once a missing-bearing numeric control enters). `fit_diag` also fails early on
+zero-variance `cov` or zero-variance numeric controls after dropna, logging the skipped model rather
+than returning an unstable coefficient. Every test still pins the CLR transform, the
+count-floor-passing sample set, the per-arm strata, and the frozen denominators. Deterministic (no
+permutation).
 
 - **Test 1 — effective within-tissue contrast.** Compute contrast on the **exact fit frame**
   (count-floor-passing, covariate-complete, same strata as WP2), not the raw column. For each
@@ -66,9 +68,12 @@ the count-floor-passing sample set, the per-arm strata, and the frozen denominat
   (each Arm-C tissue vs six-pooled), report a **range-restriction ratio** (within-tissue SD ÷ pooled
   SD) computed on **tissue-mean-centred** values — i.e. the within-tissue *usable* variation, because
   a raw pooled SD across six tissues mostly reflects between-tissue composition, not the contrast the
-  within-tissue model can exploit. *Readout:* compressed effective contrast (low ratio / low entropy)
-  → no method, however well-measured, recovers a dose-response → range restriction, not method
-  failure. Predict APOBEC wide, LUSC pack-years and UV-site compressed.
+  within-tissue model can exploit. The output columns must make this distinction explicit:
+  `sd_raw_fit_frame`, `iqr_raw_fit_frame`, `sd_tissue_centered_fit_frame`,
+  `pooled_sd_tissue_centered_fit_frame`, and `range_restriction_ratio_tissue_centered`. *Readout:*
+  compressed effective contrast (low ratio / low entropy) → no method, however well-measured,
+  recovers a dose-response → range restriction, not method failure. Predict APOBEC wide, LUSC
+  pack-years and UV-site compressed.
 
 - **Test 2 — binary smoking vs continuous pack-years → SBS4.** **Artifact gap (verified):**
   `ever_smoker` in `h08_covariates.feather` is **all-missing for LUAD/LUSC** (0/993) — `_to_num()` was
@@ -87,14 +92,16 @@ the count-floor-passing sample set, the per-arm strata, and the frozen denominat
 - **Test 3 — burden-mediated / proximal conditioning diagnostic.** For each arm's registered
   covariate→signature, add `tmb_nonsynonymous` (+ `is_hypermutator`) as **numeric** controls via
   `fit_diag` and report the registered covariate's partial coefficient vs its marginal coefficient;
-  then refit on the non-saturated subset (exclude `is_hypermutator`; for SKCM also restrict below a
-  **pre-registered-here SBS7-fraction threshold of 0.90** — fixed *before* running, with a reported
-  sensitivity sweep over {0.80, 0.85, 0.90, 0.95}). *Caveat (carried into the readout):* TMB and
-  `is_hypermutator` are target-proximal — plausibly *downstream* of the same mutational process — so
-  conditioning on them can remove the signal **by construction**. This test therefore measures
-  **burden-mediated / proximal dominance**, not clean measurement-vs-saturation separation; a covariate
-  that goes to ≈ 0 under burden conditioning is *consistent with* saturation/fan-in but does not by
-  itself rule out a noisy-but-real proxy. Read it alongside Tests 1–2, not as a standalone verdict.
+  log the model condition number and the pairwise correlation matrix among the registered covariate,
+  `tmb_nonsynonymous`, and `is_hypermutator`, then refit on the non-saturated subset (exclude
+  `is_hypermutator`; for SKCM also restrict below a **pre-registered-here SBS7-fraction threshold of
+  0.90** — fixed *before* running, with a reported sensitivity sweep over {0.80, 0.85, 0.90, 0.95}).
+  *Caveat (carried into the readout):* TMB and `is_hypermutator` are target-proximal — plausibly
+  *downstream* of the same mutational process — so conditioning on them can remove the signal **by
+  construction**. This test therefore measures **burden-mediated / proximal dominance**, not clean
+  measurement-vs-saturation separation; a covariate that goes to ≈ 0 under burden conditioning is
+  *consistent with* saturation/fan-in but does not by itself rule out a noisy-but-real proxy. Read it
+  alongside Tests 1–2, not as a standalone verdict.
 
 - **Test 4 — proliferation-robustness of the APOBEC pass.** Tests whether the APOBEC pass is partly a
   shared proliferation driver (APOBEC3 expression tracks cell-cycle), i.e. whether "directness" is
@@ -106,13 +113,15 @@ the count-floor-passing sample set, the per-arm strata, and the frozen denominat
   config — *not* a literal path): z-scored mean log2(RSEM+1) over a **published proliferation
   signature as primary** (Venet meta-PCNA), with the short canonical cell-cycle marker set
   (MKI67, PCNA, TOP2A, CCNB1/2, BUB1, CDK1, AURKA, FOXM1, …) as a **sensitivity** to reduce
-  hand-picked-marker fragility. Log the realized per-tissue gene intersection and the per-tissue score
-  variance in the meta. Then refit apobec3ab_joint→SBS2_13 **per Arm-C tissue** (scores are per-tissue
-  and non-commensurable across the six — the same constraint that kept modules out of the Arm-C
-  denominator), controlling for the proliferation score via `fit_diag`, and compare the APOBEC
-  coefficient before/after. *Readout:* coefficient shrinkage binned **< 25% / 25–50% / > 50%**, weighted
-  by per-tissue n; large shrinkage → proliferation-mediated; small shrinkage → **proliferation-robust
-  in this substrate**.
+  hand-picked-marker fragility. The exact primary and sensitivity gene lists must be embedded as
+  constants in `diagnose_h08_within_tissue.py` or loaded from a stable project file under `data/`;
+  the script must log those lists verbatim in the meta sidecar, plus the realized per-tissue gene
+  intersection and the per-tissue score variance. Then refit apobec3ab_joint→SBS2_13 **per Arm-C
+  tissue** (scores are per-tissue and non-commensurable across the six — the same constraint that kept
+  modules out of the Arm-C denominator), controlling for the proliferation score via `fit_diag`, and
+  compare the APOBEC coefficient before/after. *Readout:* coefficient shrinkage binned **< 25% /
+  25–50% / > 50%**, weighted by per-tissue n; large shrinkage → proliferation-mediated; small
+  shrinkage → **proliferation-robust in this substrate**.
 
 ## Inputs
 
@@ -137,9 +146,11 @@ the count-floor-passing sample set, the per-arm strata, and the frozen denominat
 
 1. Write `code/scripts/diagnose_h08_within_tissue.py` (click `--config`): import the frozen
    `fit_cell` (baseline only) + CLR machinery; add the `fit_diag` numeric-adjust helper and the
-   smoking-label derivation (string map + `pack_years_zero_never`); one function per test; emit a
-   tidy `diagnostics/*.feather` per test + a `*.meta.json` (logging the smoking map, the SBS7
-   threshold + sweep, the proliferation gene set + realized per-tissue intersection/variance).
+   smoking-label derivation (string map + `pack_years_zero_never`); embed or load the exact
+   proliferation gene sets from a stable project file; one function per test; emit a tidy
+   `diagnostics/*.feather` per test + a `*.meta.json` (logging the smoking map, the SBS7 threshold +
+   sweep, Test 3 condition/correlation diagnostics, and the proliferation gene sets + realized
+   per-tissue intersection/variance).
 2. Run tests 1–3 (covariate table + raw smoking labels) and confirm each test's baseline fit
    (frozen `fit_cell`, no extra control) reproduces the WP2 coefficient/sign for the registered
    covariate (apples-to-apples guard), with n matching the WP4 §1b fit n's.
@@ -176,9 +187,13 @@ the count-floor-passing sample set, the per-arm strata, and the frozen denominat
   binary/continuous comparison is auditable; confirm `ever_smoker` is derived, not read from the
   unusable frozen column.
 - Test 3: the SBS7 saturation threshold (0.90) is fixed in the script before the run, with the
-  {0.80–0.95} sensitivity sweep reported.
-- Test 4: log the proliferation gene set + realized per-tissue intersection size and score variance
-  (loud if a tissue retains < ~8 genes or near-zero score variance — score unreliable there).
+  {0.80–0.95} sensitivity sweep reported; log the condition number and pairwise covariate/control
+  correlations for each burden-conditioned fit so unstable partial coefficients are interpretable.
+- Test 4: log the exact primary + sensitivity proliferation gene sets verbatim, plus realized
+  per-tissue intersection size and score variance (loud if a tissue retains < ~8 genes or near-zero
+  score variance — score unreliable there).
+- `fit_diag`: fail early and log a skipped cell when the target covariate or any numeric control has
+  zero variance after the all-column dropna.
 - Deterministic: no seeds needed; re-running is bit-stable.
 
 ## Out of scope

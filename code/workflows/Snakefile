@@ -1233,13 +1233,49 @@ rule run_h08_sensitivity:
   shell:
     "python code/scripts/run_h08_sensitivity.py --config {params.configfile} > {log} 2>&1"
 
+#
+# t200 — read-only within-tissue failure diagnostics over the frozen h08 association artifacts.
+# Reproduces the WP2 target fits, re-derives the broken smoking binary from raw PanCanAtlas labels,
+# runs burden/proximal conditioning probes, and scores APOBEC proliferation robustness from full
+# per-arm RSEM. Diagnostic only: the locked H08a verdict is not re-read by this rule.
+#
+rule diagnose_h08_within_tissue:
+  input:
+    covariates = out_dir.joinpath("association/h08_covariates.feather"),
+    denominator = out_dir.joinpath("association/covariate_denominator.json"),
+    grid = out_dir.joinpath("association/h08_association_grid.feather"),
+    grid_meta = out_dir.joinpath("association/h08_association_grid.meta.json"),
+    exposures = out_dir.joinpath("studies/tcga_mc3/mut/signatures/restricted_assignment_per_sample.feather"),
+    smoking = "data/pancanatlas_clinical_with_followup.tsv",
+    rsem = expand(
+      data_dir.joinpath("{study}/data_mrna_seq_v2_rsem.txt"),
+      study=list(config.get("h08_arm_studies", {}).values())
+    )
+  output:
+    baseline = out_dir.joinpath("association/diagnostics/h08_within_tissue_baseline.feather"),
+    contrast = out_dir.joinpath("association/diagnostics/h08_within_tissue_contrast.feather"),
+    smoking = out_dir.joinpath("association/diagnostics/h08_smoking_operationalizations.feather"),
+    smoking_counts = out_dir.joinpath("association/diagnostics/h08_smoking_label_counts.feather"),
+    burden = out_dir.joinpath("association/diagnostics/h08_burden_conditioning.feather"),
+    proliferation = out_dir.joinpath("association/diagnostics/h08_apobec_proliferation.feather"),
+    meta = out_dir.joinpath("association/diagnostics/h08_within_tissue_diagnostics.meta.json")
+  params:
+    configfile = h08_configfile
+  log:
+    out_dir.joinpath("logs/diagnose_h08_within_tissue.log")
+  conda:
+    "../envs/project-python.yml"
+  shell:
+    "python code/scripts/diagnose_h08_within_tissue.py --config {params.configfile} --smoking {input.smoking} > {log} 2>&1"
+
 rule all_h08_association:
   input:
     out_dir.joinpath("association/h08_association_grid.feather"),
     out_dir.joinpath("association/h08_sensitivity.feather"),
     out_dir.joinpath("association/h08_permutation_null.feather"),
     out_dir.joinpath("association/h08_lung_pooling.feather"),
-    out_dir.joinpath("association/h08_sensitivity.meta.json")
+    out_dir.joinpath("association/h08_sensitivity.meta.json"),
+    out_dir.joinpath("association/diagnostics/h08_within_tissue_diagnostics.meta.json")
 
 #
 # AACR Project GENIE per-panel coverage mask.

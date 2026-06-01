@@ -1,0 +1,43 @@
+{
+  "source": "https://api.gdc.cancer.gov/data/0fc78496-818b-4896-bd83-52db1f533c5c",
+  "file_uuid": "0fc78496-818b-4896-bd83-52db1f533c5c",
+  "dest": "data/pancanatlas_clinical_with_followup.tsv",
+  "expected_size": 18633685,
+  "observed_size": 18633685,
+  "size_ok": true,
+  "md5": "ffcb35edda305dd8d615497f9214eb92",
+  "smoking_columns_present": [
+    "tobacco_smoking_history",
+    "number_pack_years_smoked"
+  ],
+  "smoking_columns_ok": true,
+  "acronym_column_present": true,
+  "patient_barcode_column": "bcr_patient_barcode",
+  "n_rows": 10956,
+  "n_cols": 746,
+  "arm_b_completeness": {
+    "LUAD": {
+      "n_patients": 522,
+      "tobacco_smoking_history": {
+        "n_nonmissing": 508,
+        "frac_nonmissing": 0.9732
+      },
+      "number_pack_years_smoked": {
+        "n_nonmissing": 358,
+        "frac_nonmissing": 0.6858
+      }
+    },
+    "LUSC": {
+      "n_patients": 504,
+      "tobacco_smoking_history": {
+        "n_nonmissing": 492,
+        "frac_nonmissing": 0.9762
+      },
+      "number_pack_years_smoked": {
+        "n_nonmissing": 427,
+        "frac_nonmissing": 0.8472
+      }
+    }
+  },
+  "all_checks_pass": true
+}

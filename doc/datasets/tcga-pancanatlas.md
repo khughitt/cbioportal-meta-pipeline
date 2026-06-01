@@ -12,8 +12,10 @@ source_refs:
   - "paper:SanchezVega2018"
 related:
   - "hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and"
+consumed_by:
+  - "plan:2026-05-31-t199-h08-association-core"
 created: "2026-05-30"
-updated: "2026-05-30"
+updated: "2026-05-31"
 ---
 
 # TCGA PanCanAtlas

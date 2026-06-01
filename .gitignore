@@ -44,3 +44,6 @@ data/normal_tissue_burden.tsv
 data/Supp-RT-human-50kb-bins.xlsx
 data/replication_timing_constitutive_bins.feather
 data/gene_replication_timing.feather
+
+# t199 WP0: public GDC PanCanAtlas clinical-with-followup (18MB, re-fetchable via fetch_pancanatlas_clinical.py)
+data/pancanatlas_clinical_with_followup.tsv

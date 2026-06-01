@@ -11,6 +11,8 @@ related:
     "task:t195",
     "task:t199",
     "task:t200",
+    "task:t201",
+    "task:t202",
   ]
 ---
 
@@ -82,3 +84,27 @@ The safer path is a narrow H08b prototype framed as exploratory and explicitly n
 The h08 program crossed from infrastructure into evidence.
 The result did not promote H08a, but it also did not collapse the method: the molecular APOBEC arm behaved as intended, while the two failed environmental arms now have concrete proxy-level explanations.
 The next useful move is housekeeping plus one explicit choice: repair smoking under a new pre-registration, or proceed to H08b as exploratory work with the `[?]` gate preserved.
+
+## Update — 07:17 EDT
+
+Three recommendations from the morning note have now shipped.
+
+| Prior recommendation | Current status | Evidence |
+|---|---|---|
+| Fix task drift for `t195` and `t200` | Done | Both tasks are closed in `tasks/done/2026-06.md`; `t195` is recorded as completed by the t196–t199 work package chain, and `t200` by commit `db24409`. |
+| File and handle the production `ever_smoker` bug | Done | `task:t201` was filed, completed, and merged in commit `22a87e2`; production `build_h08_covariates.py` now maps raw PanCanAtlas smoking labels explicitly and emits `pack_years_zero_never`. |
+| Repair dataset verification metadata for `tcga-mc3` and `tcga-pancanatlas` | Done | The dataset notes now carry public-access verification metadata and validation no longer reports those access-verification errors. |
+
+The remaining h08 fork is therefore narrower than it was earlier today.
+The housekeeping and production bug fix are no longer blockers.
+The next decision is not whether the frozen H08a verdict changes — it does not — but whether to author a new smoking-arm repair commitment before running any repaired Arm-B scan.
+
+Recommended next move: pre-register a **H08a smoking-arm repair** as a new, forward-looking pre-registration.
+It should explicitly treat the repaired analysis as non-identical to the locked 2026-05-31 H08a read, use the repaired production covariates, and decide up front whether the primary smoking proxy is `ever_smoker`, `pack_years_zero_never`, or both in a fixed primary/sensitivity order.
+The t200 diagnostic supports `ever_smoker` as the primary candidate, with `pack_years_zero_never` as sensitivity; neither should be folded back into the locked `[?]` verdict.
+
+Lower-priority items remain stable:
+UV repair should stay deferred unless a better exposure substrate appears, and H08b should remain exploratory until a repaired gate or a deliberate gate-bypass decision is on record.
+
+**Follow-through:** `task:t202` tracks and closes the smoking-arm repair pre-registration.
+The repair document is `pre-registration:h08-smoking-repair`; the next executable step is a small implementation plan for the repaired Arm-B production rerun, not a broad H08b scan.

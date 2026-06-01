@@ -86,6 +86,11 @@ The DIFG/GLASS comparator is therefore no longer contaminated by blank TMZ metad
 For that study, `no_detected_treatment_signal` now means explicit `TMZ_TREATMENT == "No"` under the available TMZ field, not "blank or not Yes."
 This does not prove absence of radiation or other treatment exposure; it only fixes the TMZ-specific silent fallback.
 
+This remedy is per-cohort, not structural.
+The silent-negative pattern is closed only for the two studies that now carry explicit sample-level unknown/naive rules.
+Any future mixed cohort with partial sample-level treatment metadata will again route blank values into `no_detected_treatment_signal` unless a matching unknown rule is hand-authored.
+The fix is therefore a manual per-cohort remedy reusing the t209 schema, not a structural guarantee against silent negatives.
+
 ## Impact Read
 
 The refreshed ratio impact table still has 776,686 rows and 51 columns.
@@ -97,6 +102,10 @@ Power status is essentially unchanged for the primary mutagenic label contrast a
 | `delta_broad` | 80,394 | 687,981 | 8,311 | broad cohort-composition sensitivity unchanged in scope |
 | `delta_mutagenic_primary` | 29,377 | 742,757 | 4,552 | still bladder plus glioma exposure-label contrast |
 | `delta_confirmed_naive_contrast` | 0 | 762,633 | 14,053 | now has BLCA sample-level support but remains underpowered |
+
+The `delta_no_detected_contrast` power-status counts (106,185 / 646,046 / 24,455) are identical to t208, but the underlying glioma frequencies did shift.
+The glioma `no_detected` denominator dropped from 265 to 104 samples once the 161 blank-TMZ samples moved to `treatment_metadata_unknown`, so glioma no-detected ratios changed; no gene-cancer row's power classification flipped.
+Read this as "row counts unchanged, glioma no-detected values shifted," not "nothing changed."
 
 The primary mutagenic interpretable rows remain 17,894 glioma rows and 11,483 bladder-cancer rows.
 Among interpretable bladder rows, mean `delta_mutagenic_primary` is -0.008166, with a minimum of -0.166894 and a maximum of 0.063492.

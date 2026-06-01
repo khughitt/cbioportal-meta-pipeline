@@ -9,6 +9,7 @@ from pathlib import Path
 import click
 import pandas as pd
 
+from annotate_treatment_exposure import NO_DETECTED_EXCLUSION_COLUMNS
 from create_freq_tables import compute_freq_tables
 
 
@@ -220,14 +221,9 @@ def _canonical_all_samples_view(canonical_gene_cancer: pd.DataFrame) -> pd.DataF
 
 
 def _cohort_masks(samples_with_treatment: pd.DataFrame) -> dict[str, pd.Series]:
-    no_detected = ~samples_with_treatment[
-        [
-            "treatment_exposed_broad",
-            "mutagenic_treatment_signal",
-            "mutagenic_treatment_signal_sensitivity_only",
-            "treatment_metadata_unknown",
-        ]
-    ].any(axis=1)
+    no_detected = ~samples_with_treatment[list(NO_DETECTED_EXCLUSION_COLUMNS)].any(
+        axis=1
+    )
     return {
         "all_samples": pd.Series(True, index=samples_with_treatment.index),
         "no_detected_treatment_signal": no_detected,

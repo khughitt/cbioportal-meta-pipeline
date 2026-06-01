@@ -39,6 +39,19 @@ SAMPLE_LEVEL_TARGETS = {
     "treatment_metadata_unknown",
 }
 
+# Canonical exclusion set defining no_detected_treatment_signal: a sample is in
+# the no-detected comparator iff none of these flags are set. positive_naive_or_
+# pretreatment is deliberately absent — those samples are genuinely untreated and
+# stay in the comparator. create_h10_treatment_freq_tables imports this so the
+# comparator definition cannot silently diverge between the annotation sidecar
+# and the cohort views.
+NO_DETECTED_EXCLUSION_COLUMNS = (
+    "treatment_exposed_broad",
+    "mutagenic_treatment_signal",
+    "mutagenic_treatment_signal_sensitivity_only",
+    "treatment_metadata_unknown",
+)
+
 
 @dataclass(frozen=True)
 class SampleLevelRule:
@@ -112,14 +125,9 @@ def annotate_treatment_exposure(
     for rule in cfg.sample_level_rules.values():
         _apply_sample_level_rule(out, rule, data_dir=data_dir)
 
-    out["no_detected_treatment_signal"] = ~out[
-        [
-            "treatment_exposed_broad",
-            "mutagenic_treatment_signal",
-            "mutagenic_treatment_signal_sensitivity_only",
-            "treatment_metadata_unknown",
-        ]
-    ].any(axis=1)
+    out["no_detected_treatment_signal"] = ~out[list(NO_DETECTED_EXCLUSION_COLUMNS)].any(
+        axis=1
+    )
     no_source = out["no_detected_treatment_signal"] & (
         out["treatment_label_source"] == ""
     )

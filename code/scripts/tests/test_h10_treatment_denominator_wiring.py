@@ -46,7 +46,24 @@ def test_config_full_defines_curated_h10_treatment_denominator_labels() -> None:
         "aml_stjude_2024",
         "msk_impact_50k_2026",
     ]
-    assert block["sample_level_rules"] == {}
+    assert block["sample_level_rules"] == {
+        "difg_glass_2019_tmz": {
+            "study_id": "difg_glass_2019",
+            "target": "mutagenic_treatment_signal",
+            "clinical_sample_file": "data_clinical_sample.txt",
+            "sample_id_column": "SAMPLE_ID",
+            "positive_columns": {"TMZ_TREATMENT": ["Yes"]},
+        },
+        "blca_cornell_2016_post_chemo": {
+            "study_id": "blca_cornell_2016",
+            "target": "mutagenic_treatment_signal",
+            "clinical_sample_file": "data_clinical_sample.txt",
+            "sample_id_column": "SAMPLE_ID",
+            "positive_columns": {
+                "SPECIMEN_COLLECTION_PRE_OR_POST_CHEMO": ["post-chemotherapy"]
+            },
+        },
+    }
 
 
 def test_snakefile_exposes_h10_treatment_annotation_target() -> None:

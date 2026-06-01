@@ -335,3 +335,23 @@ The useful result is that the H10 denominator machinery now runs on the full con
 
 Recommended next move: start a follow-up that adds deterministic sample-level mutagenic-treatment rules for the mixed cohorts already identified in t206, especially `difg_glass_2019` and `blca_cornell_2016`.
 The separate q027 arm should use measured SBS11/SBS31/SBS35/SBS87 exposure and should not be collapsed into the exposure-label pass.
+
+## Update - t208 Sample-Level Mutagenic Rules
+
+The recommended sample-level H10 follow-up has now shipped as `task:t208`.
+
+| Prior recommendation | Current status | Evidence |
+|---|---|---|
+| Add deterministic sample-level rules for `difg_glass_2019` and `blca_cornell_2016` | Done | `config-full.yml` now defines `difg_glass_2019_tmz` and `blca_cornell_2016_post_chemo` under `h10_treatment_denominator.sample_level_rules`. |
+| Rerun the H10 impact target with those labels | Done | `all_h10_treatment_impact` was forced from `annotate_treatment_exposure`, then the final target check reported all files up to date. |
+| Write the t208 interpretation | Done | `doc/interpretations/2026-06-01-t208-h10-sample-level-mutagenic-rules.md`. |
+
+The new rules add 230 primary mutagenic-treatment samples: 179 TMZ-positive DIFG samples and 51 post-chemotherapy BLCA Cornell samples.
+Primary mutagenic signal rises from 50 to 280 samples, and `delta_mutagenic_primary` interpretable rows rise from 8,834 to 29,377.
+The contrast now covers both glioma and bladder cancer instead of being effectively bladder-only.
+
+This improves the exposure-label substrate but still does not answer q027.
+The biological H10 claim remains unresolved because the current pass excludes by clinical treatment labels, not by measured SBS11/SBS31/SBS35/SBS87 exposure.
+
+Recommended next move: file and plan the distinct q027 therapy-signature-high arm.
+It should define per-sample high exposure from measured SBS11/SBS31/SBS35/SBS87 assignments and reuse the H10 impact machinery without collapsing signature-high exclusion into the clinical-label pass.

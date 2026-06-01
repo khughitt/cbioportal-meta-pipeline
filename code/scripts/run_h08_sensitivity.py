@@ -150,6 +150,28 @@ def main(config_path: Path) -> None:
     manifest_sha = _sha256(man_path)
     logger.info("frozen denominator manifest sha256=%s", manifest_sha)
 
+    # FREEZE GUARD: WP3 consumes the WP2 grid, so the sensitivity results MUST be tied to the
+    # exact frozen denominator WP2 ranked under. Fail loudly rather than silently mixing a grid
+    # built on one denominator with sensitivity runs built on another (review finding #1).
+    grid_meta_path = assoc / "h08_association_grid.meta.json"
+    if not grid_meta_path.exists():
+        logger.error(
+            "WP2 meta %s missing — run the association scan first", grid_meta_path
+        )
+        sys.exit(2)
+    wp2_sha = json.loads(grid_meta_path.read_text())["frozen_denominator_manifest"][
+        "sha256"
+    ]
+    if wp2_sha != manifest_sha:
+        logger.error(
+            "denominator SHA mismatch: WP2 grid ranked under %s but current manifest is %s — "
+            "the frozen denominator changed between WP2 and WP3; refusing to mix bases",
+            wp2_sha,
+            manifest_sha,
+        )
+        sys.exit(2)
+    logger.info("denominator SHA matches WP2 grid (%s)", wp2_sha[:16])
+
     cov = pd.read_feather(assoc / "h08_covariates.feather")
     grid = pd.read_feather(assoc / "h08_association_grid.feather")
     h = pd.read_feather(
@@ -244,11 +266,14 @@ def main(config_path: Path) -> None:
             if ft is not None:
                 null_abs.append(abs(ft[1]))
         null_abs = np.array(null_abs)
-        p_perm = (
-            float((null_abs >= abs(obs_coef)).mean())
-            if len(null_abs) and np.isfinite(obs_coef)
-            else np.nan
-        )
+        # Unbiased permutation p-value: (#exceedances + 1) / (n + 1). Never reports a literal 0.0
+        # for a finite null — a "too good" effect that no permutation reaches still floors at
+        # 1/(n+1) ≈ 0.001, which is honest about the resolution of an n=1000 null (review finding #3).
+        if len(null_abs) and np.isfinite(obs_coef):
+            n_exceed = int((null_abs >= abs(obs_coef)).sum())
+            p_perm = (n_exceed + 1) / (len(null_abs) + 1)
+        else:
+            n_exceed, p_perm = None, np.nan
         perm_rows.append(
             {
                 "arm": arm,
@@ -261,7 +286,8 @@ def main(config_path: Path) -> None:
                 "null_p95_abs_coef": round(float(np.percentile(null_abs, 95)), 4)
                 if len(null_abs)
                 else None,
-                "p_permutation": round(p_perm, 4) if np.isfinite(p_perm) else None,
+                "n_exceedances": n_exceed,
+                "p_permutation": round(p_perm, 5) if np.isfinite(p_perm) else None,
                 "n_permutations": int(len(null_abs)),
                 "exceeds_null": bool(np.isfinite(p_perm) and p_perm < 0.05),
             }
@@ -328,7 +354,8 @@ def main(config_path: Path) -> None:
     for r in perm_rows:
         console.print(
             f"  Arm cov={r['covariate']}→{r['signature']}: obs_coef={r['obs_coef']} "
-            f"p_perm={r['p_permutation']} exceeds_null={r['exceeds_null']}"
+            f"n_exceed={r['n_exceedances']}/{r['n_permutations']} p_perm={r['p_permutation']} "
+            f"exceeds_null={r['exceeds_null']}"
         )
     console.print("[bold]Absolute-burden DIAGNOSTIC (not a primary pass):[/]")
     for r in sens_rows:

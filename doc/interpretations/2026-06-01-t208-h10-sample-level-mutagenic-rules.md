@@ -38,8 +38,9 @@ The t208 follow-up adds deterministic sample-level primary mutagenic-treatment r
 `difg_glass_2019` via `TMZ_TREATMENT == "Yes"` and `blca_cornell_2016` via `SPECIMEN_COLLECTION_PRE_OR_POST_CHEMO == "post-chemotherapy"`.
 The full `all_h10_treatment_impact` target reruns with those rules and produces updated impact outputs.
 
-This materially improves the primary mutagenic-treatment contrast.
+This materially improves the primary mutagenic-treatment contrast, but it also exposes a comparator-definition gap.
 It increases labeled primary mutagenic samples from 50 to 280 and expands interpretable `delta_mutagenic_primary` rows from 8,834 to 29,377.
+For DIFG/GLASS, the residual comparator is not cleanly untreated: 161 of the 265 non-TMZ-positive samples have blank `TMZ_TREATMENT`, so they are unknown-not-confirmed-naive rather than explicit TMZ-negative controls.
 The result still does not answer q027, because q027 requires measured therapy-signature-high samples from SBS11/SBS31/SBS35/SBS87 exposure rather than clinical treatment labels.
 
 ## What Changed
@@ -63,6 +64,16 @@ The per-study counts sidecar now reports:
 Across the full annotation table, total primary mutagenic-treatment signal is now 280 samples.
 Broad treatment-exposed labels rise to 1,462 samples because primary mutagenic sample-level positives are also broad treatment positives.
 The no-detected-treatment-signal comparator falls from 326,746 to 326,516 samples.
+
+The DIFG/GLASS residual no-detected bucket is mixed.
+Among 444 samples, `TMZ_TREATMENT` is `Yes` for 179 samples, explicit `No` for 104 samples, and blank for 161 samples.
+The current sample-level rule mechanism only marks positives; it has no sample-level `treatment_metadata_unknown` target.
+As a result, the 161 blank-TMZ samples remain in `no_detected_treatment_signal`.
+That label should be read as "no positive sample-level TMZ label detected" for this cohort, not as confirmed absence of relevant therapy.
+
+BLCA Cornell has the opposite missed opportunity.
+Its 21 `pre-chemotherapy` samples are genuine pretreatment-at-collection comparators within the same study, but the current sample-level target vocabulary cannot mark `positive_naive_or_pretreatment`.
+Those samples also enter the generic no-detected bucket instead of contributing to the confirmed-naive contrast.
 
 ## Impact Read
 
@@ -89,6 +100,13 @@ The glioma effects are smaller.
 Among interpretable glioma rows, the mean `delta_mutagenic_primary` is 0.00048, with a minimum of -0.0105 and a maximum of 0.0158.
 The top positive glioma deltas include `TMEM178B`, `SLC15A5`, `PITPNC1`, and `CD38`; these should be treated as denominator-sensitivity rows, not as mechanistic treatment-signature hits.
 
+The glioma read also has a specific longitudinal confound.
+GLASS is a longitudinal glioma study, and `TMZ_TREATMENT` is entangled with surgical episode and recurrence/progression.
+In the raw clinical table, sample types include 215 primary tumors and 229 recurrence samples.
+The non-`Yes` group is not simply pretreatment primary glioma: among the 161 blank-TMZ samples, 125 are recurrence samples and 36 are primary samples; among the 104 explicit `No` samples, 50 are recurrence samples and 54 are primary samples.
+Therefore the glioma `delta_mutagenic_primary` contrast can mix temozolomide exposure, recurrence/progression biology, sampling time, and clinical ascertainment.
+It should not be interpreted as a clean TMZ causal contrast.
+
 ## Evidence Quality
 
 Evidence type: `empirical_data_evidence` for the local full-config cBioPortal/GENIE pipeline output, plus workflow-validation evidence from the forced Snakemake target.
@@ -98,13 +116,18 @@ The label counts match the raw-clinical expectations from the t206 audit: 179 TM
 
 The evidence is weaker for the H10 biological proposition.
 The output shows that treatment labels can change gene-cancer frequency summaries in bladder and glioma, but it does not establish that therapy-induced SBS11/SBS31/SBS35/SBS87 processes are causing the changes.
-Clinical treatment labels, cancer-type composition, panel coverage, treatment timing, and mutation burden remain entangled.
+Clinical treatment labels, cancer-type composition, panel coverage, treatment timing, recurrence/progression, and mutation burden remain entangled.
+The DIFG/GLASS comparator specifically includes 161 blank-TMZ samples, so the current implementation still has a silent-negative behavior for sample-level unknown treatment status.
 
 ## Open Questions
 
 `question:q024-treatment-exposed-cohort-chemotherapy-signature` advances again.
 The project now has both whole-study and deterministic sample-level exposure-label handling for the strongest available mixed mutagenic cohorts.
-q024 remains partial because treatment-metadata-unknown remains large and audit false-negative recall is still unmeasured.
+q024 remains partial because treatment-metadata-unknown remains large, sample-level unknowns cannot yet be marked, and audit false-negative recall is still unmeasured.
+
+The most immediate schema follow-up is to extend sample-level rules beyond positive treatment labels.
+The rule target vocabulary should support at least sample-level `treatment_metadata_unknown` and `positive_naive_or_pretreatment`.
+That would keep blank DIFG TMZ labels out of an overconfident no-detected comparator and would let the 21 BLCA Cornell pre-chemotherapy samples feed the confirmed-naive sensitivity arm.
 
 `question:q027-does-excluding-treatment-signature-high-samples` remains active and unanswered.
 The next q027 pass should define high-exposure samples from measured SBS11/SBS31/SBS35/SBS87 assignments, then reuse the H10 denominator machinery to ask whether signature-high exclusion changes pooled frequencies and ranks.
@@ -115,5 +138,6 @@ H10 remains proposed and unresolved.
 The infrastructure is now stronger than it was in t207, and the primary mutagenic label arm is no longer a single-study bladder-only contrast.
 However, this still reads as an exposure-label sensitivity analysis rather than a therapy-signature causal test.
 
-The next useful H10 step is the q027 signature-high arm.
-It should be filed separately from t208, use measured SBS11/SBS31/SBS35/SBS87 exposure, and write a separate interpretation so clinical-label and signature-outcome evidence do not collapse into one verdict.
+The next useful H10 implementation step is not yet q027.
+First, the sample-level H10 schema should support unknown and confirmed-naive targets so the exposure-label comparator is not silently overconfident.
+After that repair, the q027 signature-high arm should be filed separately, use measured SBS11/SBS31/SBS35/SBS87 exposure, and write a separate interpretation so clinical-label and signature-outcome evidence do not collapse into one verdict.

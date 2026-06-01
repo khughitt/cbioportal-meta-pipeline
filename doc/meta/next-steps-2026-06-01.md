@@ -350,8 +350,11 @@ The new rules add 230 primary mutagenic-treatment samples: 179 TMZ-positive DIFG
 Primary mutagenic signal rises from 50 to 280 samples, and `delta_mutagenic_primary` interpretable rows rise from 8,834 to 29,377.
 The contrast now covers both glioma and bladder cancer instead of being effectively bladder-only.
 
-This improves the exposure-label substrate but still does not answer q027.
-The biological H10 claim remains unresolved because the current pass excludes by clinical treatment labels, not by measured SBS11/SBS31/SBS35/SBS87 exposure.
+This improves the exposure-label substrate but also surfaces a sharper schema gap.
+For DIFG/GLASS, 161 samples have blank `TMZ_TREATMENT` and currently remain in `no_detected_treatment_signal`; they are unknown-not-confirmed-naive, not explicit untreated controls.
+For BLCA Cornell, 21 `pre-chemotherapy` samples are clean pretreatment-at-collection comparators, but the current sample-level target vocabulary cannot mark `positive_naive_or_pretreatment`.
 
-Recommended next move: file and plan the distinct q027 therapy-signature-high arm.
-It should define per-sample high exposure from measured SBS11/SBS31/SBS35/SBS87 assignments and reuse the H10 impact machinery without collapsing signature-high exclusion into the clinical-label pass.
+The biological H10 claim remains unresolved because the current pass excludes by clinical treatment labels, not by measured SBS11/SBS31/SBS35/SBS87 exposure, and because the sample-level comparator still overclaims in mixed cohorts.
+
+Recommended next move: handle `task:t209` before q027.
+Extend sample-level rules to support sample-level `treatment_metadata_unknown` and `positive_naive_or_pretreatment`, rerun the H10 impact target, and only then file the distinct q027 therapy-signature-high arm.

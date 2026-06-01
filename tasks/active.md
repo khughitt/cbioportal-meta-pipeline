@@ -935,3 +935,13 @@ redefined indel taxonomy (paper:Koh2025) and multimodal catalogue (paper:FerrerT
 Evaluate adding copy-number and doublet-base-substitution (DBS) signatures (paper:Everall2026,
 paper:Steele2022). Blocked on CNA ingestion (cross-ref t055 — no CNA modality in the pipeline yet);
 DBS is feasible on WGS/WES substrates sooner. Forward-looking.
+
+## [t209] Extend H10 sample-level treatment rules for unknown and confirmed-naive labels
+- priority: P2
+- status: proposed
+- aspects: [computational-analysis, software-development]
+- related: [hypothesis:h10-treatment-induced-signature-frequency-contamination, question:q024-treatment-exposed-cohort-chemotherapy-signature, question:q027-does-excluding-treatment-signature-high-samples, task:t206, task:t207, task:t208]
+- group: hypothesis-h10
+- created: 2026-06-01
+
+Extend annotate_treatment_exposure.py sample_level_rules beyond positive mutagenic labels so raw clinical sample-level unknowns and confirmed pretreatment samples are not silently folded into no_detected_treatment_signal. Add sample-level treatment_metadata_unknown support for blank DIFG/GLASS TMZ_TREATMENT values and sample-level positive_naive_or_pretreatment support for BLCA Cornell pre-chemotherapy samples; rerun H10 impact and update the interpretation before starting the q027 signature-high arm.

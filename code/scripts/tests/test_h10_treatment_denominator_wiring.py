@@ -61,6 +61,19 @@ def test_snakefile_exposes_h10_treatment_annotation_target() -> None:
     assert "metadata/samples_treatment_exposure.feather" in target
 
 
+def test_snakefile_exposes_h10_treatment_frequency_views_target() -> None:
+    text = SNAKEFILE.read_text()
+    rule = _extract_rule_block(text, "create_h10_treatment_freq_tables")
+    target = _extract_rule_block(text, "all_h10_treatment_freq_tables")
+
+    assert "studies/{id}/mut/table/gene_cancer_h10_treatment_views.feather" in rule
+    assert "create_h10_treatment_freq_tables.py" in rule
+    assert "mut_filtered.feather" in text
+    assert "studies/{wildcards.id}/metadata/samples.feather" in text
+    assert "metadata/samples_treatment_exposure.feather" in text
+    assert "gene_cancer_h10_treatment_views.feather" in target
+
+
 def _extract_rule_block(text: str, rule_name: str) -> str:
     lines = text.splitlines()
     out: list[str] = []

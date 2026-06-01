@@ -1622,6 +1622,17 @@ def _create_freq_tables_inputs(wildcards):
     return base
 
 
+def _create_h10_treatment_freq_tables_inputs(wildcards):
+    base = {
+        "mutations": out_dir.joinpath(f"studies/{wildcards.id}/mut/table/mut_filtered.feather"),
+        "samples": out_dir.joinpath(f"studies/{wildcards.id}/metadata/samples.feather"),
+        "treatment_annotations": out_dir.joinpath("metadata/samples_treatment_exposure.feather"),
+    }
+    if config.get("panel_bearing_studies", []):
+        base["panel_coverage"] = out_dir.joinpath("metadata/genie_panel_coverage.feather")
+    return base
+
+
 rule create_freq_tables:
   input:
     unpack(_create_freq_tables_inputs)
@@ -1636,6 +1647,22 @@ rule create_freq_tables:
     "../envs/project-python.yml"
   script:
     "../scripts/create_freq_tables.py"
+
+rule create_h10_treatment_freq_tables:
+  input:
+    unpack(_create_h10_treatment_freq_tables_inputs)
+  output:
+    out_dir.joinpath("studies/{id}/mut/table/gene_cancer_h10_treatment_views.feather")
+  log:
+    out_dir.joinpath("logs/create_h10_treatment_freq_tables/{id}.log")
+  conda:
+    "../envs/project-python.yml"
+  script:
+    "../scripts/create_h10_treatment_freq_tables.py"
+
+rule all_h10_treatment_freq_tables:
+  input:
+    expand(out_dir.joinpath("studies/{id}/mut/table/gene_cancer_h10_treatment_views.feather"), id=ids)
 
 rule create_protein_length_mapping:
   input:

@@ -268,3 +268,18 @@ primary mutagenic conflicts with positive-naive and sensitivity-only labels hard
 
 Recommended next move: implement WP3, the per-study treatment-aware frequency views.
 This should consume `samples_treatment_exposure.feather`, emit a long `cohort_view` table, and keep the hypermutator companion columns explicitly named rather than overloading the existing `_exclusive` suffix.
+
+## Update — t207 Treatment Frequency Views
+
+WP3 is now implemented as the per-study H10 treatment-frequency substrate.
+
+| Prior recommendation | Current status | Evidence |
+|---|---|---|
+| Implement WP3 per-study treatment-aware frequency views | Done | `code/scripts/create_h10_treatment_freq_tables.py`, `code/scripts/tests/test_create_h10_treatment_freq_tables.py`, and opt-in `all_h10_treatment_freq_tables`. |
+
+The new per-study table is long on `cohort_view` and preserves the canonical hypermutator contract by naming the companion columns explicitly:
+`num_hypermutator_excluded`, `n_samples_hypermutator_excluded`, and `ratio_hypermutator_excluded`.
+The `all_samples` view reproduces the mapped canonical `gene_cancer_study` inclusive/exclusive columns, while the treatment views use the planned denominator semantics for `no_detected_treatment_signal`, `confirmed_naive_or_pretreatment`, broad-treatment exclusion, primary mutagenic-treatment exclusion, and PDX sensitivity exclusion.
+
+Recommended next move: implement WP4, the cross-study H10 treatment impact table.
+That pass should aggregate the per-study view tables, compute `delta_no_detected_contrast` separately from denominator-dilution deltas, and emit contrast-specific power statuses before any interpretation note is written.

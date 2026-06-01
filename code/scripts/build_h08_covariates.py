@@ -129,6 +129,10 @@ CONTEXT_COVARIATES = [
     "ever_smoker",
 ]
 
+ARM_B_STRATA = [
+    "LUAD",
+    "LUSC",
+]  # arm B PRIMARY = LUAD+LUSC pooled (per-histology is sensitivity)
 ARM_C_STRATA = ["BLCA", "BRCA", "CESC", "HNSC", "LUAD", "LUSC"]
 
 
@@ -355,14 +359,16 @@ def main(config_path: Path, smoking: Path) -> None:
         n = sub["b15"].nunique()
         frac = sub.assign(pos=sub["exposure"] > 0).groupby("signature")["pos"].sum() / n
         active[arm] = sorted(frac[frac >= ACTIVE_SIGNATURE_MIN_FRAC].index)
-    # Arm-C pooled active set: exposure>0 in >=5% of the pooled APOBEC-six samples
-    poolc = h[h["cancer_type"].isin(ARM_C_STRATA)]
-    npool = poolc["b15"].nunique()
-    fracc = (
-        poolc.assign(pos=poolc["exposure"] > 0).groupby("signature")["pos"].sum()
-        / npool
-    )
-    active_pooled = sorted(fracc[fracc >= ACTIVE_SIGNATURE_MIN_FRAC].index)
+
+    # Pooled active sets (arm B = LUAD+LUSC; arm C = APOBEC-six): exposure>0 in >=5% of pooled samples
+    def pooled_active(strata: list[str]) -> list[str]:
+        pool = h[h["cancer_type"].isin(strata)]
+        n = pool["b15"].nunique()
+        fr = pool.assign(pos=pool["exposure"] > 0).groupby("signature")["pos"].sum() / n
+        return sorted(fr[fr >= ACTIVE_SIGNATURE_MIN_FRAC].index)
+
+    active_b = pooled_active(ARM_B_STRATA)
+    active_c = pooled_active(ARM_C_STRATA)
 
     # --- realized ranked denominator per stratum (testable = >=2 distinct non-missing) ---
     def testable(frame: pd.DataFrame, col: str) -> bool:
@@ -385,18 +391,23 @@ def main(config_path: Path, smoking: Path) -> None:
             "n_active_signatures": len(active[arm]),
         }
 
-    # Arm-C pooled denominator: modules EXCLUDED (F1)
-    fc = cov[cov["arm"].isin(ARM_C_STRATA)]
-    c_scalar = [c for c in ranked_all if testable(fc, c)]
-    arm_c = {
-        "strata": ARM_C_STRATA,
-        "n_samples": int(len(fc)),
-        "ranked_covariates": c_scalar,
-        "n_ranked_covariates": len(c_scalar),
-        "modules_excluded": True,
-        "active_signatures": active_pooled,
-        "n_active_signatures": len(active_pooled),
-    }
+    # Pooled denominators: modules EXCLUDED (F1) — per-tissue NMF bases are non-commensurable.
+    # Arm B PRIMARY = LUAD+LUSC pooled; Arm C = APOBEC-six pooled.
+    def pooled_denominator(strata: list[str], active_sigs: list[str]) -> dict:
+        fp = cov[cov["arm"].isin(strata)]
+        scalar = [c for c in ranked_all if testable(fp, c)]
+        return {
+            "strata": strata,
+            "n_samples": int(len(fp)),
+            "ranked_covariates": scalar,
+            "n_ranked_covariates": len(scalar),
+            "modules_excluded": True,
+            "active_signatures": active_sigs,
+            "n_active_signatures": len(active_sigs),
+        }
+
+    arm_b = pooled_denominator(ARM_B_STRATA, active_b)
+    arm_c = pooled_denominator(ARM_C_STRATA, active_c)
 
     manifest = {
         "frozen_at": "2026-05-31",
@@ -427,15 +438,23 @@ def main(config_path: Path, smoking: Path) -> None:
             "uv_site_tier_map": UV_SITE_TIER,
             "uv_rule": "max sun-exposure tier over pipe-delimited TUMOR_TISSUE_SITE tokens (KD4)",
             "clr_pseudocount": cfg.get("signature_ratio_pseudocount", 0.5),
-            "arm_c_modules_excluded": True,
+            "pooled_modules_excluded": True,
+            "target_signatures": {
+                "arm_A": "SBS7 (sum of active SBS7a/b/c/d)",
+                "arm_B": "SBS4",
+                "arm_C": "SBS2_13 (sum of SBS2 + SBS13, APOBEC)",
+                "note": "WP2 collapses sub-signatures to the pre-reg-named targets before CLR; the covariate-count denominator (the gate) is unaffected by signature collapse.",
+            },
         },
         "denominators": {
             "per_tissue_arms": {
                 arm: per_stratum[arm]["n_ranked_covariates"] for arm in arm_studies
             },
+            "pooled_arm_b": arm_b["n_ranked_covariates"],
             "pooled_arm_c": arm_c["n_ranked_covariates"],
         },
         "per_stratum": per_stratum,
+        "arm_b_pooled": arm_b,
         "arm_c_pooled": arm_c,
     }
 
@@ -455,10 +474,11 @@ def main(config_path: Path, smoking: Path) -> None:
             f"  [bold]{arm}[/] n={s['n_samples']}  ranked_covars={s['n_ranked_covariates']} "
             f"(modules_K={s['modules_K']})  active_sigs={s['n_active_signatures']}"
         )
-    console.print(
-        f"  [bold]Arm-C pooled[/] n={arm_c['n_samples']}  ranked_covars={arm_c['n_ranked_covariates']} "
-        f"(modules excluded)  active_sigs={arm_c['n_active_signatures']}"
-    )
+    for label, pooled in [("Arm-B pooled (LUAD+LUSC)", arm_b), ("Arm-C pooled", arm_c)]:
+        console.print(
+            f"  [bold]{label}[/] n={pooled['n_samples']}  ranked_covars={pooled['n_ranked_covariates']} "
+            f"(modules excluded)  active_sigs={pooled['n_active_signatures']}"
+        )
     # loud missingness for the three confirmatory covariates of interest
     for arm, col in [
         ("SKCM", "uv_sun_exposure_ordinal"),

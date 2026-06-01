@@ -1268,6 +1268,30 @@ rule diagnose_h08_within_tissue:
   shell:
     "python code/scripts/diagnose_h08_within_tissue.py --config {params.configfile} --smoking {input.smoking} > {log} 2>&1"
 
+#
+# t204 — repaired h08 Arm-B smoking production rerun.
+# Uses the t201 repaired `ever_smoker` covariate as the pre-registered primary Arm-B smoking slot,
+# writes repair-only artifacts under `association/repairs/smoking_arm/`, and leaves the locked t199
+# H08a association grid / verdict untouched.
+#
+rule run_h08_smoking_repair:
+  input:
+    covariates = out_dir.joinpath("association/h08_covariates.feather"),
+    denominator = out_dir.joinpath("association/covariate_denominator.json"),
+    exposures = out_dir.joinpath("studies/tcga_mc3/mut/signatures/restricted_assignment_per_sample.feather")
+  output:
+    grid = out_dir.joinpath("association/repairs/smoking_arm/h08_smoking_repair_grid.feather"),
+    sensitivity = out_dir.joinpath("association/repairs/smoking_arm/h08_smoking_repair_sensitivity.feather"),
+    meta = out_dir.joinpath("association/repairs/smoking_arm/h08_smoking_repair.meta.json")
+  params:
+    configfile = h08_configfile
+  log:
+    out_dir.joinpath("logs/run_h08_smoking_repair.log")
+  conda:
+    "../envs/project-python.yml"
+  shell:
+    "python code/scripts/run_h08_smoking_repair.py --config {params.configfile} > {log} 2>&1"
+
 rule all_h08_association:
   input:
     out_dir.joinpath("association/h08_association_grid.feather"),
@@ -1276,6 +1300,12 @@ rule all_h08_association:
     out_dir.joinpath("association/h08_lung_pooling.feather"),
     out_dir.joinpath("association/h08_sensitivity.meta.json"),
     out_dir.joinpath("association/diagnostics/h08_within_tissue_diagnostics.meta.json")
+
+rule all_h08_smoking_repair:
+  input:
+    out_dir.joinpath("association/repairs/smoking_arm/h08_smoking_repair_grid.feather"),
+    out_dir.joinpath("association/repairs/smoking_arm/h08_smoking_repair_sensitivity.feather"),
+    out_dir.joinpath("association/repairs/smoking_arm/h08_smoking_repair.meta.json")
 
 #
 # AACR Project GENIE per-panel coverage mask.

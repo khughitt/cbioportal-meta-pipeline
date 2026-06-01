@@ -123,3 +123,19 @@ It defines a repair-specific output surface under `association/repairs/smoking_a
 
 Recommended next move: implement `run_h08_smoking_repair.py` and the opt-in Snakemake target `all_h08_smoking_repair`, then write the repair interpretation note.
 This is still a repaired positive-control read with limited epistemic weight; it does not change H08a `[?]` and does not make H08b confirmatory.
+
+## Update — 08:44 EDT
+
+The repaired Arm-B production rerun has now shipped as `task:t204`.
+
+| Prior recommendation | Current status | Evidence |
+|---|---|---|
+| Implement the repaired smoking-arm rerun | Done | `code/scripts/run_h08_smoking_repair.py`, `all_h08_smoking_repair`, and `doc/interpretations/2026-06-01-h08-smoking-repair.md`. |
+
+The repaired production result is informative but not a pass.
+`ever_smoker` is positive and significant against SBS4 in LUAD+LUSC (n = 839, coef = +0.267, BH-q = 5.10e-04), but it ranks 5 / 8 in the repaired primary family.
+Under `pre-registration:h08-smoking-repair`, the local repaired Arm-B verdict is therefore `[?]`, because the rank <= 3 criterion fails.
+
+The strongest current read is now stable:
+the frozen Arm-B miss was partly an exposure-operationalization artifact, but the repaired binary smoking proxy still does not produce a clean top-3 positive control on this substrate.
+H08a remains `[?]`, and H08b remains exploratory unless a later gate-bypass decision is explicitly recorded.

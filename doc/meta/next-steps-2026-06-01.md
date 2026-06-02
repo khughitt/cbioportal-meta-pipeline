@@ -421,3 +421,19 @@ It asks only whether the full configured study universe contains another patient
 
 Recommended next move: implement the t211 audit extension in `code/scripts/audit_q027_therapy_signature_substrate.py`.
 The first output should be a ranked feasibility report, not a new H10 verdict.
+
+## Update - t211 q027 Substrate Discovery Complete
+
+The broad q027 substrate-discovery audit has now run.
+
+| Prior recommendation | Current status | Evidence |
+|---|---|---|
+| Implement the t211 audit extension | Done | `code/scripts/audit_q027_therapy_signature_substrate.py` now supports `--all-config-discovery`, wildcard lookup scanning, explicit treatment-signature expectation tiers, sample-ID normalization, and count-error reporting for broad discovery. |
+| Run the configured-study discovery audit | Done | `results/q027-substrate-discovery-2026-06-01/therapy_signature_substrate_feasibility.tsv` has 684 study/cancer strata. |
+| Write the t211 interpretation | Done | `doc/interpretations/2026-06-01-t211-q027-substrate-discovery.md`. |
+
+The result is negative for readiness, not negative for H10 biology.
+Only `difg_glass_2019` passes the q027 discovery gate; no second primary patient cohort in the configured study universe has enough explicit SBS11/SBS31/SBS35/SBS87 expectation, count-floor-passing samples, and retained comparator support.
+
+Recommended next move: do not run an expanded q027 impact target yet.
+If staying on H10, the next useful task is a GLASS-specific timing audit: test whether SBS11-high status is separable from recurrence/progression and TMZ episode inside `difg_glass_2019`.

@@ -1,0 +1,47 @@
+# q027 therapy-signature-high exclusion probe.
+# Scoped by WP1 feasibility audit: only difg_glass_2019 passed the primary
+# patient-denominator gate with enough count-floor-passing SBS11 substrate.
+
+data_dir: "/data/raw/cbioportal"
+out_dir: "/data/packages/cbioportal/q027-therapy-signature-high-2026-06-01"
+q027_source_out_dir: "/data/packages/cbioportal/full"
+
+filtering:
+  genes:
+    min_studies_ratio: 0.05
+
+panel_callable_mb_override: {}
+wes_default_callable_mb: 30.0
+panel_callable_mb_tolerance: 0.05
+random_seed: 0
+gmm_min_samples: 100
+
+studies:
+  - difg_glass_2019
+
+signature_assignment_lookup_keys:
+  - cns
+
+signature_assignment_extra_signatures:
+  - SBS11
+  - SBS31
+  - SBS35
+  - SBS87
+
+signature_assignment_cosmic_version: "3.4"
+signature_assignment_genome_build: GRCh37
+signature_assignment_exome: true
+signature_min_sbs_count_wes: 383
+signature_min_sbs_count_matched_normal: 100
+
+matched_normal_studies: []
+multi_caller_consensus_studies: []
+single_caller_studies: []
+panel_bearing_studies: []
+
+q027_therapy_signature_targets:
+  difg_glass_2019:
+    target_signatures:
+      - SBS11
+    primary_patient_denominator: true
+    wp1_gate: passed

@@ -16,6 +16,8 @@ related:
     "task:t205",
     "task:t206",
     "task:t207",
+    "task:t210",
+    "task:t211",
     "discussion:2026-06-01-h08b-gate-handling",
   ]
 ---
@@ -377,3 +379,61 @@ The primary mutagenic impact contrast remains bladder plus glioma, and the confi
 Recommended next move: start `task:t210`, the distinct q027 therapy-signature-high exclusion arm.
 The plan is `doc/plans/2026-06-01-t210-q027-therapy-signature-high-exclusion.md`.
 It begins with a candidate-study feasibility audit because the current full-config H10 outputs have no SBS exposure layer, and the existing H08 signature assignments do not include SBS11/SBS31/SBS35/SBS87.
+
+## Update - t210 q027 Therapy-Signature-High Arm
+
+The q027 measured-signature arm has now shipped as `task:t210`.
+
+| Prior recommendation | Current status | Evidence |
+|---|---|---|
+| Run a q027 candidate-study feasibility audit | Done | `results/q027-therapy-signature-high-2026-06-01/therapy_signature_substrate_feasibility.md`. |
+| Build q027 signature-high labels and frequency views | Done | `code/scripts/annotate_q027_signature_high.py`, `code/scripts/create_q027_signature_high_freq_tables.py`, and opt-in `all_q027_signature_high_impact`. |
+| Run the q027 impact target and write the interpretation | Done | `/data/packages/cbioportal/q027-therapy-signature-high-2026-06-01/summary/mut/table/gene_cancer_q027_signature_high_impact_ratio.feather` and `doc/interpretations/2026-06-01-t210-q027-therapy-signature-high-exclusion.md`. |
+
+The feasibility audit selected `difg_glass_2019` as the only primary patient substrate passing the first gate.
+BLCA Cornell and BLCA DFCI/MSK were too count-floor or comparator limited for this first pass, and the PDX cohorts remain sensitivity-only rather than primary patient denominator evidence.
+
+The GLASS q027 run found 36 SBS11-high samples among 444 total samples.
+There were 160 count-floor-passing samples, 284 below-floor unevaluable samples, and 124 evaluable samples with no target SBS11 exposure.
+The pre-specified sensitivity thresholds did not broaden the exclusion set: >=20 SBS, fraction >=0.10, and any non-zero SBS11 all selected the same 36 samples.
+
+The impact table is descriptive but non-arbitrating.
+Excluding the 36 SBS11-high samples changes some GLASS glioma gene frequencies by up to about 0.067, but all 20,822 q027 rows are `underpowered_non_arbitrating` because the primary substrate has only one contributing study.
+The evaluable-only contrast is larger, with maximum delta about 0.174, because it compares the 160 count-floor-passing samples against 124 evaluable non-high samples rather than retaining the 284 below-floor samples in the denominator.
+The hypermutator-excluded marginal contrast is identical to the inclusive contrast in this run because the existing `is_hypermutator` flag removes none of the 36 SBS11-high GLASS samples.
+H10 therefore remains unresolved; this is not a promotion, falsification, or cross-study confirmation.
+
+Recommended next move: either pause H10 after this complete but non-arbitrating q027 pass, or run a narrower GLASS-specific clinical timing audit that asks whether SBS11-high status is separable from recurrence/progression and TMZ episode.
+Do not collapse this measured-signature result back into the t207-t209 clinical-label denominator arm.
+A broader search for a second q027 substrate would need to be a new candidate-discovery task, since t210 audited only the five treatment-signature-plausible cohorts named in the plan rather than all 198 configured studies.
+
+## Update - t211 q027 Substrate Discovery
+
+The broader q027 follow-up is now tracked and planned.
+
+| Prior recommendation | Current status | Evidence |
+|---|---|---|
+| File a new candidate-discovery task for a second q027 substrate | Done | `task:t211` now tracks a configured-study search for additional SBS11/SBS31/SBS35/SBS87-evaluable primary patient cohorts. |
+| Fix the scope before any expensive full-config assignment run | Done | `doc/plans/2026-06-01-t211-q027-substrate-discovery.md` defines a cheap metadata/count triage before targeted q027 assignment. |
+
+t211 deliberately does not reinterpret the t210 GLASS result.
+It asks only whether the full configured study universe contains another patient cohort with enough count-floor-passing samples, retained comparator support, and a therapy-signature expectation to make an expanded q027 rerun worth doing.
+
+Recommended next move: implement the t211 audit extension in `code/scripts/audit_q027_therapy_signature_substrate.py`.
+The first output should be a ranked feasibility report, not a new H10 verdict.
+
+## Update - t211 q027 Substrate Discovery Complete
+
+The broad q027 substrate-discovery audit has now run.
+
+| Prior recommendation | Current status | Evidence |
+|---|---|---|
+| Implement the t211 audit extension | Done | `code/scripts/audit_q027_therapy_signature_substrate.py` now supports `--all-config-discovery`, wildcard lookup scanning, explicit treatment-signature expectation tiers, sample-ID normalization, and count-error reporting for broad discovery. |
+| Run the configured-study discovery audit | Done | `results/q027-substrate-discovery-2026-06-01/therapy_signature_substrate_feasibility.tsv` has 684 study/cancer strata. |
+| Write the t211 interpretation | Done | `doc/interpretations/2026-06-01-t211-q027-substrate-discovery.md`. |
+
+The result is negative for readiness, not negative for H10 biology.
+Only `difg_glass_2019` passes the q027 discovery gate; no second primary patient cohort in the configured study universe has enough explicit SBS11/SBS31/SBS35/SBS87 expectation, count-floor-passing samples, and retained comparator support.
+
+Recommended next move: do not run an expanded q027 impact target yet.
+If staying on H10, the next useful task is a GLASS-specific timing audit: test whether SBS11-high status is separable from recurrence/progression and TMZ episode inside `difg_glass_2019`.

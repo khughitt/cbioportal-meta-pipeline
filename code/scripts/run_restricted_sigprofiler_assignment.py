@@ -258,6 +258,37 @@ def expand_signature_aliases(
     return unique
 
 
+def combine_requested_signatures(
+    *, lookup_signatures: list[str], extra_signatures: list[str] | tuple[str, ...]
+) -> list[str]:
+    """Append run-specific extra signatures to the cancer-family restricted set."""
+    combined = [*lookup_signatures, *list(extra_signatures)]
+    return list(dict.fromkeys(combined))
+
+
+def assert_requested_signatures_present(
+    *,
+    requested_signatures: list[str],
+    reference_columns: list[str],
+    lookup_key: str,
+) -> None:
+    """Fail loudly if any explicitly requested signature is absent from the reference."""
+    reference_set = set(reference_columns)
+    missing = [
+        signature
+        for signature in requested_signatures
+        if not any(
+            alias in reference_set
+            for alias in SPLIT_SIGNATURE_ALIASES.get(signature, [signature])
+        )
+    ]
+    if missing:
+        raise ValueError(
+            f"Requested signatures are absent from the loaded COSMIC reference for lookup_key={lookup_key!r}: "
+            f"{missing}. Do not silently proceed with absorbed signatures."
+        )
+
+
 def default_signature_database_path(
     *, genome_build: str, cosmic_version: str, exome: bool
 ) -> Path:
@@ -741,6 +772,7 @@ def build_assignment_table_for_study(  # noqa: PLR0913
     min_sbs_count_wes: int = DEFAULT_MIN_SBS_COUNT_WES,
     min_sbs_count_matched_normal: int = DEFAULT_MIN_SBS_COUNT_MATCHED_NORMAL,
     signature_audit_out: list[pd.DataFrame] | None = None,
+    extra_signatures: list[str] | tuple[str, ...] = (),
 ) -> pd.DataFrame:
     mutations = pd.read_feather(mutations_path)
     samples = pd.read_feather(samples_path)
@@ -775,10 +807,19 @@ def build_assignment_table_for_study(  # noqa: PLR0913
             raise ValueError(
                 f"No signature lookup entry for normalized key {lookup_key!r}"
             )
+        requested_signatures = combine_requested_signatures(
+            lookup_signatures=lookup[lookup_key],
+            extra_signatures=extra_signatures,
+        )
+        assert_requested_signatures_present(
+            requested_signatures=requested_signatures,
+            reference_columns=reference_columns,
+            lookup_key=lookup_key,
+        )
 
         audit_frames.append(
             audit_signature_presence(
-                requested_signatures=lookup[lookup_key],
+                requested_signatures=requested_signatures,
                 reference_columns=reference_columns,
                 lookup_key=lookup_key,
             )
@@ -805,7 +846,7 @@ def build_assignment_table_for_study(  # noqa: PLR0913
         matrix.to_csv(matrix_path, sep="\t", index=False)
         write_restricted_signature_database(
             reference_path=reference_path,
-            requested_signatures=lookup[lookup_key],
+            requested_signatures=requested_signatures,
             output_path=signature_db_path,
         )
         run_sigprofiler_assignment(
@@ -905,6 +946,9 @@ def main() -> None:
     allowed_lookup_keys = (
         set(snek.config.get("signature_assignment_lookup_keys", [])) or None
     )
+    extra_signatures = list(
+        snek.config.get("signature_assignment_extra_signatures", [])
+    )
 
     # t178: per-study variant-caller provenance + matched-normal flags.
     multi_caller_consensus_studies = set(
@@ -959,6 +1003,7 @@ def main() -> None:
             min_sbs_count_wes=min_sbs_count_wes,
             min_sbs_count_matched_normal=min_sbs_count_matched_normal,
             signature_audit_out=signature_audit_out,
+            extra_signatures=extra_signatures,
         )
         out.to_feather(output_path)
 

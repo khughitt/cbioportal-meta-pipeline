@@ -126,18 +126,6 @@ Gap surfaced in t059: TET2 solid-tumor biology literature is thinner than ASXL1.
 
 Surfaced by t100 PoC run 2026-04-17: create_correlation_matrices for brca_tcga_pan_can_atlas_2018 (~1090 samples x ~20k genes) took ~55 min; same expected for ucec_tcga and skcm_tcga. Panel studies (MSK-IMPACT ~341 genes) are fast. Script computes patient_mut.T.corr() which is O(n_genes^2) in both time and memory. Options: (a) use numpy.corrcoef on float32 matrix (typically 5-10x faster than pandas corr), (b) restrict to the top-K variance genes before correlation (add config key max_genes_for_corr default 5000), (c) sparse-aware correlation via sklearn.metrics.pairwise when count matrix is sparse (>95% zeros typical for mutation count matrices). Recommend starting with (a)+(b) and only falling back to (c) if still too slow. Ref: code/scripts/create_correlation_matrices.py:27 (patient_mut.T.corr()).
 
-## [t106] Replace output-path provenance with version stamps in annotate_* scripts (bailey2018_source, cgc_source, sanchez_vega_source)
-- priority: P2
-- status: proposed
-- aspects: [software-development]
-- related: [task:t100, interpretation:2026-04-17-poc-run]
-- group: pipeline
-- created: 2026-04-17
-
-Surfaced by t100 PoC 2026-04-17: the bailey2018_source / cgc_source / sanchez_vega_source columns in gene_cancer_study_annotated.feather and gene_cancer_study_ratio_annotated.feather contain values like 'results/poc-2026-04-17/metadata/bailey2018_drivers.feather' — i.e. the output file path from that specific run. They should be version stamps (e.g. 'bailey2018_v1_2018-08-13_cell' or the file's content hash). Per-run paths change every run, break reproducibility, and leak out_dir into a downstream data file. Fix: add module-level VERSION constants to code/scripts/process_bailey2018_drivers.py, process_cgc.py, process_sanchez_vega_pathways.py and have annotate.py / annotate_ch.py read those constants rather than writing snakemake.input[N] path strings. Evidence: doc/interpretations/2026-04-17-poc-run.md Finding 7, bug table row 7.
-
-STILL OPEN — docstring is misleading (backlog review 2026-06-01): annotate.py:28 calls `bailey2018_source` a "version-stamp (input file path)", but annotate.py:76 writes `str(bailey_path)` where `bailey_path = Path(snek.input[1])` resolves to `out_dir/metadata/bailey2018_drivers.feather` (Snakefile rule `process_bailey2018_drivers`, line ~344) — i.e. STILL the per-run output path this task exists to eliminate. Same pattern for `cgc_source` / `sanchez_vega_source`. The process scripts already emit stable content tags ("Bailey2018", "COSMIC-CGC", "SanchezVega2018") in their own `source` columns. FIX: promote those to module-level VERSION constants (incl. release date / content hash) and have annotate.py write the constant — not `snek.input[N]` — and correct the docstring.
-
 ## [t107] Backport clustering.* defaults to main configs (config-10k-genes.yml, config-full.yml, config-pan-cancer.yml) OR make cluster rules opt-out when missing
 - priority: P2
 - status: proposed

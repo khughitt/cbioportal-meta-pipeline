@@ -7,7 +7,8 @@ annotate.py
 Unified overlay-annotator for the cross-study gene x cancer mutation-frequency tables.
 Applies all available reference-catalog overlays (Bailey 2018 drivers + COSMIC CGC +
 Sanchez-Vega 2018 pathways) in one pass. Replaces the earlier chained `annotate_drivers.py`
-pattern.
+pattern. The overlay logic lives in `annotate_lib.py` (importable + unit-tested); this file
+is the thin Snakemake IO glue.
 
 Table-shape-agnostic: works on both the count table (`gene_cancer_study.feather`) and the
 ratio table (`gene_cancer_study_ratio.feather`). Both have `(symbol, cancer_type)` keys; the
@@ -25,14 +26,15 @@ Added columns
 -------------
 - `bailey2018_driver`      (bool) — True if (gene, cancer_type) in Bailey 2018 OR gene is a
                                     pan-cancer Bailey driver.
-- `bailey2018_source`      (str)  — version-stamp (input file path).
+- `bailey2018_source`      (str)  — version stamp read from the Bailey feather's `source`
+                                    column (e.g. "Bailey2018"), NOT a per-run path.
 - `cgc_tier_1`             (bool)
 - `cgc_tier_2`             (bool)
 - `cgc_role_in_cancer`     (str)  — "oncogene", "TSG", "fusion" etc. (raw CGC value).
-- `cgc_source`             (str)
+- `cgc_source`             (str)  — version stamp from the CGC feather's `source` column.
 - `sanchez_vega_pathway`   (str)  — comma-separated if gene is in multiple pathways.
 - `sanchez_vega_og_tsg`    (str)  — SV's OG/TSG call (from the first pathway sheet for the gene).
-- `sanchez_vega_source`    (str)
+- `sanchez_vega_source`    (str)  — version stamp from the pathways feather's `source` column.
 
 Notes
 -----
@@ -48,59 +50,16 @@ from pathlib import Path
 
 import pandas as pd
 
+from annotate_lib import apply_overlays
+
 snek = snakemake  # type: ignore[name-defined]  # noqa: F821
 
-freq_path = Path(snek.input[0])
-bailey_path = Path(snek.input[1])
-cgc_path = Path(snek.input[2])
-pathway_path = Path(snek.input[3])
+freq = pd.read_feather(Path(snek.input[0]))
+bailey = pd.read_feather(Path(snek.input[1]))
+cgc = pd.read_feather(Path(snek.input[2]))
+pathways = pd.read_feather(Path(snek.input[3]))
 
-freq = pd.read_feather(freq_path)
-bailey = pd.read_feather(bailey_path)
-cgc = pd.read_feather(cgc_path)
-pathways = pd.read_feather(pathway_path)
-
-gene_col = "symbol" if "symbol" in freq.columns else "gene"
-cancer_col = "cancer_type" if "cancer_type" in freq.columns else "cancer"
-
-g_upper = freq[gene_col].astype(str).str.upper()
-c_upper = freq[cancer_col].astype(str).str.upper()
-
-# --- Bailey 2018 overlay -----------------------------------------------------
-driver_pairs = set(
-    (bailey["gene"].str.upper() + "|" + bailey["cancer_type"].str.upper()).tolist()
-)
-pancan_drivers = set(bailey.loc[bailey["cancer_type"] == "PANCAN", "gene"].str.upper())
-keys = g_upper + "|" + c_upper
-freq["bailey2018_driver"] = keys.isin(driver_pairs) | g_upper.isin(pancan_drivers)
-freq["bailey2018_source"] = str(bailey_path)
-
-# --- COSMIC CGC overlay ------------------------------------------------------
-cgc_by_gene = cgc.set_index("gene")
-freq["cgc_tier_1"] = g_upper.isin(cgc_by_gene.index[cgc_by_gene["tier"] == 1])
-freq["cgc_tier_2"] = g_upper.isin(cgc_by_gene.index[cgc_by_gene["tier"] == 2])
-freq["cgc_role_in_cancer"] = (
-    g_upper.map(cgc_by_gene["role_in_cancer"].to_dict()).fillna("").astype(str)
-)
-freq["cgc_source"] = str(cgc_path)
-
-# --- Sanchez-Vega 2018 pathway overlay ---------------------------------------
-# A gene can appear in multiple pathways; concatenate them with commas.
-pathway_by_gene = (
-    pathways.groupby("gene")["pathway"]
-    .apply(lambda s: ",".join(sorted(set(s))))
-    .to_dict()
-)
-# OG/TSG call per gene — take the first non-empty value across pathway rows for the same gene.
-og_tsg_by_gene = (
-    pathways.loc[pathways["og_tsg"].astype(str).str.len() > 0]
-    .drop_duplicates(subset=["gene"])
-    .set_index("gene")["og_tsg"]
-    .to_dict()
-)
-freq["sanchez_vega_pathway"] = g_upper.map(pathway_by_gene).fillna("").astype(str)
-freq["sanchez_vega_og_tsg"] = g_upper.map(og_tsg_by_gene).fillna("").astype(str)
-freq["sanchez_vega_source"] = str(pathway_path)
+freq = apply_overlays(freq, bailey, cgc, pathways)
 
 freq.to_feather(snek.output[0])
 

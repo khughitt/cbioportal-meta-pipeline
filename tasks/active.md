@@ -116,25 +116,6 @@ Surfaced as a real gap in t043: no pan-cancer benchmark at the pathway rollup le
 
 Gap surfaced in t059: TET2 solid-tumor biology literature is thinner than ASXL1. ASXL1 has clear MSI-CRC polyG-indel + CRPC / HNSCC / breast evidence (Katoh 2013). TET2 solid-tumor papers cluster around melanoma (catalytic-domain mutations), glioma (IDH-pathway interaction — TET2 is the IDH-pathway target, so IDH-mutant gliomas carry functional TET2 loss without TET2 mutation), and breast. Focused OpenAlex + PubMed search. Produces doc/searches/YYYY-MM-DD-tet2-solid-tumor-biology.md.
 
-## [t102] Audit two single-word commits on main (a2ce3fc save, c0f48af data) and either amend or document
-- priority: P3
-- status: proposed
-- aspects: [software-development]
-- group: meta
-- created: 2026-04-17
-
-Two recent main-branch commits have single-word messages ('save', 'data'). Terse messages risk losing context for future sessions and blur the t081 execution history. Run: git show a2ce3fc c0f48af (diffs + stats). If the content is meaningful (non-trivial file additions, config changes), write one short note in doc/meta/ describing what landed and why. If the content is trivially recoverable from the surrounding commits, document the rationale inline in this task's close note. Do NOT amend commits already on main unless explicitly approved — git history on main is shared state.
-
-## [t103] Promote closed or partially-closed open questions from topic files to doc/questions/
-- priority: P2
-- status: proposed
-- aspects: [computational-analysis]
-- related: [topic:tumor-mutational-burden, topic:clonal-hematopoiesis-contamination, topic:targeted-panel-sequencing-bias, topic:pan-cancer-interpretive-frames, task:t095, task:t097]
-- group: questions
-- created: 2026-04-17
-
-doc/questions/ is still empty; science-tool project index returns rows: []. Five open methodological questions identified in the 2026-04-14 analysis live inside topic files only and are invisible to the project index. At least two are now answered by landed work: (a) 'per-histology vs universal hypermutator cutoff' — resolved by t097 emitting both Campbell-absolute and Samstein-relative flags; (b) 'MSI-status ingestion policy' — resolved by t095's msi_normalization.py. Others (cross-panel intersection vs callability; CH filter granularity; pathway-database choice) remain open. For each: write a doc/questions/*.md entry using the science template with (question, evidence, status: open|resolved, resolving-task-or-commit). Makes the resolution history discoverable via science-tool project index.
-
 ## [t104] Optimize create_correlation_matrices.py: gene x gene corr scales O(n_genes^2) and stalls on whole-exome studies
 - priority: P2
 - status: proposed
@@ -164,6 +145,8 @@ Surfaced by t100 PoC 2026-04-17: the bailey2018_source / cgc_source / sanchez_ve
 - created: 2026-04-17
 
 Surfaced by t100 PoC 2026-04-17: cluster_genes.py and cluster_cancer_types.py require config['clustering']['gene']['k'], ['gene_min_mutations'], ['cancer_min_mutations'], ['random_seed'] (and mirror keys under ['cancer']). No shipped config prior to config-poc.yml contained these keys. This means every run of the main pipeline prior to this PoC would have crashed at the cluster rules if rule all was fully evaluated — the pre-t081 runs presumably did not have cluster rules in their rule all target list. Fix: either (a) backport the default clustering sub-tree from config-poc.yml to the 3 main configs, or (b) make the cluster scripts fall back to sensible defaults when the key is absent (with a warning). Option (a) is more explicit; option (b) is more forgiving.
+
+PARTIAL (backlog review 2026-06-01): `config-full.yml` now carries the `clustering:` block (gene/cancer k, min_mutations, random_seed); `config-10k-genes.yml` and `config-pan-cancer.yml` still lack it, and `cluster_genes.py`/`cluster_cancer_types.py` still hard-require the key (KeyError if absent). Remaining work: backport the block to the two missing configs, or add the script-level fallback.
 
 ## [t108] Investigate is_hypermutator_relative reporting ~45% for BRCA (Samstein top-20% should cap at ~20%)
 - priority: P2
@@ -471,29 +454,6 @@ The project's t077 meta-analysis pipeline (`run_gene_cancer_meta_analysis.R`) is
 
 **Cross-references**: this task is the long-term destination; a short-term split was applied 2026-04-25 to unblock t131 (see commit history).
 
-## [t140] Adopt 2026-04-25 Science P1 conventions
-- priority: P3
-- status: proposed
-- aspects: [project-conventions]
-- group: meta
-- created: 2026-04-25
-
-cbioportal already converges on the canonical Science conventions established by the 2026-04-25 P1 rollout (`science/docs/plans/2026-04-25-conventions-audit-p1-rollout.md`). All five script-driven shape rules in `science/scripts/migrate_downstream_conventions.py` produce zero changes against this project (verified 2026-04-25):
-
-- report-id-prefix: 0
-- synthesis-type-mm30: 0
-- synthesis-type-pl-emergent-threads: 0
-- synthesis-report-kind-pl-hyp: 0
-- pre-registration-type: 0
-- natural-systems-pre-reg-frontmatter: 0 (report-only)
-
-Pending adoption tracks:
-- Tasks-archive (Plan #6): current `tasks/active.md` lag = 0; nothing to migrate. When `science-tool tasks archive` ships, no action needed.
-- Validator MAV update (Plan #7 + MAV): pending upstream merge. Will pull canonical `validate.sh` via `science-tool project artifacts update validate.sh` once available.
-- Code -> task back-link (Plan #9): already adopting Pattern 1 (filename tag) for 3 marimo notebooks under `code/notebooks/`. No action needed.
-
-Surfaced by: 2026-04-25 downstream conventions migration cycle (orchestrator agent).
-
 ## [t142] Speed up create_correlation_matrices.py for large studies
 - priority: P3
 - status: proposed
@@ -692,16 +652,6 @@ Acceptance: `doc/interpretations/<date>-q017-cross-study-saturation-curve.md` wi
 
 Big-picture validator flagged t131 as orphan because its frontmatter cites question:q011 in source_refs but not in related:. Add hypothesis:h02-cross-study-ranking-divergence-is-structured to the related: list so the resolver picks it up. Pure metadata fix, no analysis change. Acceptance: validator no longer reports t131 as orphan.
 
-## [t160] Add missing YAML frontmatter to t145 mean-inclusive-inflation interpretation
-- priority: P2
-- status: proposed
-- aspects: [computational-analysis]
-- related: [interpretation:2026-04-27-t145-mean-inclusive-inflation-diagnostic, hypothesis:h02-cross-study-ranking-divergence-is-structured, meta:big-picture-2026-04-28]
-- group: spine-hygiene
-- created: 2026-04-28
-
-The t145 diagnostic file currently has no YAML frontmatter at all, leaving it orphaned by absence rather than choice. Add canonical frontmatter (id, title, related: [task:t145, hypothesis:h02-cross-study-ranking-divergence-is-structured, interpretation:2026-04-26-t131-full-pan-cancer-dndscv-run], prior_interpretations: [2026-04-26-t131-full-pan-cancer-dndscv-run, 2026-04-27-t144-tiebreaker-fix-rerun]). Acceptance: validator picks up t145 in the h02 bundle.
-
 ## [t161] Absorb orphan questions q014/q016/q017 into hypothesis spine
 - priority: P2
 - status: proposed
@@ -740,16 +690,6 @@ ad-hoc reruns.
 
 Run /science:add-hypothesis to formalize a candidate sub-hypothesis (proposed id h07) absorbing q009, t123, and t126. Working frame: 'a well-powered WGS-based topographic or signature-based diagnostic can directly flag studies with excess normal-tissue contamination, independently of tumor-purity proxies'. Distinguished from h01 because h01 targets correction whereas h07 targets *detection* — a per-study quality flag with a pre-registered threshold (e.g. SBS1 LRR-bias delta, or SBS1 fraction excess vs the matched-cohort pool). Promotion gate: any one WGS cohort added (Hartwig HMF or PCAWG follow-on). Acceptance: specs/hypotheses/h07-*.md with phase: candidate, status: proposed, source_refs to Tomkova 2018 / Sherman 2024, and the three promotion criteria stated.
 
-## [t165] Draft candidate hypothesis h08: pan-cancer aggregator choice materially changes q=0 ranking (absorbs q015)
-- priority: P2
-- status: proposed
-- aspects: [computational-analysis]
-- related: [question:q015-pan-cancer-aggregator-choice, hypothesis:h02-cross-study-ranking-divergence-is-structured, task:t155, interpretation:2026-04-26-t131-full-pan-cancer-dndscv-run, interpretation:2026-04-27-t144-tiebreaker-fix-rerun, meta:big-picture-2026-04-28]
-- group: hypothesis-spine
-- created: 2026-04-28
-
-Run /science:add-hypothesis to formalize a candidate sub-hypothesis (proposed id h08) absorbing q015 and the t131/t144/t145 chain. Working frame: 'in the q=0 BH-FDR floor regime that affects ~829 genes in the pan-cancer dNdScv ranking, the choice of aggregator (lexicographic vs Stouffer vs Fisher vs inverse-variance vs Bayesian hierarchical) materially changes the top-N gene set and at least one aggregator dominates under leave-one-cancer-out stability'. Methodological in flavor but project-specific in scale (829 genes at the floor; tiebreaker changed 12/15 top-15 identities, t144). Promotion gate: t155 produces a stability-vs-aggregator panel. Acceptance: specs/hypotheses/h08-*.md with phase: candidate, status: proposed, propositions tied to a concrete aggregator-comparison protocol.
-
 ## [t166] Acquire and integrate Hartwig HMF metastatic WGS cohort (~6,000 tumors)
 - priority: P1
 - status: proposed
@@ -781,7 +721,7 @@ PCAWG (~2,800 tumors, 38 cancer types, fully WGS, matched normals, harmonized Pa
 Genomics England 100K Genomes Project: ~70,000 cancer WGS samples + matched germline, harmonized through the Cancer Programme pipeline. Largest single WGS cancer cohort in the world. Motivations: (1) h02 saturation curve (q017, t158): testing whether top-N ranking stability saturates at the WGS-scale becomes possible only with cohorts in the 50k+ range; cBioPortal+GENIE+Hartwig+PCAWG combined still does not reach this scale uniformly. (2) h05 healthy somatic background: GEL holds matched-germline WGS, which is the closest existing approximation to a population-level normal somatic-mutation reference at scale. Access barrier: UK-only DAC; non-UK researchers must collaborate with a UK-based institution (Genomics England Research Environment is a secure analysis platform — cannot extract raw data). This task is exploratory: file as 'investigate' rather than 'integrate', because the access friction is high and the pipeline would need to run inside the GE Research Environment rather than ingesting locally. Acceptance: a one-page memo at doc/feasibility/2026-XX-genomics-england-feasibility.md with go/no-go recommendation, contingent partnership candidates, and an estimate of integration cost.
 
 ## [t169] Acquire GTEx v10 + Yizhak2019 / Rockweiler2023 healthy-tissue somatic call sets for h05 atlas
-- priority: P1
+- priority: P3
 - status: blocked
 - aspects: [computational-analysis]
 - related: [hypothesis:h05-healthy-somatic-background-atlas, hypothesis:h01-non-tumor-signal-contamination, question:q007-cross-tissue-somatic-mutation-rate-variation-as-null-model, task:t150, task:t151, task:t111, topic:normal-tissue-mutation-atlas, meta:big-picture-2026-04-28]
@@ -834,19 +774,6 @@ The current ingest uses MC3 v0.2.8 PUBLIC (PASS-only). The controlled-access MC3
 
 Follow-up from MM30 hyperdiploidy mechanism discussion. Test whether common pan-cancer gain arms such as 20q, 7p, 8q, 1q, 7q, and 20p and MM hyperdiploidy chromosomes 3, 5, 7, 9, 11, 15, 19, and 21 are enriched for known cancer drivers or oncogene-dosage targets. Use data/cosmic_cgc.tsv, data/bailey2018_table_s1.tsv, and GRCh37/GRCh38 gene annotations. Compare driver density and aggregate Bailey consensus/frequency scores per arm/chromosome while controlling for gene count and arm size. Deliverable: doc/interpretations/<date>-aneuploidy-driver-dosage-comparison.md with tables separating generic pan-cancer gain targets from plasma-cell/MM-HD-specific dosage-package candidates.
 
-## [t180] Specify APOBEC (A3A+A3B joint) + MMR-omikli covariates for h08 Arm C
-- priority: P2
-- status: proposed
-- aspects: [causal-modeling, computational-analysis]
-- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, method:h08-agnostic-association-model, question:q022-apobec-a3a-a3b-joint-expression-and-mmr-omikli]
-- group: hypothesis-h08
-- created: 2026-05-31
-
-Replace single-paralog APOBEC covariate with a joint A3A+A3B expression score; add MMR-expression
-as a positive co-predictor of SBS2/13 within MSS-restricted strata (MMR-omikli coupling); stratify
-APOBEC analysis by assay type (WGS/WES/panel) for coding-context inflation. Sources:
-paper:Carpenter2023, paper:MasPonte2020.
-
 ## [t183] Add ERCC2 + stop-gain-enrichment exploratory cross-checks to h08
 - priority: P3
 - status: proposed
@@ -859,33 +786,6 @@ Two exploratory secondary checks: (1) ERCC2 somatic-mutation status as a bladder
 positive-control covariate targeting SBS5 (paper:Kim2016 ground truth); (2) after any confirmed
 SBS4/SBS13 hit, verify elevated nonsense burden in the Adler2023 protein-truncation gene set via
 the existing Bailey2018 driver overlay. Sources: paper:Kim2016, paper:Adler2023.
-
-## [t185] commons-hygiene: fix pre-existing doc/datasets dataset-promotion validation errors
-- priority: P3
-- status: proposed
-- aspects: [software-development]
-- group: commons-hygiene
-- created: 2026-05-31
-
-`science validate` reports ~57 pre-existing errors, all `dataset-promotion.required-field-missing`
-and `dataset-promotion.datapackage-unresolved` on `doc/datasets/*.md` (e.g. aacr-genie, cbioportal,
-cosmic, gtex, msk-*, pcawg, tcga*). Populate the required promotion fields / resolve datapackage
-refs so the dataset entities validate. Unrelated to the 2026-05-31 paper batch; surfaced while
-finishing commons promotion.
-
-## [t186] commons-hygiene: finish topic datasets-field cleanup so topic promotion passes
-- priority: P3
-- status: proposed
-- aspects: [software-development]
-- related: [topic:normal-tissue-mutation-atlas, topic:pre-cancer-prevalence-and-impact, topic:signatures-expression-microenvironment]
-- group: commons-hygiene
-- created: 2026-05-31
-
-Several topics carried free-text `datasets:` frontmatter (not `^dataset:` refs); fixed for
-normal-tissue-mutation-atlas, signature-decomposition-unmatched-normal, pre-cancer-prevalence-and-impact,
-and signatures-expression-microenvironment this session. Verify all 28 topics pass
-`uv run --frozen science commons promote topic --from cbioportal` (dry-run) and convert any
-remaining free-text dataset names to `dataset:` refs or relocate them to a body section.
 
 ## [t187] commons-hygiene: re-run commons promotion after promote-paper tool bug is fixed
 - priority: P3
@@ -935,3 +835,13 @@ redefined indel taxonomy (paper:Koh2025) and multimodal catalogue (paper:FerrerT
 Evaluate adding copy-number and doublet-base-substitution (DBS) signatures (paper:Everall2026,
 paper:Steele2022). Blocked on CNA ingestion (cross-ref t055 — no CNA modality in the pipeline yet);
 DBS is feasible on WGS/WES substrates sooner. Forward-looking.
+
+## [t212] Cross-study signature-exposure reproducibility pass on existing per-study SBS assignments
+- priority: P2
+- status: proposed
+- aspects: [computational-analysis]
+- related: [hypothesis:h09-cross-study-signature-exposure-reproducibility, method:h08-agnostic-association-model, question:q018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross]
+- group: hypothesis-h09
+- created: 2026-06-01
+
+First concrete, data-unblocked test of h09: using per-sample SBS exposures already on disk (run_restricted_sigprofiler_assignment outputs), compare per-cancer-type signature-exposure profiles across independent cBioPortal studies and quantify whether divergences track technical batch (caller/panel/treatment per t178/t179 provenance flags) vs biology. h09 currently has zero tracked tasks (surfaced by 2026-06-01 backlog review). Deliverable: doc/interpretations/<date>-h09-cross-study-exposure-reproducibility.md with a per-cancer reproducibility metric and a batch-vs-biology attribution.

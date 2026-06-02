@@ -1,3 +1,16 @@
+---
+id: "interpretation:2026-05-31-t197-mc3-7strata-sbs-refit"
+type: "interpretation"
+status: "active"
+source_refs:
+  - "task:t197"
+title: "t197 full-MC3 per-sample SBS refit across the 7 h08 arm strata (COSMIC v3.4, t178/t179-hardened)"
+date: "2026-05-31"
+related:
+  - "task:t197"
+  - "hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and"
+  - "question:q018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross"
+---
 # t197 — full-MC3 per-sample SBS refit across the 7 h08 arm strata
 
 Date: 2026-05-31

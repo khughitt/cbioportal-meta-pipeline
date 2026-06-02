@@ -1,3 +1,16 @@
+---
+id: "interpretation:2026-06-01-t181-treatment-exposure-stratum"
+type: "interpretation"
+status: "active"
+source_refs:
+  - "task:t181"
+title: "t181 treatment-exposure stratum for h08 — MC3/TCGA carries no study-level treated confound; 55 patient-level neoadjuvant positives"
+date: "2026-06-01"
+related:
+  - "task:t181"
+  - "hypothesis:h10-treatment-induced-signature-frequency-contamination"
+  - "question:q024-treatment-exposed-cohort-chemotherapy-signature"
+---
 # t181 — treatment-exposure stratum for h08
 
 Date: 2026-06-01

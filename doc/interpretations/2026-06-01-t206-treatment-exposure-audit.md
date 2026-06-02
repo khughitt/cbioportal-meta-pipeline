@@ -1,3 +1,16 @@
+---
+id: "interpretation:2026-06-01-t206-treatment-exposure-audit"
+type: "interpretation"
+status: "active"
+source_refs:
+  - "task:t206"
+title: "t206 H10 treatment-exposure audit manual review — 167 non-TCGA studies; layered broad vs mutagenic-treatment label design"
+date: "2026-06-01"
+related:
+  - "task:t206"
+  - "hypothesis:h10-treatment-induced-signature-frequency-contamination"
+  - "question:q024-treatment-exposed-cohort-chemotherapy-signature"
+---
 # t206 — H10 treatment-exposure audit manual review
 
 Date: 2026-06-01

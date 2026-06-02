@@ -1,3 +1,16 @@
+---
+id: "interpretation:2026-04-29-t173-dndscv-loso-protocol"
+type: "interpretation"
+status: "active"
+source_refs:
+  - "task:t173"
+title: "t173 dNdScv LOSO protocol status — harness and holdout design for the decisive replication test"
+date: "2026-04-29"
+related:
+  - "task:t173"
+  - "hypothesis:h02-cross-study-ranking-divergence-is-structured"
+  - "question:q013-cross-study-replication-rate"
+---
 # t173 dNdScv LOSO protocol status
 
 Date: 2026-04-29

@@ -3,98 +3,209 @@ id: "synthesis:rollup"
 type: "synthesis"
 title: "Project synthesis - cbioportal"
 report_kind: "synthesis-rollup"
-generated_at: "2026-04-28T03:09:06Z"
-source_commit: "c1c6b1f29eef8326e3efde948df540ecc23c95ed"
+generated_at: "2026-06-02T09:52:22Z"
+source_commit: "037f0ab2d3c84ecc56bebd843e361c1a9dfbfa66"
 synthesized_from:
   - hypothesis: "hypothesis:h01-non-tumor-signal-contamination"
     file: "doc/reports/synthesis/h01-non-tumor-signal-contamination.md"
-    sha: "e367c5d95d1f23c74cc49854be342b60ef523e18"
+    sha: "469e4ffe80898f947e27df685cf62b76f630fb64"
   - hypothesis: "hypothesis:h02-cross-study-ranking-divergence-is-structured"
     file: "doc/reports/synthesis/h02-cross-study-ranking-divergence-is-structured.md"
-    sha: "4a5ab7402a77527981a6a799964ca5287224aebf"
+    sha: "ae4d982f8891850c7b8a85d26e2dd578cf780d7a"
   - hypothesis: "hypothesis:h03-gene-length-confounds-literature-attention"
     file: "doc/reports/synthesis/h03-gene-length-confounds-literature-attention.md"
-    sha: "b6325b216fda59fe206224d8b02a210aa990cbf3"
+    sha: "f41d7ba71a7e6325415f90d6bbdab66b20dfd17b"
   - hypothesis: "hypothesis:h04-mhn-pathway-ordering"
     file: "doc/reports/synthesis/h04-mhn-pathway-ordering.md"
-    sha: "7c0fc6da5091e9dd3073b062403f0b51f42b9b8d"
+    sha: "b4eaa8e43b8aa7c1585e2e9cfbcc27f8e7ff9ef5"
   - hypothesis: "hypothesis:h05-healthy-somatic-background-atlas"
     file: "doc/reports/synthesis/h05-healthy-somatic-background-atlas.md"
-    sha: "566d645b7fbe4793ad5258b04fc74bca70a51339"
+    sha: "27ac266f10fe2f640d2bea058927126a4f638669"
   - hypothesis: "hypothesis:h06-pre-malignant-n-minus-1-driver-carriage"
     file: "doc/reports/synthesis/h06-pre-malignant-n-minus-1-driver-carriage.md"
-    sha: "ef0f16245645ca463da0bb99c8a4a253135a15e7"
-emergent_threads_sha: "a11881f43b9732055f94603ad02645006178ed7a"
-orphan_question_count: 5
+    sha: "2b61650be04770ee0f9c2b9768d0a42f8199f60c"
+  - hypothesis: "hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and"
+    file: "doc/reports/synthesis/h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and.md"
+    sha: "1867db7fb064ed7036e12b186382d062a309f172"
+  - hypothesis: "hypothesis:h09-cross-study-signature-exposure-reproducibility"
+    file: "doc/reports/synthesis/h09-cross-study-signature-exposure-reproducibility.md"
+    sha: "68cbb17a183481e363a89631881604ff718a10f1"
+  - hypothesis: "hypothesis:h10-treatment-induced-signature-frequency-contamination"
+    file: "doc/reports/synthesis/h10-treatment-induced-signature-frequency-contamination.md"
+    sha: "134bc793e5797593b75f0837ba08bc62dadc3b41"
+  - hypothesis: "hypothesis:h11-joint-indel-sbs-improves-aetiology-discrimination"
+    file: "doc/reports/synthesis/h11-joint-indel-sbs-improves-aetiology-discrimination.md"
+    sha: "4808224f7b283be3f6737a7fa11299dcea387f07"
+emergent_threads_sha: "fa9a408ea27a3eca9b499c375626ae34b8dc3450"
+orphan_question_count: 1
 ---
 
 # Project synthesis — cbioportal
 
 ## TL;DR
 
-- The active spine is three hypotheses: h01 (non-tumor contamination is detectable and partially correctable), h02 (cross-study ranking divergence is structured, not random), and h03 (gene length confounds literature attention beyond mutation-count mediation). Three additional hypotheses (h04 MHN ordering, h05 healthy somatic background atlas, h06 pre-malignant n-1 driver carriage) sit in candidate phase.
-- The strongest empirical results to date sit under h02: the t131 → t144 → t145 dNdScv chain produced 62/100 Bailey driver recovery at K=100, with TP53/KRAS/NRAS/PIK3CA/FBXW7/PTEN/RB1 occupying ranks 1–7, and confirmed that raw and dNdScv rankings are nearly uncorrelated (ρ = +0.043) while length-adjusted and dNdScv rankings are anti-correlated (ρ = −0.468) — divergence is systematic, not random.
-- h01 has infrastructure ready (t111 normal-tissue spectra pipeline; 56 per-tissue Li 2021 reference spectra) but no decisive contamination-magnitude estimate yet; one direct test (t110 BRCA SBS1/SBS5 matched-vs-unmatched) returned an opposite-sign verdict and one signature-bias route (t126 SBS1 LRR-bias) was deferred under a pre-registered termination rule due to panel coverage limits.
-- The largest unresolved data-quality issue is mean_inclusive inflation (t145) propagating from `create_combined_gene_cancer_freq_table` forward; the raw-frequency and length-adjusted comparison panels cannot be reported externally until downstream feathers are regenerated.
-- Five questions (q009, q014, q015, q016, q017) and eight interpretations sit outside the hypothesis spine; the emergent-threads analysis surfaces two candidate hypothesis frames (signature-based contamination QC; pan-cancer aggregator methodology) and proposes folding q014/q016 into h02/h03 rather than spawning new top-level nodes.
+- **One proposition is decisively confirmed.** Cross-study gene rankings are structured, not
+  random: dNdScv recovers 62/100 Bailey 2018 drivers (vs zero for raw and length-adjusted
+  schemes) and reaches 88% CGC tier-1 recovery at K=100, while raw and length-adjusted lists are
+  near-disjoint (Jaccard@100 = 0.015). This is the project's strongest result
+  (synthesis:h02-cross-study-ranking-divergence-is-structured).
+- **The signature program (h08–h11) is the live research frontier** and shares one hardened
+  infrastructure stack (t178/t179 SBS-refit provenance + count floors). Its flagship gate, the h08
+  positive-control scan, came back **inconclusive (1/3 arms)**: only APOBEC→SBS2/13 passed cleanly;
+  UV and smoking failed on covariate-proxy quality, not method.
+- **Two confounder channels were probed and partly ruled out.** Replication timing does *not*
+  explain the residual TTN signal (RT coefficient ~0, CI spans zero); the simple SBS1/SBS5 ratio is
+  *not* a usable contamination flag (direction reversed in the BRCA matched-vs-unmatched test).
+- **A recurring structural ceiling is data access.** The SBS1 LRR contamination test, the
+  healthy-tissue atlas, MHN ordering benchmarks, and external validation all stall on the same
+  blocked WGS acquisitions (Hartwig, PCAWG/ICGC-25K, Genomics England, GTEx controlled-access).
+- **h10 (treatment-induced inflation) reached an infrastructure gate but no biological verdict:**
+  the full-config impact run covers 383,477 samples, but only one patient cohort (GLASS) passes the
+  discovery gate, so the q027 exclusion arm is `underpowered_non_arbitrating`.
+- **The orphan population is small and coherent:** one orphan question (q009, SBS1 LRR flag) plus
+  six unaffiliated interpretations, dominated by the SBS1/LRR contamination-QC spine that a proposed
+  candidate hypothesis **h07** would absorb.
 
 ## State
 
-The project's collective belief, distilled from the six per-hypothesis files, has three weight centers.
+The project collectively believes — with its single strongest evidence base — that **cross-study
+mutation-frequency rankings carry a reproducible, selection-driven signal that only a dN/dS-aware
+method recovers**, and that naive frequency- or length-based ranking schemes are dominated by
+structured confounders (protein length, panel ascertainment, fragile sites) rather than noise
+(synthesis:h02-cross-study-ranking-divergence-is-structured,
+synthesis:h03-gene-length-confounds-literature-attention). The dNdScv ranking is LOSO-stable
+(Jaccard@100 = 0.85–0.92 on broad holdouts) and externally validated against CGC, with GENIE
+identified as a *structured* rather than generic perturbation.
 
-**Cross-study ranking divergence is real and structured (h02, partial provenance).** The full pan-cancer dNdScv run (interpretation:2026-04-26-t131-full-pan-cancer-dndscv-run) is the highest-evidence artifact in the project. After the tiebreaker fix (interpretation:2026-04-27-t144-tiebreaker-fix-rerun) and the diagnosis of the mean_inclusive inflation (task:t145, interpretation:2026-04-27-t145-mean-inclusive-inflation-diagnostic), the structured-divergence claim is empirically supported for the raw-vs-dNdScv pair. Leave-one-study-out replication (task:t149, question:q013) and external IntOGen/Martincorena 2017 validation (task:t146) are the next decisive moves.
+The strongest **methodological** assets sit in the signature program. The per-sample SBS-refit
+layer is hardened (COSMIC version-pinned, caller-provenance flagged, count-floored) and has been
+shown to deliver coherent exposures (SKCM SBS7a+b ≈ 0.83; lung SBS4 ≈ 0.28–0.36). On that
+substrate, the one clean positive-control success is APOBEC expression → SBS2/13 (BH-q ≈ 4e-12,
+permutation p = 0.001, robust to cis-mutation and proliferation conditioning).
 
-**Non-tumor contamination is testable but not yet measured (h01, partial provenance).** The Li 2021 normal-tissue spectra pipeline (interpretation:2026-04-19-t111-normal-tissue-spectra-pipeline) is built and validated. The first quantitative signature-based contamination estimate (task:t127, question:q008) and the first esophagus/colon background pilot (task:t151) have not run. The BRCA matched-vs-unmatched probe (interpretation:2026-04-22-t110-sbs1-sbs5-brca-comparison) returned a result opposite to the contamination-proxy expectation, and the SBS1 LRR-bias diagnostic route (question:q009) hit a pre-registered termination on panel data (interpretation:2026-04-24-t126-sbs1-lrr-bias-per-study).
-
-**The literature-attention claim is well-posed but pre-empirical (h03, thin provenance).** No interpretation cites h03 directly. The motivating Jaccard@100 = 0.015 between raw and length-adjusted top lists (recorded in discussion:2026-04-24-gene-length-bias-in-mutation-rankings-and-literature) is the only available structural anchor. The headline number `beta_length` (predicted +0.10 to +0.40) does not yet exist; task:t129 specifies the regression and task:t154 (panel-vs-WES ascertainment) is the gating prerequisite.
-
-What's contested: TTN at rank 4–5 in the post-fix dNdScv ranking is currently treated as a residual confounder pointing toward replication timing (question:q003), but the gene-level RT correlation with the dNdScv residual has not been computed at full scale; whether it is a methodological artifact (hypermutator leakage; task:t147) or a substantive biological residual remains open.
-
-What's strongest: the dNdScv post-fix top-7 — TP53, KRAS, NRAS, PIK3CA, FBXW7, PTEN, RB1 — replicates the Bailey 2018 consensus core almost exactly, anchoring the project's claim that canonical drivers replicate strongly across schemes.
+What is **contested or unresolved**: the h08 positive-control gate is inconclusive, so discovery
+work (H08b) is correctly locked; the residual large-protein (TTN) signal after trinucleotide
+correction has no confirmed mechanism (RT ruled out, CFS untested); and the entire contamination
+program (h01) remains untested at the proposition level — its one executed proxy (SBS1/SBS5)
+returned negative. Several hypotheses (h05, h06, h09, h11) are infrastructure-ready but
+analysis-empty, gated either on blocked external data or on a prerequisite census.
 
 ## Arc
 
-The active hypotheses constitute a coherent two-axis framing. h01 and h03 sit on opposing axes of the same diagnostic problem: h01 asks whether the project's mutation-frequency tables contain non-tumor signal, while h03 asks whether the field's literature-attention measures contain length-confound signal — both are claims about systematic distortion of the rank-and-importance signal that drives "what is a cancer driver." h02 sits between them as the empirical test bench: it is where ranking-scheme comparisons (raw, length-adjusted, dNdScv) are quantified at scale, and is the hypothesis under which the dNdScv chain (t131 → t144 → t145) is run.
+**h02 — cross-study ranking divergence (active).** This is the project's most advanced thread. From
+the PoC observation that raw and length-adjusted top-100 lists are nearly disjoint, the work moved
+through a full pan-cancer dNdScv run (fixing a tiebreaker artifact and pooled-mean inflation), to
+external CGC validation defusing Bailey-circularity, to a LOSO arm that established dNdScv stability
+and GENIE as a structured perturbation. P3 (canonical-driver replication) is confirmed; P4 (RT as
+dominant residual confounder) is weakened by a null RT regression; the TTN residual is now chased
+via fragile-site annotation and hypermutator stratification.
 
-**h01 — non-tumor signal contamination (partial provenance).** The investigation moved from literature framing (q001 NOTCH1 esophagus, q007 normal-tissue null, q008 background subtraction) to infrastructure (t111 Li 2021 spectra pipeline) to its first empirical probes (t110 BRCA SBS1/SBS5; t122/t123 BRCA RT pilots; t126 SBS1 LRR-bias per-study). Two probes returned non-confirmatory or terminated verdicts; the next decisive moves are the q008 quantitative pass (task:t127) and the esophagus/colon pilot (task:t151). The structural barrier — panel cohorts being underpowered for SBS1 LRR-bias because driver-gene panels concentrate coverage in early-replicating territory — would be removed by adding a WGS cohort.
+**h03 — gene length confounds literature attention (active).** The structural prerequisite is
+established (PubTator correlations track ranking scheme as predicted), but the decisive partial-slope
+regression (`beta_length`) does not yet exist; it is blocked on a pooled-mean fix and assay-stratified
+design, with panel-vs-WES ascertainment confirmed as a required covariate.
 
-**h02 — cross-study ranking divergence is structured (partial provenance).** The investigation began from a PoC-scale Jaccard@100 = 0.015 finding, scaled to the full pan-cancer dNdScv run (task:t131, 146 cancer types, 474,524 annotated rows), and surfaced two data-quality issues that have since been fixed (task:t144 tiebreaker; task:t145 mean_inclusive). The structured-divergence claim is supported for the raw-vs-dNdScv pair; the leave-one-study-out test of P1/P2 is the open empirical front (task:t149).
+**h08 — agnostic covariate→signature association (active).** The most engineering-intensive thread:
+feasibility verdict → MC3 7-strata refit → NMF expression modules → within-tissue association core →
+pre-registered positive-control gate. Verdict is inconclusive (APOBEC passes; UV/smoking fail on
+proxy adequacy). A repaired binary-smoking rerun improved but still missed the top-3 gate. H08b is
+held closed pending either a repaired pre-registration or narrowly scoped exploratory work.
 
-**h03 — gene length confounds literature attention (thin provenance).** The hypothesis is well-posed with a clear falsification criterion (`beta_length ≤ 0` after covariate adjustment falsifies P2) but no decisive measurement exists. The regression pipeline (task:t129), Stoeger & Nunes Amaral 2018 anchor (task:t130), and ascertainment prerequisite (task:t154) are all open. Promotion of evidence is gated on the t144/t145 fixes propagating downstream so mutation counts in the regression are stable.
+**h09 — cross-study signature reproducibility (active).** Infrastructure-ready (the t178/t179 stack
+is exactly its batch-covariate substrate) but analysis-empty; t212 is the first h09-specific task and
+has not run.
 
-The three actives interlock: h02's dNdScv residuals expose the gene-length-vs-RT residual question (q003 + q011) that h03 must control for; h01's contamination correction would change the per-gene mutation counts that feed h02's rankings; h03's ascertainment finding (t154) feeds back into h02's interpretation of which top-rank genes are real biology versus design-induced. None of the three has reached a fully measured headline result yet, but the chain from infrastructure to first decisive estimate is short for h02 (LOSO + IntOGen) and one or two analyses away for h01 (t127 + t151) and h03 (t129 + t154).
+**h10 — treatment-induced frequency contamination (active).** A concentrated 2026-06-01 burst built
+an executable exposure-label substrate at full-config scale (383,477 samples), but the measured-
+signature q027 arm finds only one adequate patient cohort (36 SBS11-high GLASS samples), leaving the
+cross-study biological claim non-arbitrating.
+
+**h11 — joint indel+SBS discrimination (active).** Earliest-stage active hypothesis; gated on an
+indel-availability census (t188) that has not started.
+
+**h01 — non-tumor contamination (active).** Reference infrastructure (Li 2021 normal-tissue spectra)
+exists, but the three-channel contamination partition is untested and the one proxy tried (SBS1/SBS5)
+was ruled out.
+
+**How the active hypotheses relate.** Two backbones organize the active set. The **ranking/confounder
+backbone** (h02 ← h03, with h01's CFS channel feeding q014) asks what survives cross-study aggregation
+and why long-tail genes diverge. The **signature backbone** (h08 ← h09, h10, h11, all on the shared
+SBS-refit stack) asks whether per-sample exposures are causally interpretable (h08), reproducible
+(h09), confounded by treatment (h10), and sharpenable with indels (h11). h01 straddles both — its
+contamination concern motivates the signature QC work and supplies a confounder class to the ranking
+work.
 
 ## Research fronts
 
-Ranked across the active hypotheses by uncertainty density and decisiveness:
+Ranked across active hypotheses by uncertainty density, recent activity, and explicit task priority:
 
-1. **task:t149 — leave-one-study-out top-N replication-rate analysis** (from h02). Decisive test of P1 and P2; no LOSO numbers exist yet. Highest-priority open front.
-2. **task:t127 — first q008 quantitative contamination-magnitude estimate** (from h01). Uses the t111 Li 2021 spectra pipeline against tcga_mc3 vs msk_impact_2017; would deliver the first project-internal contamination magnitude.
-3. **task:t129 — partial-slope regression for `beta_length`** (from h03). Decisive test of h03's central claim; blocked informally on t144/t145 propagation.
-4. **task:t146 — external validation of pan-cancer dNdScv against IntOGen / Martincorena 2017** (from h02). Addresses the Bailey-circularity caveat in the post-fix headline.
-5. **task:t151 — esophagus/colon normal-tissue background pilot** (from h01). First end-to-end test of the contamination-correction proposition P3 on a tractable tissue.
-6. **task:t154 — panel-vs-WES ascertainment analysis** (from h03). Gating prerequisite for the t129 regression; also feeds back into h02 interpretation.
-7. **task:t147 — hypermutator-stratified dNdScv re-run** (from h02). Diagnostic for the TTN-at-rank-4 residual.
-8. **task:t153 — CFS overlap annotation and RT-vs-CFS residual regression** (from h02). Tests whether common-fragile-site loci form a distinct confounder channel separable from broad replication timing (also addresses orphan question:q014).
-9. **task:t158 — cross-study saturation curve for top-N stability** (from h02). Empirical complement to t149 (also addresses orphan question:q017).
-10. **task:t155 — pan-cancer dNdScv aggregation rules under q-value floor pile-up** (from h02). Methodological prerequisite for reporting a pan-cancer ranking (also addresses orphan question:q015).
+1. **Repair-or-retire the h08 positive-control gate** *(from h08)* — the single highest-leverage
+   decision: a repaired pre-registration fixing the UV proxy and lung burden-dominance, versus
+   accepting `[?]` and limiting to scoped exploratory work (task:t205 framed both paths). Gates all
+   downstream discovery.
+2. **External validation of the dNdScv ranking** *(from h02)* — task:t171 (IntOGen 2024 + DepMap),
+   the highest-priority remaining check, blocked on data acquisition.
+3. **The decisive h03 length-attention regression** *(from h03)* — task:t129 / task:t170; the
+   headline `beta_length` is the hypothesis's whole point and still unmeasured.
+4. **First h09 cross-study reproducibility pass** *(from h09)* — task:t212, the only task scoped
+   directly to h09; turns ready infrastructure into a result.
+5. **TTN residual mechanism** *(from h02)* — task:t153 (CFS overlap) + task:t147 (hypermutator-
+   stratified dNdScv) after the RT null.
+6. **h10 next step** *(from h10)* — either a GLASS-specific clinical-timing audit or external
+   treatment-rich WES/WGS acquisition to obtain a second q027 patient substrate.
+7. **h01 contamination first quantitative pass** *(from h01)* — task:t127 (blocked), the per-gene
+   rate comparison before/after spectra subtraction.
+8. **h11 indel-availability census** *(from h11)* — task:t188, prerequisite gate, not started.
 
-**Blocking dependency carried across the project**: the task:t145 mean_inclusive fix must propagate downstream from `create_combined_gene_cancer_freq_table` before the raw-frequency, length-adjusted, and length-attention regression panels can be reported.
+**Knowledge Gaps (rollup).** A demanding-vs-covered scan over project topics surfaced one gap:
+
+| Topic | Coverage | Demand | Gap | Hypotheses |
+|---|---|---|---|---|
+| topic:clinical-translational-signatures | 0 | 2 | 2 | h08, h10 |
+
+`topic:clinical-translational-signatures` is referenced by question:q024-treatment-exposed-cohort-chemotherapy-signature and question:q027-does-excluding-treatment-signature-high-samples (both in
+the treatment-signature arm) but has no project literature coverage — the clearest near-term
+background-research target.
 
 ## Candidate frames
 
-**h04 — MHN pathway-level ordering (thin provenance, candidate).** Proposes that cross-sectional cBioPortal/GENIE data contain enough joint-distribution signal for the observation-event-corrected MHN formulation in paper:Schill2024 (implemented in paper:Vocht2026) to recover a directed per-histology progression order at the Sanchez-Vega 2018 pathway level. Promotion is gated on three criteria: task:t133 VAF availability audit completing; the paper:Schill2024 observation-event correction confirmed usable for diagnostic cBioPortal cohorts with panel-specific missingness; and simulation calibration (task:t152) recovering ≥70% of injected pathway-level edges from synthetic tumors at the project's panel and cohort-size distribution. All five gating tasks (t132, t133, t134, t135, t152) are open.
+**h04 — MHN pathway ordering (candidate).** Proposes that cross-sectional cBioPortal/GENIE data
+contain enough joint-distribution signal for Mutual Hazard Networks (the Schill 2024 observation-
+event formulation, implemented by Vocht 2026) to recover a directed intrinsic-mutator → lineage-
+driver → checkpoint-loss progression at the Sanchez-Vega pathway level. No project-internal result
+yet bears on its three propositions. Promotion is gated on a VAF availability audit (task:t133), a
+primary-method check that the observation-event correction survives panel-specific missingness, and
+a simulation-calibration pass recovering ≥70% of injected pathway edges (task:t152). The framing
+discussion already flags that the naive mutator-phenotype prediction is partly wrong unless
+MMR/POLE/POLD1 are separated from the late, expansion-permitting TP53 event.
 
-**h05 — healthy somatic background atlas (thin provenance, candidate).** Proposes that healthy somatic-mutation rates span >2 OoM across tissues and that substituting a meta-analyzed cross-tissue normal null for the project's current within-pipeline null produces calibrated, tissue-specific shifts in apparent driver frequency in unmatched-normal studies. The hypothesis is a generalization of h01: where h01 targets within-sample correction, h05 frames "background" as positive cross-population knowledge. Promotion is gated on task:t150 (normal-tissue WGS cohort feasibility audit). The Li 2021 spectra pipeline (interpretation:2026-04-19-t111-normal-tissue-spectra-pipeline) is the closest existing infrastructure; task:t151 is the scoped pilot that follows.
+**h05 — healthy somatic-background atlas (candidate).** Generalizes h01's within-sample contamination
+frame to a cross-tissue null: that healthy somatic mutation rates vary >2 orders of magnitude and
+that substituting a meta-analyzed normal null shifts cBioPortal driver frequencies in calibrated,
+tissue-specific ways. The Li 2021 body-map (liver highest, pancreas lowest) is the closest anchor for
+the >2-OoM claim but rests on five donors and needs clone-size corrections. Data harmonization across
+heterogeneous normal-tissue cohorts is the principal obstacle; promotion is gated on a feasibility
+audit (task:t150), ≥6 tissues at age-stratified scale, and a pre-registered single-tissue pilot
+(task:t114 + task:t151). External-data tasks are blocked, including GTEx controlled-access (task:t169,
+blocked on institutional affiliation).
 
-**h06 — pre-malignant n-1 driver carriage (thin provenance, candidate).** Proposes that cBioPortal pre-malignant cohorts (Barrett's → EAC; MGUS/SMM → MM; MDS → AML; IPMN → PDAC; ASAP/HGPIN → PRAD; adenoma → CRC; CIN → cervical) carry n-1 of the canonical invasive-cancer drivers of the same lineage, with a small residual set of "late-stage" checkpoint-enriched drivers. Distinguished from h04 on operational grounds: h06 uses directly observed pre-malignant vs invasive sequencing data rather than cross-sectional probabilistic inference. Promotion is gated on task:t156 (cBioPortal pre-malignant cohort audit) finding ≥3 cancer types with n ≥ 30 pre-malignant samples; task:t157 (first paired driver-overlap analysis on Barrett's → EAC or MDS → AML) follows.
-
-## Knowledge Gaps (rollup)
-
-No knowledge gaps detected this run.
-
-The project graph currently has zero claim-level rows (graph project-summary returned `claim_count: 0`), so `compute_topic_gaps` produced no scoreable entries this cycle. The Knowledge Gaps surface will populate once specify-model and interpret-results runs begin materializing graph claims.
+**h06 — pre-malignant n-1 driver carriage (candidate).** The empirical sibling of h04: rather than
+inferring ordering probabilistically, it uses directly observed pre-malignant-vs-invasive cohorts to
+test whether pre-malignant lesions already carry ≥80% of same-lineage invasive drivers, with a small
+checkpoint-enriched late-stage residual. Supporting literature (Martincorena 2018, Lee-Six 2018) is
+consistent but unanalyzed against cBioPortal data. The hypothesis is fully blocked behind a pre-
+malignant cohort audit (task:t156); if fewer than three cancer types reach n≥30 pre-malignant samples,
+P1 is likely untestable within current scope, and the pipeline's SNV/indel-only design makes
+CNA-driven pre-malignant events (e.g., IgH rearrangements, Barrett's chromosomal instability)
+invisible.
 
 ## Emergent threads
 
-`doc/reports/synthesis/_emergent-threads.md` enumerates **5** orphan questions (q009, q014, q015, q016, q017) and **8** orphan interpretations, and proposes two candidate hypothesis frames (signature-based contamination QC absorbing q009; pan-cancer aggregator methodology absorbing q015) plus folding q014 into h02 and q016 into h03 as extensions rather than new top-level nodes. The cross-hypothesis bridges q007 (h01↔h05), q011 (h02↔h03), and q012 (h04↔h06) are the load-bearing connective tissue of the current spine.
+Beyond the per-hypothesis arcs, seven resolver questions bridge two or more hypotheses — the
+load-bearing connective tissue between the ranking backbone (q011, q014) and the signature backbone
+(q020, q021, q024) — and a small, coherent orphan population sits off the spine. The standout is a
+**contamination-QC spine** (orphan question q009 plus four SBS1/LRR diagnostic interpretations) that a
+proposed candidate hypothesis **h07** would absorb once WGS inputs are ingested; the test is currently
+structurally unpowered on panel data (MSK-IMPACT covers only ~20.7 kb of late-replicating territory,
+23:1 CE:CL). See `doc/reports/synthesis/_emergent-threads.md` for the full bridge map and orphan
+inventory (**orphan question count: 1**; orphan interpretations: 6).

@@ -1,95 +1,34 @@
 ---
 id: "synthesis:h02-cross-study-ranking-divergence-is-structured"
-type: "synthesis"
-title: "Cross-study ranking divergence is structured"
-report_kind: "hypothesis-synthesis"
+type: synthesis
+title: "Synthesis: h02-cross-study-ranking-divergence-is-structured"
+report_kind: hypothesis-synthesis
 hypothesis: "hypothesis:h02-cross-study-ranking-divergence-is-structured"
-generated_at: "2026-04-28T03:09:06Z"
-source_commit: "c1c6b1f29eef8326e3efde948df540ecc23c95ed"
-provenance_coverage: partial
+generated_at: "2026-06-02T09:52:22Z"
+source_commit: "037f0ab2d3c84ecc56bebd843e361c1a9dfbfa66"
+provenance_coverage: thin
 ---
 
 ## State
 
-The hypothesis asserts that divergence between ranking schemes (raw frequency, length-adjusted,
-dNdScv selection) is structured and predictable rather than random, with canonical drivers
-replicating strongly across schemes and long-tail candidates diverging in a bias-determined
-direction.
+The hypothesis asserts that cross-study ranking divergence is structured: canonical drivers replicate strongly across ranking schemes (raw frequency, length-adjusted, dNdScv) while long-tail candidates diverge in a bias-determined direction. The foundational empirical anchor is Jaccard@100 = 0.015 between raw and length-adjusted top-100 lists, documented in interpretation:2026-04-26-t131-full-pan-cancer-dndscv-run (F5 context).
 
-The most direct empirical test to date is the full pan-cancer dNdScv run
-(interpretation:2026-04-26-t131-full-pan-cancer-dndscv-run, F3 and F6). After the tiebreaker
-fix landed (interpretation:2026-04-27-t144-tiebreaker-fix-rerun, F1), dNdScv v2 recovered
-62/100 Bailey 2018 drivers at K=100 and placed TP53, KRAS, NRAS, PIK3CA, FBXW7, PTEN, and RB1
-at ranks 1–7. TTN persists at rank 4–5 despite trinucleotide-context correction
-(interpretation:2026-04-26-t131-full-pan-cancer-dndscv-run, F3), consistent with a residual
-confounder beyond length — replication timing being the leading candidate under
-question:q003-replication-timing-as-gene-level-mutation-rate-confounder, though this remains a
-prediction rather than a measurement. The three-way Spearman matrix (F6 of
-interpretation:2026-04-26-t131-full-pan-cancer-dndscv-run) shows raw rank and dNdScv rank are
-nearly uncorrelated (ρ = +0.043), while length-adjusted rank and dNdScv rank are strongly
-anti-correlated (ρ = −0.468), confirming that dNdScv and naive length adjustment disagree
-systematically, not randomly. The structured divergence claim for the raw-vs-length-adjusted
-pair rests on Jaccard@100 = 0.015 (documented in
-interpretation:2026-04-26-t131-full-pan-cancer-dndscv-run, F5 context). The raw-frequency
-top-N collapsed to zero Bailey drivers at full scale, but this was traced to a stale mean
-calculation upstream of WES zero-fill (task:t145), not to a failure of the divergence
-structure itself. Leave-one-study-out rank stability (question:q013-cross-study-replication-rate,
-task:t149) has not yet been run; P1 and P2 remain pre-registered expectations rather than
-measured results.
+The full-scale dNdScv run confirmed proposition P3 at K=100 after the tiebreaker fix: dNdScv v2 recovered 62/100 Bailey 2018 drivers versus zero for the raw and length-adjusted schemes (interpretation:2026-04-26-t131-full-pan-cancer-dndscv-run, F3–F4). External validation against CGC tier-1 yields 88% recovery at K=100 (299-fold enrichment) and 92% at K=25, against a list curated independently of Bailey (interpretation:2026-04-28-t146-external-validation-cgc, F1). The three-way Spearman matrix shows raw and dNdScv ranks are nearly uncorrelated (ρ = +0.043) while length-adjusted and dNdScv are strongly anti-correlated (ρ = −0.468), confirming systematic disagreement (interpretation:2026-04-26-t131-full-pan-cancer-dndscv-run, F6).
+
+TTN persists at rank 4–5 despite trinucleotide correction. Replication timing does not explain this: the RT late-score regression coefficient is near zero with bootstrap 95% CI [−1.69, +1.96], and log10 protein length remains the dominant covariate (Spearman ρ = 0.564 versus ρ = −0.004 for RT, interpretation:2026-04-29-q003-rt-residual-regression, F1–F2). P4 (RT as dominant residual confounder) is weakened; question:q003-replication-timing-as-gene-level-mutation-rate-confounder remains open pending CFS-specific testing (task:t153). P1 LOSO stability is supported for the dNdScv ranking: two broad non-GENIE holdouts achieved Jaccard@100 of 0.852 and 0.923, while GENIE removal produced 0.429 — establishing GENIE as a structured rather than generic perturbation (interpretation:2026-04-30-t173-dndscv-loso-synthesis).
 
 ## Arc
 
-The investigation began with a PoC-scale observation that raw-frequency and length-adjusted
-top-100 gene lists are nearly disjoint (Jaccard@100 = 0.015 at PoC scale), establishing the
-raw-vs-length-adjusted divergence as empirically substantial. This framing was formalized in
-question:q011-gene-length-as-literature-attention-confounder and anchored in the Lawrence 2014
-long-gene-passenger pattern.
+Arc reconstruction is limited because six t173 interpretation files lack `prior_interpretations` chains; ordering below relies on file dates.
 
-The main investigative move was scaling dNdScv to the full pan-cancer cohort via task:t131.
-The first run (interpretation:2026-04-26-t131-full-pan-cancer-dndscv-run) ran the 8-step DAG
-to completion across 146 cancer types and 474,524 annotated rows, but surfaced two
-data-quality issues blocking the headline comparison: an alphabetical tiebreaker among 829
-genes sharing min_q = 0 (F2), and inflated mean_inclusive values dominating the raw-frequency
-top-15 (F4). These findings reframed the immediate question from "does structured divergence
-hold at full scale?" to "what is the valid three-way comparison after methodological fixes?"
+The investigation began with the PoC finding that raw and length-adjusted top-100 lists are nearly disjoint (Jaccard@100 = 0.015), formalizing question:q011-gene-length-as-literature-attention-confounder. The full pan-cancer dNdScv run (interpretation:2026-04-26-t131-full-pan-cancer-dndscv-run) surfaced two blocking artifacts: alphabetical tiebreaker among 829 zero-q genes (F2) and inflated raw top-15 from stale pooled means (F4). Task:t144 fixed the tiebreaker; task:t145 corrected mean inflation (interpretation:2026-04-27-t145-mean-inclusive-inflation-diagnostic). External validation (interpretation:2026-04-28-t146-external-validation-cgc) then addressed the Bailey-circularity concern.
 
-The tiebreaker fix (task:t144, interpretation:2026-04-27-t144-tiebreaker-fix-rerun) resolved
-the first issue in a single downstream re-run: Bailey driver recovery lifted from 29 to 62 at
-K=100, and canonical drivers occupied ranks 1–7. This directly confirmed the strongest reading
-of P3 — that dNdScv tops overlap substantially with the Bailey consensus whereas raw tops do
-not. TTN at rank 4 emerged as a substantive residual, not an artifact, pointing toward
-task:t147 (hypermutator-stratified re-run) as the next diagnostic.
-
-The inflation issue was diagnosed in task:t145: the root cause was stale mean columns computed
-before WES zero-fill, allowing singleton small-study hits to dominate the raw-frequency
-top-15. After the fix, TP53 rises to the top of the raw ranking, and the inflated
-common-fragile-site signal drops substantially. The BRCA replication-timing pilots
-(interpretation:2026-04-22-t122-rt-brca-pilot, interpretation:2026-04-22-t123-rt-brca-sbs1-proxy-pilot)
-contributed an earlier evidence thread: gene-level CL/CE ratio is directionally separable
-between matched and unmatched cohorts (suggestive for question:q003-replication-timing-as-gene-level-mutation-rate-confounder),
-but the SBS1-proxy route collapsed under panel sparsity. The current epistemic position is that
-the structured-divergence claim is well-supported for the raw-vs-dNdScv pair and the
-Jaccard@100 metric, but the three-way picture requires the t145-fixed outputs to propagate
-through the full pipeline before the quantitative panel can be reported externally.
+The LOSO arm bifurcated. The pooled-rate LOSO (interpretation:2026-04-28-t149-loso-replication) produced median K=100 recovery of 0.185, attributable to the pooled_rate metric rather than the dNdScv ranking. Three targeted dNdScv holdouts (interpretation:2026-04-29-t173-dndscv-loso-pilot, interpretation:2026-04-29-t173-dndscv-loso-contrast, interpretation:2026-04-30-t173-dndscv-loso-second-broad-contrast) established GENIE as the structured perturbation; attribution analysis (interpretation:2026-04-30-t173-genie-dndscv-influence) traced the effect to broad sample-mix shifts across shared hg19 cancer labels. The RT regression null (interpretation:2026-04-29-q003-rt-residual-regression) then shifted the TTN residual diagnosis to task:t147 (hypermutator-stratified dNdScv).
 
 ## Research Fronts
 
-**Open tasks**: task:t149 (LOSO replication-rate analysis — the decisive test for P1/P2) is
-the highest-priority open question for this hypothesis; task:t146 (external validation against
-IntOGen / Martincorena 2017) addresses the Bailey circularity caveat; task:t147
-(hypermutator-stratified dNdScv) targets the TTN-at-rank-4 residual; task:t148 replaces the
-information-lossy single-cancer best_cancer_type field; task:t155 compares pan-cancer
-aggregation rules under q-value floor pile-up; task:t158 produces cross-study saturation
-curves for top-N stability; task:t153 (CFS overlap annotation) will test the replication-timing
-residual prediction (P4).
+**Open tasks**: task:t171 (IntOGen 2024 + DepMap external validation, blocked by data acquisition) is the highest-priority remaining external check; task:t155 (aggregator comparison under q=0 floor) addresses question:q015-pan-cancer-aggregator-choice; task:t153 (CFS overlap annotation) and task:t147 are the live diagnostics for the TTN residual after P4 weakening; task:t129 (length × PubMed regression) is the cleaner test for question:q011-gene-length-as-literature-attention-confounder; task:t158 targets question:q017-cross-study-saturation-curve; task:t161 should absorb orphan questions question:q014-cfs-as-distinct-confounder-class and question:q017-cross-study-saturation-curve into the hypothesis spine.
 
-**Live questions**: question:q013-cross-study-replication-rate (no LOO results yet),
-question:q003-replication-timing-as-gene-level-mutation-rate-confounder (gene-level RT
-correlation with dNdScv residual not yet computed at full scale),
-question:q011-gene-length-as-literature-attention-confounder (PubTator correlation magnitudes
-unstable between PoC and full run; Phase-2 partial-slope regression in task:t129 is the
-cleaner test).
+**Live questions**: question:q013-cross-study-replication-rate is partially addressed by the three-holdout dNdScv LOSO but lacks a full distribution; question:q003-replication-timing-as-gene-level-mutation-rate-confounder received a null result for constitutive-RT-late signal and awaits CFS-specific testing; question:q015-pan-cancer-aggregator-choice remains open pending task:t155.
 
-**Blocking prerequisite**: the task:t145 fix requires downstream feathers to be regenerated
-from `create_combined_gene_cancer_freq_table` forward before the raw-frequency and
-length-adjusted panels can be reported alongside the corrected dNdScv v2 ranking.
+**Blocked work**: task:t166, task:t167, and task:t168 (Hartwig, PCAWG, Genomics England integration) and task:t171 are blocked on data access and acquisition.

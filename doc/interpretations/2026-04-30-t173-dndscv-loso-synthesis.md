@@ -1,3 +1,17 @@
+---
+id: "interpretation:2026-04-30-t173-dndscv-loso-synthesis"
+type: "interpretation"
+status: "active"
+source_refs:
+  - "task:t173"
+title: "t173 dNdScv LOSO synthesis — dNdScv ranking is LOSO-stable; GENIE removal is a structured, not generic, perturbation"
+date: "2026-04-30"
+related:
+  - "task:t173"
+  - "hypothesis:h02-cross-study-ranking-divergence-is-structured"
+  - "question:q013-cross-study-replication-rate"
+  - "question:q015-pan-cancer-aggregator-choice"
+---
 # t173 dNdScv LOSO synthesis
 
 Date: 2026-04-30

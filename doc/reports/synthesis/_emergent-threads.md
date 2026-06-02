@@ -3,98 +3,162 @@ id: "synthesis:emergent-threads"
 type: "synthesis"
 title: "Emergent threads - cbioportal"
 report_kind: "emergent-threads"
-generated_at: "2026-04-28T03:09:06Z"
-source_commit: "c1c6b1f29eef8326e3efde948df540ecc23c95ed"
-orphan_question_count: 5
-orphan_interpretation_count: 8
+generated_at: "2026-06-02T09:52:22Z"
+source_commit: "037f0ab2d3c84ecc56bebd843e361c1a9dfbfa66"
+orphan_question_count: 1
+orphan_interpretation_count: 6
 orphan_ids:
   - "question:q009-sbs1-lrr-bias-as-normal-contamination-flag"
-  - "question:q014-cfs-as-distinct-confounder-class"
-  - "question:q015-pan-cancer-aggregator-choice"
-  - "question:q016-panel-induced-ascertainment"
-  - "question:q017-cross-study-saturation-curve"
   - "interpretation:2026-04-17-poc-run"
   - "interpretation:2026-04-18-t070-poc-comparison"
   - "interpretation:2026-04-22-t123-rt-brca-sbs1-proxy-pilot"
   - "interpretation:2026-04-24-t126-sbs1-lrr-bias-per-study"
   - "interpretation:2026-04-25-t052-stage-stratified-ar-esr1"
-  - "interpretation:2026-04-26-t131-full-pan-cancer-dndscv-run"
   - "interpretation:2026-04-27-t144-tiebreaker-fix-rerun"
-  - "interpretation:2026-04-27-t145-mean-inclusive-inflation-diagnostic"
 ---
 
 # Emergent Threads — Cross-Hypothesis Bridges and Orphan Inventory
 
 ## TL;DR
 
-- Three questions bridge two hypotheses each: `question:q007` (h01 + h05), `question:q011` (h02 + h03), `question:q012` (h04 + h06); these are the load-bearing connective tissue of the current spine.
-- Five questions have no primary hypothesis: two involve signature/RT-based contamination diagnostics deferred on data-type grounds (`question:q009`), two involve gene-level confounder taxonomy (`question:q014`) and aggregation methodology (`question:q015`), and one involves ascertainment feedback loops (`question:q016`) and saturation empirics (`question:q017`).
-- Eight interpretations are orphaned from the hypothesis spine, falling into three clusters: pipeline-infrastructure runs (PoC and tiebreaker re-runs), SBS1/RT diagnostic branches, and a single cohort-representativeness check.
-- Two candidate hypothesis frames emerge from the orphan population: a **quality-control diagnostics** frame absorbing `question:q009` and its associated interpretations, and an **aggregation methodology / pan-cancer rollup** frame absorbing `question:q015` and several pipeline-run interpretations.
-- `question:q014` and `question:q016` are strong enough to anchor extensions to existing hypotheses (h02 and h03 respectively) rather than requiring new top-level hypothesis nodes.
+- Four questions bridge two hypotheses each: `question:q007-cross-tissue-somatic-mutation-rate-variation-as-null-model` (h01 + h05), `question:q014-cfs-as-distinct-confounder-class`
+  (h01 + h02), `question:q011-gene-length-as-literature-attention-confounder` (h02 + h03), `question:q012-mutation-ordering-cross-sectional-inference` (h04 + h06); these are the
+  load-bearing connective tissue of the current spine.
+- The signature-program block (h08, h09, h10, h11) is bound by three cross-hypothesis questions:
+  `question:q020-minimum-sample-size-and-caller-provenance-for` (h09 + h08 + h11), `question:q021-positive-control-signature-set-expansion-sbs9` (h09 + h08), and
+  `question:q024-treatment-exposed-cohort-chemotherapy-signature` (h10 + h08), all sharing the t178/t179-hardened SBS refit infrastructure.
+- One question has no primary hypothesis: `question:q009-sbs1-lrr-bias-as-normal-contamination-flag`, the SBS1 LRR-bias contamination
+  flag, deferred until WGS data is available; a candidate hypothesis h07 has been proposed to
+  absorb it.
+- Six interpretations are orphaned from the hypothesis spine, falling into three clusters:
+  pipeline-infrastructure seeding runs (PoC lineage and tiebreaker fix), SBS1/RT diagnostic
+  branches (directly testing `question:q009-sbs1-lrr-bias-as-normal-contamination-flag`), and a cohort-representativeness validation.
+- One strong candidate hypothesis emerges: **quality-control diagnostics via SBS1 LRR topography**,
+  absorbing `question:q009-sbs1-lrr-bias-as-normal-contamination-flag` and its four associated interpretations; the proposed h07 frame is
+  explicitly flagged in the task backlog (`task:t164`).
 
 ---
 
 ## 1. Cross-Hypothesis Questions
 
-Three questions in the resolver output match two hypotheses each at `inverse` confidence, forming bridges across the spine.
+Seven questions in the resolver output match two or more hypotheses, forming bridges across the
+spine.
 
-**`question:q007-cross-tissue-somatic-mutation-rate-variation-as-null-model`** matches `hypothesis:h01-non-tumor-signal-contamination` and `hypothesis:h05-healthy-somatic-background-atlas`. The bridge is mechanistic: tissue-specific normal mutation rates (Li 2021 body-map) serve both as the null model against which non-tumor contamination is gauged (h01) and as the core empirical dataset for the healthy somatic background atlas (h05), making q007 the primary data link between the two hypotheses.
+**`question:q007-cross-tissue-somatic-mutation-rate-variation-as-null-model`** bridges
+`hypothesis:h01-non-tumor-signal-contamination` and `hypothesis:h05-healthy-somatic-background-atlas`.
+Tissue-specific normal mutation rates (Li 2021 body-map) serve both as the null model against
+which non-tumor contamination is gauged (h01) and as the core empirical dataset for the healthy
+somatic background atlas (h05), making q007 the primary data link between those two hypotheses.
 
-**`question:q011-gene-length-as-literature-attention-confounder`** matches `hypothesis:h02-cross-study-ranking-divergence-is-structured` and `hypothesis:h03-gene-length-confounds-literature-attention`. Gene length is both a confounder of raw mutation-frequency rankings (h02's structured divergence) and an independent predictor of literature attention (h03), so q011 tests whether controlling for length in one domain changes the signal in the other.
+**`question:q014-cfs-as-distinct-confounder-class`** bridges
+`hypothesis:h01-non-tumor-signal-contamination` and
+`hypothesis:h02-cross-study-ranking-divergence-is-structured`. CFS loci (FHIT, WWOX, MACROD2,
+GRID2) inflate both raw mutation-frequency rankings and apparent cross-study divergence through a
+mechanism (replication stress, not selective pressure) shared with the normal-tissue contamination
+signal, making q014 a confounder-taxonomy bridge between the two hypotheses.
 
-**`question:q012-mutation-ordering-cross-sectional-inference`** matches `hypothesis:h04-mhn-pathway-ordering` and `hypothesis:h06-pre-malignant-n-minus-1-driver-carriage`. Cross-sectional co-occurrence data is the shared input for both inferring pathway ordering via MHN (h04) and for detecting pre-malignant driver carriage at the N-1 step (h06); q012 tests whether the inference method is valid in either context.
+**`question:q011-gene-length-as-literature-attention-confounder`** bridges
+`hypothesis:h02-cross-study-ranking-divergence-is-structured` and
+`hypothesis:h03-gene-length-confounds-literature-attention`. Gene length is both a confounder of
+raw mutation-frequency rankings (h02) and an independent predictor of literature attention (h03),
+so q011 tests whether length correction in one domain propagates into the other.
+
+**`question:q012-mutation-ordering-cross-sectional-inference`** bridges
+`hypothesis:h04-mhn-pathway-ordering` and `hypothesis:h06-pre-malignant-n-minus-1-driver-carriage`.
+Cross-sectional co-occurrence data is the shared input for both inferring pathway ordering via MHN
+(h04) and detecting pre-malignant driver carriage at the N-1 step (h06); q012 tests whether the
+inference method is valid in either context.
+
+**`question:q020-minimum-sample-size-and-caller-provenance-for`** bridges
+`hypothesis:h09-cross-study-signature-exposure-reproducibility`,
+`hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and`, and
+`hypothesis:h11-joint-indel-sbs-improves-aetiology-discrimination`. Per-cancer-type sample-size
+floors and caller-provenance requirements are a shared pre-condition for all three hypotheses, as
+underpowered or artefact-rich cohorts would contaminate any signature-exposure test.
+
+**`question:q021-positive-control-signature-set-expansion-sbs9`** bridges
+`hypothesis:h09-cross-study-signature-exposure-reproducibility` and
+`hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and`. Whether
+SBS9/SBS54 and the canonical MMR signatures belong in the positive-control panel affects both the
+h09 reproducibility benchmark and the h08 positive-control scan.
+
+**`question:q024-treatment-exposed-cohort-chemotherapy-signature`** bridges
+`hypothesis:h10-treatment-induced-signature-frequency-contamination` and
+`hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and`. Identifying
+which studies carry SBS11/SBS31/SBS35/SBS87 is required both to define the h10 treatment-exposure
+stratum and to guard the h08 scan from treatment-induced confounds.
 
 ---
 
 ## 2. Orphan Questions
 
-Total: **5** questions with `primary_hypothesis: null`.
+Total: **1** question with `primary_hypothesis: null`.
 
-**`question:q009-sbs1-lrr-bias-as-normal-contamination-flag`** — asks whether the SBS1 late-replicating-region topographic bias can serve as a contamination quality flag; deferred after the t126 pre-registered decision rule determined the panel coverage of constitutive LRR territory (~20.7 kb on MSK-IMPACT) is insufficient to power the test on current data.
-
-**`question:q014-cfs-as-distinct-confounder-class`** — asks whether common-fragile-site loci (FHIT, WWOX, MACROD2, GRID2, and related) constitute a distinct gene-level confounder class separable from the broader replication-timing covariate already framed in `question:q003`, prompted by the residual CFS-cluster pile-up surfaced in the t131 + t145 diagnostic.
-
-**`question:q015-pan-cancer-aggregator-choice`** — asks which pan-cancer aggregator for multi-cancer dNdScv signals (lexicographic, Stouffer, Fisher, inverse-variance, Bayesian hierarchical) best discriminates among the 829 genes at BH-FDR floor zero and is most stable under leave-one-cancer-out; directly affects what the project reports as its pan-cancer driver list.
-
-**`question:q016-panel-induced-ascertainment`** — asks whether panel-induced ascertainment creates a measurable rich-get-richer loop coupling mutation-frequency rankings and literature-attention measures, with a downstream implication that the partial length-attention slope in h03 requires panel-vs-WES stratification as a required control.
-
-**`question:q017-cross-study-saturation-curve`** — asks at what number of contributing studies the top-N gene-cancer ranking stabilizes per cancer type, with early vs slow vs never-saturating regimes carrying distinct implications for reporting strategy and the cost-benefit of adding new cohorts.
+**`question:q009-sbs1-lrr-bias-as-normal-contamination-flag`** — asks whether the SBS1
+late-replicating-region topographic bias (present in normal tissue, absent in cancer, Yaacov 2023)
+can serve as a practical contamination quality flag for cBioPortal studies. Deferred (status:
+`deferred`, revisit condition: `WGS inputs ingested`) after the t126 pre-registered decision rule
+was triggered: the MSK-IMPACT panel covers only ~20.7 kb of constitutive late-replicating territory
+(a 23:1 CE:CL bp ratio), making the test structurally unpowered on current panel data. The t123
+SBS1-proxy pilot independently confirmed this via panel sparsity collapse (1,157/1,210 panel BRCA
+samples had CE=0). `task:t164` proposes drafting candidate hypothesis h07 to give this question a
+formal hypothesis home.
 
 ---
 
 ## 3. Orphan Interpretations
 
-Total: **8** interpretations whose `related:` field does not intersect any hypothesis directly or via a question with a primary hypothesis.
+Total: **6** interpretations whose `related:` field does not intersect any hypothesis directly or
+via a question with a primary hypothesis.
 
-**`interpretation:2026-04-17-poc-run`** — end-to-end PoC pipeline run confirming the composite hypermutator flag runs but is miscalibrated for BRCA/SKCM and MSK TMB is deflated 30x; relates only to tasks, not to any filed hypothesis.
+**`interpretation:2026-04-17-poc-run`** — first end-to-end PoC pipeline run confirming all
+canonical annotated outputs land and the POLE detector validates at canonical UCEC frequency, but
+finding the composite hypermutator flag miscalibrated for BRCA/SKCM and MSK TMB deflated 30x by
+panel-version drift; connects only to task nodes.
 
-**`interpretation:2026-04-18-t070-poc-comparison`** — pre/post comparison for the t070 MSK panel-version drift fix, confirming a ~30x TMB correction and correct hypermutator reclassification for 401 samples; relates only to tasks and the PoC interpretation.
+**`interpretation:2026-04-18-t070-poc-comparison`** — pre/post comparison for the t070
+MSK-IMPACT panel-version drift fix, confirming the predicted ~30x TMB correction and correct
+hypermutator reclassification for 401 samples; its `prior_interpretations` chain leads only to the
+PoC run, not to any hypothesis.
 
-**`interpretation:2026-04-22-t123-rt-brca-sbs1-proxy-pilot`** — the simple CpG C>T proxy for SBS1 RT topography on the BRCA panel-vs-WES pair collapsed under panel sparsity (1,157/1,210 panel samples had CE=0), ruling out the coarse proxy route for `question:q009`; relates only to q009 (an orphan question).
+**`interpretation:2026-04-22-t123-rt-brca-sbs1-proxy-pilot`** — the simple CpG C>T proxy for
+SBS1 replication-timing topography on the BRCA panel-vs-WES pair collapsed under panel sparsity,
+ruling out the coarse proxy route for `question:q009-sbs1-lrr-bias-as-normal-contamination-flag`; related only to q009 (an orphan question)
+and its predecessor `interpretation:2026-04-22-t122-rt-brca-pilot`.
 
-**`interpretation:2026-04-24-t126-sbs1-lrr-bias-per-study`** — per-study aggregate SBS1 LRR-bias test reached a pre-registered terminating verdict (both safety gates triggered: n_sbs1_pooled below 500-floor, CI half-width above 0.10 ceiling), deferring `question:q009` until WGS inputs are available; relates only to q009.
+**`interpretation:2026-04-24-t126-sbs1-lrr-bias-per-study`** — per-study aggregate SBS1 LRR-bias
+test reached a pre-registered terminating `defer` verdict (n_sbs1_pooled = 176 < 500-floor; CI
+half-width = 0.194 > 0.10 ceiling) and established that the MSK-IMPACT CE:CL bp ratio of 23:1
+structurally prevents powering this test on any panel cohort; related only to `question:q009-sbs1-lrr-bias-as-normal-contamination-flag`.
 
-**`interpretation:2026-04-25-t052-stage-stratified-ar-esr1`** — stage-stratified AR and ESR1 mutation rates returned partial verdicts (directional signal correct for metastatic > primary; one stratum per comparison within 3 pp tolerance), validating the cohort stage descriptor; relates only to a task and a topic node with no hypothesis connection.
+**`interpretation:2026-04-25-t052-stage-stratified-ar-esr1`** — stage-stratified AR and ESR1
+mutation rates in MSK-IMPACT vs TCGA returned `partial` verdicts (directional signal correct:
+metastatic > primary for both genes; one stratum per comparison within the pre-registered 3 pp
+tolerance), validating the cohort stage descriptor; relates only to a task and
+`topic:cohort-selection-bias-representativeness`, with no filed hypothesis connection.
 
-**`interpretation:2026-04-26-t131-full-pan-cancer-dndscv-run`** — full pan-cancer dNdScv chain ran end-to-end (146 cancer types, 474,524 annotated rows) but surfaced a tiebreaker artifact and a mean_inclusive inflation bug distorting the headline three-way comparison; `question:q011` appears in `source_refs` but not in `related:`, leaving this interpretation formally unconnected to any hypothesis.
-
-**`interpretation:2026-04-27-t144-tiebreaker-fix-rerun`** — the lexicographic-sort fix confirmed the Bailey driver recovery spec exactly (14/15 in top-15 at full pan-cancer scale); relates only to tasks.
-
-**`interpretation:2026-04-27-t145-mean-inclusive-inflation-diagnostic`** — root-cause analysis confirming the mean_inclusive inflation in t131 was caused by stale pooled means computed before WES zero-fill, not by the t139 nesting-check bypass; has no frontmatter `related:` field.
+**`interpretation:2026-04-27-t144-tiebreaker-fix-rerun`** — lexicographic-sort fix confirmed the
+Bailey driver recovery spec exactly (top-15 now TP53/KRAS/NRAS/PIK3CA/FBXW7/PTEN/RB1 at ranks 1–7
+vs. a prior alphabetical-A artifact), and surfaced three residual issues (TTN inflation, alphabetical
+`best_cancer_type`, raw `mean_inclusive` ranking) tracked under tasks t145–t148; relates only to
+tasks.
 
 ---
 
 ## 4. Candidate Hypotheses
 
-Two candidate hypothesis frames emerge from recurring orphan topics.
+One strong candidate emerges from the orphan population.
 
-**Candidate A: Quality-control diagnostics via mutational signatures and replication timing.**
-Absorbs: `question:q009`, `interpretation:2026-04-22-t123-rt-brca-sbs1-proxy-pilot`, `interpretation:2026-04-24-t126-sbs1-lrr-bias-per-study`. The unifying claim would be: *a well-powered WGS-based topographic or signature-based diagnostic can directly flag studies with excess normal-tissue contamination, independently of tumor-purity proxies*. Currently q009 orbits h01 conceptually but is not claimed by it; a quality-control sub-hypothesis would give these interpretations a formal home and a testable threshold (LRR-bias delta, SBS1 excess fraction).
-
-**Candidate B: Pan-cancer aggregation methodology as a structured methodological choice.**
-Absorbs: `question:q015`, `interpretation:2026-04-26-t131-full-pan-cancer-dndscv-run`, `interpretation:2026-04-27-t144-tiebreaker-fix-rerun`, `interpretation:2026-04-27-t145-mean-inclusive-inflation-diagnostic`. The unifying claim would be: *the choice of cross-cancer aggregator (tiebreaker rule, mean computation, weighting scheme) materially changes the pan-cancer driver ranking in the q=0 regime, and a pre-registered aggregator comparison is required before reporting a headline driver list*. This is partly methodological rather than scientific, but the scale of the t131/t144/t145 finding (829 genes at the q=0 floor; tiebreaker changed 12/15 top-gene identities) warrants formal treatment.
-
-**`question:q014`** (CFS as distinct confounder) and **`question:q016`** (panel-induced ascertainment loop) are better absorbed as extensions to existing hypotheses — q014 into h02 (it refines the gene-level confounder taxonomy already claimed there), and q016 into h03 (it identifies panel design as a required covariate in the length-attention regression) — rather than requiring new top-level nodes.
-
-**`question:q017`** (saturation curve) is best folded into h02 once the k-study ablation data is available, as it directly informs the LOO power argument already central to that hypothesis.
+**Candidate h07: Quality-control diagnostics via SBS1 LRR topography.** Absorbs
+`question:q009-sbs1-lrr-bias-as-normal-contamination-flag`,
+`interpretation:2026-04-22-t123-rt-brca-sbs1-proxy-pilot`, and
+`interpretation:2026-04-24-t126-sbs1-lrr-bias-per-study`. The unifying testable claim would be:
+*a well-powered WGS-based SBS1 topographic diagnostic can directly flag studies with excess
+normal-tissue contamination via the LRR-bias delta, independently of tumor-purity proxies.* This
+framing is already anticipated in the task backlog — `task:t164` explicitly proposes drafting h07
+to absorb q009. The revisit condition (WGS inputs ingested) is concrete and actionable once MC3 or
+PCAWG WGS data enters the pipeline. The PoC lineage interpretations
+(`interpretation:2026-04-17-poc-run`, `interpretation:2026-04-18-t070-poc-comparison`) and the
+stage-descriptor validation (`interpretation:2026-04-25-t052-stage-stratified-ar-esr1`) are
+pipeline-infrastructure records rather than hypothesis-bearing science; they are best left as
+unaffiliated dev-mode interpretations rather than forcing them into a hypothesis.

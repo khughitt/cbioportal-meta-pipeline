@@ -1,3 +1,16 @@
+---
+id: "interpretation:2026-06-01-t182-h08b-sbs40-sbs5-prototype"
+type: "interpretation"
+status: "active"
+source_refs:
+  - "task:t182"
+title: "t182 exploratory h08b SBS40-vs-SBS5 expression-module prototype — suggestive SKCM immune-module signal, not confirmatory"
+date: "2026-06-01"
+related:
+  - "task:t182"
+  - "hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and"
+  - "question:q023-sbs40-vs-sbs5-clocklike-expression-module"
+---
 # t182 — exploratory h08b SBS40-vs-SBS5 expression-module prototype
 
 Date: 2026-06-01

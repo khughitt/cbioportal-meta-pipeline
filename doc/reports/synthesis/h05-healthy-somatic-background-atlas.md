@@ -1,43 +1,91 @@
 ---
-id: "synthesis:h05-healthy-somatic-background-atlas"
-type: "synthesis"
-title: "Healthy somatic background atlas"
-report_kind: "hypothesis-synthesis"
-hypothesis: "hypothesis:h05-healthy-somatic-background-atlas"
-generated_at: "2026-04-28T03:09:06Z"
-source_commit: "c1c6b1f29eef8326e3efde948df540ecc23c95ed"
-provenance_coverage: "thin"
+type: synthesis
+title: "Synthesis: h05-healthy-somatic-background-atlas"
+report_kind: hypothesis-synthesis
+id: synthesis:h05-healthy-somatic-background-atlas
+hypothesis: hypothesis:h05-healthy-somatic-background-atlas
+generated_at: 2026-06-02T09:52:22Z
+source_commit: 037f0ab2d3c84ecc56bebd843e361c1a9dfbfa66
+provenance_coverage: thin
 ---
 
 ## State
 
-hypothesis:h05-healthy-somatic-background-atlas is in `phase: candidate` with `status: proposed`. No empirical tests have been run inside this project; all supporting evidence is external-literature-grounded.
+`hypothesis:h05-healthy-somatic-background-atlas` is in `phase: candidate`, with no
+interpretations yet recorded. The core claim rests on three propositions: cross-tissue somatic
+mutation rates vary by more than two orders of magnitude (P1); driver-positive clonal expansions
+in apparently-healthy tissue exceed per-tissue cancer-discovery rates at age 70+ for at least
+three tissues (P2); and substituting a meta-analyzed cross-tissue normal null for the project's
+current within-pipeline null produces calibrated, tissue-specific shifts in apparent driver
+frequencies in unmatched-normal cBioPortal studies (P3).
 
-The hypothesis carries three core propositions. P1 — cross-tissue healthy somatic-mutation rates span more than two orders of magnitude and scale with tissue stem-cell turnover — is inferred from published single-tissue normal sequencing studies (Martincorena 2018, Lee-Six 2018, Li 2021 referenced in the hypothesis spec). P2 — driver-mutation-positive clonal expansions in apparently-healthy individuals at age 70+ exceed the per-tissue cancer-discovery rate for at least three tissues — is suggestive from the esophageal and colon normal-tissue literature cited in the spec, but has not been formally tested by this project. P3 — the project-actionable claim — holds that substituting a meta-analyzed cross-tissue normal null for the current within-pipeline null will produce calibrated, tissue-specific shifts in apparent driver frequency in unmatched-normal cBioPortal studies; this remains untested.
+The only directly resolved question in the bundle,
+`question:q007-cross-tissue-somatic-mutation-rate-variation-as-null-model`, frames the Li 2021
+body-map (9 tissues, liver highest, pancreas lowest mutation burden) as the closest existing
+empirical anchor for P1. That question notes that the Li 2021 sample size is five donors and
+that per-tissue rate estimates require clone-size corrections from VAF distributions — making
+them uncertain. The question also flags a simpler dN/dS-based null as methodologically more
+mature for near-term pipeline use, and records that no published adaptation of the Li 2021
+body-map data as a quantitative null model for cancer-study frequency analysis existed as of
+its filing date.
 
-The primary gating risk is data harmonization: available normal-tissue WGS cohorts differ in sequencing depth, caller, age range, and dissection protocol. Task task:t150 (feasibility audit, proposed) is the formal gate — its output will determine whether promotion to `phase: active` is warranted. question:q007-cross-tissue-somatic-mutation-rate-variation-as-null-model is the most directly adjacent resolved question; the Li 2021 body-map is the closest existing cross-tissue reference identified by this project.
+Data harmonization is the principal unresolved obstacle: published normal-tissue cohorts differ
+in sequencing depth, variant-calling regime, and age range. For several cBioPortal-relevant
+tissues (kidney, thyroid, pancreas), normal-mutation reference data are thin or absent, which
+limits how broadly P1's >2-OoM range can be tested.
 
 ## Arc
 
-Arc reconstruction is limited because no interpretations directly cite hypothesis:h05-healthy-somatic-background-atlas, and both tasks (task:t150 and task:t151) are in `status: proposed` with no commits yet recorded.
+Arc reconstruction is limited because no interpretations with `prior_interpretations` chains
+have been filed for this hypothesis.
 
-hypothesis:h05-healthy-somatic-background-atlas was formalized on 2026-04-27 as a generalization of hypothesis:h01-non-tumor-signal-contamination. Where h01 targets within-sample contamination correction, h05 frames "background" as positive cross-population knowledge: a cross-tissue atlas of healthy somatic-mutation rates that can replace the project's current within-pipeline null. This framing was motivated by the body of single-tissue normal sequencing literature already cataloged under question:q007-cross-tissue-somatic-mutation-rate-variation-as-null-model, particularly the Li 2021 body-map across nine tissues.
+`hypothesis:h05-healthy-somatic-background-atlas` was registered on 2026-04-28 as a direct
+generalization of the within-sample contamination frame in
+`hypothesis:h01-non-tumor-signal-contamination`. The initial framing drew on
+`question:q007-cross-tissue-somatic-mutation-rate-variation-as-null-model`, which had been
+filed ten days earlier (2026-04-18) asking whether Li 2021 body-map rates could serve as a
+null model for per-tissue background in the pipeline. That question reached a provisional
+answer: the concept is sound but calibration obstacles — small donor count, clone-size
+corrections, EGA data-access requirements — make direct pipeline integration a multi-week
+project rather than a quick annotation step.
 
-Two tasks were filed concurrently with hypothesis creation. task:t150 (P2, proposed) is the gating step: enumerate available normal-tissue WGS cohorts, assess coverage across cBioPortal cancer types, and decide between a uniform-subset and a random-effects meta-analytic regime. task:t151 (P3, proposed) is the scoped pilot that follows: apply an age-stratified esophageal or colon normal background as an alternative null in the h01 contamination test and report whether it outperforms the current null. Neither task has been executed; the hypothesis is entirely pre-empirical at this writing.
+At hypothesis registration, three scoped tasks were issued to gate promotion: `t150`
+(feasibility audit of available normal-tissue WGS cohorts), `t151` (single-tissue meta-analysis
+pilot, likely esophagus), and `t114` (pre-registration of null-model correction impact before
+rolling any correction into the frequency pipeline). Dataset-acquisition tasks `t166`, `t168`,
+and `t169` were also filed but immediately blocked — `t169` was explicitly blocked on
+2026-05-31 because the GTEx controlled-access somatic call sets require institutional
+affiliation not currently available. The hypothesis has not advanced past the candidate framing
+stage; no project-internal hypothesis test has been conducted.
 
-The current epistemic position is: literature-grounded plausibility, one adjacent infrastructure build (t111 spectra extraction pipeline, grounded in Li 2021 and resolving question:q007-cross-tissue-somatic-mutation-rate-variation-as-null-model partially), and no project-internal hypothesis test yet conducted.
-
-## Research Fronts
+## Research fronts
 
 **Open tasks.**
 
-- task:t150 (P2, proposed): normal-tissue WGS cohort feasibility audit. This is the formal promotion gate for hypothesis:h05-healthy-somatic-background-atlas. Deliverable: a cohort table with promotion recommendation.
-- task:t151 (P3, proposed, blocked on task:t150): scoped meta-analysis pilot on one tractable tissue (esophagus or colon). Deliverable: one tissue-specific interpretation with effect size and scale-up recommendation.
+- `t114` (proposed, P2): pre-register expected gene-cancer ranking shifts and a head-to-head
+  comparison against a dN/dS-based null before applying any per-tissue SNVs/Mb correction to
+  pipeline outputs; deliverable is `doc/meta/pre-registration-q007-null-model-correction.md`.
+- `t150` (proposed, P2): feasibility audit — enumerate published normal-tissue WGS cohorts,
+  map to cBioPortal cancer types, decide harmonization regime, and produce a promotion
+  recommendation for `hypothesis:h05-healthy-somatic-background-atlas`.
+- `t151` (proposed, P2, depends on t150): scoped pilot meta-analysis on the most tractable
+  tissue (esophagus or colon); test whether the cross-tissue normal null improves
+  matched-vs-unmatched correction over the current within-pipeline null; deliverable is a
+  tissue-specific interpretation with effect size and scale-up recommendation.
+- `t166` (blocked, P3): Hartwig HMF acquisition; ~6,000 matched-normal metastatic WGS samples
+  covering ~25 cancer-relevant tissues, which would directly support P1 and P3 and bypass
+  the panel-coverage gap that blocked the q009 SBS1 LRR-bias test.
+- `t168` (blocked, P3): Genomics England 100K feasibility memo; access requires UK-institution
+  collaboration; exploratory only.
+- `t169` (blocked, P3): GTEx v10 + Yizhak 2019 / Rockweiler 2023 somatic call sets; blocked on
+  institutional affiliation for controlled-access tiers; revisit when affiliation is
+  re-established.
 
-**Live questions.**
+**Live question.** `question:q007-cross-tissue-somatic-mutation-rate-variation-as-null-model`
+remains the primary open question anchoring this hypothesis; resolution depends on `t150`
+completing a cohort audit and `t151` delivering a single-tissue pilot result.
 
-- question:q007-cross-tissue-somatic-mutation-rate-variation-as-null-model is partially addressed at the infrastructure level (Li 2021 spectra extraction delivered, per-tissue burden table exists) but the correction has not been applied to cBioPortal outputs. The question of whether the empirical Li 2021 normal null discriminates from a simpler dN/dS-based null (Martincorena 2017) is unresolved and noted as a pre-registration requirement before the correction is rolled out.
-
-**Key uncertainties.** Cohort heterogeneity is the dominant methodological barrier: depth, caller, age range, and dissection protocol vary across all published single-tissue studies. Several cBioPortal-relevant cancer-type contexts (kidney, thyroid, pancreas) have thin or absent normal-mutation reference data, which limits how broadly P1's >2-OoM claim can be tested. P2's "clone prevalence exceeds cancer rate" comparison is also sensitive to normalization: biopsy-level clonal coverage and population-level cancer incidence require explicit modeling to compare on a common axis.
-
-**Knowledge gaps.** No `topic_gaps` data was provided in the bundle for this hypothesis.
+**Promotion gates.** All three conditions stated in the hypothesis spec must be met: feasibility
+audit completes (t150), at least 6 cBioPortal-relevant tissues are covered at per-decade
+age-stratification scale, and a scoped first analysis testing P3 on at least one tissue is
+identified with a pre-registered effect-size target (t114 + t151 jointly fulfill this gate).

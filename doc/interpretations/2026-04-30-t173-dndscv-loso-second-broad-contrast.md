@@ -1,3 +1,16 @@
+---
+id: "interpretation:2026-04-30-t173-dndscv-loso-second-broad-contrast"
+type: "interpretation"
+status: "active"
+source_refs:
+  - "task:t173"
+title: "t173 dNdScv LOSO second broad contrast — additional broad holdout confirming structured perturbation"
+date: "2026-04-30"
+related:
+  - "task:t173"
+  - "hypothesis:h02-cross-study-ranking-divergence-is-structured"
+  - "question:q013-cross-study-replication-rate"
+---
 # t173 dNdScv LOSO second broad contrast
 
 Date: 2026-04-30

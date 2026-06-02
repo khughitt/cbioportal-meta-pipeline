@@ -1,3 +1,16 @@
+---
+id: "interpretation:2026-05-31-t199-h08-association-verdict"
+type: "interpretation"
+status: "active"
+source_refs:
+  - "task:t199"
+title: "t199 h08 positive-control association scan (H08a verdict) — inconclusive, 1/3 arms pass (APOBEC clean)"
+date: "2026-05-31"
+related:
+  - "task:t199"
+  - "hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and"
+  - "question:q018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross"
+---
 # t199 — h08 positive-control association scan (H08a verdict)
 
 Date: 2026-05-31

@@ -1,3 +1,17 @@
+---
+id: "interpretation:2026-05-31-t198-h08-expression-nmf-modules"
+type: "interpretation"
+status: "active"
+source_refs:
+  - "task:t198"
+title: "t198 h08 expression-module substrate — per-arm NMF on PanCanAtlas RNA-seq with leakage firewall"
+date: "2026-05-31"
+related:
+  - "task:t198"
+  - "hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and"
+  - "question:q022-apobec-a3a-a3b-joint-expression-and-mmr-omikli"
+  - "question:q023-sbs40-vs-sbs5-clocklike-expression-module"
+---
 # t198 — h08 expression-module substrate (per-arm NMF on PanCanAtlas RNA-seq)
 
 Date: 2026-05-31

@@ -1,3 +1,16 @@
+---
+id: "interpretation:2026-06-01-h08-within-tissue-diagnostics"
+type: "interpretation"
+status: "active"
+source_refs:
+  - "task:t200"
+title: "t200 h08 within-tissue failure diagnostics — APOBEC arm robust; UV/smoking failures are proxy-quality, not method"
+date: "2026-06-01"
+related:
+  - "task:t200"
+  - "hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and"
+  - "question:q022-apobec-a3a-a3b-joint-expression-and-mmr-omikli"
+---
 # t200 — h08 within-tissue failure diagnostics
 
 Date: 2026-06-01

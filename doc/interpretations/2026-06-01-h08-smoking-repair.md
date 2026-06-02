@@ -1,3 +1,15 @@
+---
+id: "interpretation:2026-06-01-h08-smoking-repair"
+type: "interpretation"
+status: "active"
+source_refs:
+  - "task:t204"
+title: "t204 h08 smoking-arm repair production rerun — binary ever-smoker recovers significant SBS4 association but misses top-3 gate"
+date: "2026-06-01"
+related:
+  - "task:t204"
+  - "hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and"
+---
 # t204 — h08 smoking-arm repair production rerun
 
 Date: 2026-06-01

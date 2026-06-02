@@ -1,3 +1,16 @@
+---
+id: "interpretation:2026-04-29-t173-dndscv-loso-pilot"
+type: "interpretation"
+status: "active"
+source_refs:
+  - "task:t173"
+title: "t173 dNdScv LOSO pilot — first leave-one-study-out holdout result on the dNdScv ranking"
+date: "2026-04-29"
+related:
+  - "task:t173"
+  - "hypothesis:h02-cross-study-ranking-divergence-is-structured"
+  - "question:q013-cross-study-replication-rate"
+---
 # t173 dNdScv LOSO pilot result
 
 Date: 2026-04-29

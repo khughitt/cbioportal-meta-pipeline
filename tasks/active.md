@@ -836,3 +836,23 @@ DBS is feasible on WGS/WES substrates sooner. Forward-looking.
 - created: 2026-06-01
 
 First concrete, data-unblocked test of h09: using per-sample SBS exposures already on disk (run_restricted_sigprofiler_assignment outputs), compare per-cancer-type signature-exposure profiles across independent cBioPortal studies and quantify whether divergences track technical batch (caller/panel/treatment per t178/t179 provenance flags) vs biology. h09 currently has zero tracked tasks (surfaced by 2026-06-01 backlog review). Deliverable: doc/interpretations/<date>-h09-cross-study-exposure-reproducibility.md with a per-cancer reproducibility metric and a batch-vs-biology attribution.
+
+## [t213] Build a unified corpus-capability census inventory (study x cancer_type x assay x matched_normal x n_samples x treatment_flag x indel_depth x caller_provenance)
+- priority: P2
+- status: proposed
+- aspects: [computational-analysis]
+- related: [question:q026-cancer-types-with-multiple-independent-cbioportal, question:q028-indel-call-availability-across-cbioportal-studies, question:q017-cross-study-saturation-curve, question:q024-treatment-exposed-cohort-chemotherapy-signature, theme:assay-regime-confounding, hypothesis:h09-cross-study-signature-exposure-reproducibility]
+- group: corpus-capability-census
+- created: 2026-06-02
+
+One inventory feather that multiple hypotheses are independently re-deriving. h10 found only 1 adequate treatment cohort in 198 studies; q026/q028/q017 each separately enumerate corpus capacity. Consolidate into a single per-study capability table so replication-depth questions (per cancer x condition) are answered from one source. Powers q026 (>=2 studies/cancer), q028 (indel depth), q024/q027 (treatment cohorts), q017 (saturation), and the assay-regime theme.
+
+## [t214] Materialize h02 + h08 proposition DAGs (doc/figures/dags/*.edges.yaml) with support/dispute edges from existing interpretations
+- priority: P2
+- status: proposed
+- aspects: [causal-modeling]
+- related: [hypothesis:h02-cross-study-ranking-divergence-is-structured, hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and]
+- group: knowledge-graph
+- created: 2026-06-02
+
+provenance_coverage is 'thin' on all 10 hypotheses because no edges.yaml DAGs or graph claims exist (claim_count=0). h02 (confirmed: dNdScv recovers 62/100 Bailey, LOSO-stable) and h08 (inconclusive H08a verdict: 1/3 arms) both have enough resolved interpretation evidence to materialize propositions with support/dispute chains. Building their edges.yaml DAGs upgrades provenance thin->partial/high and makes the next big-picture synthesis substantially richer.

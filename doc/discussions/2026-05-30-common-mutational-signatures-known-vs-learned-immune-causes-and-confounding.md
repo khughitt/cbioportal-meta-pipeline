@@ -40,6 +40,38 @@ signature step *would* import as assumptions, and where those assumptions are mo
 > before citation. `Degasperi2022` does exist in the bib but is not yet wired into a signature
 > topic note.
 
+## Current Position
+
+The "known/labelled" vs "learned/latent" split is one factorization (NMF of the 96-channel SBS
+catalog) followed by an optional, bias-laden recognition step against COSMIC — not two different
+methods. Prevalence is decoupled from mechanistic understanding: the two most common signatures
+(SBS1 mitotic clock, SBS5 unexplained flat spectrum) are precisely the ones whose aetiology is
+weakest, so "unknown cause" is central rather than residual. The immune system is essentially
+never a *labelled* upstream cause; its strongest claim is the APOBEC–antiviral mediator link,
+and immunoediting acts on signature *burden* (`H`, selection) rather than signature *shape*
+(`W`). For `cbioportal`, which does not currently extract signatures, this is a set of
+import-time assumptions: *if* a signature step is added it must run de novo extraction (not
+refit-only), report COSMIC matches with cosine similarity rather than bare labels, attribute
+within tissue and treatment strata, and carry an artifact-signature flag from day one.
+
+## Critical Analysis
+
+The central threat is **structural confirmation bias**: refitting to COSMIC can only return
+processes already in the catalog, most aetiology labels are post-hoc correlations, and each
+discovery gate (high-rank de novo extraction → noticing an unmatched factor → finding a
+wet-lab/epidemiological correlate to name it) selects for the already-expected. Identifiability
+is the second threat: tissue ↔ exposure collinearity means "signature caused by exposure X" is
+partly "signature characteristic of tissue T" absent within-tissue contrasts; treatment-induced
+spectra overlay intrinsic ones in mixed pre/post-treatment cohorts; and artifact signatures
+(SBS27/43/45–60, 8-oxo-dG) mimic oxidative biology — a problem sharpened on panel data, this
+project's likely input. The naive `Exposure → Signature` model is almost never identified from
+observational tumor catalogs: tissue and repair capacity are common causes of both exposure and
+spectrum, and selection sits on the burden side, so any "X causes signature S" claim must
+condition on tissue, treatment, and ancestry and separate spectrum-attribution from
+burden-attribution. Finally, every non-`Alexandrov2020` work named here remains **[UNVERIFIED]**
+— surveyed from background knowledge, not adopted into the bib — so their specific claims need
+verification before citation.
+
 ## Q1 — Most common signatures: known (labelled) vs learned (latent)
 
 ### The two framings are the same math, different epistemic commitments

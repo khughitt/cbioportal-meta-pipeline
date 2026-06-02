@@ -214,5 +214,5 @@ permutation).
 Probe-sized on purpose: it is a read-only, deterministic battery over already-committed artifacts
 (Test 4 additionally reads on-disk RSEM), reusing the frozen fit machinery — a day's work whose
 product is one diagnostic note, not a new pipeline. Methodological readiness is inherited from
-`analysis-plan:h08-positive-control-scan` (same model, same data, conditioning variations); no fresh
+`plan:2026-05-31-h08-positive-control-scan` (same model, same data, conditioning variations); no fresh
 analysis-readiness pass is warranted because nothing here is confirmatory.

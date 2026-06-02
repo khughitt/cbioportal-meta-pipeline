@@ -8,7 +8,7 @@ Read the pre-registered H08a positive-control verdict: does the agnostic within-
 covariate↔signature association model (`method:h08-agnostic-association-model`) recover the three
 registered known aetiology→signature pairs on the MC3 WES substrate, under the criteria locked in
 `pre-registration:h08-positive-control` (amendment-001)? This is check 4 — the association core —
-of `analysis-plan:h08-positive-control-scan`; checks 1–3 (t196 covariate assembly QA, t197 SBS
+of `plan:2026-05-31-h08-positive-control-scan`; checks 1–3 (t196 covariate assembly QA, t197 SBS
 refit, t198 NMF expression modules) are done. The verdict surface was **locked before ranks** and
 is not relitigated here.
 
@@ -191,5 +191,5 @@ Scripts: `code/scripts/build_h08_covariates.py` (WP1), `run_h08_association_scan
 `run_h08_sensitivity.py` (WP3). statsmodels 0.14.6; COSMIC SBS v3.4; frozen seed 0.
 
 Related: `hypothesis:h08`, `method:h08-agnostic-association-model`,
-`pre-registration:h08-positive-control` (amendment-001), `analysis-plan:h08-positive-control-scan`,
+`pre-registration:h08-positive-control` (amendment-001), `plan:2026-05-31-h08-positive-control-scan`,
 `task:t199`, and substrates `task:t197` (SBS refit) / `task:t198` (NMF modules).

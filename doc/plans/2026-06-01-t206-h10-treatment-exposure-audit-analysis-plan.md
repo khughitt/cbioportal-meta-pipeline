@@ -1,14 +1,16 @@
 ---
-type: analysis-plan
-id: analysis-plan:t206-h10-treatment-exposure-audit
-date: 2026-06-01
+id: "plan:2026-06-01-t206-h10-treatment-exposure-audit"
+type: "plan"
+title: "t206 H10 treatment-exposure audit analysis plan"
+status: "ready-with-caveats"
+created: "2026-06-01"
+updated: "2026-06-01"
 related:
   - hypothesis:h10-treatment-induced-signature-frequency-contamination
   - question:q024-treatment-exposed-cohort-chemotherapy-signature
   - question:q027-does-excluding-treatment-signature-high-samples
   - task:t181
   - task:t206
-status: ready-with-caveats
 skills_loaded:
   - id: data-genomics-somatic-mutation-qa
     reason: H10 tests mutation-frequency table shifts across cBioPortal cohorts.

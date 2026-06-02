@@ -14,7 +14,7 @@
   into the plan (commits below).
 
 > Sub-plan handling: this plan sits under `pre-registration:h08-positive-control` +
-> `analysis-plan:h08-positive-control-scan`, which already passed methodological review.
+> `plan:2026-05-31-h08-positive-control-scan`, which already passed methodological review.
 > Dimension 1 (Evidence Coverage) and Dimension 7 (Scope) are **inherited from the parent** and
 > spot-checked only. Review effort is concentrated on Dimensions 2, 3, 4, 6, 8.
 

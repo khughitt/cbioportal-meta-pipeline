@@ -37,7 +37,7 @@ related:
 Build the H08a positive-control scan: the within-tissue association between each candidate
 covariate and each per-sample COSMIC signature exposure `H`, over the 7 MC3 arm strata, reading
 the committed 2-of-3 rank gate. This is the last of the four h08-run blocking checks
-(`analysis-plan:h08-positive-control-scan` check 4); checks 1–3 (q018 / t197 refit / t198 NMF
+(`plan:2026-05-31-h08-positive-control-scan` check 4); checks 1–3 (q018 / t197 refit / t198 NMF
 modules) are done. No association-layer script exists today — the pre-reg's own "binding
 constraint."
 

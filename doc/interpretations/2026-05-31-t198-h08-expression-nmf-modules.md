@@ -9,7 +9,7 @@ Build the frozen NMF expression-module covariate set for the h08 positive-contro
 001): per arm, derive expression modules from the MC3-overlapping TCGA PanCanAtlas RNA-seq and
 select the module count K by the Brunet cophenetic-correlation rule — entirely upstream of, and
 blind to, the covariate↔signature association (leakage firewall). This is check 3 of
-`analysis-plan:h08-positive-control-scan`.
+`plan:2026-05-31-h08-positive-control-scan`.
 
 ## Substrate and the TPM→RSEM amendment
 

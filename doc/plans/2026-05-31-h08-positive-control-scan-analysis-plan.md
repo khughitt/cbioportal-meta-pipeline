@@ -1,7 +1,10 @@
 ---
-type: analysis-plan
-id: analysis-plan:h08-positive-control-scan
-date: 2026-05-31
+id: "plan:2026-05-31-h08-positive-control-scan"
+type: "plan"
+title: "Analysis plan — h08 positive-control scan (H08a recovery gate)"
+status: "not-ready"
+created: "2026-05-31"
+updated: "2026-05-31"
 related:
   - hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and
   - method:h08-agnostic-association-model
@@ -12,7 +15,6 @@ related:
   - task:t179
   - task:t180
   - task:t181
-status: not-ready
 skills_loaded:
   - id: data-genomics-mutational-signatures-and-selection
     reason: SBS per-sample exposure refit (H) is the outcome; opportunity model, COSMIC pinning, low-count + positive-control QA

@@ -9,7 +9,7 @@ across all seven `pre-registration:h08-positive-control` arm strata (SKCM, LUAD,
 BRCA, CESC, HNSC) on the MC3 WES substrate, reproducing the pre-registered §1b sample counts
 and recovering the textbook positive-control signatures as a wiring check?
 
-This is check 2 of `analysis-plan:h08-positive-control-scan` and a near-term unblocker for the
+This is check 2 of `plan:2026-05-31-h08-positive-control-scan` and a near-term unblocker for the
 H08a association core (`task:t199`). The verifiable record lives here because `results/` is
 gitignored.
 

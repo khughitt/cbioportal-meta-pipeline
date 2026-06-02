@@ -136,6 +136,8 @@ Surfaced by t100 PoC run 2026-04-17: create_correlation_matrices for brca_tcga_p
 
 Surfaced by t100 PoC 2026-04-17: the bailey2018_source / cgc_source / sanchez_vega_source columns in gene_cancer_study_annotated.feather and gene_cancer_study_ratio_annotated.feather contain values like 'results/poc-2026-04-17/metadata/bailey2018_drivers.feather' — i.e. the output file path from that specific run. They should be version stamps (e.g. 'bailey2018_v1_2018-08-13_cell' or the file's content hash). Per-run paths change every run, break reproducibility, and leak out_dir into a downstream data file. Fix: add module-level VERSION constants to code/scripts/process_bailey2018_drivers.py, process_cgc.py, process_sanchez_vega_pathways.py and have annotate.py / annotate_ch.py read those constants rather than writing snakemake.input[N] path strings. Evidence: doc/interpretations/2026-04-17-poc-run.md Finding 7, bug table row 7.
 
+STILL OPEN — docstring is misleading (backlog review 2026-06-01): annotate.py:28 calls `bailey2018_source` a "version-stamp (input file path)", but annotate.py:76 writes `str(bailey_path)` where `bailey_path = Path(snek.input[1])` resolves to `out_dir/metadata/bailey2018_drivers.feather` (Snakefile rule `process_bailey2018_drivers`, line ~344) — i.e. STILL the per-run output path this task exists to eliminate. Same pattern for `cgc_source` / `sanchez_vega_source`. The process scripts already emit stable content tags ("Bailey2018", "COSMIC-CGC", "SanchezVega2018") in their own `source` columns. FIX: promote those to module-level VERSION constants (incl. release date / content hash) and have annotate.py write the constant — not `snek.input[N]` — and correct the docstring.
+
 ## [t107] Backport clustering.* defaults to main configs (config-10k-genes.yml, config-full.yml, config-pan-cancer.yml) OR make cluster rules opt-out when missing
 - priority: P2
 - status: proposed
@@ -190,9 +192,10 @@ Before applying the t111 per-tissue snvs_per_mb correction to gene_cancer_study_
 
 ## [t127] First q008 quantitative pass: unmatched-normal contamination magnitude using t111 normal_tissue_spectra
 - priority: P3
-- status: deferred
+- status: blocked
 - aspects: [computational-analysis]
 - related: [question:q008-signature-decomposition-tissue-background-subtraction, task:t111, meta:next-steps-2026-04-24]
+- blocked-by: [task:t166]
 - group: meta-analysis
 - created: 2026-04-24
 
@@ -691,8 +694,8 @@ ad-hoc reruns.
 Run /science:add-hypothesis to formalize a candidate sub-hypothesis (proposed id h07) absorbing q009, t123, and t126. Working frame: 'a well-powered WGS-based topographic or signature-based diagnostic can directly flag studies with excess normal-tissue contamination, independently of tumor-purity proxies'. Distinguished from h01 because h01 targets correction whereas h07 targets *detection* — a per-study quality flag with a pre-registered threshold (e.g. SBS1 LRR-bias delta, or SBS1 fraction excess vs the matched-cohort pool). Promotion gate: any one WGS cohort added (Hartwig HMF or PCAWG follow-on). Acceptance: specs/hypotheses/h07-*.md with phase: candidate, status: proposed, source_refs to Tomkova 2018 / Sherman 2024, and the three promotion criteria stated.
 
 ## [t166] Acquire and integrate Hartwig HMF metastatic WGS cohort (~6,000 tumors)
-- priority: P1
-- status: proposed
+- priority: P3
+- status: blocked
 - aspects: [computational-analysis]
 - related: [hypothesis:h01-non-tumor-signal-contamination, hypothesis:h02-cross-study-ranking-divergence-is-structured, hypothesis:h05-healthy-somatic-background-atlas, question:q009-sbs1-lrr-bias-as-normal-contamination-flag, topic:signature-decomposition-unmatched-normal, topic:targeted-panel-sequencing-bias, meta:big-picture-2026-04-28]
 - group: dataset-acquisition
@@ -701,8 +704,8 @@ Run /science:add-hypothesis to formalize a candidate sub-hypothesis (proposed id
 Hartwig Medical Foundation database is a research-access metastatic WGS cohort, ~6000 tumors with matched normals, deeply called and uniformly processed. Adding it would unblock several lines simultaneously. (1) q009 SBS1 LRR-bias diagnostic was deferred (interpretation:2026-04-24-t126-sbs1-lrr-bias-per-study) under a pre-registered termination rule because MSK-IMPACT panel coverage of constitutive late-replicating bins is structurally insufficient (~20.7 kb across the panel; n_sbs1_pooled = 176 vs 500-floor; CI half-width 0.194 vs 0.10 ceiling). Hartwig WGS bypasses this entirely — every constitutive LRR bin is fully sampled. (2) h02 panel-vs-WES ascertainment work (t154) currently relies on TCGA MC3 as the WES comparator, which is matched-normal but primary-tumor; Hartwig adds a matched-normal metastatic comparator for stage-effect deconfounding. (3) h05 cross-tissue background atlas: Hartwig matched normals provide a clean cross-tissue normal sample distribution covering ~25 cancer-relevant tissues. (4) Replication-timing residual regression at full WGS scale (t163) becomes possible without panel-coverage caveats. Access: DUA via hartwigmedicalfoundation.nl/applying-for-data, typically 3-6 months. Pipeline integration scope: ingest as a single pseudo-study (parallel to tcga_mc3 MC3 path, code/scripts/process_mc3.py), add it to the matched_normal_studies config list, validate WES-vs-WGS callable-region denominators in build_panel_callable_sizes. Acceptance: data/hartwig_v6/ populated; convert_to_feather pipeline ingests; per-study mutation feathers exist for ≥20 cancer types; one rerun of the t126 SBS1 LRR-bias test on the Hartwig subset reaching a non-deferred verdict.
 
 ## [t167] Acquire and integrate PCAWG / ICGC-25K WGS cohort
-- priority: P2
-- status: proposed
+- priority: P3
+- status: blocked
 - aspects: [computational-analysis]
 - related: [hypothesis:h01-non-tumor-signal-contamination, hypothesis:h02-cross-study-ranking-divergence-is-structured, hypothesis:h04-mhn-pathway-ordering, question:q009-sbs1-lrr-bias-as-normal-contamination-flag, question:q012-mutation-ordering-cross-sectional-inference, paper:PCAWG2020, meta:big-picture-2026-04-28]
 - group: dataset-acquisition
@@ -712,7 +715,7 @@ PCAWG (~2,800 tumors, 38 cancer types, fully WGS, matched normals, harmonized Pa
 
 ## [t168] Investigate Genomics England 100K WGS access for h02 LOSO and h05 atlas
 - priority: P3
-- status: proposed
+- status: blocked
 - aspects: [computational-analysis]
 - related: [hypothesis:h02-cross-study-ranking-divergence-is-structured, hypothesis:h05-healthy-somatic-background-atlas, question:q013-cross-study-replication-rate, question:q017-cross-study-saturation-curve, meta:big-picture-2026-04-28]
 - group: dataset-acquisition
@@ -756,7 +759,7 @@ t146 (external validation of pan-cancer dNdScv ranking against IntOGen / Martinc
 
 ## [t172] Investigate MC3 controlled-access tier (TCGA non-PASS variants) for caller-confidence stratification
 - priority: P3
-- status: proposed
+- status: blocked
 - aspects: [computational-analysis]
 - related: [hypothesis:h01-non-tumor-signal-contamination, question:q008-signature-decomposition-tissue-background-subtraction, task:t127, meta:big-picture-2026-04-28]
 - group: dataset-acquisition

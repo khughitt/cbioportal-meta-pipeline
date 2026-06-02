@@ -397,7 +397,10 @@ The pre-specified sensitivity thresholds did not broaden the exclusion set: >=20
 
 The impact table is descriptive but non-arbitrating.
 Excluding the 36 SBS11-high samples changes some GLASS glioma gene frequencies by up to about 0.067, but all 20,822 q027 rows are `underpowered_non_arbitrating` because the primary substrate has only one contributing study.
+The evaluable-only contrast is larger, with maximum delta about 0.174, because it compares the 160 count-floor-passing samples against 124 evaluable non-high samples rather than retaining the 284 below-floor samples in the denominator.
+The hypermutator-excluded marginal contrast is identical to the inclusive contrast in this run because the existing `is_hypermutator` flag removes none of the 36 SBS11-high GLASS samples.
 H10 therefore remains unresolved; this is not a promotion, falsification, or cross-study confirmation.
 
 Recommended next move: either pause H10 after this complete but non-arbitrating q027 pass, or run a narrower GLASS-specific clinical timing audit that asks whether SBS11-high status is separable from recurrence/progression and TMZ episode.
 Do not collapse this measured-signature result back into the t207-t209 clinical-label denominator arm.
+A broader search for a second q027 substrate would need to be a new candidate-discovery task, since t210 audited only the five treatment-signature-plausible cohorts named in the plan rather than all 198 configured studies.

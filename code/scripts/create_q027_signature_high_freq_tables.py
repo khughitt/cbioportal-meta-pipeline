@@ -26,6 +26,9 @@ COHORT_VIEWS = (
     "therapy_signature_high_excluded_primary",
     "therapy_signature_high_excluded_sensitivity_20",
     "therapy_signature_high_excluded_sensitivity_fraction_10",
+    "signature_evaluable_high_excluded_primary",
+    "signature_evaluable_high_excluded_sensitivity_20",
+    "signature_evaluable_high_excluded_sensitivity_fraction_10",
 )
 
 SIGNATURE_LABEL_COLUMNS = (
@@ -183,6 +186,18 @@ def _cohort_masks(samples_with_labels: pd.DataFrame) -> dict[str, pd.Series]:
         "therapy_signature_high_excluded_sensitivity_fraction_10": ~samples_with_labels[
             "therapy_signature_high_sensitivity_fraction_10"
         ],
+        "signature_evaluable_high_excluded_primary": samples_with_labels[
+            "passes_count_floor"
+        ]
+        & ~samples_with_labels["therapy_signature_high"],
+        "signature_evaluable_high_excluded_sensitivity_20": samples_with_labels[
+            "passes_count_floor"
+        ]
+        & ~samples_with_labels["therapy_signature_high_sensitivity_20"],
+        "signature_evaluable_high_excluded_sensitivity_fraction_10": samples_with_labels[
+            "passes_count_floor"
+        ]
+        & ~samples_with_labels["therapy_signature_high_sensitivity_fraction_10"],
     }
 
 

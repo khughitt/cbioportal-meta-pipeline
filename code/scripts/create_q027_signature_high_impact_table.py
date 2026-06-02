@@ -16,6 +16,9 @@ COHORT_VIEWS = (
     "therapy_signature_high_excluded_primary",
     "therapy_signature_high_excluded_sensitivity_20",
     "therapy_signature_high_excluded_sensitivity_fraction_10",
+    "signature_evaluable_high_excluded_primary",
+    "signature_evaluable_high_excluded_sensitivity_20",
+    "signature_evaluable_high_excluded_sensitivity_fraction_10",
 )
 
 REQUIRED_COLUMNS = {
@@ -41,36 +44,135 @@ MEAN_COLUMNS = {
     "therapy_signature_high_excluded_sensitivity_fraction_10": (
         "mean_therapy_signature_high_excluded_sensitivity_fraction_10"
     ),
+    "signature_evaluable_high_excluded_primary": "mean_signature_evaluable_high_excluded_primary",
+    "signature_evaluable_high_excluded_sensitivity_20": (
+        "mean_signature_evaluable_high_excluded_sensitivity_20"
+    ),
+    "signature_evaluable_high_excluded_sensitivity_fraction_10": (
+        "mean_signature_evaluable_high_excluded_sensitivity_fraction_10"
+    ),
 }
 
 RANK_COLUMNS = {
     "all_samples": "rank_all_samples",
+    "signature_evaluable": "rank_signature_evaluable",
     "therapy_signature_high_excluded_primary": "rank_signature_high_excluded_primary",
     "therapy_signature_high_excluded_sensitivity_20": "rank_signature_high_excluded_sensitivity_20",
     "therapy_signature_high_excluded_sensitivity_fraction_10": (
         "rank_signature_high_excluded_sensitivity_fraction_10"
     ),
+    "signature_evaluable_high_excluded_primary": (
+        "rank_signature_evaluable_high_excluded_primary"
+    ),
+    "signature_evaluable_high_excluded_sensitivity_20": (
+        "rank_signature_evaluable_high_excluded_sensitivity_20"
+    ),
+    "signature_evaluable_high_excluded_sensitivity_fraction_10": (
+        "rank_signature_evaluable_high_excluded_sensitivity_fraction_10"
+    ),
 }
 
 CONTRASTS = {
     "signature_high_excluded_primary": {
+        "baseline_view": "all_samples",
         "view": "therapy_signature_high_excluded_primary",
         "delta": "delta_signature_high_excluded_primary",
+        "delta_hypermutator_excluded": "delta_signature_high_excluded_primary_hypermutator_excluded",
         "rank_delta": "rank_delta_signature_high_excluded_primary",
+        "rank_delta_hypermutator_excluded": (
+            "rank_delta_signature_high_excluded_primary_hypermutator_excluded"
+        ),
         "power": "power_status_signature_high_excluded_primary",
+        "power_hypermutator_excluded": (
+            "power_status_signature_high_excluded_primary_hypermutator_excluded"
+        ),
     },
     "signature_high_excluded_sensitivity_20": {
+        "baseline_view": "all_samples",
         "view": "therapy_signature_high_excluded_sensitivity_20",
         "delta": "delta_signature_high_excluded_sensitivity_20",
+        "delta_hypermutator_excluded": "delta_signature_high_excluded_sensitivity_20_hypermutator_excluded",
         "rank_delta": "rank_delta_signature_high_excluded_sensitivity_20",
+        "rank_delta_hypermutator_excluded": (
+            "rank_delta_signature_high_excluded_sensitivity_20_hypermutator_excluded"
+        ),
         "power": "power_status_signature_high_excluded_sensitivity_20",
+        "power_hypermutator_excluded": (
+            "power_status_signature_high_excluded_sensitivity_20_hypermutator_excluded"
+        ),
     },
     "signature_high_excluded_sensitivity_fraction_10": {
+        "baseline_view": "all_samples",
         "view": "therapy_signature_high_excluded_sensitivity_fraction_10",
         "delta": "delta_signature_high_excluded_sensitivity_fraction_10",
+        "delta_hypermutator_excluded": (
+            "delta_signature_high_excluded_sensitivity_fraction_10_hypermutator_excluded"
+        ),
         "rank_delta": "rank_delta_signature_high_excluded_sensitivity_fraction_10",
+        "rank_delta_hypermutator_excluded": (
+            "rank_delta_signature_high_excluded_sensitivity_fraction_10_hypermutator_excluded"
+        ),
         "power": "power_status_signature_high_excluded_sensitivity_fraction_10",
+        "power_hypermutator_excluded": (
+            "power_status_signature_high_excluded_sensitivity_fraction_10_hypermutator_excluded"
+        ),
     },
+    "signature_evaluable_high_excluded_primary": {
+        "baseline_view": "signature_evaluable",
+        "view": "signature_evaluable_high_excluded_primary",
+        "delta": "delta_signature_evaluable_high_excluded_primary",
+        "delta_hypermutator_excluded": "delta_signature_evaluable_high_excluded_primary_hypermutator_excluded",
+        "rank_delta": "rank_delta_signature_evaluable_high_excluded_primary",
+        "rank_delta_hypermutator_excluded": (
+            "rank_delta_signature_evaluable_high_excluded_primary_hypermutator_excluded"
+        ),
+        "power": "power_status_signature_evaluable_high_excluded_primary",
+        "power_hypermutator_excluded": (
+            "power_status_signature_evaluable_high_excluded_primary_hypermutator_excluded"
+        ),
+    },
+    "signature_evaluable_high_excluded_sensitivity_20": {
+        "baseline_view": "signature_evaluable",
+        "view": "signature_evaluable_high_excluded_sensitivity_20",
+        "delta": "delta_signature_evaluable_high_excluded_sensitivity_20",
+        "delta_hypermutator_excluded": (
+            "delta_signature_evaluable_high_excluded_sensitivity_20_hypermutator_excluded"
+        ),
+        "rank_delta": "rank_delta_signature_evaluable_high_excluded_sensitivity_20",
+        "rank_delta_hypermutator_excluded": (
+            "rank_delta_signature_evaluable_high_excluded_sensitivity_20_hypermutator_excluded"
+        ),
+        "power": "power_status_signature_evaluable_high_excluded_sensitivity_20",
+        "power_hypermutator_excluded": (
+            "power_status_signature_evaluable_high_excluded_sensitivity_20_hypermutator_excluded"
+        ),
+    },
+    "signature_evaluable_high_excluded_sensitivity_fraction_10": {
+        "baseline_view": "signature_evaluable",
+        "view": "signature_evaluable_high_excluded_sensitivity_fraction_10",
+        "delta": "delta_signature_evaluable_high_excluded_sensitivity_fraction_10",
+        "delta_hypermutator_excluded": (
+            "delta_signature_evaluable_high_excluded_sensitivity_fraction_10_hypermutator_excluded"
+        ),
+        "rank_delta": "rank_delta_signature_evaluable_high_excluded_sensitivity_fraction_10",
+        "rank_delta_hypermutator_excluded": (
+            "rank_delta_signature_evaluable_high_excluded_sensitivity_fraction_10_hypermutator_excluded"
+        ),
+        "power": "power_status_signature_evaluable_high_excluded_sensitivity_fraction_10",
+        "power_hypermutator_excluded": (
+            "power_status_signature_evaluable_high_excluded_sensitivity_fraction_10_hypermutator_excluded"
+        ),
+    },
+}
+
+HYPERMUTATOR_MEAN_COLUMNS = {
+    view: f"{mean_column}_hypermutator_excluded"
+    for view, mean_column in MEAN_COLUMNS.items()
+}
+
+HYPERMUTATOR_RANK_COLUMNS = {
+    view: f"{rank_column}_hypermutator_excluded"
+    for view, rank_column in RANK_COLUMNS.items()
 }
 
 
@@ -178,9 +280,16 @@ def _aggregate_view_stats(combined: pd.DataFrame) -> pd.DataFrame:
     grouped = combined.groupby([*KEY_COLUMNS, "cohort_view"], observed=True)
     return grouped.agg(
         mean_ratio=("ratio", "mean"),
+        mean_ratio_hypermutator_excluded=("ratio_hypermutator_excluded", "mean"),
         n_studies=("n_samples", lambda values: int((values > 0).sum())),
+        n_studies_hypermutator_excluded=(
+            "n_samples_hypermutator_excluded",
+            lambda values: int((values > 0).sum()),
+        ),
         n_samples=("n_samples", "sum"),
+        n_samples_hypermutator_excluded=("n_samples_hypermutator_excluded", "sum"),
         num=("num", "sum"),
+        num_hypermutator_excluded=("num_hypermutator_excluded", "sum"),
     ).reset_index()
 
 
@@ -191,57 +300,100 @@ def _wide_summary(view_stats: pd.DataFrame) -> pd.DataFrame:
         .reset_index(drop=True)
     )
     out = base.copy()
-    for metric, prefix in (
-        ("mean_ratio", "mean"),
-        ("n_studies", "n_studies"),
-        ("n_samples", "n_samples"),
-        ("num", "num"),
-    ):
+    metric_targets = {
+        "mean_ratio": lambda view: MEAN_COLUMNS[view],
+        "mean_ratio_hypermutator_excluded": lambda view: HYPERMUTATOR_MEAN_COLUMNS[
+            view
+        ],
+        "n_studies": lambda view: f"n_studies_{view}",
+        "n_studies_hypermutator_excluded": (
+            lambda view: f"n_studies_hypermutator_excluded_{view}"
+        ),
+        "n_samples": lambda view: f"n_samples_{view}",
+        "n_samples_hypermutator_excluded": (
+            lambda view: f"n_samples_hypermutator_excluded_{view}"
+        ),
+        "num": lambda view: f"num_{view}",
+        "num_hypermutator_excluded": (lambda view: f"num_hypermutator_excluded_{view}"),
+    }
+    for metric, target_for_view in metric_targets.items():
         wide = view_stats.pivot(index=KEY_COLUMNS, columns="cohort_view", values=metric)
         for view in COHORT_VIEWS:
-            target = (
-                MEAN_COLUMNS[view] if metric == "mean_ratio" else f"{prefix}_{view}"
-            )
+            target = target_for_view(view)
             values = wide[view] if view in wide.columns else pd.Series(dtype=float)
             out = out.merge(
                 values.rename(target).reset_index(), on=KEY_COLUMNS, how="left"
             )
-            if metric != "mean_ratio":
+            if not metric.startswith("mean_ratio"):
                 out[target] = out[target].fillna(0).astype(int)
     return out
 
 
 def _add_deltas(out: pd.DataFrame) -> pd.DataFrame:
+    additions: dict[str, pd.Series] = {}
     for contrast_name, contrast in CONTRASTS.items():
+        baseline_view = contrast["baseline_view"]
         view = contrast["view"]
-        out[contrast["delta"]] = out["mean_all_samples"] - out[MEAN_COLUMNS[view]]
-        out[f"n_samples_removed_{contrast_name}"] = (
-            out["n_samples_all_samples"] - out[f"n_samples_{view}"]
+        additions[contrast["delta"]] = (
+            out[MEAN_COLUMNS[baseline_view]] - out[MEAN_COLUMNS[view]]
         )
-        out[f"num_removed_{contrast_name}"] = (
-            out["num_all_samples"] - out[f"num_{view}"]
+        additions[contrast["delta_hypermutator_excluded"]] = (
+            out[HYPERMUTATOR_MEAN_COLUMNS[baseline_view]]
+            - out[HYPERMUTATOR_MEAN_COLUMNS[view]]
         )
-    return out
+        additions[f"n_samples_removed_{contrast_name}"] = (
+            out[f"n_samples_{baseline_view}"] - out[f"n_samples_{view}"]
+        )
+        additions[f"num_removed_{contrast_name}"] = (
+            out[f"num_{baseline_view}"] - out[f"num_{view}"]
+        )
+        additions[f"n_samples_removed_{contrast_name}_hypermutator_excluded"] = (
+            out[f"n_samples_hypermutator_excluded_{baseline_view}"]
+            - out[f"n_samples_hypermutator_excluded_{view}"]
+        )
+        additions[f"num_removed_{contrast_name}_hypermutator_excluded"] = (
+            out[f"num_hypermutator_excluded_{baseline_view}"]
+            - out[f"num_hypermutator_excluded_{view}"]
+        )
+    return pd.concat([out, pd.DataFrame(additions, index=out.index)], axis=1)
 
 
 def _add_ranks(out: pd.DataFrame) -> pd.DataFrame:
+    rank_additions: dict[str, pd.Series] = {}
     for view, rank_column in RANK_COLUMNS.items():
-        out[rank_column] = out.groupby("cancer_type", observed=True)[
+        rank_additions[rank_column] = out.groupby("cancer_type", observed=True)[
             MEAN_COLUMNS[view]
         ].rank(
             ascending=False,
             method="min",
         )
+    for view, rank_column in HYPERMUTATOR_RANK_COLUMNS.items():
+        rank_additions[rank_column] = out.groupby("cancer_type", observed=True)[
+            HYPERMUTATOR_MEAN_COLUMNS[view]
+        ].rank(
+            ascending=False,
+            method="min",
+        )
+    out = pd.concat([out, pd.DataFrame(rank_additions, index=out.index)], axis=1)
+    delta_additions: dict[str, pd.Series] = {}
     for contrast in CONTRASTS.values():
+        baseline_view = contrast["baseline_view"]
         view = contrast["view"]
-        out[contrast["rank_delta"]] = out["rank_all_samples"] - out[RANK_COLUMNS[view]]
-    return out
+        delta_additions[contrast["rank_delta"]] = (
+            out[RANK_COLUMNS[baseline_view]] - out[RANK_COLUMNS[view]]
+        )
+        delta_additions[contrast["rank_delta_hypermutator_excluded"]] = (
+            out[HYPERMUTATOR_RANK_COLUMNS[baseline_view]]
+            - out[HYPERMUTATOR_RANK_COLUMNS[view]]
+        )
+    return pd.concat([out, pd.DataFrame(delta_additions, index=out.index)], axis=1)
 
 
 def _add_power_statuses(out: pd.DataFrame) -> pd.DataFrame:
+    additions: dict[str, list[str]] = {}
     for contrast_name, contrast in CONTRASTS.items():
         view = contrast["view"]
-        out[contrast["power"]] = [
+        additions[contrast["power"]] = [
             _power_status(
                 removed_samples=removed_samples,
                 comparator_samples=comparator_samples,
@@ -253,7 +405,19 @@ def _add_power_statuses(out: pd.DataFrame) -> pd.DataFrame:
                 out[f"n_studies_{view}"],
             )
         ]
-    return out
+        additions[contrast["power_hypermutator_excluded"]] = [
+            _power_status(
+                removed_samples=removed_samples,
+                comparator_samples=comparator_samples,
+                comparator_studies=comparator_studies,
+            )
+            for removed_samples, comparator_samples, comparator_studies in zip(
+                out[f"n_samples_removed_{contrast_name}_hypermutator_excluded"],
+                out[f"n_samples_hypermutator_excluded_{view}"],
+                out[f"n_studies_hypermutator_excluded_{view}"],
+            )
+        ]
+    return pd.concat([out, pd.DataFrame(additions, index=out.index)], axis=1)
 
 
 def _power_status(
@@ -272,15 +436,22 @@ def _output_columns() -> list[str]:
     columns = [*KEY_COLUMNS]
     for view in COHORT_VIEWS:
         columns.append(MEAN_COLUMNS[view])
+        columns.append(HYPERMUTATOR_MEAN_COLUMNS[view])
         columns.append(f"n_studies_{view}")
+        columns.append(f"n_studies_hypermutator_excluded_{view}")
         columns.append(f"n_samples_{view}")
+        columns.append(f"n_samples_hypermutator_excluded_{view}")
         columns.append(f"num_{view}")
+        columns.append(f"num_hypermutator_excluded_{view}")
     for contrast in CONTRASTS.values():
         columns.extend(
             [
                 contrast["delta"],
+                contrast["delta_hypermutator_excluded"],
                 contrast["rank_delta"],
+                contrast["rank_delta_hypermutator_excluded"],
                 contrast["power"],
+                contrast["power_hypermutator_excluded"],
             ]
         )
     for contrast_name in CONTRASTS:
@@ -288,9 +459,12 @@ def _output_columns() -> list[str]:
             [
                 f"n_samples_removed_{contrast_name}",
                 f"num_removed_{contrast_name}",
+                f"n_samples_removed_{contrast_name}_hypermutator_excluded",
+                f"num_removed_{contrast_name}_hypermutator_excluded",
             ]
         )
     columns.extend(RANK_COLUMNS.values())
+    columns.extend(HYPERMUTATOR_RANK_COLUMNS.values())
     return columns
 
 

@@ -71,6 +71,8 @@ def test_q027_frequency_views_remove_primary_high_samples() -> None:
     assert tp53.loc["therapy_signature_high_excluded_primary", "n_samples"] == 3
     assert tp53.loc["therapy_signature_high_excluded_primary", "num"] == 1
     assert tp53.loc["signature_evaluable", "n_samples"] == 3
+    assert tp53.loc["signature_evaluable_high_excluded_primary", "n_samples"] == 2
+    assert tp53.loc["signature_evaluable_high_excluded_primary", "num"] == 1
 
 
 def test_q027_frequency_views_require_labels_for_every_sample() -> None:

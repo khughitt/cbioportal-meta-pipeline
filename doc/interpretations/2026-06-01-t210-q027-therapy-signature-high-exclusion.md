@@ -12,7 +12,7 @@ source_refs: &id001
   - code/scripts/create_q027_signature_high_impact_table.py
   - code/workflows/Snakefile
   - doc/plans/2026-06-01-t210-q027-therapy-signature-high-exclusion.md
-  - results/q027-therapy-signature-high-2026-06-01/therapy_signature_substrate_feasibility.md
+  - doc/reports/2026-06-01-t210-q027-therapy-signature-substrate-feasibility.md
   - /data/packages/cbioportal/q027-therapy-signature-high-2026-06-01/metadata/samples_q027_signature_high.feather
   - /data/packages/cbioportal/q027-therapy-signature-high-2026-06-01/summary/mut/table/gene_cancer_q027_signature_high_impact.datapackage.json
   - /data/packages/cbioportal/q027-therapy-signature-high-2026-06-01/summary/mut/table/gene_cancer_q027_signature_high_impact_ratio.feather
@@ -46,10 +46,13 @@ For the first configured pass, WP1 selected `difg_glass_2019` as the only primar
 The run finds 36 SBS11-high GLASS samples and non-trivial single-study frequency shifts when those samples are excluded.
 Those shifts should not be read as cross-study H10 evidence.
 Every q027 impact row is `underpowered_non_arbitrating` because the primary pass has only one contributing study, below the pre-specified two-study threshold.
+That outcome was knowable after WP1 selected only one primary patient study; the downstream impact tables are reusable scaffolding and a single-study sensitivity check, not a late-stage discovery that q027 was underpowered.
 
 ## Substrate
 
-WP1 audited the treatment-signature candidates from the H10 exposure-label work.
+WP1 audited the five treatment-signature candidates named in the t210 plan from the H10 exposure-label work.
+It did not exhaustively scan all 198 configured cBioPortal studies for SBS11/SBS31/SBS35/SBS87-evaluable patient cohorts.
+Therefore, "no second substrate" means no second substrate in this planned candidate set, not proof that no other configured study could support q027 after a broader search.
 
 | Study | Target signatures | Primary patient denominator | Count-floor-passing samples | Retained comparator support | WP1 gate |
 |---|---|---:|---:|---:|---|
@@ -83,16 +86,23 @@ This is a strong measured-signature stratum within GLASS, not just a weak non-ze
 
 ## Impact Read
 
-The q027 impact ratio table has 20,822 GLASS gene-cancer rows and 45 columns.
-All rows are `underpowered_non_arbitrating` for the primary and both sensitivity contrasts.
+The q027 impact ratio table has 20,822 GLASS gene-cancer rows and 150 columns.
+All rows are `underpowered_non_arbitrating` for the primary, sensitivity, evaluable-only, and hypermutator-excluded marginal contrasts.
 
 | Contrast | Removed samples | Power status | Delta summary |
 |---|---:|---|---|
 | `delta_signature_high_excluded_primary` | 36 | 20,822 / 20,822 underpowered | mean +0.0253, max +0.0669 |
+| `delta_signature_high_excluded_primary_hypermutator_excluded` | 36 | 20,822 / 20,822 underpowered | identical to primary |
+| `delta_signature_evaluable_high_excluded_primary` | 36 | 20,822 / 20,822 underpowered | mean +0.0585, max +0.1738 |
+| `delta_signature_evaluable_high_excluded_primary_hypermutator_excluded` | 36 | 20,822 / 20,822 underpowered | identical to evaluable-only |
 | `delta_signature_high_excluded_sensitivity_20` | 36 | 20,822 / 20,822 underpowered | identical to primary |
 | `delta_signature_high_excluded_sensitivity_fraction_10` | 36 | 20,822 / 20,822 underpowered | identical to primary |
 
-The largest descriptive deltas are concentrated in genes with many mutations inside the SBS11-high GLASS subset.
+The full-denominator contrast compares 444 all samples against 408 non-high samples.
+It answers the deliverable question but dilutes the measured-signature effect because 284 below-floor samples remain in both arms.
+The evaluable-only contrast compares 160 count-floor-passing samples against 124 evaluable non-high samples and is therefore the cleaner "what changes among samples where q027 is measurable" read.
+
+The largest full-denominator descriptive deltas are concentrated in genes with many mutations inside the SBS11-high GLASS subset.
 
 | Gene | All-sample mean | SBS11-high-excluded mean | Delta | Removed mutated samples |
 |---|---:|---:|---:|---:|
@@ -102,9 +112,29 @@ The largest descriptive deltas are concentrated in genes with many mutations ins
 | `HERC2` | 0.1824 | 0.1176 | +0.0648 | 33 |
 | `HERC1` | 0.1554 | 0.0907 | +0.0647 | 32 |
 
+The largest evaluable-only deltas are larger, as expected when the below-floor denominator is removed.
+
+| Gene | Evaluable mean | Evaluable SBS11-high-excluded mean | Delta | Removed mutated samples |
+|---|---:|---:|---:|---:|
+| `GCN1L1` | 0.2625 | 0.0887 | +0.1738 | 31 |
+| `UBR4` | 0.2938 | 0.1210 | +0.1728 | 32 |
+| `LRP1` | 0.2938 | 0.1210 | +0.1728 | 32 |
+| `TNXB` | 0.1938 | 0.0242 | +0.1696 | 28 |
+| `COL7A1` | 0.2063 | 0.0403 | +0.1659 | 28 |
+
 This is useful as a deliverable-sensitivity check.
 It says that a measured SBS11-high GLASS subset can materially inflate some single-study glioma gene frequencies.
 It does not say that treatment-signature-high samples are a reproducible cross-study driver-frequency contaminant, because there is no second primary patient study in this q027 substrate.
+
+## Hypermutator Marginal Read
+
+The existing hypermutator flag does not remove the q027 SBS11-high GLASS samples in this run.
+All 444 GLASS samples have `is_hypermutator == False`, including all 36 SBS11-high samples.
+The SBS11-high samples carry `hypermutator_reason == gmm_upper_mode_below_floor`, but that reason does not set the final hypermutator flag.
+
+Consequently, the hypermutator-excluded q027 deltas are identical to the inclusive q027 deltas.
+This answers the marginal-value question directly for this substrate: q027 is not redundant with the current `is_hypermutator` exclusion layer here.
+The caveat is the same as above: this marginal value is demonstrated only as a one-study GLASS sensitivity check, so it remains non-arbitrating for H10.
 
 ## Relation To t207-t209
 
@@ -122,6 +152,7 @@ It does not change the locked H10 status.
 
 The main limitation is power.
 Only GLASS passed the first primary patient gate, so the cross-study power rule correctly marks the result as non-arbitrating.
+Because only one primary patient study passed WP1, this limitation was determined before the impact stage.
 
 The second limitation is clinical confounding inside GLASS.
 SBS11-high GLASS samples are likely entangled with post-treatment recurrence/progression and sampling episode.
@@ -130,6 +161,7 @@ Measured SBS11 exposure reduces exposure-label misclassification, but it does no
 The third limitation is count-floor missingness.
 The 284 below-floor samples are unevaluable, not SBS11-negative.
 Any future expansion of q027 should preserve this semantics; widening the analysis by silently treating below-floor samples as negative would recreate the silent-fallback problem that t209 fixed for clinical labels.
+The full-denominator contrast necessarily retains below-floor samples in the non-high arm, so it should be read alongside the evaluable-only contrast rather than as the sole effect-size estimate.
 
 ## Operational Provenance
 

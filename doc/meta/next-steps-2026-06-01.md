@@ -16,6 +16,8 @@ related:
     "task:t205",
     "task:t206",
     "task:t207",
+    "task:t210",
+    "task:t211",
     "discussion:2026-06-01-h08b-gate-handling",
   ]
 ---
@@ -404,3 +406,18 @@ H10 therefore remains unresolved; this is not a promotion, falsification, or cro
 Recommended next move: either pause H10 after this complete but non-arbitrating q027 pass, or run a narrower GLASS-specific clinical timing audit that asks whether SBS11-high status is separable from recurrence/progression and TMZ episode.
 Do not collapse this measured-signature result back into the t207-t209 clinical-label denominator arm.
 A broader search for a second q027 substrate would need to be a new candidate-discovery task, since t210 audited only the five treatment-signature-plausible cohorts named in the plan rather than all 198 configured studies.
+
+## Update - t211 q027 Substrate Discovery
+
+The broader q027 follow-up is now tracked and planned.
+
+| Prior recommendation | Current status | Evidence |
+|---|---|---|
+| File a new candidate-discovery task for a second q027 substrate | Done | `task:t211` now tracks a configured-study search for additional SBS11/SBS31/SBS35/SBS87-evaluable primary patient cohorts. |
+| Fix the scope before any expensive full-config assignment run | Done | `doc/plans/2026-06-01-t211-q027-substrate-discovery.md` defines a cheap metadata/count triage before targeted q027 assignment. |
+
+t211 deliberately does not reinterpret the t210 GLASS result.
+It asks only whether the full configured study universe contains another patient cohort with enough count-floor-passing samples, retained comparator support, and a therapy-signature expectation to make an expanded q027 rerun worth doing.
+
+Recommended next move: implement the t211 audit extension in `code/scripts/audit_q027_therapy_signature_substrate.py`.
+The first output should be a ranked feasibility report, not a new H10 verdict.

@@ -935,3 +935,13 @@ redefined indel taxonomy (paper:Koh2025) and multimodal catalogue (paper:FerrerT
 Evaluate adding copy-number and doublet-base-substitution (DBS) signatures (paper:Everall2026,
 paper:Steele2022). Blocked on CNA ingestion (cross-ref t055 — no CNA modality in the pipeline yet);
 DBS is feasible on WGS/WES substrates sooner. Forward-looking.
+
+## [t211] Discover second q027 therapy-signature-high substrate across configured studies
+- priority: P2
+- status: proposed
+- aspects: [computational-analysis]
+- related: [hypothesis:h10-treatment-induced-signature-frequency-contamination, question:q027-does-excluding-treatment-signature-high-samples, question:q024-treatment-exposed-cohort-chemotherapy-signature, task:t210, plan:2026-06-01-t211-q027-substrate-discovery]
+- group: hypothesis-h10
+- created: 2026-06-01
+
+Broaden the t210 q027 feasibility audit beyond the five planned treatment-signature-plausible candidates to all configured studies with raw mutation/sample data. Identify whether any additional primary patient cohort has enough SBS11/SBS31/SBS35/SBS87-evaluable samples and retained comparator support to supply a second q027 substrate. This is a candidate-discovery/readiness task, not an H10 verdict run. Plan: doc/plans/2026-06-01-t211-q027-substrate-discovery.md.

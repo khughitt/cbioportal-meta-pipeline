@@ -32,8 +32,9 @@ updated: "2026-06-07"
 ## First-pass result (2026-06-07, poc-2026-04-17 cohort)
 
 **Partial.** The **breadth-inflation arm is confirmed**: excluding hypermutators raises the
-restricted-driver fraction 52%→60% and **232 drivers lose ≥1 cancer-type of breadth** — so q042/q043
-must stratify on `is_hypermutator`. The **per-sample dilution arm is under-identified on panel data**:
+restricted-driver fraction 52%→60% and **181 drivers lose ≥1 cancer-type of breadth (≥5% grade; 232
+at ≥2%)** — so q042/q043 must stratify on `is_hypermutator`. The **per-sample dilution arm is
+under-identified on panel data**:
 the MSK-IMPACT panel is driver-enriched, so driver-share of load barely drops in hypermutators
 (0.94→0.88 UCEC); and the per-gene prevalence-ratio metric is baseline-confounded (broad oncogenes
 inflate *least* — a ceiling artifact, not dilution). Only Melanoma + Endometrial were testable, and

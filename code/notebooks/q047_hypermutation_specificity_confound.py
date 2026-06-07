@@ -13,8 +13,9 @@ Three tests, all stratified WITHIN cancer type (hypermutators concentrate in CRC
   T3  Per-gene prevalence ratio (hyper/non-hyper) by gene class — background/passenger genes should
       inflate MORE than restricted lineage oncogenes (the dilution-of-selection signal).
 
-Class definitions reuse q043 breadth: restricted_oncogene = CGC oncogene with breadth<=2;
-broad_driver = breadth>=10; tsg / oncogene as CGC role; background = non-CGC panel genes.
+Class definitions reuse q043 breadth (oncogene-only, three bands): restricted_oncogene = breadth<=2;
+mid_oncogene = 3..9; broad_oncogene = breadth>=10. Plus tsg / oncogene_and_tsg / cgc_other by CGC
+role; background = non-CGC panel genes.
 
 Run:  uv run --frozen python code/notebooks/q047_hypermutation_specificity_confound.py
 """
@@ -40,6 +41,8 @@ PANEL_STUDY = "msk_impact_2017"
 SYNONYMOUS = {"Silent", "synonymous_variant", "Synonymous"}
 MIN_HYPER = 15  # cancer types need at least this many hypermutators to be tested
 MIN_NONHYPER = 30
+RESTRICTED_BREADTH = 2  # oncogene breadth <= this -> restricted
+BROAD_BREADTH = 10  # oncogene breadth >= this -> broad; in between -> mid
 
 
 def load_roster_with_breadth() -> pd.DataFrame:
@@ -60,7 +63,11 @@ def load_roster_with_breadth() -> pd.DataFrame:
 
     def cls(row):
         if row.is_oncogene and not row.is_tsg:
-            return "restricted_oncogene" if row.breadth <= 2 else "broad_oncogene"
+            if row.breadth <= RESTRICTED_BREADTH:
+                return "restricted_oncogene"
+            if row.breadth >= BROAD_BREADTH:
+                return "broad_oncogene"
+            return "mid_oncogene"
         if row.is_tsg and not row.is_oncogene:
             return "tsg"
         if row.is_oncogene and row.is_tsg:
@@ -140,32 +147,37 @@ def main() -> None:
     muts_panel = muts[muts["q047_class"] != "off_panel"]
 
     # ---- T1 + T2: per-sample load and driver share, within cancer type ----
+    # Build from the AUTHORITATIVE sample list (testable types) so samples with ZERO panel
+    # nonsynonymous mutations are included as total=0, not silently dropped (sample_id is unique
+    # in samples_annotated).
     print(f"\n{'=' * 28} T1/T2: per-sample load & driver share {'=' * 12}")
-    per_sample = (
-        muts_panel.groupby(
-            ["sample_id", "cancer_type", "is_hypermutator", "q047_class"]
-        )
+    class_counts = (
+        muts_panel.groupby(["sample_id", "q047_class"])
         .size()
         .unstack("q047_class", fill_value=0)
     )
-    per_sample["total"] = per_sample.sum(axis=1)
+    class_cols = list(class_counts.columns)
+    base = samples.loc[
+        samples["cancer_type"].isin(types),
+        ["sample_id", "cancer_type", "is_hypermutator"],
+    ]
+    ps = base.merge(class_counts, on="sample_id", how="left")
+    ps[class_cols] = ps[class_cols].fillna(0)
+    ps["total"] = ps[class_cols].sum(axis=1)
     driver_cols = [
         c
         for c in [
             "restricted_oncogene",
+            "mid_oncogene",
             "broad_oncogene",
             "tsg",
             "oncogene_and_tsg",
             "cgc_other",
         ]
-        if c in per_sample.columns
+        if c in class_cols
     ]
-    per_sample["driver_total"] = per_sample[driver_cols].sum(axis=1)
-    per_sample["driver_share"] = per_sample["driver_total"] / per_sample[
-        "total"
-    ].replace(0, np.nan)
-    ps = per_sample.reset_index()
-    ps = ps[ps["cancer_type"].isin(types)]
+    ps["driver_total"] = ps[driver_cols].sum(axis=1)
+    ps["driver_share"] = ps["driver_total"] / ps["total"].replace(0, np.nan)
     summ = (
         ps.groupby(["cancer_type", "is_hypermutator"])
         .agg(
@@ -211,8 +223,12 @@ def main() -> None:
     )
     print(by_class.to_string().replace("\n", "\n    "))
     print(
-        "\n  reading: background/passenger inflation HIGHER than restricted_oncogene => "
-        "hypermutators add passenger noise, diluting the selected lineage signal."
+        "\n  CAUTION: this raw log-ratio is BASELINE-CONFOUNDED and does NOT isolate passenger "
+        "dilution. Already-common genes (broad oncogenes) have a compressed ratio (ceiling); rare "
+        "genes (restricted oncogenes, background) yield mechanically large ratios from a near-zero "
+        "baseline — so restricted_oncogene scoring high here is an artifact, not dilution. The one "
+        "robust read: broad_oncogene (the q043 hubs) is the most STABLE class under hypermutation. "
+        "A baseline-prevalence-matched metric is required (see the q047 entity)."
     )
 
     wide.reset_index().to_feather(OUT / "prevalence_ratio_by_gene.feather")

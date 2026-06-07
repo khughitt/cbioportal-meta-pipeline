@@ -211,35 +211,37 @@ def main() -> None:
                     OUT / "breadth_inclusive_2pct.feather"
                 )
 
-    # inclusive vs exclusive breadth delta (q047 teaser) at 2%
+    # inclusive vs exclusive breadth delta (q047 teaser) — reported at EACH threshold,
+    # since the breadth-loss count is threshold-dependent and must be named alongside it.
     inc_counts, panel = per_cancer_counts(False)
     exc_counts, _ = per_cancer_counts(True)
-    inc_b = breadth_table(
-        inc_counts[inc_counts.symbol.isin(panel)],
-        cancer_sample_counts(samples, False),
-        0.02,
-    )
-    exc_b = breadth_table(
-        exc_counts[exc_counts.symbol.isin(panel)],
-        cancer_sample_counts(samples, True),
-        0.02,
-    )
-    delta = (inc_b - exc_b.reindex(inc_b.index).fillna(0)).sort_values(ascending=False)
-    drv_delta = delta[
-        delta.index.isin(
-            roster.loc[
-                roster.cgc_class.isin(["oncogene", "tsg", "oncogene_and_tsg"]), "symbol"
-            ]
-        )
+    driver_syms = roster.loc[
+        roster.cgc_class.isin(["oncogene", "tsg", "oncogene_and_tsg"]), "symbol"
     ]
-    print(
-        f"\n{'=' * 20} q047 teaser: breadth inflation by hypermutators (2%) {'=' * 10}"
-    )
-    print(
-        f"  genes losing >=1 cancer-type of breadth when hypermutators excluded: "
-        f"{(delta > 0).sum()} (drivers: {(drv_delta > 0).sum()})"
-    )
-    print(f"  largest driver breadth drops: {drv_delta.head(10).astype(int).to_dict()}")
+    print(f"\n{'=' * 20} q047 teaser: breadth inflation by hypermutators {'=' * 10}")
+    for th in (0.02, 0.05):
+        inc_b = breadth_table(
+            inc_counts[inc_counts.symbol.isin(panel)],
+            cancer_sample_counts(samples, False),
+            th,
+        )
+        exc_b = breadth_table(
+            exc_counts[exc_counts.symbol.isin(panel)],
+            cancer_sample_counts(samples, True),
+            th,
+        )
+        delta = (inc_b - exc_b.reindex(inc_b.index).fillna(0)).sort_values(
+            ascending=False
+        )
+        drv_delta = delta[delta.index.isin(driver_syms)]
+        print(
+            f"  [thresh={th:.0%}] genes losing >=1 cancer-type of breadth when "
+            f"hypermutators excluded: {(delta > 0).sum()} (drivers: {(drv_delta > 0).sum()})"
+        )
+        if th == 0.05:
+            print(
+                f"    largest driver breadth drops: {drv_delta.head(10).astype(int).to_dict()}"
+            )
     print(f"\nartifacts -> {OUT}")
 
 

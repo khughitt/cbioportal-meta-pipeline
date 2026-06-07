@@ -966,3 +966,15 @@ Lu2026 references a pan-cancer perineural-invasion transcriptomic classifier wit
 - created: 2026-06-07
 
 Acquire the reference resources backing the data-driven neural-gene score (t216): GTEx (have), Human Protein Atlas tissue-specificity, Allen Brain Cell Atlas cell-type markers, PanglaoDB markers, and BrainSpan (fetal-vs-adult for the H3 test). Land as per-gene tables joinable to the gene universe. Blocks t216/t220.
+
+## [t226] Fix q047 broad-oncogene class mismatch and prevalence-ratio reading
+- priority: P2
+- status: done
+- aspects: [computational-analysis]
+- related: [question:q047-hypermutation-confound-on-driver-tissue-specificity, question:q043-driver-cancer-type-breadth-distribution]
+- created: 2026-06-07
+- resolved: 2026-06-07
+
+Review of commit 94c2c85 found q047 implementation/prose drift: code/notebooks/q047_hypermutation_specificity_confound.py documents broad_oncogene as breadth >=10 but implements all CGC oncogenes with breadth >2 as broad_oncogene; the emitted T3 console reading says background/passenger inflation is higher than restricted_oncogene even though output shows restricted_oncogene median log2 ratio 4.396 > background 3.221. Decide whether broad_oncogene means true hub (>=10, with intermediate_oncogene separate) or non-restricted (>2), update notebook/docs accordingly, and regenerate q047 artifacts/interpretation.
+
+**Resolved 2026-06-07.** Implemented the three-band estimand (restricted_oncogene ≤2 / mid_oncogene 3–9 / broad_oncogene ≥10; broad now 34 obs, inflates least at 1.86); rewrote the T3 console reading to state the baseline-prevalence confound (restricted scoring high is a ceiling artifact, not dilution). Same pass fixed two further review findings: T1/T2 now include zero-panel-mutation samples (non-hyper n +17 UCEC/+16 melanoma; melanoma med_driver 8→7), and breadth-loss counts are reported per threshold (181 drivers at ≥5% matching the 52→60% headline; 232 at ≥2%). Notebooks ruff-clean; interpretations + question first-pass notes updated.

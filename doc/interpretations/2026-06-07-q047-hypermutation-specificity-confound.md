@@ -29,8 +29,10 @@ the question's null condition.
 - **Cohort:** `results/poc-2026-04-17/` — 542/13,006 samples flagged `is_hypermutator` (4.2%).
 - Per-sample coding-nonsynonymous gene calls from per-study `mut_filtered.feather` (100% sample-meta
   join), joined to `is_hypermutator` + `cancer_type` from `samples_annotated.feather`.
-- Gene classes reuse the q043 breadth feather (restricted_oncogene = CGC oncogene, breadth ≤2;
-  broad_oncogene = breadth >10; tsg; oncogene_and_tsg; background = non-CGC panel genes).
+- Gene classes reuse the q043 breadth feather, oncogene-only in three bands: restricted_oncogene =
+  breadth ≤2; mid_oncogene = 3–9; broad_oncogene = breadth ≥10 (the documented estimand — earlier
+  drafts mislabelled all non-restricted oncogenes as "broad"). Plus tsg / oncogene_and_tsg /
+  cgc_other by CGC role; background = non-CGC panel genes.
 - Script: `code/notebooks/q047_hypermutation_specificity_confound.py`.
 
 ## Key results
@@ -43,25 +45,27 @@ canonical MSI-hypermutator type — was *not* sufficiently flagged**, which poin
 result).
 
 **2. Breadth inflation confirmed (the actionable finding).** Excluding hypermutators raises the
-restricted-driver fraction 52%→60% (q043, ≥5%) and **232 drivers lose ≥1 cancer-type of breadth**.
-Hypermutator passenger recurrence does inflate apparent breadth — so any restricted-vs-pan-cancer
-count (q042/q043) must be computed with hypermutators excluded *or* explicitly stratified.
+restricted-driver fraction 52%→60% (q043, ≥5%) and **181 drivers lose ≥1 cancer-type of breadth at
+the matching ≥5% grade** (232 at the ≥2% grade). Hypermutator passenger recurrence does inflate
+apparent breadth — so any restricted-vs-pan-cancer count (q042/q043) must be computed with
+hypermutators excluded *or* explicitly stratified.
 
 **3. Per-sample passenger dilution is WEAK on panel data (a limitation, not a biology result).**
-Within cancer type, hypermutators carry far more panel mutations (Endometrial median 7→93.5;
-Melanoma 9→50), but the **driver share of load barely moves** (UCEC 0.941→0.882; Melanoma
-0.900→0.895). Reason: the MSK-IMPACT panel is **driver-enriched by design** — off-panel passengers
-are not even measured, so "driver share" is mechanically ≈0.9 regardless of hypermutation. The
-passenger-dilution test needs WES.
+Within cancer type (samples with zero panel nonsynonymous mutations included), hypermutators carry
+far more panel mutations (Endometrial median 7→93.5; Melanoma 9→50), but the **driver share of load
+barely moves** (UCEC 0.941→0.882; Melanoma 0.900→0.895). Reason: the MSK-IMPACT panel is
+**driver-enriched by design** — off-panel passengers are not even measured, so "driver share" is
+mechanically ≈0.9 regardless of hypermutation. The passenger-dilution test needs WES.
 
 **4. The prevalence-ratio metric is baseline-confounded — counter to the naive prediction.** Median
-log2(prev_hyper / prev_non) by class: restricted_oncogene 4.40 and cgc_other 4.48 (highest),
-background 3.22, **broad_oncogene 2.47 (lowest)**. Naively this looks like restricted oncogenes
-inflate *most* — the opposite of the dilution hypothesis. But it is a **ceiling/baseline artifact**:
-broad oncogenes (KRAS, PIK3CA, BRAF) are already highly prevalent in non-hypermutators, so their
-ratio is compressed; rare restricted genes start near zero and yield mechanically large ratios. The
-ratio metric does not isolate selection-vs-passenger; the one robust read is that **broad oncogenes
-(the q043 hubs) are the most stable to hypermutation**.
+log2(prev_hyper / prev_non) by class: cgc_other 4.48 and restricted_oncogene 4.40 (highest),
+tsg 3.80, oncogene_and_tsg 3.77, background 3.22, mid_oncogene 2.56, **broad_oncogene 1.86
+(lowest)**. Naively this looks like restricted oncogenes inflate *most* — the opposite of the
+dilution hypothesis. But it is a **ceiling/baseline artifact**: broad oncogenes (KRAS, PIK3CA, BRAF)
+are already highly prevalent in non-hypermutators, so their ratio is compressed; rare restricted
+genes start near zero and yield mechanically large ratios. The ratio metric does not isolate
+selection-vs-passenger; the one robust read is that **broad oncogenes (the q043 hubs) are the most
+stable to hypermutation**.
 
 ## Limitations → refinements to q047's design
 
@@ -76,7 +80,7 @@ ratio metric does not isolate selection-vs-passenger; the one robust read is tha
 ## Implications for the questions
 
 - **`q042` / `q043`:** confirmed — compute breadth / restricted-vs-pan-cancer with hypermutators
-  excluded or stratified; the effect is material (232 drivers shift breadth).
+  excluded or stratified; the effect is material (181 drivers shift breadth at ≥5%, 232 at ≥2%).
 - **`q047`:** the breadth-inflation arm is closed-positive; the per-sample dilution arm is **deferred
   to WES** with a baseline-matched metric and a hypermutator-flag audit (CRC). The null is sharpened:
   on panel data the dilution test is structurally under-identified, so a "no dilution" reading here is

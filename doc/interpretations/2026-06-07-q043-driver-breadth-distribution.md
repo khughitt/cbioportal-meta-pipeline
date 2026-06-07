@@ -73,8 +73,9 @@ restricted-vs-pan-cancer count if one kept only PANCAN-encoded rows, concretely 
 insistence on handling PANCAN explicitly rather than via the broadcast flag.
 
 **5. Hypermutator breadth inflation (→ q047).** Excluding hypermutators raises the restricted
-fraction (52% → 60% at ≥5%) and **232 drivers lose ≥1 cancer-type of breadth** — apparent breadth is
-partly hypermutator-driven passenger recurrence. Handed to `question:q047` for per-sample dissection.
+fraction (52% → 60% at ≥5%) and **181 drivers lose ≥1 cancer-type of breadth at that same ≥5% grade**
+(232 at ≥2%) — apparent breadth is partly hypermutator-driven passenger recurrence. Handed to
+`question:q047` for per-sample dissection.
 
 ## Limitations
 

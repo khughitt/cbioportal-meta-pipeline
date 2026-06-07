@@ -23,6 +23,7 @@ related:
   - "hypothesis:h06-pre-malignant-n-minus-1-driver-carriage"
   - "hypothesis:h04-mhn-pathway-ordering"
   - "question:q012-mutation-ordering-cross-sectional-inference"
+  - "question:q046-clocklike-signature-vs-driver-count-age-at-diagnosis"
   - "discussion:2026-06-07-age-of-onset-and-multistage-mutation-requirement"
 created: "2026-06-07"
 updated: "2026-06-07"

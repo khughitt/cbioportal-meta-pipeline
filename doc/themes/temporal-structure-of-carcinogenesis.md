@@ -8,6 +8,9 @@ theme_scope: project
 related:
 - question:q012-mutation-ordering-cross-sectional-inference
 - question:q041-driver-complexity-vs-median-age-at-diagnosis
+- question:q043-driver-cancer-type-breadth-distribution
+- question:q045-pathway-grain-convergence-vs-gene-grain-divergence
+- question:q046-clocklike-signature-vs-driver-count-age-at-diagnosis
 - hypothesis:h04-mhn-pathway-ordering
 - hypothesis:h06-pre-malignant-n-minus-1-driver-carriage
 - topic:multistage-carcinogenesis-and-age-of-onset

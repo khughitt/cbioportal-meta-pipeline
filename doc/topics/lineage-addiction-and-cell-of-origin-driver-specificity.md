@@ -23,6 +23,9 @@ source_refs:
   - "paper:dosSantos2023"
 related:
   - "question:q042-driver-normal-expression-tissue-cell-type-specificity"
+  - "question:q043-driver-cancer-type-breadth-distribution"
+  - "question:q045-pathway-grain-convergence-vs-gene-grain-divergence"
+  - "question:q047-hypermutation-confound-on-driver-tissue-specificity"
   - "topic:cancer-driver-genes"
   - "topic:oncofetal-developmental-reprogramming"
   - "hypothesis:h12-neural-gene-enrichment-length-histology-artifact"

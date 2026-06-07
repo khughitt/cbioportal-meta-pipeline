@@ -13,6 +13,9 @@ source_refs:
   - "paper:Sack2018"
   - "paper:MartinezJimenez2020"
   - "paper:KryuchkovaMostacci2017"
+  - "paper:Pavinato2025"
+  - "paper:Kauko2025"
+  - "paper:dosSantos2023"
 related:
   - "topic:lineage-addiction-and-cell-of-origin-driver-specificity"
   - "question:q042-driver-normal-expression-tissue-cell-type-specificity"
@@ -61,8 +64,12 @@ drivers," and only one is the user's hypothesis:
    mutation*. These genuinely have high normal-expression specificity (and lineage addiction is
    often an **expression dependency, not a recurrent mutation** — the `h12` caveat again).
 2. **Context-dependent ubiquitous drivers — broadly expressed, specific only in *effect*.**
-   `paper:Haigis2019` ("the rule, not the exception"), `paper:Sack2018` (experimental): APC, KRAS,
-   TP53 drive in a tissue-restricted way without being tissue-restricted in expression.
+   `paper:Haigis2019` ("the rule, not the exception"; the unifying mechanism is the cell's
+   preexisting **chromatin/epigenetic state** — e.g. EZH2 drives as GoF in lymphoma but LoF in
+   T-ALL), `paper:Sack2018` (experimental: 80–90% of proliferation-promoting genes differ between
+   cell types). `paper:Pavinato2025` names this **oncogenic competence**: the same mutation
+   transforms only in a permissive cell *state* (PIK3CA-H1047R growth-promoting in esophagus,
+   growth-suppressive in skin). Here specificity lives in the **state**, not the gene's expression.
 
 The **oncogene/TSG axis predicts the split**: lineage-survival drivers are overwhelmingly
 **oncogenes**; the broad genome-guardian **tumor suppressors** (TP53, RB1, PTEN, MMR) are
@@ -70,6 +77,14 @@ housekeeping-like, possibly *less* specific than random. So a blanket "cancer ge
 tissue-specific than chance" likely **washes out**; the defensible claim is narrower:
 **cancer-type-restricted drivers — concentrated in the oncogene subset — are enriched for
 cell-type-restricted normal expression, while pan-cancer drivers are broad.**
+
+**Two refinements from the 2025 work.** (i) `paper:Kauko2025`: diverse oncogenes **converge** on a
+common growth program (MYC → ribosome biogenesis / translation; NOLC1 node), so *which* oncogene is
+mutated may reflect cell-of-origin accessibility more than divergent downstream biology — a
+**temper** on "each tissue has its own driver biology" (invasion/metastasis hallmarks, notably, do
+*not* converge). (ii) `paper:dosSantos2023`: tumors **lose 20–51% of their tissue-of-origin
+expression** and gain ectopic expression ("loss of identity"), which is exactly why q042's
+specificity score must be computed on a **normal** reference, never tumor RNA.
 
 ## Critical Analysis
 
@@ -86,15 +101,21 @@ cell-type-restricted normal expression, while pan-cancer drivers are broad.**
   defining lineage dependency of a cancer and contribute *nothing* to a mutation-frequency table.
   A mutation-only pipeline sees the route-1 drivers that *are* recurrently mutated/amplified, and
   misses pure expression dependencies — state that boundary.
-- **We can do the driver side now; the specificity side needs ingest.** COSMIC CGC role+tissue
-  labels and Bailey rosters are on disk; a normal-expression reference (GTEx / HPA / Tabula
-  Sapiens) + a Tau computation is a new prerequisite (no expression modality exists yet).
+- **The driver side needs a roster-counting step, not the annotated feathers.** COSMIC CGC
+  role/tissue labels are on disk, but "restricted vs pan-cancer" must be built from **raw per-cancer
+  rosters** (Bailey with PANCAN rows excluded/encoded separately; IntOGen `paper:MartinezJimenez2020`
+  — **360/568 drivers restricted to 1–2 types, 12 cancer-wide**) — *not* the `bailey2018_driver`
+  flag, which ORs PANCAN drivers into **every** cancer row (`annotate_lib.py`). The specificity side
+  needs a new normal-expression ingest (no expression modality exists yet).
 
 ## Relationship to existing entities
 
 - **`hypothesis:h12` is a special case** — "are neural genes top-mutated because they are
-  tissue-restricted developmental genes?" `q035`/`q036` already build the
-  specificity-of-a-gene-set + fetal-vs-adult machinery `q042` needs.
+  tissue-restricted developmental genes?" `q035`/`q036` define the *same approach*
+  (specificity-of-a-gene-set + fetal-vs-adult expression), and `q042` **will reuse that planned
+  machinery** — which is **not yet built**: `t216` (build the expression-atlas score) and `t225`
+  (acquire GTEx/HPA/Allen/PanglaoDB/BrainSpan references) are still proposed tasks. q042 shares
+  q035/q036's *prerequisite*, not an existing capability.
 - **`topic:oncofetal-developmental-reprogramming`** — lineage/developmental genes overlap the
   oncofetal axis; restricted-oncogene lineage factors are often developmental TFs.
 - **`hypothesis:h03`** — the length null and annotation-attention bias apply directly.
@@ -107,7 +128,8 @@ cell-type-restricted normal expression, while pan-cancer drivers are broad.**
 | **P3** | `question:q042` — restricted-vs-pan-cancer driver Tau, OG vs TSG, length+expression-matched background, bulk + cell-type grains. Substrate (roster + role labels) on disk; gated on vendoring a normal-expression reference + Tau. | `question:q042`, `data/cosmic_cgc.tsv` + new expression ingest |
 | **P3** | Promote a **hypothesis** ("restricted oncogenes > TSGs > matched background in cell-type Tau; pan-cancer drivers broad") once the specificity reference exists and a pilot shows the effect direction. | from `q042` |
 | **P4** | Decide the expression reference + grain: GTEx (tissue) vs HPA / Tabula Sapiens (cell type). Cell-type grain is the rigorous version (MM/plasma-cell), bulk the cheap approximation. | ingest task |
-| **note** | 3 of 7 source papers are **paywalled / abstract-based** (`paper:Garraway2006`, `paper:Haigis2019`, `paper:MartinezJimenez2020`) — summaries carry `[UNVERIFIED]`; deepen if PDFs are obtained. | `doc/papers/` |
+| **done** | The 3 previously-paywalled papers (`paper:Garraway2006`, `paper:Haigis2019`, `paper:MartinezJimenez2020`) are now **full-text from PDF** (deepened 2026-06-07; `[UNVERIFIED]` markers removed; PDFs in `papers/pdfs/`). | `doc/papers/` |
+| **note** | Batch added 3 papers — `paper:Pavinato2025` (oncogenic competence), `paper:Kauko2025` (oncogene convergence on MYC/translation), `paper:dosSantos2023` (cancer loss-of-identity) — folded into Current Position + Critical Analysis. | `doc/papers/` |
 
 ## Synthesis
 

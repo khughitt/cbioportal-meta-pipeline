@@ -18,6 +18,9 @@ source_refs:
   - "paper:Sack2018"
   - "paper:MartinezJimenez2020"
   - "paper:KryuchkovaMostacci2017"
+  - "paper:Pavinato2025"
+  - "paper:Kauko2025"
+  - "paper:dosSantos2023"
 related:
   - "question:q042-driver-normal-expression-tissue-cell-type-specificity"
   - "topic:cancer-driver-genes"
@@ -95,6 +98,24 @@ specific by construction** — so any driver-specificity test must match backgro
 level** as well as **gene length** (`hypothesis:h03`). Tau is computed on a chosen normal-expression
 reference (bulk GTEx for tissue grain; HPA / Tabula Sapiens single-cell for cell-type grain) —
 neither is vendored in the pipeline yet (the q042 prerequisite).
+
+## Oncogenic competence, convergence, and loss-of-identity (2025 additions)
+
+- **Oncogenic competence (`paper:Pavinato2025`).** The mechanistic core of route 2: a mutation
+  transforms only in a **permissive cell state** set by the transcriptional/epigenetic program plus
+  microenvironment (PIK3CA-H1047R is growth-promoting in esophagus, growth-suppressive in skin).
+  Specificity can live in the **cell state**, not the driver gene's expression — so a low-Tau driver
+  is not evidence against tissue-specific driving.
+- **Convergence (`paper:Kauko2025`).** Diverse oncogenes **converge** on a shared growth program
+  (MYC → ribosome biogenesis / translation; NOLC1 node). This **tempers** "each tissue has its own
+  driver biology": the divergence is largely at the *entry point* (which oncogene the cell-of-origin
+  makes accessible), not the downstream program — although **invasion/metastasis** hallmarks do not
+  converge.
+- **Loss of identity (`paper:dosSantos2023`).** Tumors **downregulate 20–51% of their
+  tissue-of-origin-specific genes** and ectopically activate other-tissue genes (survival-associated,
+  age-independent). This is the **design constraint** for q042: a driver's normal-expression
+  specificity must be measured on a **normal** reference (GTEx/HPA/Tabula Sapiens), because tumor RNA
+  no longer reflects the cell-of-origin baseline. (THCA, PRAD are noted exceptions.)
 
 ## What this project has vs needs
 

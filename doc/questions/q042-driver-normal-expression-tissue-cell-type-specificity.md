@@ -22,9 +22,13 @@ datasets:
 source_refs:
   - "paper:KryuchkovaMostacci2017"
   - "paper:Garraway2006"
+  - "paper:Shaffer2008"
   - "paper:Haigis2019"
   - "paper:Sack2018"
   - "paper:MartinezJimenez2020"
+  - "paper:Hoadley2018"
+  - "paper:Pavinato2025"
+  - "paper:dosSantos2023"
 related:
   - "topic:lineage-addiction-and-cell-of-origin-driver-specificity"
   - "topic:cancer-driver-genes"
@@ -45,7 +49,8 @@ updated: "2026-06-07"
 Some drivers are **pan-cancer** (TP53, PIK3CA, KRAS); others are **restricted** to one cancer
 type or a few. The hypothesis: **cancer-type-restricted drivers are enriched for genes whose
 *normal* expression is confined to that cancer's cell-of-origin** — i.e. lineage genes
-(`paper:Garraway2006`'s lineage-survival oncogenes: MITF/melanoma, AR/prostate, IRF4/plasma cell)
+(`paper:Garraway2006`'s lineage-survival oncogenes: MITF/melanoma, AR/prostate, NKX2-1/lung; and,
+as the project's exemplar, IRF4 in multiple myeloma — a plasma-cell master TF, `paper:Shaffer2008`)
 — whereas pan-cancer drivers are broadly expressed. The sharp, testable version separates two
 sub-questions:
 
@@ -81,10 +86,19 @@ sub-questions:
 
 ## What we can compute (substrate already on disk)
 
-- **Driver axis (have it):** `data/cosmic_cgc.tsv` gives `Role in Cancer` (oncogene/TSG/fusion),
-  `Tissue Type`, and `Tumour Types(Somatic)`; `data/bailey2018_table_s1.tsv` + the annotated
-  gene×cancer feathers give per-cancer rosters. "Restricted vs pan-cancer" = count of cancer types
-  a gene drives in.
+- **Driver axis (substrate on disk, but needs an explicit roster-counting step — not the
+  annotated feathers).** Mode-of-action labels come from `data/cosmic_cgc.tsv` (`Role in Cancer`
+  oncogene/TSG/fusion, `Tissue Type`). **The "restricted vs pan-cancer" count must NOT be read off
+  the annotated gene×cancer feathers:** `annotate_lib.py` ORs Bailey **PANCAN** drivers into the
+  `bailey2018_driver` flag for *every* cancer-type row (documented in
+  `doc/guides/canonical-outputs.md`), so a gene's apparent per-cancer breadth there is
+  contaminated by pan-cancer broadcast. The restriction variable requires a dedicated counting
+  step over **raw per-cancer rosters** — `data/bailey2018_table_s1.tsv` with the `PANCAN` rows
+  **excluded or separately encoded**, and/or the IntOGen per-tumor-type compendium
+  (`paper:MartinezJimenez2020`: 360/568 driver genes (63%) restricted to 1–2 tumor types; only 12
+  cancer-wide drivers — TP53, KRAS, PIK3CA, PTEN, KMT2D, KMT2C, LRP1B, ARID1A, RB1, FAT4, NF1,
+  CDKN2A). Cross-check the two roster sources; do not let PANCAN-broadcast semantics define
+  "pan-cancer."
 - **Specificity axis (external prerequisite — not yet vendored):** a normal-expression reference
   + a Tau computation. **Tissue grain:** GTEx. **Cell-type grain:** HPA / Tabula Sapiens. This is
   a new ingest task (no expression modality exists in the pipeline today).
@@ -108,6 +122,15 @@ sub-questions:
   drivers are tissue-*specific in effect* while broadly *expressed* (APC, KRAS). These are
   **expected low-Tau "false negatives"** for an expression-restriction test and must not be read
   as refuting lineage addiction — they are a *different* route to tissue-specific driving.
+  `paper:Pavinato2025` (oncogenic competence) is the mechanism: the same mutation transforms only
+  in a permissive cell *state* (e.g. PIK3CA-H1047R growth-promoting in esophagus, growth-suppressive
+  in skin) — so route-2 specificity lives in the cell state, not the driver gene's expression.
+- **Use NORMAL expression, never tumor expression (design-critical).** `paper:dosSantos2023` shows
+  tumors **lose 20.5–51.3% of their tissue-of-origin-specific genes** and gain ectopic other-tissue
+  expression ("loss of identity"). Computing a driver's specificity from tumor RNA would therefore
+  measure the disease, not the cell-of-origin baseline. Tau must be computed on a **normal**
+  reference (GTEx / HPA / Tabula Sapiens). (THCA and PRAD are noted exceptions to the loss-of-
+  identity pattern — watch them if they surface as outliers.)
 
 ## Predictions
 
@@ -119,8 +142,14 @@ sub-questions:
 
 ## Stop / null conditions
 
-- After length+expression matching, restricted vs pan-cancer Tau difference vanishes → the
-  apparent lineage signal was a detection/annotation artifact.
+- The null must be evaluated **stratified by mode of action (OG/TSG) and route**, not on the
+  pooled set. An *unstratified* restricted-vs-pan-cancer Tau difference vanishing after
+  length+expression matching does **not** by itself imply a detection/annotation artifact — it is
+  equally consistent with the restricted-driver set being **dominated by route-2 context-dependent
+  drivers** (broadly expressed, low-Tau by design; `paper:Haigis2019`/`paper:Sack2018`). The
+  artifact reading is warranted only if the effect also vanishes **within the restricted-oncogene
+  subset** (where lineage-factor route-1 drivers concentrate). So: null = "no Tau enrichment in the
+  restricted *oncogene* subset vs matched background," not "no difference in the pooled set."
 - No expression reference can be vendored at acceptable cost → question blocked at the ingest
   prerequisite (document, do not fake with GO labels).
 

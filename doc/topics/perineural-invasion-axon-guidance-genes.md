@@ -15,6 +15,7 @@ source_refs:
   - "paper:Fan2024"
   - "paper:Cortese2020"
   - "paper:Xiong2023"
+  - "paper:Zhang2025"
 related:
   - "hypothesis:h12-neural-gene-enrichment-length-histology-artifact"
   - "hypothesis:h03-gene-length-confounds-literature-attention"
@@ -50,6 +51,12 @@ This makes PNI the sharpest setting to disentangle **H1 (selection on guidance g
 **H5 (length)** and **H4 (CNS)**: PNI is cancer-type-structured (PDAC ~100%, prostate 25–90%,
 HNSCC, CRC), so a *genuine* PNI-driven mutation signal would track PNI-prevalent cancer types,
 whereas a length artifact would be flat across types and a CNS artifact would localize to glioma.
+
+**SLIT2 is the cautionary example (`paper:Zhang2025`, Cell 2025):** in HNSCC, the axon-guidance
+ligand SLIT2 drives an immune-escape circuit — but through **ATF4-dependent secretion
+(expression)**, not somatic mutation. A long axon-guidance gene can be mechanistically central to
+neuro-oncology while contributing *nothing* to a somatic-mutation ranking except length-scaled
+passengers. This is exactly the dissociation `hypothesis:h12` predicts.
 
 ## Tests this topic feeds
 

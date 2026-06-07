@@ -15,6 +15,7 @@ source_refs:
   - "paper:Pu2025"
   - "paper:Cortese2020"
   - "paper:Mravec2008"
+  - "paper:Zhang2025"
 related:
   - "hypothesis:h12-neural-gene-enrichment-length-histology-artifact"
   - "hypothesis:h01-non-tumor-signal-contamination"
@@ -47,6 +48,12 @@ system focus: `paper:Cortese2020`; historical nervous–endocrine–immune triad
 - **NF1 in neurons** → Midkine→CCL4→microglia→CCL5 circuit supporting glioma stem cells
   (a rare case of a *neural-gene mutation* with immune consequence — but in NF1, an established
   driver, not in the candidate list).
+- **Inter-organ circuit (primary evidence, `paper:Zhang2025`, Cell 2025):** in HNSCC, immune
+  pressure drives **ATF4-dependent SLIT2 secretion** by cancer cells → activates tumor-innervating
+  nociceptive neurons → propagates to **tumor-draining-lymph-node** nociceptors → **CGRP (CALCA)**
+  → decreased CCL5 → **M2 TAM** polarization → reduced ICB efficacy. The strongest causal
+  demonstration in this batch that nerves mediate immune escape — and a clean example of a neural/
+  axon-guidance gene (SLIT2) acting via **expression, not mutation**.
 
 ## Relevance to this project
 

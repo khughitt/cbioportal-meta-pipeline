@@ -32,6 +32,7 @@ source_refs:
   - "paper:Kulke2012"
   - "paper:Ahmed2020"
   - "paper:Tan2024"
+  - "paper:Zhang2025"
 related:
   - "hypothesis:h12-neural-gene-enrichment-length-histology-artifact"
   - "hypothesis:h03-gene-length-confounds-literature-attention"
@@ -65,7 +66,12 @@ genes, and none of the candidate genes appear in it.** Across all 21 papers:
    reprogramming** (stated explicitly in `paper:Hanahan2023`). `paper:Wang2025` and
    `paper:Xiong2023` make the cleanest version of the point: the circuitry lives in the
    **host** peripheral/central nervous system, not in the tumor genome. A mutation-frequency
-   table is therefore *not* the expected readout for this biology.
+   table is therefore *not* the expected readout for this biology. *(Late addition,
+   `paper:Zhang2025`, Cell 2025: the sharpest single example — the axon-guidance gene **SLIT2**
+   drives an HNSCC immune-escape circuit via **ATF4-dependent secretion (expression)**, not
+   somatic mutation. A long "neural" gene can be mechanistically central yet contribute only
+   length-scaled passengers to a mutation ranking — precisely the dissociation `hypothesis:h12`
+   predicts.)*
 
 2. **The canonical neural-cancer genes are a different set from the candidate list.** The
    field's effectors are NLGN3, ADAM10, NGF, BDNF, NTRK1/2/3 (TrkA/B/C), ADRB1/2/3,

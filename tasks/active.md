@@ -999,3 +999,18 @@ The poc-2026-04-17 samples_annotated was regenerated with correct per-sample pan
 **Follow-up — both deferred items RESOLVED (2026-06-07, branch `feat/poc-pooled-meta-and-panel-map`):** the POC now runs a full `rule all` clean (9/9; final dry-run "Nothing to be done"). Two more latent bugs surfaced + fixed (tested):
 - `metadata/samples.feather` + `sample_panel_map.feather`: added the three PanCanAtlas WES study ids (`brca`/`skcm`/`ucec` `_pan_can_atlas_2018`) to `data/study_panels.tsv` (`create_combined_sample_table` fails fast on the first unmapped study). **Bug:** `build_pooled_gene_cancer_input._load_sample_panel_ids` derived study_id with `_study_id_from_path` (assumes the deeper `mut/table/{file}` layout), off-by-one on `metadata/samples.feather` → all panel ids collapsed under key `"studies"` → MSK panel class unresolvable. Fixed with layout-aware `_study_id_from_samples_path`.
 - Canonical `gene_cancer_study_ratio_annotated.feather`: stood up the `r-meta` conda env and ran the first-time t077 R meta-analysis (all 5 pooled outputs). Env-build hit conda-libmamba-solver 26.4.0's flaky repodata-shards sqlite race (`database is locked`, 10 unsynchronized threads on one un-timeout'd connection) — worked around with `CONDA_REPODATA_THREADS=1`. Pooled result is all `status=skipped_k` (k<3, correct: 4-study cohort, ≤2 studies share any cancer type); canonical table carries the 12 NaN pooled columns. **Bug:** `validate_per_study_mutation_substrates` bundled `cancer_type` with the hard identifier check → MSK null-`cancer_type` sample broke `rule all`; applied the same `_reported_missing` relaxation as `validate_samples_annotated`.
+
+## [t228] Clarify config-poc green dry-run invocation versus Snakemake provenance triggers
+- priority: P3
+- status: proposed
+- aspects: [computational-analysis]
+- related: [task:t227]
+- created: 2026-06-07
+
+Review of `feat/poc-pooled-meta-and-panel-map` found that the documented config-poc dry-run is
+mtime-clean but not provenance-clean. The command
+`uv run --frozen snakemake -s code/workflows/Snakefile -n --configfile code/config/config-poc.yml --use-conda --conda-frontend mamba`
+schedules 72 jobs due Snakemake provenance/code/env triggers, while adding
+`--rerun-triggers mtime` reports `Nothing to be done` plus three missing-provenance notes.
+The t227/AGENTS wording should either record the exact mtime-based verification command or
+clean/update Snakemake metadata before claiming a default final dry-run is clean.

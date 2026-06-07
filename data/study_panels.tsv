@@ -12,4 +12,7 @@ luad_tcga	wes	wes
 gbm_tcga	wes	wes
 lgg_tcga	wes	wes
 skcm_tcga	wes	wes
+brca_tcga_pan_can_atlas_2018	wes	wes
+skcm_tcga_pan_can_atlas_2018	wes	wes
+ucec_tcga_pan_can_atlas_2018	wes	wes
 msk_impact_2017	msk_impact_410	panel

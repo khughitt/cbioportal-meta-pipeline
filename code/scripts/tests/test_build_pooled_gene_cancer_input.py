@@ -3,10 +3,15 @@
 # science:end
 """Tests for the long-format pooled-input adapter used by t077."""
 
+from pathlib import Path
+
 import pandas as pd
 import pytest
 
-from build_pooled_gene_cancer_input import build_pooled_input
+from build_pooled_gene_cancer_input import (
+    _load_sample_panel_ids,
+    build_pooled_input,
+)
 
 
 def _per_study_frame(
@@ -145,6 +150,39 @@ def test_build_pooled_input_marks_mc3_studies_explicitly() -> None:
     row = pooled.iloc[0]
     assert row["panel_class"] == "MC3"
     assert bool(row["matched_normal"]) is True
+
+
+def test_load_sample_panel_ids_keys_on_study_under_metadata_layout(
+    tmp_path: Path,
+) -> None:
+    """The real ``studies/{id}/metadata/samples.feather`` layout must key on the
+    study id, not collapse every study under ``"studies"`` (off-by-one regression)."""
+    study_dir = tmp_path / "studies" / "msk_impact_2017" / "metadata"
+    study_dir.mkdir(parents=True)
+    samples_path = study_dir / "samples.feather"
+    pd.DataFrame(
+        {
+            "sample_id": ["S1", "S2"],
+            "panel_id": ["MSK-IMPACT-410", "MSK-IMPACT-341"],
+        }
+    ).to_feather(samples_path)
+
+    out = _load_sample_panel_ids([str(samples_path)])
+
+    assert out == {"msk_impact_2017": {"MSK-IMPACT-410", "MSK-IMPACT-341"}}
+    assert "studies" not in out
+
+
+def test_load_sample_panel_ids_handles_legacy_samples_stem(tmp_path: Path) -> None:
+    """The legacy ``{id}_samples.feather`` flat layout still derives the study id."""
+    samples_path = tmp_path / "msk_impact_2017_samples.feather"
+    pd.DataFrame({"sample_id": ["S1"], "panel_id": ["MSK-IMPACT-410"]}).to_feather(
+        samples_path
+    )
+
+    out = _load_sample_panel_ids([str(samples_path)])
+
+    assert out == {"msk_impact_2017": {"MSK-IMPACT-410"}}
 
 
 def test_unknown_panel_class_requires_explicit_override() -> None:

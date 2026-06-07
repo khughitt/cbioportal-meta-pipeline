@@ -197,10 +197,24 @@ def _load_per_study_frames(paths: list[str]) -> list[tuple[str, pd.DataFrame]]:
     return frames
 
 
+def _study_id_from_samples_path(path: str) -> str:
+    """Recover study_id from a per-study ``samples.feather`` path.
+
+    Real layout is ``studies/{id}/metadata/samples.feather`` — the study dir is
+    ``parents[1]``. The generic ``_study_id_from_path`` assumes the deeper
+    ``mut/table/{file}`` layout and is off-by-one here (it returns ``"studies"``).
+    The legacy ``{id}_samples.feather`` test layout is handled by stem-stripping.
+    """
+    p = Path(path)
+    if p.parent.name == "metadata":
+        return p.parent.parent.name
+    return p.stem.removesuffix("_samples")
+
+
 def _load_sample_panel_ids(sample_paths: list[str]) -> dict[str, set[str]]:
     out: dict[str, set[str]] = {}
     for path in sample_paths:
-        study_id = _study_id_from_path(path)
+        study_id = _study_id_from_samples_path(path)
         samples = pd.read_feather(path)
         if "panel_id" not in samples.columns:
             out[study_id] = set()

@@ -30,11 +30,25 @@ related:
   - "topic:lineage-addiction-and-cell-of-origin-driver-specificity"
   - "topic:cancer-driver-genes"
   - "theme:temporal-structure-of-carcinogenesis"
+  - "interpretation:2026-06-07-q043-driver-breadth-distribution"
 created: "2026-06-07"
 updated: "2026-06-07"
 ---
 
 # What is the distribution of cancer-type breadth across drivers in our own aggregated cohort, and does it reproduce IntOGen's restricted-vs-pan-cancer split?
+
+## First-pass result (2026-06-07, poc-2026-04-17 cohort)
+
+**Supported, qualitatively robust; restricted fraction is threshold-defined.** On the 4-study POC
+(13,006 samples, 410 panel-covered genes), breadth is heavy-tailed: TP53 broadest (33/57 types), the
+hub set TSG-dominated, oncogenes in the restricted tail (TSG median breadth > oncogene at every
+threshold) — the structure q042 predicts. **8 of IntOGen's 12 cancer-wide drivers** are panel-covered
+and all sit at the top. The fraction "restricted to 1–2 types" is **strongly threshold-dependent**
+(8%→19%→52% at 1/2/5%; →60% with hypermutators excluded), matching IntOGen's 63% only at a stringent
+≥5% recurrence grade — so "restricted vs pan-cancer" is a recurrence-bar choice, not a constant. The
+roster feather q042 needs now exists. See
+`interpretation:2026-06-07-q043-driver-breadth-distribution`;
+`code/notebooks/q043_driver_breadth_distribution.py`.
 
 ## Summary
 

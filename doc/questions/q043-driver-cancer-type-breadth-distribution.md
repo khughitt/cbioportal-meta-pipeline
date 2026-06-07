@@ -31,6 +31,7 @@ related:
   - "topic:cancer-driver-genes"
   - "theme:temporal-structure-of-carcinogenesis"
   - "interpretation:2026-06-07-q043-driver-breadth-distribution"
+  - "interpretation:2026-06-07-panel-tmb-denominator-stale-artifact-fix"
 created: "2026-06-07"
 updated: "2026-06-07"
 ---
@@ -44,10 +45,12 @@ updated: "2026-06-07"
 hub set TSG-dominated, oncogenes in the restricted tail (TSG median breadth > oncogene at every
 threshold) — the structure q042 predicts. **8 of IntOGen's 12 cancer-wide drivers** are panel-covered
 and all sit at the top. The fraction "restricted to 1–2 types" is **strongly threshold-dependent**
-(8%→19%→52% at 1/2/5%; →60% with hypermutators excluded), matching IntOGen's 63% only at a stringent
-≥5% recurrence grade — so "restricted vs pan-cancer" is a recurrence-bar choice, not a constant. The
+(8%→19%→52% at 1/2/5%; **→68% with hypermutators excluded** on corrected post-TMB-fix flags), so it
+**brackets** IntOGen's 63% at the ≥5% grade (inclusive below, hypermutator-excluded above) — i.e.
+"restricted vs pan-cancer" is a recurrence-bar + hypermutator-handling choice, not a constant. The
 roster feather q042 needs now exists. See
-`interpretation:2026-06-07-q043-driver-breadth-distribution`;
+`interpretation:2026-06-07-q043-driver-breadth-distribution` and
+`interpretation:2026-06-07-panel-tmb-denominator-stale-artifact-fix`;
 `code/notebooks/q043_driver_breadth_distribution.py`.
 
 ## Summary

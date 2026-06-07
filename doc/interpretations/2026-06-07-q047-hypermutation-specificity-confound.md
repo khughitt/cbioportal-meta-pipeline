@@ -1,7 +1,7 @@
 ---
 id: "interpretation:2026-06-07-q047-hypermutation-specificity-confound"
 type: "interpretation"
-title: "q047 first pass: hypermutation inflates breadth (confirmed) but per-sample dilution is under-identified on panel data"
+title: "q047: hypermutation inflates breadth AND dilutes driver-share across 8 cancer types (post-TMB-fix)"
 status: "active"
 source_refs:
   - "paper:MartinezJimenez2020"
@@ -10,78 +10,91 @@ related:
   - "question:q043-driver-cancer-type-breadth-distribution"
   - "question:q042-driver-normal-expression-tissue-cell-type-specificity"
   - "topic:lineage-addiction-and-cell-of-origin-driver-specificity"
+  - "interpretation:2026-06-07-panel-tmb-denominator-stale-artifact-fix"
 created: "2026-06-07"
 updated: "2026-06-07"
 ---
 
-# Interpretation: q047 — hypermutation as a driver-specificity confound (first pass)
+# Interpretation: q047 — hypermutation as a driver-specificity confound
+
+> **Revised 2026-06-07 after the panel-TMB-denominator fix**
+> (`interpretation:2026-06-07-panel-tmb-denominator-stale-artifact-fix`). The first pass ran on a
+> stale `samples_annotated` where panel TMB was ~25× too small, so only the two WES cancer types had
+> any hypermutators and the per-sample dilution test looked "under-identified." All numbers below are
+> post-fix; the earlier "weak on panel data" verdict was itself an artifact of the broken flags.
 
 ## Verdict
 
-**Partial.** One of q047's two claims is **confirmed and actionable**: hypermutators inflate apparent
-cancer-type **breadth** (the q043↔q047 link), so q042/q043 must stratify on `is_hypermutator`. The
-other claim — a clean *per-sample dilution of the restricted-lineage-oncogene signal* — is **not
-identifiable on this targeted-panel-dominated cohort**, for structural reasons that themselves refine
-the question's null condition.
+**Confirmed, both arms.** (1) Hypermutators inflate apparent cancer-type **breadth** — so q042/q043
+must stratify on `is_hypermutator`. (2) Hypermutators **dilute the driver share of mutational load**
+across the 8 testable cancer types (drop of 0.10–0.22). The one residual caveat is the per-gene
+prevalence-ratio metric, which stays baseline-confounded and is not the right tool — but the
+driver-share test (T2) cleanly shows the dilution.
 
 ## Cohort + method
 
-- **Cohort:** `results/poc-2026-04-17/` — 542/13,006 samples flagged `is_hypermutator` (4.2%).
+- **Cohort:** `results/poc-2026-04-17/` (post-fix) — 557/13,006 samples flagged `is_hypermutator`
+  (4.3%), now correctly distributed across panel and WES cancer types.
 - Per-sample coding-nonsynonymous gene calls from per-study `mut_filtered.feather` (100% sample-meta
-  join), joined to `is_hypermutator` + `cancer_type` from `samples_annotated.feather`.
+  join), joined to `is_hypermutator` + `cancer_type` from `samples_annotated.feather` (samples with
+  zero panel nonsynonymous mutations included).
 - Gene classes reuse the q043 breadth feather, oncogene-only in three bands: restricted_oncogene =
-  breadth ≤2; mid_oncogene = 3–9; broad_oncogene = breadth ≥10 (the documented estimand — earlier
-  drafts mislabelled all non-restricted oncogenes as "broad"). Plus tsg / oncogene_and_tsg /
+  breadth ≤2; mid_oncogene = 3–9; broad_oncogene = breadth ≥10. Plus tsg / oncogene_and_tsg /
   cgc_other by CGC role; background = non-CGC panel genes.
 - Script: `code/notebooks/q047_hypermutation_specificity_confound.py`.
 
 ## Key results
 
-**1. Hypermutators concentrate in two cancer types — and CRC is under-flagged.** Of 542
-hypermutators, 281 are Melanoma (35% of 813 — UV) and 190 Endometrial (25% of 747 — MSI/POLE). Only
-these two cancer types cleared the testability floor (≥15 hyper & ≥30 non-hyper). **Colorectal — the
-canonical MSI-hypermutator type — was *not* sufficiently flagged**, which points at the composite
-`is_hypermutator` flag under-calling CRC MSI in this POC (a flagging-audit follow-up, not a q047
-result).
+**1. Eight testable cancer types (was 2 pre-fix).** Bladder, Colorectal, Endometrial,
+Esophagogastric, Hepatobiliary, Melanoma, Non-Small Cell Lung, cutaneous SCC — i.e. the MSI / POLE /
+smoking / UV hypermutator-bearing types, now that panel TMB is correct.
 
-**2. Breadth inflation confirmed (the actionable finding).** Excluding hypermutators raises the
-restricted-driver fraction 52%→60% (q043, ≥5%) and **181 drivers lose ≥1 cancer-type of breadth at
-the matching ≥5% grade** (232 at the ≥2% grade). Hypermutator passenger recurrence does inflate
-apparent breadth — so any restricted-vs-pan-cancer count (q042/q043) must be computed with
-hypermutators excluded *or* explicitly stratified.
+**2. Breadth inflation confirmed (the q043↔q047 link).** Excluding hypermutators raises the
+restricted-driver fraction **52%→68% at ≥5%** (IntOGen's 63% is now bracketed), and **186 drivers
+lose ≥1 cancer-type of breadth at ≥5%** (253 at ≥2%). Any restricted-vs-pan-cancer count (q042/q043)
+must be computed with hypermutators excluded or stratified.
 
-**3. Per-sample passenger dilution is WEAK on panel data (a limitation, not a biology result).**
-Within cancer type (samples with zero panel nonsynonymous mutations included), hypermutators carry
-far more panel mutations (Endometrial median 7→93.5; Melanoma 9→50), but the **driver share of load
-barely moves** (UCEC 0.941→0.882; Melanoma 0.900→0.895). Reason: the MSK-IMPACT panel is
-**driver-enriched by design** — off-panel passengers are not even measured, so "driver share" is
-mechanically ≈0.9 regardless of hypermutation. The passenger-dilution test needs WES.
+**3. Per-sample driver-share dilution is now clearly detectable.** Within cancer type, the driver
+share of (panel) mutational load drops markedly in hypermutators — a consistent passenger-dilution
+signal across all 8 types:
 
-**4. The prevalence-ratio metric is baseline-confounded — counter to the naive prediction.** Median
-log2(prev_hyper / prev_non) by class: cgc_other 4.48 and restricted_oncogene 4.40 (highest),
-tsg 3.80, oncogene_and_tsg 3.77, background 3.22, mid_oncogene 2.56, **broad_oncogene 1.86
-(lowest)**. Naively this looks like restricted oncogenes inflate *most* — the opposite of the
-dilution hypothesis. But it is a **ceiling/baseline artifact**: broad oncogenes (KRAS, PIK3CA, BRAF)
-are already highly prevalent in non-hypermutators, so their ratio is compressed; rare restricted
-genes start near zero and yield mechanically large ratios. The ratio metric does not isolate
-selection-vs-passenger; the one robust read is that **broad oncogenes (the q043 hubs) are the most
-stable to hypermutation**.
+| cancer type | driver share (non-hyper → hyper) |
+|---|---|
+| Colorectal | 0.889 → 0.763 |
+| Non-Small Cell Lung | 0.929 → 0.784 |
+| Esophagogastric | 0.913 → 0.763 |
+| Bladder | 0.900 → 0.791 |
+| cutaneous SCC | 1.000 → 0.783 |
+| Hepatobiliary | 1.000 → 0.833 |
+| Endometrial | 0.917 → 0.873 |
+| Melanoma | 0.900 → 0.875 |
+
+This is the dilution the first pass *could not* see (it only had WES-flagged melanoma/endometrial,
+where the share barely moved). Even on a driver-enriched panel — where off-panel passengers aren't
+measured — the within-panel background-gene fraction rises enough to register the effect.
+
+**4. Broad oncogenes are the most stable class; the per-gene ratio stays baseline-confounded.**
+Median log2(prev_hyper / prev_non) by class: background 3.38, restricted_oncogene 3.51, cgc_other
+3.53, mid_oncogene 3.26, tsg 3.25, oncogene_and_tsg 3.25, **broad_oncogene 2.76 (lowest)**. Classes
+other than broad now cluster tightly (3.2–3.5), so this raw ratio still does not isolate
+selection-vs-passenger (it is a ceiling/baseline artifact — already-common broad oncogenes have
+compressed ratios). The robust read: **broad oncogenes (the q043 hubs) are the most stable under
+hypermutation**; for the dilution question, prefer the T2 driver-share metric over this ratio.
 
 ## Limitations → refinements to q047's design
 
-- **Panel driver-enrichment** caps the driver-share dilution test → rerun on a **WES cohort** where
-  off-panel passengers are counted.
-- **Baseline-prevalence confound** in the per-gene ratio → use a **prevalence-matched** comparison
-  (or the composition of the *excess* mutations: of the extra mutations hypermutators carry, what
-  fraction land on restricted oncogenes vs their non-hypermutator share) rather than a raw log-ratio.
-- **Only two testable cancer types** + **CRC under-flagging** → audit the composite `is_hypermutator`
-  flag (does it under-call CRC MSI?) before a pan-cancer rerun; raise the cohort beyond the 4-study POC.
+- **Per-gene prevalence ratio** remains baseline-confounded → for any *per-gene* claim use a
+  prevalence-matched comparison or the composition of the *excess* mutations; the *per-sample*
+  driver-share (T2) is the trustworthy aggregate read here.
+- **Panel under-resolution** still caps the absolute magnitude (off-panel passengers unmeasured), so
+  the true dilution is *larger* than the within-panel 0.10–0.22; a WES cohort would quantify it fully.
+- **POC scale** — 8 cancer types from 4 studies; a multi-study cohort would broaden coverage.
 
 ## Implications for the questions
 
-- **`q042` / `q043`:** confirmed — compute breadth / restricted-vs-pan-cancer with hypermutators
-  excluded or stratified; the effect is material (181 drivers shift breadth at ≥5%, 232 at ≥2%).
-- **`q047`:** the breadth-inflation arm is closed-positive; the per-sample dilution arm is **deferred
-  to WES** with a baseline-matched metric and a hypermutator-flag audit (CRC). The null is sharpened:
-  on panel data the dilution test is structurally under-identified, so a "no dilution" reading here is
-  *not* evidence against the mechanism.
+- **`q042` / `q043`:** confirmed and material — compute breadth / restricted-vs-pan-cancer with
+  hypermutators excluded or stratified (186 drivers shift breadth at ≥5%; restricted fraction
+  52%→68%).
+- **`q047`:** both arms now positive on panel data. The "CRC under-flagging" follow-up is **resolved**
+  — it was the panel-TMB-denominator bug
+  (`interpretation:2026-06-07-panel-tmb-denominator-stale-artifact-fix`), not a flag-logic gap.

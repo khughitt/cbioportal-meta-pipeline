@@ -16,9 +16,35 @@ import pytest
 from compute_per_sample_tmb import (
     PROTEIN_ALTERING_VARIANT_CLASSES,
     _check_no_duplicate_sample_ids,
+    assert_panel_bearing_resolved,
     compute_tmb_for_study,
     resolve_panel_for_sample,
 )
+
+
+def test_panel_bearing_without_panel_id_fails_loud():
+    """A declared panel-bearing study lacking per-sample panel_id must raise (t226 guard)."""
+    samples = pd.DataFrame({"sample_id": ["s1", "s2"], "cancer_type": ["x", "y"]})
+    with pytest.raises(ValueError, match="panel-bearing"):
+        assert_panel_bearing_resolved(samples, "msk_impact_2017", ["msk_impact_2017"])
+    samples["panel_id"] = [None, None]  # all-null is equally unusable
+    with pytest.raises(ValueError, match="panel-bearing"):
+        assert_panel_bearing_resolved(samples, "msk_impact_2017", ["msk_impact_2017"])
+
+
+def test_panel_bearing_with_panel_id_passes():
+    samples = pd.DataFrame(
+        {"sample_id": ["s1"], "cancer_type": ["x"], "panel_id": ["MSK-IMPACT-410"]}
+    )
+    assert_panel_bearing_resolved(samples, "msk_impact_2017", ["msk_impact_2017"])
+
+
+def test_non_panel_bearing_study_is_exempt():
+    """A WES study not in the list is exempt even with no panel_id (legacy path is correct)."""
+    samples = pd.DataFrame({"sample_id": ["s1"], "cancer_type": ["x"]})
+    assert_panel_bearing_resolved(
+        samples, "brca_tcga_pan_can_atlas_2018", ["msk_impact_2017"]
+    )
 
 
 _MUT_COLS = ["sample_id_tumor", "variant_class"]

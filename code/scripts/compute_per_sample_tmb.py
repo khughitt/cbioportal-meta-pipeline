@@ -53,6 +53,7 @@ Output
 
 import logging
 import math
+from collections.abc import Iterable
 
 import pandas as pd
 
@@ -97,6 +98,34 @@ def _check_no_duplicate_sample_ids(samples: pd.DataFrame, study_id: str) -> None
         raise ValueError(
             f"Study {study_id!r}: samples table has duplicate sample_id values: "
             f"{dups[:10]!r}. Deduplicate upstream."
+        )
+
+
+def assert_panel_bearing_resolved(
+    samples: pd.DataFrame,
+    study_id: str,
+    panel_bearing_studies: Iterable[str],
+) -> None:
+    """Fail-loud guard: a declared panel-bearing study MUST carry per-sample panel_id.
+
+    A study listed in ``config['panel_bearing_studies']`` is panel-sequenced, so its TMB
+    denominator must come from the per-sample panel_id (e.g. MSK-IMPACT-341/410). If the
+    ``panel_id`` column is missing or all-null, ``compute_tmb_for_study`` would silently
+    take the legacy study-level path and apply ``wes_default_callable_mb`` (~30 Mb) — a
+    ~25x-too-large denominator that makes panel TMB ~25x too small and silently disables
+    hypermutator detection for the whole study (the t226/2026-06-07 stale-artifact bug).
+    Fail early instead of producing wrong-but-plausible TMB.
+    """
+    if study_id not in set(panel_bearing_studies):
+        return
+    if "panel_id" not in samples.columns or not samples["panel_id"].notna().any():
+        raise ValueError(
+            f"Study {study_id!r} is declared panel-bearing (config['panel_bearing_studies']) "
+            "but its samples table has no usable per-sample 'panel_id'. The TMB denominator "
+            "would silently fall back to wes_default (~30 Mb), ~25x too large for a targeted "
+            "panel. Ensure convert_to_feather attached panel_id from "
+            f"data_dir/{study_id}/data_gene_panel_matrix.txt, or remove {study_id!r} from "
+            "panel_bearing_studies if it is genuinely WES."
         )
 
 
@@ -261,6 +290,9 @@ def _run_via_snakemake() -> None:
     # t070: deduplication is a pipeline invariant; fail-loud with diagnostic if violated
     # (otherwise downstream Series.map() raises InvalidIndexError with no context).
     _check_no_duplicate_sample_ids(samples, study_id)
+    assert_panel_bearing_resolved(
+        samples, study_id, snek.config.get("panel_bearing_studies", [])
+    )
     study_panel_map: dict[str, str] = dict(snek.config.get("study_panel_map", {}))
     wes_default_mb = float(snek.config.get("wes_default_callable_mb", 30.0))
 

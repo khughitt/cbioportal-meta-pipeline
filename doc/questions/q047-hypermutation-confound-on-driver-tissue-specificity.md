@@ -23,6 +23,7 @@ related:
   - "topic:lineage-addiction-and-cell-of-origin-driver-specificity"
   - "hypothesis:h03-gene-length-confounds-literature-attention"
   - "interpretation:2026-06-07-q047-hypermutation-specificity-confound"
+  - "interpretation:2026-06-07-panel-tmb-denominator-stale-artifact-fix"
 created: "2026-06-07"
 updated: "2026-06-07"
 ---
@@ -31,16 +32,17 @@ updated: "2026-06-07"
 
 ## First-pass result (2026-06-07, poc-2026-04-17 cohort)
 
-**Partial.** The **breadth-inflation arm is confirmed**: excluding hypermutators raises the
-restricted-driver fraction 52%→60% and **181 drivers lose ≥1 cancer-type of breadth (≥5% grade; 232
-at ≥2%)** — so q042/q043 must stratify on `is_hypermutator`. The **per-sample dilution arm is
-under-identified on panel data**:
-the MSK-IMPACT panel is driver-enriched, so driver-share of load barely drops in hypermutators
-(0.94→0.88 UCEC); and the per-gene prevalence-ratio metric is baseline-confounded (broad oncogenes
-inflate *least* — a ceiling artifact, not dilution). Only Melanoma + Endometrial were testable, and
-**CRC was under-flagged** as hypermutator (a flag-audit follow-up). Refinements: WES cohort,
-prevalence-matched metric, hypermutator-flag audit. See
-`interpretation:2026-06-07-q047-hypermutation-specificity-confound`;
+**Confirmed, both arms (revised after the panel-TMB-denominator fix).** The first pass ran on a stale
+`samples_annotated` where panel TMB was ~25× too small, so only 2 WES cancer types had any
+hypermutators and dilution looked "under-identified." Post-fix: **8 cancer types testable**.
+(1) **Breadth inflation:** excluding hypermutators raises the restricted-driver fraction **52%→68%**
+(186 drivers lose ≥1 cancer-type at ≥5%; 253 at ≥2%) — q042/q043 must stratify on `is_hypermutator`.
+(2) **Per-sample dilution now clearly detectable:** driver share of load drops 0.10–0.22 in
+hypermutators across all 8 types (CRC 0.89→0.76, NSCLC 0.93→0.78, cSCC 1.00→0.78). Broad oncogenes
+are the most stable class; the per-gene prevalence-ratio stays baseline-confounded (use driver-share,
+not the ratio). The "CRC under-flagging" lead was the TMB bug, now resolved. See
+`interpretation:2026-06-07-q047-hypermutation-specificity-confound` and
+`interpretation:2026-06-07-panel-tmb-denominator-stale-artifact-fix`;
 `code/notebooks/q047_hypermutation_specificity_confound.py`.
 
 ## Summary

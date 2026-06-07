@@ -13,6 +13,7 @@ related:
   - "hypothesis:h02-cross-study-ranking-divergence-is-structured"
   - "question:q016-panel-induced-ascertainment"
   - "topic:lineage-addiction-and-cell-of-origin-driver-specificity"
+  - "interpretation:2026-06-07-panel-tmb-denominator-stale-artifact-fix"
 created: "2026-06-07"
 updated: "2026-06-07"
 ---
@@ -47,12 +48,16 @@ grade.
 
 | Recurrence threshold | inclusive | hypermutator-excluded |
 |---|---:|---:|
-| ≥1% within-type | 8.4% | — |
-| ≥2% | 18.8% | — |
-| ≥5% | 52.1% | **60.4%** |
+| ≥1% within-type | 8.4% | 18.2% |
+| ≥2% | 18.8% | 41.1% |
+| ≥5% | 52.1% | **68.1%** |
 
-IntOGen reference: 63% restricted. Our cohort matches that *only* at the ≥5% recurrence grade — i.e.
-"restricted vs pan-cancer" is a statement about a chosen recurrence bar, not an intrinsic property.
+IntOGen reference: 63% restricted. At the ≥5% recurrence grade our cohort now **brackets** it —
+inclusive 52.1% below, hypermutator-excluded 68.1% above. (Hypermutator-excluded values use the
+corrected post-TMB-fix flags; see
+`interpretation:2026-06-07-panel-tmb-denominator-stale-artifact-fix`.) Either way, "restricted vs
+pan-cancer" is a statement about a chosen recurrence bar and a hypermutator-handling choice, not an
+intrinsic property.
 
 **2. The hub set reproduces IntOGen.** TP53 is the single broadest driver (breadth 33/57), followed
 by PIK3CA, ARID1A, PTEN, RB1, NF1, KRAS, CDKN2A. **8 of IntOGen's 12 cancer-wide drivers** are
@@ -73,9 +78,10 @@ restricted-vs-pan-cancer count if one kept only PANCAN-encoded rows, concretely 
 insistence on handling PANCAN explicitly rather than via the broadcast flag.
 
 **5. Hypermutator breadth inflation (→ q047).** Excluding hypermutators raises the restricted
-fraction (52% → 60% at ≥5%) and **181 drivers lose ≥1 cancer-type of breadth at that same ≥5% grade**
-(232 at ≥2%) — apparent breadth is partly hypermutator-driven passenger recurrence. Handed to
-`question:q047` for per-sample dissection.
+fraction (52% → **68%** at ≥5%, on the corrected post-TMB-fix flags) and **186 drivers lose ≥1
+cancer-type of breadth at that same ≥5% grade** (253 at ≥2%) — apparent breadth is partly
+hypermutator-driven passenger recurrence. q047 dissects this per-sample and confirms a driver-share
+dilution across 8 cancer types.
 
 ## Limitations
 

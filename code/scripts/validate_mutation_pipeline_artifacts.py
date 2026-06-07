@@ -132,8 +132,13 @@ def validate_samples_annotated(samples: pd.DataFrame) -> QaReport:
         ),
         _no_missing_values(
             samples,
-            ["study_id", "sample_id", "cancer_type"],
+            ["study_id", "sample_id"],
             "samples_annotated identifiers are populated",
+        ),
+        _reported_missing(
+            samples,
+            "cancer_type",
+            "cancer_type populated (missing tolerated, reported)",
         ),
         _bool_columns(
             samples,
@@ -376,6 +381,19 @@ def _no_missing_values(df: pd.DataFrame, columns: list[str], name: str) -> Check
         details.append("missing columns: " + ", ".join(missing_columns))
     details.append(f"missing values: {missing_values}")
     return CheckResult(name, passed, "; ".join(details))
+
+
+def _reported_missing(df: pd.DataFrame, column: str, name: str) -> CheckResult:
+    """Soft check: report how many rows lack ``column`` without failing.
+
+    For classification labels (e.g. ``cancer_type``) that may legitimately be
+    absent in source data — surfaced for visibility, not treated as a hard
+    integrity violation the way the true identifiers (study_id, sample_id) are.
+    """
+    if column not in df.columns:
+        return CheckResult(name, True, f"column absent: {column}")
+    n_missing = int(df[column].isna().sum())
+    return CheckResult(name, True, f"missing {column}: {n_missing} / {len(df)}")
 
 
 def _valid_values(

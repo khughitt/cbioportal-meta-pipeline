@@ -981,7 +981,7 @@ Review of commit 94c2c85 found q047 implementation/prose drift: code/notebooks/q
 
 ## [t227] Refresh poc-2026-04-17 downstream artifacts after the panel-TMB-denominator fix
 - priority: P2
-- status: in-progress
+- status: done
 - aspects: [computational-analysis, software-development]
 - related: [interpretation:2026-06-07-panel-tmb-denominator-stale-artifact-fix, question:q047-hypermutation-confound-on-driver-tissue-specificity, hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and]
 - created: 2026-06-07
@@ -994,7 +994,8 @@ The poc-2026-04-17 samples_annotated was regenerated with correct per-sample pan
 
 **3 latent downstream bugs the regeneration exposed (all FIXED + tested):** the table-schema regeneration (current `create_combined_gene_cancer_freq_table` emits saturation-context columns the 04-25 build lacked) broke three consumers that had never been exercised against the current schema — (1) `validate_mutation_pipeline_artifacts.py` used `from __future__ import annotations`, which snakemake 9.19's `script:` wrapper can't hoist → SyntaxError (the QA guards, added 05-31, had never run); (2) `annotate_ch.py` and (3) `create_combined_gene_cancer_mutation_matrices.py` selected per-study columns via a hardcoded skip-list that drifted, letting the string `cancer_saturation_status` (+ numeric metadata) into a numeric mean/sum → TypeError. Both now select per-study columns structurally (bare `{study}` with a paired `{study}_exclusive` twin), drift-proof. Regression tests added.
 
-**Open / needs decision:**
-- `qa_samples_annotated` now runs and correctly flags a real data issue: 1/13006 samples (MSK `P-0008543-T01-IM5`) has a null `cancer_type`. The check lumps `cancer_type` with the true identifiers (study_id, sample_id). Decision: relax the contract (cancer_type may be null, report the count) vs. fix the data upstream. Until resolved, the samples_annotated QA report is not produced.
-- `metadata/samples.feather` (flag-independent) now fails a **separate**, unrelated requirement: `create_combined_sample_table` → `build_sample_panel_map` requires every study in `data/study_panels.tsv` (a SELECT-pipeline coupling added after the build); UCEC is absent. Not a TMB-fix regression — track separately if a full `rule all` on this cohort is wanted.
-- Canonical `gene_cancer_study_ratio_annotated.feather` (the pooled-join ratio table) was **never built on this POC** (`gene_cancer_pooled*` absent) — it needs a first-time t077 R meta-analysis, which requires the `r-meta` conda env (system R lacks `arrow`). TMB-independent; separate decision whether to stand up the conda env.
+**Resolved:** `qa_samples_annotated` flagged a real data issue — 1/13006 samples (MSK `P-0008543-T01-IM5`) has a null `cancer_type`. Per decision, relaxed the QA contract: study_id + sample_id stay hard-required (true identifiers); `cancer_type` missingness is now a **reported** soft check (`_reported_missing`), not a hard failure (classification labels are legitimately absent in ~0.01% of cBioPortal samples, and the sample is already excluded from per-cancer grouping). Report now PASS with `missing cancer_type: 1 / 13006` surfaced.
+
+**Deferred (tracked separately — not flag-dependent, not TMB regressions):**
+- `metadata/samples.feather`: `create_combined_sample_table` → `build_sample_panel_map` requires every study in `data/study_panels.tsv` (a SELECT-pipeline coupling added after the build); UCEC is absent. Blocks a full `rule all` on this cohort; flag-independent.
+- Canonical `gene_cancer_study_ratio_annotated.feather` (pooled-join ratio table) was **never built on this POC** (`gene_cancer_pooled*` absent) — needs a first-time t077 R meta-analysis via the `r-meta` conda env (system R lacks `arrow`). TMB-independent; deferred per decision. The CH-annotated intermediate already carries the refreshed flags.

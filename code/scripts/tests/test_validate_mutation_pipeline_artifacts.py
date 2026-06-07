@@ -94,6 +94,41 @@ def test_validate_samples_annotated_checks_hypermutator_reason_vocabulary() -> N
     assert "hypermutator_reason uses canonical vocabulary" in report.failures
 
 
+def test_validate_samples_annotated_tolerates_null_cancer_type_but_not_null_identifier() -> (
+    None
+):
+    samples = pd.DataFrame(
+        {
+            "study_id": ["study_a", "study_a"],
+            "sample_id": ["S1", "S2"],
+            "cancer_type": ["BRCA", None],
+            "tmb": [12.0, None],
+            "hypermutation_score": [1.0, None],
+            "is_hypermutator": [True, False],
+            "hypermutator_reason": ["pole_hotspot", "tmb_unavailable"],
+            "is_hypermutator_absolute": [True, False],
+            "is_hypermutator_ultra": [False, False],
+            "is_hypermutator_relative": [True, False],
+        }
+    )
+
+    # A null cancer_type is reported, not failed (classification label, not an identifier).
+    report = validate_samples_annotated(samples)
+    assert report.failures == []
+    reported = next(
+        c for c in report.checks if c.name.startswith("cancer_type populated")
+    )
+    assert "missing cancer_type: 1 / 2" in reported.details
+
+    # A null true identifier still fails hard.
+    bad = samples.copy()
+    bad.loc[1, "sample_id"] = None
+    assert (
+        "samples_annotated identifiers are populated"
+        in validate_samples_annotated(bad).failures
+    )
+
+
 def test_validate_gene_cancer_pooled_input_checks_counts_denominators_and_panel_class() -> (
     None
 ):

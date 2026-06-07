@@ -10,6 +10,9 @@ source_refs:
 related:
   - "hypothesis:h04-mhn-pathway-ordering"
   - "question:q012-mutation-ordering-cross-sectional-inference"
+  - "question:q041-driver-complexity-vs-median-age-at-diagnosis"
+  - "topic:multistage-carcinogenesis-and-age-of-onset"
+  - "theme:temporal-structure-of-carcinogenesis"
   - "task:t156"
   - "task:t157"
   - "topic:pre-cancer-prevalence-and-impact"

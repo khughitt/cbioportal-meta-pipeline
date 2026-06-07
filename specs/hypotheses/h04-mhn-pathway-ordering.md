@@ -9,6 +9,7 @@ source_refs:
   - "paper:Schill2024"
 related:
   - "question:q012-mutation-ordering-cross-sectional-inference"
+  - "theme:temporal-structure-of-carcinogenesis"
   - "task:t135"
   - "task:t152"
   - "discussion:2026-04-24-mutation-ordering-and-path-dependency"

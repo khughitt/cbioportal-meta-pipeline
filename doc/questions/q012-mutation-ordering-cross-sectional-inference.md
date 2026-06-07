@@ -15,6 +15,8 @@ source_refs:
 related:
   - "hypothesis:h04-mhn-pathway-ordering"
   - "hypothesis:h06-pre-malignant-n-minus-1-driver-carriage"
+  - "theme:temporal-structure-of-carcinogenesis"
+  - "question:q041-driver-complexity-vs-median-age-at-diagnosis"
   - "discussion:2026-04-24-mutation-ordering-and-path-dependency"
   - "topic:co-occurrence-and-mutual-exclusivity"
   - "search:2026-04-13-cooccurrence-mutual-exclusivity-methods"

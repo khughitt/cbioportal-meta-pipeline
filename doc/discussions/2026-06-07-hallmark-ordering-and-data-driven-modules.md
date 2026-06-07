@@ -13,6 +13,8 @@ related:
   - "hypothesis:h04-mhn-pathway-ordering"
   - "question:q012-mutation-ordering-cross-sectional-inference"
   - "discussion:2026-04-24-mutation-ordering-and-path-dependency"
+  - "discussion:2026-06-07-age-of-onset-and-multistage-mutation-requirement"
+  - "theme:temporal-structure-of-carcinogenesis"
   - "topic:co-occurrence-and-mutual-exclusivity"
   - "task:t078"
 created: "2026-06-07"

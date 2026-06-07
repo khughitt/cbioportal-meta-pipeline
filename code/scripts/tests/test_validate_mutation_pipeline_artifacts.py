@@ -68,6 +68,42 @@ def test_validate_per_study_mutation_substrates_rejects_unresolved_mutation_samp
     assert "mutation sample ids resolve to samples.sample_id" in report.failures
 
 
+def test_validate_per_study_mutation_substrates_tolerates_null_cancer_type_but_not_null_identifier() -> (
+    None
+):
+    mutations = pd.DataFrame(
+        {
+            "symbol": ["TP53", "KRAS"],
+            "sample_id_tumor": ["S1", "S2"],
+            "variant_class": ["Missense_Mutation", "Nonsense_Mutation"],
+            "variant_type": ["SNP", "SNP"],
+        }
+    )
+    samples = pd.DataFrame(
+        {
+            "sample_id": ["S1", "S2"],
+            "patient_id": ["P1", "P2"],
+            "cancer_type": ["BRCA", None],
+        }
+    )
+
+    # A null cancer_type is reported, not failed (classification label, not an identifier).
+    report = validate_per_study_mutation_substrates(mutations, samples)
+    assert report.failures == []
+    reported = next(
+        c for c in report.checks if c.name.startswith("cancer_type populated")
+    )
+    assert "missing cancer_type: 1 / 2" in reported.details
+
+    # A null true identifier still fails hard.
+    bad = samples.copy()
+    bad.loc[1, "patient_id"] = None
+    assert (
+        "sample ids and patient ids are populated"
+        in validate_per_study_mutation_substrates(mutations, bad).failures
+    )
+
+
 def test_validate_samples_annotated_checks_hypermutator_reason_vocabulary() -> None:
     samples = pd.DataFrame(
         {

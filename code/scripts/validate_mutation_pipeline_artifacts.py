@@ -88,8 +88,16 @@ def validate_per_study_mutation_substrates(
         ),
         _no_missing_values(
             samples,
-            ["sample_id", "patient_id", "cancer_type"],
-            "sample ids, patient ids, and cancer types are populated",
+            ["sample_id", "patient_id"],
+            "sample ids and patient ids are populated",
+        ),
+        # cancer_type is a classification label, not an identifier: a null is
+        # reported (e.g. MSK samples lacking an OncoTree assignment) but does not
+        # fail the substrate contract. Mirrors validate_samples_annotated.
+        _reported_missing(
+            samples,
+            "cancer_type",
+            "cancer_type populated (missing tolerated, reported)",
         ),
     ]
     if {"sample_id_tumor"}.issubset(mutations.columns) and {"sample_id"}.issubset(

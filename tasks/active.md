@@ -856,3 +856,113 @@ One inventory feather that multiple hypotheses are independently re-deriving. h1
 - created: 2026-06-02
 
 provenance_coverage is 'thin' on all 10 hypotheses because no edges.yaml DAGs or graph claims exist (claim_count=0). h02 (confirmed: dNdScv recovers 62/100 Bailey, LOSO-stable) and h08 (inconclusive H08a verdict: 1/3 arms) both have enough resolved interpretation evidence to materialize propositions with support/dispute chains. Building their edges.yaml DAGs upgrades provenance thin->partial/high and makes the next big-picture synthesis substantially richer.
+
+## [t215] Reproduce the neural-gene top-mutated observation from pipeline outputs (gate)
+- priority: P1
+- status: proposed
+- aspects: [computational-analysis]
+- related: [hypothesis:h12-neural-gene-enrichment-length-histology-artifact, question:q032-neural-gene-length-null]
+- group: neural-gene-meta-analysis
+- created: 2026-06-06
+
+Confirm whether NKAIN2/KCNIP4/TAFA2/RIT2/CALN1/RBFOX1/LSAMP/SGCZ/OPCML actually rank highly in gene_cancer_study(_ratio)_annotated.feather, on which metric (raw count vs sample-ratio) and config, and from which studies. The candidate list is from unreliable notes — if it does not reproduce, close the program and record the notes as spurious. See doc/plans/2026-06-06-neural-gene-enrichment-meta-analysis-plan.md.
+
+## [t216] Build label-free neural-enrichment gene score from expression atlases (q035)
+- priority: P2
+- status: proposed
+- aspects: [computational-analysis, dataset-acquisition]
+- related: [question:q035-label-free-neural-gene-definition, hypothesis:h12-neural-gene-enrichment-length-histology-artifact]
+- group: neural-gene-meta-analysis
+- created: 2026-06-06
+
+Per-gene neural-enrichment score from GTEx (brain regions + tibial nerve) and Human Protein Atlas tissue-specificity, partitioned into CNS-structural / PNS-autonomic / neuroendocrine-lineage sub-scores; no GO labels (GO as sensitivity comparator only). Validate against canonical effectors (NLGN3, ADRB2, NTRK1/2, CHRM3, GRIN2A/B, NGF, BDNF) as positive controls. Output reusable gene_neural_enrichment.feather. Blocks t217/t218/t219 enrichment statistic.
+
+## [t217] Gene-length null test for neural-gene enrichment (q032, P1)
+- priority: P1
+- status: proposed
+- aspects: [computational-analysis]
+- related: [question:q032-neural-gene-length-null, hypothesis:h03-gene-length-confounds-literature-attention, hypothesis:h12-neural-gene-enrichment-length-histology-artifact]
+- group: neural-gene-meta-analysis
+- created: 2026-06-06
+
+Does the neural-enrichment statistic survive normalization to mutations-per-callable-kb and the dndscv background? Reuse data/uniprotkb_hsapiens_protein_lengths.tsv.gz + Ensembl CDS length and existing dndscv q-values. Primary, runnable now against existing outputs. Wilcoxon of candidate-gene length vs background.
+
+## [t218] CNS/glioma study-exclusion sensitivity for neural enrichment (q033, P2)
+- priority: P2
+- status: proposed
+- aspects: [computational-analysis]
+- related: [question:q033-neural-enrichment-cns-exclusion, hypothesis:h12-neural-gene-enrichment-length-histology-artifact]
+- group: neural-gene-meta-analysis
+- created: 2026-06-06
+
+Re-aggregate with CNS/glioma cancer types removed; quantify each excluded study's contribution to LSAMP/OPCML/RBFOX1 and to the neural-enrichment statistic. Leave-one-study-out to test single-study vs diffuse origin.
+
+## [t219] Neuroendocrine-histology flag + exclusion sensitivity (q034, P3)
+- priority: P2
+- status: proposed
+- aspects: [computational-analysis, software-development]
+- related: [question:q034-neuroendocrine-histology-confound, topic:neuroendocrine-neoplasm-lineage-confound]
+- group: neural-gene-meta-analysis
+- created: 2026-06-06
+
+Enumerate NET/NEC OncoTree codes present in pipeline studies; add is_neuroendocrine_histology flag; recompute ranks with NEN excluded. MEN1 rank is the positive-control canary; watch ATRX/NF1 as dual CNS+NEN confounds.
+
+## [t220] Interpret residual: oncofetal (H3) vs selection (H1) (q036/q037, P4/P5)
+- priority: P3
+- status: proposed
+- aspects: [computational-analysis]
+- related: [question:q036-oncofetal-fetal-vs-adult-neural-expression, question:q037-canonical-neural-gene-dnds-selection, topic:oncofetal-developmental-reprogramming]
+- group: neural-gene-meta-analysis
+- created: 2026-06-06
+
+Only if signal survives t217-t219. H3 test: BrainSpan fetal-vs-adult ratio for residual set + stemness/oncofetal correlation in matched-expression studies + recurrence/clustering check. H1 test: dndscv on canonical effectors per cancer type (NF1 = positive control). Opposite predictions decide H1 vs H3.
+
+## [t221] QA / sanity battery for the neural-gene program
+- priority: P2
+- status: proposed
+- aspects: [computational-analysis, validation]
+- related: [hypothesis:h12-neural-gene-enrichment-length-histology-artifact, question:q032-neural-gene-length-null]
+- group: neural-gene-meta-analysis
+- created: 2026-06-06
+
+Matched- vs unmatched-normal stratification (germline-leak control via matched_normal_studies); hypermutator/MSI stratification (is_hypermutator); common-fragile-site overlap for candidates; data-driven-set vs GO-label-set sensitivity. Runs alongside t217-t220.
+
+## [t222] Search/acquire: Schmitt 2023 SCLC neural-gene screen (Nrxn1/Nlgn1/Dcc/Reln)
+- priority: P3
+- status: proposed
+- aspects: [literature-search]
+- related: [question:q037-canonical-neural-gene-dnds-selection, paper:Huang2023, theme:cancer-neuroscience-in-a-mutation-only-pipeline]
+- group: searches
+- created: 2026-06-07
+
+Cited in Huang2023 as an insertional-mutagenesis + transcriptome screen identifying Nrxn1/Nlgn1/Dcc/Reln in murine + human SCLC — a rare *label-free* neural-gene discovery in a NON-CNS cancer. Confirm peer-review status (was a bioRxiv preprint), get the gene list, and assess whether it offers a data-driven neural-gene set in a peripheral tumor to cross-check against our candidates.
+
+## [t223] Search/acquire: Chen 2025 Cancer Cell pancreatic neural-invasion single-cell + spatial atlas
+- priority: P3
+- status: proposed
+- aspects: [literature-search, dataset-acquisition]
+- related: [question:q035-label-free-neural-gene-definition, topic:perineural-invasion-axon-guidance-genes]
+- group: searches
+- created: 2026-06-07
+
+Flagged by Lu2026 (DOI 10.1016/j.ccell.2025.06.020, "Trace-n-Seq"): integrated single-cell + spatial transcriptomics of pancreatic neural invasion. Candidate source for a data-driven tumor-nerve-interface gene signature to test against the top-mutated list (q035).
+
+## [t224] Search: Lu2026 pan-cancer PNI transcriptomic classifier (2,029 patients, 12 cancer types)
+- priority: P3
+- status: proposed
+- aspects: [literature-search]
+- related: [question:q033-neural-enrichment-cns-exclusion, topic:perineural-invasion-axon-guidance-genes]
+- group: searches
+- created: 2026-06-07
+
+Lu2026 references a pan-cancer perineural-invasion transcriptomic classifier without an accession. Track down the source publication + gene set; useful for cancer-type-structured PNI gene definitions and the CNS-vs-peripheral discrimination.
+
+## [t225] Acquire label-free neural reference atlases (BrainSpan, HPA, Allen Brain Cell Atlas, PanglaoDB)
+- priority: P2
+- status: proposed
+- aspects: [dataset-acquisition]
+- related: [question:q035-label-free-neural-gene-definition, question:q036-oncofetal-fetal-vs-adult-neural-expression, dataset:brainspan, dataset:human-protein-atlas, dataset:allen-brain-cell-atlas, dataset:panglaodb]
+- group: dataset-acquisition
+- created: 2026-06-07
+
+Acquire the reference resources backing the data-driven neural-gene score (t216): GTEx (have), Human Protein Atlas tissue-specificity, Allen Brain Cell Atlas cell-type markers, PanglaoDB markers, and BrainSpan (fetal-vs-adult for the H3 test). Land as per-gene tables joinable to the gene universe. Blocks t216/t220.

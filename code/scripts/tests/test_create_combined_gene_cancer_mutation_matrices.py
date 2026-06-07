@@ -28,7 +28,9 @@ def test_per_study_columns_skip_means_and_callability_metadata() -> None:
             "cancer_type",
             "symbol",
             "study_a",
+            "study_a_exclusive",
             "study_b",
+            "study_b_exclusive",
             "mean",
             "mean_adj",
             "mean_inclusive",
@@ -40,6 +42,31 @@ def test_per_study_columns_skip_means_and_callability_metadata() -> None:
         ]
     )
     assert _per_study_columns(df) == ["study_a", "study_b"]
+
+
+def test_per_study_columns_skip_saturation_context_columns() -> None:
+    """Regression: the saturation-context columns added by
+    ``create_combined_gene_cancer_freq_table`` (incl. the string
+    ``cancer_saturation_status``) must not be treated as per-study columns —
+    a string slot otherwise breaks the numeric sum/mean aggregate.
+    """
+    df = pd.DataFrame(
+        columns=[
+            "cancer_type",
+            "symbol",
+            "study_a",
+            "study_a_exclusive",
+            "n_studies_contributing",
+            "n_total_samples_in_cancer_inclusive",
+            "n_total_samples_in_cancer_exclusive",
+            "n_panel_covered_samples_inclusive",
+            "callable_sample_fraction_inclusive",
+            "lawrence2014_required_n",
+            "lawrence2014_saturation_fraction",
+            "cancer_saturation_status",
+        ]
+    )
+    assert _per_study_columns(df) == ["study_a"]
 
 
 def test_aggregate_matrix_sum_over_inclusive_only() -> None:

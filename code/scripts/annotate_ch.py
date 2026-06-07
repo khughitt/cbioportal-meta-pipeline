@@ -50,59 +50,117 @@ References
 - `topic:clonal-hematopoiesis-contamination` and `topic:cross-study-harmonization` for the
   full synthesis.
 """
+
 import pandas as pd
 
-snek = snakemake  # type: ignore[name-defined]  # noqa: F821
+CH_PRIORITY_GENES: frozenset[str] = frozenset(
+    {
+        "DNMT3A",
+        "PPM1D",
+        "TET2",
+        "TP53",
+        "ASXL1",
+        "CHEK2",
+        "PRPF8",
+    }
+)
 
-CH_PRIORITY_GENES: frozenset[str] = frozenset({
-    "DNMT3A", "PPM1D", "TET2", "TP53", "ASXL1", "CHEK2", "PRPF8",
-})
+# Schema columns that are keys, summaries, or pre-existing annotations — never
+# per-study rate slots.
+_RESERVED_COLUMNS: frozenset[str] = frozenset(
+    {
+        "cancer_type",
+        "symbol",
+        "mean",
+        "mean_adj",
+        # t098 part B: paired pooled columns + callability metadata.
+        "mean_inclusive",
+        "mean_exclusive",
+        "n_total_studies",
+        "n_contributing_studies",
+        "n_panel_covered_studies",
+        "callable_fraction",
+        "ch_priority_gene",
+        "mean_matched",
+        "mean_unmatched",
+        "n_matched_studies",
+        "n_unmatched_studies",
+        # Inherited from upstream annotate.py (unified overlay) rule:
+        "bailey2018_driver",
+        "bailey2018_source",
+        "cgc_tier_1",
+        "cgc_tier_2",
+        "cgc_role_in_cancer",
+        "cgc_source",
+        "sanchez_vega_pathway",
+        "sanchez_vega_og_tsg",
+        "sanchez_vega_source",
+    }
+)
 
-ratio = pd.read_feather(snek.input[0])
 
-# Identify per-study columns (everything that isn't a key, summary, or pre-existing annotation).
-reserved = {
-    "cancer_type", "symbol", "mean", "mean_adj",
-    # t098 part B: paired pooled columns + callability metadata.
-    "mean_inclusive", "mean_exclusive",
-    "n_total_studies", "n_contributing_studies", "n_panel_covered_studies",
-    "callable_fraction",
-    "ch_priority_gene", "mean_matched", "mean_unmatched",
-    "n_matched_studies", "n_unmatched_studies",
-    # Inherited from upstream annotate.py (unified overlay) rule:
-    "bailey2018_driver", "bailey2018_source",
-    "cgc_tier_1", "cgc_tier_2", "cgc_role_in_cancer", "cgc_source",
-    "sanchez_vega_pathway", "sanchez_vega_og_tsg", "sanchez_vega_source",
-}
-# Per-study columns: legacy-named slot per study (= inclusive view). The paired
-# ``{study}_exclusive`` columns emitted by t098 part B are skipped here so
-# matched-normal / tumor-only stratification operates on the full-cohort rates
-# (the interpretive frame CH aligns to). Exclusive-variant stratification, if
-# ever needed, can be added as a separate pass.
-study_cols: list[str] = [
-    c for c in ratio.columns
-    if c not in reserved and not c.endswith("_exclusive")
-]
+def per_study_columns(ratio: pd.DataFrame) -> list[str]:
+    """Return the inclusive-view per-study rate columns in ``ratio``.
 
-matched_studies: set[str] = set(snek.config.get("matched_normal_studies", []))
-matched_cols: list[str] = [c for c in study_cols if c in matched_studies]
-unmatched_cols: list[str] = [c for c in study_cols if c not in matched_studies]
+    A per-study inclusive slot is the bare ``{study}`` column, identified
+    structurally by the presence of its paired ``{study}_exclusive`` twin
+    (emitted by t098 part B). Matched-normal / tumor-only stratification
+    operates on these full-cohort rates (the interpretive frame CH aligns to).
+    The twin requirement excludes saturation / callability metadata
+    (``cancer_saturation_status``, ``lawrence2014_*``, ``n_*``, ``*_inclusive``)
+    added upstream by ``create_combined_gene_cancer_freq_table`` — robust to new
+    metadata columns, where the prior hardcoded skip-list drifted and let a
+    string column into the numeric mean. Exclusive-variant stratification, if
+    ever needed, can be added as a separate pass.
+    """
+    columns = set(ratio.columns)
+    return [
+        c
+        for c in ratio.columns
+        if c not in _RESERVED_COLUMNS
+        and not c.endswith("_exclusive")
+        and not c.endswith("_inclusive")
+        and f"{c}_exclusive" in columns
+    ]
 
-# CH-priority flag — operates on the gene symbol regardless of cancer.
-ratio["ch_priority_gene"] = ratio["symbol"].astype(str).str.upper().isin(CH_PRIORITY_GENES)
 
-# Stratified pooled means over the per-study columns. NaN when a partition contributes no
-# studies for a given row.
-if matched_cols:
-    matched_slice = ratio[matched_cols]
-    ratio["mean_matched"] = matched_slice.mean(axis=1, skipna=True)
-    ratio["n_matched_studies"] = matched_slice.notna().sum(axis=1)
-else:
-    ratio["mean_matched"] = float("nan")
-    ratio["n_matched_studies"] = 0
+def annotate_ch(ratio: pd.DataFrame, matched_studies: set[str]) -> pd.DataFrame:
+    """Add the CH-priority flag plus matched/unmatched stratified pooled means.
 
-unmatched_slice = ratio[unmatched_cols]
-ratio["mean_unmatched"] = unmatched_slice.mean(axis=1, skipna=True)
-ratio["n_unmatched_studies"] = unmatched_slice.notna().sum(axis=1)
+    Studies NOT in ``matched_studies`` are treated as tumor-only (the
+    conservative default). Pooled means are NaN when a partition contributes no
+    studies for a given row.
+    """
+    study_cols = per_study_columns(ratio)
+    matched_cols = [c for c in study_cols if c in matched_studies]
+    unmatched_cols = [c for c in study_cols if c not in matched_studies]
 
-ratio.to_feather(snek.output[0])
+    ratio = ratio.copy()
+    # CH-priority flag — operates on the gene symbol regardless of cancer.
+    ratio["ch_priority_gene"] = (
+        ratio["symbol"].astype(str).str.upper().isin(CH_PRIORITY_GENES)
+    )
+
+    if matched_cols:
+        matched_slice = ratio[matched_cols]
+        ratio["mean_matched"] = matched_slice.mean(axis=1, skipna=True)
+        ratio["n_matched_studies"] = matched_slice.notna().sum(axis=1)
+    else:
+        ratio["mean_matched"] = float("nan")
+        ratio["n_matched_studies"] = 0
+
+    unmatched_slice = ratio[unmatched_cols]
+    ratio["mean_unmatched"] = unmatched_slice.mean(axis=1, skipna=True)
+    ratio["n_unmatched_studies"] = unmatched_slice.notna().sum(axis=1)
+    return ratio
+
+
+def _run_via_snakemake() -> None:
+    snek = snakemake  # type: ignore[name-defined]  # noqa: F821
+    ratio = pd.read_feather(snek.input[0])
+    matched_studies = set(snek.config.get("matched_normal_studies", []))
+    annotate_ch(ratio, matched_studies).to_feather(snek.output[0])
+
+
+if "snakemake" in globals():
+    _run_via_snakemake()

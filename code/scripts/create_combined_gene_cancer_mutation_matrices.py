@@ -32,7 +32,6 @@ Outputs
   inclusive columns.
 """
 
-
 import pandas as pd
 
 
@@ -55,13 +54,22 @@ _RESERVED_COLUMNS: frozenset[str] = frozenset(
 def _per_study_columns(df: pd.DataFrame) -> list[str]:
     """Return the inclusive-view per-study column names in ``df``.
 
-    Skips reserved schema columns (keys, means, callability metadata) and any
-    ``*_exclusive`` paired variant column.
+    A per-study inclusive slot is the bare ``{study}`` column, identified
+    structurally by the presence of its paired ``{study}_exclusive`` twin.
+    Saturation / callability / metadata columns (``cancer_saturation_status``,
+    ``lawrence2014_*``, ``n_*``, ``*_inclusive``) never carry that twin and are
+    excluded. This is robust to new metadata columns being added upstream by
+    ``create_combined_gene_cancer_freq_table`` — unlike a hardcoded skip-list,
+    which silently drifts and (for string columns) breaks the numeric aggregate.
     """
+    columns = set(df.columns)
     return [
         c
         for c in df.columns
-        if c not in _RESERVED_COLUMNS and not c.endswith("_exclusive")
+        if c not in _RESERVED_COLUMNS
+        and not c.endswith("_exclusive")
+        and not c.endswith("_inclusive")
+        and f"{c}_exclusive" in columns
     ]
 
 

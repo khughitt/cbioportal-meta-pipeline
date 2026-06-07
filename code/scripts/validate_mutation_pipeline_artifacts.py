@@ -3,8 +3,6 @@
 # science:end
 """Workflow-visible structural QA for canonical mutation pipeline artifacts."""
 
-from __future__ import annotations
-
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Mapping

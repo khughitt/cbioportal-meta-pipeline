@@ -42,6 +42,14 @@ Notes:
 - AACR GENIE requires a synapse.org account; those inputs must be downloaded manually into the
   configured `data_dir` before running the pipeline. See
   <https://www.synapse.org/Synapse:syn21683345>.
+- The t077 pooled meta-analysis (`rule run_gene_cancer_meta_analysis`) is the only R rule in the
+  default DAG and runs in an isolated conda env (`code/envs/r-meta.yml`: r-metafor / r-arrow /
+  r-lme4). It is reached by the canonical `gene_cancer_study_ratio_annotated.feather` target, so a
+  full `rule all` needs `--use-conda --conda-frontend mamba`. System R is **not** sufficient (lacks
+  `arrow`). If the first env build dies with `sqlite3.OperationalError: database is locked` inside
+  `conda_libmamba_solver` (a flaky repodata-shards race in conda-libmamba-solver ≥26.4 — many
+  threads on one sqlite cache), prefix the invocation with `CONDA_REPODATA_THREADS=1` to serialize
+  the shard fetches.
 
 ## Languages & Tools
 

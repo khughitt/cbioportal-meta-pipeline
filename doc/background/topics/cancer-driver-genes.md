@@ -17,6 +17,9 @@ related:
   - "topic:hotspot-based-driver-detection"
   - "topic:variant-interpretation-oncokb-vus"
   - "topic:mutation-rate-normalization"
+  - "topic:lineage-addiction-and-cell-of-origin-driver-specificity"
+  - "question:q042-driver-normal-expression-tissue-cell-type-specificity"
+  - "discussion:2026-06-07-tissue-cell-type-specificity-of-cancer-drivers"
 created: "2026-04-13"
 updated: "2026-04-13"
 ---

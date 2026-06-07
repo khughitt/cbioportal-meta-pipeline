@@ -8,6 +8,7 @@ source_refs:
   - "paper:Lawrence2014"
 related:
   - "question:q011-gene-length-as-literature-attention-confounder"
+  - "question:q042-driver-normal-expression-tissue-cell-type-specificity"
   - "discussion:2026-04-24-gene-length-bias-in-mutation-rankings-and-literature"
   - "interpretation:2026-04-26-t131-full-pan-cancer-dndscv-run"
   - "topic:mutation-rate-normalization"

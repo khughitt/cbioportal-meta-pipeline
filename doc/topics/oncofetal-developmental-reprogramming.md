@@ -19,6 +19,8 @@ related:
   - "question:q035-label-free-neural-gene-definition"
   - "synthesis:2026-06-06-cancer-neuroscience"
   - "topic:cancer-neuroscience-neural-regulation"
+  - "topic:lineage-addiction-and-cell-of-origin-driver-specificity"
+  - "question:q042-driver-normal-expression-tissue-cell-type-specificity"
 created: "2026-06-06"
 updated: "2026-06-06"
 ---

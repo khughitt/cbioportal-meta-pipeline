@@ -22,6 +22,9 @@ related:
   - "question:q037-canonical-neural-gene-dnds-selection"
   - "synthesis:2026-06-06-cancer-neuroscience"
   - "topic:oncofetal-developmental-reprogramming"
+  - "topic:lineage-addiction-and-cell-of-origin-driver-specificity"
+  - "question:q042-driver-normal-expression-tissue-cell-type-specificity"
+  - "discussion:2026-06-07-tissue-cell-type-specificity-of-cancer-drivers"
 created: "2026-06-06"
 updated: "2026-06-06"
 ---

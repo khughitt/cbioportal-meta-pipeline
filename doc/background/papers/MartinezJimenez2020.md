@@ -10,6 +10,9 @@ related:
 - paper:Bailey2018
 - topic:cross-study-meta-analysis-cancer-genomics
 - topic:cancer-driver-genes
+- topic:lineage-addiction-and-cell-of-origin-driver-specificity
+- question:q042-driver-normal-expression-tissue-cell-type-specificity
+- discussion:2026-06-07-tissue-cell-type-specificity-of-cancer-drivers
 created: '2026-04-21'
 updated: '2026-04-21'
 ---

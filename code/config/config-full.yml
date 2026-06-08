@@ -179,6 +179,91 @@ h10_treatment_denominator:
         SPECIMEN_COLLECTION_PRE_OR_POST_CHEMO:
           - pre-chemotherapy
 
+# matched_normal_studies: subset of studies that use patient-matched buffy-coat / normal sequencing.
+# Consumed by annotate_ch.py (matched-vs-unmatched stratified ratios for the 7 Bolton 2020 CH-priority
+# genes) and by the t221 germline-leak split. Populate conservatively: studies not listed are treated as
+# tumor-only. This list is EVIDENCE-DERIVED (t221c, code/notebooks/t221c_classify_matched_normal.py): a
+# study is included iff >=50% of its variant rows carry a normal barcode (sample_id_norm) that shares the
+# tumour barcode patient stem (per-patient normal, not a pooled/panel-of-normals). It is a high-precision
+# lower bound. Matched-BY-DESIGN cohorts whose public MAF does not record a per-variant normal barcode are
+# therefore NOT auto-included (stem_match=0): msk_chord_2024, msk_impact_2017, msk_impact_50k_2026 (MSK-IMPACT family, matched buffy-coat
+# normal). Add them manually if a run needs them. Audit: results/neural-gene-matched-normal-2026-06-08/.
+matched_normal_studies:
+  - acc_2019
+  - acc_tcga_pan_can_atlas_2018
+  - all_phase2_target_2018_pub
+  - aml_target_2018_pub
+  - ampca_bcm_2016
+  - angs_painter_2020
+  - angs_project_painter_2018
+  - bfn_duke_nus_2015
+  - bladder_columbia_msk_2018
+  - blca_cornell_2016
+  - blca_mskcc_solit_2014
+  - blca_tcga_pan_can_atlas_2018
+  - brca_igr_2015
+  - brca_mbcproject_wagle_2017
+  - brca_tcga_pan_can_atlas_2018
+  - cesc_tcga_pan_can_atlas_2018
+  - cll_broad_2022
+  - coad_caseccc_2015
+  - coadread_tcga_pan_can_atlas_2018
+  - crc_nigerian_2020
+  - cscc_hgsc_bcm_2014
+  - dlbc_tcga_pan_can_atlas_2018
+  - dlbcl_dfci_2018
+  - esca_tcga_pan_can_atlas_2018
+  - gbm_cptac_2021
+  - gbm_tcga_pan_can_atlas_2018
+  - hnsc_broad
+  - hnsc_mdanderson_2013
+  - hnsc_tcga_pan_can_atlas_2018
+  - kich_tcga_pan_can_atlas_2018
+  - kirc_tcga_pan_can_atlas_2018
+  - kirp_tcga_pan_can_atlas_2018
+  - laml_tcga_pan_can_atlas_2018
+  - lgg_tcga_pan_can_atlas_2018
+  - lihc_amc_prv
+  - lihc_tcga_pan_can_atlas_2018
+  - luad_broad
+  - luad_tcga_pan_can_atlas_2018
+  - lung_nci_2022
+  - lusc_cptac_2021
+  - lusc_tcga_pan_can_atlas_2018
+  - mbl_sickkids_2016
+  - meso_tcga_pan_can_atlas_2018
+  - mpcproject_broad_2021
+  - mpnst_mskcc
+  - nbl_target_2018_pub
+  - ov_tcga_pan_can_atlas_2018
+  - paad_cptac_2021
+  - paad_qcmg_uq_2016
+  - paad_tcga_pan_can_atlas_2018
+  - panet_arcnet_2017
+  - pcpg_tcga_pan_can_atlas_2018
+  - pog570_bcgsc_2020
+  - prad_broad
+  - prad_msk_2019
+  - prad_su2c_2019
+  - prad_tcga_pan_can_atlas_2018
+  - prostate_dkfz_2018
+  - rt_target_2018_pub
+  - sarc_tcga_pan_can_atlas_2018
+  - skcm_broad
+  - skcm_tcga_pan_can_atlas_2018
+  - stad_tcga_pan_can_atlas_2018
+  - tgct_tcga_pan_can_atlas_2018
+  - thca_tcga_pan_can_atlas_2018
+  - thym_tcga_pan_can_atlas_2018
+  - uccc_nih_2017
+  - ucec_cptac_2020
+  - ucec_tcga_pan_can_atlas_2018
+  - ucs_tcga_pan_can_atlas_2018
+  - utuc_msk_2019
+  - uvm_tcga_pan_can_atlas_2018
+  - vsc_cuk_2018
+  - wt_target_2018_pub
+
 # studies to include; this is a subset of the "curated" study list + genie
 studies: [
   "genie",

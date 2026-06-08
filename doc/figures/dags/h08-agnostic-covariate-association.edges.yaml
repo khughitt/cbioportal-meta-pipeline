@@ -1,0 +1,310 @@
+dag: h08-agnostic-covariate-association
+source_dot: doc/figures/dags/h08-agnostic-covariate-association.dot
+edges:
+- id: 1
+  source: uv_exposure
+  target: H
+  source_label: UV exposure (anatomic-site proxy)
+  target_label: Signature exposure H (outcome)
+  relation: "H08a Arm A: UV -> SBS7"
+  edge_status: eliminated
+  identification: observational
+  description: "H08a positive-control Arm A. The agnostic within-tissue scan FAILED to recover the
+    textbook UV->SBS7 link in SKCM: the anatomic-site UV proxy ranked 10/14 with a negative sign and
+    a non-significant q. The miss is a proxy/cohort failure, not evidence against UV->SBS7 biology —
+    82% of the SKCM cohort is metastatic (metastasis site != sun exposure), the ordinal collapses
+    to 3 coarse tiers, and SBS7 saturation lets burden covariates take ranks 1-2."
+  eliminated_by:
+  - task: t199
+    description: "Frozen primary scan — UV-site ordinal vs SBS7 in SKCM: rank 10/14, coef -0.046,
+      q = 0.596, n = 370. Pre-acceptance permutation p = 0.401 (consistent with null)."
+  - task: t200
+    description: "Within-tissue diagnostics — anatomic site compressed to 3 tiers (40/119/211,
+      entropy 1.34 bits); non-saturated subset (SBS7 < 0.90) only n=9-10; burden-conditioned UV-site
+      still null (coef -0.066). Root cause: 82% metastatic contamination + saturation."
+  lit_support:
+  - doi: 10.1038/s41586-020-1943-3
+    author_year: Alexandrov2020
+    description: "COSMIC v3.x — SBS7a-d dominate cutaneous-melanoma spectra (UV C>T at
+      dipyrimidines); the textbook link the agnostic scan failed to recover via the anatomic-site
+      proxy."
+  caveats:
+  - "Eliminated = the *registered proxy arm* failed, not the UV->SBS7 aetiology; a primary-tumour-
+    restricted UV dose measure (gated EHR data) would be needed to re-test."
+- id: 2
+  source: smoking
+  target: H
+  source_label: Tobacco exposure (pack-years / ever-smoker)
+  target_label: Signature exposure H (outcome)
+  relation: "H08a Arm B: smoking -> SBS4"
+  edge_status: tentative
+  identification: observational
+  description: "H08a positive-control Arm B. The frozen pack-years covariate failed the gate
+    (rank 6/8, q = 0.375), partly an operationalisation artefact: pack-years is silently dropped
+    (not zero-filled) for the 82% never-smoker rows. A repaired ever-smoker covariate recovers a
+    positive, significant association but still misses the top-3 rank gate (rank 5/8), because
+    burden covariates (is_hypermutator, TMB) occupy ranks 1-2. Signal is real and concentrated in
+    LUAD; the arm is tentative, not eliminated."
+  data_support:
+  - task: t200
+    description: "Diagnostics — re-derived ever_smoker: LUAD+LUSC coef +0.267, p = 3.2e-4
+      (n = 839); LUAD-only +0.393, p = 1.5e-4; LUSC-only +0.139, p = 0.208 (signal concentrated in
+      LUAD)."
+  - task: t204
+    description: "Production repair rerun — repaired ever_smoker vs SBS4 in LUAD+LUSC: coef +0.267,
+      p = 3.19e-4, BH-q = 5.1e-4, but rank 5/8 (failed repaired top-3 gate). Verdict [?]: positive +
+      significant, gate not met."
+  disputing_refs:
+  - task: t199
+    description: "Frozen primary — pack-years rank 6/8 vs SBS4, coef +0.107, q = 0.375, n = 703;
+      burden covariates dominate (is_hypermutator q ~ 1e-23, tmb q ~ 4e-21)."
+  lit_support:
+  - doi: 10.1038/s41586-020-1943-3
+    author_year: Alexandrov2020
+    description: "SBS4 = tobacco-smoking signature in lung (C>A transversions) — the textbook
+      link the repaired arm recovers in sign and significance but not in rank."
+  caveats:
+  - "Tentative: positive + FDR-significant under the repaired covariate, but never top-3; burden
+    covariates outrank it, so the agnostic scan does not cleanly surface smoking as the lead
+    SBS4 covariate on MC3."
+- id: 3
+  source: apobec3
+  target: H
+  source_label: APOBEC3A/B expression
+  target_label: Signature exposure H (outcome)
+  relation: "H08a Arm C: APOBEC3 expr -> SBS2/13"
+  edge_status: supported
+  identification: observational
+  description: "H08a positive-control Arm C — the one arm that PASSED, and the keystone proof that
+    the agnostic scan recovers a known aetiology unprompted. APOBEC3A/B expression ranks 1/10 vs
+    SBS2/13 across the pooled APOBEC-six tissues with a large positive coefficient and an
+    essentially-zero FDR q. It survives a permutation null, an APOBEC3-locus cis-mutation leakage
+    guard, a compositional-basis check, and proliferation conditioning. Expression resolves a
+    mediator the clinical labels cannot (Prediction 2)."
+  data_support:
+  - task: t199
+    description: "Frozen primary — APOBEC3A/B mRNA vs SBS2/13, pooled BLCA/BRCA/CESC/HNSC/LUAD/LUSC:
+      rank 1/10, coef +0.458, BH-q ~ 4.4e-12, n = 1883 (97.4% covariate completeness). Permutation
+      null 0/1000 exceedances (p = 0.001); locus-leakage guard (drop 120 cis-mutated samples) keeps
+      rank 1; absolute-basis diagnostic rank 1."
+  - task: t200
+    description: "Proliferation control — APOBEC signal survives meta-PCNA cell-cycle conditioning
+      (pooled coef 0.427 -> 0.434, unchanged; per-tissue shrinkage < 25%). BRCA flips from -0.086 to
+      +0.216 after control; pooled signal robust."
+  lit_support:
+  - doi: 10.1038/s41586-020-1943-3
+    author_year: Alexandrov2020
+    description: "SBS2/13 attributed to APOBEC3 cytidine-deaminase activity — the aetiology the
+      agnostic scan recovers from expression alone."
+  - doi: 10.1371/journal.pgen.1011043
+    author_year: Carpenter2023
+    description: "Experimental APOBEC3A/3B mutagenesis in a cell line + breast cancer — functional
+      grounding for the expression->SBS2/13 edge."
+  caveats:
+  - "APOBEC3 mRNA is a direct molecular measure, not a behavioural exposure surrogate — this is why
+    Arm C passed while Arms A/B (proxies) failed. The edge establishes association, not direction
+    (see R2 reverse-causation edge)."
+- id: 4
+  source: apobec3
+  target: W
+  source_label: APOBEC3A/B expression
+  target_label: Signature spectrum W (which process)
+  relation: "enzyme shapes spectrum"
+  edge_status: structural
+  identification: structural
+  description: "Structural enzyme->spectrum edge: APOBEC3 deaminase activity generates the
+    TpC-context C>T / C>G spectrum that DEFINES SBS2/SBS13. Near-definitional at the level of how
+    the signature is constructed; retained as structural (not independently re-tested in h08, which
+    targets the exposure H, not the spectrum W)."
+  data_support: []
+  lit_support:
+  - doi: 10.1038/s41586-020-1943-3
+    author_year: Alexandrov2020
+    description: "Defines SBS2/13 by the APOBEC TpC mutational spectrum."
+- id: 5
+  source: mmr_pole
+  target: H
+  source_label: MMR-loss / POLE (repair capacity)
+  target_label: Signature exposure H (outcome)
+  relation: "secondary control: MMR->SBS6/15/26, POLE->SBS10"
+  edge_status: unknown
+  identification: observational
+  description: "Secondary positive controls (MMR/MSI->SBS6/15/26, POLE->SBS10) were NOT evaluable in
+    the t199 arm panel: none of SBS6/15/26/10 was active at the >=5% threshold in the chosen
+    UV/smoking/APOBEC-prevalent strata, which deliberately exclude MMR-rich tissues (COAD/READ/STAD/
+    UCEC). Unknown, not failed — the design simply did not place these signatures in scope."
+  data_support: []
+  disputing_refs:
+  - task: t199
+    description: "Secondary controls not evaluable — SBS6/15/26/10 inactive (>=5% rule) in every arm
+      stratum; within Arm C, MSI/POLE rank below APOBEC with negative sign (competing processes)."
+  lit_support:
+  - doi: 10.1038/s41586-020-1943-3
+    author_year: Alexandrov2020
+    description: "MMR-deficiency (SBS6/15/26) and POLE (SBS10) signatures catalogued; would require
+      an MMR-enriched-tissue gate to test."
+  caveats:
+  - "A future H08a gate including COAD/READ/STAD/UCEC is needed to bring these secondary controls
+    into scope."
+- id: 6
+  source: expr_module
+  target: H
+  source_label: Expression module (immune / repair)
+  target_label: Signature exposure H (outcome)
+  relation: "H08b candidate upstream (TEST)"
+  edge_status: unknown
+  identification: none
+  description: "The H08b discovery edge — does an unsupervised expression module associate with a
+    clock-like / unexplained signature (SBS5, SBS40) beyond its COSMIC aetiology? This is the
+    flagship discovery claim and it is GATED: H08b is not opened as confirmatory work because H08a
+    returned [?] (1/3 arms), per the h08b-gate-handling decision. An exploratory SBS40-vs-SBS5
+    prototype (t182) may run but does not promote the hypothesis. Identification = none: even a
+    passing association would not establish upstream causation, because the direction is unidentified
+    (rival R2, below)."
+  data_support: []
+  disputing_refs:
+  - task: t199
+    description: "H08a verdict [?] (1/3 arms: only APOBEC passed); per pre-registration a sub-2/3
+      verdict gates H08b as confirmatory work."
+  lit_support:
+  - doi: 10.1101/2025.08.28.672844
+    author_year: Spisak2025
+    description: "SBS5 is an expected true-negative for single exogenous covariates (multiple
+      upstream sources funnel into the clock-like signature) — the flagship H08b test is therefore
+      SBS40-vs-SBS5 separation via age-conditioned expression modules."
+  - doi: 10.1093/bioinformatics/btz340
+    author_year: Robinson2019
+    description: "TCSM — models clinical/molecular covariates of signature activity and explicitly
+      flags expression<->signature directionality as ambiguous (the R2 rival)."
+  caveats:
+  - "Gated/unopened: any H08b output is exploratory-only (t182) and must not be read as confirmatory
+    evidence for h08 or used to update the H08a verdict."
+  - "Rival R2 (reverse causation), drawn as this edge's hypothesised direction only. The association
+    is non-identified: a signature's driver mutation can remodel its own pathway's expression, so the
+    module may be DOWNSTREAM of the mutational process. h08 flags, never asserts direction; an
+    upstream claim requires the q025 causal-direction guard (mediation / clonal timing / cross-study
+    replication). The DAG draws expr_module->H (the hypothesis) rather than a 2-cycle."
+- id: 7
+  source: tissue
+  target: H
+  source_label: Tissue of origin
+  target_label: Signature exposure H (outcome)
+  relation: "R1: tissue collinearity"
+  edge_status: supported
+  identification: observational
+  description: "Rival R1, and a confirmed design requirement. Each exposure is tissue-enriched, so an
+    unconditioned covariate<->signature link can be a restatement of tissue-of-origin. The
+    pre-registered Prediction 4 contrast (within-tissue vs tissue-pooled) confirms associations
+    inflate or sign-distort when tissue is not conditioned on — which is why the whole scan runs
+    within-tissue strata only and reports the unconditioned version solely to quantify confounding."
+  data_support:
+  - task: t199
+    description: "WP2 within-tissue vs unconditioned contrast (Prediction 4) — unconditioned arms
+      show inflated/sign-distorted associations relative to the within-tissue fit; the within-tissue
+      stratification is load-bearing, not cosmetic."
+  lit_support:
+  - doi: 10.1126/science.abl9283
+    author_year: Degasperi2022
+    description: "Genomics-England WGS signature catalogue — tissue-specific signature variation is
+      central to correct attribution, motivating within-tissue conditioning."
+- id: 8
+  source: tissue
+  target: expr_module
+  source_label: Tissue of origin
+  target_label: Expression module (immune / repair)
+  relation: "R1: shared tissue backdoor"
+  edge_status: supported
+  identification: structural
+  description: "The second leg of the R1 backdoor: tissue drives both the exposure/enzyme and the
+    co-measured expression module, opening a tissue->expr_module->H path that within-tissue
+    stratification closes. Structural in the causal model; included so the adjustment set
+    {tissue, treatment, study/assay, ancestry} is visibly justified."
+  data_support: []
+  lit_support:
+  - doi: 10.1126/science.abl9283
+    author_year: Degasperi2022
+    description: "Tissue-specific expression and signature co-variation — the shared-cause structure
+      this edge encodes."
+- id: 9
+  source: treatment
+  target: H
+  source_label: Treatment history
+  target_label: Signature exposure H (outcome)
+  relation: "iatrogenic confound (controlled)"
+  edge_status: structural
+  identification: structural
+  description: "Treatment is a confound stratum: iatrogenic signatures (SBS11/31/35/87) inflate
+    exposure H for treated samples. Entered as a nuisance covariate and a confound flag (t181). On
+    the TCGA MC3 substrate the flag is near-vacuous (largely treatment-naive primary tumours), so it
+    controls a confound that is mostly absent here but must be active on treated cohorts."
+  data_support:
+  - task: t181
+    description: "Treatment-exposure stratum specification — TCGA MC3 is largely treatment-naive
+      primary tumours, so neoadjuvant/prior-therapy flags are near-vacuous as expected; the stratum
+      is specified for transfer to treated cohorts."
+  lit_support:
+  - doi: 10.1158/2159-8290.CD-21-1434
+    author_year: Crisafulli2022
+    description: "Temozolomide alters MMR and boosts burden in colorectal cancer — a worked example
+      of treatment-induced signature change the stratum guards against."
+- id: 10
+  source: study_assay
+  target: H
+  source_label: Study / panel / assay
+  target_label: Signature exposure H (outcome)
+  relation: "R4: batch / assay artifact (controlled)"
+  edge_status: structural
+  identification: structural
+  description: "Rival R4. The 'agnostic' covariate could be a study/panel/callable-bp proxy, and
+    artifact signatures (SBS27/43/45-60) can masquerade as real exposure. Controlled by restricting
+    to the single-assay WES MC3 substrate (so study/assay collapses to a near-constant in each arm)
+    and by entering study/assay as a nuisance covariate; artifact signatures are flagged. Recorded
+    as structural because it is handled by design rather than re-tested."
+  data_support:
+  - task: t199
+    description: "Adjustment set {tissue, treatment, study/assay, ancestry}; MC3 is single-assay WES
+      so study/assay collapses to constant in SKCM (Arm A); artifact signatures SBS27/43/45-60
+      flagged but inactive (>=5% rule unmet)."
+  lit_support:
+  - doi: 10.1038/s41586-020-1943-3
+    author_year: Alexandrov2020
+    description: "Catalogues the possible/sequencing-artifact signatures (SBS27/43/45-60) this edge
+      guards against."
+- id: 11
+  source: ancestry
+  target: H
+  source_label: Ancestry / germline
+  target_label: Signature exposure H (outcome)
+  relation: "germline confound (controlled)"
+  edge_status: structural
+  identification: structural
+  description: "Ancestry/germline can confound exposure H (germline repair-capacity variants, ancestry-
+    correlated exposures). Entered as a fixed-effect nuisance covariate (GENETIC_ANCESTRY_LABEL).
+    Structural — controlled by adjustment, not a tested h08 claim."
+  data_support:
+  - task: t199
+    description: "Ancestry (GENETIC_ANCESTRY_LABEL) entered as a fixed-effect nuisance covariate in
+      the WP1 covariate assembly."
+  lit_support: []
+- id: 12
+  source: selection
+  target: H
+  source_label: Selection / immunoediting
+  target_label: Signature exposure H (outcome)
+  relation: "R3: selection acts on H not W"
+  edge_status: structural
+  identification: structural
+  description: "Rival R3, and the structural reason exposure H is modelled separately from spectrum
+    W. Immunoediting acts on WHICH mutated clones survive (neoantigen selection on H / on the dN/dS
+    of immunogenic sites), not on the spectrum W that says which process generated the mutations. So
+    a covariate<->H association can reflect what survived rather than what was generated. Encoded as
+    a structural assumption of the model, not tested by the H08a positive-control scan."
+  data_support: []
+  lit_support:
+  - doi: 10.1038/s41586-020-1943-3
+    author_year: Alexandrov2020
+    description: "Background for the W-vs-H distinction (which-process spectrum vs how-much exposure)
+      that makes the selection-on-H rival precise."
+  caveats:
+  - "Structural assumption: separating selection-on-H from generation requires spectrum-attribution
+    vs burden-attribution tests (R3 adjudication) not run in the positive-control scan."

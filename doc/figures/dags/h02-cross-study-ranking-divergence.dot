@@ -1,0 +1,37 @@
+// h02-cross-study-ranking-divergence — proposition DAG for hypothesis h02.
+// Nodes are the ranking schemes + the gene-level confounders + the cross-study outcomes;
+// edges are the P1-P4 propositions. Support/dispute evidence lives in the paired
+// h02-cross-study-ranking-divergence.edges.yaml. Render: science dag render --dag h02-cross-study-ranking-divergence
+digraph h02_cross_study_ranking_divergence {
+  rankdir=TB;
+  labelloc="t";
+  label=<<b>h02 — cross-study ranking divergence is structured</b>>;
+  node [shape=box, style="rounded,filled", fillcolor="#f0f0f0", fontsize=10];
+  edge [fontsize=9];
+
+  gene_length [label="Gene length /\nprotein size", fillcolor="#fef7e0"];
+  cfs         [label="Common-fragile-site\ninstability", fillcolor="#fef7e0"];
+  rep_timing  [label="Replication timing\n(late)", fillcolor="#fef7e0"];
+
+  raw_rank    [label="Raw-frequency\nranking"];
+  lenadj_rank [label="Length-adjusted\nranking"];
+  dndscv_rank [label="dNdScv selection\nranking", fillcolor="#e8f0fe"];
+
+  divergence  [label="Structured scheme\ndivergence (P3)", fillcolor="#e6f4ea"];
+  drivers     [label="Canonical-driver\nrecovery (Bailey/CGC)", fillcolor="#e6f4ea"];
+  longtail    [label="Long-tail\ncandidates"];
+  stability   [label="Cross-study (LOSO)\nrank stability", fillcolor="#fce8e6"];
+
+  gene_length -> raw_rank;
+  gene_length -> lenadj_rank;
+  gene_length -> dndscv_rank;
+  cfs         -> raw_rank;
+  cfs         -> dndscv_rank;
+  rep_timing  -> dndscv_rank;
+  raw_rank    -> divergence;
+  lenadj_rank -> divergence;
+  divergence  -> longtail;
+  dndscv_rank -> drivers;
+  drivers     -> stability;
+  longtail    -> stability;
+}

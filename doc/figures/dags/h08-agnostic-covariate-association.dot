@@ -1,0 +1,40 @@
+// h08-agnostic-covariate-association — proposition DAG for hypothesis h08.
+// Outcome = signature exposure H (how much of a latent process); spectrum W (which process)
+// kept separate because selection/immunoediting acts on H, not W. Arm-level H08a verdicts +
+// the R1-R5 rivals are carried as edges; evidence lives in the paired edges.yaml.
+// Adapted from models/h08-agnostic-signature-association.dot. Render: science dag render --dag h08-agnostic-covariate-association
+digraph h08_agnostic_covariate_association {
+  rankdir=LR;
+  labelloc="t";
+  label=<<b>h08 — agnostic covariate-signature association</b>>;
+  node [shape=box, style="rounded,filled", fillcolor="#f0f0f0", fontsize=10];
+  edge [fontsize=9];
+
+  H            [label="Signature exposure H\n(OUTCOME: how much)", fillcolor="#fce8e6"];
+  W            [label="Signature spectrum W\n(which process)", fillcolor="#e8f0fe"];
+
+  uv_exposure  [label="UV exposure\n(anatomic-site proxy)"];
+  smoking      [label="Tobacco exposure\n(pack-years / ever-smoker)"];
+  apobec3      [label="APOBEC3A/B\nexpression"];
+  mmr_pole     [label="MMR-loss / POLE\n(repair capacity)"];
+  expr_module  [label="Expression module\n(immune / repair)"];
+
+  tissue       [label="Tissue of origin", fillcolor="#fef7e0"];
+  treatment    [label="Treatment history", fillcolor="#fef7e0"];
+  study_assay  [label="Study / panel / assay", fillcolor="#fef7e0"];
+  ancestry     [label="Ancestry / germline", fillcolor="#fef7e0"];
+  selection    [label="Selection /\nimmunoediting", fillcolor="#e6f4ea"];
+
+  uv_exposure -> H;
+  smoking     -> H;
+  apobec3     -> H;
+  apobec3     -> W;
+  mmr_pole    -> H;
+  expr_module -> H;
+  tissue      -> H;
+  tissue      -> expr_module;
+  treatment   -> H;
+  study_assay -> H;
+  ancestry    -> H;
+  selection   -> H;
+}

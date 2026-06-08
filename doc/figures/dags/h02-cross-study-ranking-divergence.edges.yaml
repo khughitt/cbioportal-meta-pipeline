@@ -1,0 +1,289 @@
+dag: h02-cross-study-ranking-divergence
+source_dot: doc/figures/dags/h02-cross-study-ranking-divergence.dot
+edges:
+- id: 1
+  source: gene_length
+  target: raw_rank
+  source_label: Gene length / protein size
+  target_label: Raw-frequency ranking
+  relation: "length inflates raw count"
+  edge_status: supported
+  identification: observational
+  description: Raw per-gene mutation frequency scales with coding length, so the raw-frequency
+    ranking is dominated by long-gene passengers (TTN, MUC16, OBSCN, RYR2, LRP1B, DNAH5, PCLO,
+    CSMD1/3). This is the canonical Lawrence 2014 failure mode and the upstream confound the whole
+    hypothesis is organised around. Confirmed empirically at full pan-cancer scale.
+  data_support:
+  - task: t131
+    description: "Full pan-cancer run — raw top-15 = TTN, MUC16, TP53, DNAH5, PCLO, LRP1B,
+      OBSCN, CSMD3, CSMD1, RYR2 (long-gene passengers); raw top-100 recovers 0/100 Bailey drivers."
+  - task: t145
+    description: "mean_inclusive inflation diagnostic — stale pooled-mean before WES zero-fill
+      put snoU13/Y_RNA/LSAMP/MACROD2 at ranks 1-4 (means 0.72-0.84); after the fix raw top-1 is
+      TP53 (0.317). Confirms the raw head is a length/coverage artefact, not biology."
+  lit_support:
+  - doi: 10.1038/nature12912
+    author_year: Lawrence2014
+    description: "MutSigCV — establishes TTN/MUC16/OBSCN/RYR2/LRP1B as the canonical
+      length-driven false positives of raw-frequency ranking; the baseline this edge reproduces."
+- id: 2
+  source: gene_length
+  target: lenadj_rank
+  source_label: Gene length / protein size
+  target_label: Length-adjusted ranking
+  relation: "naive correction overshoots"
+  edge_status: supported
+  identification: observational
+  description: Dividing raw counts by length over-corrects, flipping the failure mode from
+    long-gene passengers to tiny-protein artefacts (BAGE2, PYY2, DEFB119, TMSB4X, SPANXN5) plus a
+    few short canonical drivers (KRAS, TP53, RHOA, CDKN2A). Both raw and length-adjusted heads are
+    length artefacts in opposite directions.
+  data_support:
+  - task: t131
+    description: "Length-adjusted top-15 = BAGE2, TP53, KRAS, CXCL12, PYY2, RHOA, DEFB119, TMSB4X,
+      SPANXN5, CDKN2A — BAGE2/PYY2/DEFB119 are <200 aa; length-adj top-100 also recovers 0/100
+      Bailey drivers."
+  lit_support:
+  - doi: 10.1038/nature12912
+    author_year: Lawrence2014
+    description: "Demonstrates that naive per-length normalisation is itself biased; motivates the
+      context-aware correction (trinucleotide + covariates) that dNdScv implements."
+- id: 3
+  source: gene_length
+  target: dndscv_rank
+  source_label: Gene length / protein size
+  target_label: dNdScv selection ranking
+  relation: "residual length signal (P4)"
+  edge_status: tentative
+  identification: observational
+  description: "P4 (residual confounder). dNdScv's trinucleotide-context + covariate model reduces
+    but does not eliminate the length signal: TTN persists at rank #5 of the full-scale dNdScv
+    ranking (n_cancers_significant_q05 = 48, not a tiebreaker artefact), and AHNAK/AHNAK2/ABCA13
+    sit in the q=0 cluster. The gene-level length-dNdScv association is strong even after
+    correction (Spearman rho = 0.564)."
+  data_support:
+  - task: t131
+    description: "TTN at dNdScv-v2 rank #5 with n_cancers_significant_q05 = 48; AHNAK/ABCA13 in the
+      q=0 cluster despite trinucleotide-context correction — dNdScv reduces but does not erase
+      the long-gene effect at full sample size."
+  - task: t163
+    description: "RT-residual regression — Spearman rho(log_length, dndscv_signal) = 0.564,
+      the dominant simple covariate of the dNdScv residual; TTN's drop after adjustment is driven by
+      length, not replication timing."
+  lit_support:
+  - doi: 10.1016/j.cell.2017.09.042
+    author_year: Martincorena2017
+    description: "dNdScv — the selection-based model whose design goal is to neutralise
+      mutation-rate covariates (including length via trinucleotide context); the surviving TTN
+      signal bounds how completely it achieves that on aggregated cBioPortal data."
+- id: 4
+  source: cfs
+  target: raw_rank
+  source_label: Common-fragile-site instability
+  target_label: Raw-frequency ranking
+  relation: "fragile-site enrichment"
+  edge_status: unknown
+  identification: observational
+  description: "P4 (residual confounder, CFS arm). The raw head is enriched for known common-fragile-site
+    genes (FHIT, MACROD2, GPC5, IMMP2L, GRID2, CNTNAP2, LSAMP, NKAIN3, KCNIP4, SGCZ, LRRTM4) at
+    implausibly high pooled ratios (0.65-0.84). Whether this is a genuine CFS instability signal or
+    a WES-callability/pooled-meta artefact is unresolved — the edge is recorded as a flagged
+    open mechanism, not an established one. (The neural-gene candidate set t216-t221 is the same CFS
+    class viewed from the gene-annotation side.)"
+  data_support:
+  - task: t131
+    description: "Raw top-15 CFS enrichment: FHIT, MACROD2, GPC5, IMMP2L, GRID2, CNTNAP2 at
+      mean_inclusive 0.65-0.84 — implausible for point mutations; mechanism (callability failure
+      vs genuine fragility) filed for follow-up, not resolved."
+  caveats:
+  - "Mechanism unresolved: CFS enrichment could be a t139 callability-bypass / pooled-meta inflation
+    artefact rather than biological fragility; no CFS-overlap quantification has been run yet."
+- id: 5
+  source: cfs
+  target: dndscv_rank
+  source_label: Common-fragile-site instability
+  target_label: dNdScv selection ranking
+  relation: "residual fragile-site signal"
+  edge_status: unknown
+  identification: observational
+  description: "Companion to edge 4: the question of whether CFS overlap (distinct from raw coding
+    length) is part of the dNdScv residual that P4 predicts. Not yet measured — a CFS-overlap
+    annotation crossed with the dNdScv-residual rank is the missing test. Listed so the DAG carries
+    the open prediction rather than silently omitting it."
+  data_support: []
+  caveats:
+  - "No project-internal evidence yet: CFS-vs-dNdScv-residual enrichment has not been computed; this
+    edge is a registered prediction, not a result."
+- id: 6
+  source: rep_timing
+  target: dndscv_rank
+  source_label: Replication timing (late)
+  target_label: dNdScv selection ranking
+  relation: "late-RT residual (P4) — refuted"
+  edge_status: eliminated
+  identification: observational
+  description: "P4's headline mechanism — that late-replication timing is the dominant residual
+    confounder after length + trinucleotide correction — is REFUTED for the genes tested. The
+    late-RT coefficient is indistinguishable from zero and the gene-level RT-residual correlation
+    is null, while length remains strongly predictive. Replication timing does not explain TTN
+    persistence; length does."
+  eliminated_by:
+  - task: t163
+    description: "RT-residual regression — beta_rt_late_score = 0.111 with bootstrap CI
+      [-1.686, 1.962] (crosses zero); Spearman rho(rt_late_score, dndscv_signal) = -0.004 vs
+      rho(log_length) = 0.564. TTN is unassigned in the RT map (rt_late_score = 0)."
+  caveats:
+  - "Power-limited: the RT map is sparse for constitutive-late genes (445 CL vs 13,521 unassigned),
+    so this eliminates late-RT as the *dominant* residual for the tested set, not as a contributor
+    for unmapped genes."
+- id: 7
+  source: raw_rank
+  target: divergence
+  source_label: Raw-frequency ranking
+  target_label: Structured scheme divergence (P3)
+  relation: "near-disjoint heads"
+  edge_status: supported
+  identification: observational
+  description: "P3 (structured divergence), raw arm. The raw and length-adjusted top-100 are almost
+    disjoint and the disjointness is structured (long-gene vs tiny-protein), not random. The
+    pre-registered expectation Jaccard@100(raw, length-adj) <= 0.10 is met with room to spare."
+  data_support:
+  - task: t131
+    description: "Jaccard@100(raw, length-adj) = 0.015 (intersection = 3 genes); three-way Spearman:
+      raw~length_adj = +0.479 (both favour long genes), raw~dndscv = +0.043 (independent),
+      length_adj~dndscv = -0.468 (anti-correlated). Pre-registered <=0.10 met."
+  - task: t141
+    description: "Gene-length discussion notebook (q011) — Spearman rho(mean_inclusive,
+      mean_adj) = 0.372; Jaccard overlap top-10 0.053, top-100 0.015, top-500 0.010; only TP53 makes
+      both raw and length-adjusted top-10s."
+  lit_support:
+  - doi: 10.1038/nature12912
+    author_year: Lawrence2014
+    description: "Establishes that switching from raw count to length-corrected ranking reshuffles
+      the head by orders of magnitude in a structured (length-driven) way — the divergence is
+      expected, not noise."
+- id: 8
+  source: lenadj_rank
+  target: divergence
+  source_label: Length-adjusted ranking
+  target_label: Structured scheme divergence (P3)
+  relation: "opposite-pole head"
+  edge_status: supported
+  identification: observational
+  description: "P3, length-adjusted arm. The length-adjusted head supplies the opposite pole of the
+    structured divergence — tiny-protein artefacts and short canonical drivers — confirming
+    the two schemes diverge along the length axis rather than at random. dNdScv, by contrast,
+    recovers the canonical core neither extreme reaches."
+  data_support:
+  - task: t131
+    description: "length_adj~dndscv Spearman = -0.468: the length-adjusted ranking is actively
+      anti-correlated with the selection ranking, the sharpest expression of structured (not random)
+      divergence between schemes."
+  lit_support:
+  - doi: 10.1038/s41586-018-0312-y
+    author_year: Bailey2018
+    description: "26-tool consensus driver list — the oracle against which all three schemes are
+      scored; its triage design (require tool agreement) presupposes that schemes diverge in
+      structured, correctable ways."
+- id: 9
+  source: divergence
+  target: longtail
+  source_label: Structured scheme divergence (P3)
+  target_label: Long-tail candidates
+  relation: "divergence localises to the tail"
+  edge_status: tentative
+  identification: observational
+  description: "P2 (weak candidate replication). The scheme-divergence concentrates in non-canonical
+    long-tail candidates: which genes occupy the top-100 past the canonical core depends on the
+    scheme and on which study is in the cohort. Driver recovery decays smoothly into this tail.
+    Supported structurally (study-holdout reshuffling hits secondary drivers); a dedicated per-study
+    fragmentation metric for the candidate set has not yet been run."
+  data_support:
+  - task: t146
+    description: "CGC-tier-1 recovery decays K=100 -> 0.88, K=250 -> 0.77, K=500 -> 0.59;
+      only 145/199 (73%) Bailey drivers reach top-500 — the signal concentrates in the head and
+      frays into the long tail."
+  - task: t173
+    description: "GENIE holdout reshuffles 40/100 top genes (Jaccard@100 = 0.429), and the
+      in/out genes are secondary/study-specific drivers (ESR1, NTRK1, PTPN11, RECQL4 out; ABL1,
+      BCL6, EGFR, HLA-A in), not the canonical core."
+  caveats:
+  - "No direct per-study fragmentation metric for long-tail candidates yet; P2 is inferred from the
+    GENIE-vs-non-GENIE differential, not from an explicit candidate-set LOO stability number."
+- id: 10
+  source: dndscv_rank
+  target: drivers
+  source_label: dNdScv selection ranking
+  target_label: Canonical-driver recovery (Bailey/CGC)
+  relation: "selection recovers drivers (P3/P1)"
+  edge_status: supported
+  identification: observational
+  description: "The keystone result: the selection-based scheme recovers the canonical-driver core
+    that neither length-naive scheme reaches. dNdScv top-100 recovers 62/100 Bailey drivers and
+    14/15 canonical drivers in its top-15, validated against an independent curated list (CGC)."
+  data_support:
+  - task: t131
+    description: "dNdScv-v2 (min_q, n_cancers tiebreak) top-100 recovers 62/100 Bailey drivers;
+      top-15 = TP53, KRAS, NRAS, PIK3CA, TTN, FBXW7, KMT2D, PTEN, RB1, TET2, ARID1A, ARID2, DNMT3A,
+      BRAF, SETD2 (14/15 canonical)."
+  - task: t144
+    description: "Tiebreaker-fix rerun — Bailey recovery top-10 8/10, top-25 22/25, top-50 37/50,
+      top-100 62/100; canonical drivers occupy ranks 1-7. Matches the pre-registered prediction
+      (>=22/25 in top-25)."
+  - task: t146
+    description: "External validation against CGC (curated independently of Bailey) — tier-1
+      recovery 80% @K=10, 92% @K=25, 88% @K=100; OR = 299 at K=100, Fisher p < 1e-300."
+  lit_support:
+  - doi: 10.1038/s41586-018-0312-y
+    author_year: Bailey2018
+    description: "The driver oracle. Documented circularity caveat: dNdScv was one of the 26 Bailey
+      input tools, so CGC (t146) is the less-circular check."
+  - doi: 10.1016/j.cell.2017.09.042
+    author_year: Martincorena2017
+    description: "dNdScv method paper — the selection model the project re-runs at full
+      pan-cancer scale to produce this ranking."
+- id: 11
+  source: drivers
+  target: stability
+  source_label: Canonical-driver recovery (Bailey/CGC)
+  target_label: Cross-study (LOSO) rank stability
+  relation: "drivers replicate (P1)"
+  edge_status: tentative
+  identification: observational
+  description: "P1 (strong driver replication). On the dNdScv ranking, leave-one-study-out is highly
+    stable for non-GENIE holdouts — the canonical core is preserved when any single study is
+    removed. Marked tentative rather than supported because (a) only three holdouts have been run,
+    not exhaustive LOO, (b) the GENIE holdout perturbs 40% of the head, and (c) the
+    significance-naive pooled_rate aggregator is unstable (a separate methodological point, not a
+    refutation of the dNdScv-rank result)."
+  data_support:
+  - task: t173
+    description: "dNdScv-rank LOSO — msk_met_2021 holdout Jaccard@100 = 0.852 (92% stable),
+      pog570_bcgsc_2020 holdout 0.923 (96% stable). The canonical core survives single-study
+      removal."
+  caveats:
+  - "Partial LOO: three holdouts, not exhaustive leave-one-study-out; t149's exhaustive run used the
+    significance-naive pooled_rate aggregator."
+- id: 12
+  source: longtail
+  target: stability
+  source_label: Long-tail candidates
+  target_label: Cross-study (LOSO) rank stability
+  relation: "candidates are study-specific (P2)"
+  edge_status: tentative
+  identification: observational
+  description: "P2's outcome side: long-tail candidate ranks are study-specific, so their LOSO
+    stability is materially lower than the canonical core's. The GENIE holdout makes this concrete —
+    the genes that move are secondary drivers, and the pooled_rate aggregator (which weights by
+    sample size without significance) is highly unstable in exactly this tail."
+  data_support:
+  - task: t149
+    description: "pooled_rate LOSO — median recovery@K=100 = 0.185 (IQR 0.023-0.495, min 0.0);
+      Bailey-restriction barely helps (0.21). The non-significance-weighted tail is unstable, the
+      P2 direction."
+  - task: t173
+    description: "Genes lost/gained on GENIE holdout (ESR1/NTRK1/PTPN11/RECQL4 vs ABL1/BCL6/EGFR/
+      HLA-A) are study-specific secondary drivers — the candidate tail, not the canonical core."
+  caveats:
+  - "pooled_rate instability conflates true candidate study-specificity (P2) with aggregator choice;
+    disentangling them needs a dNdScv-rank candidate-set LOO, not yet run."

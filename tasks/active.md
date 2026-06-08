@@ -847,16 +847,6 @@ First concrete, data-unblocked test of h09: using per-sample SBS exposures alrea
 
 One inventory feather that multiple hypotheses are independently re-deriving. h10 found only 1 adequate treatment cohort in 198 studies; q026/q028/q017 each separately enumerate corpus capacity. Consolidate into a single per-study capability table so replication-depth questions (per cancer x condition) are answered from one source. Powers q026 (>=2 studies/cancer), q028 (indel depth), q024/q027 (treatment cohorts), q017 (saturation), and the assay-regime theme.
 
-## [t214] Materialize h02 + h08 proposition DAGs (doc/figures/dags/*.edges.yaml) with support/dispute edges from existing interpretations
-- priority: P2
-- status: proposed
-- aspects: [causal-modeling]
-- related: [hypothesis:h02-cross-study-ranking-divergence-is-structured, hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and]
-- group: knowledge-graph
-- created: 2026-06-02
-
-provenance_coverage is 'thin' on all 10 hypotheses because no edges.yaml DAGs or graph claims exist (claim_count=0). h02 (confirmed: dNdScv recovers 62/100 Bailey, LOSO-stable) and h08 (inconclusive H08a verdict: 1/3 arms) both have enough resolved interpretation evidence to materialize propositions with support/dispute chains. Building their edges.yaml DAGs upgrades provenance thin->partial/high and makes the next big-picture synthesis substantially richer.
-
 ## [t219] Neuroendocrine-histology flag + exclusion sensitivity (q034, P3)
 - priority: P2
 - status: proposed

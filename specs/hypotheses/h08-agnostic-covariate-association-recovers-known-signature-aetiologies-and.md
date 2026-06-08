@@ -138,10 +138,22 @@ hypothesis's own framing:
   a new repaired positive-control gate that addresses both the UV proxy and lung burden-dominance
   issues before any H08b promotion decision.
 
+## Proposition DAG
+
+The causal model (`models/h08-agnostic-signature-association.dot`) is materialized as a proposition DAG
+with support/dispute evidence at `doc/figures/dags/h08-agnostic-covariate-association.edges.yaml`
+(+ `.dot`, auto-rendered PNG), built by `t214`. Twelve edges carry the arm-level H08a verdicts and the
+R1–R5 rivals with task IDs and concrete numbers: APOBEC3-expr→SBS2/13 (Arm C, **supported**: rank 1/10,
+β = +0.458, q ≈ 4.4e-12, permutation- and leakage-guarded), smoking→SBS4 (Arm B, **tentative**: repaired
+β = +0.267, q = 5.1e-4, but rank 5/8), UV→SBS7 (Arm A, **eliminated** as a proxy: rank 10/14, negative),
+the gated H08b expr-module→H edge (**unknown**, carrying the R2 reverse-causation non-identification), and
+the R1/R3/R4 confounders (tissue / selection-on-H / study-assay) as structural adjustment-set edges.
+
 ## Related
 
 - Topic notes: `topic:signature-decomposition-unmatched-normal`
 - Method/model: `method:h08-agnostic-association-model`, `models/h08-agnostic-signature-association.dot`
+- Proposition DAG: `doc/figures/dags/h08-agnostic-covariate-association.edges.yaml`
 - Discussion: `discussion:2026-05-30-common-mutational-signatures-known-vs-learned-immune-causes-and-confounding`
 - Questions: `question:q018-...`, `question:q019-...`
 - Code substrate: `code/scripts/export_study_expression.py`, `code/scripts/convert_to_feather.py`,

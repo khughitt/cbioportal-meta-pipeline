@@ -51,6 +51,33 @@ Notes:
   threads on one sqlite cache), prefix the invocation with `CONDA_REPODATA_THREADS=1` to serialize
   the shard fetches.
 
+### Verifying a run is green (idempotency check)
+
+The canonical "outputs are present and up to date" check pins the rerun trigger to **mtime**:
+
+```bash
+uv run --frozen snakemake -s code/workflows/Snakefile -n \
+  --configfile code/config/config-poc.yml --use-conda --conda-frontend mamba \
+  --rerun-triggers mtime
+# expect: "Nothing to be done (all requested files are present and up to date)."
+```
+
+A *bare* dry-run (Snakemake's default `--rerun-triggers` set = `mtime,params,input,software-env,code`)
+will instead schedule a large rerun (~72 jobs on config-poc) even when every output is present.
+This is **expected, not a failure**: the default also fires on `code` and `software-env` *provenance*
+hashes, so editing any pipeline script or env YAML after its outputs were built flags those outputs
+(and everything downstream) as stale. On config-poc the trigger is three reference-prep rules
+(`process_bailey2018_drivers`, `process_cgc`, `process_sanchez_vega_pathways`) whose outputs were
+materialized by an older run that never recorded code-provenance metadata, plus a `software-env`
+trigger on `create_protein_length_mapping` / `download_study` / `process_genie_panel_coverage`.
+
+`--cleanup-metadata <outfile>` clears a stale provenance hash for a single output, but it does **not**
+make the bare dry-run empty (the `software-env` trigger and the input cascade remain, and any later
+script edit re-dirties it). So **mtime is the idempotency contract**; provenance/code/env reruns are a
+separate reproducibility question, not part of "is this run green." "Green end-to-end" = a full
+`rule all` completes with zero job failures and all QA reports PASS, *and* the mtime dry-run above is
+empty.
+
 ## Languages & Tools
 
 - **Python**: pandas, pyarrow, scikit-learn, seaborn, snakemake

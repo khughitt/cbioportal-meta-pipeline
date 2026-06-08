@@ -29,12 +29,13 @@ updated: "2026-06-08"
 > selection in any of 68 cancers.
 >
 > **Correction (2026-06-08, by t218):** the F5 "panel ascertainment" attribution below is **WRONG**.
-> t218 shows the residual lives in the **WES/WGS** studies and is *absent* in panels (which barely tile
-> these genes); pan-cancer's "no residual" was its panel studies diluting the WES signal. The residual is
-> driven entirely by **one high-burden metastatic WGS cohort** (`pog570_bcgsc_2020`) whose whole-gene-body
-> sequencing tiles the candidates' multi-Mb introns — the genomic-span confound amplified by assay reach,
-> not panel ascertainment and not CNS histology. The F2/F3/F4 genomic-span conclusions below are unchanged
-> and strengthened. See `interpretation:2026-06-08-t218-cns-exclusion-wes-panel`.
+> t218 shows the residual lives in the **WES/WGS-class** studies and is *absent* in panels (which barely
+> tile these genes); pan-cancer's "no residual" was its panel studies diluting the WES signal. The
+> residual is driven entirely by **one cohort** (`pog570_bcgsc_2020`) whose mutation table is all-region —
+> **98.5 % of its candidate variant rows are intronic** — so counts for these multi-Mb loci scale with
+> genomic span (the same confound, amplified by call-set region coverage, not by panel ascertainment or
+> CNS histology). That cohort carries zero hypermutator samples. The F2/F3/F4 genomic-span conclusions
+> below are unchanged and strengthened. See `interpretation:2026-06-08-t218-cns-exclusion-wes-panel`.
 
 - **Task:** `t217` (q032 length null, P1; plan step 3,
   `doc/plans/2026-06-06-neural-gene-enrichment-meta-analysis-plan.md`).

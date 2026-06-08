@@ -23,12 +23,15 @@ genomic-span-matched empirical residual p from t217):
   wes_excl_wgs_driver WES studies minus the sole LOSO driver (a high-burden WGS cohort)
 
 OUTCOME (recorded here so the script self-documents): the t217 F5 "panel ascertainment" guess is WRONG.
-The residual lives in the WES/WGS studies (p~0.002) and is ABSENT in panels (p~1.0; panels barely tile
-these genes). It is robust to span-matching, span+late-replication-class matching, CNS exclusion, and
-hypermutator exclusion — but it is driven ENTIRELY by one high-burden metastatic WGS cohort
-(pog570_bcgsc_2020): dropping it returns the candidates to the span-matched null (p 0.002 -> 0.19). WGS
-sequences the full multi-Mb gene body, so these CFS loci accrue whole-span counts — the genomic-span
-confound amplified by assay reach, not biology. q033 answered: the enrichment is NOT CNS-driven.
+The residual lives in the WES/WGS-class studies (p~0.002) and is ABSENT in panels (p~1.0; panels barely
+tile these genes). It is robust to span-matching, span+late-replication-class matching, and CNS exclusion
+— but it is driven ENTIRELY by one cohort (pog570_bcgsc_2020): dropping it returns the candidates to the
+span-matched null (p 0.002 -> 0.19). That cohort's mutation table is all-region (t218b: 98.5% of its
+candidate variant rows are intronic) and carries 0/570 hypermutators, so these CFS loci accrue whole-span
+counts — the genomic-span confound amplified by call-set region coverage, not by assay label, panel
+ascertainment, hypermutators, or biology. q033 answered (candidate-set mutational thread): NOT CNS-driven.
+NB the aggregate hypermutator arm (pan-cancer wes_hypermut_excl) tests an already-non-significant arm and
+does NOT bear on the significant full-WES residual; the driver-cohort zero-hypermutator fact (t218b) does.
 
 Plus: per-candidate CNS contribution (q033 deliverable, esp. LSAMP/OPCML/RBFOX1), leave-one-study-out
 (single-study vs diffuse origin), and a panel-membership check (are the candidates tiled by the panels
@@ -77,8 +80,9 @@ OUT = Path("results/neural-gene-cns-wes-2026-06-08")
 WES_GENE_THR = (
     5000  # >= this many distinct genes covered => WES/WGS; else panel/limited
 )
-# Sole study flagged by leave-one-study-out as moving candidate median > 0.1 pct (a high-burden
-# metastatic WGS cohort; see the WGS-driver-excluded arm). Recorded as a named constant for the arm.
+# Sole study flagged by leave-one-study-out as moving candidate median > 0.1 pct. Its mutation table is
+# all-region (t218b: ~98.5% of candidate variant rows intronic) despite a `wes` study_panels label, so it
+# tiles these multi-Mb loci across their whole gene body. Recorded as a named constant for the driver arm.
 LOSO_DRIVER = "pog570_bcgsc_2020"
 RANDOM_SEED = 0
 N_NULL = 5000
@@ -259,10 +263,10 @@ def main() -> None:
         ]
         if wes_excl:
             restrictions["wes_hypermut_excl"] = (cnt, wes_excl)
-        # WGS-driver-excluded arm: leave-one-study-out flags pog570_bcgsc_2020 (a high-burden metastatic
-        # WGS cohort) as the SOLE study moving candidate median > 0.1 pct. WGS sequences the full multi-Mb
-        # gene body (introns), so these CFS loci accrue whole-span counts there — an amplified form of the
-        # genomic-span confound, not WES exonic signal. Dropping it returns candidates to the span null.
+        # Driver-excluded arm: leave-one-study-out flags pog570_bcgsc_2020 as the SOLE study moving
+        # candidate median > 0.1 pct. Its mutation table is all-region (t218b: ~98.5% of candidate variant
+        # rows intronic), so these multi-Mb CFS loci accrue whole-gene-body counts there — an amplified form
+        # of the genomic-span confound, not exonic signal. Dropping it returns candidates to the span null.
         if LOSO_DRIVER in wes_cols:
             restrictions["wes_excl_wgs_driver"] = (
                 cnt,
@@ -335,7 +339,10 @@ def main() -> None:
 
     restr = pd.DataFrame(restriction_rows)
     contrib = pd.DataFrame(contrib_rows)
-    loso = pd.DataFrame(loso_rows).sort_values("delta_vs_base")
+    # sort by MAGNITUDE of shift so the most influential studies (either direction) sort first —
+    # the sole large driver (pog570_bcgsc_2020) raises the median when dropped (positive delta).
+    loso = pd.DataFrame(loso_rows)
+    loso = loso.reindex(loso["delta_vs_base"].abs().sort_values(ascending=False).index)
     assay = pd.DataFrame(assay_rows)
 
     # panel-membership: which candidates are tiled by GENIE panels (mechanism evidence for ascertainment)
@@ -404,6 +411,12 @@ def main() -> None:
                 "name": "candidate_panel_membership",
                 "path": "candidate_panel_membership.tsv",
             },
+            {
+                "name": "pog570_driver_forensics",
+                "path": "pog570_*.{tsv,json}",
+                "note": "variant-class + hypermutator forensic on the sole LOSO driver; "
+                "written by code/notebooks/t218b_pog570_driver_forensics.py",
+            },
         ],
         "parameters": {
             "random_seed": RANDOM_SEED,
@@ -449,11 +462,12 @@ def main() -> None:
     print("\n================ PER-CANDIDATE CNS CONTRIBUTION (full) ================")
     print(contrib.to_string(index=False))
     print(
-        "\n================ LEAVE-ONE-STUDY-OUT (WES, full) — 6 most influential ================"
+        "\n========== LEAVE-ONE-STUDY-OUT (WES, full) — 6 most influential by |delta| =========="
     )
     print(loso.head(6).to_string(index=False))
+    n_big = int((loso["delta_vs_base"].abs() > 0.1).sum())
     print(
-        f"   (base candidate median pct restored across {len(loso)} WES studies; "
+        f"   ({n_big} of {len(loso)} WES studies shift candidate median by > 0.1 pct; "
         f"max |delta| = {loso['delta_vs_base'].abs().max():.3f} pct points)"
     )
     if not panel_mem.empty:

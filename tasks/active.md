@@ -857,16 +857,6 @@ One inventory feather that multiple hypotheses are independently re-deriving. h1
 
 provenance_coverage is 'thin' on all 10 hypotheses because no edges.yaml DAGs or graph claims exist (claim_count=0). h02 (confirmed: dNdScv recovers 62/100 Bailey, LOSO-stable) and h08 (inconclusive H08a verdict: 1/3 arms) both have enough resolved interpretation evidence to materialize propositions with support/dispute chains. Building their edges.yaml DAGs upgrades provenance thin->partial/high and makes the next big-picture synthesis substantially richer.
 
-## [t215] Reproduce the neural-gene top-mutated observation from pipeline outputs (gate)
-- priority: P1
-- status: proposed
-- aspects: [computational-analysis]
-- related: [hypothesis:h12-neural-gene-enrichment-length-histology-artifact, question:q032-neural-gene-length-null]
-- group: neural-gene-meta-analysis
-- created: 2026-06-06
-
-Confirm whether NKAIN2/KCNIP4/TAFA2/RIT2/CALN1/RBFOX1/LSAMP/SGCZ/OPCML actually rank highly in gene_cancer_study(_ratio)_annotated.feather, on which metric (raw count vs sample-ratio) and config, and from which studies. The candidate list is from unreliable notes — if it does not reproduce, close the program and record the notes as spurious. See doc/plans/2026-06-06-neural-gene-enrichment-meta-analysis-plan.md.
-
 ## [t216] Build label-free neural-enrichment gene score from expression atlases (q035)
 - priority: P2
 - status: proposed
@@ -877,6 +867,10 @@ Confirm whether NKAIN2/KCNIP4/TAFA2/RIT2/CALN1/RBFOX1/LSAMP/SGCZ/OPCML actually 
 
 Per-gene neural-enrichment score from GTEx (brain regions + tibial nerve) and Human Protein Atlas tissue-specificity, partitioned into CNS-structural / PNS-autonomic / neuroendocrine-lineage sub-scores; no GO labels (GO as sensitivity comparator only). Validate against canonical effectors (NLGN3, ADRB2, NTRK1/2, CHRM3, GRIN2A/B, NGF, BDNF) as positive controls. Output reusable gene_neural_enrichment.feather. Blocks t217/t218/t219 enrichment statistic.
 
+### Notes
+
+- 2026-06-08: t215 gate (2026-06-08): benchmark the label-free neural score against a size-matched large-locus/CFS null, not only housekeeping negatives — the top non-driver mutated genes are a neural-and-non-neural large-locus mixture (EYS/USH2A/RYR2/TTN/MACROD2), so a neural score looks enriched unless it beats a CFS-matched control.
+
 ## [t217] Gene-length null test for neural-gene enrichment (q032, P1)
 - priority: P1
 - status: proposed
@@ -886,6 +880,11 @@ Per-gene neural-enrichment score from GTEx (brain regions + tibial nerve) and Hu
 - created: 2026-06-06
 
 Does the neural-enrichment statistic survive normalization to mutations-per-callable-kb and the dndscv background? Reuse data/uniprotkb_hsapiens_protein_lengths.tsv.gz + Ensembl CDS length and existing dndscv q-values. Primary, runnable now against existing outputs. Wilcoxon of candidate-gene length vs background.
+
+### Notes
+
+- 2026-06-08: t215 gate redirect (2026-06-08): protein-aa length is the WRONG yardstick — candidate neural genes are SHORT proteins (208-397 aa, pctile 18-47) while canonical effectors are longer (800-1480 aa) yet rank far lower in mutation count; an aa-length Wilcoxon would spuriously fail to reject. Normalize by genomic/CDS callable territory (mutations-per-callable-kb) + dndscv background, and promote t221 common-fragile-site overlap to a PRIMARY covariate (non-driver top-20 is a large-locus/CFS class: CSMD1/EYS/PCDH15/SYNE1/RYR2/USH2A/MACROD2 + the candidates). Report on full AND pan-cancer (enrichment is config-dependent — absent in pan-cancer); apply t082 alias mapping first. See interpretation:2026-06-08-t215-neural-gene-reproduction-gate.
+- 2026-06-08: CORRECTION to prior note (2026-06-08): the enrichment is NOT 'absent in pan-cancer' — that was a column-bug artifact. It is robust across configs by MWU; only the top-100 raw-count tail is config-dependent. Still report full AND pan-cancer, but as a tail-sensitivity (q016 coupling), not a presence/absence flip. The genomic/CDS-span + CFS redirect (not protein-aa length) stands and is strengthened: FAM19A2 resolves at 131 aa, all candidates are short proteins.
 
 ## [t218] CNS/glioma study-exclusion sensitivity for neural enrichment (q033, P2)
 - priority: P2
@@ -973,7 +972,6 @@ Acquire the reference resources backing the data-driven neural-gene score (t216)
 - aspects: [computational-analysis]
 - related: [question:q047-hypermutation-confound-on-driver-tissue-specificity, question:q043-driver-cancer-type-breadth-distribution]
 - created: 2026-06-07
-- resolved: 2026-06-07
 
 Review of commit 94c2c85 found q047 implementation/prose drift: code/notebooks/q047_hypermutation_specificity_confound.py documents broad_oncogene as breadth >=10 but implements all CGC oncogenes with breadth >2 as broad_oncogene; the emitted T3 console reading says background/passenger inflation is higher than restricted_oncogene even though output shows restricted_oncogene median log2 ratio 4.396 > background 3.221. Decide whether broad_oncogene means true hub (>=10, with intermediate_oncogene separate) or non-restricted (>2), update notebook/docs accordingly, and regenerate q047 artifacts/interpretation.
 

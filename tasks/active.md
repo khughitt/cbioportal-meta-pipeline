@@ -857,16 +857,6 @@ One inventory feather that multiple hypotheses are independently re-deriving. h1
 
 provenance_coverage is 'thin' on all 10 hypotheses because no edges.yaml DAGs or graph claims exist (claim_count=0). h02 (confirmed: dNdScv recovers 62/100 Bailey, LOSO-stable) and h08 (inconclusive H08a verdict: 1/3 arms) both have enough resolved interpretation evidence to materialize propositions with support/dispute chains. Building their edges.yaml DAGs upgrades provenance thin->partial/high and makes the next big-picture synthesis substantially richer.
 
-## [t218] CNS/glioma study-exclusion sensitivity for neural enrichment (q033, P2)
-- priority: P2
-- status: proposed
-- aspects: [computational-analysis]
-- related: [question:q033-neural-enrichment-cns-exclusion, hypothesis:h12-neural-gene-enrichment-length-histology-artifact]
-- group: neural-gene-meta-analysis
-- created: 2026-06-06
-
-Re-aggregate with CNS/glioma cancer types removed; quantify each excluded study's contribution to LSAMP/OPCML/RBFOX1 and to the neural-enrichment statistic. Leave-one-study-out to test single-study vs diffuse origin.
-
 ## [t219] Neuroendocrine-histology flag + exclusion sensitivity (q034, P3)
 - priority: P2
 - status: proposed
@@ -877,6 +867,10 @@ Re-aggregate with CNS/glioma cancer types removed; quantify each excluded study'
 
 Enumerate NET/NEC OncoTree codes present in pipeline studies; add is_neuroendocrine_histology flag; recompute ranks with NEN excluded. MEN1 rank is the positive-control canary; watch ATRX/NF1 as dual CNS+NEN confounds.
 
+### Notes
+
+- 2026-06-08: Downgrade (t218, 2026-06-08): the plan gated NET exclusion on a residual surviving CNS exclusion. t218 shows no residual survives (the candidate enrichment is fully genomic-span/CFS + one WGS cohort's whole-locus reach; not CNS, not panel, not hypermutator, not selection). Keep t219 only as a quick MEN1-canary NET-exclusion sanity check, not as a residual-explaining step. See interpretation:2026-06-08-t218-cns-exclusion-wes-panel.
+
 ## [t220] Interpret residual: oncofetal (H3) vs selection (H1) (q036/q037, P4/P5)
 - priority: P3
 - status: proposed
@@ -886,6 +880,10 @@ Enumerate NET/NEC OncoTree codes present in pipeline studies; add is_neuroendocr
 - created: 2026-06-06
 
 Only if signal survives t217-t219. H3 test: BrainSpan fetal-vs-adult ratio for residual set + stemness/oncofetal correlation in matched-expression studies + recurrence/clustering check. H1 test: dndscv on canonical effectors per cancer type (NF1 = positive control). Opposite predictions decide H1 vs H3.
+
+### Notes
+
+- 2026-06-08: Downgrade (t218, 2026-06-08): H3 oncofetal / H1 dN-dS residual interpretation was gated on a surviving residual after CNS exclusion. None survives (t217+t218 close the candidate enrichment as genomic-span/CFS amplified by one WGS cohort's reach; dndscv 0/9 selected). Low priority - nothing left to interpret mutationally for these genes. See interpretation:2026-06-08-t218-cns-exclusion-wes-panel.
 
 ## [t221] QA / sanity battery for the neural-gene program
 - priority: P2

@@ -895,6 +895,10 @@ Only if signal survives t217-t219. H3 test: BrainSpan fetal-vs-adult ratio for r
 
 Matched- vs unmatched-normal stratification (germline-leak control via matched_normal_studies); hypermutator/MSI stratification (is_hypermutator); common-fragile-site overlap for candidates; data-driven-set vs GO-label-set sensitivity. Runs alongside t217-t220.
 
+### Notes
+
+- 2026-06-08: Arm (a) complete (negative): full-config sample-level hypermutator exclusion across all 91 WES studies (326 hypermutator samples / 1.15M variant rows dropped) leaves the t217 genomic-span residual unchanged (span-matched p 0.002 -> 0.002; per-candidate only 0.4-1.9% of rows dropped). Closes the hypermutator control t218 deferred. Re-aggregation validated: inclusive arm reproduces the canonical wide table gene-for-gene (candidates exact) and t218 wes_only p=0.0022 exactly. Script code/notebooks/t221a_sample_level_hypermutator_exclusion.py; interpretation doc/interpretations/2026-06-08-t221a-sample-level-hypermutator-exclusion.md. Remaining: arm (b) standing-controls panel.
+
 ## [t222] Search/acquire: Schmitt 2023 SCLC neural-gene screen (Nrxn1/Nlgn1/Dcc/Reln)
 - priority: P3
 - status: proposed

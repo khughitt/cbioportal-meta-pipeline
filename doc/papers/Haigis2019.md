@@ -173,8 +173,9 @@ developmental insights and therapeutic vulnerabilities.
 
 ## Relevance
 
-This Perspective is directly relevant to question:q042-driver-normal-expression-tissue-cell-type-
-specificity and to the project's cross-study mutation-frequency meta-analysis.
+This Perspective is directly relevant to
+question:q042-driver-normal-expression-tissue-cell-type-specificity and to the project's cross-study
+mutation-frequency meta-analysis.
 
 **Route-2 anchor for q042.** The Haigis2019 thesis describes a mechanistically *distinct* route
 to tissue-specific driver behavior compared to lineage-addiction oncogenes (paper:Garraway2006).

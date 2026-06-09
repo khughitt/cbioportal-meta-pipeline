@@ -637,7 +637,7 @@ Acceptance: `doc/interpretations/<date>-q017-cross-study-saturation-curve.md` wi
 - priority: P2
 - status: proposed
 - aspects: [computational-analysis]
-- related: [interpretation:2026-04-26-t131-full-pan-cancer-dndscv-run, hypothesis:h02-cross-study-ranking-divergence-is-structured, meta:big-picture-2026-04-28]
+- related: [interpretation:2026-04-26-t131-full-pan-cancer-dndscv-run, hypothesis:h02-cross-study-ranking-divergence-is-structured]
 - group: spine-hygiene
 - created: 2026-04-28
 
@@ -647,7 +647,7 @@ Big-picture validator flagged t131 as orphan because its frontmatter cites quest
 - priority: P2
 - status: proposed
 - aspects: [computational-analysis]
-- related: [hypothesis:h02-cross-study-ranking-divergence-is-structured, hypothesis:h03-gene-length-confounds-literature-attention, question:q014-cfs-as-distinct-confounder-class, question:q016-panel-induced-ascertainment, question:q017-cross-study-saturation-curve, meta:big-picture-2026-04-28]
+- related: [hypothesis:h02-cross-study-ranking-divergence-is-structured, hypothesis:h03-gene-length-confounds-literature-attention, question:q014-cfs-as-distinct-confounder-class, question:q016-panel-induced-ascertainment, question:q017-cross-study-saturation-curve]
 - group: spine-hygiene
 - created: 2026-04-28
 
@@ -675,7 +675,7 @@ ad-hoc reruns.
 - priority: P2
 - status: proposed
 - aspects: [computational-analysis]
-- related: [question:q009-sbs1-lrr-bias-as-normal-contamination-flag, hypothesis:h01-non-tumor-signal-contamination, interpretation:2026-04-22-t123-rt-brca-sbs1-proxy-pilot, interpretation:2026-04-24-t126-sbs1-lrr-bias-per-study, meta:big-picture-2026-04-28]
+- related: [question:q009-sbs1-lrr-bias-as-normal-contamination-flag, hypothesis:h01-non-tumor-signal-contamination, interpretation:2026-04-22-t123-rt-brca-sbs1-proxy-pilot, interpretation:2026-04-24-t126-sbs1-lrr-bias-per-study]
 - group: hypothesis-spine
 - created: 2026-04-28
 
@@ -685,7 +685,7 @@ Run /science:add-hypothesis to formalize a candidate sub-hypothesis (proposed id
 - priority: P3
 - status: blocked
 - aspects: [computational-analysis]
-- related: [hypothesis:h01-non-tumor-signal-contamination, hypothesis:h02-cross-study-ranking-divergence-is-structured, hypothesis:h05-healthy-somatic-background-atlas, question:q009-sbs1-lrr-bias-as-normal-contamination-flag, topic:signature-decomposition-unmatched-normal, topic:targeted-panel-sequencing-bias, meta:big-picture-2026-04-28]
+- related: [hypothesis:h01-non-tumor-signal-contamination, hypothesis:h02-cross-study-ranking-divergence-is-structured, hypothesis:h05-healthy-somatic-background-atlas, question:q009-sbs1-lrr-bias-as-normal-contamination-flag, topic:signature-decomposition-unmatched-normal, topic:targeted-panel-sequencing-bias]
 - group: dataset-acquisition
 - created: 2026-04-28
 
@@ -695,7 +695,7 @@ Hartwig Medical Foundation database is a research-access metastatic WGS cohort, 
 - priority: P3
 - status: blocked
 - aspects: [computational-analysis]
-- related: [hypothesis:h01-non-tumor-signal-contamination, hypothesis:h02-cross-study-ranking-divergence-is-structured, hypothesis:h04-mhn-pathway-ordering, question:q009-sbs1-lrr-bias-as-normal-contamination-flag, question:q012-mutation-ordering-cross-sectional-inference, paper:PCAWG2020, meta:big-picture-2026-04-28]
+- related: [hypothesis:h01-non-tumor-signal-contamination, hypothesis:h02-cross-study-ranking-divergence-is-structured, hypothesis:h04-mhn-pathway-ordering, question:q009-sbs1-lrr-bias-as-normal-contamination-flag, question:q012-mutation-ordering-cross-sectional-inference, paper:PCAWG2020]
 - group: dataset-acquisition
 - created: 2026-04-28
 
@@ -705,7 +705,7 @@ PCAWG (~2,800 tumors, 38 cancer types, fully WGS, matched normals, harmonized Pa
 - priority: P3
 - status: blocked
 - aspects: [computational-analysis]
-- related: [hypothesis:h02-cross-study-ranking-divergence-is-structured, hypothesis:h05-healthy-somatic-background-atlas, question:q013-cross-study-replication-rate, question:q017-cross-study-saturation-curve, meta:big-picture-2026-04-28]
+- related: [hypothesis:h02-cross-study-ranking-divergence-is-structured, hypothesis:h05-healthy-somatic-background-atlas, question:q013-cross-study-replication-rate, question:q017-cross-study-saturation-curve]
 - group: dataset-acquisition
 - created: 2026-04-28
 
@@ -715,7 +715,7 @@ Genomics England 100K Genomes Project: ~70,000 cancer WGS samples + matched germ
 - priority: P3
 - status: blocked
 - aspects: [computational-analysis]
-- related: [hypothesis:h05-healthy-somatic-background-atlas, hypothesis:h01-non-tumor-signal-contamination, question:q007-cross-tissue-somatic-mutation-rate-variation-as-null-model, task:t150, task:t151, task:t111, topic:normal-tissue-mutation-atlas, meta:big-picture-2026-04-28]
+- related: [hypothesis:h05-healthy-somatic-background-atlas, hypothesis:h01-non-tumor-signal-contamination, question:q007-cross-tissue-somatic-mutation-rate-variation-as-null-model, task:t150, task:t151, task:t111, topic:normal-tissue-mutation-atlas]
 - group: dataset-acquisition
 - created: 2026-04-28
 
@@ -729,7 +729,7 @@ The current h05 cross-tissue normal background relies on Li 2021 spectra alone (
 - priority: P1
 - status: proposed
 - aspects: [computational-analysis]
-- related: [hypothesis:h03-gene-length-confounds-literature-attention, question:q011-gene-length-as-literature-attention-confounder, task:t129, task:t130, topic:mutation-rate-normalization, meta:big-picture-2026-04-28]
+- related: [hypothesis:h03-gene-length-confounds-literature-attention, question:q011-gene-length-as-literature-attention-confounder, task:t129, task:t130, topic:mutation-rate-normalization]
 - group: dataset-acquisition
 - created: 2026-04-28
 
@@ -739,7 +739,7 @@ t129 (the partial-slope regression for beta_length) and the broader h03 framing 
 - priority: P1
 - status: proposed
 - aspects: [computational-analysis]
-- related: [hypothesis:h02-cross-study-ranking-divergence-is-structured, task:t146, question:q013-cross-study-replication-rate, meta:big-picture-2026-04-28]
+- related: [hypothesis:h02-cross-study-ranking-divergence-is-structured, task:t146, question:q013-cross-study-replication-rate]
 - group: dataset-acquisition
 - created: 2026-04-28
 
@@ -749,7 +749,7 @@ t146 (external validation of pan-cancer dNdScv ranking against IntOGen / Martinc
 - priority: P3
 - status: blocked
 - aspects: [computational-analysis]
-- related: [hypothesis:h01-non-tumor-signal-contamination, question:q008-signature-decomposition-tissue-background-subtraction, task:t127, meta:big-picture-2026-04-28]
+- related: [hypothesis:h01-non-tumor-signal-contamination, question:q008-signature-decomposition-tissue-background-subtraction, task:t127]
 - group: dataset-acquisition
 - created: 2026-04-28
 

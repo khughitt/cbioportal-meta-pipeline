@@ -38,8 +38,9 @@ single-stranded DNA (ssDNA), producing the canonical SBS2 (C→T in TCW) and SBS
 COSMIC signatures. These two signatures together define the "APOBEC3 signature" and are among
 the most prevalent endogenous mutational processes in human cancers, with high activity in
 bladder, breast, cervical, lung, and head-and-neck squamous tumors. APOBEC mutagenesis serves
-as a positive-control arm in hypothesis:h08-agnostic-covariate-association-recovers-known-
-signature-aetiologies-and: an agnostic within-tissue covariate-to-signature-exposure association
+as a positive-control arm in
+hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and: an agnostic
+within-tissue covariate-to-signature-exposure association
 must recover APOBEC3A/B mRNA expression as the top predictor of SBS2/SBS13 burden to be
 considered validated.
 

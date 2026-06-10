@@ -105,6 +105,32 @@ labels are used only as a sensitivity comparator, never as the primary definitio
 | Canonical effectors show dN/dS>1 in specific cancers, recurrent hotspots | P5 — H1 (only defensible mutational H1) |
 | Candidate genes show recurrent, clustered, functional mutations after all corrections | would *refute* the null and support H1 |
 
+## Falsifiability
+
+This hypothesis is the **null** (the neural signal is a length + histology artifact, and any
+residual is developmental rather than selective). It is **refuted** if, after the corrections
+P1–P3 are applied jointly, the candidate neural genes (NKAIN2, KCNIP4, TAFA2, RIT2, CALN1,
+RBFOX1, LSAMP, SGCZ, OPCML) **retain** statistically significant neural-label enrichment in the
+length-normalized, CNS-excluded, NET/NEC-excluded gene ranking. Concretely, the null fails if
+**any** of the following hold:
+
+- **Length null survives correction (refutes P1/P4).** The candidate set stays in the top tier
+  of a length-normalized statistic (mutations per callable kb, or dN/dS), so the enrichment is
+  not a gene-length artifact.
+- **Histology-independent (refutes P2/P3).** The enrichment persists at similar magnitude after
+  excluding CNS/glioma and NET/NEC studies, and MEN1 does **not** drop out — ruling out lineage
+  composition as the driver.
+- **Selection, not development (refutes P4/P5).** The surviving residual shows recurrent,
+  clustered, functional mutations with dN/dS > 1 (genome-wide significant) in canonical
+  cancer-neuroscience effectors, rather than fetal-brain-biased, non-recurrent expression — i.e.
+  the positive-selection (H1) signature beats the oncofetal (H3) signature.
+
+Conversely, the hypothesis is **corroborated** when length normalization plus CNS+NET exclusion
+collapses the neural-label enrichment to non-significance, and whatever remains is fetal-brain-
+enriched and non-recurrent. The test is decisive because P1 (length null) is runnable
+immediately against existing pipeline outputs and the in-repo UniProt protein-length reference,
+giving an early go/no-go before any new data acquisition.
+
 ## Status / Next Steps
 
 Proposed. Operationalized by `doc/plans/2026-06-06-neural-gene-enrichment-meta-analysis-plan.md`

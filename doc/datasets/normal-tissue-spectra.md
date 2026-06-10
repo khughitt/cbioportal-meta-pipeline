@@ -9,7 +9,7 @@ source_refs:
   - "paper:Li2021"
 related:
   - "dataset:li2021-normal-wgs"
-  - "hypothesis:h01-non-tumor-signal-contamination"
+  - "hypothesis:0001-non-tumor-signal-contamination"
   - "topic:normal-tissue-mutation-atlas"
 created: "2026-04-19"
 updated: "2026-05-31"

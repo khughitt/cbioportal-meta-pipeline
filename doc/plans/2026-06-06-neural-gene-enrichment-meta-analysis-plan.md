@@ -1,7 +1,7 @@
 # Plan: data-driven test of the "neural gene" mutation-enrichment observation
 
 - **Date:** 2026-06-06
-- **Hypothesis:** `hypothesis:h12-neural-gene-enrichment-length-histology-artifact` (null-first)
+- **Hypothesis:** `hypothesis:0012-neural-gene-enrichment-length-histology-artifact` (null-first)
 - **Synthesis:** `doc/papers/synthesis-2026-06-06-cancer-neuroscience.md`
 - **Questions:** q032 (length null), q033 (CNS exclusion), q034 (NET exclusion), q035 (label-free
   definition), q036 (oncofetal H3), q037 (canonical-effector dN/dS H1)

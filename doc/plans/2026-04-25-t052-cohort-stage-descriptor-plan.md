@@ -1650,7 +1650,7 @@ Create `doc/interpretations/2026-04-25-t052-stage-stratified-ar-esr1.md` using t
 
 ```markdown
 ---
-id: "interpretation:2026-04-25-t052-stage-stratified-ar-esr1"
+id: "interpretation:0008-t052-stage-stratified-ar-esr1"
 type: "interpretation"
 title: "t052: stage-stratified AR + ESR1 rates (Zehir 2017 validation)"
 status: "active"
@@ -1659,7 +1659,7 @@ source_refs:
 related:
   - "task:t052"
   - "topic:cohort-selection-bias-representativeness"
-  - "plan:2026-04-24-t052-cohort-stage-descriptor-design"
+  - "plan:0003-t052-cohort-stage-descriptor-design"
 created: "2026-04-25"
 updated: "2026-04-25"
 workflow_run: "t052-stage-stratified-2026-04-25"
@@ -1716,17 +1716,17 @@ explicitly if so.***
 
 If closure-state is `descriptor validated`:
 ```bash
-uv run science-tool tasks done t052 --note "Closed by interpretation:2026-04-25-t052-stage-stratified-ar-esr1. Closure state: descriptor validated. Per-comparison verdicts: <fill>. Follow-up: pooled-ratio stratification (out of scope for t052)."
+uv run science-tool tasks done t052 --note "Closed by interpretation:0008-t052-stage-stratified-ar-esr1. Closure state: descriptor validated. Per-comparison verdicts: <fill>. Follow-up: pooled-ratio stratification (out of scope for t052)."
 ```
 
 If `insufficient evidence`:
 ```bash
-uv run science-tool tasks done t052 --note "Closed by interpretation:2026-04-25-t052-stage-stratified-ar-esr1. Closure state: insufficient evidence. Re-run gated on larger study list."
+uv run science-tool tasks done t052 --note "Closed by interpretation:0008-t052-stage-stratified-ar-esr1. Closure state: insufficient evidence. Re-run gated on larger study list."
 ```
 
 If `descriptor needs investigation`: do **NOT** mark done. Update the task body with the specific failure mode for follow-up:
 ```bash
-uv run science-tool tasks edit t052 --description "<append: needs revision per interpretation:2026-04-25-t052-stage-stratified-ar-esr1; failure mode: ...>"
+uv run science-tool tasks edit t052 --description "<append: needs revision per interpretation:0008-t052-stage-stratified-ar-esr1; failure mode: ...>"
 ```
 
 - [ ] **Step 5: Commit interpretation**

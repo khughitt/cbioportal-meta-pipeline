@@ -7,8 +7,8 @@ source_class: "reference"
 source_refs:
   - "paper:Yaacov2023"
 related:
-  - "question:q003-replication-timing-as-gene-level-mutation-rate-confounder"
-  - "question:q009-sbs1-lrr-bias-as-normal-contamination-flag"
+  - "question:0003-replication-timing-as-gene-level-mutation-rate-confounder"
+  - "question:0009-sbs1-lrr-bias-as-normal-contamination-flag"
 created: "2026-04-22"
 updated: "2026-04-22"
 ---
@@ -31,7 +31,7 @@ Supporting references:
   developmental regions using 21 published human replication-timing data sets, in 50 kb bins.
 - The paper explicitly states that these labels are provided as the human supplemental file
   `Supp-RT-human-50kb-bins.xlsx`.
-- `question:q009-sbs1-lrr-bias-as-normal-contamination-flag` only needs the **constitutive**
+- `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` only needs the **constitutive**
   labels (`CE`, `CL`) for the first panel/WES-feasible gene-level proxy, not the full
   cell-line-specific continuous signals.
 

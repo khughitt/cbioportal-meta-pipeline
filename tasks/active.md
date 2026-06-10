@@ -40,7 +40,7 @@ Open question from CH topic: ASXL1 and TET2 are bona fide tumor suppressors in s
 - priority: P2
 - status: proposed
 - aspects: [software-development]
-- related: [task:bias-audit-cross-study-aggregation-pipeline]
+- related: [meta:0001-bias-audit-cross-study-aggregation-pipeline-preprocessing-clustering]
 - group: pipeline
 - created: 2026-04-13
 
@@ -50,7 +50,7 @@ Open question from CH topic: ASXL1 and TET2 are bona fide tumor suppressors in s
 - priority: P3
 - status: proposed
 - aspects: [software-development]
-- related: [task:bias-audit-cross-study-aggregation-pipeline]
+- related: [meta:0001-bias-audit-cross-study-aggregation-pipeline-preprocessing-clustering]
 - group: pipeline
 - created: 2026-04-13
 
@@ -60,7 +60,7 @@ Open question from CH topic: ASXL1 and TET2 are bona fide tumor suppressors in s
 - priority: P3
 - status: proposed
 - aspects: [software-development]
-- related: [task:bias-audit-cross-study-aggregation-pipeline]
+- related: [meta:0001-bias-audit-cross-study-aggregation-pipeline-preprocessing-clustering]
 - group: pipeline
 - created: 2026-04-13
 
@@ -70,7 +70,7 @@ Open question from CH topic: ASXL1 and TET2 are bona fide tumor suppressors in s
 - priority: P3
 - status: proposed
 - aspects: [software-development]
-- related: [task:bias-audit-cross-study-aggregation-pipeline]
+- related: [meta:0001-bias-audit-cross-study-aggregation-pipeline-preprocessing-clustering]
 - group: pipeline
 - created: 2026-04-13
 
@@ -80,7 +80,7 @@ Open question from CH topic: ASXL1 and TET2 are bona fide tumor suppressors in s
 - priority: P2
 - status: proposed
 - aspects: [software-development]
-- related: [search:2026-04-14-asxl1-tet2-ch-disambiguation, topic:clonal-hematopoiesis-contamination, paper:Coombs2018, task:t059]
+- related: [search:0004-asxl1-tet2-ch-disambiguation, topic:clonal-hematopoiesis-contamination, paper:Coombs2018, task:t059]
 - group: pipeline
 - created: 2026-04-14
 
@@ -90,7 +90,7 @@ Replace the uniform ch_priority_gene boolean emitted by annotate_ch.py with a gr
 - priority: P3
 - status: proposed
 - aspects: [software-development]
-- related: [search:2026-04-14-tmb-hypermutator-followup, topic:tumor-mutational-burden, paper:Chalmers2017, task:t081, task:t025]
+- related: [search:0006-tmb-hypermutator-followup, topic:tumor-mutational-burden, paper:Chalmers2017, task:t081, task:t025]
 - group: pipeline
 - created: 2026-04-14
 
@@ -100,7 +100,7 @@ Chalmers 2017 documents a 2.4x TMB increase between age 10 and age 90 in 100000-
 - priority: P2
 - status: proposed
 - aspects: [computational-analysis]
-- related: [search:2026-04-14-pathway-level-pan-cancer-methods, paper:Reyna2020Pathway, paper:Iorio2018SLAPenrich, paper:Paczkowska2020, task:t043, task:t077, task:t079]
+- related: [search:0005-pathway-level-pan-cancer-methods, paper:Reyna2020Pathway, paper:Iorio2018SLAPenrich, paper:Paczkowska2020, task:t043, task:t077, task:t079]
 - group: meta-analysis
 - created: 2026-04-14
 
@@ -110,7 +110,7 @@ Surfaced as a real gap in t043: no pan-cancer benchmark at the pathway rollup le
 - priority: P3
 - status: proposed
 - aspects: [computational-analysis]
-- related: [search:2026-04-14-asxl1-tet2-ch-disambiguation, topic:clonal-hematopoiesis-contamination, task:t059]
+- related: [search:0004-asxl1-tet2-ch-disambiguation, topic:clonal-hematopoiesis-contamination, task:t059]
 - group: searches
 - created: 2026-04-14
 
@@ -142,7 +142,7 @@ PARTIAL (backlog review 2026-06-01): `config-full.yml` now carries the `clusteri
 - priority: P2
 - status: proposed
 - aspects: [software-development]
-- related: [task:t097, task:t100, paper:Samstein2019, interpretation:2026-04-17-poc-run]
+- related: [task:t097, task:t100, paper:Samstein2019, interpretation:0001-poc-run]
 - group: pipeline
 - created: 2026-04-17
 
@@ -152,7 +152,7 @@ Surfaced by t100 PoC 2026-04-17: is_hypermutator_relative reports 45.5% for brca
 - priority: P3
 - status: proposed
 - aspects: [software-development]
-- related: [task:t111, topic:signature-decomposition-unmatched-normal, question:q006-ch-priority-gene-completeness, question:q008-signature-decomposition-tissue-background-subtraction, paper:LeeSix2018, paper:Xu2025]
+- related: [task:t111, topic:signature-decomposition-unmatched-normal, question:0006-ch-priority-gene-completeness, question:0008-signature-decomposition-tissue-background-subtraction, paper:LeeSix2018, paper:Xu2025]
 - group: pipeline
 - created: 2026-04-18
 
@@ -162,7 +162,7 @@ Follow-up to t111 (which was reduced to Li2021-only by the 2026-04-19 data-acces
 - priority: P3
 - status: proposed
 - aspects: [software-development]
-- related: [task:t111, interpretation:2026-04-19-t111-normal-tissue-spectra-pipeline]
+- related: [task:t111, interpretation:0003-t111-normal-tissue-spectra-pipeline]
 - group: pipeline
 - created: 2026-04-19
 
@@ -172,7 +172,7 @@ Current validate_input_contract accepts the assembly parameter but does not rang
 - priority: P2
 - status: proposed
 - aspects: [computational-analysis]
-- related: [task:t111, question:q007-cross-tissue-somatic-mutation-rate-variation-as-null-model, paper:Li2021]
+- related: [task:t111, question:0007-cross-tissue-somatic-mutation-rate-variation-as-null-model, paper:Li2021]
 - group: pipeline
 - created: 2026-04-19
 
@@ -182,7 +182,7 @@ Before applying the t111 per-tissue snvs_per_mb correction to gene_cancer_study_
 - priority: P3
 - status: blocked
 - aspects: [computational-analysis]
-- related: [question:q008-signature-decomposition-tissue-background-subtraction, task:t111, meta:next-steps-2026-04-24]
+- related: [question:0008-signature-decomposition-tissue-background-subtraction, task:t111, meta:0007-next-steps-and-gap-analysis-2026-04-24]
 - blocked-by: [task:t166]
 - group: meta-analysis
 - created: 2026-04-24
@@ -191,7 +191,7 @@ Produce a first numeric estimate of normal-tissue SBS1/SBS5 contamination
 magnitude in unmatched-normal cBioPortal-style cohorts, using the Li2021
 reference spectra landed by t111 + the existing t109/t110 SigProfiler
 assignment surface. Closes the "built-but-unexploited" gap from
-meta:next-steps-2026-04-24 gap 2 for question:q008.
+meta:0007-next-steps-and-gap-analysis-2026-04-24 gap 2 for question:0008.
 
 Status: deferred 2026-04-28 — workable but materially weaker than originally
 scoped. Plan + cohort survey landed; revival is cheap when a better
@@ -274,7 +274,7 @@ feasibility table.
 - priority: P2
 - status: proposed
 - aspects: [software-development]
-- related: [task:t100, meta:next-steps-2026-04-24]
+- related: [task:t100, meta:0007-next-steps-and-gap-analysis-2026-04-24]
 - group: pipeline
 - created: 2026-04-24
 
@@ -284,7 +284,7 @@ Two workflow output directories currently sit on disk with no datapackage.json m
 - priority: P2
 - status: proposed
 - aspects: [computational-analysis]
-- related: [question:q011-gene-length-as-literature-attention-confounder, topic:mutation-rate-normalization, discussion:2026-04-24-gene-length-bias-in-mutation-rankings-and-literature, task:t082]
+- related: [question:0011-gene-length-as-literature-attention-confounder, topic:mutation-rate-normalization, discussion:0001-gene-length-bias-in-mutation-rankings-and-literature, task:t082]
 - group: meta-analysis
 - created: 2026-04-24
 
@@ -294,7 +294,7 @@ Implement the regression spec'd in q011: log(mention_count+1) ~ log(protein_leng
 - priority: P2
 - status: proposed
 - aspects: [computational-analysis]
-- related: [question:q011-gene-length-as-literature-attention-confounder, topic:mutation-rate-normalization, discussion:2026-04-24-gene-length-bias-in-mutation-rankings-and-literature]
+- related: [question:0011-gene-length-as-literature-attention-confounder, topic:mutation-rate-normalization, discussion:0001-gene-length-bias-in-mutation-rankings-and-literature]
 - group: searches
 - created: 2026-04-24
 
@@ -304,7 +304,7 @@ Use science:research-papers to summarize Stoeger T, Gerlach M, Morimoto RI, Nune
 - priority: P2
 - status: proposed
 - aspects: [computational-analysis, software-development]
-- related: [topic:mutation-rate-normalization, discussion:2026-04-24-gene-length-bias-in-mutation-rankings-and-literature, question:q011-gene-length-as-literature-attention-confounder, paper:Martincorena2017]
+- related: [topic:mutation-rate-normalization, discussion:0001-gene-length-bias-in-mutation-rankings-and-literature, question:0011-gene-length-as-literature-attention-confounder, paper:Martincorena2017]
 - group: pipeline
 - created: 2026-04-24
 
@@ -314,7 +314,7 @@ Add a side config code/config/config-pan-cancer-dndscv.yml that includes the per
 - priority: P2
 - status: proposed
 - aspects: [computational-analysis]
-- related: [question:q012-mutation-ordering-cross-sectional-inference, discussion:2026-04-24-mutation-ordering-and-path-dependency, task:t078]
+- related: [question:0012-mutation-ordering-cross-sectional-inference, discussion:0002-mutation-ordering-and-path-dependency, task:t078]
 - group: searches
 - created: 2026-04-24
 
@@ -324,7 +324,7 @@ Method × assumption table comparing Mutual Hazard Networks (Schill 2020), Conju
 - priority: P2
 - status: proposed
 - aspects: [software-development]
-- related: [question:q012-mutation-ordering-cross-sectional-inference, discussion:2026-04-24-mutation-ordering-and-path-dependency]
+- related: [question:0012-mutation-ordering-cross-sectional-inference, discussion:0002-mutation-ordering-and-path-dependency]
 - group: audits
 - created: 2026-04-24
 
@@ -334,7 +334,7 @@ Hard gate on any clonality-based ordering work. For each study in code/config/co
 - priority: P3
 - status: proposed
 - aspects: [software-development]
-- related: [question:q012-mutation-ordering-cross-sectional-inference]
+- related: [question:0012-mutation-ordering-cross-sectional-inference]
 - blocked-by: [Audit VAF availability across cBioPortal/GENIE studies]
 - group: pipeline
 - created: 2026-04-24
@@ -345,7 +345,7 @@ Extend convert_to_feather.py to retain per-variant allele-count columns alongsid
 - priority: P3
 - status: proposed
 - aspects: [computational-analysis]
-- related: [question:q012-mutation-ordering-cross-sectional-inference, hypothesis:h04-mhn-pathway-ordering, paper:Schill2024, paper:Vocht2026, task:t078, task:t081, task:t111, task:t152]
+- related: [question:0012-mutation-ordering-cross-sectional-inference, hypothesis:0004-mhn-pathway-ordering, paper:Schill2024, paper:Vocht2026, task:t078, task:t081, task:t111, task:t152]
 - group: meta-analysis
 - created: 2026-04-24
 
@@ -357,7 +357,7 @@ Implementation plan: `doc/plans/2026-05-02-t135-t152-ordering-validation-plan.md
 - priority: P2
 - status: proposed
 - aspects: [software-development]
-- related: [task:t131, topic:mutation-rate-normalization, discussion:2026-04-24-gene-length-bias-in-mutation-rankings-and-literature]
+- related: [task:t131, topic:mutation-rate-normalization, discussion:0001-gene-length-bias-in-mutation-rankings-and-literature]
 - group: pipeline
 - created: 2026-04-24
 
@@ -416,7 +416,7 @@ verify production data flows end-to-end, then bump to full
 - priority: P3
 - status: proposed
 - aspects: [computational-analysis]
-- related: [task:t081, paper:Bavisetty2025, paper:Lu2023, paper:Rashid2025, paper:Jung2025, synthesis:2026-04-25-canalization-gene-regulatory-networks, topic:tumor-mutational-burden]
+- related: [task:t081, paper:Bavisetty2025, paper:Lu2023, paper:Rashid2025, paper:Jung2025, synthesis:0002-canalization-in-gene-regulatory-networks-cross-paper-synthesis-for-the, topic:tumor-mutational-burden]
 - group: docs
 - created: 2026-04-25
 
@@ -490,7 +490,7 @@ The project's t077 meta-analysis pipeline (`run_gene_cancer_meta_analysis.R`) is
 - priority: P2
 - status: blocked
 - aspects: [computational-analysis]
-- related: [task:t131, task:t171, interpretation:2026-04-28-t146-external-validation-cgc, interpretation:2026-04-26-t131-full-pan-cancer-dndscv-run]
+- related: [task:t131, task:t171, interpretation:0012-t146-external-validation-cgc, interpretation:0009-t131-full-pan-cancer-dndscv-run]
 - group: validation
 - created: 2026-04-26
 
@@ -507,7 +507,7 @@ The 2026-04-26 t131 interpretation flagged **mild circularity** in using Bailey 
 - priority: P2
 - status: proposed
 - aspects: [computational-analysis, software-development]
-- related: [task:t131, task:t081, task:t141, interpretation:2026-04-26-t131-full-pan-cancer-dndscv-run]
+- related: [task:t131, task:t081, task:t141, interpretation:0009-t131-full-pan-cancer-dndscv-run]
 - group: pipeline
 - created: 2026-04-26
 
@@ -523,7 +523,7 @@ The t131 interpretation noted that even after the t144 tiebreaker fix, TTN persi
 - priority: P3
 - status: proposed
 - aspects: [software-development]
-- related: [task:t131, task:t144, interpretation:2026-04-26-t131-full-pan-cancer-dndscv-run]
+- related: [task:t131, task:t144, interpretation:0009-t131-full-pan-cancer-dndscv-run]
 - group: pipeline
 - created: 2026-04-26
 
@@ -539,7 +539,7 @@ The current `best_cancer_type` column in `dndscv_pooled.feather` and `three_way_
 - priority: P2
 - status: proposed
 - aspects: [computational-analysis]
-- related: [hypothesis:h05-healthy-somatic-background-atlas, topic:normal-tissue-mutation-atlas, question:q007-cross-tissue-somatic-mutation-rate-variation-as-null-model]
+- related: [hypothesis:0005-healthy-somatic-background-atlas, topic:normal-tissue-mutation-atlas, question:0007-cross-tissue-somatic-mutation-rate-variation-as-null-model]
 - group: audits
 - created: 2026-04-28
 
@@ -551,7 +551,7 @@ Acceptance: `doc/audits/<date>-normal-tissue-wgs-cohort-feasibility.md` with a t
 - priority: P2
 - status: proposed
 - aspects: [computational-analysis]
-- related: [task:t150, hypothesis:h05-healthy-somatic-background-atlas, hypothesis:h01-non-tumor-signal-contamination, question:q007-cross-tissue-somatic-mutation-rate-variation-as-null-model]
+- related: [task:t150, hypothesis:0005-healthy-somatic-background-atlas, hypothesis:0001-non-tumor-signal-contamination, question:0007-cross-tissue-somatic-mutation-rate-variation-as-null-model]
 - group: meta-analysis
 - created: 2026-04-28
 
@@ -563,7 +563,7 @@ Acceptance: one tissue-specific interpretation document with effect size, uncert
 - priority: P2
 - status: proposed
 - aspects: [computational-analysis]
-- related: [hypothesis:h04-mhn-pathway-ordering, question:q012-mutation-ordering-cross-sectional-inference, task:t135, paper:Vocht2026, paper:Schill2024]
+- related: [hypothesis:0004-mhn-pathway-ordering, question:0012-mutation-ordering-cross-sectional-inference, task:t135, paper:Vocht2026, paper:Schill2024]
 - group: validation
 - created: 2026-04-28
 
@@ -577,7 +577,7 @@ Implementation plan: `doc/plans/2026-05-02-t135-t152-ordering-validation-plan.md
 - priority: P2
 - status: proposed
 - aspects: [computational-analysis, software-development]
-- related: [question:q014-cfs-as-distinct-confounder-class, question:q003-replication-timing-as-gene-level-mutation-rate-confounder, hypothesis:h01-non-tumor-signal-contamination, hypothesis:h02-cross-study-ranking-divergence-is-structured, task:t121]
+- related: [question:0014-cfs-as-distinct-confounder-class, question:0003-replication-timing-as-gene-level-mutation-rate-confounder, hypothesis:0001-non-tumor-signal-contamination, hypothesis:0002-cross-study-ranking-divergence-is-structured, task:t121]
 - group: meta-analysis
 - created: 2026-04-28
 
@@ -589,7 +589,7 @@ Acceptance: CFS annotation artifact under `data/` or `models/`, plus `doc/interp
 - priority: P3
 - status: proposed
 - aspects: [computational-analysis]
-- related: [question:q015-pan-cancer-aggregator-choice, hypothesis:h02-cross-study-ranking-divergence-is-structured, task:t144, task:t146, task:t148]
+- related: [question:0015-pan-cancer-aggregator-choice, hypothesis:0002-cross-study-ranking-divergence-is-structured, task:t144, task:t146, task:t148]
 - group: meta-analysis
 - created: 2026-04-28
 
@@ -601,7 +601,7 @@ Acceptance: `doc/interpretations/<date>-q015-dndscv-aggregator-choice.md` and a 
 - priority: P2
 - status: proposed
 - aspects: [computational-analysis]
-- related: [hypothesis:h06-pre-malignant-n-minus-1-driver-carriage, topic:pre-cancer-prevalence-and-impact, question:q012-mutation-ordering-cross-sectional-inference]
+- related: [hypothesis:0006-pre-malignant-n-minus-1-driver-carriage, topic:pre-cancer-prevalence-and-impact, question:0012-mutation-ordering-cross-sectional-inference]
 - group: audits
 - created: 2026-04-28
 
@@ -613,7 +613,7 @@ Acceptance: `doc/audits/<date>-cbioportal-pre-malignant-cohort-audit.md` with a 
 - priority: P3
 - status: proposed
 - aspects: [computational-analysis]
-- related: [task:t156, hypothesis:h06-pre-malignant-n-minus-1-driver-carriage, topic:pre-cancer-prevalence-and-impact]
+- related: [task:t156, hypothesis:0006-pre-malignant-n-minus-1-driver-carriage, topic:pre-cancer-prevalence-and-impact]
 - group: meta-analysis
 - created: 2026-04-28
 
@@ -625,7 +625,7 @@ Acceptance: `doc/interpretations/<date>-pre-malignant-invasive-driver-overlap.md
 - priority: P3
 - status: proposed
 - aspects: [computational-analysis]
-- related: [question:q017-cross-study-saturation-curve, question:q013-cross-study-replication-rate, hypothesis:h02-cross-study-ranking-divergence-is-structured, task:t072, task:t149]
+- related: [question:0017-cross-study-saturation-curve, question:0013-cross-study-replication-rate, hypothesis:0002-cross-study-ranking-divergence-is-structured, task:t072, task:t149]
 - group: validation
 - created: 2026-04-28
 
@@ -637,17 +637,17 @@ Acceptance: `doc/interpretations/<date>-q017-cross-study-saturation-curve.md` wi
 - priority: P2
 - status: proposed
 - aspects: [computational-analysis]
-- related: [interpretation:2026-04-26-t131-full-pan-cancer-dndscv-run, hypothesis:h02-cross-study-ranking-divergence-is-structured]
+- related: [interpretation:0009-t131-full-pan-cancer-dndscv-run, hypothesis:0002-cross-study-ranking-divergence-is-structured]
 - group: spine-hygiene
 - created: 2026-04-28
 
-Big-picture validator flagged t131 as orphan because its frontmatter cites question:q011 in source_refs but not in related:. Add hypothesis:h02-cross-study-ranking-divergence-is-structured to the related: list so the resolver picks it up. Pure metadata fix, no analysis change. Acceptance: validator no longer reports t131 as orphan.
+Big-picture validator flagged t131 as orphan because its frontmatter cites question:0011 in source_refs but not in related:. Add hypothesis:0002-cross-study-ranking-divergence-is-structured to the related: list so the resolver picks it up. Pure metadata fix, no analysis change. Acceptance: validator no longer reports t131 as orphan.
 
 ## [t161] Absorb orphan questions q014/q016/q017 into hypothesis spine
 - priority: P2
 - status: proposed
 - aspects: [computational-analysis]
-- related: [hypothesis:h02-cross-study-ranking-divergence-is-structured, hypothesis:h03-gene-length-confounds-literature-attention, question:q014-cfs-as-distinct-confounder-class, question:q016-panel-induced-ascertainment, question:q017-cross-study-saturation-curve]
+- related: [hypothesis:0002-cross-study-ranking-divergence-is-structured, hypothesis:0003-gene-length-confounds-literature-attention, question:0014-cfs-as-distinct-confounder-class, question:0016-panel-induced-ascertainment, question:0017-cross-study-saturation-curve]
 - group: spine-hygiene
 - created: 2026-04-28
 
@@ -657,7 +657,7 @@ Resolver currently treats q014/q016/q017 as orphan questions even though they su
 - priority: P2
 - status: proposed
 - aspects: [software-development]
-- related: [task:t154, task:t163, question:q016-panel-induced-ascertainment, question:q003-replication-timing-as-gene-level-mutation-rate-confounder]
+- related: [task:t154, task:t163, question:0016-panel-induced-ascertainment, question:0003-replication-timing-as-gene-level-mutation-rate-confounder]
 - group: pipeline
 - created: 2026-04-29
 
@@ -675,7 +675,7 @@ ad-hoc reruns.
 - priority: P2
 - status: proposed
 - aspects: [computational-analysis]
-- related: [question:q009-sbs1-lrr-bias-as-normal-contamination-flag, hypothesis:h01-non-tumor-signal-contamination, interpretation:2026-04-22-t123-rt-brca-sbs1-proxy-pilot, interpretation:2026-04-24-t126-sbs1-lrr-bias-per-study]
+- related: [question:0009-sbs1-lrr-bias-as-normal-contamination-flag, hypothesis:0001-non-tumor-signal-contamination, interpretation:0006-t123-rt-brca-sbs1-proxy-pilot, interpretation:0007-t126-sbs1-lrr-bias-per-study]
 - group: hypothesis-spine
 - created: 2026-04-28
 
@@ -685,17 +685,17 @@ Run /science:add-hypothesis to formalize a candidate sub-hypothesis (proposed id
 - priority: P3
 - status: blocked
 - aspects: [computational-analysis]
-- related: [hypothesis:h01-non-tumor-signal-contamination, hypothesis:h02-cross-study-ranking-divergence-is-structured, hypothesis:h05-healthy-somatic-background-atlas, question:q009-sbs1-lrr-bias-as-normal-contamination-flag, topic:signature-decomposition-unmatched-normal, topic:targeted-panel-sequencing-bias]
+- related: [hypothesis:0001-non-tumor-signal-contamination, hypothesis:0002-cross-study-ranking-divergence-is-structured, hypothesis:0005-healthy-somatic-background-atlas, question:0009-sbs1-lrr-bias-as-normal-contamination-flag, topic:signature-decomposition-unmatched-normal, topic:targeted-panel-sequencing-bias]
 - group: dataset-acquisition
 - created: 2026-04-28
 
-Hartwig Medical Foundation database is a research-access metastatic WGS cohort, ~6000 tumors with matched normals, deeply called and uniformly processed. Adding it would unblock several lines simultaneously. (1) q009 SBS1 LRR-bias diagnostic was deferred (interpretation:2026-04-24-t126-sbs1-lrr-bias-per-study) under a pre-registered termination rule because MSK-IMPACT panel coverage of constitutive late-replicating bins is structurally insufficient (~20.7 kb across the panel; n_sbs1_pooled = 176 vs 500-floor; CI half-width 0.194 vs 0.10 ceiling). Hartwig WGS bypasses this entirely — every constitutive LRR bin is fully sampled. (2) h02 panel-vs-WES ascertainment work (t154) currently relies on TCGA MC3 as the WES comparator, which is matched-normal but primary-tumor; Hartwig adds a matched-normal metastatic comparator for stage-effect deconfounding. (3) h05 cross-tissue background atlas: Hartwig matched normals provide a clean cross-tissue normal sample distribution covering ~25 cancer-relevant tissues. (4) Replication-timing residual regression at full WGS scale (t163) becomes possible without panel-coverage caveats. Access: DUA via hartwigmedicalfoundation.nl/applying-for-data, typically 3-6 months. Pipeline integration scope: ingest as a single pseudo-study (parallel to tcga_mc3 MC3 path, code/scripts/process_mc3.py), add it to the matched_normal_studies config list, validate WES-vs-WGS callable-region denominators in build_panel_callable_sizes. Acceptance: data/hartwig_v6/ populated; convert_to_feather pipeline ingests; per-study mutation feathers exist for ≥20 cancer types; one rerun of the t126 SBS1 LRR-bias test on the Hartwig subset reaching a non-deferred verdict.
+Hartwig Medical Foundation database is a research-access metastatic WGS cohort, ~6000 tumors with matched normals, deeply called and uniformly processed. Adding it would unblock several lines simultaneously. (1) q009 SBS1 LRR-bias diagnostic was deferred (interpretation:0007-t126-sbs1-lrr-bias-per-study) under a pre-registered termination rule because MSK-IMPACT panel coverage of constitutive late-replicating bins is structurally insufficient (~20.7 kb across the panel; n_sbs1_pooled = 176 vs 500-floor; CI half-width 0.194 vs 0.10 ceiling). Hartwig WGS bypasses this entirely — every constitutive LRR bin is fully sampled. (2) h02 panel-vs-WES ascertainment work (t154) currently relies on TCGA MC3 as the WES comparator, which is matched-normal but primary-tumor; Hartwig adds a matched-normal metastatic comparator for stage-effect deconfounding. (3) h05 cross-tissue background atlas: Hartwig matched normals provide a clean cross-tissue normal sample distribution covering ~25 cancer-relevant tissues. (4) Replication-timing residual regression at full WGS scale (t163) becomes possible without panel-coverage caveats. Access: DUA via hartwigmedicalfoundation.nl/applying-for-data, typically 3-6 months. Pipeline integration scope: ingest as a single pseudo-study (parallel to tcga_mc3 MC3 path, code/scripts/process_mc3.py), add it to the matched_normal_studies config list, validate WES-vs-WGS callable-region denominators in build_panel_callable_sizes. Acceptance: data/hartwig_v6/ populated; convert_to_feather pipeline ingests; per-study mutation feathers exist for ≥20 cancer types; one rerun of the t126 SBS1 LRR-bias test on the Hartwig subset reaching a non-deferred verdict.
 
 ## [t167] Acquire and integrate PCAWG / ICGC-25K WGS cohort
 - priority: P3
 - status: blocked
 - aspects: [computational-analysis]
-- related: [hypothesis:h01-non-tumor-signal-contamination, hypothesis:h02-cross-study-ranking-divergence-is-structured, hypothesis:h04-mhn-pathway-ordering, question:q009-sbs1-lrr-bias-as-normal-contamination-flag, question:q012-mutation-ordering-cross-sectional-inference, paper:PCAWG2020]
+- related: [hypothesis:0001-non-tumor-signal-contamination, hypothesis:0002-cross-study-ranking-divergence-is-structured, hypothesis:0004-mhn-pathway-ordering, question:0009-sbs1-lrr-bias-as-normal-contamination-flag, question:0012-mutation-ordering-cross-sectional-inference, paper:PCAWG2020]
 - group: dataset-acquisition
 - created: 2026-04-28
 
@@ -705,7 +705,7 @@ PCAWG (~2,800 tumors, 38 cancer types, fully WGS, matched normals, harmonized Pa
 - priority: P3
 - status: blocked
 - aspects: [computational-analysis]
-- related: [hypothesis:h02-cross-study-ranking-divergence-is-structured, hypothesis:h05-healthy-somatic-background-atlas, question:q013-cross-study-replication-rate, question:q017-cross-study-saturation-curve]
+- related: [hypothesis:0002-cross-study-ranking-divergence-is-structured, hypothesis:0005-healthy-somatic-background-atlas, question:0013-cross-study-replication-rate, question:0017-cross-study-saturation-curve]
 - group: dataset-acquisition
 - created: 2026-04-28
 
@@ -715,7 +715,7 @@ Genomics England 100K Genomes Project: ~70,000 cancer WGS samples + matched germ
 - priority: P3
 - status: blocked
 - aspects: [computational-analysis]
-- related: [hypothesis:h05-healthy-somatic-background-atlas, hypothesis:h01-non-tumor-signal-contamination, question:q007-cross-tissue-somatic-mutation-rate-variation-as-null-model, task:t150, task:t151, task:t111, topic:normal-tissue-mutation-atlas]
+- related: [hypothesis:0005-healthy-somatic-background-atlas, hypothesis:0001-non-tumor-signal-contamination, question:0007-cross-tissue-somatic-mutation-rate-variation-as-null-model, task:t150, task:t151, task:t111, topic:normal-tissue-mutation-atlas]
 - group: dataset-acquisition
 - created: 2026-04-28
 
@@ -729,7 +729,7 @@ The current h05 cross-tissue normal background relies on Li 2021 spectra alone (
 - priority: P1
 - status: proposed
 - aspects: [computational-analysis]
-- related: [hypothesis:h03-gene-length-confounds-literature-attention, question:q011-gene-length-as-literature-attention-confounder, task:t129, task:t130, topic:mutation-rate-normalization]
+- related: [hypothesis:0003-gene-length-confounds-literature-attention, question:0011-gene-length-as-literature-attention-confounder, task:t129, task:t130, topic:mutation-rate-normalization]
 - group: dataset-acquisition
 - created: 2026-04-28
 
@@ -739,7 +739,7 @@ t129 (the partial-slope regression for beta_length) and the broader h03 framing 
 - priority: P1
 - status: proposed
 - aspects: [computational-analysis]
-- related: [hypothesis:h02-cross-study-ranking-divergence-is-structured, task:t146, question:q013-cross-study-replication-rate]
+- related: [hypothesis:0002-cross-study-ranking-divergence-is-structured, task:t146, question:0013-cross-study-replication-rate]
 - group: dataset-acquisition
 - created: 2026-04-28
 
@@ -749,7 +749,7 @@ t146 (external validation of pan-cancer dNdScv ranking against IntOGen / Martinc
 - priority: P3
 - status: blocked
 - aspects: [computational-analysis]
-- related: [hypothesis:h01-non-tumor-signal-contamination, question:q008-signature-decomposition-tissue-background-subtraction, task:t127]
+- related: [hypothesis:0001-non-tumor-signal-contamination, question:0008-signature-decomposition-tissue-background-subtraction, task:t127]
 - group: dataset-acquisition
 - created: 2026-04-28
 
@@ -769,7 +769,7 @@ Follow-up from MM30 hyperdiploidy mechanism discussion. Test whether common pan-
 - priority: P3
 - status: proposed
 - aspects: [computational-analysis]
-- related: [hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and, method:h08-agnostic-association-model, question:q021-positive-control-signature-set-expansion-sbs9]
+- related: [hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and, method:h08-agnostic-association-model, question:0021-positive-control-signature-set-expansion-sbs9]
 - group: hypothesis-h08
 - created: 2026-05-31
 
@@ -795,11 +795,11 @@ upstream, re-run paper + topic promotion to publish the reusable mutational-sign
 - priority: P3
 - status: proposed
 - aspects: [computational-analysis]
-- related: [hypothesis:h11-joint-indel-sbs-improves-aetiology-discrimination, question:q028-indel-call-availability-across-cbioportal-studies]
+- related: [hypothesis:0010-joint-indel-sbs-improves-aetiology-discrimination, question:0028-indel-call-availability-across-cbioportal-studies]
 - group: signature-modality-expansion
 - created: 2026-05-31
 
-Execution arm of `question:q028`: census per-study indel-call presence and depth across the
+Execution arm of `question:0028`: census per-study indel-call presence and depth across the
 cBioPortal/MC3 corpus to determine where joint SBS+ID decomposition is feasible (expected: WGS/MC3
 yes, most panels no). Deliverable: a per-study indel-feasibility flag.
 
@@ -807,11 +807,11 @@ yes, most panels no). Deliverable: a per-study indel-feasibility flag.
 - priority: P3
 - status: proposed
 - aspects: [computational-analysis]
-- related: [hypothesis:h11-joint-indel-sbs-improves-aetiology-discrimination, paper:FerrerTorres2025, paper:Koh2025, paper:Owusu2025]
+- related: [hypothesis:0010-joint-indel-sbs-improves-aetiology-discrimination, paper:FerrerTorres2025, paper:Koh2025, paper:Owusu2025]
 - group: signature-modality-expansion
 - created: 2026-05-31
 
-Cleanest test of `hypothesis:h11`: on MC3 (consensus, indel-bearing), compare aetiology
+Cleanest test of `hypothesis:0010`: on MC3 (consensus, indel-bearing), compare aetiology
 discrimination (MMRd vs MSS / dMMR status) of SBS-only vs joint SBS+ID assignment using the
 redefined indel taxonomy (paper:Koh2025) and multimodal catalogue (paper:FerrerTorres2025).
 
@@ -831,7 +831,7 @@ DBS is feasible on WGS/WES substrates sooner. Forward-looking.
 - priority: P2
 - status: proposed
 - aspects: [computational-analysis]
-- related: [hypothesis:h09-cross-study-signature-exposure-reproducibility, method:h08-agnostic-association-model, question:q018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross]
+- related: [hypothesis:0008-cross-study-signature-exposure-reproducibility, method:h08-agnostic-association-model, question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross]
 - group: hypothesis-h09
 - created: 2026-06-01
 
@@ -841,7 +841,7 @@ First concrete, data-unblocked test of h09: using per-sample SBS exposures alrea
 - priority: P2
 - status: proposed
 - aspects: [computational-analysis]
-- related: [question:q026-cancer-types-with-multiple-independent-cbioportal, question:q028-indel-call-availability-across-cbioportal-studies, question:q017-cross-study-saturation-curve, question:q024-treatment-exposed-cohort-chemotherapy-signature, theme:assay-regime-confounding, hypothesis:h09-cross-study-signature-exposure-reproducibility]
+- related: [question:0026-cancer-types-with-multiple-independent-cbioportal, question:0028-indel-call-availability-across-cbioportal-studies, question:0017-cross-study-saturation-curve, question:0024-treatment-exposed-cohort-chemotherapy-signature, theme:0001-assay-regime-panel-wes-wgs-as-a-master-technical-confounder-spanning, hypothesis:0008-cross-study-signature-exposure-reproducibility]
 - group: corpus-capability-census
 - created: 2026-06-02
 
@@ -851,7 +851,7 @@ One inventory feather that multiple hypotheses are independently re-deriving. h1
 - priority: P2
 - status: proposed
 - aspects: [computational-analysis, software-development]
-- related: [question:q034-neuroendocrine-histology-confound, topic:neuroendocrine-neoplasm-lineage-confound]
+- related: [question:0034-neuroendocrine-histology-confound, topic:neuroendocrine-neoplasm-lineage-confound]
 - group: neural-gene-meta-analysis
 - created: 2026-06-06
 
@@ -859,13 +859,13 @@ Enumerate NET/NEC OncoTree codes present in pipeline studies; add is_neuroendocr
 
 ### Notes
 
-- 2026-06-08: Downgrade (t218, 2026-06-08): the plan gated NET exclusion on a residual surviving CNS exclusion. t218 shows no residual survives (the candidate enrichment is fully genomic-span/CFS + one WGS cohort's whole-locus reach; not CNS, not panel, not hypermutator, not selection). Keep t219 only as a quick MEN1-canary NET-exclusion sanity check, not as a residual-explaining step. See interpretation:2026-06-08-t218-cns-exclusion-wes-panel.
+- 2026-06-08: Downgrade (t218, 2026-06-08): the plan gated NET exclusion on a residual surviving CNS exclusion. t218 shows no residual survives (the candidate enrichment is fully genomic-span/CFS + one WGS cohort's whole-locus reach; not CNS, not panel, not hypermutator, not selection). Keep t219 only as a quick MEN1-canary NET-exclusion sanity check, not as a residual-explaining step. See interpretation:0042-t218-cns-exclusion-wes-panel.
 
 ## [t220] Interpret residual: oncofetal (H3) vs selection (H1) (q036/q037, P4/P5)
 - priority: P3
 - status: proposed
 - aspects: [computational-analysis]
-- related: [question:q036-oncofetal-fetal-vs-adult-neural-expression, question:q037-canonical-neural-gene-dnds-selection, topic:oncofetal-developmental-reprogramming]
+- related: [question:0036-oncofetal-fetal-vs-adult-neural-expression, question:0037-canonical-neural-gene-dnds-selection, topic:oncofetal-developmental-reprogramming]
 - group: neural-gene-meta-analysis
 - created: 2026-06-06
 
@@ -873,13 +873,13 @@ Only if signal survives t217-t219. H3 test: BrainSpan fetal-vs-adult ratio for r
 
 ### Notes
 
-- 2026-06-08: Downgrade (t218, 2026-06-08): H3 oncofetal / H1 dN-dS residual interpretation was gated on a surviving residual after CNS exclusion. None survives (t217+t218 close the candidate enrichment as genomic-span/CFS amplified by one WGS cohort's reach; dndscv 0/9 selected). Low priority - nothing left to interpret mutationally for these genes. See interpretation:2026-06-08-t218-cns-exclusion-wes-panel.
+- 2026-06-08: Downgrade (t218, 2026-06-08): H3 oncofetal / H1 dN-dS residual interpretation was gated on a surviving residual after CNS exclusion. None survives (t217+t218 close the candidate enrichment as genomic-span/CFS amplified by one WGS cohort's reach; dndscv 0/9 selected). Low priority - nothing left to interpret mutationally for these genes. See interpretation:0042-t218-cns-exclusion-wes-panel.
 
 ## [t221] QA / sanity battery for the neural-gene program
 - priority: P2
 - status: proposed
 - aspects: [computational-analysis, validation]
-- related: [hypothesis:h12-neural-gene-enrichment-length-histology-artifact, question:q032-neural-gene-length-null]
+- related: [hypothesis:0012-neural-gene-enrichment-length-histology-artifact, question:0032-neural-gene-length-null]
 - group: neural-gene-meta-analysis
 - created: 2026-06-06
 
@@ -896,7 +896,7 @@ Matched- vs unmatched-normal stratification (germline-leak control via matched_n
 - priority: P3
 - status: proposed
 - aspects: [literature-search]
-- related: [question:q037-canonical-neural-gene-dnds-selection, paper:Huang2023, theme:cancer-neuroscience-in-a-mutation-only-pipeline]
+- related: [question:0037-canonical-neural-gene-dnds-selection, paper:Huang2023a, theme:0002-cancer-neuroscience-in-a-mutation-only-pipeline-expression-not-mutation]
 - group: searches
 - created: 2026-06-07
 
@@ -906,7 +906,7 @@ Cited in Huang2023 as an insertional-mutagenesis + transcriptome screen identify
 - priority: P3
 - status: proposed
 - aspects: [literature-search, dataset-acquisition]
-- related: [question:q035-label-free-neural-gene-definition, topic:perineural-invasion-axon-guidance-genes]
+- related: [question:0035-label-free-neural-gene-definition, topic:perineural-invasion-axon-guidance-genes]
 - group: searches
 - created: 2026-06-07
 
@@ -916,7 +916,7 @@ Flagged by Lu2026 (DOI 10.1016/j.ccell.2025.06.020, "Trace-n-Seq"): integrated s
 - priority: P3
 - status: proposed
 - aspects: [literature-search]
-- related: [question:q033-neural-enrichment-cns-exclusion, topic:perineural-invasion-axon-guidance-genes]
+- related: [question:0033-neural-enrichment-cns-exclusion, topic:perineural-invasion-axon-guidance-genes]
 - group: searches
 - created: 2026-06-07
 
@@ -926,7 +926,7 @@ Lu2026 references a pan-cancer perineural-invasion transcriptomic classifier wit
 - priority: P2
 - status: proposed
 - aspects: [dataset-acquisition]
-- related: [question:q035-label-free-neural-gene-definition, question:q036-oncofetal-fetal-vs-adult-neural-expression, dataset:brainspan, dataset:human-protein-atlas, dataset:allen-brain-cell-atlas, dataset:panglaodb]
+- related: [question:0035-label-free-neural-gene-definition, question:0036-oncofetal-fetal-vs-adult-neural-expression, dataset:brainspan, dataset:human-protein-atlas, dataset:allen-brain-cell-atlas, dataset:panglaodb]
 - group: dataset-acquisition
 - created: 2026-06-07
 
@@ -936,7 +936,7 @@ Acquire the reference resources backing the data-driven neural-gene score (t216)
 - priority: P2
 - status: done
 - aspects: [computational-analysis]
-- related: [question:q047-hypermutation-confound-on-driver-tissue-specificity, question:q043-driver-cancer-type-breadth-distribution]
+- related: [question:0047-hypermutation-confound-on-driver-tissue-specificity, question:0043-driver-cancer-type-breadth-distribution]
 - created: 2026-06-07
 
 Review of commit 94c2c85 found q047 implementation/prose drift: code/notebooks/q047_hypermutation_specificity_confound.py documents broad_oncogene as breadth >=10 but implements all CGC oncogenes with breadth >2 as broad_oncogene; the emitted T3 console reading says background/passenger inflation is higher than restricted_oncogene even though output shows restricted_oncogene median log2 ratio 4.396 > background 3.221. Decide whether broad_oncogene means true hub (>=10, with intermediate_oncogene separate) or non-restricted (>2), update notebook/docs accordingly, and regenerate q047 artifacts/interpretation.
@@ -947,7 +947,7 @@ Review of commit 94c2c85 found q047 implementation/prose drift: code/notebooks/q
 - priority: P2
 - status: done
 - aspects: [computational-analysis, software-development]
-- related: [interpretation:2026-06-07-panel-tmb-denominator-stale-artifact-fix, question:q047-hypermutation-confound-on-driver-tissue-specificity, hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and]
+- related: [interpretation:0036-panel-tmb-denominator-stale-artifact-fix, question:0047-hypermutation-confound-on-driver-tissue-specificity, hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and]
 - created: 2026-06-07
 
 The poc-2026-04-17 samples_annotated was regenerated with correct per-sample panel TMB denominators (config_override 0.89–1.01 Mb for MSK-IMPACT; was wes_default 30 Mb for all), plus the gene_cancer_study* freq tables. Audit which `rule all` targets depend (transitively) on samples_annotated and re-materialize. Separately, q047's full per-sample dilution magnitude needs a WES cohort (off-panel passengers) — the panel under-resolves it; the within-panel driver-share drop (0.10–0.22) is a floor, not the true effect.

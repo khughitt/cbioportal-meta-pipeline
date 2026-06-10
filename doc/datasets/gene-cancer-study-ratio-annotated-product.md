@@ -12,7 +12,7 @@ ontology_terms:
 source_refs: []
 related:
   - "topic:pre-cancer-prevalence-and-impact"
-  - "question:q012-mutation-ordering-cross-sectional-inference"
+  - "question:0012-mutation-ordering-cross-sectional-inference"
 created: "2026-05-02"
 updated: "2026-05-02"
 ---

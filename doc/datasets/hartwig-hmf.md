@@ -33,7 +33,7 @@ consumed_by: []
 source_refs:
   - paper:Pleasance2020
 related:
-  - hypothesis:h10-treatment-induced-signature-frequency-contamination
+  - hypothesis:0009-treatment-induced-signature-frequency-contamination
   - topic:clinical-translational-signatures
   - dataset:pcawg
 created: "2026-05-31"
@@ -51,12 +51,12 @@ makes it the ideal substrate for the treatment-induced-signature-contamination h
 
 ## Why it matters for the project
 
-- **Primary substrate for `hypothesis:h10`.** Treatment annotation + WGS depth lets us directly
+- **Primary substrate for `hypothesis:0009`.** Treatment annotation + WGS depth lets us directly
   observe therapy signatures (SBS11/31/35/87) and quantify their burden inflation against
   treatment-naive cohorts — the contamination mechanism h10 proposes for the gene × cancer frequency
   tables.
 - **WGS contrast to panel cBioPortal.** Complements `dataset:pcawg` (treatment-naive-leaning primary
-  WGS) with the metastatic/treated end of the spectrum — useful for `hypothesis:h09` cross-study
+  WGS) with the metastatic/treated end of the spectrum — useful for `hypothesis:0008` cross-study
   reproducibility batch modelling (assay + treatment axes).
 
 ## Access and Scope
@@ -76,8 +76,8 @@ makes it the ideal substrate for the treatment-induced-signature-contamination h
 
 ## Related
 
-- Hypotheses: `hypothesis:h10-treatment-induced-signature-frequency-contamination`,
-  `hypothesis:h09-cross-study-signature-exposure-reproducibility`
+- Hypotheses: `hypothesis:0009-treatment-induced-signature-frequency-contamination`,
+  `hypothesis:0008-cross-study-signature-exposure-reproducibility`
 - Topics: `topic:clinical-translational-signatures`
 - Datasets: `dataset:pcawg` (WGS contrast)
 - Papers: `paper:Pleasance2020`

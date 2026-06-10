@@ -24,7 +24,7 @@ pending_decisions: 4
 - Two unresolved refs from `science-tool health` are high-confidence metadata problems, both caused by canonical docs lacking machine-resolvable IDs:
   - `doc:2026-04-22-t077-glmm-logit-plan`
   - `doc:replication-timing-constitutive-regions`
-- `question:q009-sbs1-lrr-bias-as-normal-contamination-flag` is now semantically behind the codebase: it still frames `t121` as the current entry point and does not incorporate the negative `t123` screening result or the new `t124` decision point.
+- `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` is now semantically behind the codebase: it still frames `t121` as the current entry point and does not incorporate the negative `t123` screening result or the new `t124` decision point.
 - The project relies on several document kinds that the current profile/tooling does not register cleanly (`meta`, `pre-registration`, `synthesis`, `guide`, `modality-guide`). This now produces persistent health noise and weakens curation signal quality.
 - `doc/interpretations/2026-04-18-t070-poc-comparison.md` remains a conspicuous metadata outlier: no frontmatter, no machine ID, no `related`, and no `source_refs`, despite being an important validation artifact.
 - `doc/interpretations/2026-04-17-poc-run.md` is better linked than the `t070` note, but still lacks `source_refs` even though it makes several evidence-bearing claims that now anchor downstream task decisions.
@@ -87,7 +87,7 @@ Notable coverage gaps surfaced by inventory/health:
    - Source artifacts: `tasks/done/2026-04.md#t115`–`#t120`
    - Target artifact: `doc/plans/2026-04-22-t077-glmm-logit-plan.md`
    - Evidence: health unresolved ref `doc:2026-04-22-t077-glmm-logit-plan` appears 6 times from `t115`–`t120`.
-   - Proposed action: add frontmatter with a resolvable `id`, likely `plan:2026-04-22-t077-glmm-logit-plan`, then update task refs to that canonical entity name.
+   - Proposed action: add frontmatter with a resolvable `id`, likely `plan:0002-t077-glmm-logit-plan`, then update task refs to that canonical entity name.
    - Confidence: high
    - Applied: no
 
@@ -99,7 +99,7 @@ Notable coverage gaps surfaced by inventory/health:
    - Confidence: high
    - Applied: no
 
-3. Link `question:q009-sbs1-lrr-bias-as-normal-contamination-flag` to the new negative-result chain.
+3. Link `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` to the new negative-result chain.
    - Source artifacts:
      - `doc/questions/q009-sbs1-lrr-bias-as-normal-contamination-flag.md`
      - `doc/interpretations/2026-04-22-t122-rt-brca-pilot.md`
@@ -113,7 +113,7 @@ Notable coverage gaps surfaced by inventory/health:
 
 4. Add outbound `related` to `doc/papers/Poon2021.md`.
    - Suggested links:
-     - `question:q006-ch-priority-gene-completeness`
+     - `question:0006-ch-priority-gene-completeness`
      - `topic:clonal-hematopoiesis-contamination`
      - possibly `paper:Martincorena2018` and/or `paper:LeeSix2018`
    - Confidence: high
@@ -256,9 +256,9 @@ Applied the three high-confidence fixes from the original sweep:
   - `doc/plans/2026-04-22-t077-glmm-logit-plan.md`
   - `doc/datasets/replication-timing-constitutive-regions.md`
 - updated task references to use canonical entities:
-  - `plan:2026-04-22-t077-glmm-logit-plan`
+  - `plan:0002-t077-glmm-logit-plan`
   - `dataset:replication-timing-constitutive-regions`
-- refreshed `question:q009-sbs1-lrr-bias-as-normal-contamination-flag` so it now reflects:
+- refreshed `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` so it now reflects:
   - the mixed `t122` all-mutation RT result
   - the negative `t123` SBS1-proxy result
   - the new `t124` fork decision
@@ -296,7 +296,7 @@ Applied the last two repo-local metadata fixes from this sweep:
 - normalized `doc/interpretations/2026-04-18-t070-poc-comparison.md` into the standard interpretation frontmatter shape with a canonical ID, `mode`, `source_refs`, `related`, and `prior_interpretations`
 - added outbound `related` links on `doc/papers/Poon2021.md` to the already-linked CH topic/question/paper cluster:
   - `topic:clonal-hematopoiesis-contamination`
-  - `question:q006-ch-priority-gene-completeness`
+  - `question:0006-ch-priority-gene-completeness`
   - `paper:LeeSix2018`
   - `paper:Martincorena2018`
 

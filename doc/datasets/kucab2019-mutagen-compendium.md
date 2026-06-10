@@ -33,7 +33,7 @@ consumed_by: []
 source_refs:
   - paper:Kucab2019
 related:
-  - hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and
+  - hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and
   - topic:pan-cancer-signature-catalogs
   - topic:dna-damage-repair-signature-mechanisms
   - dataset:cosmic-signatures
@@ -54,7 +54,7 @@ observational, post-hoc-labelled catalogue.
 
 ## Why it matters for the project
 
-- **Aetiology ground truth for `hypothesis:h08`.** When the agnostic scan produces a candidate
+- **Aetiology ground truth for `hypothesis:0007`.** When the agnostic scan produces a candidate
   spectrum, matching it against experimentally-caused Kucab signatures is stronger evidence than a
   COSMIC cosine match alone — a spectrum-level corroboration layer for any h08b discovery hit.
 - **Positive-control spectra.** Provides clean reference spectra for known exposures (e.g. specific

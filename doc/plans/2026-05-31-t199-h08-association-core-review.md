@@ -1,6 +1,6 @@
 # Pipeline Review: h08 within-tissue covariate↔H association core (t199)
 
-- **Plan:** `plan:2026-05-31-t199-h08-association-core`
+- **Plan:** `plan:0007-t199-h08-association-core`
 - **Task:** t199 (analysis-plan check 4; pre-reg-already-exists mode)
 - **Date:** 2026-05-31
 - **Overall:** **WARN** — structurally sound and correctly avoids relitigating locked criteria, but
@@ -13,8 +13,8 @@
   plan-precision fix (name the concrete endpoint + verification), and all findings are now patched
   into the plan (commits below).
 
-> Sub-plan handling: this plan sits under `pre-registration:h08-positive-control` +
-> `plan:2026-05-31-h08-positive-control-scan`, which already passed methodological review.
+> Sub-plan handling: this plan sits under `pre-registration:0003-h08-positive-control-agnostic-association-must-recover-known-signature` +
+> `plan:0005-h08-positive-control-scan-analysis-plan`, which already passed methodological review.
 > Dimension 1 (Evidence Coverage) and Dimension 7 (Scope) are **inherited from the parent** and
 > spot-checked only. Review effort is concentrated on Dimensions 2, 3, 4, 6, 8.
 
@@ -133,7 +133,7 @@ compositional precision gate.
 
 ### F6 — [MAJOR, Dim 3/9] Dataset backlinks (plan-pipeline Step 4.5) were skipped
 
-No `consumed_by: plan:2026-05-31-t199-h08-association-core` was appended to `dataset:tcga-mc3` /
+No `consumed_by: plan:0007-t199-h08-association-core` was appended to `dataset:tcga-mc3` /
 `dataset:tcga-pancanatlas`, and no entity exists for the smoking source.
 
 **Recommendation.** Add the `consumed_by` backlink to the two existing dataset entities and create

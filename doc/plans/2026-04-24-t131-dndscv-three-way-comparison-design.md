@@ -2,8 +2,8 @@
 
 - **Task:** t131 (Opt dNdScv into rule all via config-pan-cancer-dndscv.yml + three-way ranking comparison)
 - **Priority:** P2
-- **Related discussion:** `discussion:2026-04-24-gene-length-bias-in-mutation-rankings-and-literature`
-- **Related question:** `question:q011-gene-length-as-literature-attention-confounder`
+- **Related discussion:** `discussion:0001-gene-length-bias-in-mutation-rankings-and-literature`
+- **Related question:** `question:0011-gene-length-as-literature-attention-confounder`
 - **Related topic:** `topic:mutation-rate-normalization`
 - **Related paper:** `paper:Martincorena2017`
 - **Companion follow-up task:** `task:t136` (canonicalize-to-GRCh38 at ingestion — long-term build strategy)

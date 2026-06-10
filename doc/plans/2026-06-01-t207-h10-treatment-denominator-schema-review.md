@@ -1,7 +1,7 @@
 # Pipeline Review: H10 treatment-denominator schema and impact pass
 
 - **Plan:** `doc/plans/2026-06-01-t207-h10-treatment-denominator-schema.md`
-- **Related:** `plan:2026-06-01-t207-h10-treatment-denominator-schema`, `hypothesis:h10-treatment-induced-signature-frequency-contamination`, `question:q024-treatment-exposed-cohort-chemotherapy-signature`, `question:q027-does-excluding-treatment-signature-high-samples`, `task:t207`
+- **Related:** `plan:0011-t207-h10-treatment-denominator-schema`, `hypothesis:0009-treatment-induced-signature-frequency-contamination`, `question:0024-treatment-exposed-cohort-chemotherapy-signature`, `question:0027-does-excluding-treatment-signature-high-samples`, `task:t207`
 - **Date:** 2026-06-01
 - **Overall:** WARN
 
@@ -10,7 +10,7 @@
 This is a careful, well-instrumented plan. Its central design move — layering broad
 treatment-exposure, mutagenic-treatment expectation, PDX sensitivity, positive-naive, and
 unknown-metadata as *separate* config fields rather than a flat `treatment_exposed_studies`
-list — correctly preserves the specific SBS11/31/35/87 prediction in `hypothesis:h10` and
+list — correctly preserves the specific SBS11/31/35/87 prediction in `hypothesis:0009` and
 faithfully implements the t206 manual-review recommendation. Validation criteria and
 hard-fail QA are a standout strength. Two issues hold it back from a clean PASS: (1) the
 plan operationalizes treatment **exposure labels** (q024), but is filed against q027, whose
@@ -138,7 +138,7 @@ report, but existing summary outputs ship a `.datapackage.json` (Snakefile:53). 
 report but no manifest.
 
 **Recommendation:** Emit a `datapackage.json` for the new summary outputs listing resources +
-the entity cross-refs (`hypothesis:h10`, `task:t207`) + provenance inputs, matching the
+the entity cross-refs (`hypothesis:0009`, `task:t207`) + provenance inputs, matching the
 existing convention.
 
 ### Minor — asymmetric impact readout

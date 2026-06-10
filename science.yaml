@@ -8,7 +8,7 @@ summary: Snakemake-driven meta-analysis pipeline that aggregates cBioPortal muta
   gene x cancer matrices, and gene/cancer clusters.
 status: active
 profile: research
-layout_version: 2
+layout_version: 3
 tags:
 - bioinformatics
 - cancer

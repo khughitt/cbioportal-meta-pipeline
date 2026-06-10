@@ -592,7 +592,7 @@ def resolve_caller_consensus(
     Polarity is chosen so the *safe default is unknown*: a study that appears in neither
     config list returns ``None`` (provenance unknown, must not be assumed consensus). This
     mirrors the `matched_normal_studies` pattern but with an explicit three-state result so
-    the downstream h08 scan can guard on single-caller artefacts (`paper:Jiang2025`).
+    the downstream h08 scan can guard on single-caller artefacts (`paper:Jiang2025a`).
     """
     in_multi = study_id in multi_caller_consensus_studies
     in_single = study_id in single_caller_studies

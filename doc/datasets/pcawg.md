@@ -10,9 +10,9 @@ source_refs:
   - "paper:Yaacov2023"
   - "paper:Alexandrov2020"
 related:
-  - hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and
-  - hypothesis:h09-cross-study-signature-exposure-reproducibility
-  - hypothesis:h11-joint-indel-sbs-improves-aetiology-discrimination
+  - hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and
+  - hypothesis:0008-cross-study-signature-exposure-reproducibility
+  - hypothesis:0010-joint-indel-sbs-improves-aetiology-discrimination
   - topic:pan-cancer-signature-catalogs
   - topic:signature-topography-genomic-features
 created: "2026-05-30"
@@ -31,8 +31,8 @@ PCAWG is the **WGS signature gold standard** for the project: it is the substrat
 signatures were defined (`paper:Alexandrov2020`) and carries genome-wide SBS+indel+SV+CN calls at
 depth the panel/WES cBioPortal corpus cannot reach. It is therefore the natural cross-validation
 reference for (a) checking that panel/WES signature calls recover the WGS-defined map
-(`hypothesis:h09`), (b) the high-depth arm of joint indel+SBS decomposition
-(`hypothesis:h11`), and (c) genome-wide topography analysis
+(`hypothesis:0008`), (b) the high-depth arm of joint indel+SBS decomposition
+(`hypothesis:0010`), and (c) genome-wide topography analysis
 (`topic:signature-topography-genomic-features`). Access is controlled (ICGC DACO for protected
 tiers); treat protected-tier files with the same data-sensitivity posture as GENIE.
 

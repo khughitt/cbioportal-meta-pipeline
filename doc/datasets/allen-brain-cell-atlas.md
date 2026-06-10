@@ -8,7 +8,7 @@ source_refs:
   - "paper:Hwang2025a"
   - "paper:Keough2022"
 related:
-  - "question:q035-label-free-neural-gene-definition"
+  - "question:0035-label-free-neural-gene-definition"
   - "topic:cancer-neuroscience-neural-regulation"
 created: "2026-06-07"
 updated: "2026-06-07"
@@ -33,6 +33,6 @@ cell-type specificity without GO labels.
 
 ## Connections to Project
 
-- Required by: `question:q035`; second view alongside GTEx/HPA tissue specificity.
+- Required by: `question:0035`; second view alongside GTEx/HPA tissue specificity.
 - Related: `topic:cancer-neuroscience-neural-regulation`.
 - Acquisition: tracked as a search/acquire task in `tasks/active.md`.

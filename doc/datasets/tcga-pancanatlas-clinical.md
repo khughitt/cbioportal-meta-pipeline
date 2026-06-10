@@ -31,11 +31,11 @@ parent_dataset: "dataset:tcga-pancanatlas"
 siblings: []
 local_path: "data/pancanatlas_clinical_with_followup.tsv"
 consumed_by:
-  - "plan:2026-05-31-t199-h08-association-core"
+  - "plan:0007-t199-h08-association-core"
 source_refs:
   - "cite:Liu2018TCGACDR"
 related:
-  - "hypothesis:h08-agnostic-covariate-association-recovers-known-signature-aetiologies-and"
+  - "hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and"
   - "dataset:tcga-pancanatlas"
   - "task:t199"
 created: "2026-05-31"
@@ -51,7 +51,7 @@ TCGA patient (10,956 patients × 746 fields), keyed on the 12-char `bcr_patient_
 type in the `acronym` column. It is the **only** TCGA source of `tobacco_smoking_history` and
 `number_pack_years_smoked`; the per-study cBioPortal PanCanAtlas clinical (`data_clinical_patient.txt`)
 does **not** carry a smoking field. It is therefore the substrate for the h08 **Arm B** smoking
-covariate (`pre-registration:h08-positive-control`).
+covariate (`pre-registration:0003-h08-positive-control-agnostic-association-must-recover-known-signature`).
 
 ## Access and Scope
 
@@ -85,7 +85,7 @@ realized Arm-B join n is the MC3∩(this table)∩(smoking non-missing) intersec
 
 ## Connections to Project
 
-- Consumed by: `plan:2026-05-31-t199-h08-association-core` (WP0 → WP1 covariate join), `task:t199`.
+- Consumed by: `plan:0007-t199-h08-association-core` (WP0 → WP1 covariate join), `task:t199`.
 - Variables used: `number_pack_years_smoked` (continuous), `tobacco_smoking_history` (ordinal
   indicator) — the Arm-B covariate against SBS4 within LUAD+LUSC.
 

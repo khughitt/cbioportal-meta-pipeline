@@ -7,7 +7,7 @@ source_class: "observational"
 source_refs:
   - "paper:Keough2022"
 related:
-  - "question:q035-label-free-neural-gene-definition"
+  - "question:0035-label-free-neural-gene-definition"
   - "topic:cancer-neuroscience-neural-regulation"
 created: "2026-06-07"
 updated: "2026-06-07"
@@ -31,6 +31,6 @@ without relying on GO/human labels, and to partition CNS vs PNS vs neuroendocrin
 
 ## Connections to Project
 
-- Required by: `question:q035`; consumed by `method:length-aware-geneset-enrichment` (gene set `S`).
+- Required by: `question:0035`; consumed by `method:length-aware-geneset-enrichment` (gene set `S`).
 - Related: complements `dataset:gtex`; `topic:cancer-neuroscience-neural-regulation`.
 - Acquisition: tracked as a search/acquire task in `tasks/active.md`.

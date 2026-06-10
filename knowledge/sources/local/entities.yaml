@@ -28,12 +28,6 @@ entities:
     intertissue variation and driver dependencies
   profile: local
   source_path: knowledge/sources/local/entities.yaml
-- canonical_id: paper:Iorio2018SLAPenrich
-  kind: paper
-  title: Pathway-based dissection of the genomic heterogeneity of cancer hallmarks'
-    acquisition with SLAPenrich
-  profile: local
-  source_path: knowledge/sources/local/entities.yaml
 - canonical_id: paper:Nguyen2022CUPLR
   kind: paper
   title: Machine learning-based tissue of origin classification for cancer of unknown

@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: superpowers:subagent-driven-development. Steps use `- [ ]` checkbox syntax.
 
-**Goal:** Produce a first numeric **pilot estimate** of how the SBS1+SBS5 exposure-fraction differs between matched-normal and unmatched-normal cohorts of the same cancer type, under the existing t109/t110 SigProfilerAssignment surface, and test whether subtracting the Li2021 normal-tissue spectrum (t111 output) as a residual-matrix transform attenuates the gap. Closes the "built-but-unexploited" gap from `meta:next-steps-2026-04-24` for `question:q008`.
+**Goal:** Produce a first numeric **pilot estimate** of how the SBS1+SBS5 exposure-fraction differs between matched-normal and unmatched-normal cohorts of the same cancer type, under the existing t109/t110 SigProfilerAssignment surface, and test whether subtracting the Li2021 normal-tissue spectrum (t111 output) as a residual-matrix transform attenuates the gap. Closes the "built-but-unexploited" gap from `meta:0007-next-steps-and-gap-analysis-2026-04-24` for `question:0008`.
 
 **Framing.** This is a **pilot consistency test**, not a causal attribution. The matched/unmatched contrast confounds normal-status with assay (WES vs panel), variant caller, primary-vs-clinical cohort, and likely age/stage mix. The verdict language reflects this: results read as "consistent / inconsistent with contamination" with named alternative explanations; causal attribution requires a follow-up study with a within-cohort matched-vs-unmatched comparator.
 
@@ -20,7 +20,7 @@
 
 **Tech stack:** Python 3.13+, the existing `code/scripts/run_restricted_sigprofiler_assignment.py` and Snakefile rules (no parallel decomposition path), plus a new `subtract_normal_background.py` operating on the SBS96 matrix. Statistical comparison + interpretation in a marimo notebook.
 
-**Related:** `task:t127`, `task:t109`, `task:t110`, `task:t111`, `task:t126`, `question:q008`, `question:q009`, `topic:signature-decomposition-unmatched-normal`, `paper:Li2021`, `paper:DiazGay2023`.
+**Related:** `task:t127`, `task:t109`, `task:t110`, `task:t111`, `task:t126`, `question:0008`, `question:0009`, `topic:signature-decomposition-unmatched-normal`, `paper:Li2021`, `paper:DiazGay2023`.
 
 ---
 
@@ -137,7 +137,7 @@ Per review F6, the Li2021 reference is a WES-derived shape; subtracting it from 
 - New: `code/notebooks/2026-MM-DD-q008-quantitative-pilot.py` (marimo)
 
 - [ ] **Step 1: Marimo notebook.** Altair plots: (a) feasibility table; (b) per-cancer-type Δ with CI bars (raw); (c) Δ(c) curves for li2021-eligible types; (d) subtraction diagnostics (removed/clipped/residual mass per cancer type); (e) collateral signature panel; (f) sensitivity panels.
-- [ ] **Step 2: Interpretation doc.** Frontmatter follows project convention (`type: interpretation`, related to `task:t127`, `question:q008`, `hypothesis:h01-non-tumor-signal-contamination`). Verdict structure:
+- [ ] **Step 2: Interpretation doc.** Frontmatter follows project convention (`type: interpretation`, related to `task:t127`, `question:0008`, `hypothesis:0001-non-tumor-signal-contamination`). Verdict structure:
   - **Headline verdict:** "pilot evidence consistent / inconsistent with contamination" (not causal). Cite the matched-vs-unmatched Δ and the named confounders that remain unresolved.
   - **Subtraction verdict:** rescues / partial / fails-or-overcorrects, gated on `c_star` AND collateral-signature thresholds. If panel sparsity makes the residual matrix structurally noisy (per t126), report this as the dominant uncertainty.
   - **Confounder ledger:** one paragraph per named confounder (assay, caller, stage, age, exposure mix), what the sensitivity panel showed, what's unresolved.
@@ -160,7 +160,7 @@ Single dedicated session, with a feasibility-table checkpoint after Task 1 that 
 ## Out-of-scope (deferred)
 
 - Tumor-purity covariate (Strategy 4) — needs ABSOLUTE/PureCN ingestion.
-- WGS-based LRR/ERR topographic test for q009 — `defer` per `interpretation:2026-04-24-t126-sbs1-lrr-bias-per-study`; gated on a WGS cohort (Hartwig HMF).
+- WGS-based LRR/ERR topographic test for q009 — `defer` per `interpretation:0007-t126-sbs1-lrr-bias-per-study`; gated on a WGS cohort (Hartwig HMF).
 - MuSiCal / SigFormer cross-tool comparison.
 - Extending to all cBioPortal unmatched studies — gated on this pilot.
 - CUPLR-style q010 classifier — separate plan.

@@ -7,10 +7,6 @@ entity_kinds:
     canonical_prefix: meta
     layer: layer/local
     description: Project-local meta document.
-  - name: synthesis
-    canonical_prefix: synthesis
-    layer: layer/local
-    description: Project-local synthesis document.
   - name: guide
     canonical_prefix: guide
     layer: layer/local

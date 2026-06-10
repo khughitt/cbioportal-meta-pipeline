@@ -1004,3 +1004,11 @@ Deliverables: AGENTS "Running The Pipeline" gains a "Verifying a run is green (i
 subsection (canonical `--rerun-triggers mtime` command + the default-vs-mtime explanation + the
 "green = full rule all 0-failure + QA PASS + empty mtime dry-run" definition); the t227 follow-up
 note above is reworded to cite the mtime-pinned form explicitly.
+
+## [t229] Retire §B5 aggregate paper stubs in entities.yaml (v3 conformance)
+- priority: P2
+- status: proposed
+- aspects: []
+- created: 2026-06-09
+
+After the v2->v3 layout migration (layout_version 3, branch v3-migration / commit ee86bd1), 'science validate' reports 10 [aggregate-not-retired-at-v3] errors: 9 lone paper stubs in knowledge/sources/local/entities.yaml (Chalmers2017, Coombs2017, Coombs2018, Degasperi2020, Nguyen2022CUPLR, Paczkowska2020, Reyna2020Pathway, Samstein2019, Campbell2017Hypermutation). 'science entities triage-aggregate' classifies them 'ambiguous' (paper without primary_external_id). All are in papers/references.bib (no DOI in rows); 8/9 are referenced by entities, Degasperi2020 is an orphan. Options: add DOIs + 'triage-aggregate --retire-external-refs --apply'; or promote referenced ones to stub owner files + delete the orphan. Design ref: ~/d/science/docs/plans/2026-06-06-knowledge-meta-model-and-substrate-design.md §B5.

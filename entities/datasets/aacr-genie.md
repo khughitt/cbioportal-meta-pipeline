@@ -1,16 +1,16 @@
 ---
-id: "dataset:aacr-genie"
-type: "dataset"
-title: "AACR Project GENIE"
-status: "active"
-source_class: "observational"
+type: dataset
+title: AACR Project GENIE
+status: active
+created: '2026-05-30'
+updated: '2026-05-30'
+id: dataset:aacr-genie
+source_class: observational
 source_refs:
-  - "paper:AACRGENIEConsortium2017"
-  - "paper:Pugh2022"
-  - "paper:Vocht2026"
+- paper:AACRGENIEConsortium2017
+- paper:Pugh2022
+- paper:Vocht2026
 related: []
-created: "2026-05-30"
-updated: "2026-05-30"
 ---
 
 # AACR Project GENIE

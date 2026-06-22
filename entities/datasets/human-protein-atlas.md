@@ -1,16 +1,16 @@
 ---
-id: "dataset:human-protein-atlas"
-type: "dataset"
-title: "Human Protein Atlas (tissue specificity)"
-status: "proposed"
-source_class: "observational"
+type: dataset
+title: Human Protein Atlas (tissue specificity)
+status: proposed
+created: '2026-06-07'
+updated: '2026-06-07'
+id: dataset:human-protein-atlas
+source_class: observational
 source_refs:
-  - "paper:Keough2022"
+- paper:Keough2022
 related:
-  - "question:0035-label-free-neural-gene-definition"
-  - "topic:cancer-neuroscience-neural-regulation"
-created: "2026-06-07"
-updated: "2026-06-07"
+- question:0035-label-free-neural-gene-definition
+- topic:cancer-neuroscience-neural-regulation
 ---
 
 # Human Protein Atlas (tissue specificity)

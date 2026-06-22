@@ -1,15 +1,15 @@
 ---
-id: "dataset:oncokb"
-type: "dataset"
-title: "OncoKB"
-status: "active"
-source_class: "reference"
+type: dataset
+title: OncoKB
+status: active
+created: '2026-05-30'
+updated: '2026-05-30'
+id: dataset:oncokb
+source_class: reference
 source_refs:
-  - "paper:Chakravarty2017"
-  - "paper:Suehnholz2024"
+- paper:Chakravarty2017
+- paper:Suehnholz2024
 related: []
-created: "2026-05-30"
-updated: "2026-05-30"
 ---
 
 # OncoKB

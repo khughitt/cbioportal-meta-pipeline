@@ -1,40 +1,40 @@
 ---
-id: "dataset:tcga-mc3"
-type: "dataset"
-title: "TCGA MC3 unified MAF"
-status: "active"
-source_class: "derived"
-derived_kind: "aggregate"
-tier: "use-now"
-license: "custom"
-update_cadence: "static"
+type: dataset
+title: TCGA MC3 unified MAF
+status: active
+created: '2026-05-30'
+updated: '2026-05-31'
+id: dataset:tcga-mc3
+source_class: derived
+derived_kind: aggregate
+tier: use-now
+license: custom
+update_cadence: static
 accessions:
-  - "GDC mc3.v0.2.8.PUBLIC.maf.gz"
+- GDC mc3.v0.2.8.PUBLIC.maf.gz
 access:
-  level: "public"
-  availability: "available"
-  available_after: ""
+  level: public
+  availability: available
+  available_after: ''
   verified: true
-  verification_method: "retrieved"
-  last_reviewed: "2026-06-01"
-  verified_by: "codex (t201)"
-  source_url: "https://gdc.cancer.gov/about-data/publications/mc3-2017"
-  credentials_required: ""
+  verification_method: retrieved
+  last_reviewed: '2026-06-01'
+  verified_by: codex (t201)
+  source_url: https://gdc.cancer.gov/about-data/publications/mc3-2017
+  credentials_required: ''
   exception:
-    mode: ""
-    decision_date: ""
-    followup_task: ""
-    superseded_by_dataset: ""
-    rationale: ""
-local_path: "data/mc3.v0.2.8.PUBLIC.maf.gz"
+    mode: ''
+    decision_date: ''
+    followup_task: ''
+    superseded_by_dataset: ''
+    rationale: ''
+local_path: data/mc3.v0.2.8.PUBLIC.maf.gz
 source_refs:
-  - "paper:Ellrott2018"
+- paper:Ellrott2018
 related:
-  - "hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and"
+- hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and
 consumed_by:
-  - "plan:0007-t199-h08-association-core"
-created: "2026-05-30"
-updated: "2026-05-31"
+- plan:0007-t199-h08-association-core
 ---
 
 # TCGA MC3 unified MAF

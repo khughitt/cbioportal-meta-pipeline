@@ -1,20 +1,20 @@
 ---
-id: "dataset:gene-cancer-study-ratio-annotated-product"
-type: "dataset"
-title: "Canonical annotated gene-cancer study ratio product"
-status: "active"
-source_class: "derived"
-derived_kind: "aggregate"
+type: dataset
+title: Canonical annotated gene-cancer study ratio product
+status: active
+created: '2026-05-02'
+updated: '2026-05-02'
+id: dataset:gene-cancer-study-ratio-annotated-product
+source_class: derived
+derived_kind: aggregate
 ontology_terms:
-  - "somatic mutation"
-  - "mutation frequency"
-  - "cancer genomics"
+- somatic mutation
+- mutation frequency
+- cancer genomics
 source_refs: []
 related:
-  - "topic:pre-cancer-prevalence-and-impact"
-  - "question:0012-mutation-ordering-cross-sectional-inference"
-created: "2026-05-02"
-updated: "2026-05-02"
+- topic:pre-cancer-prevalence-and-impact
+- question:0012-mutation-ordering-cross-sectional-inference
 ---
 
 # Canonical annotated gene-cancer study ratio product

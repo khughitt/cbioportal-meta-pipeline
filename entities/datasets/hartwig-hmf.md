@@ -1,43 +1,43 @@
 ---
-id: "dataset:hartwig-hmf"
-type: "dataset"
-title: "Hartwig Medical Foundation (HMF) metastatic pan-cancer WGS"
-status: "active"
-source_class: "observational"
-origin: "external"
-tier: "evaluate-next"
-license: "custom"
-update_cadence: "versioned-releases"
+type: dataset
+title: Hartwig Medical Foundation (HMF) metastatic pan-cancer WGS
+status: active
+created: '2026-05-31'
+updated: '2026-05-31'
+id: dataset:hartwig-hmf
+source_class: observational
+origin: external
+tier: evaluate-next
+license: custom
+update_cadence: versioned-releases
 ontology_terms: []
 accessions:
-  - "Hartwig Medical Foundation DR-series (https://www.hartwigmedicalfoundation.nl/en/data/data-access-request/)"
+- Hartwig Medical Foundation DR-series (https://www.hartwigmedicalfoundation.nl/en/data/data-access-request/)
 access:
-  level: "controlled"
-  availability: "available"
-  available_after: ""
+  level: controlled
+  availability: available
+  available_after: ''
   verified: false
-  verification_method: ""
-  last_reviewed: "2026-05-31"
-  verified_by: ""
-  source_url: "https://www.hartwigmedicalfoundation.nl/en/data/data-access-request/"
-  credentials_required: "Data Access Request + Data Use Agreement (academic/commercial tiers); not downloadable without approval"
+  verification_method: ''
+  last_reviewed: '2026-05-31'
+  verified_by: ''
+  source_url: https://www.hartwigmedicalfoundation.nl/en/data/data-access-request/
+  credentials_required: Data Access Request + Data Use Agreement (academic/commercial
+    tiers); not downloadable without approval
   exception:
-    mode: ""
-    decision_date: ""
-    followup_task: ""
-    superseded_by_dataset: ""
-    rationale: ""
-parent_dataset: ""
+    mode: ''
+    decision_date: ''
+    followup_task: ''
+    superseded_by_dataset: ''
+    rationale: ''
 siblings: []
 consumed_by: []
 source_refs:
-  - paper:Pleasance2020
+- paper:Pleasance2020
 related:
-  - hypothesis:0009-treatment-induced-signature-frequency-contamination
-  - topic:clinical-translational-signatures
-  - dataset:pcawg
-created: "2026-05-31"
-updated: "2026-05-31"
+- hypothesis:0009-treatment-induced-signature-frequency-contamination
+- topic:clinical-translational-signatures
+- dataset:pcawg
 ---
 
 # Hartwig Medical Foundation (HMF) metastatic pan-cancer WGS

@@ -1,20 +1,20 @@
 ---
-id: "dataset:tcga"
-type: "dataset"
-title: "The Cancer Genome Atlas (TCGA)"
-status: "active"
-source_class: "observational"
+type: dataset
+title: The Cancer Genome Atlas (TCGA)
+status: active
+created: '2026-05-30'
+updated: '2026-05-30'
+id: dataset:tcga
+source_class: observational
 source_refs:
-  - "paper:Kim2017"
-  - "paper:Ciriello2012"
-  - "paper:Canisius2016"
-  - "paper:Imielinski2017"
-  - "paper:Vandin2012"
-  - "paper:Leiserson2015"
-  - "paper:Mina2020"
+- paper:Kim2017
+- paper:Ciriello2012
+- paper:Canisius2016
+- paper:Imielinski2017
+- paper:Vandin2012
+- paper:Leiserson2015
+- paper:Mina2020
 related: []
-created: "2026-05-30"
-updated: "2026-05-30"
 ---
 
 # The Cancer Genome Atlas (TCGA)

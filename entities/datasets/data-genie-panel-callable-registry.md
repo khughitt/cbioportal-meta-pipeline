@@ -1,15 +1,15 @@
 ---
-id: "dataset:data-genie-panel-callable-registry"
-type: "dataset"
-title: "GENIE panel coverage and callable-size registry"
-status: "active"
-source_class: "derived"
-derived_kind: "transform"
+type: dataset
+title: GENIE panel coverage and callable-size registry
+status: active
+created: '2026-05-31'
+updated: '2026-05-31'
+id: dataset:data-genie-panel-callable-registry
+source_class: derived
+derived_kind: transform
 related:
-  - "dataset:aacr-genie"
-  - "dataset:gene-cancer-study-ratio-annotated-product"
-created: "2026-05-31"
-updated: "2026-05-31"
+- dataset:aacr-genie
+- dataset:gene-cancer-study-ratio-annotated-product
 ---
 
 # GENIE Panel Coverage And Callable-Size Registry

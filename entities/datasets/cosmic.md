@@ -1,14 +1,14 @@
 ---
-id: "dataset:cosmic"
-type: "dataset"
-title: "COSMIC"
-status: "active"
-source_class: "reference"
+type: dataset
+title: COSMIC
+status: active
+created: '2026-05-30'
+updated: '2026-05-30'
+id: dataset:cosmic
+source_class: reference
 source_refs:
-  - "paper:Tate2019"
+- paper:Tate2019
 related: []
-created: "2026-05-30"
-updated: "2026-05-30"
 ---
 
 # COSMIC

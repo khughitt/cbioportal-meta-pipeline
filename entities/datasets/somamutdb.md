@@ -1,14 +1,14 @@
 ---
-id: "dataset:somamutdb"
-type: "dataset"
-title: "SomaMutDB"
-status: "active"
-source_class: "reference"
+type: dataset
+title: SomaMutDB
+status: active
+created: '2026-05-30'
+updated: '2026-05-30'
+id: dataset:somamutdb
+source_class: reference
 source_refs:
-  - "paper:Yaacov2023"
+- paper:Yaacov2023
 related: []
-created: "2026-05-30"
-updated: "2026-05-30"
 ---
 
 # SomaMutDB

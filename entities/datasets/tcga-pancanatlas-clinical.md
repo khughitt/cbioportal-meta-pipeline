@@ -1,45 +1,45 @@
 ---
-id: "dataset:tcga-pancanatlas-clinical"
-type: "dataset"
-title: "TCGA PanCanAtlas clinical-with-followup (smoking / pack-years)"
-status: "active"
-source_class: "observational"
-origin: "external"
-tier: "use-now"
-license: "custom"
-update_cadence: "static"
+type: dataset
+title: TCGA PanCanAtlas clinical-with-followup (smoking / pack-years)
+status: active
+created: '2026-05-31'
+updated: '2026-05-31'
+id: dataset:tcga-pancanatlas-clinical
+source_class: observational
+origin: external
+tier: use-now
+license: custom
+update_cadence: static
 ontology_terms: []
 accessions:
-  - "GDC file UUID 0fc78496-818b-4896-bd83-52db1f533c5c (clinical_PANCAN_patient_with_followup.tsv)"
+- GDC file UUID 0fc78496-818b-4896-bd83-52db1f533c5c (clinical_PANCAN_patient_with_followup.tsv)
 access:
-  level: "public"
-  availability: "available"
-  available_after: ""
+  level: public
+  availability: available
+  available_after: ''
   verified: true
-  verification_method: "retrieved"
-  last_reviewed: "2026-05-31"
-  verified_by: "claude (t199 WP0)"
-  source_url: "https://api.gdc.cancer.gov/data/0fc78496-818b-4896-bd83-52db1f533c5c"
-  credentials_required: ""
+  verification_method: retrieved
+  last_reviewed: '2026-05-31'
+  verified_by: claude (t199 WP0)
+  source_url: https://api.gdc.cancer.gov/data/0fc78496-818b-4896-bd83-52db1f533c5c
+  credentials_required: ''
   exception:
-    mode: ""
-    decision_date: ""
-    followup_task: ""
-    superseded_by_dataset: ""
-    rationale: ""
-parent_dataset: "dataset:tcga-pancanatlas"
+    mode: ''
+    decision_date: ''
+    followup_task: ''
+    superseded_by_dataset: ''
+    rationale: ''
+parent_dataset: dataset:tcga-pancanatlas
 siblings: []
-local_path: "data/pancanatlas_clinical_with_followup.tsv"
+local_path: data/pancanatlas_clinical_with_followup.tsv
 consumed_by:
-  - "plan:0007-t199-h08-association-core"
+- plan:0007-t199-h08-association-core
 source_refs:
-  - "cite:Liu2018TCGACDR"
+- cite:Liu2018TCGACDR
 related:
-  - "hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and"
-  - "dataset:tcga-pancanatlas"
-  - "task:t199"
-created: "2026-05-31"
-updated: "2026-05-31"
+- hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and
+- dataset:tcga-pancanatlas
+- task:t199
 ---
 
 # TCGA PanCanAtlas clinical-with-followup (smoking / pack-years)

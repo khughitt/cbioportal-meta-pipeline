@@ -1,15 +1,15 @@
 ---
-id: "dataset:cbioportal"
-type: "dataset"
-title: "cBioPortal for Cancer Genomics"
-status: "active"
-source_class: "reference"
+type: dataset
+title: cBioPortal for Cancer Genomics
+status: active
+created: '2026-05-30'
+updated: '2026-05-30'
+id: dataset:cbioportal
+source_class: reference
 source_refs:
-  - "paper:Cerami2012"
-  - "paper:Gao2013"
+- paper:Cerami2012
+- paper:Gao2013
 related: []
-created: "2026-05-30"
-updated: "2026-05-30"
 ---
 
 # cBioPortal for Cancer Genomics

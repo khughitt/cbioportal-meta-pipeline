@@ -1,18 +1,18 @@
 ---
-id: "dataset:normal-tissue-spectra"
-type: "dataset"
-title: "Normal-tissue 96-context SBS spectra and burden"
-status: "active"
-source_class: "derived"
-derived_kind: "aggregate"
+type: dataset
+title: Normal-tissue 96-context SBS spectra and burden
+status: active
+created: '2026-04-19'
+updated: '2026-05-31'
+id: dataset:normal-tissue-spectra
+source_class: derived
+derived_kind: aggregate
 source_refs:
-  - "paper:Li2021"
+- paper:Li2021
 related:
-  - "dataset:li2021-normal-wgs"
-  - "hypothesis:0001-non-tumor-signal-contamination"
-  - "topic:normal-tissue-mutation-atlas"
-created: "2026-04-19"
-updated: "2026-05-31"
+- dataset:li2021-normal-wgs
+- hypothesis:0001-non-tumor-signal-contamination
+- topic:normal-tissue-mutation-atlas
 ---
 
 # Normal-tissue 96-context SBS spectra and burden

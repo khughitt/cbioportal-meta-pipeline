@@ -1,16 +1,16 @@
 ---
-id: "dataset:data-cbioportal-per-study-mutation-cleanbase"
-type: "dataset"
-title: "Generated cBioPortal per-study mutation clean-base substrates"
-status: "active"
-source_class: "derived"
-derived_kind: "transform"
+type: dataset
+title: Generated cBioPortal per-study mutation clean-base substrates
+status: active
+created: '2026-05-31'
+updated: '2026-05-31'
+id: dataset:data-cbioportal-per-study-mutation-cleanbase
+source_class: derived
+derived_kind: transform
 related:
-  - "dataset:cbioportal"
-  - "dataset:tcga-mc3"
-  - "dataset:gene-cancer-study-ratio-annotated-product"
-created: "2026-05-31"
-updated: "2026-05-31"
+- dataset:cbioportal
+- dataset:tcga-mc3
+- dataset:gene-cancer-study-ratio-annotated-product
 ---
 
 # Generated cBioPortal per-study mutation clean-base substrates

@@ -1,14 +1,14 @@
 ---
-id: "dataset:li2021-normal-wgs"
-type: "dataset"
-title: "Li 2021 normal multi-organ WGS cohort"
-status: "active"
-source_class: "observational"
+type: dataset
+title: Li 2021 normal multi-organ WGS cohort
+status: active
+created: '2026-05-30'
+updated: '2026-05-30'
+id: dataset:li2021-normal-wgs
+source_class: observational
 source_refs:
-  - "paper:Li2021"
+- paper:Li2021
 related: []
-created: "2026-05-30"
-updated: "2026-05-30"
 ---
 
 # Li 2021 normal multi-organ WGS cohort

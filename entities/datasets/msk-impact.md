@@ -1,19 +1,19 @@
 ---
-id: "dataset:msk-impact"
-type: "dataset"
-title: "MSK-IMPACT clinical sequencing cohort"
-status: "active"
-source_class: "observational"
+type: dataset
+title: MSK-IMPACT clinical sequencing cohort
+status: active
+created: '2026-05-30'
+updated: '2026-05-30'
+id: dataset:msk-impact
+source_class: observational
 source_refs:
-  - "paper:Bandlamudi2026"
-  - "paper:Cheng2015"
-  - "paper:Suehnholz2024"
-  - "paper:Zehir2017"
-  - "paper:Mina2020"
-  - "paper:Schill2024"
+- paper:Bandlamudi2026
+- paper:Cheng2015
+- paper:Suehnholz2024
+- paper:Zehir2017
+- paper:Mina2020
+- paper:Schill2024
 related: []
-created: "2026-05-30"
-updated: "2026-05-30"
 ---
 
 # MSK-IMPACT clinical sequencing cohort

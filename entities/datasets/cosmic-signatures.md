@@ -1,14 +1,14 @@
 ---
-id: "dataset:cosmic-signatures"
-type: "dataset"
-title: "COSMIC Mutational Signatures"
-status: "active"
-source_class: "reference"
+type: dataset
+title: COSMIC Mutational Signatures
+status: active
+created: '2026-05-30'
+updated: '2026-05-30'
+id: dataset:cosmic-signatures
+source_class: reference
 source_refs:
-  - "paper:Alexandrov2020"
+- paper:Alexandrov2020
 related: []
-created: "2026-05-30"
-updated: "2026-05-30"
 ---
 
 # COSMIC Mutational Signatures

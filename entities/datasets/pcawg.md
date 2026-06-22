@@ -1,22 +1,22 @@
 ---
-id: "dataset:pcawg"
-type: "dataset"
-title: "ICGC/TCGA PCAWG"
-status: "active"
-source_class: "observational"
-tier: "evaluate-next"
+type: dataset
+title: ICGC/TCGA PCAWG
+status: active
+created: '2026-05-30'
+updated: '2026-05-31'
+id: dataset:pcawg
+source_class: observational
+tier: evaluate-next
 source_refs:
-  - "paper:PCAWG2020"
-  - "paper:Yaacov2023"
-  - "paper:Alexandrov2020"
+- paper:PCAWG2020
+- paper:Yaacov2023
+- paper:Alexandrov2020
 related:
-  - hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and
-  - hypothesis:0008-cross-study-signature-exposure-reproducibility
-  - hypothesis:0010-joint-indel-sbs-improves-aetiology-discrimination
-  - topic:pan-cancer-signature-catalogs
-  - topic:signature-topography-genomic-features
-created: "2026-05-30"
-updated: "2026-05-31"
+- hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and
+- hypothesis:0008-cross-study-signature-exposure-reproducibility
+- hypothesis:0010-joint-indel-sbs-improves-aetiology-discrimination
+- topic:pan-cancer-signature-catalogs
+- topic:signature-topography-genomic-features
 ---
 
 # ICGC/TCGA PCAWG

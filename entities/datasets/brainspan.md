@@ -1,17 +1,17 @@
 ---
-id: "dataset:brainspan"
-type: "dataset"
-title: "BrainSpan Atlas of the Developing Human Brain"
-status: "proposed"
-source_class: "observational"
+type: dataset
+title: BrainSpan Atlas of the Developing Human Brain
+status: proposed
+created: '2026-06-07'
+updated: '2026-06-07'
+id: dataset:brainspan
+source_class: observational
 source_refs:
-  - "paper:Cao2023"
+- paper:Cao2023
 related:
-  - "question:0036-oncofetal-fetal-vs-adult-neural-expression"
-  - "question:0035-label-free-neural-gene-definition"
-  - "topic:oncofetal-developmental-reprogramming"
-created: "2026-06-07"
-updated: "2026-06-07"
+- question:0036-oncofetal-fetal-vs-adult-neural-expression
+- question:0035-label-free-neural-gene-definition
+- topic:oncofetal-developmental-reprogramming
 ---
 
 # BrainSpan Atlas of the Developing Human Brain

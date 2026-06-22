@@ -1,19 +1,19 @@
 ---
-id: "dataset:data-driver-overlay-registry"
-type: "dataset"
-title: "Processed driver and pathway overlay registry"
-status: "active"
-source_class: "derived"
-derived_kind: "transform"
+type: dataset
+title: Processed driver and pathway overlay registry
+status: active
+created: '2026-05-31'
+updated: '2026-05-31'
+id: dataset:data-driver-overlay-registry
+source_class: derived
+derived_kind: transform
 source_refs:
-  - "paper:Bailey2018"
-  - "paper:SanchezVega2018"
-  - "paper:Tate2019"
+- paper:Bailey2018
+- paper:SanchezVega2018
+- paper:Tate2019
 related:
-  - "dataset:cosmic"
-  - "dataset:gene-cancer-study-ratio-annotated-product"
-created: "2026-05-31"
-updated: "2026-05-31"
+- dataset:cosmic
+- dataset:gene-cancer-study-ratio-annotated-product
 ---
 
 # Processed Driver And Pathway Overlay Registry

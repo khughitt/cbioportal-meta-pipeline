@@ -1,16 +1,16 @@
 ---
-id: "dataset:msk-chord"
-type: "dataset"
-title: "MSK-CHORD"
-status: "active"
-source_class: "observational"
+type: dataset
+title: MSK-CHORD
+status: active
+created: '2026-05-30'
+updated: '2026-05-30'
+id: dataset:msk-chord
+source_class: observational
 source_refs:
-  - "paper:Jee2024"
+- paper:Jee2024
 related:
-  - "dataset:aacr-genie-bpc"
-  - "hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and"
-created: "2026-05-30"
-updated: "2026-05-30"
+- dataset:aacr-genie-bpc
+- hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and
 ---
 
 # MSK-CHORD

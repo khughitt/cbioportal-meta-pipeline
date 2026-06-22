@@ -1,18 +1,18 @@
 ---
-id: "dataset:aacr-genie-bpc"
-type: "dataset"
-title: "AACR Project GENIE BPC (Biopharma Collaborative, PRISSMM)"
-status: "active"
-source_class: "observational"
+type: dataset
+title: AACR Project GENIE BPC (Biopharma Collaborative, PRISSMM)
+status: active
+created: '2026-05-30'
+updated: '2026-05-30'
+id: dataset:aacr-genie-bpc
+source_class: observational
 source_refs:
-  - "paper:AACRGENIEConsortium2017"
+- paper:AACRGENIEConsortium2017
 related:
-  - "dataset:aacr-genie"
-  - "dataset:msk-chord"
-  - "hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and"
-  - "topic:signature-decomposition-unmatched-normal"
-created: "2026-05-30"
-updated: "2026-05-30"
+- dataset:aacr-genie
+- dataset:msk-chord
+- hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and
+- topic:signature-decomposition-unmatched-normal
 ---
 
 # AACR Project GENIE BPC (Biopharma Collaborative, PRISSMM)

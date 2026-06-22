@@ -1,15 +1,15 @@
 ---
-id: "dataset:gtex"
-type: "dataset"
-title: "GTEx"
-status: "active"
-source_class: "observational"
+type: dataset
+title: GTEx
+status: active
+created: '2026-05-30'
+updated: '2026-05-30'
+id: dataset:gtex
+source_class: observational
 source_refs:
-  - "paper:Gao2023"
-  - "paper:Xu2025"
+- paper:Gao2023
+- paper:Xu2025
 related: []
-created: "2026-05-30"
-updated: "2026-05-30"
 ---
 
 # GTEx

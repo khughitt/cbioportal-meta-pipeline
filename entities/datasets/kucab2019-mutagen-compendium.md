@@ -1,45 +1,44 @@
 ---
-id: "dataset:kucab2019-mutagen-compendium"
-type: "dataset"
-title: "Kucab 2019 environmental-mutagen reference signature compendium (iPSC)"
-status: "active"
-source_class: "reference"
-origin: "external"
-tier: "evaluate-next"
-license: "CC-BY-4.0"
-update_cadence: "static"
+type: dataset
+title: Kucab 2019 environmental-mutagen reference signature compendium (iPSC)
+status: active
+created: '2026-05-31'
+updated: '2026-05-31'
+id: dataset:kucab2019-mutagen-compendium
+source_class: reference
+origin: external
+tier: evaluate-next
+license: CC-BY-4.0
+update_cadence: static
 ontology_terms: []
 accessions:
-  - "Kucab 2019 Cell supplementary signatures (DOI 10.1016/j.cell.2019.03.001)"
+- Kucab 2019 Cell supplementary signatures (DOI 10.1016/j.cell.2019.03.001)
 access:
-  level: "public"
-  availability: "available"
-  available_after: ""
+  level: public
+  availability: available
+  available_after: ''
   verified: false
-  verification_method: ""
-  last_reviewed: "2026-05-31"
-  verified_by: ""
-  source_url: "https://doi.org/10.1016/j.cell.2019.03.001"
-  credentials_required: ""
+  verification_method: ''
+  last_reviewed: '2026-05-31'
+  verified_by: ''
+  source_url: https://doi.org/10.1016/j.cell.2019.03.001
+  credentials_required: ''
   exception:
-    mode: ""
-    decision_date: ""
-    followup_task: ""
-    superseded_by_dataset: ""
-    rationale: ""
-parent_dataset: ""
+    mode: ''
+    decision_date: ''
+    followup_task: ''
+    superseded_by_dataset: ''
+    rationale: ''
 siblings: []
 consumed_by: []
 source_refs:
-  - paper:Kucab2019
+- paper:Kucab2019
 related:
-  - hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and
-  - topic:pan-cancer-signature-catalogs
-  - topic:dna-damage-repair-signature-mechanisms
-  - dataset:cosmic-signatures
-  - dataset:normal-tissue-spectra
-created: "2026-05-31"
-updated: "2026-05-31"
+- hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and
+- topic:pan-cancer-signature-catalogs
+- topic:dna-damage-repair-signature-mechanisms
+- dataset:cosmic-signatures
+- dataset:normal-tissue-spectra
 ---
 
 # Kucab 2019 environmental-mutagen reference signature compendium (iPSC)

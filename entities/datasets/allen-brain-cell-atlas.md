@@ -1,17 +1,17 @@
 ---
-id: "dataset:allen-brain-cell-atlas"
-type: "dataset"
-title: "Allen Brain Cell Atlas"
-status: "proposed"
-source_class: "observational"
+type: dataset
+title: Allen Brain Cell Atlas
+status: proposed
+created: '2026-06-07'
+updated: '2026-06-07'
+id: dataset:allen-brain-cell-atlas
+source_class: observational
 source_refs:
-  - "paper:Hwang2025a"
-  - "paper:Keough2022"
+- paper:Hwang2025a
+- paper:Keough2022
 related:
-  - "question:0035-label-free-neural-gene-definition"
-  - "topic:cancer-neuroscience-neural-regulation"
-created: "2026-06-07"
-updated: "2026-06-07"
+- question:0035-label-free-neural-gene-definition
+- topic:cancer-neuroscience-neural-regulation
 ---
 
 # Allen Brain Cell Atlas

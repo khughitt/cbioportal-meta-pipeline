@@ -1,17 +1,17 @@
 ---
-id: "dataset:panglaodb"
-type: "dataset"
-title: "PanglaoDB cell-type marker database"
-status: "proposed"
-source_class: "reference"
+type: dataset
+title: PanglaoDB cell-type marker database
+status: proposed
+created: '2026-06-07'
+updated: '2026-06-07'
+id: dataset:panglaodb
+source_class: reference
 source_refs:
-  - "paper:Hwang2025a"
-  - "paper:Wu2025a"
+- paper:Hwang2025a
+- paper:Wu2025a
 related:
-  - "question:0035-label-free-neural-gene-definition"
-  - "method:length-aware-geneset-enrichment"
-created: "2026-06-07"
-updated: "2026-06-07"
+- question:0035-label-free-neural-gene-definition
+- method:length-aware-geneset-enrichment
 ---
 
 # PanglaoDB cell-type marker database

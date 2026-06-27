@@ -169,9 +169,9 @@ claims derive from cited primary literature.
 
 ## Relevance
 
-### Bearing on H1–H5 (neural gene hypotheses)
+### Bearing on `H1`-`H5` (neural gene hypotheses)
 
-**H1 (hijack neural circuitry — top-down):** Strongly supported as the dominant mechanistic
+**`H1` (hijack neural circuitry — top-down):** Strongly supported as the dominant mechanistic
 framework. The review provides abundant evidence that cancers actively exploit neural
 signaling pathways for proliferation, invasion, and metastasis. The key genes and pathways
 documented (NLGN3, AMPAR/NMDAR, NRXN1, DCC, RELN) are core synaptic genes. Crucially, the
@@ -179,26 +179,26 @@ hijacking is not one-directional: cancer cells *acquire expression* of synaptic 
 Nlgn1, Dcc, Reln in SCLC) and neural stem cell genes (EGR2, SOX2, HOX in CSCs) to *become*
 synaptically active. This is mechanistically distinct from incidental mutation accumulation.
 
-**H2 (neural modulation via immune cells):** Partially supported. The review documents that
+**`H2` (neural modulation via immune cells):** Partially supported. The review documents that
 sympathetic nerves shape TAM populations (sympathectomy increases CD163+ macrophages in PDAC),
 parasympathetic signaling modulates TME T-cell infiltration, Schwann cells interact with immune
 cells in PNI, and neuropeptides (SP via NK1-R) activate oncogenic pathways. However, the review
-does not propose H2 as a primary mechanism; immune modulation is treated as downstream of
+does not propose `H2` as a primary mechanism; immune modulation is treated as downstream of
 direct cancer-nerve crosstalk.
 
-**H3 (aberrant developmental/oncofetal expression):** Directly evidenced by Mechanism 5
+**`H3` (aberrant developmental/oncofetal expression):** Directly evidenced by Mechanism 5
 (CSC transdifferentiation into neurons via EGR2, SOX2, HOX genes) and Mechanism 6 (DCX+
 neural progenitor recruitment). The review demonstrates that cancer cells can re-activate
 developmental neural programs in a fully mechanistic way.
 
-**H4 (brain/CNS-cancer artifact):** Explicitly countered for CNS tumors (glioma sections are
+**`H4` (brain/CNS-cancer artifact):** Explicitly countered for CNS tumors (glioma sections are
 detailed and mechanistic). However, the review also demonstrates that PNS-innervated tumors
 (PDAC, prostate, gastric, colorectal) show equally deep neural gene expression — NDRG4 in
-enteric neurons of colorectal, Nrxn1/Nlgn1/Dcc/Reln in SCLC (a thoracic cancer). H4 as an
+enteric neurons of colorectal, Nrxn1/Nlgn1/Dcc/Reln in SCLC (a thoracic cancer). `H4` as an
 exclusive explanation for the "top mutated neural genes" list is therefore weakened but not
 entirely eliminated — CNS-contaminating samples remain a possible contributor.
 
-**H5 (misannotation):** Not addressed; outside this review's scope.
+**`H5` (misannotation):** Not addressed; outside this review's scope.
 
 ### Data-driven neural gene definition
 
@@ -224,9 +224,9 @@ studies, which this review does not provide.
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
 | NLGN3, NRXN1, NLGN1, DCC, RELN (synaptic genes in cancer) | Neural gene candidates from cBioPortal top-mutated list | These are exactly the gene families appearing in the "top mutated" list; review explains *why* they could be functionally present in tumors |
-| Bidirectional cancer-neuron crosstalk | H1 mechanistic framework | Supports H1 over H4/H5 as primary explanation |
+| Bidirectional cancer-neuron crosstalk | `H1` mechanistic framework | Supports `H1` over `H4`/`H5` as primary explanation |
 | SCLC synaptic gene screen (Nrxn1, Nlgn1, Dcc, Reln) | Label-free neural gene discovery | Closest to the "define neural genes from data" goal |
-| CSC transdifferentiation (EGR2, SOX2, HOX) | H3 oncofetal expression | Mechanistically validated; not just incidental |
+| CSC transdifferentiation (EGR2, SOX2, HOX) | `H3` oncofetal expression | Mechanistically validated; not just incidental |
 | Intratumoral nerve density as prognostic factor | Cross-study covariate annotation | Nerve density correlates with recurrence in PDAC, prostate, gastric, gallbladder, head/neck, breast, cervical cancers |
 | ADAM10 / NLGN3 shedding axis | Glioma-specific mechanism | ADAM10 is a druggable target; clinical trials ongoing |
 | ADRB2 as adrenergic receptor on tumor/endothelium | TME signaling | Relevant to PDAC/prostate annotation in cBioPortal |
@@ -249,9 +249,9 @@ studies, which this review does not provide.
   evidence.
 - The review does not quantify how much of the high mutation frequency of neural genes in
   cBioPortal could be explained by the mechanisms it describes versus gene-length confound
-  (H3/Lawrence 2014 bias). These are orthogonal analytical questions.
-- Coverage of immune-modulatory and microenvironmental mechanisms (H2) is secondary to direct
-  cancer-neuron signaling; a dedicated neuroimmunology review would be needed to fully assess H2.
+  (`H3`/Lawrence et al. [@Lawrence2014] bias). These are orthogonal analytical questions.
+- Coverage of immune-modulatory and microenvironmental mechanisms (`H2`) is secondary to direct
+  cancer-neuron signaling; a dedicated neuroimmunology review would be needed to fully assess `H2`.
 - No population-level or pan-cancer genomic data; the mechanistic findings are predominantly
   from mouse models and cell lines.
 
@@ -271,21 +271,21 @@ cited:
   and Nrxn1, Nlgn1, Dcc, Reln in SCLC.
 - **Regan et al. 2022 (iScience 25:104498):** Neural development gene signature in colon cancer
   CSCs (ALDH+ cells) with EGR2 as functional driver — relevant for defining whether "neural
-  genes in CRC" reflects oncofetal reprogramming (H3) or contamination (H4).
+  genes in CRC" reflects oncofetal reprogramming (`H3`) or contamination (`H4`).
 - **Magnon et al. 2013 / Science 341:1236361 [ref 46 in Huang2023]:** Autonomic nerve
-  development contributes to prostate cancer progression — foundational paper for H1 in
+  development contributes to prostate cancer progression — foundational paper for `H1` in
   prostate; already in `paper:Magnon2023` context.
 - **Gene-level follow-up:** Test whether NRXN1, NLGN1, DCC, RELN, NLGN3, GRM8, NDRG4, EGR2,
   and LSAMP appear as significantly mutated in cBioPortal pan-cancer MAF after length
-  normalization (dN/dS), or whether they drop out (distinguishing H1/H3 from H4 length-bias).
+  normalization (dN/dS), or whether they drop out (distinguishing `H1`/`H3` from `H4` length-bias).
 - **LSAMP connection:** The cBioPortal top-mutated neural gene list includes LSAMP (limbic
   system-associated membrane protein). LSAMP is a GPI-anchored cell adhesion molecule
   expressed in limbic neurons; whether it has a documented cancer-neuroscience role analogous
   to NLGN3 merits a targeted search.
 - **SGCZ, OPCML, CALN1, RIT2, RBFOX1, KCNIP4, NKAIN2, TAFA2:** The other neural genes
   from the cBioPortal top-mutated list. This review does not mention them; their absence from
-  the cancer-neuroscience literature is itself informative and could support H4 (length bias
-  on genes incidentally annotated as neural) over H1. A targeted dN/dS analysis against the
+  the cancer-neuroscience literature is itself informative and could support `H4` (length bias
+  on genes incidentally annotated as neural) over `H1`. A targeted dN/dS analysis against the
   background mutation rate for each gene's cancer type would be the definitive test.
 - **CHRM1 / CHRM3 therapeutic angle in PDAC:** Clinical relevance of cholinergic receptor
   modulation — CHRM1 inhibits cancer stem cells but CHRM3 promotes them; the net effect

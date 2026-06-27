@@ -59,7 +59,7 @@ Gene regulatory networks are drawn from the publicly available GRAND database (g
 
 ### Hallmark gene set construction
 
-The 10 canonical hallmarks (H1 Evading Apoptosis, H2 Evading Immune Destruction, H3 Genome Instability and Mutation, H4 Insensitivity to Anti-Growth Signals, H5 Limitless Replicative Potential, H6 Reprogramming Energy Metabolism, H7 Self-Sufficiency in Growth Signals, H8 Sustained Angiogenesis, H9 Tissue Invasion and Metastasis, H10 Tumor-Promoting Inflammation) are operationalized as gene sets through the following pipeline:
+The 10 canonical hallmarks (`H1` Evading Apoptosis, `H2` Evading Immune Destruction, `H3` Genome Instability and Mutation, `H4` Insensitivity to Anti-Growth Signals, `H5` Limitless Replicative Potential, `H6` Reprogramming Energy Metabolism, `H7` Self-Sufficiency in Growth Signals, `H8` Sustained Angiogenesis, `H9` Tissue Invasion and Metastasis, `H10` Tumor-Promoting Inflammation) are operationalized as gene sets through the following pipeline:
 
 1. Start from the **Plaisier et al. (2012)** published mapping of hallmarks of cancer to Gene Ontology (GO) terms (reference 62 in the paper).
 2. Retrieve the current GO term IDs from geneontology.org; remove any officially deprecated IDs (two removed, documented in Supplementary Table S2).
@@ -116,35 +116,35 @@ A potential energy landscape is constructed by projecting the 10,000 × 100 traj
 ### Hallmark dynamics (gastric adenocarcinoma as representative example)
 
 - All 10 hallmark levels are significantly elevated in the cancerous stationary state vs. the normal stationary state (Mann-Whitney U, p < 0.001; Fig. 3c).
-- JS divergences range from 0.295 (H6, Reprogramming Energy Metabolism) to 0.683 (H9, Tissue Invasion and Metastasis; Fig. 3d).
-- Hallmarks with the largest distributional shifts: H9 Tissue Invasion and Metastasis (0.683), H8 Sustained Angiogenesis (0.669), H10 Tumor-Promoting Inflammation (0.668), H7 Self-Sufficiency in Growth Signals (0.667). Hallmarks with the smallest shifts: H6 Reprogramming Energy Metabolism (0.295), H4 Insensitivity to Anti-Growth Signals (0.218), H5 Limitless Replicative Potential (0.373; Fig. 3d).
-- The smaller divergence of H6/H4/H5 is interpreted as reflecting overlap with normal proliferative physiology (e.g., Warburg effect is active in normal embryonic/immune cells; H4/H5 processes overlap with normal proliferative mechanisms).
+- JS divergences range from 0.295 (`H6`, Reprogramming Energy Metabolism) to 0.683 (`H9`, Tissue Invasion and Metastasis; Fig. 3d).
+- Hallmarks with the largest distributional shifts: `H9` Tissue Invasion and Metastasis (0.683), `H8` Sustained Angiogenesis (0.669), `H10` Tumor-Promoting Inflammation (0.668), `H7` Self-Sufficiency in Growth Signals (0.667). Hallmarks with the smallest shifts: `H6` Reprogramming Energy Metabolism (0.295), `H4` Insensitivity to Anti-Growth Signals (0.218), `H5` Limitless Replicative Potential (0.373; Fig. 3d).
+- The smaller divergence of `H6`/`H4`/`H5` is interpreted as reflecting overlap with normal proliferative physiology (e.g., Warburg effect is active in normal embryonic/immune cells; `H4`/`H5` processes overlap with normal proliferative mechanisms).
 
 ### Network reconfiguration precedes hallmark shifts — across all 15 cancer types
 
 - The DIND score shows a sharp peak at $t_1 = 37$ (gastric example), before $t_2$ (the overt hallmark shift), giving a positive lead time $\Delta t$ for all hallmarks.
-- For H9 (Tissue Invasion and Metastasis), network reconfiguration preceded hallmark-level change by approximately 3 time units on average.
+- For `H9` (Tissue Invasion and Metastasis), network reconfiguration preceded hallmark-level change by approximately 3 time units on average.
 - Lead time $\Delta t$ is significantly greater than zero for all 10 hallmarks across 15 cancer types (one-sample Wilcoxon signed-rank, p < 0.001 for all; Fig. 5b).
 - This precedence of network topology over node-level changes is the central mechanistic claim: the structure of hallmark interactions is a more sensitive malignancy indicator than hallmark activity levels per se.
 
 ### Pan-cancer universality (15 cancer types)
 
-- "Tissue Invasion and Metastasis" (H9) is the **top-ranked hallmark by JS divergence** in 12 of 15 cancer types (average rank 1.00 across the cohort; Fig. 6c). H1 Evading Apoptosis and H7 Self-Sufficiency in Growth Signals are also consistently highly ranked.
-- "Reprogramming Energy Metabolism" (H6) and "Limitless Replicative Potential" (H5) and "Genome Instability and Mutation" (H3) consistently show lower divergence ranks (Fig. 6a,c). Notably, H6 has average rank ~5.6 and H3 has average rank ~8.4 (lower rank = larger divergence in their convention).
+- "Tissue Invasion and Metastasis" (`H9`) is the **top-ranked hallmark by JS divergence** in 12 of 15 cancer types (average rank 1.00 across the cohort; Fig. 6c). `H1` Evading Apoptosis and `H7` Self-Sufficiency in Growth Signals are also consistently highly ranked.
+- "Reprogramming Energy Metabolism" (`H6`) and "Limitless Replicative Potential" (`H5`) and "Genome Instability and Mutation" (`H3`) consistently show lower divergence ranks (Fig. 6a,c). Notably, `H6` has average rank ~5.6 and `H3` has average rank ~8.4 (lower rank = larger divergence in their convention).
 - The consistent ranking pattern across the 15 cancers is highly statistically significant (Friedman test, p < 2.55 × 10^{-23}).
-- H7 (Self-Sufficiency in Growth Signals) has the earliest early-warning lead time on average (average rank 1.00 in the lead-time ranking; Fig. 6d); H2 (Evading Immune Destruction) has the latest (average rank 9.73). The ranking of lead times is also highly significant (Friedman test, p < 1.08 × 10^{-19}).
+- `H7` (Self-Sufficiency in Growth Signals) has the earliest early-warning lead time on average (average rank 1.00 in the lead-time ranking; Fig. 6d); `H2` (Evading Immune Destruction) has the latest (average rank 9.73). The ranking of lead times is also highly significant (Friedman test, p < 1.08 × 10^{-19}).
 - Hierarchical clustering of hallmark levels (Fig. 6e) identifies one major cluster of solid tumors: STAD, KIRP, KIRC, LUAD, THCA. LUSC is separated; hematological LAML is distinct.
 
 ### Cancer-type-specific patterns
 
-- LUAD frequently harbors EGFR/KRAS mutations, activating PI3K/AKT/mTOR and MAPK/ERK, reflected in the H4/H7 dynamics.
+- LUAD frequently harbors EGFR/KRAS mutations, activating PI3K/AKT/mTOR and MAPK/ERK, reflected in the `H4`/`H7` dynamics.
 - LUSC is driven by smoking-related CDKN2A mutations disrupting cell cycle and apoptosis, and "CEP55" co-expresses with cell cycle and DNA replication genes in LUAD but not LUSC.
 
 ### Potential energy landscape
 
 - Two clear attractor basins (normal, cancer) are visible in the potential landscape (Fig. 7a,b).
 - The normal-state basin is deeper than the cancer-state basin, indicating normal is a more stable attractor.
-- The most probable transition path shows H9 (Tissue Invasion and Metastasis), H1 (Evading Apoptosis), and H7 (Self-Sufficiency in Growth Signals) exhibit the most pronounced hallmark increases along the transition path (Fig. 7c).
+- The most probable transition path shows `H9` (Tissue Invasion and Metastasis), `H1` (Evading Apoptosis), and `H7` (Self-Sufficiency in Growth Signals) exhibit the most pronounced hallmark increases along the transition path (Fig. 7c).
 
 ## Relevance
 
@@ -158,7 +158,7 @@ A potential energy landscape is constructed by projecting the 10,000 × 100 traj
 
 3. **Critical-transition / early-indicator idea at the hallmark level.** The finding that network topology (inter-hallmark connectivity) changes before hallmark-level activity shifts is conceptually related to the project's mutation-ordering question: do mutations in some hallmarks systematically precede mutations in others? Wang2025a's result is at the regulatory level (topology precedes activity) and ours would be at the somatic level (driver mutations in enabling hallmarks precede mutations in executing hallmarks), but the logical structure is parallel. This makes the paper useful as **conceptual prior art and framing**, not a methodological blueprint.
 
-4. **Pan-cancer hallmark ranking as a calibration target.** Wang2025a's finding that "Tissue Invasion and Metastasis" has the largest normal-vs-cancer divergence and "Reprogramming Energy Metabolism" the smallest, consistently across 15 cancer types, provides an expression-level reference expectation. If the project's mutation-ordering analysis recovers a different ordering (e.g., if H3 Genome Instability ranks first in the mutation-frequency domain, consistent with its enabling-characteristic role), the divergence between the two orderings would be interpretively interesting — mutation selection and expression dysregulation measure different aspects of hallmark activation.
+4. **Pan-cancer hallmark ranking as a calibration target.** Wang2025a's finding that "Tissue Invasion and Metastasis" has the largest normal-vs-cancer divergence and "Reprogramming Energy Metabolism" the smallest, consistently across 15 cancer types, provides an expression-level reference expectation. If the project's mutation-ordering analysis recovers a different ordering (e.g., if `H3` Genome Instability ranks first in the mutation-frequency domain, consistent with its enabling-characteristic role), the divergence between the two orderings would be interpretively interesting — mutation selection and expression dysregulation measure different aspects of hallmark activation.
 
 5. **What does NOT transfer:**
    - The SDE model and DNB/DIND scores are not applicable to cross-sectional snapshot mutation data. Mutation data lack the time-series trajectory structure that the DNB method requires.
@@ -172,11 +172,11 @@ A potential energy landscape is constructed by projecting the 10,000 × 100 traj
 |---|---|---|
 | Coarse-grained hallmark network (10-node GRN) | Hallmark-level aggregation of mutation modules | Wang2025a demonstrates feasibility of the framing; project needs the somatic-mutation analogue |
 | Plaisier 2012 GO-based hallmark gene sets | Gene-to-hallmark assignment for mutual-exclusivity module analysis | Cite Plaisier 2012 (not Wang2025a) as the assignment source; Wang2025a validates the sets work at expression level |
-| Network topology precedes hallmark activity shift (DNB/DIND early-warning) | Mutation-ordering inference (h04 / MHN) | Conceptual parallel: both ask whether some hallmark-level change is "earlier"; different data modalities and methods |
-| JS divergence ranking (H9 highest, H6 lowest) | Pan-cancer hallmark ordering calibration | Expression-level ranking ≠ mutation-frequency ranking; the difference is interpretively informative |
-| H9 Tissue Invasion and Metastasis: most different normal-vs-cancer | Late/executing hallmark in ordering | Consistent with `discussion:0007-hallmark-ordering-and-data-driven-modules` expectation that invasion/metastasis is a late hallmark |
-| H3 Genome Instability and Mutation: smaller JS divergence | Genome instability as early/enabling hallmark | Expression level of H3 genes does not differentiate sharply — consistent with its role as an early mutational enabler, not a late expression program |
-| H7 Self-Sufficiency in Growth Signals: earliest early-warning lead time | MHN early events | GRN-level early-warning order (H7 first, H2 last) may partially calibrate mutation-ordering expectations |
+| Network topology precedes hallmark activity shift (DNB/DIND early-warning) | Mutation-ordering inference (`hypothesis:0004-mhn-pathway-ordering` / MHN) | Conceptual parallel: both ask whether some hallmark-level change is "earlier"; different data modalities and methods |
+| JS divergence ranking (`H9` highest, `H6` lowest) | Pan-cancer hallmark ordering calibration | Expression-level ranking ≠ mutation-frequency ranking; the difference is interpretively informative |
+| `H9` Tissue Invasion and Metastasis: most different normal-vs-cancer | Late/executing hallmark in ordering | Consistent with `discussion:0007-hallmark-ordering-and-data-driven-modules` expectation that invasion/metastasis is a late hallmark |
+| `H3` Genome Instability and Mutation: smaller JS divergence | Genome instability as early/enabling hallmark | Expression level of `H3` genes does not differentiate sharply — consistent with its role as an early mutational enabler, not a late expression program |
+| `H7` Self-Sufficiency in Growth Signals: earliest early-warning lead time | MHN early events | GRN-level early-warning order (`H7` first, `H2` last) may partially calibrate mutation-ordering expectations |
 | Potential landscape with two attractor basins (normal, cancer) | Cancer as a distinct genomic attractor state | Conceptual support for treating tumorigenesis as a discontinuous transition rather than a continuum |
 | 15 cancer types from GRAND (STAD, KIRP, KIRC, LUAD, etc.) | Overlapping cBioPortal study cancer types | Good overlap with the cBioPortal pipeline cohort; mutation-level analysis could be run on the same 15 types for direct comparison |
 | GRAND database (publicly available) | Potential secondary input for expression-level validation | If project adds expression data, GRAND provides pre-built TF networks for paired normal/cancer comparisons |
@@ -201,9 +201,9 @@ A potential energy landscape is constructed by projecting the 10,000 × 100 traj
 
 ## Follow-up
 
-- **Adopt the Plaisier 2012 hallmark-to-GO gene assignment as the project's canonical label-free-to-labeled bridge.** Wang2025a uses this mapping to go from data-available gene sets to hallmark labels, and provides the cleaned/updated gene sets in its supplementary data. For the project's post-hoc hallmark annotation of data-driven mutual-exclusivity modules (step 3 in the `discussion:2026-06-07` pipeline), this is a citable, reproducible starting point. Supplement with the Iorio 2018 / SLAPenrich pathway-hallmark mapping for cross-validation.
+- **Adopt the Plaisier et al. hallmark-to-GO gene assignment as the project's canonical label-free-to-labeled bridge.** Wang2025a uses this mapping to go from data-available gene sets to hallmark labels, and provides the cleaned/updated gene sets in its supplementary data. For the project's post-hoc hallmark annotation of data-driven mutual-exclusivity modules (step 3 in the `discussion:2026-06-07` pipeline), this is a citable, reproducible starting point. Supplement with the Iorio et al. [@Iorio2018SLAPenrich] / SLAPenrich pathway-hallmark mapping for cross-validation.
 
-- **Compare hallmark ordering between modalities.** Wang2025a reports two hallmark rankings: (a) JS divergence rank (H9 first, H6 last — which hallmark's activity shifts most between normal and cancer) and (b) early-warning lead time rank (H7 first, H2 last — which hallmark's network reconfigures earliest). If the project's MHN-based mutation ordering recovers a third ranking (e.g., H3 Genome Instability first per the enabling-characteristic hypothesis), the three rankings can be compared in a table. Agreement and disagreement would each be interpretively informative: agreement would suggest the three modalities measure the same underlying biology; disagreement would suggest mutation selection, expression dysregulation, and regulatory network reconfiguration are partially decoupled processes.
+- **Compare hallmark ordering between modalities.** Wang2025a reports two hallmark rankings: (a) JS divergence rank (`H9` first, `H6` last — which hallmark's activity shifts most between normal and cancer) and (b) early-warning lead time rank (`H7` first, `H2` last — which hallmark's network reconfigures earliest). If the project's MHN-based mutation ordering recovers a third ranking (e.g., `H3` Genome Instability first per the enabling-characteristic hypothesis), the three rankings can be compared in a table. Agreement and disagreement would each be interpretively informative: agreement would suggest the three modalities measure the same underlying biology; disagreement would suggest mutation selection, expression dysregulation, and regulatory network reconfiguration are partially decoupled processes.
 
 - **Use the 15-cancer cohort as a benchmark set.** Wang2025a's results hold across STAD, KIRP, KIRC, LUAD, LUSC, PCPG, SKCM, THCA, UVM, LAML, ACC, LGG, ESCA, HNSC, and KICH — all of which have cBioPortal studies. Running the project's mutual-exclusivity and MHN analysis on the same cancer types enables a direct head-to-head comparison at the hallmark level.
 

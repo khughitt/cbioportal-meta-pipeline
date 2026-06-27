@@ -16,7 +16,7 @@ related:
 - interpretation:0036-panel-tmb-denominator-stale-artifact-fix
 ---
 
-# Interpretation: q047 — hypermutation as a driver-specificity confound
+# Interpretation: `q047` — hypermutation as a driver-specificity confound
 
 > **Revised 2026-06-07 after the panel-TMB-denominator fix**
 > (`interpretation:0036-panel-tmb-denominator-stale-artifact-fix`). The first pass ran on a
@@ -26,11 +26,11 @@ related:
 
 ## Verdict
 
-**Confirmed, both arms.** (1) Hypermutators inflate apparent cancer-type **breadth** — so q042/q043
+**Confirmed, both arms.** (1) Hypermutators inflate apparent cancer-type **breadth** — so `q042`/`q043`
 must stratify on `is_hypermutator`. (2) Hypermutators **dilute the driver share of mutational load**
 across the 8 testable cancer types (drop of 0.10–0.22). The one residual caveat is the per-gene
 prevalence-ratio metric, which stays baseline-confounded and is not the right tool — but the
-driver-share test (T2) cleanly shows the dilution.
+driver-share test (`T2`) cleanly shows the dilution.
 
 ## Cohort + method
 
@@ -39,7 +39,7 @@ driver-share test (T2) cleanly shows the dilution.
 - Per-sample coding-nonsynonymous gene calls from per-study `mut_filtered.feather` (100% sample-meta
   join), joined to `is_hypermutator` + `cancer_type` from `samples_annotated.feather` (samples with
   zero panel nonsynonymous mutations included).
-- Gene classes reuse the q043 breadth feather, oncogene-only in three bands: restricted_oncogene =
+- Gene classes reuse the `q043` breadth feather, oncogene-only in three bands: restricted_oncogene =
   breadth ≤2; mid_oncogene = 3–9; broad_oncogene = breadth ≥10. Plus tsg / oncogene_and_tsg /
   cgc_other by CGC role; background = non-CGC panel genes.
 - Script: `code/notebooks/q047_hypermutation_specificity_confound.py`.
@@ -50,9 +50,9 @@ driver-share test (T2) cleanly shows the dilution.
 Esophagogastric, Hepatobiliary, Melanoma, Non-Small Cell Lung, cutaneous SCC — i.e. the MSI / POLE /
 smoking / UV hypermutator-bearing types, now that panel TMB is correct.
 
-**2. Breadth inflation confirmed (the q043↔q047 link).** Excluding hypermutators raises the
+**2. Breadth inflation confirmed (the `q043`↔`q047` link).** Excluding hypermutators raises the
 restricted-driver fraction **52%→68% at ≥5%** (IntOGen's 63% is now bracketed), and **186 drivers
-lose ≥1 cancer-type of breadth at ≥5%** (253 at ≥2%). Any restricted-vs-pan-cancer count (q042/q043)
+lose ≥1 cancer-type of breadth at ≥5%** (253 at ≥2%). Any restricted-vs-pan-cancer count (`q042`/`q043`)
 must be computed with hypermutators excluded or stratified.
 
 **3. Per-sample driver-share dilution is now clearly detectable.** Within cancer type, the driver
@@ -79,14 +79,14 @@ Median log2(prev_hyper / prev_non) by class: background 3.38, restricted_oncogen
 3.53, mid_oncogene 3.26, tsg 3.25, oncogene_and_tsg 3.25, **broad_oncogene 2.76 (lowest)**. Classes
 other than broad now cluster tightly (3.2–3.5), so this raw ratio still does not isolate
 selection-vs-passenger (it is a ceiling/baseline artifact — already-common broad oncogenes have
-compressed ratios). The robust read: **broad oncogenes (the q043 hubs) are the most stable under
-hypermutation**; for the dilution question, prefer the T2 driver-share metric over this ratio.
+compressed ratios). The robust read: **broad oncogenes (the `q043` hubs) are the most stable under
+hypermutation**; for the dilution question, prefer the `T2` driver-share metric over this ratio.
 
-## Limitations → refinements to q047's design
+## Limitations → refinements to `q047`'s design
 
 - **Per-gene prevalence ratio** remains baseline-confounded → for any *per-gene* claim use a
   prevalence-matched comparison or the composition of the *excess* mutations; the *per-sample*
-  driver-share (T2) is the trustworthy aggregate read here.
+  driver-share (`T2`) is the trustworthy aggregate read here.
 - **Panel under-resolution** still caps the absolute magnitude (off-panel passengers unmeasured), so
   the true dilution is *larger* than the within-panel 0.10–0.22; a WES cohort would quantify it fully.
 - **POC scale** — 8 cancer types from 4 studies; a multi-study cohort would broaden coverage.

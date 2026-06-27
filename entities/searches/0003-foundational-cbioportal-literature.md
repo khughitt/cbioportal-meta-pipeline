@@ -25,7 +25,7 @@ cohorts (AACR GENIE, MSK-IMPACT 10k / 50k, MSK-MET, MSK-CHORD).
 3. **Broad — metastatic cohort**: `MSK-MET metastatic organotropism Nguyen`.
 4. **Broad — clinical-outcome integration**: `MSK-CHORD automated real-world data cancer outcome`.
 5. **Contrasting / confounder — clonal hematopoiesis**: `Bolton clonal hematopoiesis solid tumor Nature Genetics`.
-6. **Methods — pan-cancer driver / signature catalogs**: verified seed citations for Cerami 2012, Gao 2013, Zehir 2017, Bailey 2018, Ellrott 2018 (MC3), Tate 2019 (COSMIC), ICGC/TCGA PCAWG 2020.
+6. **Methods — pan-cancer driver / signature catalogs**: verified seed citations for Cerami 2012 [@Cerami2012], Gao 2013 [@Gao2013], Zehir 2017 [@Zehir2017], Bailey 2018 [@Bailey2018], Ellrott 2018 [@Ellrott2018] (MC3), Tate 2019 [@Tate2019] (COSMIC), ICGC/TCGA PCAWG 2020 [@Unknown2020PanCancer].
 
 ## Sources and Run Metadata
 
@@ -57,36 +57,36 @@ cohorts (AACR GENIE, MSK-IMPACT 10k / 50k, MSK-MET, MSK-CHORD).
 
 **Core now (read first):**
 
-1. Pugh 2022 — GENIE 100k (defines the cohort the pipeline actually ingests).
-2. Bandlamudi 2026 — MSK-IMPACT 50k drivers (most direct methodological peer of this project's outputs).
-3. Zehir 2017 — MSK-IMPACT 10k (panel content + prospective-sequencing framing).
-4. Bolton 2020 — CH contamination (critical interpretation caveat for panel-based gene frequencies).
-5. Bailey 2018 — PanCanAtlas driver consensus (comparison framework for gene prioritization).
-6. AACR GENIE 2017 — original consortium paper.
-7. Nguyen 2022 — MSK-MET (matches an archived dataset in this repo).
-8. Cerami 2012 — cBioPortal platform (citation-hygiene foundation).
-9. Tate 2019 — COSMIC CGC (external validation reference list).
+1. Pugh 2022 [@Pugh2022] — GENIE 100k (defines the cohort the pipeline actually ingests).
+2. Bandlamudi 2026 [@Bandlamudi2026] — MSK-IMPACT 50k drivers (most direct methodological peer of this project's outputs).
+3. Zehir 2017 [@Zehir2017] — MSK-IMPACT 10k (panel content + prospective-sequencing framing).
+4. Bolton 2020 [@Bolton2020] — CH contamination (critical interpretation caveat for panel-based gene frequencies).
+5. Bailey 2018 [@Bailey2018] — PanCanAtlas driver consensus (comparison framework for gene prioritization).
+6. AACR GENIE 2017 [@AACRGENIEConsortium2017] — original consortium paper.
+7. Nguyen 2022 [@Nguyen2022] — MSK-MET (matches an archived dataset in this repo).
+8. Cerami 2012 [@Cerami2012] — cBioPortal platform (citation-hygiene foundation).
+9. Tate 2019 [@Tate2019] — COSMIC CGC (external validation reference list).
 
 **Relevant next:**
 
-10. Jee 2024 — MSK-CHORD (for the eventual outcome-integration extension).
-11. Ellrott 2018 — MC3 (when comparing panel vs. WES calls).
-12. Gao 2013 — cBioPortal analysis companion.
+10. Jee 2024 [@Jee2024] — MSK-CHORD (for the eventual outcome-integration extension).
+11. Ellrott 2018 [@Ellrott2018] — MC3 (when comparing panel vs. WES calls).
+12. Gao 2013 [@Gao2013] — cBioPortal analysis companion.
 
 **Peripheral monitor:**
 
-13. ICGC/TCGA PCAWG 2020 — WGS pan-cancer complement.
+13. ICGC/TCGA PCAWG 2020 [@Unknown2020PanCancer] — WGS pan-cancer complement.
 
 ## Coverage Notes and Gaps
 
 - **MSK-CH 2023**: the archived `archive/msk_ch_2023/` directory in this repo appears to reference
   the MSK clonal-hematopoiesis cBioPortal study rather than a distinct 2023 paper; the canonical
-  citation for that study remains Bolton KL, et al. (2020) *Nat Genet*.
-- **AACR GENIE-BPC (Biopharma Collaborative)**: found Acebedo et al. 2025 *ESMO Real World Data
+  citation for that study remains Bolton KL, et al. (2020) [@Bolton2020] *Nat Genet*.
+- **AACR GENIE-BPC (Biopharma Collaborative)**: found Acebedo et al. 2025 [@Acebedo2025CollaborAcross] *ESMO Real World Data
   Digit Oncol* (PMID: 41647353) — treat as peripheral until the pipeline actually consumes BPC
   cohorts.
 - **COSMIC mutational-signatures reference**: not verified in this run. Add Alexandrov et al.
-  (2020) *Nature* signature-catalog paper when the mutational-signatures topic is developed.
+  (2020) [@Alexandrov2020] *Nature* signature-catalog paper when the mutational-signatures topic is developed.
 - **Targeted-panel bias / comparability across panels**: no dedicated paper pulled in this run.
   Add a dedicated search (MSK-IMPACT vs FoundationOne vs GENIE panels) before attempting
   cross-panel normalization.

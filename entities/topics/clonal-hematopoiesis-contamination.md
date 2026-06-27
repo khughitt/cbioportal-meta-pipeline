@@ -24,7 +24,7 @@ related:
 Somatic mutations arising in blood (clonal hematopoiesis, CH) leak into tumor variant calls
 when normal-control sequencing is absent or imperfect. CH-driver genes (DNMT3A, TET2, ASXL1,
 PPM1D, TP53, CHEK2, PRPF8) appear as spuriously "mutated" across many cancer types in
-panel-based cohorts that lack matched-buffy-coat sequencing. Bolton et al. 2020 (Nat Genet,
+panel-based cohorts that lack matched-buffy-coat sequencing. Bolton et al. [@Bolton2020] (Nat Genet,
 24,146 MSK-IMPACT patients with paired tumor + buffy-coat) is the empirical anchor: ~30% of
 solid-tumor patients carry detectable CH at panel sensitivity, prevalence doubles per decade
 after 50, and prior cytotoxic therapy + ionizing radiation strongly enrich for *DDR*-CH
@@ -40,7 +40,7 @@ the unmatched arm.**
 - **CH = age-related expansion of clonal blood cell populations** carrying somatic
   mutations, primarily in DNA-methylation regulators and DDR genes. Background prevalence
   in healthy adults rises from <1% under 50 to >10% over 70.
-- **CH "drivers" vs CH "passengers."** Bolton 2020 distinguishes putative-driver CH (PD-CH:
+- **CH "drivers" vs CH "passengers."** Bolton et al. [@Bolton2020] distinguish putative-driver CH (PD-CH:
   curated myeloid hotspots / truncating events) from non-driver blood variants. The PD-CH
   spectrum is the leakage risk for tumor panel calls.
 - **Matched buffy-coat normal subtraction** removes per-patient CH from the tumor MAF.
@@ -49,13 +49,13 @@ the unmatched arm.**
 - **VAF / age / tumor-type heuristics** are the substitute when matched normal is
   unavailable: low-VAF (<10%) calls in DDR genes in older patients in pre-treated cohorts
   carry the highest CH-leakage probability.
-- **Therapy-driven CH selection** (Bolton 2020): radiation, platinum, and topoisomerase-II
+- **Therapy-driven CH selection** [@Bolton2020]: radiation, platinum, and topoisomerase-II
   inhibitors expand DDR-CH clones (TP53/PPM1D/CHEK2). Smoking enriches ASXL1. DNMT3A and
   TET2 are essentially age-only.
 
 ## Current State of Knowledge
 
-The Bolton 2020 cohort gives a concrete per-gene CH spectrum (share of CH-positive
+The Bolton et al. [@Bolton2020] cohort gives a concrete per-gene CH spectrum (share of CH-positive
 patients carrying a variant in each gene):
 
 | Gene | ~Share of CH calls | Selection signal |
@@ -70,18 +70,18 @@ patients carrying a variant in each gene):
 | SRSF2 / SF3B1 | small | age-related, MDS-like |
 
 **Critical interpretation:** PPM1D's ~20% share is dramatically over-represented vs.
-general-population CH precisely because the cohort is heavily pretreated. Bolton 2020 is
+general-population CH precisely because the cohort is heavily pretreated. This cohort is
 not a baseline-CH paper; it's a *therapy-selected*-CH paper. Cross-cancer aggregations
 that pool by-cancer-type without controlling for treatment exposure inherit this bias.
 
-Martincorena 2017 provides the deeper context: dN/dS ≈ 1 across the genome in normal
+Martincorena et al. [@Martincorena2017] provide the deeper context: dN/dS ≈ 1 across the genome in normal
 somatic tissues *including* blood, with positive selection acting on a defined set of
 driver genes. CH is therefore a *predictable* phenomenon, not an artifact — but pretending
 it isn't there in tumor calls is the artifact.
 
 ## Controversies & Open Questions
 
-- **No portable CH-aware filter prescription has been published.** Bolton 2020's
+- **No portable CH-aware filter prescription has been published.** That matched-normal
   matched-normal VAF-ratio rule (blood ≥ 2× tumor VAF; 1.5× for nodal biopsies; ~2% VAF
   floor) only works when matched blood is available. The unmatched-cohort analogue is
   heuristic.
@@ -114,7 +114,7 @@ Concrete additions to plan:
    interpretive value.
 2. **Per-study `matched_normal` flag** ingested from study metadata (where available).
    MSK-IMPACT cBioPortal studies are matched-normal by design; GENIE per-center varies.
-   Pugh 2022 reports 48% of v9.1 GENIE has matched normals; the 52% remaining are tumor-
+   Pugh et al. [@Pugh2022] report 48% of v9.1 GENIE has matched normals; the 52% remaining are tumor-
    only.
 3. **CH-aware ratio recomputation.** For each (CH-priority-gene, cancer-type) pair,
    compute ratios separately on the matched-normal vs tumor-only sub-cohorts. A large

@@ -40,7 +40,7 @@ This topic is the master interpretive frame for our pipeline outputs.
 ### The Four Compounding Bias Axes
 
 ### 1. Panel content
-- 91 distinct GENIE assays at v9.1 (Pugh 2022); MSK-IMPACT spans 4 panel versions.
+- 91 distinct GENIE assays at v9.1 (Pugh et al. [@Pugh2022]); MSK-IMPACT spans 4 panel versions.
 - 44-gene core across all 12 launch GENIE panels; smaller intersection at 91 panels.
 - Per-gene callable region length differs ~10× across panels (APC example, AACR GENIE
   2017).
@@ -49,7 +49,7 @@ This topic is the master interpretive frame for our pipeline outputs.
 
 ### 2. Matched-vs-unmatched normal calling
 - MSK-IMPACT: 98% matched-buffy-coat; CH variants correctly subtracted.
-- Pugh 2022 GENIE: 52% tumor-only; centralized artifact / population-frequency filtering
+- GENIE analysis by Pugh et al. [@Pugh2022]: 52% tumor-only; centralized artifact / population-frequency filtering
   applied centrally but is not equivalent to per-patient matched-normal subtraction.
 - 7 priority CH-driver genes systematically inflated in tumor-only cohorts: DNMT3A,
   PPM1D, TET2, TP53, ASXL1, CHEK2, PRPF8.
@@ -59,8 +59,9 @@ This topic is the master interpretive frame for our pipeline outputs.
 ### 3. Cohort selection
 - Clinical-sequencing cohorts (GENIE, MSK-IMPACT) are dominated by advanced / metastatic /
   pre-treated disease. TCGA is treatment-naive primary.
-- Quantitative example: AR mutations 18% in MSK-IMPACT metastatic prostate vs 1% in TCGA;
-  ESR1 11% in MSK-IMPACT metastatic breast vs 4% in TCGA (Zehir 2017).
+- Quantitative example from Zehir et al. [@Zehir2017]: AR mutations 18% in MSK-IMPACT metastatic
+  prostate vs 1% in TCGA;
+  ESR1 11% in MSK-IMPACT metastatic breast vs 4% in TCGA.
 - EGFR T790M 11.3% of GENIE EGFR mutations vs 2.2% of TCGA EGFR mutations — clean
   quantification of post-TKI / advanced-disease bias.
 - **Fix**: per-study cohort-stage descriptor (primary-naive / metastatic / pre-treated)
@@ -69,7 +70,7 @@ This topic is the master interpretive frame for our pipeline outputs.
 
 ### 4. Annotation version drift
 - OncoKB Level 1/2A actionability rate rose from **8.9% (2017) → 31.6% (2022)** on the
-  *same* MSK-IMPACT cohort (Suehnholz 2024 follow-up).
+  *same* MSK-IMPACT cohort in the follow-up by Suehnholz et al. [@Suehnholz2024].
 - GENIE Level 1/2A independently rose from **7.3% → 17.0%** in the same period.
 - Implication: any "% functional" / "% actionable" / driver-list-overlap statistic must be
   pinned to a specific OncoKB / Bailey / CGC version, not floating against the current
@@ -86,15 +87,15 @@ Across Batches 1–6 we hit this pattern repeatedly:
 
 | Paper | Acknowledged bias | Published correction? |
 |---|---|---|
-| AACR GENIE 2017 | 12 panels with only 44-gene core | No (BEDs in Synapse, no usable correction recipe) |
-| Pugh 2022 | 91 panels, 52% tumor-only | TMB harmonization model mentioned, never quantified |
-| Zehir 2017 | Advanced-disease selection inflates AR/ESR1/TP53 | No (stratified analyses, no correction) |
-| Bandlamudi 2026 | ~1/3 drivers in non-canonical contexts | No correction, but Zenodo data lets us re-analyze |
-| Bolton 2020 | CH inflates DDR-gene counts | Matched-normal VAF-ratio rule (only works with matched normal) |
-| Chakravarty Solit 2021 | Cross-vendor panel heterogeneity | No (review focuses on clinical utility) |
-| Ellrott 2018 | TCGA per-study calling heterogeneity | **Yes — MC3 unified MAF** |
+| AACR GENIE Consortium [@AACRGENIEConsortium2017] | 12 panels with only 44-gene core | No (BEDs in Synapse, no usable correction recipe) |
+| Pugh et al. [@Pugh2022] | 91 panels, 52% tumor-only | TMB harmonization model mentioned, never quantified |
+| Zehir et al. [@Zehir2017] | Advanced-disease selection inflates AR/ESR1/TP53 | No (stratified analyses, no correction) |
+| Bandlamudi et al. [@Bandlamudi2026] | ~1/3 drivers in non-canonical contexts | No correction, but Zenodo data lets us re-analyze |
+| Bolton et al. [@Bolton2020] | CH inflates DDR-gene counts | Matched-normal VAF-ratio rule (only works with matched normal) |
+| Chakravarty and Solit [@ChakravartySolit2021] | Cross-vendor panel heterogeneity | No (review focuses on clinical utility) |
+| Ellrott et al. [@Ellrott2018] | TCGA per-study calling heterogeneity | **Yes — MC3 unified MAF** |
 
-**Ellrott 2018 (MC3) is the exception that proves the rule.** It actually solves the
+**MC3 is the exception that proves the rule.** Ellrott et al. [@Ellrott2018] actually solve the
 problem by re-calling all TCGA exomes uniformly. Most consortia document the issue and
 move on.
 
@@ -125,7 +126,8 @@ Three additional fixes that need design work:
    in our outputs should carry the catalog version (date, release tag) the annotation was
    computed against.
 6. **Tissue-conditional driver flag** — partial fix for the "non-canonical context"
-   finding (Bandlamudi 2026 + Bailey 2018 19% tissue-borrowed). Each (gene, cancer)
+   finding by Bandlamudi et al. [@Bandlamudi2026] plus the Bailey et al. [@Bailey2018] 19%
+   tissue-borrowed result. Each (gene, cancer)
    annotation should distinguish "Bailey driver in this cancer" vs "Bailey driver in
    any cancer."
 

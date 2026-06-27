@@ -31,7 +31,7 @@ counts across MSK-IMPACT / FoundationOne / Tempus / Caris / GENIE is biased.
 This topic surveys the *methods* that have been proposed to fix it —
 panel-intersection analyses, per-(study, gene) callability denominators,
 explicit TMB calibration to WES (Friends of Cancer Research TMB Harmonization
-Project Phase I/II, Buchhalter 2019, Fancello 2019), and more recent
+Project Phase I/II, Buchhalter et al. [@Buchhalter2019], Fancello et al. [@Fancello2019]), and more recent
 panel-aware statistical tooling. The central organizing idea: every per-gene
 rate or per-sample burden computed on panel data has a denominator that is
 panel-specific, and any cross-panel comparison must either (a) restrict to a
@@ -82,7 +82,7 @@ callable), but few extend it to per-gene rates.
 
 ### Calibration-style TMB harmonization (Friends of Cancer Research model)
 
-The **FoCR TMB Harmonization Project** (Merino 2020 Phase I; Vega 2021 Phase
+The **FoCR TMB Harmonization Project** (Merino et al. [@Merino2020] Phase I; Vega et al. [@Vega2021] Phase
 II) established the dominant TMB cross-panel method. The approach:
 
 1. Process the same reference samples (Phase I: in silico down-sampling of
@@ -105,7 +105,7 @@ Key Phase-II quantitative findings:
   levels; without calibration, cross-panel TMB comparisons are not reliable
   at clinical cutoffs.
 
-Buchhalter 2019 ("Size matters", Int J Cancer) reached a similar conclusion
+Buchhalter et al. [@Buchhalter2019] ("Size matters", Int J Cancer) reached a similar conclusion
 independently by in silico down-sampling a WES cohort: variance in TMB
 estimates scales ~1/panel_size, with practical floor around 1 Mb.
 
@@ -120,7 +120,7 @@ exist:
   exon 2 of APC will inflate APC rates.
 - **Per-gene callable-fraction rates** (rate = mutations / (samples × gene_
   callable_bp)) condition on the gene — this is what the AACR GENIE
-  Consortium 2017 APC ~10× example implicitly argues for, and what
+  AACR Project GENIE Consortium [@AACRGENIEConsortium2017] APC ~10× example implicitly argues for, and what
   `process_genie_panel_coverage.py` in this repo computes.
 
 ### Panel-version drift within a single vendor
@@ -145,7 +145,7 @@ evolving gene lists), as does Tempus xT (V2/V3/V4/V5).
 
 Cross-panel normalization alone does not make cohorts comparable when some
 are matched-normal (MSK-IMPACT: ~98%) and others are predominantly tumor-only
-(GENIE overall: 52% tumor-only per Pugh 2022). Tumor-only cohorts retain
+(GENIE overall: 52% tumor-only per Pugh et al. [@Pugh2022]). Tumor-only cohorts retain
 germline + CH variants that matched-normal pipelines subtract — see
 `topic:clonal-hematopoiesis-contamination`. Any callability-denominator
 normalization should carry a matched-normal flag.
@@ -157,12 +157,12 @@ normalization should carry a matched-normal flag.
 1. Naive pooling is biased. AACR GENIE 2017 documented the problem with the
    APC example; every subsequent panel-methods paper treats it as given.
 2. Panel size below ~1 Mb callable coding makes TMB estimates unreliable at
-   clinical cutoffs (Buchhalter 2019; Vega 2021; Fancello 2019).
+   clinical cutoffs (Buchhalter et al. [@Buchhalter2019]; Vega et al. [@Vega2021]; Fancello et al. [@Fancello2019]).
 3. Linear calibration per panel sufficiently reduces cross-panel TMB variance
-   for clinical binary classification (Vega 2021).
+   for clinical binary classification (Vega et al. [@Vega2021]).
 4. Panel BEDs are necessary input for any principled correction; only GENIE
-   publishes them at population scale (Pugh 2022, Synapse `syn24179663`).
-5. MC3 (Ellrott 2018) provides a panel-free WES baseline for TCGA samples and
+   publishes them at population scale (Pugh et al. [@Pugh2022], Synapse `syn24179663`).
+5. MC3 (Ellrott et al. [@Ellrott2018]) provides a panel-free WES baseline for TCGA samples and
    eliminates panel heterogeneity entirely for the TCGA portion of any cohort
    (if the analyst is willing to drop the non-TCGA portion or treat MC3 as a
    single panel alongside the panels).
@@ -245,7 +245,7 @@ the repo has to make:
    fallback).
 3. **For TMB-style harmonization (future):** re-use the FoCR per-panel
    calibration if / when we compute per-sample TMB from our ingested MAFs;
-   tooling from Vega 2021 is publicly released.
+   tooling from Vega et al. [@Vega2021] is publicly released.
 
 ## Pipeline Implications
 
@@ -273,7 +273,7 @@ the repo has to make:
   joined into ratio tables.
 - **`jasonwong-lab/TMB`** (GitHub): published two-layer Poisson panel→WES
   TMB correction (Nat Rev Clin Oncol 2024 review cites this lineage).
-- **FoCR Phase II tool** (Vega 2021 supplementary): per-panel calibration
+- **FoCR Phase II tool** (Vega et al. [@Vega2021] supplementary): per-panel calibration
   coefficients for Phase-II participating panels; public release
   specifically to promote reproducibility.
 - **GATK `CallableLoci`** / **`mosdepth`**: depth-threshold callable region
@@ -286,36 +286,36 @@ the repo has to make:
 
 ## Key References
 
-- Merino DM, et al. 2020. "Establishing guidelines to harmonize tumor
+- Merino et al. [@Merino2020]. "Establishing guidelines to harmonize tumor
   mutational burden (TMB): in silico assessment of variation in TMB
   quantification across diagnostic platforms: phase I of the Friends of
   Cancer Research TMB Harmonization Project." *J Immunother Cancer* 8(1):
   e000147. PMID 32217756.
   → Phase-I in silico down-sampling result; established the pipeline.
-- Vega DM, et al. 2021. "Aligning tumor mutational burden (TMB)
+- Vega et al. [@Vega2021]. "Aligning tumor mutational burden (TMB)
   quantification across diagnostic platforms: phase II of the Friends of
   Cancer Research TMB Harmonization Project." *Ann Oncol* 32(12):
   1626–1636. PMID 34606929.
   → Empirical Phase-II multi-lab calibration; panel-size floor ~667 kb;
   public calibration tool.
-- Buchhalter I, et al. 2019. "Size matters: Dissecting key parameters for
+- Buchhalter et al. [@Buchhalter2019]. "Size matters: Dissecting key parameters for
   panel-based tumor mutational burden analysis." *Int J Cancer* 144(4):
   848–858. PMID 30238975.
   → Independent in-silico down-sampling result reaching ~1 Mb floor.
-- Fancello L, et al. 2019. "Tumor mutational burden quantification from
+- Fancello et al. [@Fancello2019]. "Tumor mutational burden quantification from
   targeted gene panels: major advancements and challenges." *J Immunother
   Cancer* 7:183. PMID 31307554.
   → Review-style survey of panel-TMB methods; good entry point to the
   calibration literature.
-- AACR Project GENIE Consortium. 2017. PMID 28572459.
+- AACR Project GENIE Consortium [@AACRGENIEConsortium2017]. PMID 28572459.
   → 44-gene core; APC ~10× callable-region example; the seminal framing.
-- Pugh TJ, et al. 2022. PMID 35819403.
+- Pugh et al. [@Pugh2022]. PMID 35819403.
   → 91-panel v9.1; per-assay BEDs in Synapse `syn24179663` = the only
   population-scale open BED corpus.
-- Zehir A, et al. 2017. PMID 28481359.
+- Zehir et al. [@Zehir2017]. PMID 28481359.
   → MSK-IMPACT 341/410/468 panel-version history + matched-buffy-coat
   design.
-- Ellrott K, et al. 2018. PMID 29596782.
+- Ellrott et al. [@Ellrott2018]. PMID 29596782.
   → MC3 unified-WES TCGA recall; the "escape hatch" from panel
   heterogeneity for the TCGA portion.
 - ChakravartySolit2021. PMID 33762738.

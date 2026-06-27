@@ -19,13 +19,14 @@ id: meta:0004-next-steps-and-gap-analysis-2026-04-14
 - **t060 panel-mutation-data modality guide** expanded with 4 new source citations,
   2 new checklist rows (panel.11 NaN-vs-0, panel.12 commercial-BED fallback), 3 new
   pitfalls (`c1096bd`).
-- **t043 pathway-level pan-cancer search** — 6 Core-now (Reyna 2020 PCAWG,
-  Paczkowska 2020 ActivePathways, Leiserson 2015 HotNet2, Iorio 2018 SLAPenrich,
-  Martinez-Jimenez 2020 IntOGen, Horn 2018 NetSig), 7 BibTeX added (`43b44ce`).
-- **t059 ASXL1/TET2 CH-leakage search** — Coombs 2018 per-gene stratification
+- **t043 pathway-level pan-cancer search** — 6 Core-now (Reyna et al. [@Reyna2020Pathway] PCAWG,
+  Paczkowska et al. [@Paczkowska2020] ActivePathways, Leiserson et al. [@Leiserson2015] HotNet2,
+  Iorio et al. [@Iorio2018SLAPenrich] SLAPenrich,
+  Martinez-Jimenez 2020 IntOGen, Horn et al. [@Horn2018] NetSig), 7 BibTeX added (`43b44ce`).
+- **t059 ASXL1/TET2 CH-leakage search** — Coombs et al. [@Coombs2018] per-gene stratification
   (8% overall, DNMT3A ~64%, TP53 ~4%), 6 BibTeX added (`f077cab`).
-- **t025 rescoped** — TMB follow-up: Campbell 2017 hypermutator cutoffs, Samstein
-  2019 per-histology cutpoints, Chalmers 2017 100k-cohort landscape, 6 BibTeX
+- **t025 rescoped** — TMB follow-up: Campbell et al. [@Campbell2017Hypermutation] hypermutator cutoffs, Samstein
+  2019 per-histology cutpoints, Chalmers et al. [@Chalmers2017] 100k-cohort landscape, 6 BibTeX
   added (`26502f2`).
 
 **Task backlog:**

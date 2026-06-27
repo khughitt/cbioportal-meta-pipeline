@@ -61,12 +61,12 @@ Whole-genome sequencing of individual normal intestinal crypts from 10 individua
 
 ## Relevance
 
-**h08 (agnostic covariate ↔ signature-exposure association; positive-control recovery):**
+**hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and (agnostic covariate ↔ signature-exposure association; positive-control recovery):**
 
-This paper is directly relevant to the h08 positive-control arm (H08a). It provides a well-powered, mechanistically validated exemplar of a germline BER-deficiency exposure (biallelic *MUTYH* mutation) producing a quantitatively and qualitatively distinctive mutational signature in tissue. Key connections:
+This paper is directly relevant to the hypothesis:0007 positive-control arm (H08a). It provides a well-powered, mechanistically validated exemplar of a germline BER-deficiency exposure (biallelic *MUTYH* mutation) producing a quantitatively and qualitatively distinctive mutational signature in tissue. Key connections:
 
 - **Known exposure → known signature:** MUTYH deficiency → SBS36 is one of the cleanest aetiology assignments in the COSMIC catalogue, complemented by SBS18 (ROS). This paper provides the mechanistic validation for the exposure-signature link at near-single-cell resolution in normal tissue, which is exactly the kind of ground-truth exemplar that should be recoverable by an agnostic covariate-signature scan — if such a scan were run across cBioPortal studies that include MAP individuals or hereditary polyposis cohorts.
-- **Tissue-specificity of signature rates:** The 13-fold enrichment of SBS18/SBS36 activity in intestinal epithelium vs blood illustrates that tissue-of-origin is a critical modifying covariate for signature exposure, consistent with h08 Prediction 4 (associations attenuate when tissue is not conditioned on). A naive cross-tissue association would confound tissue-specific ROS with MUTYH genotype.
+- **Tissue-specificity of signature rates:** The 13-fold enrichment of SBS18/SBS36 activity in intestinal epithelium vs blood illustrates that tissue-of-origin is a critical modifying covariate for signature exposure, consistent with hypothesis:0007 Prediction 4 (associations attenuate when tissue is not conditioned on). A naive cross-tissue association would confound tissue-specific ROS with MUTYH genotype.
 - **Genotype as a germline covariate:** The graded mutation rate across MUTYH genotypes (truncating > missense homozygous > compound heterozygous with partial activity) demonstrates that germline variant status is a high-signal covariate that an agnostic scan should rank near the top of any cBioPortal-wide association when MUTYH status is captured.
 - **Normal-tissue background vs tumour signal:** This paper works entirely in histologically *normal* cells, making it complementary to tumour-focused cross-study meta-analysis. It establishes the baseline elevated mutation burden that MAP individuals carry into malignant transformation, relevant to the pipeline's clonal hematopoiesis contamination correction (matched normal sequencing may itself carry elevated SBS18/SBS36 signal in MAP carriers).
 
@@ -78,12 +78,12 @@ In the cBioPortal context, MAP/MUTYH-associated colorectal cancer cohorts (e.g. 
 
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
-| SBS18 (ROS/8-oxoguanine damage) | COSMIC SBS18 | Positive-control signature for h08 aetiology recovery |
+| SBS18 (ROS/8-oxoguanine damage) | COSMIC SBS18 | Positive-control signature for hypothesis:0007 aetiology recovery |
 | SBS36 (defective MUTYH function) | COSMIC SBS36 | MUTYH-specific signature; C>A dominant |
 | SBSOGG1 (OGG1-deletion signature) | Novel / COSMIC-catalogued | Relevant only to biallelic OGG1+MUTYH deficiency |
 | Biallelic MUTYH germline status | Germline covariate | Not currently tracked in cBioPortal pipeline config |
-| ~13× tissue-specific SBS rate enrichment | Tissue-stratification requirement | Supports within-tissue conditioning for h08 |
-| Candidate driver mutations in normal crypts | Pre-malignant driver signal (h06) | 15% crypts with driver mutations; relevant to h06 |
+| ~13× tissue-specific SBS rate enrichment | Tissue-stratification requirement | Supports within-tissue conditioning for hypothesis:0007 |
+| Candidate driver mutations in normal crypts | Pre-malignant driver signal (hypothesis:0006) | 15% crypts with driver mutations; relevant to hypothesis:0006 |
 | HDP signature extraction | De-novo extraction method | Alternative to SigProfiler NMF; used in normal-tissue studies |
 
 ## Limitations
@@ -103,8 +103,8 @@ In the cBioPortal context, MAP/MUTYH-associated colorectal cancer cohorts (e.g. 
 
 ## Follow-up
 
-- SBS36 and SBS18 as positive-control signatures for h08: verify that any cBioPortal cohort with MAP patients or hereditary colorectal polyposis labels shows elevated SBS36/SBS18 in within-tissue association scans.
+- SBS36 and SBS18 as positive-control signatures for hypothesis:0007: verify that any cBioPortal cohort with MAP patients or hereditary colorectal polyposis labels shows elevated SBS36/SBS18 in within-tissue association scans.
 - Interaction between MUTYH germline status and the pipeline's hypermutator annotation: MAP carriers at 2–4-fold elevated burden will not be flagged as hypermutators by GMM or absolute-TMB criteria (the elevation is modest); check whether matched-normal sequencing from MAP carriers inflates the unmatched-normal false-positive rate in mutation calling.
 - Robinson et al. 2019 (Nat Commun) characterised *POLE*-exonuclease-domain mutation carriers in the same normal-tissue WGS framework — direct predecessor study in same lab/pipeline.
 - Lee-Six et al. 2018 (LeeSix2018 in project) is the wild-type control dataset this study builds on — already summarised.
-- The colibactin signature (SBS88) detected incidentally in PD44890's crypts intersects with microbiome-mutagenesis aetiology, a potential novel h08b discovery target.
+- The colibactin signature (SBS88) detected incidentally in PD44890's crypts intersects with microbiome-mutagenesis aetiology, a potential novel H08b discovery target.

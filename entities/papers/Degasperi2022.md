@@ -60,7 +60,7 @@ and 3,417 Hartwig metastatic WGS cancers (18,640 total across all three cohorts)
    "reference signatures"; QC (green / amber / red) was assigned based on independent
    reproducibility.
 6. 82 SBS and 27 DBS reference signatures passed QC-green. These were matched to COSMIC v3
-   (ref 14 = Alexandrov 2020) by cosine similarity.
+   (ref 14 = Alexandrov [@Alexandrov2020]) by cosine similarity.
 
 **DBS curation.** For each DBS signature, the dinucleotides were verified to be in *cis*
 (co-occurrence in the same read), an *in silico* analysis tested whether the DBS spectrum
@@ -148,10 +148,10 @@ curated from supplementary tables to link genomic drivers to signature presence.
 
 ## Relevance
 
-**Direct support for hypothesis h08 (agnostic covariate-signature association).**
+**Direct support for hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and (agnostic covariate-signature association).**
 
 This paper provides the most complete current catalog of WGS-derived mutational signatures
-and their verified aetiologies, and is directly cited in h08's `source_refs`. Specific
+and their verified aetiologies, and is directly cited in hypothesis:0007's `source_refs`. Specific
 connections:
 
 - **Positive-control ground truth for H08a.** The paper rigorously validates exposure→signature
@@ -159,16 +159,16 @@ connections:
   POLE↔SBS10a) in a matched-normal WGS cohort. These verified links are precisely the
   recovery targets that H08a must reproduce agnostically. The paper's confirmation that these
   associations are tissue-stratified (smoking in lung, UV in skin, MMRd in colorectal/uterine)
-  also pre-validates H08's within-tissue conditioning design.
+  also pre-validates hypothesis:0007's within-tissue conditioning design.
 
 - **Identification of signatures with unknown aetiology — H08b targets.** Many of the 40 new
   SBS signatures (including clock-like or tissue-specific ones like SBS120, SBS121, SBS122,
-  SBS137) have no confirmed etiology. These are candidate targets for H08b's agnostic
+  SBS137) have no confirmed etiology. These are candidate targets for the H08b agnostic
   covariate scan using expression modules.
 
 - **Common-vs-rare structure informs the pipeline's signature-fitting strategy.** The paper's
   finding that each organ has a fixed number of common signatures (5–10) and that rare
-  signatures grow with sample size is directly relevant to q018 (feasibility of downstream
+  signatures grow with sample size is directly relevant to question:0018 (feasibility of downstream
   signature decomposition across cBioPortal studies, which are far smaller than GEL). Most
   cBioPortal panel studies will only recover common signatures; rare signatures require WGS
   scale (GEL/ICGC/MC3).
@@ -205,7 +205,7 @@ connections:
 - **WGS only.** The GEL and ICGC cohorts are WGS; the paper explicitly notes that WES/panel
   data are 100–4,000× lower in genomic footprint and suffer AT/GC representation biases that
   distort signature extractions. Rare signatures detectable only in large WGS cohorts will be
-  inaccessible in cBioPortal panel data (the binding constraint for q018).
+  inaccessible in cBioPortal panel data (the binding constraint for question:0018).
 - **Primary vs. metastatic mixing.** GEL and ICGC are primary; Hartwig is metastatic. The
   paper validates across cohorts but does not systematically partition primary-vs-metastatic
   effects on signature composition (treatment-induced signatures are more prevalent in the
@@ -238,9 +238,9 @@ connections:
 ## Follow-up
 
 - **Alexandrov2020** (`paper:Alexandrov2020`) — the COSMIC v3 SBS/DBS catalog this paper
-  extends; directly cited in the cbioportal pipeline and h08.
+  extends; directly cited in the cbioportal pipeline and hypothesis:0007.
 - The FitMS `signature.tools.lib` implementation should be evaluated against
-  `run_restricted_sigprofiler_assignment.py` for the h08 positive-control refit step.
+  `run_restricted_sigprofiler_assignment.py` for the hypothesis:0007 positive-control refit step.
 - For H08b candidate signatures with unknown aetiology (SBS120, SBS121, SBS122, SBS137,
   etc.), the Signal browser provides per-sample exposure tables useful for covariate
   association once matched to clinical data from the pipeline.

@@ -92,13 +92,13 @@ The key methodological point (Box 2) is that local mutation rate enrichment requ
 
 ## Relevance
 
-This review is directly relevant to **h08 (agnostic covariate↔signature-exposure association; positive-control recovery)**:
+This review is directly relevant to **hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and (agnostic covariate↔signature-exposure association; positive-control recovery)**:
 
 1. **Positive-control mechanistic ground truth (H08a):** The paper provides the clearest mechanistic account of *why* the canonical signature↔aetiology links are what they are — UV→SBS7 because NER is inhibited in nucleosomes; tobacco→SBS4 because BPDE-dG adducts accumulate at linkers; APOBEC/AID→SBS2/13 via C>U deamination of single-stranded DNA during transcription; MMR-loss→SBS6/15/26 because exonic MMR is disrupted. Understanding the mechanism behind these links clarifies what features an agnostic covariate association should recover and *why* those are the right targets.
 
-2. **Tissue-level collinearity confound (R1 in h08):** Several signatures reviewed here (e.g. UV in melanoma, tobacco in lung) are confounded with tissue of origin. The review's discussion of TF tissue-specificity underscores that conditioning on tissue/cancer-type is essential before interpreting any exposure↔signature association — directly supporting the h08 design requirement for within-tissue strata.
+2. **Tissue-level collinearity confound (R1 in hypothesis:0007):** Several signatures reviewed here (e.g. UV in melanoma, tobacco in lung) are confounded with tissue of origin. The review's discussion of TF tissue-specificity underscores that conditioning on tissue/cancer-type is essential before interpreting any exposure↔signature association — directly supporting the hypothesis:0007 design requirement for within-tissue strata.
 
-3. **Expression as a mechanistic mediator:** The review's treatment of TC-NER, TCD, and MMR-via-H3K36me3 establishes that gene *expression level* and *transcriptional activity* are mechanistically upstream of mutation rate for multiple signatures (SBS2/13 via single-stranded DNA during transcription; SBS7 via TC-NER; MMR via H3K36me3). This provides prior justification for the h08 prediction that APOBEC3 expression modules will associate with SBS2/13 independently of clinical covariates.
+3. **Expression as a mechanistic mediator:** The review's treatment of TC-NER, TCD, and MMR-via-H3K36me3 establishes that gene *expression level* and *transcriptional activity* are mechanistically upstream of mutation rate for multiple signatures (SBS2/13 via single-stranded DNA during transcription; SBS7 via TC-NER; MMR via H3K36me3). This provides prior justification for the hypothesis:0007 prediction that APOBEC3 expression modules will associate with SBS2/13 independently of clinical covariates.
 
 4. **Non-UV background rate confounds:** The review clarifies that nucleosome occupancy, replication timing, and GC content all shape the background mutation rate against which signature exposures are measured. For cross-study meta-analysis in this project, this reinforces the importance of per-cancer-type normalization and the hypermutator annotation pipeline (t081).
 
@@ -111,8 +111,8 @@ This review is directly relevant to **h08 (agnostic covariate↔signature-exposu
 | Mutational signature (SBS) | Signature exposure (COSMIC SBS catalogue) | Project uses SigProfiler restricted assignment against COSMIC v3 |
 | Local mutation rate variation | Background mutation rate heterogeneity | Affects normalization in create_freq_tables.py |
 | NER deficiency at TFBSs | Potential batch/artifact signal | TFBS-enriched mutations could inflate gene-level ratios for promoter-proximal genes |
-| TC-NER strand asymmetry | Transcriptional strand bias (SBS7, SBS4) | Relevant to h08 positive-control arms for UV/tobacco |
-| MMR-driven exon protection | Exon vs intron mutation stratification | Not currently implemented in pipeline but noted in h08 rationale |
+| TC-NER strand asymmetry | Transcriptional strand bias (SBS7, SBS4) | Relevant to hypothesis:0007 positive-control arms for UV/tobacco |
+| MMR-driven exon protection | Exon vs intron mutation stratification | Not currently implemented in pipeline but noted in hypothesis:0007 rationale |
 | 5mCpG deamination clock | Clock-like signatures SBS1/SBS5 | Paper discusses replication-timing dependence of CpG>TpG rates |
 
 ## Limitations
@@ -129,9 +129,9 @@ This is a review article and does not release a new tool or dataset. The review 
 
 ## Follow-up
 
-- **Alexandrov et al. 2020** (Nature) — the comprehensive COSMIC v3 signature compendium; referenced as the primary signature catalogue h08 will use for restricted assignment.
+- **Alexandrov et al.** [@Alexandrov2020] — the comprehensive COSMIC v3 signature compendium; referenced as the primary signature catalogue hypothesis:0007 will use for restricted assignment.
 - **Degasperi et al. 2022** (Science) — extends signature extraction to paired tumour/normal and organ-specific contexts; already in project.
 - **Frigola et al. 2017** (Nat Genet) — MMR-mediated exon protection cited in this review; relevant to whether exon-level mutation ratios in the pipeline need MMR-correction.
 - **Sabarinathan et al. 2016** (Nature) — NER impairment at TF binding sites in melanomas; key primary paper behind one of the TFBS findings summarized here.
 - **Pich et al. 2018** (PLoS Genet) — whole-genome nucleosome periodicity of somatic and germline mutations; primary data paper underpinning the 10-bp periodicity finding.
-- Questions for project: Does the pipeline's per-gene mutation ratio inadvertently confound promoter-proximal genes (high TFBS density) with genuine driver signal? Would conditioning on replication timing improve the h08 positive-control recovery of signatures correlated with replication (SBS1, SBS5)?
+- Questions for project: Does the pipeline's per-gene mutation ratio inadvertently confound promoter-proximal genes (high TFBS density) with genuine driver signal? Would conditioning on replication timing improve the hypothesis:0007 positive-control recovery of signatures correlated with replication (SBS1, SBS5)?

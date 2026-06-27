@@ -65,7 +65,7 @@ The solution is an **observation-event model**: an explicit (n+1)th event repres
 
 ## Relevance
 
-This paper is directly relevant to **q012** and to the project's mutation co-occurrence and ordering analyses, on two levels:
+This paper is directly relevant to **question:0012-mutation-ordering-cross-sectional-inference** and to the project's mutation co-occurrence and ordering analyses, on two levels:
 
 **1. Co-occurrence and mutual exclusivity analysis (t078)**
 
@@ -76,11 +76,11 @@ The cbioportal pipeline aggregates cross-sectional data from diagnostic cohorts 
 
 **Implication:** Any mutual exclusivity finding in our pipeline that involves a highly detectable driver gene (EGFR in LUAD, TP53 in CRC, likely PIK3CA in breast) should be treated with additional skepticism until checked against an observation-event–corrected model.
 
-**2. Mutation ordering inference (q012)**
+**2. Mutation ordering inference (question:0012)**
 
 The project's roadmap includes MHN fitting for directed ordering inference (A→B temporal sequences). Schill 2024 establishes that the *standard* MHN (Schill 2020) produces biased ordering inferences on diagnostic cohorts. The corrected model should be used if mutation ordering analysis is pursued (task: prerequisite before any MHN fit on cBioPortal data).
 
-**3. Hypothesis h04 (if applicable)**
+**3. Hypothesis:0004-mhn-pathway-ordering (if applicable)**
 
 If the project formalizes a hypothesis about gene-cancer epistasis or ordering, the observation-event correction defines the methodological lower bar that any such hypothesis test must clear. A finding from a cMHN without correction cannot be treated as evidence for or against biological ordering.
 
@@ -122,6 +122,6 @@ The classical MHN (Schill 2020, without observation-event correction) is also av
 - **Read Schill 2020** (doi: 10.1093/bioinformatics/btz513, PMC6956791 — OA) to understand the classical MHN framework before the observation-event extension; foundational for interpreting the correction.
 - **Read Rupp et al. 2024** (doi: 10.1093/bioinformatics/btae250, PMC11245855 — OA) — a closely related extension of MHN to metastatic progression, also from the Schill / Beerenwinkel group; uses cross-sectional data across primary + metastatic samples.
 - **Obtain the Schill 2024 PDF** via institutional access (PMID 39480133) to verify the specific quantitative results (simulation benchmarks, exact edge counts changed by collider correction, sensitivity analysis on regularization choice).
-- **Pilot in the project:** Before any t078 / q012 MHN analysis, install `mhn` and run a single-cancer-type demo (e.g. LUAD from GENIE, matching the paper's own demo) to confirm the observation-event model is estimable on our data and to benchmark runtime against sample count and panel size.
+- **Pilot in the project:** Before any t078 / question:0012 MHN analysis, install `mhn` and run a single-cancer-type demo (e.g. LUAD from GENIE, matching the paper's own demo) to confirm the observation-event model is estimable on our data and to benchmark runtime against sample count and panel size.
 - **Assess per-gene detectability biology:** Which genes in the pipeline's 10k-gene universe are likely to have large observation rate multipliers? TP53 (CRC), EGFR (LUAD) are known; BRCA1/2 in ovarian (strong family history screening), PIK3CA in breast, VHL in RCC are plausible candidates. This list would inform which apparent mutual-exclusivity results are highest-risk for collider-bias inflation.
-- **Check q012 for update:** The question file already notes MHN as the recommended tool; add a note that the observation-event correction (Schill 2024) is required — the cMHN (Schill 2020) alone is insufficient for this pipeline's diagnostic cohort data.
+- **Check question:0012 for update:** The question file already notes MHN as the recommended tool; add a note that the observation-event correction (Schill 2024) is required — the cMHN (Schill 2020) alone is insufficient for this pipeline's diagnostic cohort data.

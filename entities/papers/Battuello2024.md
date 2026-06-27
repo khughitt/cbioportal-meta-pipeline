@@ -81,9 +81,9 @@ Arbitrary choices in the mutational signature analysis pipeline — NGS workflow
 
 ## Relevance
 
-This paper is directly relevant to hypothesis h08 (agnostic covariate ↔ signature-exposure association; positive-control recovery of biologically meaningful signatures). Key connections:
+This paper is directly relevant to hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and (agnostic covariate ↔ signature-exposure association; positive-control recovery of biologically meaningful signatures). Key connections:
 
-1. **Positive-control recovery:** The paper operationalises exactly the kind of positive-control test that h08 envisions — it asks whether known biological covariates (MMR status, POLE mutation, smoking, colibactin) are recoverable from fitted signature exposures, and shows that the answer depends strongly on pipeline choices. This provides a concrete benchmark design for h08 validation experiments.
+1. **Positive-control recovery:** The paper operationalises exactly the kind of positive-control test that hypothesis:0007 envisions — it asks whether known biological covariates (MMR status, POLE mutation, smoking, colibactin) are recoverable from fitted signature exposures, and shows that the answer depends strongly on pipeline choices. This provides a concrete benchmark design for hypothesis:0007 validation experiments.
 
 2. **Pipeline standardisation for cross-study meta-analysis:** The cbioportal pipeline aggregates somatic mutations across heterogeneous cBioPortal studies that differ in sequencing platform (WGS, WES, targeted panels) and calling workflows. The finding that NGS workflow choice produces statistically different signature exposures — even when cosine similarity is similar — is a direct warning about cross-study signature comparisons without workflow harmonisation.
 
@@ -99,7 +99,7 @@ This paper is directly relevant to hypothesis h08 (agnostic covariate ↔ signat
 
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
-| ΔMMR (biological readout) | Positive-control signature recovery | h08 validation metric |
+| ΔMMR (biological readout) | Positive-control signature recovery | hypothesis:0007 validation metric |
 | ΔPOLE (biological readout) | Positive-control signature recovery | POLE as a known hypermutator aetiology |
 | NGS workflow (WGS/WES/panel) | Study-level sequencing heterogeneity | Relevant to cross-study aggregation in cbioportal |
 | Reference catalogue (COSMIC v2/v3/TS) | Signature reference choice | Affects pooled meta-analysis results |
@@ -133,5 +133,5 @@ This paper is directly relevant to hypothesis h08 (agnostic covariate ↔ signat
 - Evaluate whether the cbioportal cross-study pipeline should apply a minimum mutation-count filter before signature fitting (threshold: 64–323 depending on normal matching).
 - Test whether MutationalPatterns with COSMIC v2 or a pan-cancer tissue-specific reference improves positive-control signature recovery in the cross-study meta-analysis.
 - Examine CoMSCER as a benchmarking tool to compare signature outputs across the heterogeneous sequencing platforms present in cBioPortal studies.
-- Consider whether the ΔMMR / ΔPOLE framework could serve as a h08 positive-control metric: if fitted exposures in MMR-deficient tumours do not elevate MMR-associated signatures, the pipeline is miscalibrated.
+- Consider whether the ΔMMR / ΔPOLE framework could serve as a hypothesis:0007 positive-control metric: if fitted exposures in MMR-deficient tumours do not elevate MMR-associated signatures, the pipeline is miscalibrated.
 - Read: Alexandrov et al. 2020 (Nature, SBS repertoire); Maura et al. 2019 (Nat Commun, practical guide for haematological malignancies); Blokzijl et al. 2018 (Genome Biol, MutationalPatterns); Rosenthal et al. 2016 (Genome Biol, deconstructSigs).

@@ -56,15 +56,15 @@ ReDeNovo formalises the **Combined Mutational Signature Inference (CMSI)** probl
 
 ## Relevance
 
-Directly relevant to hypothesis **h08** (agnostic covariate association recovers known signature aetiologies and surfaces novel causes). h08 proposes treating per-sample signature exposures (H matrix columns) as outcomes for phenome-wide covariate association. The quality of those exposures is the bottleneck: ReDeNovo's superior per-sample activity estimation (lower RMSE at all noise levels, especially for flat signatures like SBS3/5/8) would propagate through to cleaner phenotypic associations. The joint known+novel framing also matters: if the cross-study aggregation harbours study-level technical artefacts that manifest as coherent novel signals, ReDeNovo's de novo stage would capture them explicitly rather than smearing them into known-signature exposures.
+Directly relevant to hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and (agnostic covariate association recovers known signature aetiologies and surfaces novel causes). Hypothesis:0007 proposes treating per-sample signature exposures (H matrix columns) as outcomes for phenome-wide covariate association. The quality of those exposures is the bottleneck: ReDeNovo's superior per-sample activity estimation (lower RMSE at all noise levels, especially for flat signatures like SBS3/5/8) would propagate through to cleaner phenotypic associations. The joint known+novel framing also matters: if the cross-study aggregation harbours study-level technical artefacts that manifest as coherent novel signals, ReDeNovo's de novo stage would capture them explicitly rather than smearing them into known-signature exposures.
 
-Within the signature-method ecosystem this project tracks, ReDeNovo sits alongside SigProfilerExtractor (de novo reference), SigProfilerAssignment (refitting reference), MuSiCal (prior joint method), and sigLASSO as candidate tools for the decomposition step upstream of h08's association analysis.
+Within the signature-method ecosystem this project tracks, ReDeNovo sits alongside SigProfilerExtractor (de novo reference), SigProfilerAssignment (refitting reference), MuSiCal (prior joint method), and sigLASSO as candidate tools for the decomposition step upstream of the hypothesis:0007 association analysis.
 
 ## Project Framework Mapping
 
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
-| Activity matrix A (n samples × l signatures) | Per-sample signature exposures (H) | Direct input to h08 covariate-association |
+| Activity matrix A (n samples × l signatures) | Per-sample signature exposures (H) | Direct input to hypothesis:0007 covariate-association |
 | Recognition phase | Refitting / known-signature attribution | Corresponds to SigProfilerAssignment role |
 | De novo discovery phase | De novo extraction | Corresponds to SigProfilerExtractor role |
 | CMSI constraint (2): activity support threshold φ, γ | Hypermutator / low-burden exclusion filters | Activity-support gating is analogous to the pipeline's sample-count thresholds |
@@ -93,7 +93,7 @@ Within the signature-method ecosystem this project tracks, ReDeNovo sits alongsi
 
 ## Follow-up
 
-- Compare ReDeNovo exposures vs SigProfilerExtractor/SigProfilerAssignment exposures on the PCAWG cohort to quantify the downstream effect on h08 covariate associations.
+- Compare ReDeNovo exposures vs SigProfilerExtractor/SigProfilerAssignment exposures on the PCAWG cohort to quantify the downstream effect on hypothesis:0007 covariate associations.
 - Examine whether the cross-study aggregation in this project surfaces study-cohort-specific signals that would be captured as novel signatures by ReDeNovo but attributed to known ones by pure refitting.
 - Check computational runtime and memory footprint for the full cBioPortal cohort (potentially 10k+ samples) — not reported in paper.
 - Investigate whether the activity-support constraint (φ, γ) should be tuned for smaller per-study cohorts common in cBioPortal (many studies have n < 100).

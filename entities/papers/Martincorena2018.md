@@ -55,7 +55,7 @@ Clone boundaries were inferred from contiguous samples sharing the same variant 
 
 ### Selection quantification
 
-dN/dS analysis via dNdScv (Martincorena 2017, Cell) was applied to all detected somatic mutations. The tool estimates gene-level selection coefficients as dN/dS ratios using a negative-binomial regression framework that corrects for gene length and trinucleotide mutation rates.
+dN/dS analysis via dNdScv [@Martincorena2017] was applied to all detected somatic mutations. The tool estimates gene-level selection coefficients as dN/dS ratios using a negative-binomial regression framework that corrects for gene length and trinucleotide mutation rates.
 
 ## Key Findings
 
@@ -148,9 +148,9 @@ TP53 shows the inverse pattern:
 
 ## Relevance
 
-This paper is the primary empirical foundation for the q001 esophageal contamination concern and for multiple claims in the normal-tissue synthesis. It is directly relevant to the cbioportal project across four dimensions:
+This paper is the primary empirical foundation for the question:0001-normal-epithelial-clone-contamination-in-esophageal-studies esophageal contamination concern and for multiple claims in the normal-tissue synthesis. It is directly relevant to the cbioportal project across four dimensions:
 
-**1. Direct source for q001: NOTCH1 contamination risk in esophageal cBioPortal studies**
+**1. Direct source for question:0001: NOTCH1 contamination risk in esophageal cBioPortal studies**
 
 The quantitative finding that NOTCH1-mutant clones cover 30–80% of the normal esophageal epithelium by middle age — and that this is *higher* than the ~10% NOTCH1 rate in ESCC tumors — means that any cBioPortal esophageal study with imperfect tumor purity (endoscopic biopsies, variable dissection quality) will have NOTCH1 mutation rates inflated by normal-clone contamination. This sharpens `question:0001` with specific numbers: if a biopsy is 30% contaminated by normal cells, and 30–80% of those normal cells carry NOTCH1 mutations, the contamination contribution to apparent NOTCH1 frequency could be on the order of 10–24 percentage points. The pipeline's cross-study gene×cancer outputs for esophageal studies may therefore overestimate NOTCH1 as a driver while underestimating its cancer-specificity.
 
@@ -160,7 +160,7 @@ Yoshida2026 cites this study for the NOTCH1 normal-vs-cancer inversion. Poon2021
 
 **3. dNdScv as the selection quantification method**
 
-The dNdScv algorithm used here is the Martincorena 2017 (Cell) method, which is also implemented in our pipeline's optional `run_dndscv.R` rule. The dN/dS values (NOTCH1 truncating >50; TP53 missense ~50; TP53 truncating ~150) represent strong empirical benchmarks for expected selection coefficients in normal esophageal tissue. These can be compared against dN/dS values the pipeline computes for esophageal cancer cohorts.
+The dNdScv algorithm used here is the Martincorena method [@Martincorena2017], which is also implemented in our pipeline's optional `run_dndscv.R` rule. The dN/dS values (NOTCH1 truncating >50; TP53 missense ~50; TP53 truncating ~150) represent strong empirical benchmarks for expected selection coefficients in normal esophageal tissue. These can be compared against dN/dS values the pipeline computes for esophageal cancer cohorts.
 
 **4. Mutation burden calibration for the aging background model**
 
@@ -199,8 +199,8 @@ The finding that normal esophageal cells accumulate several hundred to 2,000 mut
 
 ## Follow-up
 
-- **Read Yokoyama et al. 2019 (Science)** — independent study of somatic clone colonization in esophagus; complements this study and resolves some of the mechanistic questions about NOTCH1's non-oncogenic role. Cited in Yoshida2026 and q001.
-- **Update `question:0001`** — the specific numbers from this paper (30–80% NOTCH1 coverage in normal, ~10% in ESCC; TP53 5–37% normal vs >90% ESCC) sharpen the contamination concern substantially. The question should now include these quantitative bounds.
+- **Read Yokoyama et al. 2019 (Science)** — independent study of somatic clone colonization in esophagus; complements this study and resolves some of the mechanistic questions about NOTCH1's non-oncogenic role. Cited in Yoshida2026 and question:0001.
+- **Update `question:0001-normal-epithelial-clone-contamination-in-esophageal-studies`** — the specific numbers from this paper (30–80% NOTCH1 coverage in normal, ~10% in ESCC; TP53 5–37% normal vs >90% ESCC) sharpen the contamination concern substantially. The question should now include these quantitative bounds.
 - **Check dNdScv pipeline output** for esophageal studies in cBioPortal: if any run has been done, compare NOTCH1 dN/dS there against the >50 benchmark for normal tissue. A cancer-tissue dN/dS much lower than 50 would confirm that the selection signal in tumors comes primarily from a different (smaller) selected clone subpopulation.
 - **Synthesis update:** Add Martincorena2018 to `synthesis-2026-04-18-somatic-mutations-in-normal-tissue.md` as the primary data reference behind claims currently attributed to secondary sources.
 - **Consider:** does the ~17 cm² sampling of 9 donors constitute a sufficient power base for the selection coefficients? The Poon2021 re-analysis of these data using the synonymous-passenger framework independently confirms NOTCH1 and TP53 selection, which provides orthogonal validation.

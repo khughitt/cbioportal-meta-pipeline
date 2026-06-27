@@ -80,18 +80,18 @@ This is a perspective/theoretical review paper, not a primary data study. The ar
 
 This paper is the essential modern counterweight to a naive "fewer required hits = earlier onset" interpretation of the Armitage-Doll multistage framework and the Tomasetti-Vogelstein lifetime stem-cell-division (lscd) correlation. The lscd correlation observes that tissues with more cumulative stem cell divisions have higher lifetime cancer risk, which Tomasetti and Vogelstein attributed primarily to "bad luck" replication errors. Rozhok and DeGregori provide a mechanistic argument for why the lscd correlation, even if real, should not be interpreted causally: the timing and rate of carcinogenesis are governed not only by mutation supply (which is proportional to divisions) but critically by the selection landscape — and that landscape shifts with age in ways that are largely independent of division count. A tissue could accumulate mutations rapidly via frequent divisions yet suppress carcinogenesis efficiently through robust stabilizing selection; conversely, infrequently dividing tissue in an aged microenvironment could rapidly promote clonal expansion once the selection balance tips.
 
-For this project's question about what governs differential median age of cancer onset (q041), the Rozhok-DeGregori framework demands that any multi-study analysis of driver-complexity vs. age-at-diagnosis distinguish the mutation-supply channel (hits accumulated per unit time, related to lscd) from the selection-landscape channel (when those accumulated hits begin conferring a fitness advantage). The steep late-life incidence surge in some tissues — even those requiring many driver events — is more readily explained by a late-shifting selection regime than by the final mutation event being delayed to old age by sheer probability. The model also provides a principled explanation for CML's late-life incidence despite its single-hit origin, a paradox that purely hit-counting models cannot resolve.
+For this project's question about what governs differential median age of cancer onset (question:0041-driver-complexity-vs-median-age-at-diagnosis), the Rozhok-DeGregori framework demands that any multi-study analysis of driver-complexity vs. age-at-diagnosis distinguish the mutation-supply channel (hits accumulated per unit time, related to lscd) from the selection-landscape channel (when those accumulated hits begin conferring a fitness advantage). The steep late-life incidence surge in some tissues — even those requiring many driver events — is more readily explained by a late-shifting selection regime than by the final mutation event being delayed to old age by sheer probability. The model also provides a principled explanation for CML's late-life incidence despite its single-hit origin, a paradox that purely hit-counting models cannot resolve.
 
 ## Project Framework Mapping
 
 | Paper Concept | Project Framework Concept | Notes |
 |---|---|---|
-| Stabilizing selection in young tissue | Pre-malignant suppression regime | Connects to h06 pre-malignant n−1 driver carriage; suppressed clones may carry subsets of required drivers without expanding |
+| Stabilizing selection in young tissue | Pre-malignant suppression regime | Connects to hypothesis:0006-pre-malignant-n-minus-1-driver-carriage; suppressed clones may carry subsets of required drivers without expanding |
 | Age-dependent microenvironmental shift | Temporal structure of carcinogenesis | The primary driver of incidence timing in the theme:0003-temporal-structure-of-carcinogenesis-order-count-and-timing-of-the thread |
 | Fitness is dynamic / environment-dependent | Selection landscape modulation | The key departure from the Armitage-Doll fixed-probability-per-stage assumption |
 | Tissue architecture (pool size, fragmentation) | Cancer-type-specific mutation dynamics | Could inform why some cancer types show sharper driver-complexity vs. age correlations than others in our gene x cancer matrices |
 | D(t) clonal expansion factor | Mutation frequency metric (cross-study) | Our cross-study mutation frequencies reflect fixed-time snapshots; this framework implies the snapshot captures post-selection state, not raw mutation supply |
-| CML single-hit late-life paradox | Counter-example for hit-count models | Directly relevant to interpreting outlier cancer types in q041 |
+| CML single-hit late-life paradox | Counter-example for hit-count models | Directly relevant to interpreting outlier cancer types in question:0041 |
 
 ## Limitations
 
@@ -109,6 +109,6 @@ No software, dataset, or quantitative model is released with this paper. It is a
 
 - **TomasettiVogelstein2015** — the primary interlocutor for the lscd correlation interpretation; this project has a summary forthcoming or pending.
 - **ArmitageDoll1954** — the foundational multi-stage model this paper critiques; summary exists at `doc/papers/ArmitageDoll1954.md`.
-- DeGregori and collaborators subsequently developed the "adaptive oncogenesis" framework more formally (DeGregori 2011 PNAS; DeGregori 2013 *Nat Rev Cancer*); those papers extend the fitness-landscape concept with experimental data from hematopoietic systems.
+- DeGregori and collaborators subsequently developed the "adaptive oncogenesis" framework more formally in follow-up work; those papers extend the fitness-landscape concept with experimental data from hematopoietic systems.
 - Wu et al. and other experimental studies on aged HSC niches may provide empirical grounding for the microenvironmental shift mechanism.
 - Questions for this project: Does the driver-complexity vs. median-age-at-diagnosis correlation in our cross-study data show a different slope for tissue types with large well-mixed SC pools vs. small fragmented pools (hematopoietic vs. epithelial)? Does the CML outlier pattern (single-driver, late onset) appear in our cross-study gene x cancer matrix?

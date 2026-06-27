@@ -177,7 +177,7 @@ This Perspective is directly relevant to
 question:0042-driver-normal-expression-tissue-cell-type-specificity and to the project's cross-study
 mutation-frequency meta-analysis.
 
-**Route-2 anchor for q042.** The Haigis2019 thesis describes a mechanistically *distinct* route
+**Route-2 anchor for question:0042-driver-normal-expression-tissue-cell-type-specificity.** The Haigis2019 thesis describes a mechanistically *distinct* route
 to tissue-specific driver behavior compared to lineage-addiction oncogenes (paper:Garraway2006).
 Garraway2006 explains tissue-specific drivers via tissue-restricted *expression* of the oncogene
 in normal tissue (the gene is only expressed — and thus only a dependency — in that lineage).
@@ -190,12 +190,12 @@ the epigenetic and proteomic wiring of each tissue. This is a clean conceptual s
 | Lineage addiction (Garraway2006) | Gene is tissue-restricted in normal expression → tissue-restricted dependency after amplification/mutation | MITF in melanoma, AR in prostate |
 | Context-dependent driver (Haigis2019) | Gene is broadly expressed; driver fitness effect is tissue-specific via epigenetic permissivity | KRAS in pancreas/colon/lung vs. other tissues; BRAF V600E in melanoma vs. CRC |
 
-**For q042 null condition.** Any attempt to predict driver-ness from normal-tissue expression
+**For the question:0042 null condition.** Any attempt to predict driver-ness from normal-tissue expression
 profiles will capture lineage-addiction oncogenes (Garraway2006 route) but will *miss*
 context-dependent drivers (Haigis2019 route), because the latter are broadly expressed. A
 vanishing restricted-vs-pan-cancer Tau difference in the pipeline's frequency tables may reflect
 route-2 dominance — not artifact — because route-2 drivers would not be picked up by an
-expression-based classifier. The project's q042 must either distinguish the two routes or accept
+expression-based classifier. The project's question:0042 must either distinguish the two routes or accept
 that expression-based signal will only partially explain driver tissue-specificity.
 
 **For cross-study frequency tables.** The pipeline's gene × cancer mutation-frequency matrices
@@ -220,7 +220,7 @@ architecture — relevant if the pipeline is extended to incorporate pathway-lev
 | Preexisting epigenetic landscape as permissivity filter | Not currently modeled | Explains why same mutation → different driver outcome; not captured by mutation-frequency tables |
 | Context-dependent driver (broadly expressed gene) | Per-cancer driver frequency (gene_cancer_study tables) | Empirically captures outcome; Haigis2019 explains the mechanism |
 | Tissue-specific selective pressure via proteomic circuitry | Cancer-type stratification in frequency tables | Motivates per-cancer thresholds over pan-cancer aggregation |
-| Route-2 (broadly expressed, tissue-restricted driver effect) | Non-lineage-addiction mechanism in q042 | Distinct from lineage-survival oncogenes (Garraway2006) |
+| Route-2 (broadly expressed, tissue-restricted driver effect) | Non-lineage-addiction mechanism in question:0042 | Distinct from lineage-survival oncogenes (Garraway2006) |
 | Pan-cancer driver vs. tissue-specific driver | bailey2018_driver flag vs. per-cancer driver roster | Bailey2018 overlay partially encodes this distinction |
 | EZH2 gain-of-function vs. loss-of-function across lineages | Not modeled | Demonstrates same gene can have opposite driver direction by tissue |
 | Permissive vs. nonpermissive tissue comparison | Not currently implemented | Authors' prescribed research design for mechanistic driver discovery |
@@ -250,7 +250,7 @@ No computational tools, datasets, or models are released. This is a Perspective 
 ## Follow-up
 
 - **paper:Garraway2006** — lineage addiction / lineage-survival oncogene framing; the
-  complementary route-1 to Haigis2019's route-2, essential for q042.
+  complementary route-1 to Haigis2019's route-2, essential for question:0042.
 - **question:0042-driver-normal-expression-tissue-cell-type-specificity** — the project
   question this Perspective directly motivates; the two-mechanism framework should be formalized
   there.

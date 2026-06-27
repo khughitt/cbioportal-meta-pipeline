@@ -23,7 +23,7 @@ related:
 ---
 
 <!-- Author: Monjur Ahmed | 2020 | World J Gastrointest Oncol 12(8):791-807 -->
-<!-- DOI: 10.4251/wjgo.v12.i8.791 -->
+<!-- DOI recorded in BibTeX entry -->
 <!-- BibTeX: Ahmed2020 -->
 <!-- Source: PDF -->
 
@@ -32,7 +32,7 @@ related:
 - **Authors:** Monjur Ahmed
 - **Year:** 2020
 - **Journal:** World Journal of Gastrointestinal Oncology, Vol. 12, No. 8, pp. 791-807
-- **DOI/URL:** https://doi.org/10.4251/wjgo.v12.i8.791
+- **DOI/URL:** recorded in BibTeX entry
 - **BibTeX key:** Ahmed2020
 - **Source:** PDF
 
@@ -62,14 +62,14 @@ Single-author narrative clinical review; no original cohort data, genomic analys
 
 ## Relevance
 
-**This paper is relevant primarily as a boundary-setting reference for the cbioportal project's H4 artifact concern.**
+**This paper is relevant primarily as a boundary-setting reference for the cbioportal project's neuroendocrine-lineage artifact concern.**
 
 NETs are tumors OF neuroendocrine cells — cells that are developmentally programmed to constitutively express a stereotyped neural/endocrine gene signature (CgA/CHGA, SYP, NSE/ENO2, somatostatin receptors, NCAM1/CD56, vesicular monoamine transporters). This is not neural regulation of epithelial cancer; it is a distinct histological lineage whose baseline transcriptional and proteomic identity is neuroendocrine.
 
-**H4-type confound — NET studies in the cBioPortal cohort.** If any cBioPortal studies in the pipeline's `studies` list include NET histologies (e.g., pancreatic NETs, GI-NETs labeled under broad cancer-type codes), those samples will carry constitutive high expression of neuroendocrine genes. In the cross-study somatic mutation frequency tables this matters less directly (somatic mutations, not expression), but it matters for two specific artifact pathways:
+**Neuroendocrine-lineage confound — NET studies in the cBioPortal cohort.** If any cBioPortal studies in the pipeline's `studies` list include NET histologies (e.g., pancreatic NETs, GI-NETs labeled under broad cancer-type codes), those samples will carry constitutive high expression of neuroendocrine genes. In the cross-study somatic mutation frequency tables this matters less directly (somatic mutations, not expression), but it matters for two specific artifact pathways:
 
-- If the pipeline's `h08` covariate-association scan uses expression covariates, NET samples will produce spurious strong associations between neuroendocrine lineage genes and "neural gene" mutation patterns.
-- More directly relevant: if OncoTree codes for NET histologies are not correctly mapped and end up binned under a broad GI or "other" cancer type bucket, their constitutive expression and possibly elevated mutation rates in neuroendocrine-lineage genes (e.g., MEN1, DAXX, ATRX in pancreatic NETs [UNVERIFIED for GI-NETs]) could inflate apparent neural-gene signal in that cancer type stratum — mimicking the H4 neural-gene artifact.
+- If the pipeline's hypothesis:0007 covariate-association scan uses expression covariates, NET samples will produce spurious strong associations between neuroendocrine lineage genes and "neural gene" mutation patterns.
+- More directly relevant: if OncoTree codes for NET histologies are not correctly mapped and end up binned under a broad GI or "other" cancer type bucket, their constitutive expression and possibly elevated mutation rates in neuroendocrine-lineage genes (e.g., MEN1, DAXX, ATRX in pancreatic NETs [UNVERIFIED for GI-NETs]) could inflate apparent neural-gene signal in that cancer type stratum, mimicking a neural-gene lineage artifact.
 
 **Recommendation.** NET histologies should be identified via OncoTree codes (e.g., GINET, PNET, CANED, NET\_STOMACH, NET\_SI, NET\_R, SCLC-adjacent NEC codes) and treated as a sensitivity stratum in any analysis where neural/neuroendocrine-lineage gene frequency is the outcome. Excluding or separately analyzing NET-labeled studies is a prerequisite before attributing elevated neuroendocrine gene mutation frequency to a "neural regulation" mechanism in non-NET cancers.
 

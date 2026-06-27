@@ -129,19 +129,19 @@ The following genes are named in mechanistic context (not as somatic mutation da
 
 ## Relevance
 
-**This paper is the primary literature anchor for Hypothesis H1 (top-down neural circuitry hijacking).** It provides the most comprehensive and up-to-date mechanistic framing for why tumors may exploit the nervous system systemically.
+**This paper is the primary literature anchor for local Hypothesis `H1` (top-down neural circuitry hijacking).** It provides the most comprehensive and up-to-date mechanistic framing for why tumors may exploit the nervous system systemically.
 
-**H1 — Hijack top-down neural circuitry (STRONGLY supported):** The paper's entire thesis is that tumors subvert the CNS's homeostatic regulatory circuits (HPA, SAM, HSA, HPG, vagal, neuro-metabolic, neuro-immune) to create a systemic macroenvironment favorable to tumor survival. This is the strongest "top-down circuitry" framing available in the 2025 literature. The key H1 mechanism is: tumor secretes IL-6/GDF15/TNF-α → activates HPA/SAM → releases glucocorticoids/NE → remodels TME and suppresses anti-tumor immunity.
+**`H1` — Hijack top-down neural circuitry (STRONGLY supported):** The paper's entire thesis is that tumors subvert the CNS's homeostatic regulatory circuits (HPA, SAM, HSA, HPG, vagal, neuro-metabolic, neuro-immune) to create a systemic macroenvironment favorable to tumor survival. This is the strongest "top-down circuitry" framing available in the 2025 literature. The key `H1` mechanism is: tumor secretes IL-6/GDF15/TNF-α → activates HPA/SAM → releases glucocorticoids/NE → remodels TME and suppresses anti-tumor immunity.
 
-**H2 — Immune modulation (SUPPORTED as a downstream mechanism of H1):** The paper explicitly shows that neural circuits modulate immune function — NE remodels TAMs (ARG1 upregulation, IL-10 upregulation, TNF-α/IL-12 downregulation), suppresses NK cytotoxicity (perforin/granzyme B reduction), and impairs CD8+T function. Vagal/parasympathetic ACh conversely enhances anti-tumor immunity. H2 is thus mechanistically downstream of H1 in this framework: the primary signal is neural (top-down), and immune modulation is one major effector arm.
+**`H2` — Immune modulation (SUPPORTED as a downstream mechanism of `H1`):** The paper explicitly shows that neural circuits modulate immune function — NE remodels TAMs (ARG1 upregulation, IL-10 upregulation, TNF-α/IL-12 downregulation), suppresses NK cytotoxicity (perforin/granzyme B reduction), and impairs CD8+T function. Vagal/parasympathetic ACh conversely enhances anti-tumor immunity. `H2` is thus mechanistically downstream of `H1` in this framework: the primary signal is neural (top-down), and immune modulation is one major effector arm.
 
-**H3 — Aberrant developmental/oncofetal expression (PARTIALLY supported):** The paper's innervated-niche section describes brain-derived neural progenitor recruitment to tumors, and glioma cell co-option of developmental synaptic mechanisms (neuroligin-3, AMPA receptors). This suggests that neural developmental gene expression programs can be re-activated in the tumor context. However, the paper does not directly address H3 for the specific neural genes observed in the cBioPortal top-mutated gene list.
+**`H3` — Aberrant developmental/oncofetal expression (PARTIALLY supported):** The paper's innervated-niche section describes brain-derived neural progenitor recruitment to tumors, and glioma cell co-option of developmental synaptic mechanisms (neuroligin-3, AMPA receptors). This suggests that neural developmental gene expression programs can be re-activated in the tumor context. However, the paper does not directly address `H3` for the specific neural genes observed in the cBioPortal top-mutated gene list.
 
-**H4 — CNS/brain cancer artifact (PARTIALLY addressed):** The paper focuses heavily on brain tumors (glioma, GBM, brain metastases) as paradigmatic cases of neural-tumor communication but also extensively discusses peripheral tumors (PDAC, prostate, breast, colorectal). The CNS-tumor interactions described (AMPA/NMDA synapses, gliomagenesis, neurotrophic factor circuits) are mechanistically distinct from peripheral tumor neural signaling. The presence of brain-tumor studies in cBioPortal datasets could contribute elevated neural gene mutation frequencies if brain cancer studies disproportionately represent the corpus — H4 remains plausible and is not ruled out by this paper.
+**`H4` — CNS/brain cancer artifact (PARTIALLY addressed):** The paper focuses heavily on brain tumors (glioma, GBM, brain metastases) as paradigmatic cases of neural-tumor communication but also extensively discusses peripheral tumors (PDAC, prostate, breast, colorectal). The CNS-tumor interactions described (AMPA/NMDA synapses, gliomagenesis, neurotrophic factor circuits) are mechanistically distinct from peripheral tumor neural signaling. The presence of brain-tumor studies in cBioPortal datasets could contribute elevated neural gene mutation frequencies if brain cancer studies disproportionately represent the corpus — `H4` remains plausible and is not ruled out by this paper.
 
-**H5 — Misannotation (not addressed):** The paper does not discuss gene-length confounding, misannotation, or bioinformatic artifacts in mutation frequency tables.
+**`H5` — Misannotation (not addressed):** The paper does not discuss gene-length confounding, misannotation, or bioinformatic artifacts in mutation frequency tables.
 
-**Critical interpretive point for the neural-gene mutation frequency observation:** This paper's framework is almost entirely about *systemic signaling by neural circuits acting on tumors*, not about *somatic mutation of neural genes within tumors*. The mechanisms described (catecholamines, acetylcholine, neuropeptides, HPA hormones, vagal signals) operate through protein-ligand interactions, not genomic alteration. The paper does not propose, and would not predict, that the neurally-relevant genes (NKAIN2, KCNIP4, TAFA2, RIT2, CALN1, RBFOX1, LSAMP, SGCZ, OPCML) would be highly somatically mutated within tumors. Those genes would be relevant in H1 terms only if their somatic loss in tumor cells impaired a suppressive neural signal, or if they are large-exon genes (gene-length confounding, H5). The H1 hijacking reviewed here is mediated by signaling axes that do not require tumor-cell mutation of neural genes; the tumor exploits pre-existing brain-body signaling through secreted factors and nerve infiltration.
+**Critical interpretive point for the neural-gene mutation frequency observation:** This paper's framework is almost entirely about *systemic signaling by neural circuits acting on tumors*, not about *somatic mutation of neural genes within tumors*. The mechanisms described (catecholamines, acetylcholine, neuropeptides, HPA hormones, vagal signals) operate through protein-ligand interactions, not genomic alteration. The paper does not propose, and would not predict, that the neurally-relevant genes (NKAIN2, KCNIP4, TAFA2, RIT2, CALN1, RBFOX1, LSAMP, SGCZ, OPCML) would be highly somatically mutated within tumors. Those genes would be relevant in `H1` terms only if their somatic loss in tumor cells impaired a suppressive neural signal, or if they are large-exon genes (gene-length confounding, `H5`). The `H1` hijacking reviewed here is mediated by signaling axes that do not require tumor-cell mutation of neural genes; the tumor exploits pre-existing brain-body signaling through secreted factors and nerve infiltration.
 
 **No data-driven definition of "neural genes" is provided.** The review classifies genes by functional role (neurotransmitter receptor, neuropeptide, synaptic molecule) drawn from neuroscience literature, not from a systematic transcriptomic or genomic analysis of gene expression in tumors vs normal brain.
 
@@ -153,11 +153,11 @@ The following genes are named in mechanistic context (not as somatic mutation da
 | β-adrenergic signaling (ADRB2/ADRB3 somatic mutation?) | Gene-frequency table: ADRB2, ADRB3 | Check mutation frequency; PNI mechanism but rarely somatically mutated |
 | Perineural invasion (PNI) | No current pipeline annotation | PNI status not in standard cBioPortal clinical fields |
 | Innervated niche (SVZ neural progenitor recruitment) | TME composition covariate | Not in current pipeline scope |
-| Glioma/GBM synaptic signaling (AMPA, NMDA) | Brain cancer subset in study list | If GBM studies are over-represented, neural gene signal is partially H4 artifact |
+| Glioma/GBM synaptic signaling (AMPA, NMDA) | Brain cancer subset in study list | If GBM studies are over-represented, neural gene signal is partially `H4` artifact |
 | Vagal stimulation → anti-tumor immunity | No pipeline analog | Therapeutic not observational; not a genomic covariate |
 | Neural gene circuit members (NGFR, BDNF, CHRNA7) | Candidate neural-gene list | Not top-mutated in our pipeline; relevant as signaling context not somatic drivers |
-| Cancer neuroscience (Monje field) | Background hypothesis H1 | Direct literature anchor for H1 framing |
-| Gene-length confound (not addressed) | Core pipeline concern (H5) | Large neural genes (NKAIN2, RBFOX1, LSAMP) are long; confounding unaddressed here |
+| Cancer neuroscience (Monje field) | Background hypothesis `H1` | Direct literature anchor for `H1` framing |
+| Gene-length confound (not addressed) | Core pipeline concern (`H5`) | Large neural genes (NKAIN2, RBFOX1, LSAMP) are long; confounding unaddressed here |
 
 ## Limitations
 
@@ -185,19 +185,19 @@ No software tool, model, or dataset is released with this review. Table 1 catalo
 ## Follow-up
 
 **Papers to read next (in this batch or subsequent):**
-- Magnon 2023 (neural addiction of cancer; Nat Rev Cancer) — mechanistic complement for the PNI and autonomic nerve-driven tumor progression claims
-- Hanahan 2023 (cancer hallmarks; Cell) — the "tumor neuroscience" hallmark framing that Wang 2025 extends
-- Venkatesh 2019 (Nat Med; glioma-neuron synapse) — primary paper behind the AMPA receptor and neuroligin-3 findings cited repeatedly here
-- Mravec 2008 (brain-tumor neural regulation) — historical context for the HPA/autonomic axis claims
-- Mancusi 2023 and Keough 2022 — for context on nervous system gene expression in tumor cells vs stromal cells
+- Magnon and Hondermarck [@Magnon2023] (neural addiction of cancer; *Nature Reviews Cancer*) — mechanistic complement for the PNI and autonomic nerve-driven tumor progression claims.
+- Hanahan and Monje [@Hanahan2023] (cancer hallmarks; *Cell*) — the "tumor neuroscience" hallmark framing that Wang et al. [@Wang2025b] extends.
+- Venkatesh [@Venkatesh2019] (*Science*; glioma-neuron synapse) — primary paper behind the AMPA receptor and neuroligin-3 findings cited repeatedly here.
+- Mravec et al. [@Mravec2008] (brain-tumor neural regulation) — historical context for the HPA/autonomic axis claims.
+- Mancusi and Monje [@Mancusi2023] and Keough and Monje [@Keough2022] — for context on nervous system gene expression in tumor cells vs stromal cells.
 
 **Testable questions for the cbioportal project:**
 
-1. **Are the top-mutated neural genes (NKAIN2, KCNIP4, RBFOX1, LSAMP, SGCZ, OPCML) large-exon genes?** If yes, gene-length normalization (by coding sequence length or exon count) should dramatically reduce their apparent mutation frequency — H5 (misannotation/length confound) is the null. Check against UniProt protein lengths already in `data/uniprotkb_hsapiens_protein_lengths.tsv.gz`.
+1. **Are the top-mutated neural genes (NKAIN2, KCNIP4, RBFOX1, LSAMP, SGCZ, OPCML) large-exon genes?** If yes, gene-length normalization (by coding sequence length or exon count) should dramatically reduce their apparent mutation frequency — `H5` (misannotation/length confound) is the null. Check against UniProt protein lengths already in `data/uniprotkb_hsapiens_protein_lengths.tsv.gz`.
 
-2. **Do the top-mutated neural genes correlate with CNS/brain cancer study enrichment?** If GBM, LGG, or brain-metastasis-enriched studies are over-represented in the cBioPortal corpus, the H4 artifact hypothesis predicts the neural gene signal should diminish when those studies are excluded. Test by computing gene-mutation frequency with vs without brain cancer studies.
+2. **Do the top-mutated neural genes correlate with CNS/brain cancer study enrichment?** If GBM, LGG, or brain-metastasis-enriched studies are over-represented in the cBioPortal corpus, the `H4` artifact hypothesis predicts the neural gene signal should diminish when those studies are excluded. Test by computing gene-mutation frequency with vs without brain cancer studies.
 
-3. **Are ADRB2/ADRB3 somatically mutated at elevated frequency in any cancer type?** Wang 2025 highlights ADRB2/ADRB3 as mechanistically central to pro-tumor sympathetic signaling. If these genes appear at high somatic mutation frequency, it could support H1 (tumors mutating signaling axes to constitutively activate them) rather than H5.
+3. **Are ADRB2/ADRB3 somatically mutated at elevated frequency in any cancer type?** Wang et al. [@Wang2025b] highlight ADRB2/ADRB3 as mechanistically central to pro-tumor sympathetic signaling. If these genes appear at high somatic mutation frequency, it could support `H1` (tumors mutating signaling axes to constitutively activate them) rather than `H5`.
 
 4. **Does CHRNA7 (α7nAChR) mutation correlate with reduced immune infiltration proxies?** Given its anti-tumor role, somatic CHRNA7 loss could be a mechanism of immune evasion. Testable using TMB or mutation burden as a surrogate.
 
@@ -209,4 +209,4 @@ No software tool, model, or dataset is released with this review. Table 1 catalo
 - Allen Brain Atlas expression data — genes with high brain-specific expression
 - Human Protein Atlas "tissue specificity" annotations (Brain category)
 - Reactome pathways: "Neuronal system", "Transmission across chemical synapses", "Axon guidance"
-- None of these provide a somatic-mutation-context definition; a data-driven definition requires comparing tumor vs matched normal transcriptomes to identify neural program re-activation (H3) — outside this paper's scope
+- None of these provide a somatic-mutation-context definition; a data-driven definition requires comparing tumor vs matched normal transcriptomes to identify neural program re-activation (`H3`) — outside this paper's scope.

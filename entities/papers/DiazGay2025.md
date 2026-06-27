@@ -86,11 +86,11 @@ This study applies whole-genome sequencing to 981 colorectal cancer genomes from
 
 ## Relevance
 
-**Connection to h08 (agnostic covariate-signature association):** This paper is a premier exemplar of the "mutational epidemiology" approach that h08 aims to operationalize: systematic, regression-based association of external covariates (geography, age at diagnosis, country-level incidence rates) with mutational signature exposures. Key connections:
+**Connection to hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and (agnostic covariate-signature association):** This paper is a premier exemplar of the "mutational epidemiology" approach that hypothesis:0007 aims to operationalize: systematic, regression-based association of external covariates (geography, age at diagnosis, country-level incidence rates) with mutational signature exposures. Key connections:
 
-- **Positive control recovery:** The study successfully recovers known causal exposures (colibactin → SBS88/ID18 enriched in younger patients with higher-incidence colorectal cancer) using multivariable regression adjusted for known confounders — exactly the validation strategy h08 requires for UV/smoking/APOBEC/MMR signatures.
-- **Covariate adjustment strategy:** Geographic/demographic covariates (sex, country, tumour subsite, purity, age) are systematically included as adjustment variables in all regression models, illustrating how confounding can be controlled in multi-population covariate-signature association studies. This is directly relevant to the design of the agnostic covariate screen in h08.
-- **Novel signature discovery via geography:** Multiple signatures of unknown aetiology (SBS89/DBS8/ID_J in Argentina; SBS94/SBS_F/DBS6 in Colombia) are identified through geographic enrichment analysis, showing that covariate-driven screens can implicate new mutational processes — a key motivation for h08.
+- **Positive control recovery:** The study successfully recovers known causal exposures (colibactin → SBS88/ID18 enriched in younger patients with higher-incidence colorectal cancer) using multivariable regression adjusted for known confounders — exactly the validation strategy hypothesis:0007 requires for UV/smoking/APOBEC/MMR signatures.
+- **Covariate adjustment strategy:** Geographic/demographic covariates (sex, country, tumour subsite, purity, age) are systematically included as adjustment variables in all regression models, illustrating how confounding can be controlled in multi-population covariate-signature association studies. This is directly relevant to the design of the agnostic covariate screen in hypothesis:0007.
+- **Novel signature discovery via geography:** Multiple signatures of unknown aetiology (SBS89/DBS8/ID_J in Argentina; SBS94/SBS_F/DBS6 in Colombia) are identified through geographic enrichment analysis, showing that covariate-driven screens can implicate new mutational processes — a key motivation for hypothesis:0007.
 - **Benchmark for APOBEC:** SBS2/SBS13 enrichment in Russia and expected age-associations of clock-like SBS1/SBS5 serve as positive controls demonstrating that known aetiology-exposure links are recoverable in this framework.
 - **Cross-study meta-analysis relevance:** The study's aggregation of multiple country-cohorts into one unified signature analysis parallels the cross-study aggregation performed by this project (cBioPortal meta-analysis). It demonstrates that heterogeneous cohort-level covariates can be harmonized for joint signature-association analysis, suggesting that cross-study cancer-type and study-design covariates could be similarly leveraged.
 - **Colibactin as case study:** The timing and driver-mutation analyses illustrate how signature exposures (early-life colibactin) propagate into driver gene mutations (APC indels), connecting signature biology to cancer gene mutation frequencies tracked by this project's pipeline.
@@ -100,11 +100,11 @@ This study applies whole-genome sequencing to 981 colorectal cancer genomes from
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
 | Geographic signature variation (country-level) | Cross-study signature prevalence variation | Equivalent; country maps to study in our context |
-| ASR (age-standardized incidence rate) as covariate | External covariate for signature association | Exactly the agnostic-covariate design in h08 |
-| Multivariable logistic/linear regression per signature | Association test in h08 screen | BH-corrected, adjusted for confounders |
-| SBS88 / ID18 (colibactin) as early-life imprint | Persistent signature exposure detectable in tumours | Relevant to normal-tissue mutation background (h05) |
+| ASR (age-standardized incidence rate) as covariate | External covariate for signature association | Exactly the agnostic-covariate design in hypothesis:0007 |
+| Multivariable logistic/linear regression per signature | Association test in hypothesis:0007 screen | BH-corrected, adjusted for confounders |
+| SBS88 / ID18 (colibactin) as early-life imprint | Persistent signature exposure detectable in tumours | Relevant to normal-tissue mutation background (hypothesis:0005-healthy-somatic-background-atlas) |
 | pks+ bacteria microbiome status | Environmental exposure proxy | Shows microbiome assay ≠ historical exposure |
-| IntOGen driver gene detection | Driver gene identification (Bailey 2018 overlay) | Partially overlapping gene sets |
+| IntOGen driver gene detection | Driver gene identification (Bailey overlay [@Bailey2018]) | Partially overlapping gene sets |
 
 ## Limitations
 
@@ -127,5 +127,5 @@ This study applies whole-genome sequencing to 981 colorectal cancer genomes from
 
 - Read complementary normal-tissue colibactin study (referenced as Alexandrov et al. showing SBS88/ID18 in normal colorectal crypts).
 - Examine SBS89's possible microbiome origin — the paper speculates it may be a second microbiome-derived mutagen with Argentina-specific exposure.
-- Consider whether the cross-study cBioPortal meta-analysis can recover country-level SBS88 enrichment using publicly available genomic data, connecting the pipeline's aggregated mutation frequencies to epidemiological covariate screens (h08).
+- Consider whether the cross-study cBioPortal meta-analysis can recover country-level SBS88 enrichment using publicly available genomic data, connecting the pipeline's aggregated mutation frequencies to epidemiological covariate screens (hypothesis:0007).
 - Assess whether colibactin-associated APC indel enrichment is detectable in cBioPortal CRC studies through the ID18-signature mutation profile (T deletions in repetitive regions).

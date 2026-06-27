@@ -183,7 +183,7 @@ tissue changes accumulating in older patients.
 
 ## Relevance
 
-### Critical methodological caveat for q042
+### Critical methodological caveat for question:0042
 
 This paper delivers a direct, quantitative warning for the design of
 `question:0042-driver-normal-expression-tissue-cell-type-specificity`. Because tumors
@@ -200,7 +200,7 @@ Concretely:
   inverted.
 - The correct reference is a **normal tissue or cell-type expression atlas** — GTEx (which
   this paper itself uses), Human Protein Atlas, Tabula Sapiens, or similar. The Tau index
-  applied to GTEx is exactly what q042's proposed Tau-based normal-expression specificity
+  applied to GTEx is exactly what question:0042's proposed Tau-based normal-expression specificity
   metric should be built on, and this paper validates that design choice directly.
 
 The effect sizes reported (20.5%–51.3% of tissue-specific genes downregulated per cancer,
@@ -220,7 +220,7 @@ from `hypothesis:0012-neural-gene-enrichment-length-histology-artifact` (that ec
 expression is a general cancer-biology property rather than a neural-specific one). Neural
 developmental genes, being among the many categories of tissue-specific or normally-silent
 genes in non-neural tissues, would be expected to appear in the "Tissue-Unexpressed
-upregulated" set for a wide range of cancer types — exactly the confound h12 is concerned
+upregulated" set for a wide range of cancer types — exactly the confound hypothesis:0012 is concerned
 about.
 
 ### Connection to lineage addiction
@@ -236,7 +236,7 @@ programs may have a narrower therapeutic window as tumor dedifferentiation progr
 ### Ageing arm: separate from cancer, but relevant to project scope
 
 The 40%-of-tissues ageing finding is interesting context for `topic:cancer-driver-genes` but
-is not a direct methodological input to q042. The key comparison is that ageing shows
+is not a direct methodological input to question:0042. The key comparison is that ageing shows
 downregulation of tissue-specific genes *without* the robust gain of ectopic/unexpressed gene
 expression that characterizes cancer. This divergence argues against the simplest hypothesis
 that "old patients just have more dedifferentiated tumors" — the cancer loss-of-identity
@@ -246,7 +246,7 @@ process is age-independent.
 
 | Paper Concept | Project Concept / Analysis Hook | Notes |
 |---|---|---|
-| Tau index (GTEx-based) | Normal-expression tissue-specificity metric for q042 | Direct methodological match; this paper validates Tau as the right measure |
+| Tau index (GTEx-based) | Normal-expression tissue-specificity metric for question:0042 | Direct methodological match; this paper validates Tau as the right measure |
 | Downregulation of Tissue-Specific genes in tumor | Loss-of-identity baseline | Quantifies magnitude: 20.5%–51.3% of tissue-specific genes lost per cancer type |
 | Upregulation of Tissue-Unexpressed genes | Ectopic activation / oncofetal reactivation | GO terms include embryogenesis — connects to oncofetal topic |
 | Upregulation of High Tissue Specificity genes from other tissues | Cross-lineage contamination | No obvious single target tissue; generalized instability |
@@ -317,22 +317,22 @@ but the pipeline is described in sufficient detail to reproduce.
 
 ### Open questions this paper raises for the project
 
-1. **q042 reference-expression design confirmation.** This paper provides formal justification
-   to use GTEx/HPA Tau as the specificity metric for q042 rather than any tumor-derived
-   expression reference. The q042 write-up should cite dosSantos2023 explicitly for this
+1. **question:0042 reference-expression design confirmation.** This paper provides formal justification
+   to use GTEx/HPA Tau as the specificity metric for question:0042 rather than any tumor-derived
+   expression reference. The question:0042 write-up should cite dosSantos2023 explicitly for this
    design choice.
 
 2. **Ectopic expression as confounder for neural gene enrichment.** If upregulated
    Tissue-Unexpressed genes in non-neural tumors include neural developmental genes (plausible
    given the embryogenesis GO terms), this would create a systematic false-positive signal in
    any pan-cancer "neural gene" analysis that uses tumor expression rather than mutation data.
-   This is a refined version of the h12 concern: even mutation-frequency analyses are not
+   This is a refined version of the hypothesis:0012 concern: even mutation-frequency analyses are not
    immune if the gene expression patterns drive selection for somatic events at ectopically
    expressed loci.
 
 3. **Which cancer types lose identity fastest?** The range 20.5% (THCA) to 51.3% (KIRC)
    suggests substantial inter-cancer variation. Cancers with the strongest identity loss might
-   be those most prone to false-positive tissue-specificity assignments in q042 if tumor
+   be those most prone to false-positive tissue-specificity assignments in question:0042 if tumor
    expression were naively used.
 
 4. **Survival signature validation.** Testing whether the Tissue-Unexpressed upregulation

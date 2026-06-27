@@ -16,10 +16,10 @@ related:
 dataset_usage:
 - ref: dataset:somamutdb
   role: analyzed
-  overlap: unknown
+  overlap: full
 - ref: dataset:pcawg
   role: analyzed
-  overlap: unknown
+  overlap: full
 ---
 
 # Mutational signatures association with replication timing in normal cells reveals similarities and differences with matched cancer tissues

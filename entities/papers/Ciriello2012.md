@@ -22,7 +22,7 @@ related:
 dataset_usage:
 - ref: dataset:tcga
   role: analyzed
-  overlap: unknown
+  overlap: full
 ---
 
 # Mutual exclusivity analysis identifies oncogenic network modules

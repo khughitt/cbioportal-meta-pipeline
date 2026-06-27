@@ -1,3 +1,6 @@
+# science:code
+# status: exploratory
+# science:end
 """t218 — CNS-exclusion + WES-restriction + panel-membership stratification for neural enrichment.
 
 Question: q033 (CNS exclusion) / hypothesis h12-neural-gene-enrichment-length-histology-artifact.
@@ -50,6 +53,8 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 
+PACKAGE_ROOT = Path("/") / "data" / "packages" / "cbioportal"
+
 CANDIDATES = [
     "NKAIN2",
     "KCNIP4",
@@ -68,12 +73,12 @@ _NONSTUDY_EXACT = {"mean", "mean_adj"}
 _NONSTUDY_PREFIXES = ("mean_", "n_", "callable_")
 
 CONFIGS = {
-    "full": "/data/packages/cbioportal/full/summary/mut/table",
-    "pan-cancer": "/data/packages/cbioportal/pan-cancer/summary/mut/table",
+    "full": PACKAGE_ROOT / "full/summary/mut/table",
+    "pan-cancer": PACKAGE_ROOT / "pan-cancer/summary/mut/table",
 }
 REPTIMING = Path("data/gene_replication_timing.feather")
 GENIE_COV = Path(
-    "/data/packages/cbioportal/pan-cancer/metadata/genie_panel_coverage.feather"
+    PACKAGE_ROOT / "pan-cancer/metadata/genie_panel_coverage.feather"
 )
 OUT = Path("results/neural-gene-cns-wes-2026-06-08")
 

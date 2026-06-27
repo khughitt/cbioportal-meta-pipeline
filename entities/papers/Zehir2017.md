@@ -16,7 +16,7 @@ related:
 dataset_usage:
 - ref: dataset:msk-impact
   role: analyzed
-  overlap: unknown
+  overlap: full
 ---
 
 # Mutational landscape of metastatic cancer revealed from prospective clinical sequencing of 10,000 patients

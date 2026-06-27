@@ -3,9 +3,10 @@ type: dataset
 title: Constitutive replication-timing regions (human hg19 / GRCh37)
 status: active
 created: '2026-04-22'
-updated: '2026-04-22'
+updated: '2026-06-27'
 id: dataset:replication-timing-constitutive-regions
 source_class: reference
+local_path: data/replication_timing_constitutive_bins.feather
 source_refs:
 - paper:Yaacov2023
 related:

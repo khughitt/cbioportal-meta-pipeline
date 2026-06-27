@@ -6,6 +6,7 @@ created: '2026-04-24'
 updated: '2026-04-24'
 id: pre-registration:0002-pre-registration-t126-per-study-aggregate-sbs1-lrr-bias-test
 committed: '2026-04-24'
+spec: ''
 source_refs:
 - paper:Yaacov2023
 - paper:Alexandrov2020

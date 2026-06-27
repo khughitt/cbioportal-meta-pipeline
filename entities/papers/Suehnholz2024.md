@@ -17,10 +17,10 @@ related:
 dataset_usage:
 - ref: dataset:msk-impact
   role: analyzed
-  overlap: unknown
+  overlap: full
 - ref: dataset:oncokb
   role: analyzed
-  overlap: unknown
+  overlap: full
 ---
 
 # Quantifying the Expanding Landscape of Clinical Actionability for Patients with Cancer

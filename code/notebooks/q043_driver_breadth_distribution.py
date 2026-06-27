@@ -1,3 +1,6 @@
+# science:code
+# status: exploratory
+# science:end
 """q043 — driver cancer-type-breadth distribution (first pass on the poc-2026-04-17 cohort).
 
 Question: q043-driver-cancer-type-breadth-distribution.

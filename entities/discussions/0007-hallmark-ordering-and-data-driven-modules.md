@@ -184,6 +184,12 @@ heterogeneity) but does not remove these.
 - The temporal-evolution paper's genome-instability-first / immune-evasion-last result is a
   **free external calibration check** for any ordering we recover.
 
+## Evidence Needed
+
+- Corrected co-occurrence and mutual-exclusivity outputs are needed before inferring label-free modules; the pairwise association layer is not itself a module partition.
+- Per-histology MHN or equivalent ordering fits need CCF/VAF sensitivity checks, hypermutator stratification, and callability correction before any hallmark-order claim is interpreted.
+- External calibration should compare inferred module orderings against published hallmark-order results without treating those papers as ground truth.
+
 ## Prioritized Follow-Ups
 
 | Priority | Action | Why | Dependencies |

@@ -72,3 +72,23 @@ null-first `hypothesis:0012` and the canonical-effector dN/dS test (`question:00
   and brain atlases (`question:0035`).
 - Whether enrichment survives CNS-study removal (`question:0033`) — peripheral-cancer biology is
   real (see `topic:perineural-invasion-axon-guidance-genes`) but still non-mutational.
+
+## Summary
+
+This topic note is currently a concise project-facing record; the existing sections above carry the substantive synthesis until a fuller rewrite is warranted.
+
+## Key Concepts
+
+The key concepts are defined in the existing prose above and in the linked project entities; this section is present to keep the topic aligned with the current Science topic template.
+
+## Current State of Knowledge
+
+The current project-facing state of knowledge is summarized in the existing prose above. No additional confidence upgrade is made by this structural section.
+
+## Relevance to This Project
+
+This topic is relevant through the linked questions, hypotheses, datasets, and source references in the frontmatter and in the note above.
+
+## Key References
+
+Key references are listed in `source_refs` and cited in the note above.

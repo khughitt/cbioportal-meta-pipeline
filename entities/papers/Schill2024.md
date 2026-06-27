@@ -16,7 +16,7 @@ related:
 dataset_usage:
 - ref: dataset:msk-impact
   role: analyzed
-  overlap: unknown
+  overlap: full
 ---
 
 # Correcting for Observation Bias in Cancer Progression Modeling

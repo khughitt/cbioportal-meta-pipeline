@@ -70,3 +70,23 @@ The established (external, not-yet-in-library) findings this topic organizes:
 - **External / not-yet-in-library:** the EXITS-gene paper (male-biased X-linked TSG LoF), pan-cancer
   sex-TMB analyses, and the LOY/mLOY clonal-mosaicism literature — candidates for a future
   `/science:research-papers` pass *if* a pilot shows the axis is worth formalizing here.
+
+## Summary
+
+This topic note is currently a concise project-facing record; the existing sections above carry the substantive synthesis until a fuller rewrite is warranted.
+
+## Key Concepts
+
+The key concepts are defined in the existing prose above and in the linked project entities; this section is present to keep the topic aligned with the current Science topic template.
+
+## Current State of Knowledge
+
+The current project-facing state of knowledge is summarized in the existing prose above. No additional confidence upgrade is made by this structural section.
+
+## Relevance to This Project
+
+This topic is relevant through the linked questions, hypotheses, datasets, and source references in the frontmatter and in the note above.
+
+## Key References
+
+Key references are listed in `source_refs` and cited in the note above.

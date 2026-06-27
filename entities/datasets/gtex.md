@@ -3,9 +3,10 @@ type: dataset
 title: GTEx
 status: active
 created: '2026-05-30'
-updated: '2026-05-30'
+updated: '2026-06-27'
 id: dataset:gtex
 source_class: observational
+local_path: /data/raw/gtex
 source_refs:
 - paper:Gao2023
 - paper:Xu2025

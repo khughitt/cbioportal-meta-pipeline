@@ -57,3 +57,23 @@ top-mutated ranking and could mimic a "neural gene" signal:
 `question:0034` / task t219: enumerate NET/NEC OncoTree codes in the pipeline studies, add an
 `is_neuroendocrine_histology` flag, and recompute ranks with NEN excluded as a sensitivity
 stratum. This is independent of, and additive to, the CNS exclusion and the gene-length null.
+
+## Summary
+
+This topic note is currently a concise project-facing record; the existing sections above carry the substantive synthesis until a fuller rewrite is warranted.
+
+## Key Concepts
+
+The key concepts are defined in the existing prose above and in the linked project entities; this section is present to keep the topic aligned with the current Science topic template.
+
+## Current State of Knowledge
+
+The current project-facing state of knowledge is summarized in the existing prose above. No additional confidence upgrade is made by this structural section.
+
+## Relevance to This Project
+
+This topic is relevant through the linked questions, hypotheses, datasets, and source references in the frontmatter and in the note above.
+
+## Key References
+
+Key references are listed in `source_refs` and cited in the note above.

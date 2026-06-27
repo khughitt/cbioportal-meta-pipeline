@@ -1,9 +1,9 @@
 ---
 type: dataset
 title: Human Protein Atlas (tissue specificity)
-status: proposed
+status: candidate
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-27'
 id: dataset:human-protein-atlas
 source_class: observational
 source_refs:

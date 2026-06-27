@@ -3,10 +3,11 @@ type: dataset
 title: Processed driver and pathway overlay registry
 status: active
 created: '2026-05-31'
-updated: '2026-05-31'
+updated: '2026-06-27'
 id: dataset:data-driver-overlay-registry
 source_class: derived
 derived_kind: transform
+local_path: /data/packages/cbioportal/pan-cancer/metadata
 source_refs:
 - paper:Bailey2018
 - paper:SanchezVega2018

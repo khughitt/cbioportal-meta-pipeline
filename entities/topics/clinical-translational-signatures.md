@@ -126,3 +126,7 @@ The 10 mut/Mb FDA cut-off receives mixed clinical validation. Panel size, tumour
 - paper:Levatic2022 — ancestry-corrected cell-line signatures predict drug sensitivity; 290 replicated signature–drug associations; methodological template for cross-study replication
 - paper:Alexandrov2015 — Signature 3 (HRD) in gastric cancer at 7-12%, independent of BRCA1/2; ground-truth positive-control data point for an h08 gastric subanalysis
 - paper:Ostroverkhova2023 — driver-detection methods review; establishes bidirectionality of signature–driver hotspot links and validates APOBEC3B↔SBS2/13 as H08 Prediction 2
+
+## Relevance to This Project
+
+This topic is relevant through the linked questions, hypotheses, datasets, and source references in the frontmatter and in the note above.

@@ -1,9 +1,9 @@
 ---
 type: dataset
 title: AACR Project GENIE BPC (Biopharma Collaborative, PRISSMM)
-status: active
+status: candidate
 created: '2026-05-30'
-updated: '2026-05-30'
+updated: '2026-06-27'
 id: dataset:aacr-genie-bpc
 source_class: observational
 source_refs:

@@ -3,10 +3,11 @@ type: dataset
 title: Canonical annotated gene-cancer study ratio product
 status: active
 created: '2026-05-02'
-updated: '2026-05-02'
+updated: '2026-06-27'
 id: dataset:gene-cancer-study-ratio-annotated-product
 source_class: derived
 derived_kind: aggregate
+local_path: /data/packages/cbioportal/pan-cancer/summary/mut/table/gene_cancer_study_ratio_annotated.feather
 ontology_terms:
 - somatic mutation
 - mutation frequency

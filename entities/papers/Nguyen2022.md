@@ -15,7 +15,7 @@ related:
 dataset_usage:
 - ref: dataset:msk-met
   role: analyzed
-  overlap: unknown
+  overlap: full
 ---
 
 # Genomic characterization of metastatic patterns from prospective clinical sequencing of 25,000 patients

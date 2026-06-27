@@ -3,10 +3,11 @@ type: dataset
 title: Generated cBioPortal per-study mutation clean-base substrates
 status: active
 created: '2026-05-31'
-updated: '2026-05-31'
+updated: '2026-06-27'
 id: dataset:data-cbioportal-per-study-mutation-cleanbase
 source_class: derived
 derived_kind: transform
+local_path: /data/packages/cbioportal/pan-cancer/studies
 related:
 - dataset:cbioportal
 - dataset:tcga-mc3

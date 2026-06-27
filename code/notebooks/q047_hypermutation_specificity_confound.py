@@ -1,3 +1,6 @@
+# science:code
+# status: exploratory
+# science:end
 """q047 — hypermutation as a confound on driver tissue-specificity (poc-2026-04-17 cohort).
 
 Question: q047-hypermutation-confound-on-driver-tissue-specificity.

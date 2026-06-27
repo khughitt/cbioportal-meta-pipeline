@@ -208,3 +208,7 @@ The MVK model is a mathematical framework derived in Moolgavkar & Venzon 1979 (M
 - **Luebeck & Moolgavkar 2002** (Proc Natl Acad Sci) — later multi-stage TSCE extension fitting colorectal adenoma→carcinoma progression.
 - **Do the cross-study mutation-frequency differences in the cbioportal pipeline correlate with tissue-specific stem-cell division rates?** The MVK model predicts they should, and publicly available tissue stem-cell division rate estimates (Tomasetti & Vogelstein 2015) could be used to test this.
 - **Is there a way to infer net clonal expansion rates from multi-study VAF distributions in the pipeline outputs?** VAF distributions in cBioPortal MAFs might carry partial signal for this, though panel-sequencing data are noisy and clonal-expansion inference would require careful modelling of sampling depth and tumour purity.
+
+## Relevance
+
+This paper informs the linked topic and question context in the frontmatter. No additional interpretation is added here beyond the summary above.

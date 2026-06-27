@@ -370,3 +370,11 @@ Studies/resources discussed in this topic (not yet first-class `dataset:` entiti
 - cBioPortal (~300 studies)
 - PCAWG
 - COSMIC v3.x
+
+## Current State of Knowledge
+
+The current project-facing state of knowledge is summarized in the existing prose above. No additional confidence upgrade is made by this structural section.
+
+## Relevance to This Project
+
+This topic is relevant through the linked questions, hypotheses, datasets, and source references in the frontmatter and in the note above.

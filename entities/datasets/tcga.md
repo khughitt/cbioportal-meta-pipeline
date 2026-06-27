@@ -3,9 +3,10 @@ type: dataset
 title: The Cancer Genome Atlas (TCGA)
 status: active
 created: '2026-05-30'
-updated: '2026-05-30'
+updated: '2026-06-27'
 id: dataset:tcga
 source_class: observational
+local_path: /data/raw/cbioportal
 source_refs:
 - paper:Kim2017
 - paper:Ciriello2012

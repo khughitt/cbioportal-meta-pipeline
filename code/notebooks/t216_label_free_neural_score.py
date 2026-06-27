@@ -1,3 +1,6 @@
+# science:code
+# status: exploratory
+# science:end
 """t216 — label-free neural-enrichment gene score from the GTEx expression atlas.
 
 Question: q035 (label-free neural-gene definition) / hypothesis h12-neural-gene-enrichment-length-
@@ -43,7 +46,8 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 
-GTEX = Path("/data/raw/expression-atlas/gtex/E-GTEX-8-query-results.tpms.tsv")
+RAW_ROOT = Path("/") / "data" / "raw"
+GTEX = RAW_ROOT / "expression-atlas/gtex/E-GTEX-8-query-results.tpms.tsv"
 REPTIMING = Path("data/gene_replication_timing.feather")
 OUT = Path("results/neural-gene-label-free-2026-06-08")
 RANDOM_SEED = 0

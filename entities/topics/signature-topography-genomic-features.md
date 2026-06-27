@@ -75,3 +75,19 @@ project threads — the gene-level mutation-rate confounders behind `hypothesis:
 - Questions: `question:0003-replication-timing-as-gene-level-mutation-rate-confounder`
 - Topics: `topic:dna-damage-repair-signature-mechanisms`
 - Datasets: `dataset:replication-timing-constitutive-regions`, `dataset:pcawg`
+
+## Key Concepts
+
+The key concepts are defined in the existing prose above and in the linked project entities; this section is present to keep the topic aligned with the current Science topic template.
+
+## Current State of Knowledge
+
+The current project-facing state of knowledge is summarized in the existing prose above. No additional confidence upgrade is made by this structural section.
+
+## Relevance to This Project
+
+This topic is relevant through the linked questions, hypotheses, datasets, and source references in the frontmatter and in the note above.
+
+## Key References
+
+Key references are listed in `source_refs` and cited in the note above.

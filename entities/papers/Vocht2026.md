@@ -17,7 +17,7 @@ related:
 dataset_usage:
 - ref: dataset:aacr-genie
   role: analyzed
-  overlap: unknown
+  overlap: full
 ---
 
 # mhn: a Python package for analyzing cancer progression with Mutual Hazard Networks

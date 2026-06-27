@@ -122,6 +122,12 @@ specificity score must be computed on a **normal** reference, never tumor RNA.
 - **`hypothesis:0003`** — the length null and annotation-attention bias apply directly.
 - **`topic:cancer-driver-genes` / `paper:MartinezJimenez2020`** — the driver-definition backbone.
 
+## Evidence Needed
+
+- A normal-expression reference at tissue and preferably cell-type grain is required before testing driver specificity; tumor RNA is not an adequate substitute.
+- Driver rosters need to distinguish cancer-type-restricted oncogenes, pan-cancer drivers, and broad tumor suppressors before comparing specificity distributions.
+- The enrichment test should use length- and expression-matched backgrounds so a neural/lineage signal is not just a gene-length or low-expression artifact.
+
 ## Prioritized Follow-Ups
 
 | Priority | Item | Where |

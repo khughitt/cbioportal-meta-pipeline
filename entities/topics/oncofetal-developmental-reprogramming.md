@@ -68,3 +68,23 @@ label-free neural-gene definition (`question:0035`), complementing adult tissue-
 ## Datasets
 
 BrainSpan, Allen Developing Human Brain Atlas, Human Cell Atlas fetal, GTEx fetal-vs-adult.
+
+## Summary
+
+This topic note is currently a concise project-facing record; the existing sections above carry the substantive synthesis until a fuller rewrite is warranted.
+
+## Key Concepts
+
+The key concepts are defined in the existing prose above and in the linked project entities; this section is present to keep the topic aligned with the current Science topic template.
+
+## Current State of Knowledge
+
+The current project-facing state of knowledge is summarized in the existing prose above. No additional confidence upgrade is made by this structural section.
+
+## Relevance to This Project
+
+This topic is relevant through the linked questions, hypotheses, datasets, and source references in the frontmatter and in the note above.
+
+## Key References
+
+Key references are listed in `source_refs` and cited in the note above.

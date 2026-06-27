@@ -1,3 +1,6 @@
+# science:code
+# status: exploratory
+# science:end
 """t217 — genomic-span / common-fragile-site null test for neural-gene mutation enrichment.
 
 Question: q032 (neural-gene length null) / hypothesis h12-neural-gene-enrichment-length-histology-artifact.
@@ -41,6 +44,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 from scipy import stats
+
+PACKAGE_ROOT = Path("/") / "data" / "packages" / "cbioportal"
 
 # --- candidate set (FAM19A2 is the pipeline symbol; TAFA2 is the HGNC primary) ---
 CANDIDATES = [
@@ -108,13 +113,13 @@ _NONSTUDY_EXACT = {"mean", "mean_adj"}
 _NONSTUDY_PREFIXES = ("mean_", "n_", "callable_")
 
 CONFIGS = {
-    "full": "/data/packages/cbioportal/full/summary/mut/table",
-    "pan-cancer": "/data/packages/cbioportal/pan-cancer/summary/mut/table",
+    "full": PACKAGE_ROOT / "full/summary/mut/table",
+    "pan-cancer": PACKAGE_ROOT / "pan-cancer/summary/mut/table",
 }
 REPTIMING = Path("data/gene_replication_timing.feather")
 UNIPROT = Path("data/uniprotkb_hsapiens_protein_lengths.tsv.gz")
 DNDSCV = Path(
-    "/data/packages/cbioportal/pan-cancer/summary/mut/table/dndscv_pooled.feather"
+    PACKAGE_ROOT / "pan-cancer/summary/mut/table/dndscv_pooled.feather"
 )
 OUT = Path("results/neural-gene-span-null-2026-06-08")
 

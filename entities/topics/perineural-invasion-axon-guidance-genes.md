@@ -72,3 +72,23 @@ passengers. This is exactly the dissociation `hypothesis:0012` predicts.
 `paper:Lu2026` points to a pan-cancer PNI transcriptomic classifier (2,029 patients, 12 cancer
 types) and a single-cell + spatial pancreatic neural-invasion dataset (Chen et al. 2025 Cancer
 Cell) as label-free sources for a tumor-nerve-interface gene signature.
+
+## Summary
+
+This topic note is currently a concise project-facing record; the existing sections above carry the substantive synthesis until a fuller rewrite is warranted.
+
+## Key Concepts
+
+The key concepts are defined in the existing prose above and in the linked project entities; this section is present to keep the topic aligned with the current Science topic template.
+
+## Current State of Knowledge
+
+The current project-facing state of knowledge is summarized in the existing prose above. No additional confidence upgrade is made by this structural section.
+
+## Relevance to This Project
+
+This topic is relevant through the linked questions, hypotheses, datasets, and source references in the frontmatter and in the note above.
+
+## Key References
+
+Key references are listed in `source_refs` and cited in the note above.

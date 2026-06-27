@@ -287,3 +287,7 @@ confounders but not reverse causation per se.
   and clonal-timing causality argument.
 - paper:Adler2023 — SBS4/SBS13 trinucleotide preference → stop-gain enrichment; functional
   readout and orthogonal validation layer for covariate→signature recovery.
+
+## Relevance to This Project
+
+This topic is relevant through the linked questions, hypotheses, datasets, and source references in the frontmatter and in the note above.

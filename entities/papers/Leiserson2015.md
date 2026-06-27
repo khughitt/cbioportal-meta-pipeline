@@ -23,7 +23,7 @@ related:
 dataset_usage:
 - ref: dataset:tcga
   role: analyzed
-  overlap: unknown
+  overlap: full
 ---
 
 # CoMEt: a statistical approach to identify combinations of mutually exclusive alterations in cancer

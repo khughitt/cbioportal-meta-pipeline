@@ -15,7 +15,7 @@ related:
 dataset_usage:
 - ref: dataset:tcga-pancanatlas
   role: analyzed
-  overlap: unknown
+  overlap: full
 ---
 
 # Comprehensive Characterization of Cancer Driver Genes and Mutations

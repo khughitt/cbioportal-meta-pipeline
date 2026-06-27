@@ -3,9 +3,10 @@ type: dataset
 title: MSK-CHORD
 status: active
 created: '2026-05-30'
-updated: '2026-05-30'
+updated: '2026-06-27'
 id: dataset:msk-chord
 source_class: observational
+local_path: /data/raw/cbioportal/msk_chord_2024
 source_refs:
 - paper:Jee2024
 related:

@@ -3,10 +3,11 @@ type: dataset
 title: ICGC/TCGA PCAWG
 status: active
 created: '2026-05-30'
-updated: '2026-05-31'
+updated: '2026-06-27'
 id: dataset:pcawg
 source_class: observational
 tier: evaluate-next
+local_path: /data/raw/cbioportal/pancan_pcawg_2020
 source_refs:
 - paper:PCAWG2020
 - paper:Yaacov2023

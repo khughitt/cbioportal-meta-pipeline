@@ -1,9 +1,9 @@
 ---
 type: dataset
 title: Allen Brain Cell Atlas
-status: proposed
+status: candidate
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-27'
 id: dataset:allen-brain-cell-atlas
 source_class: observational
 source_refs:

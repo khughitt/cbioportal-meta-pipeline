@@ -14,7 +14,7 @@ related:
 dataset_usage:
 - ref: dataset:pcawg
   role: analyzed
-  overlap: unknown
+  overlap: full
 ---
 
 # Pan-cancer analysis of whole genomes

@@ -220,3 +220,7 @@ cancer types should be annotated with this mechanistic caveat.
 - paper:MasPonte2020 — Identifies omikli as the dominant APOBEC3 cluster mode; demonstrates
   MMR-dependency and preferential omikli enrichment in gene-dense chromatin; mechanistically
   links A3A to omikli and A3B to kataegis.
+
+## Relevance to This Project
+
+This topic is relevant through the linked questions, hypotheses, datasets, and source references in the frontmatter and in the note above.

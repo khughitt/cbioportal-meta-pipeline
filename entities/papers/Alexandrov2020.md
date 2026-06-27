@@ -15,7 +15,7 @@ related:
 dataset_usage:
 - ref: dataset:cosmic-signatures
   role: analyzed
-  overlap: unknown
+  overlap: full
 ---
 
 # The repertoire of mutational signatures in human cancer

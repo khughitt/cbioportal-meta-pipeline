@@ -3,10 +3,11 @@ type: dataset
 title: GENIE panel coverage and callable-size registry
 status: active
 created: '2026-05-31'
-updated: '2026-05-31'
+updated: '2026-06-27'
 id: dataset:data-genie-panel-callable-registry
 source_class: derived
 derived_kind: transform
+local_path: /data/packages/cbioportal/pan-cancer/metadata
 related:
 - dataset:aacr-genie
 - dataset:gene-cancer-study-ratio-annotated-product

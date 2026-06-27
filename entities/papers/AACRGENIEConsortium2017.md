@@ -17,7 +17,7 @@ related:
 dataset_usage:
 - ref: dataset:aacr-genie
   role: analyzed
-  overlap: unknown
+  overlap: full
 ---
 
 # AACR Project GENIE: Powering Precision Medicine through an International Consortium

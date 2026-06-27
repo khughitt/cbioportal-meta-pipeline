@@ -3,9 +3,10 @@ type: dataset
 title: SomaMutDB
 status: active
 created: '2026-05-30'
-updated: '2026-05-30'
+updated: '2026-06-27'
 id: dataset:somamutdb
 source_class: reference
+local_path: /data/raw/somamutdb
 source_refs:
 - paper:Yaacov2023
 related: []

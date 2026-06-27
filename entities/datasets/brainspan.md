@@ -1,9 +1,9 @@
 ---
 type: dataset
 title: BrainSpan Atlas of the Developing Human Brain
-status: proposed
+status: candidate
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-27'
 id: dataset:brainspan
 source_class: observational
 source_refs:

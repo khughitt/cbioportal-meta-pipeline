@@ -1,9 +1,9 @@
 ---
 type: dataset
 title: PanglaoDB cell-type marker database
-status: proposed
+status: candidate
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-27'
 id: dataset:panglaodb
 source_class: reference
 source_refs:

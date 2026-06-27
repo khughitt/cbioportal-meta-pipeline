@@ -1,3 +1,6 @@
+# science:code
+# status: exploratory
+# science:end
 """t218b — forensic on the single study that drives the t218 WES residual: pog570_bcgsc_2020.
 
 t218's leave-one-study-out found that dropping pog570_bcgsc_2020 returns the candidate genes to the
@@ -29,6 +32,8 @@ from pathlib import Path
 
 import pandas as pd
 
+PACKAGE_ROOT = Path("/") / "data" / "packages" / "cbioportal"
+
 CANDIDATES = [
     "NKAIN2",
     "KCNIP4",
@@ -42,9 +47,9 @@ CANDIDATES = [
 ]
 STUDY = "pog570_bcgsc_2020"
 MUT = Path(
-    f"/data/packages/cbioportal/full/studies/{STUDY}/mut/table/mut_filtered.feather"
+    PACKAGE_ROOT / f"full/studies/{STUDY}/mut/table/mut_filtered.feather"
 )
-SAMPLES = Path("/data/packages/cbioportal/full/metadata/samples_annotated.feather")
+SAMPLES = PACKAGE_ROOT / "full/metadata/samples_annotated.feather"
 PANELS = Path("data/study_panels.tsv")
 OUT = Path("results/neural-gene-cns-wes-2026-06-08")
 

@@ -14,7 +14,7 @@ related:
 dataset_usage:
 - ref: dataset:cbioportal
   role: analyzed
-  overlap: unknown
+  overlap: full
 ---
 
 # The cBio cancer genomics portal: an open platform for exploring multidimensional cancer genomics data

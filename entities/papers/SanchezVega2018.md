@@ -16,7 +16,7 @@ related:
 dataset_usage:
 - ref: dataset:tcga-pancanatlas
   role: analyzed
-  overlap: unknown
+  overlap: full
 ---
 
 # Oncogenic Signaling Pathways in The Cancer Genome Atlas

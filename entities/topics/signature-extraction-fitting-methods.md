@@ -453,3 +453,15 @@ most informative for studies with WGS; ID signatures require reliable indel call
 
 All tools operate on per-sample or per-cohort SBS-96 matrices. The pipeline must generate
 these matrices from the per-study MAF outputs before invoking any signature tool.
+
+## Current State of Knowledge
+
+The current project-facing state of knowledge is summarized in the existing prose above. No additional confidence upgrade is made by this structural section.
+
+## Relevance to This Project
+
+This topic is relevant through the linked questions, hypotheses, datasets, and source references in the frontmatter and in the note above.
+
+## Key References
+
+Key references are listed in `source_refs` and cited in the note above.

@@ -4,7 +4,7 @@ title: Transcriptomic analysis reveals a tissue-specific loss of identity during
   and cancer
 status: active
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-27'
 id: paper:dosSantos2023
 ontology_terms:
 - tissue specificity
@@ -17,9 +17,13 @@ ontology_terms:
 - tissue-of-origin
 - tau index
 - pan-cancer
-datasets:
-- dataset:tcga
-- dataset:gtex
+dataset_usage:
+- ref: dataset:tcga
+  role: analyzed
+  overlap: full
+- ref: dataset:gtex
+  role: analyzed
+  overlap: full
 source_refs:
 - cite:dosSantos2023
 related:

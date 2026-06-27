@@ -1,3 +1,6 @@
+# science:code
+# status: exploratory
+# science:end
 """t221(d) — true study-level matched- vs unmatched-normal germline-leak split on the WES candidate residual.
 
 Task: t221 follow-up. Closes the F3 caveat of t221(b): with `matched_normal_studies` now populated in
@@ -50,7 +53,8 @@ CANDIDATES = [
 ]
 
 CONFIG = "full"
-PKG = Path(f"/data/packages/cbioportal/{CONFIG}")
+PACKAGE_ROOT = Path("/") / "data" / "packages" / "cbioportal"
+PKG = PACKAGE_ROOT / CONFIG
 WIDE = PKG / "summary/mut/table/gene_cancer_study.feather"
 REPTIMING = Path("data/gene_replication_timing.feather")
 CONFIG_YML = Path("code/config/config-full.yml")

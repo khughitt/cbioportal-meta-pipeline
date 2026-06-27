@@ -1,3 +1,6 @@
+# science:code
+# status: exploratory
+# science:end
 """t221(a) — full-config SAMPLE-LEVEL hypermutator exclusion for the neural-gene residual.
 
 Task: t221 (QA / sanity battery for the neural-gene program), arm (a). Closes the one hypermutator
@@ -52,6 +55,8 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 
+PACKAGE_ROOT = Path("/") / "data" / "packages" / "cbioportal"
+
 CANDIDATES = [
     "NKAIN2",
     "KCNIP4",
@@ -65,7 +70,7 @@ CANDIDATES = [
 ]
 
 CONFIG = "full"  # arm (a) targets the powered residual; pan-cancer WES is underpowered (t218, n=7)
-PKG = Path(f"/data/packages/cbioportal/{CONFIG}")
+PKG = PACKAGE_ROOT / CONFIG
 WIDE = PKG / "summary/mut/table/gene_cancer_study.feather"
 SAMPLES = PKG / "metadata/samples_annotated.feather"
 STUDY_DIR = PKG / "studies"

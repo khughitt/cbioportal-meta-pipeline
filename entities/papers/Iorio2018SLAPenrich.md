@@ -4,7 +4,7 @@ title: Pathway-based dissection of the genomic heterogeneity of cancer hallmarks
   acquisition with SLAPenrich
 status: active
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-27'
 id: paper:Iorio2018SLAPenrich
 ontology_terms:
 - cancer hallmarks
@@ -17,8 +17,10 @@ ontology_terms:
 - pan-cancer analysis
 - pathway alteration
 - hallmark acquisition
-datasets:
-- dataset:tcga
+dataset_usage:
+- ref: dataset:tcga
+  role: analyzed
+  overlap: full
 source_refs:
 - cite:Iorio2018SLAPenrich
 related:

@@ -3,9 +3,10 @@ type: dataset
 title: cBioPortal for Cancer Genomics
 status: active
 created: '2026-05-30'
-updated: '2026-05-30'
+updated: '2026-06-27'
 id: dataset:cbioportal
 source_class: reference
+local_path: /data/raw/cbioportal
 source_refs:
 - paper:Cerami2012
 - paper:Gao2013

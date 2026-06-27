@@ -3,7 +3,7 @@ type: paper
 title: Data-driven universal insights into tumorigenesis via hallmark networks
 status: active
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-27'
 id: paper:Wang2025a
 ontology_terms:
 - hallmarks of cancer
@@ -18,9 +18,13 @@ ontology_terms:
 - reprogramming energy metabolism
 - GRAND database
 - PANDA algorithm
-datasets:
-- dataset:gtex
-- dataset:tcga
+dataset_usage:
+- ref: dataset:gtex
+  role: analyzed
+  overlap: full
+- ref: dataset:tcga
+  role: analyzed
+  overlap: full
 source_refs:
 - cite:Wang2025a
 related:

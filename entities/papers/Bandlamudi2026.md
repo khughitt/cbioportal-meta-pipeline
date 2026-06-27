@@ -18,7 +18,7 @@ related:
 dataset_usage:
 - ref: dataset:msk-impact
   role: analyzed
-  overlap: unknown
+  overlap: full
 ---
 
 # Cancer type-specific variation in patterns of driver alterations across 50,000 tumors

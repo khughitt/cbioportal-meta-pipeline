@@ -1,5 +1,5 @@
 # science:code
-# status: workflow-owned
+# status: exploratory
 # science:end
 """Audit candidate studies for q027 therapy-signature-high feasibility."""
 

@@ -3,9 +3,10 @@ type: dataset
 title: OncoKB
 status: active
 created: '2026-05-30'
-updated: '2026-05-30'
+updated: '2026-06-27'
 id: dataset:oncokb
 source_class: reference
+local_path: /data/raw/oncokb
 source_refs:
 - paper:Chakravarty2017
 - paper:Suehnholz2024

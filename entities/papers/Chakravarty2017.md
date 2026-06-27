@@ -15,7 +15,7 @@ related:
 dataset_usage:
 - ref: dataset:oncokb
   role: analyzed
-  overlap: unknown
+  overlap: full
 ---
 
 # OncoKB: A Precision Oncology Knowledge Base

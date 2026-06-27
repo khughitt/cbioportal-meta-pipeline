@@ -6,6 +6,8 @@ status: active
 created: '2026-04-18'
 updated: '2026-04-18'
 id: synthesis:0001-somatic-mutations-in-morphologically-normal-human-tissues-cross-paper
+report_kind: cluster-digest
+source_commit: 110aaf19ed97e16a6887298000a89a29e6f47f22
 source_refs:
 - paper:Martincorena2018
 - paper:Lin2024

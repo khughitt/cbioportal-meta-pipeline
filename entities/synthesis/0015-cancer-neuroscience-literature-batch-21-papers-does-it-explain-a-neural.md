@@ -6,6 +6,8 @@ status: active
 created: '2026-06-06'
 updated: '2026-06-06'
 id: synthesis:0015-cancer-neuroscience-literature-batch-21-papers-does-it-explain-a-neural
+report_kind: cluster-digest
+source_commit: 110aaf19ed97e16a6887298000a89a29e6f47f22
 ontology_terms:
 - cancer neuroscience
 - neuro-immune crosstalk

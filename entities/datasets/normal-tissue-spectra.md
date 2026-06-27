@@ -3,10 +3,11 @@ type: dataset
 title: Normal-tissue 96-context SBS spectra and burden
 status: active
 created: '2026-04-19'
-updated: '2026-05-31'
+updated: '2026-06-27'
 id: dataset:normal-tissue-spectra
 source_class: derived
 derived_kind: aggregate
+local_path: data/normal_tissue_spectra.tsv
 source_refs:
 - paper:Li2021
 related:

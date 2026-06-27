@@ -1,3 +1,6 @@
+# science:code
+# status: exploratory
+# science:end
 """t215 — neural-gene mutation-enrichment reproduction gate.
 
 Question: q032 / hypothesis h12-neural-gene-enrichment-length-histology-artifact.
@@ -30,6 +33,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 from scipy import stats
+
+PACKAGE_ROOT = Path("/") / "data" / "packages" / "cbioportal"
 
 # --- candidate set (TAFA2 is the HGNC alias of FAM19A2; the pipeline carries FAM19A2) ---
 CANDIDATES = [
@@ -83,9 +88,9 @@ def study_columns(df: pd.DataFrame) -> list[str]:
 
 
 CONFIGS = {
-    "full": "/data/packages/cbioportal/full/summary/mut/table",
-    "pan-cancer": "/data/packages/cbioportal/pan-cancer/summary/mut/table",
-    "10k": "/data/packages/cbioportal/10k/summary/mut/table",
+    "full": PACKAGE_ROOT / "full/summary/mut/table",
+    "pan-cancer": PACKAGE_ROOT / "pan-cancer/summary/mut/table",
+    "10k": PACKAGE_ROOT / "10k/summary/mut/table",
 }
 
 OUT = Path("results/neural-gene-reproduction-2026-06-08")
@@ -382,7 +387,7 @@ def main() -> None:
             "effectors": EFFECTORS,
             "inclusive_study_counts": study_counts,
             "note": "unannotated gene_cancer_study(_ratio) aggregates used; annotated full/10k feathers "
-            "are not present under /data/packages (annotation adds overlay columns, not counts).",
+            "are not present under the package root (annotation adds overlay columns, not counts).",
         },
     }
     (OUT / "datapackage.json").write_text(json.dumps(datapackage, indent=2))

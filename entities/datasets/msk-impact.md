@@ -3,9 +3,10 @@ type: dataset
 title: MSK-IMPACT clinical sequencing cohort
 status: active
 created: '2026-05-30'
-updated: '2026-05-30'
+updated: '2026-06-27'
 id: dataset:msk-impact
 source_class: observational
+local_path: /data/raw/cbioportal/msk_impact_2017
 source_refs:
 - paper:Bandlamudi2026
 - paper:Cheng2015

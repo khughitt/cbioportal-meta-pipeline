@@ -5,7 +5,7 @@ title: A well-powered WGS-based SBS1 late-replicating-region topographic diagnos
   of tumor-purity proxies
 status: proposed
 created: '2026-06-02'
-updated: '2026-06-02'
+updated: '2026-06-27'
 id: hypothesis:0011-sbs1-lrr-contamination-qc
 phase: candidate
 source_refs:
@@ -60,10 +60,9 @@ Distinguish strong discriminating predictions from weaker corollaries.
 
 ## Falsifiability
 
-<!--
-What results would materially lower confidence in the core claims?
-Be specific about what would force revision.
--->
+- A well-powered WGS cohort with matched normal sequencing shows no reproducible SBS1 late-replicating-region enrichment beyond the cancer-type baseline.
+- The putative SBS1 LRR excess is fully explained by tumor purity, TMB, replication-timing gene composition, or assay coverage after stratification.
+- Studies with known unmatched-normal or contamination risk do not separate from matched-normal controls when using the pre-registered aggregate topography statistic.
 
 ## Promotion criteria
 

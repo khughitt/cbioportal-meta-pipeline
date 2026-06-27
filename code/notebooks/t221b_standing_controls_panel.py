@@ -1,3 +1,6 @@
+# science:code
+# status: exploratory
+# science:end
 """t221(b) — standing-controls panel for the neural-gene program.
 
 Task: t221 (QA / sanity battery), arm (b). Follows t221(a) (sample-level hypermutator exclusion, ruled
@@ -81,7 +84,8 @@ CANDIDATES = [
 ]
 
 CONFIG = "full"
-PKG = Path(f"/data/packages/cbioportal/{CONFIG}")
+PACKAGE_ROOT = Path("/") / "data" / "packages" / "cbioportal"
+PKG = PACKAGE_ROOT / CONFIG
 WIDE = PKG / "summary/mut/table/gene_cancer_study.feather"
 STUDY_DIR = PKG / "studies"
 REPTIMING = Path("data/gene_replication_timing.feather")

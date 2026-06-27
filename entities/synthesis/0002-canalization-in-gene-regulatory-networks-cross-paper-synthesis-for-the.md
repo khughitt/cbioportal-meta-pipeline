@@ -6,6 +6,8 @@ status: active
 created: '2026-04-25'
 updated: '2026-04-25'
 id: synthesis:0002-canalization-in-gene-regulatory-networks-cross-paper-synthesis-for-the
+report_kind: cluster-digest
+source_commit: 110aaf19ed97e16a6887298000a89a29e6f47f22
 source_refs:
 - paper:Kadelka2026
 - paper:Kadelka2024

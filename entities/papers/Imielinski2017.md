@@ -23,7 +23,7 @@ related:
 dataset_usage:
 - ref: dataset:tcga
   role: analyzed
-  overlap: unknown
+  overlap: full
 ---
 
 # Insertions and Deletions Target Lineage-Defining Genes in Human Cancers

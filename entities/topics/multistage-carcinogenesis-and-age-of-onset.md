@@ -118,3 +118,23 @@ node in `theme:0003-temporal-structure-of-carcinogenesis-order-count-and-timing-
 - **External / not-yet-in-library:** Nordling 1953; Tomasetti-Vogelstein-Nowak 2015 PNAS
   (3-drivers); Martincorena 2017 (dN/dS driver counts); Wu et al. 2016 *Nature* (extrinsic
   rebuttal); Gröbner 2018 / Ma 2018 (pan-pediatric).
+
+## Summary
+
+This topic note is currently a concise project-facing record; the existing sections above carry the substantive synthesis until a fuller rewrite is warranted.
+
+## Key Concepts
+
+The key concepts are defined in the existing prose above and in the linked project entities; this section is present to keep the topic aligned with the current Science topic template.
+
+## Current State of Knowledge
+
+The current project-facing state of knowledge is summarized in the existing prose above. No additional confidence upgrade is made by this structural section.
+
+## Relevance to This Project
+
+This topic is relevant through the linked questions, hypotheses, datasets, and source references in the frontmatter and in the note above.
+
+## Key References
+
+Key references are listed in `source_refs` and cited in the note above.

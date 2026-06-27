@@ -3,9 +3,10 @@ type: dataset
 title: AACR Project GENIE
 status: active
 created: '2026-05-30'
-updated: '2026-05-30'
+updated: '2026-06-27'
 id: dataset:aacr-genie
 source_class: observational
+local_path: /data/raw/cbioportal/genie
 source_refs:
 - paper:AACRGENIEConsortium2017
 - paper:Pugh2022

@@ -3,7 +3,7 @@ type: dataset
 title: TCGA PanCanAtlas
 status: active
 created: '2026-05-30'
-updated: '2026-05-31'
+updated: '2026-06-27'
 id: dataset:tcga-pancanatlas
 source_class: derived
 derived_kind: aggregate
@@ -29,7 +29,7 @@ access:
     followup_task: ''
     superseded_by_dataset: ''
     rationale: ''
-local_path: /data/raw/cbioportal/*_tcga_pan_can_atlas_2018
+local_path: /data/raw/cbioportal
 source_refs:
 - paper:Bailey2018
 - paper:Hoadley2018

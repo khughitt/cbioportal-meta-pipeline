@@ -102,6 +102,12 @@ The full background and citations live in `topic:multistage-carcinogenesis-and-a
   of the same temporal question; all three now sit under
   `theme:0003-temporal-structure-of-carcinogenesis-order-count-and-timing-of-the`.
 
+## Evidence Needed
+
+- Population age-incidence curves remain the clean evidence layer for estimating the number of rate-limiting stages by cancer type.
+- Project data can provide only a descriptive, confound-controlled check: per-histology driver complexity against age-at-diagnosis or age-at-sequencing, with TMB, ascertainment, and histology mix controlled.
+- Paired pre-malignant/invasive cohorts would be needed to separate initiation-stage driver count from diagnostic timing and metastatic progression.
+
 ## Prioritized Follow-Ups
 
 | Priority | Item | Where |

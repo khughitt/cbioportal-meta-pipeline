@@ -26,7 +26,7 @@ related:
 dataset_usage:
 - ref: dataset:tcga
   role: analyzed
-  overlap: unknown
+  overlap: full
 ---
 
 # A novel independence test for somatic alterations in cancer shows that biology drives mutual exclusivity but chance explains most co-occurrence

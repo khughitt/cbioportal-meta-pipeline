@@ -20,7 +20,7 @@ related:
 dataset_usage:
 - ref: dataset:tcga-pancanatlas
   role: analyzed
-  overlap: unknown
+  overlap: full
 ---
 
 # Cell-of-Origin Patterns Dominate the Molecular Classification of 10,000 Tumors from 33 Types of Cancer

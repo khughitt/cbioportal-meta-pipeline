@@ -1,9 +1,9 @@
 ---
 type: dataset
 title: Hartwig Medical Foundation (HMF) metastatic pan-cancer WGS
-status: active
+status: candidate
 created: '2026-05-31'
-updated: '2026-05-31'
+updated: '2026-06-27'
 id: dataset:hartwig-hmf
 source_class: observational
 origin: external

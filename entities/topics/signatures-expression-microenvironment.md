@@ -277,3 +277,7 @@ informative secondary finding beyond the primary positive-control test.
 Resources discussed (not yet first-class `dataset:` entities):
 
 - "TCGA multi-tissue (Hakobyan2024: n=3,132 samples, 12 tissues)"
+
+## Relevance to This Project
+
+This topic is relevant through the linked questions, hypotheses, datasets, and source references in the frontmatter and in the note above.

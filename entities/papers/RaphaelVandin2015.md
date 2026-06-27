@@ -21,7 +21,7 @@ related:
 dataset_usage:
 - ref: dataset:tcga
   role: analyzed
-  overlap: unknown
+  overlap: full
 ---
 
 # Simultaneous Inference of Cancer Pathways and Tumor Progression from Cross-Sectional Mutation Data

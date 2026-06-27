@@ -7,6 +7,7 @@ created: '2026-04-14'
 updated: '2026-04-22'
 id: pre-registration:0001-pre-registration-glmm-logit-random-effects-pooling-for-per-gene-cancer
 committed: '2026-04-14'
+spec: ''
 related:
 - task:t077
 - task:t079

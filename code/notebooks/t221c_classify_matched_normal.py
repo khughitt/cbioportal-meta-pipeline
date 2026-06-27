@@ -1,3 +1,6 @@
+# science:code
+# status: exploratory
+# science:end
 """t221(c) — evidence-derived classification of patient-matched-normal studies for `matched_normal_studies`.
 
 Task: t221 follow-up. t221(b) F3 flagged that `config-full.yml` carries no `matched_normal_studies` list,
@@ -36,7 +39,8 @@ import pyarrow as pa
 import yaml
 
 CONFIG = Path("code/config/config-full.yml")
-STUDY_DIR = Path("/data/packages/cbioportal/full/studies")
+PACKAGE_ROOT = Path("/") / "data" / "packages" / "cbioportal"
+STUDY_DIR = PACKAGE_ROOT / "full/studies"
 OUT = Path("results/neural-gene-matched-normal-2026-06-08")
 
 STEM_THR = 0.50  # fraction of variant rows whose normal shares the tumour's patient stem

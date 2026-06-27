@@ -80,15 +80,15 @@ Narrative review drawing on published clinical trial data (Keynote-158, CheckMat
 
 ## Relevance
 
-This review is directly relevant to hypothesis **h08** (agnostic covariate<->signature-exposure association; positive-control recovery of known aetiologies) and the cbioportal cross-study TMB annotation pipeline:
+This review is directly relevant to hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and and the cbioportal cross-study TMB annotation pipeline:
 
-**For h08 positive controls:** The review consolidates the canonical exposure→signature map that h08 must recover: UV↔SBS7 (melanoma), tobacco smoking↔SBS4 (NSCLC), APOBEC activation↔SBS2/13 (NSCLC), MMRd↔SBS6/15/21 (colon/gastric). Crucially, the review notes that (a) APOBEC signatures associate with *higher* ICI response even within NSCLC, independent of bulk TMB — consistent with the h08 prediction that APOBEC3 expression resolves a mediator that clinical labels alone cannot; and (b) SBS4 (smoking) similarly associates with ICI benefit — confirming that the h08 positive-control arms (UV→SBS7, smoking→SBS4, APOBEC-expr→SBS2/13) have detectable phenotypic correlates this review expects to re-emerge.
+**For positive controls:** The review consolidates the canonical exposure→signature map that the hypothesis must recover: UV↔SBS7 (melanoma), tobacco smoking↔SBS4 (NSCLC), APOBEC activation↔SBS2/13 (NSCLC), MMRd↔SBS6/15/21 (colon/gastric). Crucially, the review notes that (a) APOBEC signatures associate with *higher* ICI response even within NSCLC, independent of bulk TMB — consistent with the prediction that APOBEC3 expression resolves a mediator that clinical labels alone cannot; and (b) SBS4 (smoking) similarly associates with ICI benefit — confirming that the positive-control arms (UV→SBS7, smoking→SBS4, APOBEC-expr→SBS2/13) have detectable phenotypic correlates this review expects to re-emerge.
 
-**For h08 discovery / immune signatures:** The review raises the explicit question of whether immune-process mutational signatures (immune-mediated hypermutation by AID/APOBEC in B/T cells) can be distinguished from tumour-intrinsic APOBEC signatures — directly relevant to the h08 concern that immune cells contaminate the mutational spectrum. The finding that SBS5 (clock-like) is a negative predictor of ICI response in NSCLC is a novel candidate association warranting h08b investigation.
+**For discovery / immune signatures:** The review raises the explicit question of whether immune-process mutational signatures (immune-mediated hypermutation by AID/APOBEC in B/T cells) can be distinguished from tumour-intrinsic APOBEC signatures — directly relevant to the concern that immune cells contaminate the mutational spectrum. The finding that SBS5 (clock-like) is a negative predictor of ICI response in NSCLC is a novel candidate association warranting discovery-arm investigation.
 
 **For the TMB annotation pipeline (t081–t099):** The review provides quantitative benchmarks for the project's hypermutator annotation plan: the 10 mut/Mb FDA cut-off, the 100 mut/Mb ultra-high threshold (Fig. 1a legend), POLE/POLD1 (PRD) and MMRd as causes of ultra-high TMB, and the tumour-purity simulation data (Fig. 3) that motivate the `purity_min` quality filter. The authors' recommendation of panel size ≥1 Mb (ideally ≥2 Mb) for clinical TMB directly informs the `build_panel_callable_sizes` rule's sensitivity expectations.
 
-**For cross-study meta-analysis:** The review demonstrates that TMB distributions vary substantially across cancer types within TCGA (Fig. 2), and that any fixed pan-cancer cut-off is a compromise. The cbioportal pipeline's per-cancer-type GMM (`fit_per_cancer_tmb_gmm`) and parallel `is_hypermutator_absolute` / `is_hypermutator_relative` flags (Samstein 2019 top-20%) are consistent with the review's own recommendation that higher and cancer-type-specific cut-offs outperform the fixed 10 mut/Mb threshold.
+**For cross-study meta-analysis:** The review demonstrates that TMB distributions vary substantially across cancer types within TCGA (Fig. 2), and that any fixed pan-cancer cut-off is a compromise. The cbioportal pipeline's per-cancer-type GMM (`fit_per_cancer_tmb_gmm`) and parallel `is_hypermutator_absolute` / `is_hypermutator_relative` flags (Samstein et al. [@Samstein2019] top-20%) are consistent with the review's own recommendation that higher and cancer-type-specific cut-offs outperform the fixed 10 mut/Mb threshold.
 
 ## Project Framework Mapping
 
@@ -96,14 +96,14 @@ This review is directly relevant to hypothesis **h08** (agnostic covariate<->sig
 |---|---|---|
 | PRD (proofreading deficiency): SBS10a–d, SBS14, SBS20 | `hypermutator_reason: pole_hotspot / pold1_hotspot` | POLE/POLD1 hotspot detection is first in the composite rule ordering |
 | MMRd: SBS6, SBS15, SBS21, SBS44, ID1, ID2, ID7 | `hypermutator_reason: msi_h` | MSI-H annotation from `msi_normalization.py` |
-| High TMB (≥10 mut/Mb) | `is_hypermutator_absolute` (Campbell 2017 ≥10 mut/Mb) | Project implements the FDA cut-off |
+| High TMB (≥10 mut/Mb) | `is_hypermutator_absolute` (Campbell et al. [@Campbell2017Hypermutation] ≥10 mut/Mb) | Project implements the FDA cut-off |
 | Ultra-high TMB (>100 mut/Mb) | `is_hypermutator_ultra` (≥100 mut/Mb) | Separate pipeline flag |
-| Per-histology top-20% | `is_hypermutator_relative` (Samstein 2019) | Per-cancer-type relative criterion |
+| Per-histology top-20% | `is_hypermutator_relative` (Samstein et al. [@Samstein2019]) | Per-cancer-type relative criterion |
 | Per-cancer-type GMM on log10 TMB | `fit_per_cancer_tmb_gmm` | Analogous approach; review supports rationale |
 | Tumour purity ≥60% recommendation | `purity_min` config filter | Simulation data (Fig. 3) quantifies sensitivity loss below 40% |
 | Panel size ≥1 Mb for TMB | `panel_callable_mb_tolerance` | `build_panel_callable_sizes` rule |
 | Mutational signatures as TMB components | `run_restricted_sigprofiler_assignment.py` | Review supports adding sig-layer to cross-study pipeline |
-| APOBEC (SBS2/13) ↔ ICI response | h08 positive-control arm | Confirms APOBEC3 expression as mediator variable |
+| APOBEC (SBS2/13) ↔ ICI response | positive-control arm of hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and | Confirms APOBEC3 expression as mediator variable |
 
 ## Limitations
 
@@ -115,7 +115,7 @@ This review is directly relevant to hypothesis **h08** (agnostic covariate<->sig
 
 ## Follow-up
 
-- The review cites Alexandrov 2020 (COSMIC v3 signatures) and Degasperi 2022 (SigProfiler pan-UK) — both already have summaries in this project.
-- For h08: this review's Table/Fig. 1a (signature↔TMB-level map) should be used as the reference for which signatures are expected to be detectable in panel-sequenced cBioPortal studies (abundant/dominant only) vs requiring WGS.
-- Consider reading: Samstein 2019 (Nat Genet — TMB top-20% per histology, basis for `is_hypermutator_relative`), and the QuIP/Friends of Cancer Research harmonisation papers (refs 39, 40) for panel calibration context.
-- The review explicitly flags antigen presentation machinery (B2M, JAK1/JAK2) as covariates not captured by TMB — potentially relevant to h08b discovery if expression module data for these pathways is available in the co-measured RNA studies.
+- The review cites Alexandrov et al. [@Alexandrov2020] (COSMIC v3 signatures) and Degasperi et al. [@Degasperi2022] (SigProfiler pan-UK) — both already have summaries in this project.
+- For hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and: this review's Table/Fig. 1a (signature↔TMB-level map) should be used as the reference for which signatures are expected to be detectable in panel-sequenced cBioPortal studies (abundant/dominant only) vs requiring WGS.
+- Consider reading: Samstein et al. [@Samstein2019] (Nat Genet — TMB top-20% per histology, basis for `is_hypermutator_relative`), and the QuIP/Friends of Cancer Research harmonisation papers (refs 39, 40) for panel calibration context.
+- The review explicitly flags antigen presentation machinery (B2M, JAK1/JAK2) as covariates not captured by TMB — potentially relevant to the discovery arm if expression module data for these pathways is available in the co-measured RNA studies.

@@ -66,24 +66,24 @@ SigFormer is a set-conditioned transformer framework for single-sample mutationa
 
 ## Relevance
 
-**Direct support for H08a (positive-control recovery).** SigFormer demonstrates that a prior-free, single-sample inference procedure can recover known exposure→signature links — UV↔SBS7 in melanoma, smoking↔SBS4/SBS92 in lung, MMR-loss↔SBS6/SBS15/SBS20/SBS26 in MSI cancers, POLE↔SBS10a/b/SBS28 — *without* tumor-type-specific gating. This is the same positive-control recovery that h08 requires before trusting novel covariate hits. SigFormer's demonstration that catalogue-anchored decomposition naturally clusters by tissue biology (even without conditioning) reduces concern that our pipeline's cross-study aggregation will conflate tissue collinearity with true exposure signal (h08 rival R1).
+**Direct support for positive-control recovery.** SigFormer demonstrates that a prior-free, single-sample inference procedure can recover known exposure→signature links — UV↔SBS7 in melanoma, smoking↔SBS4/SBS92 in lung, MMR-loss↔SBS6/SBS15/SBS20/SBS26 in MSI cancers, POLE↔SBS10a/b/SBS28 — *without* tumor-type-specific gating. This is the same positive-control recovery that hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and requires before trusting novel covariate hits. SigFormer's demonstration that catalogue-anchored decomposition naturally clusters by tissue biology (even without conditioning) reduces concern that our pipeline's cross-study aggregation will conflate tissue collinearity with true exposure signal (rival R1).
 
-**Residual channel as a discovery signal.** The explicit unattributed channel in SigFormer is a concrete implementation of the idea h08 encodes for novel signature discovery: rather than forcing unresolved structure into SBS5-like catch-alls, flag it. This is directly relevant to h08b, where we want to identify signatures with unknown or clock-like labels that may have upstream covariates.
+**Residual channel as a discovery signal.** The explicit unattributed channel in SigFormer is a concrete implementation of the idea encoded in the project hypothesis for novel signature discovery: rather than forcing unresolved structure into SBS5-like catch-alls, flag it. This is directly relevant to the discovery arm, where we want to identify signatures with unknown or clock-like labels that may have upstream covariates.
 
-**Flat-signature identifiability.** The finding that SBS3, SBS5, and SBS40a are the hardest to recover (reduced R², largest MuSiCal catch-all effect) is a direct caution for the h08 association scan: these signatures may receive spurious mass from any unmodelled signal, inflating their covariate associations. The pipeline should treat SBS5/SBS40 associations with additional scrutiny.
+**Flat-signature identifiability.** The finding that SBS3, SBS5, and SBS40a are the hardest to recover (reduced R², largest MuSiCal catch-all effect) is a direct caution for the association scan: these signatures may receive spurious mass from any unmodelled signal, inflating their covariate associations. The pipeline should treat SBS5/SBS40 associations with additional scrutiny.
 
-**Tool option for the h08 per-sample refit step.** For q018 (feasibility of per-sample signature extraction downstream of the cross-study pipeline), SigFormer is a candidate tool alongside SigProfilerSingleSample and MuSiCal; its set-conditioned design supports study-specific catalogue pruning/augmentation, which could be valuable for the within-tissue stratification the h08 positive-control design requires. However, the code repository was private at preprint time and not yet peer-reviewed.
+**Tool option for the per-sample refit step.** For question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross, SigFormer is a candidate tool alongside SigProfilerSingleSample and MuSiCal; its set-conditioned design supports study-specific catalogue pruning/augmentation, which could be valuable for the within-tissue stratification the positive-control design requires. However, the code repository was private at preprint time and not yet peer-reviewed.
 
 ## Project Framework Mapping
 
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
-| Prior-free single-sample inference | Within-tissue agnostic association (h08) | Both avoid tumor-type gating |
+| Prior-free single-sample inference | Within-tissue agnostic association | Both avoid tumor-type gating |
 | Reference catalogue as input set | COSMIC v3.4 catalogue used in restricted SigProfiler assignment | SigFormer supports custom/pruned sets |
-| Unattributed residual channel | Out-of-catalogue signal; novel signature flag | Relevant to h08b discovery |
-| Bootstrap necessity test | Validation of minor signature calls | Complements FDR association controls in h08 |
-| SBS5/SBS40a catch-all inflation | Flat-signature confounding rival (h08 R4) | Key caution for association scan |
-| Tissue-stratified UMAP of exposures | Within-tissue stratification in h08 design | Confirms tissue partitions without explicit conditioning |
+| Unattributed residual channel | Out-of-catalogue signal; novel signature flag | Relevant to discovery-arm analysis |
+| Bootstrap necessity test | Validation of minor signature calls | Complements FDR association controls in hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and |
+| SBS5/SBS40a catch-all inflation | Flat-signature confounding rival (R4) | Key caution for association scan |
+| Tissue-stratified UMAP of exposures | Within-tissue stratification | Confirms tissue partitions without explicit conditioning |
 
 ## Limitations
 
@@ -102,7 +102,7 @@ SigFormer is a set-conditioned transformer framework for single-sample mutationa
 
 ## Follow-up
 
-- Check whether SigFormer code has been made public after the preprint date and evaluate as an alternative/complement to SigProfilerSingleSample for the h08 per-sample refit step (q018).
-- The replacement-aware bootstrap necessity test (Supplementary Note 4) is a useful complement to exposure-frequency thresholding — consider adapting the approach for validating minor signature hits in the h08 association scan.
-- SigFormer's handling of the smoking/lung divergence (SBS25+SBS39 vs SBS22+SBS100) flags a recurrent poorly-represented process in lung adenocarcinomas; relevant to h08b discovery if expression modules correlate with this subcluster.
-- The SBS3/SBS5/SBS40a flat-signature finding should inform the specificity-vs-sensitivity trade-off discussion when SigProfiler-assigned exposures for these signatures enter the h08 association model.
+- Check whether SigFormer code has been made public after the preprint date and evaluate as an alternative/complement to SigProfilerSingleSample for the per-sample refit step (question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross).
+- The replacement-aware bootstrap necessity test (Supplementary Note 4) is a useful complement to exposure-frequency thresholding — consider adapting the approach for validating minor signature hits in the association scan.
+- SigFormer's handling of the smoking/lung divergence (SBS25+SBS39 vs SBS22+SBS100) flags a recurrent poorly-represented process in lung adenocarcinomas; relevant to discovery-arm analysis if expression modules correlate with this subcluster.
+- The SBS3/SBS5/SBS40a flat-signature finding should inform the specificity-vs-sensitivity trade-off discussion when SigProfiler-assigned exposures for these signatures enter the association model.

@@ -61,17 +61,17 @@ SigProfilerExtractor is a Python/R tool for automated de novo extraction of muta
 
 ## Relevance
 
-**Direct relevance to h08 (agnostic covariate↔signature-exposure association):**
+**Direct relevance to hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and:**
 
-1. **SBS92 as a smoking positive control.** H08a requires recovery of the smoking→signature link without being told it. SBS92 is a textbook example of exactly this — an environment-exposure (tobacco) signature in a specific tissue (bladder). The paper demonstrates that without prior knowledge of tobacco etiology, de novo extraction of SBS92 followed by statistical association of per-sample SBS92 exposure with self-reported smoking status (never vs ever) reproduces the known link at p < 0.001. This validates the agnostic-association paradigm and serves as a model for the H08a positive-control arm design.
+1. **SBS92 as a smoking positive control.** The positive-control arm requires recovery of the smoking→signature link without being told it. SBS92 is a textbook example of exactly this — an environment-exposure (tobacco) signature in a specific tissue (bladder). The paper demonstrates that without prior knowledge of tobacco etiology, de novo extraction of SBS92 followed by statistical association of per-sample SBS92 exposure with self-reported smoking status (never vs ever) reproduces the known link at p < 0.001. This validates the agnostic-association paradigm and serves as a model for the positive-control arm design.
 
-2. **Tool selection for the pipeline.** For h08's signature-decomposition step (see `question:0019`), SigProfilerExtractor is the best-evidenced open-source tool for de novo extraction — it outperforms 13 alternatives on the benchmarking scenarios most representative of real cancer genomics (5% noise, hard multi-signature settings). Its automatic rank selection removes an analyst-dependent hyperparameter, important for reproducibility in the cbioportal pipeline.
+2. **Tool selection for the pipeline.** For the signature-decomposition step (see question:0019-does-de-novo-extraction-on-the-aggregated-cohort-surface-factors-not-in), SigProfilerExtractor is the best-evidenced open-source tool for de novo extraction — it outperforms 13 alternatives on the benchmarking scenarios most representative of real cancer genomics (5% noise, hard multi-signature settings). Its automatic rank selection removes an analyst-dependent hyperparameter, important for reproducibility in the cbioportal pipeline.
 
-3. **SBS92 is WGS-only.** The paper explicitly shows SBS92 is undetectable by WES because of its intergenic distribution. This is a binding constraint for h08: the smoking↔SBS92 positive control can only be tested on WGS cohorts (PCAWG, MC3 where WGS is available). Panel-sequenced studies in cBioPortal will miss it. This informs the per-study stratification and the Q018 panel-adequacy question.
+3. **SBS92 is WGS-only.** The paper explicitly shows SBS92 is undetectable by WES because of its intergenic distribution. This is a binding constraint for hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and: the smoking↔SBS92 positive control can only be tested on WGS cohorts (PCAWG, MC3 where WGS is available). Panel-sequenced studies in cBioPortal will miss it. This informs the per-study stratification and question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross.
 
-4. **Within-tissue stratification.** The paper's de novo extraction ran within-cancer-type, matching h08's design requirement that associations be conditioned on tissue of origin (Prediction 4 of h08). Cross-tissue pooling inflates both false positives and confounders; SigProfilerExtractor's per-cancer-type runs are the model for the h08 pipeline architecture.
+4. **Within-tissue stratification.** The paper's de novo extraction ran within-cancer-type, matching the design requirement that associations be conditioned on tissue of origin (Prediction 4). Cross-tissue pooling inflates both false positives and confounders; SigProfilerExtractor's per-cancer-type runs are the model for the project pipeline architecture.
 
-5. **NMFk rank-selection robustness.** The near-identity of suggested vs forced model-selection F1 (rF1 ≈ 1.0) confirms that SigProfilerExtractor's automatic rank selection is not a material source of error. For h08, this means the extracted exposures H used as outcome variables carry limited model-selection uncertainty.
+5. **NMFk rank-selection robustness.** The near-identity of suggested vs forced model-selection F1 (rF1 ≈ 1.0) confirms that SigProfilerExtractor's automatic rank selection is not a material source of error. For the project hypothesis, this means the extracted exposures H used as outcome variables carry limited model-selection uncertainty.
 
 6. **Cross-study aggregation relevance.** The paper's multi-study aggregation (PCAWG + TCGA + 261 ICGC studies) mirrors the cbioportal pipeline's core cross-study design. Four signatures that were missed in single-study analyses emerge only in the larger pooled cohort — consistent with the project's hypothesis that cross-study aggregation surfaces signal invisible within individual studies.
 
@@ -80,13 +80,13 @@ SigProfilerExtractor is a Python/R tool for automated de novo extraction of muta
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
 | De novo NMF extraction (M ≈ S × A) | Upstream of `run_restricted_sigprofiler_assignment.py` | Paper provides the extraction step; project currently uses restricted assignment |
-| Activities matrix A (per-sample signature exposures) | Outcome variable for h08 association scan | H columns = signature exposures = h08's dependent variables |
+| Activities matrix A (per-sample signature exposures) | Outcome variable for the association scan | H columns = signature exposures = dependent variables in hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and |
 | SBS-96 mutational classification | cBioPortal mutation counts (6-channel or 96-channel) | Pipeline currently aggregates counts; 96-channel matrix requires per-sample SBS context |
-| Within-cancer-type extraction | Within-tissue conditioning (h08 Prediction 4) | Required to avoid tissue collinearity (h08 Alternative R1) |
+| Within-cancer-type extraction | Within-tissue conditioning (Prediction 4) | Required to avoid tissue collinearity (Alternative R1) |
 | COSMICv3 reference signatures | COSMIC catalog used in `annotate_drivers.py` context | Same reference catalog; driver annotation uses genes not signatures |
 | Noise robustness (5% noise benchmark) | WES vs WGS heterogeneity across cBioPortal studies | Panel / WES studies → higher noise; WGS studies → best extraction |
-| SBS92 (tobacco / bladder) | h08a positive control: smoking→signature | Key validation target for h08a's smoking arm |
-| SBS4 (lung / smoking) | h08a positive control: smoking→SBS4 | SBS4 not re-extracted here but is the canonical lung control |
+| SBS92 (tobacco / bladder) | positive control: smoking→signature | Key validation target for the smoking arm |
+| SBS4 (lung / smoking) | positive control: smoking→SBS4 | SBS4 not re-extracted here but is the canonical lung control |
 
 ## Limitations
 
@@ -113,6 +113,6 @@ SigProfilerExtractor is a Python/R tool for automated de novo extraction of muta
 ## Follow-up
 
 - **Read next:** Degasperi et al. 2022 (already summarized: `paper:Degasperi2022`) for comparison of signature extraction methodology using a Bayesian framework (SignatureAnalyzer). DiazGay et al. 2023 (`paper:DiazGay2023`) for downstream restricted assignment in multi-cancer contexts.
-- **h08 design questions:** Can SigProfilerExtractor's per-sample activity outputs be used directly as outcome variables in the h08 association scan, or must activities first be refitted per-sample using `run_restricted_sigprofiler_assignment.py`? (See `question:0018`.)
-- **Cross-study aggregation:** Does pooling across cBioPortal studies before extraction (pan-cancer) vs within-study extraction change the signatures recovered? The paper suggests within-cancer-type extraction first, then pan-cancer as a supplement — consistent with h08's within-tissue conditioning requirement.
-- **SBS92 positive control:** For h08a's smoking arm, which cBioPortal/MC3 WGS bladder cancer studies have self-reported smoking status to replicate the SBS92 elevation analysis?
+- **Design questions:** Can SigProfilerExtractor's per-sample activity outputs be used directly as outcome variables in the association scan, or must activities first be refitted per-sample using `run_restricted_sigprofiler_assignment.py`? (See question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross.)
+- **Cross-study aggregation:** Does pooling across cBioPortal studies before extraction (pan-cancer) vs within-study extraction change the signatures recovered? The paper suggests within-cancer-type extraction first, then pan-cancer as a supplement — consistent with the within-tissue conditioning requirement.
+- **SBS92 positive control:** For the smoking arm, which cBioPortal/MC3 WGS bladder cancer studies have self-reported smoking status to replicate the SBS92 elevation analysis?

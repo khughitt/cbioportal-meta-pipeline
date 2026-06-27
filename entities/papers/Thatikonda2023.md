@@ -85,17 +85,17 @@ This study provides the largest systematic COSMIC v.3 mutational-signature analy
 
 ## Relevance
 
-**h08 (agnostic covariate-signature exposure association; positive-control recovery):**
+**hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and:**
 
-This paper is directly relevant as a positive-control reference catalog for h08. Key points:
+This paper is directly relevant as a positive-control reference catalog for this hypothesis. Key points:
 
-1. **Age at diagnosis** is confirmed as a significant covariate for multiple signatures in pediatric cancers (SBS1, SBS5, SBS40 positively correlated with age; ID1, ID2, ID9 show clock-like age behavior). The linear regression framework used here (signature activity ~ exposure + cancer_type + age) is a worked example of within-cancer-type covariate association — structurally identical to the h08 agnostic association model.
+1. **Age at diagnosis** is confirmed as a significant covariate for multiple signatures in pediatric cancers (SBS1, SBS5, SBS40 positively correlated with age; ID1, ID2, ID9 show clock-like age behavior). The linear regression framework used here (signature activity ~ exposure + cancer_type + age) is a worked example of within-cancer-type covariate association — structurally identical to the agnostic association model.
 
-2. **TP53 mutation status** associates with APOBEC signatures (SBS2 elevated in germline TP53 mutants; p_adj = 0.011) and SBS8 (chromothripsis-positive tumors enriched with SBS8). These represent clinical-genomic covariate associations analogous to what h08 aims to systematically recover.
+2. **TP53 mutation status** associates with APOBEC signatures (SBS2 elevated in germline TP53 mutants; p_adj = 0.011) and SBS8 (chromothripsis-positive tumors enriched with SBS8). These represent clinical-genomic covariate associations analogous to what the project hypothesis aims to systematically recover.
 
-3. **Chromothripsis** (a structural variant-derived binary covariate) associates with SBS8 and SBS40, demonstrating that derived molecular features beyond mutation counts can drive signature differences — exactly the type of signal h08 wants to surface agnostically.
+3. **Chromothripsis** (a structural variant-derived binary covariate) associates with SBS8 and SBS40, demonstrating that derived molecular features beyond mutation counts can drive signature differences — exactly the type of signal the hypothesis wants to surface agnostically.
 
-4. **Known aetiologies (positive controls for h08):** UV (SBS7a/b) confined to B-ALL-HYPO; APOBEC (SBS2/13) in ACC/ES/HGG/OS; clock signatures (SBS1/5) universal; HR-defect (SBS3/ID6) requiring biallelic BRCA1/2 loss; platinum treatment (SBS31/SBS35). These provide ground-truth aetiology-covariate linkages that h08's agnostic scan should recover.
+4. **Known aetiologies (positive controls):** UV (SBS7a/b) confined to B-ALL-HYPO; APOBEC (SBS2/13) in ACC/ES/HGG/OS; clock signatures (SBS1/5) universal; HR-defect (SBS3/ID6) requiring biallelic BRCA1/2 loss; platinum treatment (SBS31/SBS35). These provide ground-truth aetiology-covariate linkages that the agnostic scan should recover.
 
 5. **Signature complexity in pediatric vs. adult cancer:** Fewer active signatures in pediatric tumors means that agnostic scans on pediatric cohorts (should any cBioPortal studies include pediatric cancer) would face a lower-dimensional signature space, potentially aiding covariate recovery but limiting power for rarer signatures.
 
@@ -107,13 +107,13 @@ This paper is directly relevant as a positive-control reference catalog for h08.
 
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
-| SigProfilerExtractor NMF extraction | Signature decomposition step (downstream of cross-study aggregation) | q018/q019 ask whether to add this |
-| SBS/ID signature activity per tumor | Per-sample signature exposure vector H | Outcome variable in h08 association model |
-| TP53 mutation status, chromothripsis | Structured clinical/molecular covariate | Positive-control covariate for h08 agnostic scan |
+| SigProfilerExtractor NMF extraction | Signature decomposition step (downstream of cross-study aggregation) | question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross and question:0019-does-de-novo-extraction-on-the-aggregated-cohort-surface-factors-not-in ask whether to add this |
+| SBS/ID signature activity per tumor | Per-sample signature exposure vector H | Outcome variable in the association model |
+| TP53 mutation status, chromothripsis | Structured clinical/molecular covariate | Positive-control covariate for the agnostic scan |
 | Age at diagnosis | Clinical covariate (age) | Already present as a cBioPortal field in the pipeline |
 | COSMIC v.3 reference signatures | COSMIC v.3 reference catalog | Same reference; project uses same version |
 | IDN (novel pediatric leukemia indel) | Novel de novo signature not in COSMIC | Example of what agnostic extraction might surface |
-| Cancer type as regression covariate | within-cancer-type stratification | h08 applies within-tissue stratification to avoid confounding |
+| Cancer type as regression covariate | within-cancer-type stratification | hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and applies within-tissue stratification to avoid confounding |
 | Strand asymmetry analysis | Mechanistic validation | Not part of core pipeline, but relevant for signature interpretation |
 
 ## Limitations
@@ -121,7 +121,7 @@ This paper is directly relevant as a positive-control reference catalog for h08.
 - **Pediatric-only scope:** All 785 tumors are from children/adolescents (<25 years). Adult signatures (tobacco, UV in melanoma, microsatellite instability in colorectal) are absent or minor, limiting generalizability to adult-dominant cBioPortal studies. Cross-study translation of the IDN signature requires confirmation in adult leukemia cohorts.
 - **WGS only, no exome-seq:** Signature decomposition requires trinucleotide context counts; exome-based studies in the cBioPortal pipeline cannot use these signatures directly without panel/exome normalization.
 - **Low indel counts per tumor:** Very low ID mutation burden in most pediatric tumors limits statistical power for ID signature decomposition; the authors acknowledge that even longer IDN insertions (>5 bp) are likely missed by short-read WGS.
-- **Hypothesis-driven associations only:** Association analyses were targeted to TP53, chromothripsis, and age — selected based on prior biological knowledge. An agnostic phenome-wide scan (as proposed in h08) was not performed.
+- **Hypothesis-driven associations only:** Association analyses were targeted to TP53, chromothripsis, and age — selected based on prior biological knowledge. An agnostic phenome-wide scan was not performed.
 - **SBS3 reclassification caveat:** The dramatic drop in SBS3 frequency from COSMIC v.2 to v.3 (54% to 2.29%) raises a method-sensitivity concern: flat background signatures (SBS5, SBS40) can absorb activity previously attributed to HR-defect signatures, making it difficult to confidently exclude HRD in tumors without biallelic BRCA1/2 hits.
 - **No matched adult comparison cohort from the same variant-calling pipeline**, making comparisons to adult PCAWG data indirect.
 
@@ -141,6 +141,6 @@ This paper is directly relevant as a positive-control reference catalog for h08.
 
 - **IDN signature in adult leukemias:** Degasperi et al. 2022 (Sci. Adv.) studied UK Biobank adult cancers including CLL; no IDN equivalent reported. Brady et al. 2022 (Nat. Genet.) analyzed ALL genomic landscape without flagging IDN. Warrants checking whether IDN is truly pediatric-restricted or missed in adult studies due to indel calling limitations.
 - **Signature.P1 / SBS31+SBS35 connection to ETMR:** This paper re-classifies the pediatric-specific Signature.P1 as cisplatin treatment artifacts — relevant for any pediatric cohort in cBioPortal that includes relapsed/treated tumors.
-- **APOBEC-TP53 link:** Association between germline TP53 loss and elevated SBS2 is consistent with p53 suppressing APOBEC3B. In h08, TP53 mutation frequency (available in cBioPortal) could serve as a positive-control covariate for APOBEC signature recovery.
-- **SBS40 and structural variants:** Strong correlation suggests that structural variant count (if computable from cBioPortal) could serve as a covariate predictor of SBS40 exposure in the h08 agnostic framework.
+- **APOBEC-TP53 link:** Association between germline TP53 loss and elevated SBS2 is consistent with p53 suppressing APOBEC3B. In hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and, TP53 mutation frequency (available in cBioPortal) could serve as a positive-control covariate for APOBEC signature recovery.
+- **SBS40 and structural variants:** Strong correlation suggests that structural variant count (if computable from cBioPortal) could serve as a covariate predictor of SBS40 exposure in the agnostic framework.
 - Relevant companion paper: Grobner et al. 2018 (Nature 555, 321-327) — the initial PedPanCan landscape paper that established the PPC-WGS cohort.

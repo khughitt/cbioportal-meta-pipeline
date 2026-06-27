@@ -121,37 +121,37 @@ studies (breast, esophageal, multiple myeloma, ALL, glioma, neuroblastoma, pedia
 
 ## Relevance
 
-**Hypothesis h08 (agnostic covariate ↔ signature-exposure association):**
+**hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and:**
 
-This review is directly relevant to h08 in two ways.
+This review is directly relevant to this hypothesis in two ways.
 
-1. **Positive-control grounding (H08a).** The review catalogues the best-established
-   exposure→signature links that H08a must recover: UV light→SBS7 (melanoma), tobacco
+1. **Positive-control grounding.** The review catalogues the best-established
+   exposure→signature links that the positive-control arm must recover: UV light→SBS7 (melanoma), tobacco
    smoking→SBS4 (lung), APOBEC3 activity→SBS2/13 (breast, ovarian, bladder), MMR
    inactivation→SBS6/15/26/44, POLE/POLD1→SBS10, and thiopurines→SBS87. Brady et al. also
    describe the *mechanism* behind each link, which helps design the expected covariate columns
    (e.g., APOBEC3A/B expression modules, MSI status, MMR-gene mutation flags) that the
-   H08 agnostic scan should rank at the top for those known associations.
+   agnostic scan should rank at the top for those known associations.
 
-2. **Clinical contraindication signatures as h08 discovery targets (H08b).** The review
+2. **Clinical contraindication signatures as discovery targets.** The review
    highlights therapy-induced signatures (SBS87, SBS11, radiation indels) as a class of
    clinically informative exposures detectable *purely from mutation patterns* — exactly the
    kind of orthogonal, clinically actionable information an agnostic scan can surface without
    requiring prior annotation. The observation that signature-defined subgroups are
-   *orthogonal* to clinical features (Secrier esophageal study) directly supports h08's
+   *orthogonal* to clinical features (Secrier esophageal study) directly supports the hypothesis's
    premise: signatures carry information not captured by the structured clinical covariates
    already held in the pipeline.
 
 3. **Known biomarker associations inform which clinical fields to prioritise in the agnostic
    scan:** HRDetect-predicted HR deficiency → treatment-response column; MSI/MMR gene status
    → MMR signatures; APOBEC-enriched cancers → stage/grade columns (if APOBEC is associated
-   with high-risk translocations in myeloma, as the Walker 2015 reference suggests). These
-   provide within-tissue covariate expectations that FDR-corrected H08 associations should
+   with high-risk translocations in myeloma, as a cited myeloma study suggests). These
+   provide within-tissue covariate expectations that FDR-corrected associations should
    match.
 
 The review also foregrounds the *interpretive hazard* of reverse causation: expression of ATR,
 WRN, or PARP is likely *downstream* of the repair-pathway loss causing the signature, not
-upstream. This aligns with the h08 reverse-causation guard (R2 alternative explanation in the
+upstream. This aligns with the reverse-causation guard (R2 alternative explanation in the
 hypothesis spec) — expression↔signature concordance is a hypothesis, not a causal arrow.
 
 ## Project Framework Mapping
@@ -168,16 +168,16 @@ hypothesis spec) — expression↔signature concordance is a hypothesis, not a c
 ## Limitations
 
 - Review does not cover de-novo extraction methodology in detail; biases from NMF initialisation
-  or signature number selection are not discussed, which is a gap for h08 implementation
+  or signature number selection are not discussed, which is a gap for implementing hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and
   planning.
 - All therapy-sensitivity examples are largely correlative cell-line or retrospective-cohort
   data; only HRDetect for PARPi is at the clinical-trial-evidence stage. The review itself
   notes the need for prospective validation throughout.
 - The review focusses on WGS-scale assays for most applications; the pipeline primarily holds
   WES and panel data. Panel adequacy for per-sample signature assignment is not addressed
-  (this is the subject of q018).
+  (this is the subject of question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross).
 - No systematic evaluation of cross-study heterogeneity in signature exposures — relevant for
-  the cBioPortal meta-analysis context where study-level batch effects are a concern (h08 R4
+  the cBioPortal meta-analysis context where study-level batch effects are a concern (the hypothesis's R4
   alternative explanation).
 - Outstanding questions raised by the paper: (1) Can therapy-induced signatures be detected
   on-treatment via cfDNA for clinical guidance? (2) Why do only ~15% of thiopurine-treated
@@ -193,10 +193,10 @@ HRDetect, CHORD, and mutREAD — all previously published; see respective citati
 
 - Brady et al. cite the Levatić (2021) systematic cell-line signature ↔ drug-response screen
   (bioRxiv doi 10.1101/2021.05.19.444811) — worth summarising as a methodological template for
-  H08b discovery scan design.
+  discovery-scan design.
 - The Hoang et al. multiple myeloma SV+SNV prognostic scheme demonstrates joint multi-modal
   signature classification; relevant if the pipeline ever integrates SV-level data.
 - The Secrier et al. esophageal classification (three signature subgroups orthogonal to
-  clinical features) is a strong existence proof for h08's premise.
-- See h08 spec for the connection to q018 (panel adequacy for per-sample refit) and q019
+  clinical features) is a strong existence proof for the hypothesis's premise.
+- See hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and for the connection to question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross (panel adequacy for per-sample refit) and question:0019-does-de-novo-extraction-on-the-aggregated-cohort-surface-factors-not-in
   (de-novo extraction on the aggregated cohort).

@@ -65,17 +65,17 @@ Mutational signatures inferred from cancer cell line exomes — after correcting
 
 ## Relevance
 
-This paper is directly relevant to **hypothesis h08** (agnostic covariate↔signature-exposure association; positive-control recovery):
+This paper is directly relevant to hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and:
 
-- **Positive-control benchmark (H08a):** Levatic et al. demonstrate that DNA repair deficiency signatures (MMR SBS6/15/26, HR, NER) associate robustly and replicably with drug sensitivity phenotypes. This establishes that known signature aetiologies have detectable downstream consequences in orthogonal data — the same logic underpins H08a's prediction that known exposure→signature links (UV↔SBS7, smoking↔SBS4, APOBEC↔SBS2/13, MMR↔SBS6/15/26) should re-emerge in an agnostic covariate scan.
+- **Positive-control benchmark:** Levatic et al. demonstrate that DNA repair deficiency signatures (MMR SBS6/15/26, HR, NER) associate robustly and replicably with drug sensitivity phenotypes. This establishes that known signature aetiologies have detectable downstream consequences in orthogonal data — the same logic underpins the prediction that known exposure→signature links (UV↔SBS7, smoking↔SBS4, APOBEC↔SBS2/13, MMR↔SBS6/15/26) should re-emerge in an agnostic covariate scan.
 
-- **Prior-exposure signatures as resistance markers:** The finding that SBS25L (chemotherapy), SBS42L (haloalkane), and SBS4/45L (tobacco) associate with drug *resistance* illustrates a confounding pattern relevant to our cross-study analysis: tumors from heavily pre-treated patients will carry chemotherapy-exposure signatures that correlate with poor prognosis / resistance, mimicking an exposure aetiology. In the cBioPortal context — where treatment history is inconsistently recorded — this is a concrete example of the "R4 — batch/study artifact" alternative explanation flagged in h08.
+- **Prior-exposure signatures as resistance markers:** The finding that SBS25L (chemotherapy), SBS42L (haloalkane), and SBS4/45L (tobacco) associate with drug *resistance* illustrates a confounding pattern relevant to our cross-study analysis: tumors from heavily pre-treated patients will carry chemotherapy-exposure signatures that correlate with poor prognosis / resistance, mimicking an exposure aetiology. In the cBioPortal context — where treatment history is inconsistently recorded — this is a concrete example of the "R4 — batch/study artifact" alternative explanation flagged in the hypothesis.
 
-- **Ancestry-matched germline correction as methodological template:** The ancestry-matching approach (cluster cell lines with TCGA normal exomes, subtract cluster-median germline spectrum) is a systematic solution to the unmatched-normal problem. This is relevant to `topic:signature-decomposition-unmatched-normal` and q018's feasibility question about downstream signature extraction. The cBioPortal pipeline faces the same challenge for panel-sequenced tumors without paired normals.
+- **Ancestry-matched germline correction as methodological template:** The ancestry-matching approach (cluster cell lines with TCGA normal exomes, subtract cluster-median germline spectrum) is a systematic solution to the unmatched-normal problem. This is relevant to `topic:signature-decomposition-unmatched-normal` and question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross. The cBioPortal pipeline faces the same challenge for panel-sequenced tumors without paired normals.
 
-- **Mutational signatures complement, rather than replace, expression for drug prediction:** Figure 2d–e shows that gene expression is the single strongest predictor but that signatures add complementary, expression-independent signal for ~50% of predictive drug-tissue pairs. This is consistent with h08's cross-decomposition concordance rationale: expression and mutation factors can be jointly informative about shared upstream drivers.
+- **Mutational signatures complement, rather than replace, expression for drug prediction:** Figure 2d–e shows that gene expression is the single strongest predictor but that signatures add complementary, expression-independent signal for ~50% of predictive drug-tissue pairs. This is consistent with the cross-decomposition concordance rationale: expression and mutation factors can be jointly informative about shared upstream drivers.
 
-- **MMR signatures predict AKT inhibitor sensitivity via ARID1A:** This mechanistic link (MMR deficiency ↔ ARID1A mutation ↔ AKT2 dependency) is an example of the kind of trans-omic causal chain that the h08 agnostic association could surface — a signature (MMR) points to an expression program (ARID1A-driven transcription) and a drug vulnerability, all recoverable from the mutation data alone.
+- **MMR signatures predict AKT inhibitor sensitivity via ARID1A:** This mechanistic link (MMR deficiency ↔ ARID1A mutation ↔ AKT2 dependency) is an example of the kind of trans-omic causal chain that the agnostic association could surface — a signature (MMR) points to an expression program (ARID1A-driven transcription) and a drug vulnerability, all recoverable from the mutation data alone.
 
 ## Project Framework Mapping
 
@@ -83,10 +83,10 @@ This paper is directly relevant to **hypothesis h08** (agnostic covariate↔sign
 |---|---|---|
 | Ancestry-matched germline subtraction (13 TCGA clusters) | `topic:signature-decomposition-unmatched-normal` | Directly applicable to cBioPortal unmatched-normal problem |
 | SBS-CL (cell-line-specific signatures) | Artifact signatures (SBS27/43/45–60 in COSMIC) | Cell-line culture may generate signatures not present in tumors |
-| GDSC/PRISM/PSCORE replication framework | Within-study vs cross-study replication in h08 | Three-way replication is the gold standard; our cBioPortal cross-study design is analogous |
+| GDSC/PRISM/PSCORE replication framework | Within-study vs cross-study replication | Three-way replication is the gold standard; our cBioPortal cross-study design is analogous |
 | Prior-exposure signatures → resistance | Treatment-history confound in cBioPortal | cBioPortal studies vary in treatment status; pre-treated cohorts inflate chemotherapy-exposure signatures |
-| NMF joint SBS+indel extraction | h08 signature modality choice (SBS only vs joint) | Indel signatures added >5 SBS-CL associations; worth considering for h08 |
-| Random Forest per-drug-tissue predictive models | h08 covariate association layer | RF used here for IC50 prediction; h08 uses association/regression for exposure~covariate |
+| NMF joint SBS+indel extraction | signature modality choice (SBS only vs joint) | Indel signatures added >5 SBS-CL associations; worth considering for hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and |
+| Random Forest per-drug-tissue predictive models | covariate association layer | RF used here for IC50 prediction; hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and uses association/regression for exposure~covariate |
 
 ## Limitations
 
@@ -105,6 +105,6 @@ This paper is directly relevant to **hypothesis h08** (agnostic covariate↔sign
 ## Follow-up
 
 - **Methodological:** The ancestry-matching germline subtraction approach warrants review for adapting to the cBioPortal panel-sequenced context (partial exome coverage, no TCGA cluster-match available for non-TCGA cohorts). See `topic:signature-decomposition-unmatched-normal`.
-- **h08 design input:** The replication framework (GDSC × PRISM × PSCORE) is a model for the h08 cross-study replication design. The "golden set" criteria (≥3 tissues or ≥3 methods, d>0.5, p<0.005) could inform the effect-size thresholds and FDR regime for h08 association reporting.
-- **Prior-exposure artifact audit:** Before finalizing h08, audit cBioPortal studies for treatment-exposed cohorts whose samples will carry chemotherapy/radiation signatures — a structured confound that should be treated as a covariate or excluded from the positive-control arm.
-- **Related papers to read:** Degasperi2022 (SigProfiler, already summarized); papers on WRN synthetic lethality in MMR-deficient tumors; Ellrott 2018 MC3 (for matched-normal TCGA baseline).
+- **Design input:** The replication framework (GDSC × PRISM × PSCORE) is a model for the cross-study replication design. The "golden set" criteria (≥3 tissues or ≥3 methods, d>0.5, p<0.005) could inform the effect-size thresholds and FDR regime for association reporting.
+- **Prior-exposure artifact audit:** Before finalizing hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and, audit cBioPortal studies for treatment-exposed cohorts whose samples will carry chemotherapy/radiation signatures — a structured confound that should be treated as a covariate or excluded from the positive-control arm.
+- **Related papers to read:** Degasperi2022 (SigProfiler, already summarized); papers on WRN synthetic lethality in MMR-deficient tumors; Ellrott et al. [@Ellrott2018] MC3 (for matched-normal TCGA baseline).

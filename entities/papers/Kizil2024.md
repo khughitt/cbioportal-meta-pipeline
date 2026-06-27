@@ -66,21 +66,21 @@ This is a narrative viewpoint/review article. No primary data are generated. The
 
 ## Relevance
 
-**Direct support for H2 (neural gene enrichment via immune modulation).** This paper provides the mechanistic backbone for hypothesis H2: neural genes are enriched in pan-cancer mutation data not because they drive tumor biology through neural circuitry per se, but because they encode receptors and signaling proteins that immune cells in the TME use to receive and process neuro-immune signals. Specifically:
+**Direct support for paper-internal `H2` (neural gene enrichment via immune modulation).** This paper provides the mechanistic backbone for the paper-internal `H2`: neural genes are enriched in pan-cancer mutation data not because they drive tumor biology through neural circuitry per se, but because they encode receptors and signaling proteins that immune cells in the TME use to receive and process neuro-immune signals. Specifically:
 
 - Genes encoding adrenergic receptors (ADRB1, ADRB2, ADRB3, ADRA2A/ADRA2B), cholinergic receptors (CHRM1, α7nAChR), and neuropeptide signaling components (CALCA/CGRP, TAC1/SubP) are expressed on immune cells infiltrating tumors — not only on neurons. If these immune-expressed neural-signaling genes are frequently mutated in cancer, their frequency could reflect immunoediting pressure rather than a neural-circuit function.
 
 - The paper does not directly address somatic mutation patterns in these genes. Whether the user's top-mutated neural gene list (NKAIN2, KCNIP4, TAFA2/FAM19A2, RIT2, CALN1, RBFOX1, LSAMP, SGCZ, OPCML) overlaps with neuro-immune interface genes is not resolved here. These specific genes are not named in this review. Most of the user's top-mutated list are CNS-enriched structural/developmental genes rather than the peripheral-receptor genes (ADRB2, CHRM1, CALCA) emphasized here, suggesting the overlap between the neuro-immune axis covered by Kizil2024 and the user's observed top-mutated neural genes is partial at best.
 
-**H1 (hijacking neural circuitry):** Partially supported. The review documents that tumors actively promote neoneurogenesis (nerve infiltration) and perineural invasion, suggesting cancer cells do co-opt neural infrastructure. However, the mechanisms described are largely paracrine (neurotransmitter→immune receptor) rather than cancer cells acquiring neural identity.
+**`H1` (hijacking neural circuitry):** Partially supported. The review documents that tumors actively promote neoneurogenesis (nerve infiltration) and perineural invasion, suggesting cancer cells do co-opt neural infrastructure. However, the mechanisms described are largely paracrine (neurotransmitter→immune receptor) rather than cancer cells acquiring neural identity.
 
-**H2 (neural-gene enrichment via immune modulation):** Strongly supported as a mechanistic framework. The neuro-immune receptors (ADRB2, CHRM1, CALCA, TAC1) are both neuronally derived and immune-cell expressed, creating a conceptual bridge between "neural" gene expression and immune regulation in tumors.
+**`H2` (neural-gene enrichment via immune modulation):** Strongly supported as a mechanistic framework. The neuro-immune receptors (ADRB2, CHRM1, CALCA, TAC1) are both neuronally derived and immune-cell expressed, creating a conceptual bridge between "neural" gene expression and immune regulation in tumors.
 
-**H3 (oncofetal/developmental expression):** Not addressed by this paper.
+**`H3` (oncofetal/developmental expression):** Not addressed by this paper.
 
-**H4 (brain/CNS-cancer artifact):** The paper focuses on peripheral nerves (PNS) in solid tumors — not CNS cancers. However, the genes discussed (ADRB2, ADRA2) are expressed broadly, not exclusively in CNS, weakening H4 for the neuro-immune axis specifically.
+**`H4` (brain/CNS-cancer artifact):** The paper focuses on peripheral nerves (PNS) in solid tumors — not CNS cancers. However, the genes discussed (ADRB2, ADRA2) are expressed broadly, not exclusively in CNS, weakening `H4` for the neuro-immune axis specifically.
 
-**H5 (misannotation):** Not addressed.
+**`H5` (misannotation):** Not addressed.
 
 **Data-driven neural-gene definition:** Kizil2024 implicitly defines a functional category of "neuro-immune interface genes" — genes whose protein products mediate communication between neurons and immune cells. These include: ADRB1, ADRB2, ADRB3, ADRA2A, ADRA2B, CHRM1, CALCA (CGRP), TAC1 (substance P), TRPV1, BDNF (mentioned in SNS-driven intratumoral innervation via BDNF induction). This is a mechanism-defined set, not an expression-cluster-defined set. A label-free data-driven definition (e.g., from single-cell RNA-seq co-expression of immune and neural gene programs) would require different resources than this review provides.
 
@@ -89,9 +89,9 @@ This is a narrative viewpoint/review article. No primary data are generated. The
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
 | Sensory nerve → CGRP → CD8+ T cell inhibition | Neuro-immune axis, potential confound in neural gene mutation frequency | CALCA (CGRP gene) expressed on sensory neurons and immune cells |
-| SNS → NA → ADRB2 → MDSC immunosuppression | H2 mechanism: neural receptor genes expressed on myeloid cells | ADRB2 somatic mutations could alter MDSC immunosuppression |
+| SNS → NA → ADRB2 → MDSC immunosuppression | `H2` mechanism: neural receptor genes expressed on myeloid cells | ADRB2 somatic mutations could alter MDSC immunosuppression |
 | PSNS → ACh → α7nAChR → anti-tumor immunity | Cholinergic neuro-immune axis | CHRM1 muscarinic receptor is explicit intervention target |
-| Beta-blocker clinical trials | Pharmacological validation of neuro-immune axis in human cancer | External validation layer for H2 |
+| Beta-blocker clinical trials | Pharmacological validation of neuro-immune axis in human cancer | External validation layer for `H2` |
 | PD-1/PD-L1 regulation by adrenergic signaling | Immune checkpoint biology intersects neural signaling | Checkpoint expression under neural control |
 | MDSC expansion via ADRB2 + arginase-1/PD-L1 | Myeloid immunosuppression in TME | Relevant to interpreting immune cell composition in cBioPortal clinical data |
 | Tumor innervation density as prognostic marker | Cross-study variable not yet in pipeline | Nerve density data not available in standard cBioPortal downloads |
@@ -121,9 +121,9 @@ Referenced experimental tools and genetic systems useful for follow-up:
 
 ## Follow-up
 
-- **Does the user's top-mutated neural gene list contain neuro-immune interface genes?** Cross-reference NKAIN2, KCNIP4, TAFA2/FAM19A2, RIT2, CALN1, RBFOX1, LSAMP, SGCZ, OPCML against databases of immune-cell-expressed neural-signaling genes (e.g., CellChat ligand-receptor database, NeurIPS 2021 neuro-immune atlas) to test whether H2 applies specifically to the observed list.
+- **Does the user's top-mutated neural gene list contain neuro-immune interface genes?** Cross-reference NKAIN2, KCNIP4, TAFA2/FAM19A2, RIT2, CALN1, RBFOX1, LSAMP, SGCZ, OPCML against databases of immune-cell-expressed neural-signaling genes (e.g., CellChat ligand-receptor database, NeurIPS 2021 neuro-immune atlas) to test whether `H2` applies specifically to the observed list.
 - **Define a data-driven neuro-immune gene set.** Use single-cell RNA-seq data (e.g., Human Tumor Microenvironment Atlas, TCIA, or TCGA RNA-seq) to identify genes co-expressed in both immune and neural cell clusters. This would provide a label-free operational definition of "neural-immune interface genes" against which to test mutation enrichment.
-- **Test ADRB2/ADRA2A somatic mutation frequency in cBioPortal.** If ADRB2 or ADRA2A appear among top-mutated genes across studies, this would directly support H2. If absent, it argues the user's neural gene list reflects a different mechanism (H3, H4, or H5).
+- **Test ADRB2/ADRA2A somatic mutation frequency in cBioPortal.** If ADRB2 or ADRA2A appear among top-mutated genes across studies, this would directly support `H2`. If absent, it argues the user's neural gene list reflects a different mechanism (`H3`, `H4`, or `H5`).
 - **Correlate tumor nerve density with immune composition in TCGA.** Nerve density quantification from pathology images (e.g., PGP9.5 IHC data if available) correlated with MDSC/CD8 infiltration signatures would externally validate the central claim of this review in human data.
 - **Companion paper:** Magnon2023 (also in this batch) focuses on cancer neuroscience from the tumor-cell-autonomy angle and should be read alongside Kizil2024 for a complete picture of neural–cancer crosstalk.
 - **Examine whether CALCA (CGRP) and TAC1 (substance P) are in the user's top-mutated gene list or their extended neighborhood** in the gene-cancer frequency table, as these are the most mechanistically grounded neuro-immune neuropeptide genes identified here.

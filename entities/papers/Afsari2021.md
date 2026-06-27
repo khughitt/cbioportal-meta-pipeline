@@ -66,15 +66,15 @@ SuperSigs is a supervised machine-learning framework that learns mutational sign
 
 ## Relevance
 
-**Direct relevance to h08 (agnostic covariate association recovers known signature aetiologies and surfaces novel upstream causes).**
+**Direct relevance to hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and.**
 
-SuperSigs is essentially an operationalized positive-control machine for h08a: it shows that supervised association of mutation patterns with annotated clinical covariates — age, smoking, BMI, viral infection, etc. — robustly recovers and extends known exposure→signature links. Key connections:
+SuperSigs is essentially an operationalized positive-control machine: it shows that supervised association of mutation patterns with annotated clinical covariates — age, smoking, BMI, viral infection, etc. — robustly recovers and extends known exposure→signature links. Key connections:
 
-- **H08a positive-control recovery.** The paper demonstrates that supervised approaches recover canonical exposure→signature aetiologies (UV, smoking, MMR deficiency, APOBEC, POLE) with AUC that far exceeds unsupervised NMF. This is precisely what h08a predicts and requires before the discovery prong (h08b) can be trusted.
-- **H08b discovery signal — obesity.** The discovery of an obesity mutational signature in kidney and uterine cancers is a concrete example of a novel upstream cause surfaced by treating a clinical covariate as the outcome variable, which is the spirit of h08b.
-- **Tissue-specificity finding.** The observation that the same exposure produces different signatures in different tissues is a direct methodological constraint for the h08 association scan: associations must be performed within-tissue strata, not pan-cancer — consistent with h08's design (Prediction 4 / R1).
-- **Partially supervised strategy vs. our agnostic scan.** The "partially supervised" extension is conceptually related to h08's plan to regress out known signatures before testing residuals, and provides a methodological template. However, our h08 approach is agnostic at the first step (no pre-specified exposures), adding a PheWAS-style sweep over all clinical covariates and expression modules.
-- **Key divergence from h08.** SuperSigs requires clinical annotation as a training label; h08 begins from de-novo NMF factors (W, H) and then asks what covariates correlate with H. SuperSigs generates signatures optimized for a specific exposure; our approach evaluates signatures that were learned without any exposure in mind. These are complementary designs — SuperSigs' higher AUC reflects exposure-targeted optimization, while h08 can in principle surface unknown exposures not in the clinical annotation.
+- **Positive-control recovery.** The paper demonstrates that supervised approaches recover canonical exposure→signature aetiologies (UV, smoking, MMR deficiency, APOBEC, POLE) with AUC that far exceeds unsupervised NMF. This is precisely what the positive-control arm of hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and predicts and requires before the discovery prong can be trusted.
+- **Discovery signal — obesity.** The discovery of an obesity mutational signature in kidney and uterine cancers is a concrete example of a novel upstream cause surfaced by treating a clinical covariate as the outcome variable.
+- **Tissue-specificity finding.** The observation that the same exposure produces different signatures in different tissues is a direct methodological constraint for the association scan: associations must be performed within-tissue strata, not pan-cancer — consistent with the hypothesis's design (Prediction 4 / R1).
+- **Partially supervised strategy vs. our agnostic scan.** The "partially supervised" extension is conceptually related to the plan to regress out known signatures before testing residuals, and provides a methodological template. However, our approach is agnostic at the first step (no pre-specified exposures), adding a PheWAS-style sweep over all clinical covariates and expression modules.
+- **Key divergence from the project hypothesis.** SuperSigs requires clinical annotation as a training label; our association design begins from de-novo NMF factors (W, H) and then asks what covariates correlate with H. SuperSigs generates signatures optimized for a specific exposure; our approach evaluates signatures that were learned without any exposure in mind. These are complementary designs — SuperSigs' higher AUC reflects exposure-targeted optimization, while the project hypothesis can in principle surface unknown exposures not in the clinical annotation.
 - **Relevance to cross-study meta-analysis.** The finding that unsupervised signatures (NMF) in liver cancer show Signature 4 (smoking) and Signature 6 (MMR deficiency) in virtually every patient illustrates the confounding problem in pan-cancer meta-analyses: omnipresent signatures inflate apparent mutation frequencies regardless of true etiology. The cbioportal pipeline's hypermutator flags and matched-normal study separation address related concerns.
 
 ## Project Framework Mapping
@@ -82,15 +82,15 @@ SuperSigs is essentially an operationalized positive-control machine for h08a: i
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
 | SuperSig (supervised, exposure-specific signature) | signature exposure (H column from NMF factorization) | SuperSigs are not NMF-derived; they are feature vectors optimized per exposure |
-| Etiological factor / exposure | clinical covariate (age, smoking, BMI, etc.) | h08 treats these as outcomes to correlate against signature exposures |
+| Etiological factor / exposure | clinical covariate (age, smoking, BMI, etc.) | The association design treats these as outcomes to correlate against signature exposures |
 | Unsupervised NMF signatures (Alexandrov) | de-novo signature extraction (SigProfiler / NMF) | pipeline's `run_restricted_sigprofiler_assignment.py` does restricted assignment |
-| Tissue-specificity of signatures | within-tissue stratification (h08 design) | validates the h08 requirement for within-tissue strata |
-| Partially supervised (subtract known, NMF residual) | peel-and-discover residual analysis | not yet implemented; a candidate extension for h08b |
-| AUC for exposure prediction | correlation / effect size in agnostic association | h08 uses FDR-corrected effect sizes; SuperSigs use AUC from targeted classifiers |
+| Tissue-specificity of signatures | within-tissue stratification | validates the requirement for within-tissue strata in hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and |
+| Partially supervised (subtract known, NMF residual) | peel-and-discover residual analysis | not yet implemented; a candidate extension for the discovery arm |
+| AUC for exposure prediction | correlation / effect size in agnostic association | hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and uses FDR-corrected effect sizes; SuperSigs use AUC from targeted classifiers |
 
 ## Limitations
 
-- **Requires complete clinical annotation for the target exposure.** Where annotation is unavailable (or noisy), predictive power degrades. This contrasts with the agnostic h08 design, which can run on any co-measured covariate.
+- **Requires complete clinical annotation for the target exposure.** Where annotation is unavailable (or noisy), predictive power degrades. This contrasts with the agnostic project design, which can run on any co-measured covariate.
 - **One exposure per model.** Each SuperSig is fit to classify a single clinical label (e.g. smoker vs. non-smoker). Multi-exposure interactions and unknown exposures can only be explored through the partially supervised extension.
 - **Exome only (primarily).** TCGA exome data limits power for less-mutable trinucleotide contexts; WGS would increase sensitivity (OV and AML used WGS for this reason).
 - **Obesity signature AUC is modest in UCEC (0.66) and unreliable in colon and esophageal cancers (AUC < 0.60 in CV).** Cross-validation failures highlight that sample size constraints limit detection.
@@ -104,8 +104,8 @@ The SuperSigs methodology is implemented in R (R version 3.5.2; glm from STATS, 
 
 ## Follow-up
 
-- Examine whether the "partially supervised" strategy (subtract annotated SuperSigs, apply NMF to residual) is applicable as a pre-processing step before the h08 agnostic association scan.
-- The tissue-specific distance heatmap (Figure 5) is a useful reference for confirming that within-tissue stratification is necessary before running h08 associations.
-- The obesity SuperSig result (especially the KIRP C>A enrichment) is an example of a novel upstream candidate (h08b class); worth revisiting if kidney cancer samples appear in the cBioPortal dataset with BMI annotation.
+- Examine whether the "partially supervised" strategy (subtract annotated SuperSigs, apply NMF to residual) is applicable as a pre-processing step before the agnostic association scan in hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and.
+- The tissue-specific distance heatmap (Figure 5) is a useful reference for confirming that within-tissue stratification is necessary before running the association analyses.
+- The obesity SuperSig result (especially the KIRP C>A enrichment) is an example of a novel upstream candidate from the discovery arm; worth revisiting if kidney cancer samples appear in the cBioPortal dataset with BMI annotation.
 - Compare the 69% aging attribution estimate with the CH annotation pipeline's matched vs. unmatched stratification: clonal hematopoiesis contamination would inflate "aging" attributions in studies without matched normals.
 - Tomasetti et al. 2017b (referenced for the 69% figure) should be read alongside this paper for the stem-cell division / replicative mutation rate model.

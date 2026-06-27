@@ -125,20 +125,20 @@ genes relative to common external mutagens (tobacco, UV).
 
 ## Relevance
 
-**Direct relevance to h08 (agnostic covariate→signature-exposure recovery):**
+**Direct relevance to hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and (agnostic covariate→signature-exposure recovery):**
 
 - **Positive control arm — APOBEC3 expression ↔ SBS2/13 (H08a Arm 3).** This paper
   provides the mechanistic foundation for why APOBEC3A/B expression should be the strongest
   molecular predictor of A3 signature exposure within a tissue: the omikli mechanism is
   expression-limited (Spearman rho = 0.31/0.45 for APOBEC3A/B mRNA with omikli burden;
-  smaller for kataegis). If h08's agnostic covariate scan of mRNA expression recovers
+  smaller for kataegis). If the hypothesis:0007 agnostic covariate scan of mRNA expression recovers
   APOBEC3A/3B as the top hits for SBS2/SBS13 within relevant tissue types (lung, bladder,
   breast, cervical, HNSC), that is expected and interpretable mechanistically. Failure to
   recover this would falsify H08a.
 
 - **Interpretation guide for the discovery prong (H08b).** The MMR→A3 coupling means that
   MSI status and MMR gene (MSH6, MSH2, EXO1) expression/copy-number should also correlate
-  *negatively* with SBS2/13 exposures (omikli depleted in MSI). The h08 scan should see
+  *negatively* with SBS2/13 exposures (omikli depleted in MSI). The hypothesis:0007 scan should see
   MMR pathway covariates associating with APOBEC signatures in an unexpected direction
   (higher MMR integrity → more SBS2/13, not less). This is a subtle, counterintuitive
   association that a purely covariate-blind scan might surface and that the literature
@@ -198,6 +198,6 @@ genes relative to common external mutagens (tobacco, UV).
 - Petljak et al. / Roberts & Gordenin — foundational kataegis papers (references 8, 10).
 - Chan et al. 2015 / Buisson et al. — A3 expression in cancer, germline APOBEC3A/B
   deletion polymorphism.
-- For h08: whether within-tissue APOBEC3A/3B mRNA expression rank-predicts SBS2/13
+- For hypothesis:0007: whether within-tissue APOBEC3A/3B mRNA expression rank-predicts SBS2/13
   exposure better than MSI status or other covariates is the key association test to run.
   The paper predicts expression is the primary limiting factor for omikli (not kataegis).

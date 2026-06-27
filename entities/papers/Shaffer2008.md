@@ -46,7 +46,7 @@ Using a doxycycline-inducible shRNA loss-of-function screen across multiple myel
 
 ## Methods
 
-**Loss-of-function RNAi screen.** Doxycycline-inducible retrovirally delivered shRNAs targeting IRF4 were introduced into three myeloma cell lines representing distinct oncogenic subtypes: KMS12 (CCND1 translocation), H929 (FGFR3/MMSET translocation), and SKMM1 (MAFB/IRF4 translocations). Competitive growth assays were used to measure depletion of shRNA-expressing cells relative to uninfected controls. Five lymphoma cell lines served as non-myeloma controls.
+**Loss-of-function RNAi screen.** Doxycycline-inducible retrovirally delivered shRNAs targeting IRF4 were introduced into three myeloma cell lines representing distinct oncogenic subtypes: KMS12 (CCND1 translocation), a line with FGFR3/MMSET translocation, and SKMM1 (MAFB/IRF4 translocations). Competitive growth assays were used to measure depletion of shRNA-expressing cells relative to uninfected controls. Five lymphoma cell lines served as non-myeloma controls.
 
 **Gene expression profiling.** Agilent microarrays and Lymphochip arrays were used to identify IRF4-dependent transcriptional programs following shRNA knockdown, and to compare IRF4 targets against a reference panel of primary myeloma samples (n=451) vs. normal B cell stages (activated B cells, plasma cells).
 
@@ -64,7 +64,7 @@ Using a doxycycline-inducible shRNA loss-of-function screen across multiple myel
 
 **IRF4→MYC direct regulation.** Genome-wide ChIP-chip identified 558 direct IRF4-bound loci in myeloma cells but not lymphoma cells; 35 overlapped with downregulated genes after IRF4 knockdown (p=1.0×10⁻¹⁶). MYC was a direct target: IRF4 bound the MYC promoter ~1.6 kb upstream of the transcriptional start site, IRF4 knockdown reduced MYC mRNA >2-fold in myeloma lines, and ectopic IRF4 in lymphoma cells increased MYC mRNA. The same IRF4→MYC binding was observed in mitogen-activated primary B cells after 3-20 hours of stimulation.
 
-**MYC→IRF4 reciprocal feedback (the autoregulatory circuit).** MYC knockdown decreased IRF4 expression in myeloma cells. ChIP demonstrated direct MYC binding within the IRF4 first intron in MYC-expressing myeloma lines (KMS12, H929) but not in the low-MYC line U266 (which instead expresses MYCL1). In primary myeloma samples, MYC and IRF4 mRNA showed significant positive correlation across 451 samples (r=0.24, p=2.5×10⁻⁷). This creates a self-sustaining positive feedback loop: any genetic event that elevates MYC (translocation, copy gain) will drive IRF4 expression, which in turn sustains MYC — locking cells into the hybrid activation/differentiation program.
+**MYC→IRF4 reciprocal feedback (the autoregulatory circuit).** MYC knockdown decreased IRF4 expression in myeloma cells. ChIP demonstrated direct MYC binding within the IRF4 first intron in MYC-expressing myeloma lines but not in the low-MYC line U266 (which instead expresses MYCL1). In primary myeloma samples, MYC and IRF4 mRNA showed significant positive correlation across 451 samples (r=0.24, p=2.5×10⁻⁷). This creates a self-sustaining positive feedback loop: any genetic event that elevates MYC (translocation, copy gain) will drive IRF4 expression, which in turn sustains MYC — locking cells into the hybrid activation/differentiation program.
 
 **Cell death mechanism is multi-factorial.** IRF4 knockdown caused cell death (elevated sub-G1 fraction) within 3 days with no major cell-cycle arrest, and loss of many essential gene products simultaneously (CDK6, STAG2, metabolic enzymes LDHA/HK2/PDK1, mitochondrial components, telomere maintenance factors BMI1/TERT, differentiation regulator PRDM1/Blimp-1). The authors term this "death by a thousand cuts."
 
@@ -78,7 +78,7 @@ This paper is the canonical primary example for a key theme emerging in our proj
 
 **Nononcogene addiction as a distinct driver class.** The paper explicitly coins the term "nononcogene addiction" to distinguish this from classical oncogene/TSG driver logic. In our project's driver-vs-biomarker framing: IRF4 is a dependency/biomarker, not a classically mutated driver. It would not be flagged by any recurrence-based statistical test (MutSigCV, dN/dS, etc.) applied to our aggregated cBioPortal data. This is a concrete instance where the "driver" designation requires functional screens, not just somatic mutation tallies.
 
-**Lineage program as cancer vulnerability.** The mechanism — co-option of a normal lineage-specification transcription factor — is precisely the "cell-of-origin determines dependency" principle. Plasma cells require high IRF4 for their identity and function; MM cells inherit this requirement and cannot escape it. The parallel to MITF dependency in melanoma (Garraway 2006) is direct: both are cases where the cancer cell is "addicted" to the master transcription factor that specifies its normal cell-of-origin.
+**Lineage program as cancer vulnerability.** The mechanism — co-option of a normal lineage-specification transcription factor — is precisely the "cell-of-origin determines dependency" principle. Plasma cells require high IRF4 for their identity and function; MM cells inherit this requirement and cannot escape it. The parallel to MITF dependency in melanoma (Garraway 2006 [@Garraway2006]) is direct: both are cases where the cancer cell is "addicted" to the master transcription factor that specifies its normal cell-of-origin.
 
 **IRF4-MYC circuit as a model for mutation-amplified expression dependencies.** Even though IRF4 is not mutated, the MYC↔IRF4 feedback loop explains why MYC-activating events (translocations, copy gains — which ARE detectable in our pipeline) would amplify IRF4 activity without altering IRF4 sequence. This is a mechanistic example of how a mutational event in one gene (MYC) creates a dependency on a second gene (IRF4) that would only be apparent through expression or functional data.
 
@@ -114,10 +114,10 @@ This paper does not release a computational tool or model. Gene expression data 
 ## Follow-up
 
 **Papers to read next:**
-- Garraway et al. 2006 (Nature) — MITF lineage survival oncogene in melanoma; the conceptual parallel to IRF4 in MM; referenced in `related`
+- Garraway et al. 2006 [@Garraway2006] (Nature) — MITF lineage survival oncogene in melanoma; the conceptual parallel to IRF4 in MM; referenced in `related`
 - Bhatt et al. / later IRF4 inhibitor papers — subsequent pharmacological efforts to target the IRF4-MYC axis
 - Hollenhorst et al. on ETS factors in prostate cancer — another lineage-TF addiction example
-- Weinstein 2002 (Science) — original "oncogene addiction" framing that Shaffer2008 extends to nononcogene addiction
+- Original "oncogene addiction" framing — the conceptual predecessor that Shaffer2008 extends to nononcogene addiction
 
 **Questions this raises for our project:**
 - `question:0042-driver-normal-expression-tissue-cell-type-specificity` — What fraction of known cancer vulnerabilities are expression/lineage dependencies that are mutation-invisible? Can we estimate the "missed" dependency rate from our mutation-only data?

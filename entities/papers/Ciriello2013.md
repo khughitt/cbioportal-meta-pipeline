@@ -97,8 +97,8 @@ C13/C14 BRCA1/2-deficient tumors.
 
 Early pan-cancer oncogenic-event landscape paper from 2013 — establishes the M class
 (mutation-driven) vs C class (copy-number-driven) framing that became influential in subsequent
-pan-cancer work. Historical context for the pathway-level analyses (Sanchez-Vega 2018) and
-methodologically a peer of Kandoth 2013.
+pan-cancer work. Historical context for the pathway-level analyses (Sanchez-Vega 2018 [@SanchezVega2018]) and
+methodologically a peer of Kandoth 2013 [@Kandoth2013].
 
 ## Limitations
 
@@ -116,9 +116,9 @@ methodologically a peer of Kandoth 2013.
 
 ## Follow-up
 
-- **Pathway-level reformulation:** Sanchez-Vega 2018 reframes the same TCGA substrate
+- **Pathway-level reformulation:** Sanchez-Vega 2018 [@SanchezVega2018] reframes the same TCGA substrate
   through 10 canonical signaling pathways instead of SFE modules.
-- **Cell-of-origin reclassification:** Hoadley 2018 (iCluster across 33 TCGA types) shows
+- **Cell-of-origin reclassification:** Hoadley 2018 [@Hoadley2018] (iCluster across 33 TCGA types) shows
   that when *multi-omics* features (methylation, miRNA, mRNA, protein) are added to DNA,
   ~2/3 of tumors re-cluster by tissue/cell-of-origin rather than by mutation-vs-CNA axis —
   partially walking back the strong "alteration-type beats tissue" claim, while preserving

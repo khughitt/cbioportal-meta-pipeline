@@ -73,7 +73,7 @@ remodeling the TDLN into an immunosuppressed state that blunts immune checkpoint
 
 ## Relevance
 
-- **H2 (neural signal via immune modulation): strong, mechanistic, causal support.** This is the
+- **Neural signal via immune modulation: strong, mechanistic, causal support.** This is the
   clearest primary demonstration in the batch of nerves mediating tumor **immune escape** —
   and it does so as a multi-organ circuit (tumor → tumor nerves → TDLN nerves → TDLN immunity →
   TAMs), echoing the brain-body framing of `paper:Wang2025b` but grounded in HNSCC.
@@ -84,7 +84,7 @@ remodeling the TDLN into an immunosuppressed state that blunts immune checkpoint
   "expression-not-mutation" pattern that argues against reading neural-gene **mutation**
   enrichment as active hijacking. SLIT2 here is a *secreted ligand under transcriptional
   control*, not a recurrently mutated driver.
-- **Weakens H4 (CNS-artifact).** HNSCC is a peripheral cancer; the circuit is non-CNS.
+- **Weakens the CNS-artifact explanation.** HNSCC is a peripheral cancer; the circuit is non-CNS.
 - **CGRP (CALCA) convergence.** Independently corroborates `paper:Kizil2024` / `paper:Pu2025` /
   `paper:Cortese2020` on CGRP→nociceptor→immune suppression, now extended to an inter-organ
   (tumor↔TDLN) scale.
@@ -93,9 +93,9 @@ remodeling the TDLN into an immunosuppressed state that blunts immune checkpoint
 
 | Paper concept | Project concept | Notes |
 |---|---|---|
-| ATF4→SLIT2 secretion | gene **expression**, not mutation | central to why mutation-frequency tables miss this biology (h12) |
+| ATF4→SLIT2 secretion | gene **expression**, not mutation | central to why mutation-frequency tables miss this biology (hypothesis:0012) |
 | SLIT2 (axon-guidance ligand) | candidate-adjacent large gene | `topic:perineural-invasion-axon-guidance-genes`; expression-driven, not mutated |
-| CGRP / nociceptor → TDLN immunosuppression | neuro-immune axis | `topic:neuro-immune-crosstalk-cancer`; H2 |
+| CGRP / nociceptor → TDLN immunosuppression | neuro-immune axis | `topic:neuro-immune-crosstalk-cancer`; neural immune-modulation mechanism |
 | ICB response modulation | treatment / clinical covariate | potential expression-axis covariate; not a mutation feature |
 
 ## Limitations

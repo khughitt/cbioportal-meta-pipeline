@@ -29,7 +29,7 @@ related:
 ## Key Contribution
 
 Systematic critique of Freeman-Tukey double-arcsine (FTT) and related arcsine-based
-transformations for meta-analysis of proportions (Barendregt 2013). Argues that the standard
+transformations for meta-analysis of proportions (Barendregt 2013 [@Barendregt2013]). Argues that the standard
 arcsine-pooling recipe is statistically unsound in common scenarios and recommends
 **generalized linear mixed models (GLMMs) with logit link** or **Bayesian hierarchical models**
 as the current-generation default.
@@ -41,7 +41,7 @@ representative datasets:
 
 1. Untransformed proportions with fixed- or random-effects.
 2. Logit transform with normal-approximate within-study variance.
-3. Freeman-Tukey double-arcsine (Barendregt 2013 recipe).
+3. Freeman-Tukey double-arcsine (Barendregt 2013 [@Barendregt2013] recipe).
 4. GLMM with logit link (Stijnen 2010) / Bayesian hierarchical alternative.
 
 ## Key Findings
@@ -94,7 +94,7 @@ study), family = binomial)` (Bayesian alternative).
 ## Follow-up
 
 - **Stijnen 2010** — GLMM-based pooling methods foundation.
-- **Nyaga 2014** — single-proportion meta-analysis recipe (Stata metaprop, R equivalent).
-- **Barendregt 2013** — the arcsine approach this paper critiques; context read only.
+- **Nyaga 2014 [@Nyaga2014]** — single-proportion meta-analysis recipe (Stata metaprop, R equivalent).
+- **Barendregt 2013 [@Barendregt2013]** — the arcsine approach this paper critiques; context read only.
 - For this project: adopt GLMM-logit as the default pooling transform; retain FTT as a
   disclosed-alternative sensitivity analysis only.

@@ -164,7 +164,7 @@ More concretely:
 ## Limitations
 
 - **Ancestry restriction:** Analysis limited to self-reported White British UKB participants
-  (n = 408,925); PGS portability across ancestries is low (Chen 2015, Martin 2017 cited);
+  (n = 408,925); the paper cites PGS-portability work showing weak cross-ancestry portability;
   findings may not generalize.
 - **Healthy volunteer bias:** UKB has known healthy volunteer selection effects, particularly for
   behavioral traits, which could attenuate decanalization signal.
@@ -191,7 +191,7 @@ More concretely:
 
 ## Follow-up
 
-- Read Gibson 2009 (decanalization concept) and Gibson & Wagner 2000 (canalization theory) as
+- Read the cited decanalization and canalization-theory papers as
   foundational references for the conceptual framework.
 - Simons et al. 2018 (omnigenic model + stabilizing selection) is cited as the evolutionary
   context for why canalization might be expected genome-wide.

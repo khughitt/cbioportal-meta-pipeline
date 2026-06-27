@@ -35,9 +35,9 @@ The paper identifies design principles governing how interconnected positive fee
 
 - **Mathematical model:** Continuous ODE framework using shifted Hill functions for each gene interaction, implemented in the RACIPE (RAndom CIrcuit PErturbation) computational platform. Each network was sampled with 10,000 random parameter sets drawn from log-uniform distributions to capture cell-to-cell biochemical variability.
 - **Boolean model:** Discrete asynchronous Boolean model used for cross-validation; continuous and Boolean SSD were shown to be concordant (Jensen-Shannon divergence near zero).
-- **Networks studied:** Eleven biological and synthetic HDFLs — three serial (S3, S4, S5, based on miR200/ZEB EMT circuitry and GRHL2), two hub (H4, H5), one hybrid serial-hub (SH5), three cyclic (TT, TS, TP), and complete toggle networks (C3–C10). All grounded in published EMT and CD4+T cell lineage biology.
+- **Networks studied:** Eleven biological and synthetic HDFLs — three serial (S3, S4, S5, based on miR200/ZEB EMT circuitry and GRHL2), two hub topologies, one hybrid serial-hub topology, three cyclic topologies (TT, TS, TP), and complete toggle networks (C3-C10). All grounded in published EMT and CD4+T cell lineage biology.
 - **State-space analysis:** Steady-state distribution (SSD) frequencies computed across mono-, bi-, tri-, tetra-, and penta/higher-order stability classes. K-means clustering with PCA projection used to identify phenotypically distinct clusters in gene-expression space.
-- **Perturbation analysis:** Edge deletion (ED) and edge sign reversal (ESR) applied systematically across all networks; bifurcation analysis performed in MATLAB for S3, S4, S5, H5, and TP using basal production rate B₁ as the control parameter.
+- **Perturbation analysis:** Edge deletion (ED) and edge sign reversal (ESR) applied systematically across all networks; bifurcation analysis performed in MATLAB for the serial networks, one hub network, and TP using basal production rate B₁ as the control parameter.
 
 ## Key Findings
 
@@ -92,7 +92,7 @@ This paper directly informs the **canalization** conceptual lens being applied t
 
 ## Follow-up
 
-- **Kadelka & Murrugarra 2024** (ref 47 in this paper): "Canalization reduces the nonlinearity of regulation in biological networks" — *npj Syst. Biol. Appl.* 10:67. Direct treatment of canalization in GRNs; high priority read for the canalization theme.
+- **Kadelka & Murrugarra 2024 [@Kadelka2024]** (ref 47 in this paper): "Canalization reduces the nonlinearity of regulation in biological networks" — *npj Syst. Biol. Appl.* 10:67. Direct treatment of canalization in GRNs; high priority read for the canalization theme.
 - **Hari et al. 2022** (ref 45): EMT plasticity as emergent property of coordinated teams in regulatory networks — *eLife* 11:e76535. Connects HDFL topology to phenotypic plasticity in the EMT context.
 - **Rashid et al. 2024** (ref 30 — same first author, prior work): Cooperativity in miR200-Zeb feedback network for EMT control — *Bull. Math. Biol.* 86:48.
 - **Gates et al. 2021** (ref 44): "The effective graph reveals redundancy, canalization, and control pathways in biochemical regulation and signaling" — *PNAS* 118. Directly connects effective graph theory to canalization.

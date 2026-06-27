@@ -39,7 +39,7 @@ actually has: per-study mutation ratios are single proportions, not two-arm comp
 - **Within-study CI options:** Wald, Wilson score, Agresti-Coull, exact (Clopper-Pearson) —
   critical for small n where Wald fails.
 - **Transformation options:** raw proportion, logit (Hamza et al. 2008), double-arcsine
-  (Freeman-Tukey, Barendregt 2013), or GLMM with logit link (Stijnen 2010).
+	  (Freeman-Tukey, Barendregt 2013 [@Barendregt2013]), or GLMM with logit link (Stijnen 2010).
 - **Heterogeneity:** DL, REML, SJ, PM for τ²; Q, I², H statistics; HKSJ variance adjustment.
 - **Output:** pooled proportion with CI back-transformed to the original scale, forest plot,
   per-study CIs.
@@ -48,7 +48,7 @@ actually has: per-study mutation ratios are single proportions, not two-arm comp
 
 - **Default Wald CIs for per-study proportions are wrong** for small n or extreme p; Wilson
   / exact should be default.
-- **Freeman-Tukey double-arcsine** (Barendregt 2013) produces spuriously tight pooled CIs
+- **Freeman-Tukey double-arcsine** (Barendregt 2013 [@Barendregt2013]) produces spuriously tight pooled CIs
   near the 0/1 boundaries — consistent with Lin & Xu 2020's later critique.
 - **GLMM logit-link pooling** (Stijnen 2010) is the most statistically principled of the
   four transforms but is also the slowest and can fail to converge with sparse data.
@@ -102,7 +102,7 @@ R equivalent: `meta::metaprop(event, n, method = "GLMM", sm = "PLOGIT")`.
 
 - **Stijnen 2010** — GLMM methodology behind the `metaprop` `glmm` option.
 - **Lin & Xu 2020** — critique of the `ftt` option; recommends `glmm` as the modern default.
-- **Barendregt 2013** — the FTT recipe that `ftt` operationalises.
+- **Barendregt 2013 [@Barendregt2013]** — the FTT recipe that `ftt` operationalises.
 - For this project: use R `meta::metaprop` or `metafor::rma.glmm` as the direct analogue.
-  The Nyaga 2014 paper should be cited whenever we describe the single-proportion meta-analysis
+  The Nyaga 2014 [@Nyaga2014] paper should be cited whenever we describe the single-proportion meta-analysis
   framing.

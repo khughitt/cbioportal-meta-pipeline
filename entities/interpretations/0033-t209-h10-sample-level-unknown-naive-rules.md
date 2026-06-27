@@ -31,11 +31,11 @@ prior_interpretations:
 - interpretation:0032-t208-h10-sample-level-mutagenic-rules
 ---
 
-# Interpretation: t209 H10 sample-level unknown and confirmed-naive rule impact
+# Interpretation: t209 `H10` sample-level unknown and confirmed-naive rule impact
 
 ## Verdict
 
-**Verdict:** [?] Comparator semantics repaired for the exposure-label arm; H10 remains non-arbitrating and q027 remains unanswered.
+**Verdict:** [?] Comparator semantics repaired for the exposure-label arm; `H10` remains non-arbitrating and `q027` remains unanswered.
 
 The t209 follow-up extends `h10_treatment_denominator.sample_level_rules` so sample-level rules can now target `treatment_metadata_unknown` and `positive_naive_or_pretreatment`, not only positive treatment labels.
 The full `all_h10_treatment_impact` target reruns on `code/config/config-full.yml` with the repaired label vocabulary and produces an up-to-date impact table plus datapackage.
@@ -45,8 +45,8 @@ The 161 DIFG/GLASS samples with blank `TMZ_TREATMENT` now leave `no_detected_tre
 The 21 BLCA Cornell `pre-chemotherapy` samples now enter `positive_naive_or_pretreatment` while remaining in the retained no-detected comparator.
 This closes the silent-negative behavior identified after t208.
 
-The result still does not adjudicate H10.
-The exposure-label denominator pass is now cleaner, but q027 requires a separate measured SBS11/SBS31/SBS35/SBS87 signature-high exclusion arm.
+The result still does not adjudicate `H10`.
+The exposure-label denominator pass is now cleaner, but `q027` requires a separate measured SBS11/SBS31/SBS35/SBS87 signature-high exclusion arm.
 
 ## What Changed
 
@@ -122,7 +122,7 @@ Evidence type: `empirical_data_evidence` for the local full-config cBioPortal/GE
 The evidence is strong that the t209 schema fix behaves as intended.
 Focused tests prove the new sample-level targets, the config wiring pins the two real rules, and the full workflow regenerated the annotation sidecar, per-study views, impact tables, and datapackage.
 
-The evidence remains weak for the biological H10 proposition.
+The evidence remains weak for the biological `H10` proposition.
 The analysis still excludes by clinical labels rather than measured therapy-signature exposure.
 Clinical treatment, recurrence/progression, cancer subtype, panel coverage, and mutation burden remain entangled.
 In GLASS specifically, the glioma contrast remains a longitudinal treatment/timing/progression mixture rather than a clean TMZ causal contrast.
@@ -130,17 +130,17 @@ In GLASS specifically, the glioma contrast remains a longitudinal treatment/timi
 ## Open Questions
 
 `question:0024-treatment-exposed-cohort-chemotherapy-signature` advances from a schema standpoint.
-The known sample-level positive, unknown, and pretreatment labels for DIFG/GLASS and BLCA Cornell are now expressible and propagated through the H10 denominator outputs.
-q024 remains partial because audit recall is still unmeasured and many no-signal studies are not confirmed naive.
+The known sample-level positive, unknown, and pretreatment labels for DIFG/GLASS and BLCA Cornell are now expressible and propagated through the `H10` denominator outputs.
+`q024` remains partial because audit recall is still unmeasured and many no-signal studies are not confirmed naive.
 
 `question:0027-does-excluding-treatment-signature-high-samples` remains active and unanswered.
-The next task should define therapy-signature-high samples from measured SBS11/SBS31/SBS35/SBS87 exposure, then reuse the H10 denominator machinery to compare all-sample frequencies against signature-high-excluded frequencies.
+The next task should define therapy-signature-high samples from measured SBS11/SBS31/SBS35/SBS87 exposure, then reuse the `H10` denominator machinery to compare all-sample frequencies against signature-high-excluded frequencies.
 That task should be planned separately so clinical-label and signature-outcome evidence remain distinct.
 
 ## Implications
 
-The H10 exposure-label substrate is now ready for the next branch.
-It should remain a denominator-sensitivity layer, not the final biological H10 test.
+The `H10` exposure-label substrate is now ready for the next branch.
+It should remain a denominator-sensitivity layer, not the final biological `H10` test.
 
-The next step is to file and plan the q027 therapy-signature-high exclusion arm.
+The next step is to file and plan the `q027` therapy-signature-high exclusion arm.
 That plan should use measured signature exposures, define high-exposure thresholds before running, state how SBS11/SBS31/SBS35/SBS87 are handled when absent or under count floor, and emit a separate interpretation rather than overwriting the t207-t209 exposure-label notes.

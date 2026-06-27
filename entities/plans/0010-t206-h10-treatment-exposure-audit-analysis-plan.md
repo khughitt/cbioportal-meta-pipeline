@@ -27,18 +27,18 @@ skills_loaded:
     need fixed arbitration.
 ---
 
-# t206 H10 treatment-exposure audit analysis plan
+# t206 `H10` treatment-exposure audit analysis plan
 
 ## Analysis Question
 
-Which non-TCGA cBioPortal studies in the project configs are sufficiently enriched for prior treatment, relapse, metastatic sampling, or therapy-specific trial ascertainment that H10 should test whether they alter pooled gene-by-cancer mutation-frequency outputs?
+Which non-TCGA cBioPortal studies in the project configs are sufficiently enriched for prior treatment, relapse, metastatic sampling, or therapy-specific trial ascertainment that `H10` should test whether they alter pooled gene-by-cancer mutation-frequency outputs?
 
-The immediate analysis is an audit and readiness step, not the final H10 verdict.
+The immediate analysis is an audit and readiness step, not the final `H10` verdict.
 It prepares a label table and impact-test design for `hypothesis:0009-treatment-induced-signature-frequency-contamination`.
 
 ## Related Hypotheses / Inquiries / Tasks
 
-This plan executes the first half of `task:t206` and extends the H08-facing treatment stratum from `task:t181`.
+This plan executes the first half of `task:t206` and extends the `H08`-facing treatment stratum from `task:t181`.
 It directly supports `question:0024-treatment-exposed-cohort-chemotherapy-signature` and prepares the denominator/exclusion logic needed by `question:0027-does-excluding-treatment-signature-high-samples`.
 
 ## Data Inputs and Provenance
@@ -112,8 +112,8 @@ Primary metrics:
 - Rank shift among genes within cancer type, using the same ranking field used by the current consumer-facing table.
 - Driver-list perturbation among Bailey/driver-overlaid rows when the annotated table is available.
 
-The audit itself does not estimate H10 support.
-It only decides whether the H10 impact pass is ready and which labels are allowed into that pass.
+The audit itself does not estimate `H10` support.
+It only decides whether the `H10` impact pass is ready and which labels are allowed into that pass.
 
 ## Model / Test Assumptions
 
@@ -128,7 +128,7 @@ Metastatic-only review cohorts should not be mixed into the primary treatment-ex
 Null impact is interpretable only in cancer types with both enough callable samples and enough exposed/non-exposed contrast.
 If a cancer type has fewer than two contributing studies after exclusion or fewer than 100 callable non-exposed samples for a gene, label unchanged ranks as `underpowered_non_arbitrating`.
 
-For rare cancers, the audit may still be useful for provenance but should not arbitrate H10.
+For rare cancers, the audit may still be useful for provenance but should not arbitrate `H10`.
 The expected high-value strata are cancers with treated and treatment-naive comparators in the same broad cancer family, such as breast, prostate, melanoma, bladder, lung, and colorectal cohorts.
 
 ## Bias vs Variance Risks
@@ -148,13 +148,13 @@ Avoid this in the primary cohort-label audit; signature-high filtering can be a 
 Primary label set: manually confirmed `explicit_treatment_exposed` studies.
 
 Mandatory sensitivity 1: add manually reviewed `advanced_metastatic_enriched` studies with documented treatment fractions.
-If this changes the direction or top-driver perturbation while the primary set does not, report H10 as `cohort-stage-sensitive`, not as clean treatment-signature contamination.
+If this changes the direction or top-driver perturbation while the primary set does not, report `H10` as `cohort-stage-sensitive`, not as clean treatment-signature contamination.
 
 Mandatory sensitivity 2: therapy-signature-high exclusion among samples where signature assignment is eligible and count-floor-passing.
 If signature-high exclusion changes rankings but metadata-only exclusion does not, report the effect as `signature-detectable_but_metadata-limited`.
 
 Mandatory sensitivity 3: hypermutator-excluded baseline.
-If H10 effects disappear after existing hypermutator exclusion, report them as `hypermutator_overlapping`; if they persist, H10 remains distinct from the current hypermutator layer.
+If `H10` effects disappear after existing hypermutator exclusion, report them as `hypermutator_overlapping`; if they persist, `H10` remains distinct from the current hypermutator layer.
 
 ## Required Output Artifacts
 

@@ -1,4 +1,4 @@
-# Pipeline Review: H10 treatment-denominator schema and impact pass
+# Pipeline Review: `H10` treatment-denominator schema and impact pass
 
 - **Plan:** `doc/plans/2026-06-01-t207-h10-treatment-denominator-schema.md`
 - **Related:** `plan:0011-t207-h10-treatment-denominator-schema`, `hypothesis:0009-treatment-induced-signature-frequency-contamination`, `question:0024-treatment-exposed-cohort-chemotherapy-signature`, `question:0027-does-excluding-treatment-signature-high-samples`, `task:t207`
@@ -13,7 +13,7 @@ unknown-metadata as *separate* config fields rather than a flat `treatment_expos
 list — correctly preserves the specific SBS11/31/35/87 prediction in `hypothesis:0009` and
 faithfully implements the t206 manual-review recommendation. Validation criteria and
 hard-fail QA are a standout strength. Two issues hold it back from a clean PASS: (1) the
-plan operationalizes treatment **exposure labels** (q024), but is filed against q027, whose
+plan operationalizes treatment **exposure labels** (`q024`), but is filed against `q027`, whose
 impact test is defined on therapy-**signature-high** samples — these are not the same
 exclusion set and the relationship must be stated; and (2) the `no_detected_treatment_signal`
 cohort view is defined inconsistently between WP3 and WP4. A handful of integration-boundary
@@ -25,7 +25,7 @@ before implementation.
 | Dimension | Score | Issues |
 |---|---|---|
 | Evidence coverage | PASS | Labels traced to t206 audit; provisional `manual-review-v0` provenance explicit |
-| Assumption audit | WARN | Exposure-label exclusion is conflated with the signature-high exclusion that q027 names |
+| Assumption audit | WARN | Exposure-label exclusion is conflated with the signature-high exclusion that `q027` names |
 | Data availability | WARN | WP2 depends on raw `data_clinical_sample.txt` columns not present in canonical `samples.feather`; sample-ID join key unspecified |
 | Identifiability | WARN | First pass has ~1 study-level primary-mutagenic flag and `sample_level_rules: {}`; most primary contrasts will be `underpowered_non_arbitrating`/`no_contrast` |
 | Reproducibility | PASS | Deterministic label assignment; inherits pinned `random_seed`/hypermutator layer; no new stochastic step |
@@ -44,18 +44,18 @@ The plan's `related` block and `q027` both name *"excluding therapy-signature-hi
 signature exposure. These are different sets:
 
 - A platinum-treated sample with no detectable SBS31/35 would be excluded by this plan but
-  retained by the q027 signature-based test.
+  retained by the `q027` signature-based test.
 - A high-SBS11 sample in a study with no treatment-named clinical column would be excluded by
-  q027 but retained here.
+  `q027` but retained here.
 
 This is a legitimate and useful arm (it answers the Purpose's *first* question — "does
-cohort composition by treatment history change the deliverable?", i.e. q024). The problem is
-only that the plan files itself against q027 without saying it is the **complementary
-exposure arm**, leaving the eventual impact note at risk of being read as the q027 answer.
+cohort composition by treatment history change the deliverable?", i.e. `q024`). The problem is
+only that the plan files itself against `q027` without saying it is the **complementary
+exposure arm**, leaving the eventual impact note at risk of being read as the `q027` answer.
 
-**Recommendation:** Add one paragraph (Purpose or a new "Relationship to q027" note) stating
-that this pass answers the exposure-label arm; the signature-high arm (h10 Prediction 2/3,
-q027) is served by the h08 per-sample signature exposures (`method:h08-agnostic-association-model`,
+**Recommendation:** Add one paragraph (Purpose or a new "Relationship to `q027`" note) stating
+that this pass answers the exposure-label arm; the signature-high arm (`h10` Prediction 2/3,
+`q027`) is served by the `h08` per-sample signature exposures (`method:h08-agnostic-association-model`,
 t178/t179) or is explicitly deferred. The two arms adjudicate each other — say so.
 
 ### Internal consistency — `no_detected_treatment_signal` defined two ways
@@ -92,7 +92,7 @@ The `h10_power_status` field is exactly the right defensive instrument and earns
 credit. But the plan should set the expectation that **the first impact note is expected to be
 largely `no_contrast`/`underpowered`**, and that the informative pass arrives only after
 `blca_cornell_2016` and `difg_glass_2019` sample-level rules land. Otherwise a near-null first
-note could be mis-read as "H10 impact is negligible" (the falsification clause in the
+note could be mis-read as "`H10` impact is negligible" (the falsification clause in the
 hypothesis) when it is really "the test has not yet been powered."
 
 **Recommendation:** State the staged expectation in WP4/WP5, and consider gating the
@@ -150,7 +150,7 @@ shift/rank-shift, which is the actual sensitivity signal. Consider adding `delta
 
 ## Recommendations
 
-1. **State the exposure-vs-signature relationship to q027** explicitly (highest priority) —
+1. **State the exposure-vs-signature relationship to `q027`** explicitly (highest priority) —
    one paragraph clarifying this is the exposure-label arm, complementary to the signature
    arm.
 2. **Disambiguate `no_detected_treatment_signal`** (comparator group) from

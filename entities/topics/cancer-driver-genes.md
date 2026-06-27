@@ -62,7 +62,7 @@ which methods can we plug in as parallel signals?"
   position recurrence. Examples it surfaces that recurrence misses: ZFP36L1/L2, KANSL1,
   BMPR2, MAP2K7, NIPBL. Limitation: needs enough synonymous sites to fit the 192-class
   background, so panel data degrades.
-- **Hotspots (Chang 2016, Gao 2017 3D)** — orthogonal to gene-level counting; produces a
+- **Hotspots (Chang et al. [@Chang2016], Gao et al. [@Gao2017] 3D)** — orthogonal to gene-level counting; produces a
   directly downloadable residue-level reference (`github.com/taylor-lab/hotspots`).
 - **Curated knowledge (CGC, OncoKB)** — incorporates functional / clinical evidence not
   visible in mutation data alone; biased toward well-studied genes.
@@ -78,16 +78,16 @@ which methods can we plug in as parallel signals?"
 
 ### Tool agreement is modest
 
-Bailey 2018: union of 8 phase-1 driver-detection tools = **2,101 candidate genes**;
+Bailey et al. [@Bailey2018]: union of 8 phase-1 driver-detection tools = **2,101 candidate genes**;
 consensus filtering collapses this to **299** (~7× reduction). Individual rankings are
 noisy; relying on any single tool produces inflated lists. The consensus / multi-source
 approach is the field standard for a reason.
 
 ### The "tissue-borrowed" finding
 
-Bailey 2018 reports **19% of driver mutations** (1,719 events in 1,431 patients) occur in
+Bailey et al. [@Bailey2018] report **19% of driver mutations** (1,719 events in 1,431 patients) occur in
 genes that are drivers in a *different* cancer type than the patient's primary site.
-Bandlamudi 2026 independently reports **~1/3 of detected driver mutations** are in
+Bandlamudi et al. [@Bandlamudi2026] independently report **~1/3 of detected driver mutations** are in
 "non-canonical" tissue contexts and behave differently (more subclonal, later in tumor
 evolution). Two papers, different methods, same conclusion: **driver-ness is partly
 tissue-conditional**.
@@ -96,24 +96,24 @@ tissue-conditional**.
 
 The field has consolidated around:
 
-1. **Consensus catalogs as the primary reference** — Bailey 2018 + CGC are the two most
+1. **Consensus catalogs as the primary reference** — Bailey et al. [@Bailey2018] + CGC are the two most
    widely cited. New publications routinely benchmark new candidate driver lists against
    these two.
 2. **Multi-tool / multi-signal approaches over single methods** — the era of "we ran
    MutSigCV and called it done" is over. Modern pipelines combine recurrence + selection +
    hotspots + curated knowledge.
-3. **Tissue-conditional driver-ness** as a first-class concern — both Bailey 2018 and
-   Bandlamudi 2026 push this, OncoKB encodes it operationally (tumor-type-specific tiers),
-   and pan-cancer signature decomposition (Alexandrov 2020) similarly stratifies by tissue.
+3. **Tissue-conditional driver-ness** as a first-class concern — both Bailey et al. [@Bailey2018] and
+   Bandlamudi et al. [@Bandlamudi2026] push this, OncoKB encodes it operationally (tumor-type-specific tiers),
+   and pan-cancer signature decomposition (Alexandrov et al. [@Alexandrov2020]) similarly stratifies by tissue.
 
 ## Controversies & Open Questions
 
-- **Is the long-tail real or noise?** Lawrence 2014's saturation analysis says only 4 of 21
+- **Is the long-tail real or noise?** The saturation analysis from Lawrence et al. [@Lawrence2014] says only 4 of 21
   cancer types were close to driver-discovery saturation in 2014. With current cohorts
   (~50k MSK-IMPACT, ~100k GENIE), we may be approaching saturation for common cancers but
   rare cancers remain under-powered.
 - **Should selection-based methods (dNdScv) replace recurrence-based methods, or
-  complement them?** Field consensus is "complement"; Bailey 2018 includes both classes
+  complement them?** Field consensus is "complement"; Bailey et al. [@Bailey2018] include both classes
   in its 26-tool ensemble.
 - **How should panel-restricted cohorts be analyzed for driver discovery?** dNdScv works
   on panels but with degraded background-rate fits. MutSigCV requires external covariates
@@ -125,7 +125,7 @@ The field has consolidated around:
 Our pipeline ranks genes by raw cross-study mutation frequency. Compared to the field
 standard:
 
-- **We are below the 2013 methodological bar.** Kandoth 2013 used MuSiC's covariate-aware
+- **We are below the 2013 methodological bar.** Kandoth et al. [@Kandoth2013] used MuSiC's covariate-aware
   SMG test on harmonized MAFs. We do not run any significance test.
 - **We have no external driver-gene reference annotation** in our outputs. A high-frequency
   gene in our `gene_cancer.feather` could be a known driver, a long-tail candidate, or an
@@ -137,7 +137,7 @@ standard:
 
 Three concrete additions, two of which are already wired:
 
-1. **[wired] Bailey 2018 driver overlay.** `process_bailey2018_drivers.py` +
+1. **[wired] Bailey et al. [@Bailey2018] driver overlay.** `process_bailey2018_drivers.py` +
    `annotate_drivers.py` Snakemake rules add `bailey2018_driver` boolean column to
    `gene_cancer_study.feather`. Manual prerequisite: download Cell supp Table S1 to
    `data/bailey2018_table_s1.xlsx`.
@@ -148,7 +148,7 @@ Three concrete additions, two of which are already wired:
 3. **[planned] CGC overlay.** Analogous to Bailey overlay using the COSMIC CGC TSV. Two-
    source consensus annotation (Bailey ∧ CGC) is more robust than either alone.
 
-Plus the operational addition surfaced from Bandlamudi 2026:
+Plus the operational addition surfaced from Bandlamudi et al. [@Bandlamudi2026]:
 
 4. **[planned] Tissue-conditional driver flag.** For each (gene, cancer-type) pair, mark
    whether the gene is a driver *in that specific cancer type* per Bailey's per-cancer

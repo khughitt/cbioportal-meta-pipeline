@@ -124,10 +124,10 @@ against SignatureAnalyzer with L2 priors.
 
 ## Relevance
 
-**h08 — agnostic covariate-signature-exposure association.** Any downstream phenome-wide
+**hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and — agnostic covariate-signature-exposure association.** Any downstream phenome-wide
 association study (PheWAS) of signature exposures against covariates requires reliable,
 calibrated exposure estimates as the outcome variable. bayesNMF directly addresses two
-bottlenecks relevant to h08:
+bottlenecks relevant to hypothesis:0007:
 
 1. **Posterior uncertainty on exposures.** Standard NMF and even SignatureAnalyzer return point
    estimates. bayesNMF returns 95% credible intervals on each sample's exposure to each
@@ -135,14 +135,14 @@ bottlenecks relevant to h08:
    measurement-error-corrected regression inputs).
 
 2. **Rank selection without subjectivity.** The SBFI prior learns rank within a single Bayesian
-   run. For the cross-study aggregation underlying h08, where signature extraction may be run
+   run. For the cross-study aggregation underlying hypothesis:0007, where signature extraction may be run
    across many cancer types and studies independently, an automated and principled rank selection
    procedure reduces one major analyst-degree-of-freedom and makes results more reproducible
    across runs.
 
 3. **Positive-control recovery of known aetiologies.** In the PCAWG analysis, bayesNMF
    recovers SBS1 (clock/deamination), SBS5 (clock), SBS40 (clock), UV-associated signatures
-   in skin, and tobacco-associated signatures in lung — the same positive controls h08 expects
+   in skin, and tobacco-associated signatures in lung — the same positive controls hypothesis:0007 expects
    to recover in any well-calibrated signature pipeline. The PCAWG results can serve as a
    benchmark for the cbioportal cross-study extraction.
 
@@ -156,7 +156,7 @@ bottlenecks relevant to h08:
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
 | Signatures matrix P (K×N) | NMF basis / signature dictionary | 96-channel SBS; comparable to COSMIC SBS reference |
-| Exposures matrix E (N×G) | Per-sample signature exposures | Used as outcomes in h08 association tests |
+| Exposures matrix E (N×G) | Per-sample signature exposures | Used as outcomes in hypothesis:0007 association tests |
 | SBFI learned rank N' | Number of active signatures | Eliminates manual elbow/BIC scan |
 | Posterior credible intervals on E | Uncertainty on exposure estimates | Currently absent from SigProfiler/SignatureAnalyzer outputs used in pipeline |
 | Hypermutator exclusion (NB mixture) | `is_hypermutator` flag + `_exclusive` ratio columns | Same rationale; bayesNMF uses per-cancer mixture models |
@@ -198,10 +198,10 @@ bottlenecks relevant to h08:
   signatures; builds on the same Gibbs framework, extends to joint cross-study extraction.
   Directly relevant to whether cross-study consistency of signatures can be learned jointly
   rather than by post-hoc cosine alignment.
-- Zito and Miller 2024 (arXiv:2404.10974) — Compressive Bayesian NMF; an alternative
+- The Compressive Bayesian NMF preprint cited by the authors — an alternative
   efficiency approach that the authors suggest could be combined with Poisson+MH in future work.
 - **Project question:** Can the posterior credible intervals on per-sample signature exposures
-  from bayesNMF be used as error-in-variables inputs to the h08 covariate association tests,
+  from bayesNMF be used as error-in-variables inputs to the hypothesis:0007 covariate association tests,
   rather than using point estimates?
 - **Project question:** For the cbioportal cross-study extraction, does applying bayesNMF
   per-cancer-type with SBFI produce more parsimonious signature sets than the current

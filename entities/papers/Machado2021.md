@@ -84,13 +84,13 @@ This study provides the first comprehensive whole-genome mutational landscape of
 
 ## Relevance
 
-**Relevance to h08 (covariate–signature-exposure association; positive-control recovery of UV/smoking/APOBEC/MMR).**
+**Relevance to hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and (covariate–signature-exposure association; positive-control recovery of UV/smoking/APOBEC/MMR).**
 
-This paper is directly germane to h08 in several ways:
+This paper is directly germane to hypothesis:0007 in several ways:
 
 1. **Positive-control signature recovery.** The clean recovery of SBS7 (UV) in circulating memory T cells demonstrates that exogenous-exposure signatures can be detected and attributed in non-cancer, non-skin WGS data when cell types are appropriate. This validates signature-based inference of environmental history as a biological reality and not purely a cancer-tissue artifact.
 
-2. **Signature-to-covariate linkage.** SBS9 exposure is correlated with a biological covariate (IGHV mutation rate, a proxy for germinal center activity) with R²=0.57. SBS7 is correlated with UV/skin-residency; SBS17b correlates with GI tract residency. This is a model system for h08-style covariate<->signature-exposure association—the covariate here is cell-type-specific differentiation history rather than a clinical/demographic variable, but the conceptual structure is identical.
+2. **Signature-to-covariate linkage.** SBS9 exposure is correlated with a biological covariate (IGHV mutation rate, a proxy for germinal center activity) with R²=0.57. SBS7 is correlated with UV/skin-residency; SBS17b correlates with GI tract residency. This is a model system for hypothesis:0007-style covariate<->signature-exposure association—the covariate here is cell-type-specific differentiation history rather than a clinical/demographic variable, but the conceptual structure is identical.
 
 3. **Normal-tissue baseline for lymphocyte-derived tumors.** For the cbioportal cross-study meta-analysis, lymphoid malignancy studies (DLBC, CLL, ALL, MM) carry SBS9 and SBS8 as the dominant excess signatures. Understanding that these signatures originate in normal germinal center activity—and that their intensities reflect the degree of germinal center transit—contextualizes inter-study variation in lymphoid cancer mutation burdens. Studies dominated by post-GC malignancies will show elevated SBS9; studies with more naive-B-derived malignancies will not.
 
@@ -104,7 +104,7 @@ This paper is directly germane to h08 in several ways:
 |---|---|---|
 | SBSblood (endogenous HSPC/naive lymphocyte signature) | Clock-like background signature | Baseline for mutation burden comparisons in lymphoid cancers in cbioportal |
 | SBS9 (germinal center off-target AID/Pol-eta) | Lymphoid-specific signature | Dominant excess signature in post-GC B-cell malignancies; tissue-of-origin covariate |
-| SBS7a (UV, skin residency) | Exogenous exposure signature | Positive control for h08 covariate–signature recovery |
+| SBS7a (UV, skin residency) | Exogenous exposure signature | Positive control for hypothesis:0007 covariate–signature recovery |
 | SBS17b (GI microenvironment) | Exogenous exposure signature | Sporadic; tissue-residency covariate candidate |
 | Off-target RAG SVs | Structural variant confound | ~15% of non-Ig/TCR deletions in normal lymphocytes |
 | Germinal center reaction | Cell-type differentiation event | Biological covariate explaining SBS9 exposure variance |
@@ -129,4 +129,4 @@ This paper is directly germane to h08 in several ways:
 - Seek a published version of this preprint for peer-reviewed confirmation of findings.
 - Compare SBS9 exposure levels across cbioportal lymphoid malignancy studies as a potential covariate proxy for germinal center transit.
 - LeeSix2018 (HSPC WGS) provides the baseline HSPC mutation rate (~16 mut/cell/year) that this paper references and extends into lymphocyte subsets.
-- Papers to read: Zhang 2019 (B lymphocyte single-cell WGS across lifespan, ref 13 in this paper); Alexandrov 2020 (mutational signatures repertoire, ref 36); Maura 2019 (practical guide to signature analysis in hematological malignancies, ref 40).
+- Papers to read: the B lymphocyte single-cell WGS across lifespan paper cited as ref 13; the mutational signatures repertoire paper [@Alexandrov2020]; and the practical guide to signature analysis in hematological malignancies [@Maura2019].

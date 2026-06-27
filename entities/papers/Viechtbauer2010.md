@@ -20,7 +20,7 @@ related:
 - **Authors:** Viechtbauer W
 - **Year:** 2010
 - **Journal:** Journal of Statistical Software (Vol. 36, Issue 3)
-- **DOI:** 10.18637/jss.v036.i03
+- **DOI:** `10.18637/jss.v036.i03`
 - **OpenAlex:** W2139168999
 - **BibTeX key:** Viechtbauer2010
 - **Source:** OpenAlex (verified)
@@ -60,7 +60,7 @@ capabilities rather than an empirical result._
 - All major heterogeneity estimators (DL, REML, PM, SJ, HE, ML, EB) available via a single
   argument — critical for sensitivity analysis.
 - Built-in HKSJ variance adjustment (`test = "knha"`) — the modern practical default
-  recommended by Langan 2018 and IntHout 2016.
+  recommended by Langan [@Langan2018] and IntHout [@IntHout2016].
 - GLMM-based pooling via `rma.glmm()` directly operationalises Stijnen 2010 for
   single-proportion and two-arm binary meta-analyses.
 - Meta-regression via the standard R formula interface — easy to add study-level covariates
@@ -79,9 +79,9 @@ script's library calls.
 | Paper concept | Project concept | Notes |
 |---|---|---|
 | `escalc(measure = "PLO", xi, ni)` | Compute per-study logit proportion + variance from mutation-ratio counts | Preprocessing step before pooling. |
-| `rma(yi, vi, method = "REML", test = "knha")` | Random-effects pooled estimate with HKSJ variance adjustment | Recommended default per Langan 2018. |
+| `rma(yi, vi, method = "REML", test = "knha")` | Random-effects pooled estimate with HKSJ variance adjustment | Recommended default per Langan [@Langan2018]. |
 | `rma.glmm(measure = "PLO", xi, ni, method = "ML")` | GLMM-based pooling directly from counts, no transform needed | Recommended per Lin & Xu 2020 / Stijnen 2010. |
-| `predict(rma_fit, level = 95)` | 95% prediction interval for the pooled gene-cancer rate | Per IntHout 2016 recommendation. |
+| `predict(rma_fit, level = 95)` | 95% prediction interval for the pooled gene-cancer rate | Per IntHout [@IntHout2016] recommendation. |
 | `forest()`, `funnel()` | Per-gene-per-cancer study-level plots | Optional diagnostic output. |
 
 ## Limitations
@@ -101,8 +101,8 @@ script's library calls.
 
 ## Follow-up
 
-- **Langan 2018** — which τ² estimator to use.
+- **Langan** [@Langan2018] — which τ² estimator to use.
 - **Stijnen 2010** — methodological paper behind `rma.glmm`.
-- **IntHout 2016** — prediction intervals and HKSJ practical guidance.
+- **IntHout** [@IntHout2016] — prediction intervals and HKSJ practical guidance.
 - For this project: add `metafor` to `environment.yml`; add a `code/scripts/meta_analyze_gene_cancer.R`
   that runs `rma.glmm(measure = "PLO")` per (gene, cancer) across studies.

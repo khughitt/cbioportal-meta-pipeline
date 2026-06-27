@@ -63,13 +63,13 @@ signeR 2.0 extends the original Bayesian NMF framework for mutational-signature 
 
 ## Relevance
 
-This paper is directly relevant to **hypothesis h08 (agnostic covariate↔signature-exposure association)** as a methodological reference implementation of exactly the analysis h08 proposes:
+This paper is directly relevant to **hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and (agnostic covariate↔signature-exposure association)** as a methodological reference implementation of exactly the analysis this project hypothesis proposes:
 
 - **H08a positive control (recovery):** The STAD demonstration is a worked example of agnostic DES recovering textbook MMR/MSI-signature links (SBS15/20/21/26/44) without curating which signatures to examine. The same logic applies to UV→SBS7 (skin) and smoking→SBS4 (lung) in other tissue strata — signeR 2.0 provides the test statistics for those arms.
-- **H08b discovery:** The continuous-feature correlation mode (expression → exposure) and survival analyses are the machinery needed for the expression-module↔signature associations h08 predicts will reveal novel upstream causes.
-- **Uncertainty propagation:** The core algorithmic novelty — running every test on each posterior draw E^(r) and summarising across R — directly addresses the concern (noted in h08) that NMF solutions are non-unique and that single-point exposure estimates understate uncertainty. This is a principled answer to the multiple-solutions problem that bootstrap resampling only partially solves.
+- **H08b discovery:** The continuous-feature correlation mode (expression → exposure) and survival analyses are the machinery needed for the expression-module↔signature associations that hypothesis:0007 predicts will reveal novel upstream causes.
+- **Uncertainty propagation:** The core algorithmic novelty — running every test on each posterior draw E^(r) and summarising across R — directly addresses the concern (noted in hypothesis:0007) that NMF solutions are non-unique and that single-point exposure estimates understate uncertainty. This is a principled answer to the multiple-solutions problem that bootstrap resampling only partially solves.
 - **Classifier as optional label for cross-study transfer:** The ExposureClassify function could label new samples from an external study using a model trained on a reference cohort — relevant to the cross-study aggregation pipeline if per-sample signature profiles are ever compared across cBioPortal studies.
-- **Positive-control design alignment:** The MSI/MMR recovery here (agnostically, from exposures alone, AUC 0.983) is the template for the h08 pre-registration design: a 2-of-3 gate requiring UV, smoking, and APOBEC arms to recover their known covariates. signeR 2.0 is one of the candidate tools for running those association arms.
+- **Positive-control design alignment:** The MSI/MMR recovery here (agnostically, from exposures alone, AUC 0.983) is the template for the hypothesis:0007 pre-registration design: a 2-of-3 gate requiring UV, smoking, and APOBEC arms to recover their known covariates. signeR 2.0 is one of the candidate tools for running those association arms.
 
 ## Project Framework Mapping
 
@@ -103,6 +103,6 @@ This paper is directly relevant to **hypothesis h08 (agnostic covariate↔signat
 ## Follow-up
 
 - Compare DES (Kruskal–Wallis on posterior draws) to standard association tests (logistic regression, mixed model) on the same data to understand power/FDR properties in the cBioPortal context.
-- The paper cites the original signeR (Rosales 2017, `paper:Rosales2017`) — worth reading for the full Bayesian derivation underlying the Gibbs sampler.
+- The paper cites the original signeR paper [@Rosales2017] (`paper:Rosales2017`) — worth reading for the full Bayesian derivation underlying the Gibbs sampler.
 - Check whether the signeR Bioconductor package accepts pre-computed exposure matrices from SigProfilerExtractor as input (allowing the association layer to be reused without re-running extraction).
-- The MSI-H classification result (AUC 0.983) with SBS26 as a key driver is directly relevant to the MMR arm of the h08 pre-registration positive control — consider replicating on MC3 STAD samples as a pilot.
+- The MSI-H classification result (AUC 0.983) with SBS26 as a key driver is directly relevant to the MMR arm of the hypothesis:0007 pre-registration positive control — consider replicating on MC3 STAD samples as a pilot.

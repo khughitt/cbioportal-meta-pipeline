@@ -106,17 +106,17 @@ the pipeline and avoiding complications of signature-fitting.
 
 ## Relevance
 
-**Relevance to h08 (agnostic covariate↔signature-exposure association):**
+**Relevance to hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and (agnostic covariate↔signature-exposure association):**
 
 - HRD/BRCA-deficiency is the underlying aetiology for SBS3 (homologous recombination deficiency)
   and ID6/ID8 (microhomology-mediated end-joining deletions). This paper defines how to
   operationalize HRD ground-truth status — a prerequisite for any aetiology-assignment
-  benchmark, including h08a's positive-control recovery.
+  benchmark, including the positive-control recovery arm of hypothesis:0007.
 - The paper's central methodological claim — that HRD can be detected from raw mutation contexts
-  *without* fitting COSMIC signatures — is directly relevant to h08's design choice of using
+  *without* fitting COSMIC signatures — is directly relevant to hypothesis:0007's design choice of using
   per-sample mutation spectra (or exposures) as outcomes. It validates that the raw-context
   representation retains sufficient information.
-- HRD status is a strong candidate covariate in the h08 agnostic scan: BRCA1/2-deficient tumors
+- HRD status is a strong candidate covariate in the hypothesis:0007 agnostic scan: BRCA1/2-deficient tumors
   have markedly elevated SBS3 and indel-microhomology exposures, so a properly calibrated scan
   should recover HRD→SBS3 as a strong positive-control association alongside UV→SBS7 and
   smoking→SBS4.
@@ -141,10 +141,10 @@ the pipeline and avoiding complications of signature-fitting.
 
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
-| CHORD HRD probability | Potential covariate in h08 agnostic scan | Not in cBioPortal metadata; would need external join |
+| CHORD HRD probability | Potential covariate in hypothesis:0007 agnostic scan | Not in cBioPortal metadata; would need external join |
 | Biallelic BRCA1/BRCA2 status | Gene-cancer mutation frequency (gene_cancer_study.feather) | cBioPortal captures SNV/indels but frequently misses deep deletions and CNV-mediated LOH |
 | BRCA1-type vs BRCA2-type HRD | Signature-subtype discrimination | Analogous to distinguishing SBS2 vs SBS13 (APOBEC sub-activities) |
-| Mutation contexts (SNV/indel/SV relative fractions) | Input features for signature decomposition | CHORD uses these directly; h08 uses COSMIC-fitted exposures as outcomes |
+| Mutation contexts (SNV/indel/SV relative fractions) | Input features for signature decomposition | CHORD uses these directly; hypothesis:0007 uses COSMIC-fitted exposures as outcomes |
 | HRD mutational scar | SBS3 / ID6 / ID8 COSMIC signatures | Paper demonstrates the scar is tissue-agnostic |
 | MSI exclusion (≥14,000 repeat indels) | Hypermutator exclusion | Analogue to the project's GMM-based hypermutator annotation; MSI masks microhomology signal |
 
@@ -187,7 +187,7 @@ the pipeline and avoiding complications of signature-fitting.
 - Ellrott et al. 2018 (MC3 TCGA MAF) — the cBioPortal pipeline's TCGA equivalent; CHORD
   applied to MC3 would require SV calls, which MC3 does not include.
 - PCAWG consortium papers — provide the validation cohort.
-- For h08: connecting HRD status to SBS3 exposure in the within-tissue association model —
+- For hypothesis:0007: connecting HRD status to SBS3 exposure in the within-tissue association model —
   whether cBioPortal panel data yields enough microhomology indels to proxy HRD probability
-  (likely no; this is a concrete limitation for the h08 positive-control design where SBS3
+  (likely no; this is a concrete limitation for the hypothesis:0007 positive-control design where SBS3
   is not one of the three pre-registered arms).

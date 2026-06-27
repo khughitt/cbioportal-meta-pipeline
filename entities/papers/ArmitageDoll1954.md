@@ -111,7 +111,7 @@ The `theme:0003-temporal-structure-of-carcinogenesis-order-count-and-timing-of-t
 
 2. **Ordered stages only.** The model assumes changes must occur in a single fixed order. This conflicts with modern evidence that the same driver genes can be acquired in different orders across patients (relevant to `question:0012-mutation-ordering-cross-sectional-inference`) and that clonal selection can make equivalent evolutionary paths converge.
 
-3. **No clonal expansion between stages.** The simplest Armitage-Doll formulation treats each cell independently and does not model the growth advantage that partially-transformed cells might have. This was the central extension added by the **Moolgavkar-Venzon-Knudson (MVK) two-stage clonal-expansion model** (Moolgavkar and Venzon 1979; Moolgavkar and Knudson 1981), which allows the intermediate-stage cell population to expand clonally, changing the age-incidence predictions substantially — especially for two-hit tumour suppressor cancers (retinoblastoma being the canonical example where Knudson's "two-hit hypothesis" was validated). The MVK model is the principal successor framework.
+3. **No clonal expansion between stages.** The simplest Armitage-Doll formulation treats each cell independently and does not model the growth advantage that partially-transformed cells might have. This was the central extension added by the **Moolgavkar-Venzon-Knudson (MVK) two-stage clonal-expansion model** [@MoolgavkarKnudson1981], which allows the intermediate-stage cell population to expand clonally, changing the age-incidence predictions substantially — especially for two-hit tumour suppressor cancers (retinoblastoma being the canonical example where Knudson's "two-hit hypothesis" was validated [@Knudson1971]). The MVK model is the principal successor framework.
 
 4. **Constant target-cell number N.** Organ growth and the turnover rate of tissue stem cells both change with age, violating this assumption.
 
@@ -131,13 +131,13 @@ This is a theoretical/statistical paper from 1954; no software, dataset, or comp
 
 **Immediate theoretical successors.**
 
-- **Moolgavkar and Venzon 1979 / Moolgavkar and Knudson 1981** — the MVK two-stage clonal-expansion model; adds clonal growth of initiated cells between stages; the primary refinement of Armitage-Doll.
-- **Knudson 1971** — the "two-hit hypothesis" for retinoblastoma; provided the first mechanistic (somatic + germline) instantiation of the multi-stage framework.
+- **MVK two-stage clonal-expansion model** — adds clonal growth of initiated cells between stages; the primary refinement of Armitage-Doll [@MoolgavkarKnudson1981].
+- **Knudson's retinoblastoma two-hit model** — provided the first mechanistic (somatic + germline) instantiation of the multi-stage framework [@Knudson1971].
 - **Nordling 1953** — the direct precursor; grouped all cancers together and noted the sixth-power law; Armitage and Doll extend and formalize.
-- **Tomasetti and Vogelstein 2015 / 2017** (Science) — revisited the number-of-stem-cell-divisions framework as the dominant determinant of cancer risk across tissues, reigniting debate about intrinsic vs. extrinsic contributions to stage hit rates.
+- **Tomasetti and Vogelstein's stem-cell-division framework** — revisited the number-of-stem-cell-divisions framework as the dominant determinant of cancer risk across tissues, reigniting debate about intrinsic vs. extrinsic contributions to stage hit rates [@TomasettiVogelstein2015].
 
 **Questions raised for this project.**
 
 - If we correlate median age at first diagnosis (from cBioPortal clinical metadata) with an estimate of the number of recurrent driver genes per cancer type (from our cross-study aggregation tables), does the rank ordering across cancer types qualitatively match the Armitage-Doll expectation? Which cancer types are most outlying, and do their deviations align with the "Group 2" (variable-exposure) sites the original paper identified?
 - For cancer types with very steep incidence-vs-age curves (i.e., many required hits), do we observe a longer right tail in the number of drivers per tumor in cBioPortal, as would be expected if higher-stage tumors require more accumulated mutations to reach the final stage?
-- Can the Bailey 2018 driver gene census (annotated in our pipeline) serve as a proxy for r — the number of rate-limiting stages — per histology, and does it correlate with median onset age in SEER data?
+- Can the Bailey driver gene census (annotated in our pipeline) serve as a proxy for r — the number of rate-limiting stages — per histology, and does it correlate with median onset age in SEER data [@Bailey2018]?

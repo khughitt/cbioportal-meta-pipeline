@@ -52,7 +52,7 @@ No original data analysis is presented; the review synthesises published finding
 
 ## Relevance
 
-**Hypothesis h08** (agnostic covariate–signature-exposure association; positive-control recovery of UV/smoking/APOBEC/MMR): This review is directly relevant as a conceptual anchor. It articulates why the known aetiology of canonical signatures (UV→SBS7a, tobacco→SBS4, MMR defects→SBS6/15/20/26, aristolochic acid→SBS22) can serve as ground-truth positive controls for any agnostic association pipeline. The review explicitly lists the properties a validated signature must have: tissue-specificity of the exposed tissue, dose-dependence, and non-reversibility. These criteria translate directly into testable expectations for h08: a covariate such as tobacco exposure should recover SBS4 preferentially in lung, scaled by pack-year equivalents.
+**hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and** (agnostic covariate–signature-exposure association; positive-control recovery of UV/smoking/APOBEC/MMR): This review is directly relevant as a conceptual anchor. It articulates why the known aetiology of canonical signatures (UV→SBS7a, tobacco→SBS4, MMR defects→SBS6/15/20/26, aristolochic acid→SBS22) can serve as ground-truth positive controls for any agnostic association pipeline. The review explicitly lists the properties a validated signature must have: tissue-specificity of the exposed tissue, dose-dependence, and non-reversibility. These criteria translate directly into testable expectations for hypothesis:0007: a covariate such as tobacco exposure should recover SBS4 preferentially in lung, scaled by pack-year equivalents.
 
 **Cross-study meta-analysis (cbioportal pipeline)**: The paper underscores that bulk tumour WGS/WES data from cBioPortal studies is the dominant data source for signature discovery in cancer. The review of mutational phenotypes (composite SBS+indel+CNA patterns) is relevant to understanding confounders in cross-study aggregation: samples with MMR deficiency or POLE/POLD1 mutations will show hypermutator phenotypes that need to be stratified (aligning with the pipeline's `is_hypermutator` annotation layer and the t081 plan). The colibactin and chemotherapy signature findings highlight that somatic mutation rate in cBioPortal studies can be elevated by prior treatment or infection, which is a confound for frequency-ranking analysis.
 
@@ -62,10 +62,10 @@ The review's framing that somatic mutations are "non-reversible, cumulative" whi
 
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
-| COSMIC SBS catalogue | Canonical signature reference | Pipeline uses COSMIC SBS numbers via Bailey 2018 driver overlay and CH annotation |
+| COSMIC SBS catalogue | Canonical signature reference | Pipeline uses COSMIC SBS numbers via Bailey driver overlay [@Bailey2018] and CH annotation |
 | Mutational signature tissue-specificity | Cross-cancer mutation frequency matrix | Tissue-of-origin patterns visible in gene x cancer tables |
 | Hypermutator / high-TMB phenotypes | `is_hypermutator` annotation (t081) | Review confirms POLE/POLD1 and MMR defects as major hypermutator sources |
-| Clonal haematopoiesis | CH-aware annotation (`ch_priority_gene`) | Bolton 2020 gene list captures DNMT3A, TET2, ASXL1, etc. mentioned in review |
+| Clonal haematopoiesis | CH-aware annotation (`ch_priority_gene`) | Bolton gene list captures DNMT3A, TET2, ASXL1, etc. mentioned in review [@Bolton2020] |
 | Prior chemotherapy (cisplatin) as mutagen | Treatment-related signal in cBioPortal studies | A confound in cross-study mutation frequency comparisons |
 | Colibactin / SBS88 in colon cancer | Not currently tracked | Could be relevant if stratifying GI cancers by infection exposure |
 
@@ -73,7 +73,7 @@ The review's framing that somatic mutations are "non-reversible, cumulative" whi
 
 - **No original data or quantitative analysis** — the review's claims rest on the cited primary literature; individual studies have heterogeneous sample sizes and sequencing depths.
 - **Coverage is selective** — the review focuses on illustrative examples; it does not attempt a systematic or exhaustive survey of all published normal-tissue somatic mutation studies.
-- **APOBEC signatures (SBS2/13) are absent** — the review does not cover APOBEC mutagenesis, a major endogenous mutational process and important positive-control candidate for h08.
+- **APOBEC signatures (SBS2/13) are absent** — the review does not cover APOBEC mutagenesis, a major endogenous mutational process and important positive-control candidate for hypothesis:0007.
 - **SBS-centric** — indels and structural variants are mentioned in the context of DNA-repair phenotypes but are not covered as systematically as SBS.
 - **Tissue culture / organoid generalizability** — several mechanistic claims about DNA-repair signatures derive from in vitro CRISPR screens whose translation to primary tissue is noted by the authors themselves as uncertain.
 - **Clinical applications are aspirational** — the review presents cisplatin germline mutagenicity and tissue-of-origin inference as proof-of-concept; clinical adoption is not yet established.
@@ -90,6 +90,6 @@ No new computational tools or models are released with this review. References a
 - **Boysen2025** (already in doc/papers/) — covers origins of mutational signatures, complementary mechanistic depth.
 - **LeeSix2018** (already in doc/papers/) — the colibactin landscape paper is reviewed here as a primary source.
 - **Koh2021** (already in doc/papers/) — COSMIC signature clinical applications review cited extensively.
-- Consider reading Senkin 2024 (ref 71) on geographic variation of mutagenic exposures in kidney cancers, which is directly relevant to h08 covariate-geographic variables.
-- Consider reading Vali-Pour 2022 (ref 105) on rare germline variants and somatic mutation phenotypes, relevant to familial cancer predisposition contexts in the pipeline.
-- The Mutograph project (ref 69, Perdomo 2024) — correlating regional cancer incidence with mutational signature data epidemiologically — is a real-world implementation of h08-style covariate association at population scale.
+- Consider reading Senkin et al. (ref 71) on geographic variation of mutagenic exposures in kidney cancers, which is directly relevant to hypothesis:0007 covariate-geographic variables.
+- Consider reading the rare-germline-variant paper cited as ref 105 on rare germline variants and somatic mutation phenotypes, relevant to familial cancer predisposition contexts in the pipeline.
+- The Mutograph project (ref 69) — correlating regional cancer incidence with mutational signature data epidemiologically — is a real-world implementation of hypothesis:0007-style covariate association at population scale.

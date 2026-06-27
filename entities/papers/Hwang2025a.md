@@ -34,20 +34,6 @@ related:
 - **BibTeX key:** Hwang2025a
 - **Source:** PDF
 
-<!-- BibTeX:
-@article{Hwang2025a,
-  title     = {Integrating priorities at the intersection of cancer and neuroscience},
-  author    = {Hwang, William L. and Perrault, Ella N. and Birbrair, Alexander and Mattson, Brandi J. and Gutmann, David H. and Mabbott, Donald J. and Cukierman, Edna and Repasky, Elizabeth A. and Sloan, Erica K. and Zong, Hui and Demir, Ihsan Ekin and Saloman, Jami L. and Borniger, Jeremy C. and Hu, Jian and Dietrich, Jorg and Breunig, Joshua J. and Cifcibasi, Kaan and Kasm, Khalil Ali Ahmad and Valiente, Manuel and Wintermark, Max and Acharya, Munjal M. and Scheff, Nicole N. and D'Silva, Nisha J. and Vermeer, Paola D. and Wong, Richard J. and Talbot, Sebastien and Hervey-Jumper, Shawn L. and Wang, Timothy C. and Ye, Yi and Pan, Yuan and Bunimovich, Yuri L. and Amit, Moran},
-  journal   = {Cancer Cell},
-  volume    = {43},
-  number    = {1},
-  pages     = {573--580},
-  year      = {2025},
-  doi       = {10.1016/j.ccell.2024.09.014},
-  publisher = {Elsevier}
-}
--->
-
 ## Key Contribution
 
 This community roadmap commentary, authored by 33 leading researchers who attended the 2024 MD Anderson Cancer Neuroscience Symposium and responded to a field-wide survey (n = 330 for one question; n = 188 for a sub-question), synthesizes the current state of cancer neuroscience and defines three strategic priority areas for the next phase of the field: **multidisciplinary collaboration**, **diversification** (of investigators, methods, and cancer types studied), and **training and career development**. The paper's structural argument is that cancer neuroscience has grown 22-fold in scholarly output (216 → 4,852 articles, 2000–2023) and now stands at an inflection point requiring cohesion and strategic investment rather than further fragmentation. It identifies the primary barriers to clinical translation — surveyed as: lack of fundamental knowledge (42.0% of respondents), lack of financial support (32.5%), and barriers to pharmacotherapeutic delivery (12.2%) — and lays out specific technology and methodology priorities for overcoming them. Critically for the project, the roadmap explicitly endorses **spatial and molecular targeting technologies** (viral vectors for retrograde neural circuit tracing, spatial omics, single-cell approaches, bispecific antibody-drug conjugates, bioelectronic methods) as the near-term methodological frontier. The paper also advocates for repurposing existing neuromodulatory drugs as a translational shortcut.

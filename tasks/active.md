@@ -934,7 +934,7 @@ Acquire the reference resources backing the data-driven neural-gene score (t216)
 
 ## [t231] Normalize Science prose citation lint warnings
 - priority: P3
-- status: proposed
+- status: active
 - aspects: []
 - group: science-health-cleanup
 - created: 2026-06-27

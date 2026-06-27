@@ -71,7 +71,7 @@ both faster here and reproducible.)
 Realized effective n is the MC3∩RNA-seq intersection per arm — the number that feeds the pre-reg
 §1b post-join table (the gate "is not read until [it is] filled in"):
 
-| Arm | MC3 arm n | RSEM samples | **Eff. n (∩)** | Genes (MAD) | **Selected K** | Cophenetic @K |
+| Arm | MC3 arm n | RSEM samples | **Eff. n (∩)** | Genes (MAD) | **Selected K** | Cophenetic at selected K |
 |---|---|---|---|---|---|---|
 | SKCM | 466 | 443 | **437** | 2000 | 5 | 0.943 |
 | LUAD | 513 | 510 | **504** | 2000 | 5 | 0.948 |

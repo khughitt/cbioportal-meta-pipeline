@@ -89,7 +89,7 @@ combination machinery that should replace naive count pooling.
 - Harrer M, Cuijpers P, Furukawa T, Ebert DD. 2021. *Doing Meta-Analysis with R: A Hands-On
   Guide.* Chapman & Hall/CRC. `dmetar` R package (companion).
   → practitioner handbook; comprehensive coverage of `meta` / `metafor` workflows. Not
-  retrieved in the 2026-04-13 search (book, not article); manually noted as an @book entry
+  retrieved in the 2026-04-13 search (book, not article); manually noted as a BibTeX book entry
   when `dmetar` is added to the pipeline's R dependencies.
 
 **Reviews / synthesis:**

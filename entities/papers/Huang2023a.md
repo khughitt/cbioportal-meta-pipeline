@@ -29,7 +29,6 @@ related:
 
 <!-- Authors: Meng Huang, Gu Gong, Yicheng Deng, Xinmiao Long, Wenyong Long, Qing Liu, Wei Zhao, Rufu Chen -->
 <!-- DOI: 10.1002/med4.27 -->
-<!-- BibTeX: @article{Huang2023a, title={Crosstalk between cancer cells and the nervous system}, author={Huang, Meng and Gong, Gu and Deng, Yicheng and Long, Xinmiao and Long, Wenyong and Liu, Qing and Zhao, Wei and Chen, Rufu}, journal={Medicine Advances}, year={2023}, volume={1}, number={3}, pages={173--189}, doi={10.1002/med4.27}, publisher={Wiley}} -->
 <!-- Source: PDF -->
 
 - **Authors:** Meng Huang, Gu Gong, Yicheng Deng, Xinmiao Long, Wenyong Long, Qing Liu, Wei Zhao, Rufu Chen

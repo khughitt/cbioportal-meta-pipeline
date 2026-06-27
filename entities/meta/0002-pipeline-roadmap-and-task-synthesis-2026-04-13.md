@@ -17,7 +17,7 @@ Consolidated view of the findings from **6 reading batches (22 papers) + 14 topi
 
 ## The goal
 
-Get our pipeline to current-best-practice for cross-study panel-based cancer-genomics aggregation — specifically, **above the methodological bar set by Kandoth 2013** (covariate-aware SMG test on harmonized MAFs) and **approaching Bailey 2018** (consensus driver catalog + per-cancer rosters). Three concrete milestones in priority order:
+Get our pipeline to current-best-practice for cross-study panel-based cancer-genomics aggregation — specifically, **above the methodological bar set by Kandoth et al. [@Kandoth2013]** (covariate-aware SMG test on harmonized MAFs) and **approaching Bailey et al. [@Bailey2018]** (consensus driver catalog + per-cancer rosters). Three concrete milestones in priority order:
 
 1. **Immediate (P1 audit-fixes)**: Remove statistically-incoherent outputs; wire the three foundational overlays (Bailey drivers, CH-priority flag, MC3 / panel callability).
 2. **Near-term (P1 pipeline additions)**: Callability-masked cross-study ratios; CH-aware stratified outputs; MC3 for the TCGA portion; OncoKB version stamping.
@@ -42,7 +42,7 @@ Get our pipeline to current-best-practice for cross-study panel-based cancer-gen
 | Axis | Finding(s) | Quantification | Fix task | Priority |
 |---|---|---|---|---|
 | **Panel content** | Audit F2 | APC ~10× region-length across GENIE panels; 91 distinct assays at v9.1; only 44 genes on all launch panels | t016 (GENIE BED ingestion) + t048 (MC3 for TCGA) | P1 |
-| **Matched-normal / CH** | Audit F3, F7 | 7 priority genes (DNMT3A, PPM1D, TET2, TP53, ASXL1, CHEK2, PRPF8); matched-normal yields 6 vs 15 somatic events/sample (Cheng 2015); 52% of GENIE v9.1 is tumor-only | t050 | P1 |
+| **Matched-normal / CH** | Audit F3, F7 | 7 priority genes (DNMT3A, PPM1D, TET2, TP53, ASXL1, CHEK2, PRPF8); matched-normal yields 6 vs 15 somatic events/sample (Cheng et al. [@Cheng2015]); 52% of GENIE v9.1 is tumor-only | t050 | P1 |
 | **Cohort selection** | Audit F5 | AR 18% vs 1%, ESR1 11% vs 4%, EGFR T790M 11.3% vs 2.2% (clinical-seq vs TCGA) | t052 | P2 |
 | **Annotation drift** | Audit F4, F8 | OncoKB Level 1/2 actionability 8.9% → 31.6% in 5 years on same cohort | t053 (version stamping) + t069 (annotated feather as canonical) | P1 |
 
@@ -56,11 +56,11 @@ Not blocker-severity, but move our pipeline from "raw counting" to "current best
 |---|---|---|---|
 | Weighted vs unweighted aggregation | Audit F9 (unweighted ratio-mean) | t071 + t062 (cross-study-aggregation guide) | P2 |
 | Selection-based driver signal | topic:cancer-driver-genes | t015 (dNdScv rule — already wired) | P1 done |
-| Pathway-level view | topic:pan-cancer-interpretive-frames | t049 (Sanchez-Vega 2018 Tables S2/S3 overlay) | P2 |
-| Tissue-conditional driver flag | Bailey 2018 19% tissue-borrowed + Bandlamudi 2026 ~1/3 non-canonical | t054 | P2 |
-| Saturation-aware long-tail | Audit F10 (Lawrence 2014 required-N) | t072 | P3 |
+| Pathway-level view | topic:pan-cancer-interpretive-frames | t049 (Sanchez-Vega et al. [@SanchezVega2018] Tables S2/S3 overlay) | P2 |
+| Tissue-conditional driver flag | Bailey et al. [@Bailey2018] 19% tissue-borrowed + Bandlamudi et al. [@Bandlamudi2026] ~1/3 non-canonical | t054 | P2 |
+| Saturation-aware long-tail | Audit F10 (Lawrence et al. [@Lawrence2014] required-N) | t072 | P3 |
 | M/C-class hyperbola descriptor | topic:pan-cancer-interpretive-frames | t055 (blocked on CNA ingestion) | P3 |
-| Cluster concordance vs Hoadley 2018 | topic:pan-cancer-interpretive-frames | t056 | P3 |
+| Cluster concordance vs Hoadley et al. [@Hoadley2018] | topic:pan-cancer-interpretive-frames | t056 | P3 |
 
 ### Cluster D: Documentation / provenance / drive-by fixes
 
@@ -124,11 +124,11 @@ t016 (GENIE BEDs) ───────────────┘
 |---|---|---|
 | 0: raw counting | ✓ (current) | — |
 | 1: first-order normalization (protein length) | ✓ (current, partial) | — |
-| 2: covariate-aware SMG test on harmonized MAFs | ✗ | Kandoth 2013 |
-| 3: MutSigCV with full covariate set | ✗ (requires external RNA / chromatin tracks) | Lawrence 2014 |
-| 4: Selection-based (dNdScv) parallel signal | **partially done** (rule wired, not in rule-all) | Martincorena 2017 |
-| 5: Multi-tool consensus + external catalog overlay | **in progress** (Bailey overlay wired; rule-all integration = F4) | Bailey 2018 |
-| 6: Tissue-conditional + pathway-collapsed + version-stamped | ✗ | Bandlamudi 2026 / Sanchez-Vega 2018 / Suehnholz 2024 |
+| 2: covariate-aware SMG test on harmonized MAFs | ✗ | Kandoth et al. [@Kandoth2013] |
+| 3: MutSigCV with full covariate set | ✗ (requires external RNA / chromatin tracks) | Lawrence et al. [@Lawrence2014] |
+| 4: Selection-based (dNdScv) parallel signal | **partially done** (rule wired, not in rule-all) | Martincorena et al. [@Martincorena2017] |
+| 5: Multi-tool consensus + external catalog overlay | **in progress** (Bailey overlay wired; rule-all integration = F4) | Bailey et al. [@Bailey2018] |
+| 6: Tissue-conditional + pathway-collapsed + version-stamped | ✗ | Bandlamudi et al. [@Bandlamudi2026] / Sanchez-Vega et al. [@SanchezVega2018] / Suehnholz et al. [@Suehnholz2024] |
 
 **Completing P1 audit-fixes + P1 pipeline additions would put us at rung 5.** Longer-term P2 tasks target rung 6.
 
@@ -146,4 +146,4 @@ Then move into pipeline additions in cluster B priority order.
 
 ## Closing note
 
-The reading-driven synthesis was **worth the cost**. Every Critical audit finding traces back to a specific paper we read (Bolton 2020 → F3; Pugh 2022 → F2; Bailey 2018 → F4; Cheng 2015 + Pugh 2022 → F7) and a specific topic stub that synthesized across papers (`topic:targeted-panel-sequencing-bias`, `topic:clonal-hematopoiesis-contamination`, `topic:cross-study-harmonization`). Without the reading, we'd have "vague concerns about panel aggregation" instead of 11 specific findings with quantified biases and citation chains to primary sources.
+The reading-driven synthesis was **worth the cost**. Every Critical audit finding traces back to a specific paper we read (Bolton et al. [@Bolton2020] → F3; Pugh et al. [@Pugh2022] → F2; Bailey et al. [@Bailey2018] → F4; Cheng et al. [@Cheng2015] + Pugh et al. [@Pugh2022] → F7) and a specific topic stub that synthesized across papers (`topic:targeted-panel-sequencing-bias`, `topic:clonal-hematopoiesis-contamination`, `topic:cross-study-harmonization`). Without the reading, we'd have "vague concerns about panel aggregation" instead of 11 specific findings with quantified biases and citation chains to primary sources.

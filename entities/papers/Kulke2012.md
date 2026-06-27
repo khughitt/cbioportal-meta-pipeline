@@ -17,6 +17,7 @@ ontology_terms:
 datasets: []
 source_refs:
 - cite:Kulke2012
+- cite:Tan2024
 related: []
 ---
 
@@ -43,8 +44,8 @@ This is a consensus clinical practice guideline, not an empirical study. Recomme
 
 **Classification.** NETs are organized by primary site and histologic differentiation:
 
-- *Carcinoid tumors*: arise from enterochromaffin and related cells; approximately one-third in lungs/thymus, two-thirds in GI tract (jejunum, ileum, colon, appendix, rectum, duodenum, stomach). May secrete serotonin, histamine, tachykinins causing carcinoid syndrome [UNVERIFIED frequency ~8% without liver metastases].
-- *Pancreatic NETs (islet cell tumors)*: nonfunctioning (~40-91%) [UNVERIFIED] or functional (insulinoma, gastrinoma, glucagonoma, VIPoma, somatostatinoma, PPoma). Approximately 1% of pancreatic cancers by incidence, 10% by prevalence [UNVERIFIED].
+- *Carcinoid tumors*: arise from enterochromaffin and related cells; approximately one-third in lungs/thymus, two-thirds in GI tract (jejunum, ileum, colon, appendix, rectum, duodenum, stomach). May secrete serotonin, histamine, and tachykinins causing carcinoid syndrome.
+- *Pancreatic NETs (islet cell tumors)*: may be nonfunctioning or functional (insulinoma, gastrinoma, glucagonoma, VIPoma, somatostatinoma, PPoma), and are uncommon relative to pancreatic adenocarcinoma.
 - *Adrenal gland tumors*: adrenocortical carcinoma (ACC), pheochromocytoma/paraganglioma, hyperaldosteronism, Cushing syndrome.
 - *Hereditary syndromes*: MEN 1 (mutations in the *menin* gene — parathyroid, pituitary, pancreatic tumors); MEN 2 (*RET* proto-oncogene — medullary thyroid carcinoma, pheochromocytoma); von Hippel-Lindau; tuberous sclerosis; neurofibromatosis. MEN 1 family history is explicitly flagged for all patients with pancreatic NETs.
 
@@ -60,24 +61,24 @@ Poorly differentiated G3 tumors are synonymous with high-grade neuroendocrine ca
 
 **Immunohistochemical (IHC) markers for NET lineage (p. 743-744):**
 
-- *Chromogranin A (CHGA)*: primary general neuroendocrine marker; measured in serum (category 3); elevated in 60%+ of functioning and nonfunctioning pancreatic NETs [UNVERIFIED].
+- *Chromogranin A (CHGA)*: primary general neuroendocrine marker; measured in serum (category 3).
 - *Synaptophysin (SYP)*: general neuroendocrine marker.
 - *CD56*: general neuroendocrine marker (noted as less specific).
 - *Ki-67 (MIB-1)*: proliferation index, required for grading.
 - *Lineage-specific IHC*: TTF-1 for lung origin; CDX2 for intestinal or pancreatic origin; Islet 1 (Isl1) for pancreatic origin.
 - *Hormone markers*: 5-HIAA (urine, carcinoid), chromogranin A, gastrin, proinsulin, VIP, glucagon, catecholamines/metanephrines (pheochromocytoma), ACTH, GRH, GHRH.
 
-**Genomic/molecular content (limited in this 2012 guideline):** The guideline mentions *menin* (MEN1) and *RET* as hereditary NET drivers. For sporadic ACCs, inactivating mutations of *p53* (chromosome 17p13) and alterations at the 11p15 locus (IGF-2 gene site) are noted as occurring frequently [UNVERIFIED]. DAXX and ATRX — identified as major somatic drivers of sporadic pancreatic NETs in the contemporaneous Jiao et al. 2011 Science paper — are not discussed; this gap reflects the guideline's focus on clinical management rather than genomic characterization, and the recency of those findings at time of publication. [UNVERIFIED whether later NCCN versions incorporated DAXX/ATRX.]
+**Genomic/molecular content (limited in this 2012 guideline):** The guideline mentions *menin* (MEN1) and *RET* as hereditary NET drivers. For sporadic ACCs, it notes recurrent *TP53* and 11p15/IGF-2 alterations. DAXX and ATRX — now established as major somatic drivers of sporadic pancreatic NETs [@Tan2024] — are not discussed; this gap reflects the guideline's focus on clinical management rather than genomic characterization, and the recency of those findings at time of publication.
 
 **Staging:** AJCC TNM system (7th edition); separate staging tables for carcinoids of stomach, duodenum/ampulla/jejunum/ileum, colon/rectum, appendix, and pancreatic NETs. Stage-prognosis associations confirmed in SEER analyses.
 
 **Treatment highlights:**
 - Surgery is primary for localized/locoregional disease across all NET types.
-- Somatostatin analogs (octreotide LAR): antiproliferative in midgut carcinoid (PROMID trial, median TTP 14.3 vs 6 months) [UNVERIFIED].
-- Everolimus (mTOR inhibitor): approved for advanced pancreatic NETs (RADIANT-3: median PFS 11.0 vs 4.6 months, P < 0.001) [UNVERIFIED] and considered (category 3) for advanced carcinoids.
-- Sunitinib: approved for advanced pancreatic NETs (median PFS 11.4 vs 5.5 months, P < 0.001) [UNVERIFIED].
+- Somatostatin analogs (octreotide LAR): antiproliferative evidence in midgut carcinoid (PROMID trial).
+- Everolimus (mTOR inhibitor): approved for advanced pancreatic NETs based on RADIANT-3 and considered (category 3) for advanced carcinoids.
+- Sunitinib: approved for advanced pancreatic NETs.
 - Streptozocin-based chemotherapy: FDA-approved for pancreatic NETs.
-- Temozolomide-based regimens: increasingly used; capecitabine + temozolomide reported 70% radiographic response rate [UNVERIFIED].
+- Temozolomide-based regimens: increasingly used; capecitabine + temozolomide reported high radiographic response in early studies.
 
 ## Relevance
 
@@ -89,12 +90,12 @@ Neuroendocrine tumors arise from cells of the diffuse endocrine system (enteroch
 
 - *CHGA* (chromogranin A), *SYP* (synaptophysin), *ENO2* (NSE/neuron-specific enolase), *CD56* (NCAM1) are constitutive lineage markers in NET cells.
 - *MEN1*, *RET*, *VHL*, *TSC1/TSC2*, *NF1* are recurrently mutated in hereditary NETs.
-- *DAXX*, *ATRX* are the dominant somatic drivers in sporadic pancreatic NETs [UNVERIFIED — from contemporaneous literature, not in this guideline].
+- *DAXX*, *ATRX* are dominant somatic drivers in sporadic pancreatic NETs [@Tan2024], but not part of this 2012 guideline's molecular section.
 - *TP53*, *IGF2* locus (11p15) are implicated in adrenocortical carcinoma.
 
 If cBioPortal studies labeled as "pancreatic cancer," "lung carcinoid," "adrenal," or general "neuroendocrine" are included in pan-cancer aggregations without flagging, any cross-study signal in neuroendocrine/neural genes could be inflated by NET lineage biology rather than reflecting convergent neural-pathway selection across epithelial tumors.
 
-**Incidence note:** SEER data cited in the guideline estimated 5.25 cases per 100,000 in 2004 [UNVERIFIED], with rising diagnosed incidence — meaning NET cohorts are present in cBioPortal at non-trivial scale.
+**Incidence note:** SEER data cited in the guideline show rising diagnosed NET incidence, meaning NET cohorts are present in cBioPortal at non-trivial scale.
 
 ## Project Framework Mapping
 

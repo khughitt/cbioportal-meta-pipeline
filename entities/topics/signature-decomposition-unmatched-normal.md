@@ -78,7 +78,7 @@ This synthesis covers SBS (single-base substitution) signatures only. DBS and ID
 
 **deconstructSigs** (Rosenthal et al., Genome Biology 2016) is a legacy tool widely used in published cBioPortal studies. Benchmarking consistently places it in the lower half for accuracy, particularly for small mutation counts, because it uses a threshold-based rather than probabilistic approach. Outputs from cBioPortal studies that report deconstructSigs results should be interpreted cautiously.
 
-**cancereffectsizeR / SIGNAL** (Cannataro et al., 2022): The `suggest_cosmic_signature_exclusions()` function in cancereffectsizeR implements COSMIC's Extended Data Figure 5 (Alexandrov 2020) per-cancer-type signature exclusion lists. It also allows treatment-associated signature exclusion for naive cohorts. This is the simplest available approach to restrict decomposition to plausible signatures.
+**cancereffectsizeR / SIGNAL** (Cannataro et al., 2022): The `suggest_cosmic_signature_exclusions()` function in cancereffectsizeR implements COSMIC's Extended Data Figure 5 (Alexandrov et al. [@Alexandrov2020]) per-cancer-type signature exclusion lists. It also allows treatment-associated signature exclusion for naive cohorts. This is the simplest available approach to restrict decomposition to plausible signatures.
 
 ### Normal-tissue-aware approaches
 
@@ -86,7 +86,7 @@ No currently published tool performs decomposition with an explicit tissue-of-or
 
 1. **SIGNAL tissue-stratified matrices** (in MutationalPatterns): restrict the allowed signature set to those observed in that tissue type, effectively setting a floor on how much variance can be absorbed by cancer-only signatures.
 
-2. **Per-tissue reference cohort subtraction**: fit the normal-tissue spectrum first (using published data from Li 2021, Xu 2025, or Moore 2022), then decompose the residual tumor spectrum. This is a proposed but not yet standardized workflow.
+2. **Per-tissue reference cohort subtraction**: fit the normal-tissue spectrum first (using published data from Li 2021, Xu 2025, or `Moore 2022`), then decompose the residual tumor spectrum. This is a proposed but not yet standardized workflow.
 
 3. **CUPLR / tissue-of-origin classifier signal consistency check**: flag samples whose global signature profile is more consistent with normal-tissue priors (SBS1+SBS5 dominant, no cancer-specific signatures) than with known cancer-type profiles. Samples flagging as "ambiguous" or "normal-like" should be investigated for tumor purity.
 
@@ -94,7 +94,7 @@ No currently published tool performs decomposition with an explicit tissue-of-or
 
 ## COSMIC SBS Signatures: Normal-Tissue Provenance
 
-The table below classifies COSMIC v3.x SBS signatures by whether they are documented in morphologically normal tissue. Evidence sources are Li 2021, Xu 2025, Yaacov 2023, and COSMIC signature pages.
+The table below classifies COSMIC v3.x SBS signatures by whether they are documented in morphologically normal tissue. Evidence sources are Li 2021, Xu 2025, Yaacov et al. [@Yaacov2023], and COSMIC signature pages.
 
 ### Group A: Ubiquitous in normal tissue (direct bleeding risk)
 
@@ -159,7 +159,7 @@ Turcan et al. 2021 and related work on RNA-seq TMB without matched normal show t
 
 ### 4. No known published retractions specifically attributable to normal-contamination signature artifact
 
-A systematic search (as of April 2026) found no published retractions or formal corrections to cancer genomics papers attributed specifically to signature misdecomposition from unmatched-normal contamination. However, the methodological concern is widely acknowledged in the signature methods literature (see discussion in Alexandrov 2020 Supplementary and Jin 2024 MuSiCal paper). The absence of retractions likely reflects two realities: (a) the effect is quantitative and continuous rather than binary, making it hard to identify as a discrete error; (b) the field has largely moved toward using COSMIC per-cancer-type signature lists rather than unconstrained decomposition.
+A systematic search (as of April 2026) found no published retractions or formal corrections to cancer genomics papers attributed specifically to signature misdecomposition from unmatched-normal contamination. However, the methodological concern is widely acknowledged in the signature methods literature (see discussion in Alexandrov et al. [@Alexandrov2020] Supplementary and Jin et al. [@Jin2024] MuSiCal paper). The absence of retractions likely reflects two realities: (a) the effect is quantitative and continuous rather than binary, making it hard to identify as a discrete error; (b) the field has largely moved toward using COSMIC per-cancer-type signature lists rather than unconstrained decomposition.
 
 ---
 
@@ -169,7 +169,7 @@ A systematic search (as of April 2026) found no published retractions or formal 
 
 Use `suggest_cosmic_signature_exclusions()` from cancereffectsizeR or the analogous per-cancer-type lists in MutationalPatterns/SIGNAL to restrict the active signature set to those documented for the cancer type. This is the minimal, immediately actionable step.
 
-**Status:** Well-validated. Alexandrov 2020 (PCAWG) established the per-cancer-type expected signatures (Extended Data Figure 5). MuSiCal and SigProfilerAssignment both support this via a user-supplied allowed-signature list.
+**Status:** Well-validated. Alexandrov et al. [@Alexandrov2020] (PCAWG) established the per-cancer-type expected signatures (Extended Data Figure 5). MuSiCal and SigProfilerAssignment both support this via a user-supplied allowed-signature list.
 
 **Limitations:** Does not distinguish normal-tissue background from cancer contribution within an allowed signature. SBS1, SBS5, SBS18 are allowed for virtually every cancer type because they are genuinely present in both normal and tumor.
 
@@ -183,13 +183,13 @@ Fit the published normal-tissue trinucleotide spectrum for the relevant tissue (
 
 **Status:** Conceptually established but not yet a published, validated workflow. The scaling step requires either a tumor purity estimate or a prior on contamination fraction, which introduces its own uncertainty. For the cbioportal pipeline, where single-sample mutation counts are often low (panel/WES), the subtraction error could exceed the signal.
 
-**Practical feasibility for pipeline:** Medium. Requires obtaining per-tissue reference spectra from a source like Li 2021 supplemental tables or Xu 2025 / Moore 2022. The reference spectra exist; the pipeline engineering is tractable (a new Snakemake rule taking the sample's cancer type → look up tissue reference spectrum → subtract → decompose residual).
+**Practical feasibility for pipeline:** Medium. Requires obtaining per-tissue reference spectra from a source like Li 2021 supplemental tables or Xu 2025 / `Moore 2022`. The reference spectra exist; the pipeline engineering is tractable (a new Snakemake rule taking the sample's cancer type → look up tissue reference spectrum → subtract → decompose residual).
 
 ### Strategy 3: SBS1 LRR-bias as a normal-contamination indicator
 
-Yaacov et al. 2023 showed that SBS1 carries a late-replicating-region (LRR) enrichment bias in normal tissue but loses this bias in cancer. If per-sample replication-timing-stratified SBS1 counts are available (e.g., via SigProfilerTopography), comparing the LRR vs ERR distribution of SBS1 mutations can flag samples where SBS1 is behaving like a normal-tissue signal rather than a cancer signal.
+Yaacov et al. [@Yaacov2023] showed that SBS1 carries a late-replicating-region (LRR) enrichment bias in normal tissue but loses this bias in cancer. If per-sample replication-timing-stratified SBS1 counts are available (e.g., via SigProfilerTopography), comparing the LRR vs ERR distribution of SBS1 mutations can flag samples where SBS1 is behaving like a normal-tissue signal rather than a cancer signal.
 
-**Status:** Conceptually validated in Yaacov 2023 but not yet operationalized as a contamination filter. Requires whole-genome sequencing data for the topography analysis; not applicable to panel/WES data. Not directly usable in the current cbioportal pipeline without WGS inputs.
+**Status:** Conceptually validated in Yaacov et al. [@Yaacov2023] but not yet operationalized as a contamination filter. Requires whole-genome sequencing data for the topography analysis; not applicable to panel/WES data. Not directly usable in the current cbioportal pipeline without WGS inputs.
 
 **Practical feasibility for pipeline:** Low for current panel/WES inputs. Applicable in the future if WGS-based studies are added.
 
@@ -215,7 +215,7 @@ This is essentially what PCAWG did: extract signatures jointly from hundreds of 
 
 ## Replication-Timing Structure as a Decomposition Constraint
 
-From Yaacov et al. 2023 (see `paper:Yaacov2023`):
+From Yaacov et al. [@Yaacov2023] (see `paper:Yaacov2023`):
 
 - **SBS1** is LRR-enriched in normal tissue but this bias is lost in cancer. This is the strongest published topographic fingerprint distinguishing normal-tissue from cancer-origin SBS1.
 - **SBS5** is ERR-enriched in both normal and cancer — no distinguishing topographic signal.
@@ -261,7 +261,7 @@ The pipeline aggregates mutation calls from ~300 studies, many using tumor-only 
 
 ### Intervention 1: Cancer-type signature restriction for per-study decomposition
 
-**Action:** When signature decomposition is added as a pipeline step, use SigProfilerAssignment or MutationalPatterns with cancer-type-specific signature exclusion lists (COSMIC Extended Data Figure 5 / Alexandrov 2020). At a minimum, exclude signatures with no documented occurrence in the cancer type being analyzed.
+**Action:** When signature decomposition is added as a pipeline step, use SigProfilerAssignment or MutationalPatterns with cancer-type-specific signature exclusion lists (COSMIC Extended Data Figure 5 / Alexandrov et al. [@Alexandrov2020]). At a minimum, exclude signatures with no documented occurrence in the cancer type being analyzed.
 
 **Feasibility:** High. The exclusion lists are published and static. A lookup table (cancer_type → allowed_sbs_signatures) can be constructed from COSMIC documentation and stored in `data/`.
 
@@ -281,7 +281,7 @@ The pipeline aggregates mutation calls from ~300 studies, many using tumor-only 
 
 ### Intervention 3: Per-tissue normal-spectrum cosine similarity screen
 
-**Action:** For each study in the pipeline, compute the cosine similarity of the per-study aggregate 96-trinucleotide profile against two reference profiles: (a) the matched-cancer-type PCAWG reference spectrum and (b) the matched-normal-tissue spectrum (from Li 2021 / Xu 2025 or Moore 2022 per-tissue reference). Studies where the cosine similarity to the normal-tissue reference exceeds the similarity to the cancer-type reference are flagged as potential contamination outliers.
+**Action:** For each study in the pipeline, compute the cosine similarity of the per-study aggregate 96-trinucleotide profile against two reference profiles: (a) the matched-cancer-type PCAWG reference spectrum and (b) the matched-normal-tissue spectrum (from Li 2021 / Xu 2025 or `Moore 2022` per-tissue reference). Studies where the cosine similarity to the normal-tissue reference exceeds the similarity to the cancer-type reference are flagged as potential contamination outliers.
 
 **Feasibility:** Medium. Per-tissue reference spectra are available from Li 2021 supplemental tables and Xu 2025. Computing cosine similarity per study from the pipeline's existing per-study mutation call files is a straightforward Python step.
 
@@ -291,7 +291,7 @@ The pipeline aggregates mutation calls from ~300 studies, many using tumor-only 
 
 **Action:** Create a `normal_epithelial_risk_gene` annotation analogous to `ch_priority_gene`, populated from the Li 2021 32-gene normal-tissue driver list and the NOTCH1/TP53/PIK3CA/ARID1A solid-tissue inversion evidence. For each gene in this list, annotate which tissue types carry the risk (e.g., NOTCH1 risk in esophageal and bronchial studies; PIK3CA risk in endometrial studies).
 
-**Feasibility:** Medium. The gene-tissue risk mapping can be constructed manually from published data (Li 2021 supplemental, Martincorena 2018 esophageal data, Yokoyama 2019). Annotating the `gene_cancer_study_annotated.feather` with this flag requires a new column and a new script analogous to `annotate_ch.py`.
+**Feasibility:** Medium. The gene-tissue risk mapping can be constructed manually from published data (Li 2021 supplemental, Martincorena et al. [@Martincorena2018] esophageal data, Yokoyama 2019). Annotating the `gene_cancer_study_annotated.feather` with this flag requires a new column and a new script analogous to `annotate_ch.py`.
 
 **Expected impact:** Surfaces the most likely false-positive driver hits in biopsy-based or low-purity studies. Highest priority: NOTCH1 in ESCA studies.
 
@@ -311,7 +311,7 @@ The pipeline aggregates mutation calls from ~300 studies, many using tumor-only 
 
 1. **How large is the contamination effect quantitatively?** The CH literature documents a few percent false-positive rate for specific genes (DNMT3A ~64% of CH misattributions, ~8% overall variant-level rate). For solid-tissue normal-clone contamination, no analogous quantification exists at the study-aggregate level. It is plausible the effect is smaller (normal epithelial clone VAF is lower than CH clone VAF) but this is unverified.
 
-2. **Does the SBS1 LRR loss in cancer (Yaacov 2023) hold at the low mutation counts typical of panel/WES studies?** The finding is based on WGS data with thousands of mutations per sample. At panel-level mutation counts (tens to hundreds per sample), the test has insufficient power. This limits the direct applicability of the topographic contamination indicator.
+2. **Does the SBS1 LRR loss in cancer (Yaacov et al. [@Yaacov2023]) hold at the low mutation counts typical of panel/WES studies?** The finding is based on WGS data with thousands of mutations per sample. At panel-level mutation counts (tens to hundreds per sample), the test has insufficient power. This limits the direct applicability of the topographic contamination indicator.
 
 3. **Is the SIGNAL tissue-stratified signature matrix (used by MutationalPatterns) an adequate proxy for per-tissue background?** SIGNAL was constructed from cancer tissue signature profiles, not normal-tissue profiles. It stratifies signatures by tissue of origin but does not model the normal-cell contribution within a tumor biopsy. Whether SIGNAL's tissue specificity is sufficient to address unmatched-normal contamination is unclear.
 
@@ -357,7 +357,7 @@ Papers worth queuing for `/science:research-papers` full summarization:
 
 2. **Degasperi et al. 2020** (Signal/SIGNAL practical framework, Nature Cancer, PMID 32908195) — Introduces tissue-stratified signature matrices; directly relevant to implementing Intervention 1. MutationalPatterns incorporates SIGNAL; a full summary would clarify how the tissue stratification works and whether it covers the normal-tissue contamination use case.
 
-3. **Nguyen, Van Hoeck, Cuppen 2022** (CUPLR, Nature Communications, PMID 35817764) — TOO classifier based on WGS features including RMD and SBS. Summary needed to assess whether the approach can be adapted for panel/WES studies or whether a simpler cosine-similarity heuristic is more appropriate.
+3. **Nguyen, Van Hoeck, `Cuppen 2022`** (CUPLR, Nature Communications, PMID 35817764) — TOO classifier based on WGS features including RMD and SBS. Summary needed to assess whether the approach can be adapted for panel/WES studies or whether a simpler cosine-similarity heuristic is more appropriate.
 
 4. **Diaz-Gay et al. 2023** (SigProfilerAssignment, Bioinformatics, PMID 38096571) — Current Alexandrov-lab assignment tool; pipeline integration candidate. A summary would clarify the allowed-signature input interface and performance on WES/panel data.
 

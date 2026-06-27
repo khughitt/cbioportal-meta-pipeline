@@ -23,7 +23,7 @@ related: []
 
 - **Authors:** Welles Robinson, Roded Sharan, Mark D. M. Leiserson
 - **Year:** 2019
-- **Journal:** Bioinformatics, 35(14), i492–i500 (ISMB/ECCB 2019)
+- **Journal:** Bioinformatics, 35(14), `i492`-`i500` (ISMB/ECCB 2019)
 - **DOI/URL:** https://doi.org/10.1093/bioinformatics/btz340
 - **BibTeX key:** Robinson2019
 - **Source:** PDF
@@ -66,32 +66,32 @@ TCSM (Tumor Covariate Signature Model) is the first probabilistic method to dire
 
 ## Relevance
 
-This paper is directly relevant to **hypothesis h08** (agnostic covariate↔signature-exposure association; H08a positive-control recovery of known aetiologies):
+This paper is directly relevant to `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`, the agnostic covariate-signature-exposure association hypothesis and its positive-control recovery of known aetiologies:
 
-- **Methodological prior art for h08.** TCSM is the closest existing method to the agnostic association layer proposed in h08. It conditions signature-exposure priors on observed covariates rather than running post-hoc correlation, and provides a permutation significance test — both design choices that inform h08's association layer.
+- **Methodological prior art for the agnostic association hypothesis.** TCSM is the closest existing method to the proposed agnostic association layer. It conditions signature-exposure priors on observed covariates rather than running post-hoc correlation, and provides a permutation significance test — both design choices that inform the hypothesis's association layer.
 
-- **Positive-control recovery (H08a).** Results directly demonstrate the feasibility of the h08a positive control: within a single cancer type, conditioning on HR-pathway status recovers SBS3 (not SBS5) as the elevated signature, and cancer-type conditioning in the melanoma/lung cohort cleanly separates UV (SBS7) in SKCM from smoking (SBS4) and APOBEC in LUSC — exactly the known-etiology links h08 must recover to validate its discovery prong.
+- **Positive-control recovery.** Results directly demonstrate the feasibility of the positive-control arm: within a single cancer type, conditioning on HR-pathway status recovers SBS3 (not SBS5) as the elevated signature, and cancer-type conditioning in the melanoma/lung cohort cleanly separates UV (SBS7) in SKCM from smoking (SBS4) and APOBEC in LUSC — exactly the known-etiology links the agnostic association hypothesis must recover to validate its discovery prong.
 
-- **Covariate collinearity warning (relevant to h08 design).** The finding that smoking history and UV proxy added negligible held-out likelihood improvement beyond cancer type in the melanoma/lung cohort is a concrete caution: the h08 within-tissue design is essential, not optional. Cross-tissue associations are dominated by tissue-of-origin (Alternative R1 in h08).
+- **Covariate collinearity warning.** The finding that smoking history and UV proxy added negligible held-out likelihood improvement beyond cancer type in the melanoma/lung cohort is a concrete caution: the within-tissue design is essential, not optional. Cross-tissue associations are dominated by tissue-of-origin.
 
-- **Limitation for h08 purposes.** TCSM requires covariate specification at training time — it is not a post-hoc agnostic scan of an arbitrary covariate grid. h08's phenome-wide framing (all covariates × all factors) goes beyond TCSM's one-or-few-covariate parameterization. The h08 association layer will likely need a different architectural choice (e.g., simple linear/rank-based regression on pre-computed signature exposures vs. a full generative joint model), though TCSM's statistical testing strategy (permutation of covariate labels, BH correction) is reusable.
+- **Limitation for the agnostic scan.** TCSM requires covariate specification at training time — it is not a post-hoc agnostic scan of an arbitrary covariate grid. The project hypothesis's phenome-wide framing (all covariates × all factors) goes beyond TCSM's one-or-few-covariate parameterization. The association layer will likely need a different architectural choice (e.g., simple linear/rank-based regression on pre-computed signature exposures vs. a full generative joint model), though TCSM's statistical testing strategy (permutation of covariate labels, BH correction) is reusable.
 
-- **Expression covariates.** TCSM supports arbitrary real-valued covariates and demonstrates LST count (a continuous assay) as a valid covariate, supporting h08's plan to incorporate expression modules as numerical covariates alongside clinical fields.
+- **Expression covariates.** TCSM supports arbitrary real-valued covariates and demonstrates LST count (a continuous assay) as a valid covariate, supporting the plan to incorporate expression modules as numerical covariates alongside clinical fields.
 
 ## Project Framework Mapping
 
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
-| Tumor covariate x_i | Per-sample covariates in `clinical_sample.feather` / expression modules | TCSM formalizes what h08 proposes to scan |
-| Signature exposure θ_i | Per-sample signature exposure H (NMF) | h08 targets these as outcomes |
-| Covariate–exposure coefficient Γ | Association effect size in h08 scan | TCSM learns Γ jointly; h08 plans post-hoc regression |
-| Permutation significance test | FDR-controlled association layer (h08 design) | Permutation of covariate labels is the null strategy |
-| CC→TT dinucleotide count as UV proxy | Anatomic-site UV proxy in h08 pre-registration | Both use orthogonal mutation features as proxies |
+| Tumor covariate x_i | Per-sample covariates in `clinical_sample.feather` / expression modules | TCSM formalizes what `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` proposes to scan |
+| Signature exposure θ_i | Per-sample signature exposure `H` (NMF) | The agnostic association hypothesis targets these as outcomes |
+| Covariate–exposure coefficient Γ | Association effect size in `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` scan | TCSM learns Γ jointly; the project currently plans post-hoc regression |
+| Permutation significance test | FDR-controlled association layer (`hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` design) | Permutation of covariate labels is the null strategy |
+| CC→TT dinucleotide count as UV proxy | Anatomic-site UV proxy in `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` pre-registration | Both use orthogonal mutation features as proxies |
 | Cancer type covariate | `cancer_type` / `oncotree_code` in clinical data | Within-tissue conditioning corresponds to stratifying by these fields |
 
 ## Limitations
 
-- **Covariate must be pre-specified.** TCSM is not a phenome-wide scan; each run requires choosing covariates upfront. This limits scalability to h08's grid-scale design.
+- **Covariate must be pre-specified.** TCSM is not a phenome-wide scan; each run requires choosing covariates upfront. This limits scalability to the grid-scale design.
 - **No panel/targeted sequencing support.** All experiments use whole-exome data. Cross-study applicability to the heterogeneous panel data in the cBioPortal meta-analysis is unstated.
 - **Computational cost.** Multiple TCSM runs are required for model selection over K; the permutation test (10,000 samples per covariate×signature pair) adds further cost. Authors note this as a limitation and suggest Dirichlet-substituted models for faster closed-form significance.
 - **Logistic-normal parameterization.** Makes direct interpretation of Γ coefficients non-trivial (requires sampling), unlike a Dirichlet parameterization where concentration parameters are directly interpretable.
@@ -108,7 +108,7 @@ This paper is directly relevant to **hypothesis h08** (agnostic covariate↔sign
 
 ## Follow-up
 
-- Examine the Structural Topic Model (Roberts et al. 2016) as the upstream method; understand the variational EM implementation details for potential adaptation to the h08 association layer.
-- Compare TCSM's joint-model approach to the simpler post-hoc regression strategy (regress pre-computed NMF exposures on covariates) that h08 currently favors — does the joint model yield meaningfully better power on MC3-scale data?
+- Examine the Structural Topic Model (Roberts et al. 2016) as the upstream method; understand the variational EM implementation details for potential adaptation to the agnostic association layer.
+- Compare TCSM's joint-model approach to the simpler post-hoc regression strategy (regress pre-computed NMF exposures on covariates) that the project currently favors — does the joint model yield meaningfully better power on MC3-scale data?
 - Check whether any subsequent work extended TCSM to continuous covariate grids or to panel sequencing, which would be directly useful for the cBioPortal meta-analysis.
-- The melanoma/lung result (collinear cancer-type + smoking/UV covariates) is a useful benchmark: the h08 within-tissue design should be validated against this same dataset to confirm the collinearity finding using the planned association method.
+- The melanoma/lung result (collinear cancer-type + smoking/UV covariates) is a useful benchmark: the within-tissue design should be validated against this same dataset to confirm the collinearity finding using the planned association method.

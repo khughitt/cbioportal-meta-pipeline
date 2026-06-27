@@ -61,17 +61,17 @@ Primary results cited are from Venkatesh et al. Cell 161:803 (2015), Nature 549:
 
 ## Relevance
 
-### Connection to H1–H5 (project hypotheses about neural gene enrichment)
+### Connection to `H1`-`H5` (project hypotheses about neural gene enrichment)
 
 The project's observed enrichment of neural genes (NKAIN2, KCNIP4, TAFA2/FAM19A2, RIT2, CALN1, RBFOX1, LSAMP, SGCZ, OPCML) at the top of cross-cancer somatic mutation frequency rankings prompted five competing explanations:
 
-- **H1 (cancers hijack top-down neural circuitry):** This essay is the canonical primary literature for H1. It provides experimental proof-of-concept that gliomas exploit neuronal-activity signaling (NLGN3/ADAM10/PI3K, neuron-to-glioma synapses, gap-junction depolarization) to drive proliferation. It therefore strongly motivates H1 as a biologically real mechanism. However, the essay is focused exclusively on glioma (and briefly mentions prostate, pancreatic, skin, gastric cancers as extensions) — the identified driver is NLGN3, not the large-gene synaptic scaffold proteins (NKAIN2, KCNIP4, etc.) that dominate this project's mutation lists.
-- **H2 (via immune modulation):** Not addressed.
-- **H3 (aberrant developmental / oncofetal expression):** Indirectly relevant — the essay frames cancer neural hijacking as recapitulating mechanisms of normal neurodevelopment (NPC activity-regulation), and NLGN3 is described as upregulating synapse-related gene programs in glioma. This aligns with H3 conceptually, but the essay does not frame it as oncofetal re-expression.
-- **H4 (brain/CNS-cancer artifact):** The essay's focus on glioma makes H4 a live concern for this project: if the neural gene enrichment in cross-cancer mutation tables is driven by CNS tumor studies, the Venkatesh mechanism is the correct biology but the wrong cancer type. The essay does not address whether neural gene mutations confer selective advantage in non-CNS cancers. **This paper does not resolve H4; it amplifies the need to control for it.**
-- **H5 (misannotation):** Not addressed.
+- **`H1` (cancers hijack top-down neural circuitry):** This essay is the canonical primary literature for `H1`. It provides experimental proof-of-concept that gliomas exploit neuronal-activity signaling (NLGN3/ADAM10/PI3K, neuron-to-glioma synapses, gap-junction depolarization) to drive proliferation. It therefore strongly motivates `H1` as a biologically real mechanism. However, the essay is focused exclusively on glioma (and briefly mentions prostate, pancreatic, skin, gastric cancers as extensions) — the identified driver is NLGN3, not the large-gene synaptic scaffold proteins (NKAIN2, KCNIP4, etc.) that dominate this project's mutation lists.
+- **`H2` (via immune modulation):** Not addressed.
+- **`H3` (aberrant developmental / oncofetal expression):** Indirectly relevant — the essay frames cancer neural hijacking as recapitulating mechanisms of normal neurodevelopment (NPC activity-regulation), and NLGN3 is described as upregulating synapse-related gene programs in glioma. This aligns with `H3` conceptually, but the essay does not frame it as oncofetal re-expression.
+- **`H4` (brain/CNS-cancer artifact):** The essay's focus on glioma makes `H4` a live concern for this project: if the neural gene enrichment in cross-cancer mutation tables is driven by CNS tumor studies, the Venkatesh mechanism is the correct biology but the wrong cancer type. The essay does not address whether neural gene mutations confer selective advantage in non-CNS cancers. **This paper does not resolve `H4`; it amplifies the need to control for it.**
+- **`H5` (misannotation):** Not addressed.
 
-**Net assessment:** This paper strongly supports H1 as biologically feasible for glioma, but does not provide a data-driven definition of "neural genes" from somatic mutation data, does not address confounding by gene length or CNS study prevalence, and does not directly explain why NKAIN2, KCNIP4, and similar large-footprint synaptic scaffold genes would be selected for somatic mutation in pan-cancer cohorts. The NLGN3/ADAM10 axis it identifies is paracrine signaling, not a cell-autonomous somatic driver in the conventional oncogenomics sense.
+**Net assessment:** This paper strongly supports `H1` as biologically feasible for glioma, but does not provide a data-driven definition of "neural genes" from somatic mutation data, does not address confounding by gene length or CNS study prevalence, and does not directly explain why NKAIN2, KCNIP4, and similar large-footprint synaptic scaffold genes would be selected for somatic mutation in pan-cancer cohorts. The NLGN3/ADAM10 axis it identifies is paracrine signaling, not a cell-autonomous somatic driver in the conventional oncogenomics sense.
 
 ### Connection to this project's pipeline
 
@@ -83,12 +83,12 @@ The project's observed enrichment of neural genes (NKAIN2, KCNIP4, TAFA2/FAM19A2
 
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
-| Neuronal activity → NLGN3 secretion → glioma PI3K activation | H1: neural hijacking mechanism | Experimentally validated in glioma; not tested in pan-cancer somatic mutation context |
+| Neuronal activity → NLGN3 secretion → glioma PI3K activation | `H1`: neural hijacking mechanism | Experimentally validated in glioma; not tested in pan-cancer somatic mutation context |
 | NLGN3 as essential glioma dependency (KO = no tumor) | Functional selection for neural gene retention | Argues against pure length confound for NLGN3; does not address other genes in project's top list |
 | ADAM10 sheddase as therapeutic target | Not directly in pipeline scope | Potential therapeutic relevance |
-| Neuron-glioma synapse (AMPA receptors, gap junctions) | H1, H4 | Biologically real for glioma; H4 risk: pipeline's neural-gene enrichment may be CNS-study-driven |
-| Extension to prostate / pancreatic / skin / gastric cancer | Pan-cancer neural hijacking (H1 generalization) | Claims are secondary citations; experimental depth varies across cancer types |
-| Normal neurodevelopment recapitulation | H3 (oncofetal expression) | Framing overlap; essay does not operationalize H3 |
+| Neuron-glioma synapse (AMPA receptors, gap junctions) | `H1`, `H4` | Biologically real for glioma; `H4` risk: pipeline's neural-gene enrichment may be CNS-study-driven |
+| Extension to prostate / pancreatic / skin / gastric cancer | Pan-cancer neural hijacking (`H1` generalization) | Claims are secondary citations; experimental depth varies across cancer types |
+| Normal neurodevelopment recapitulation | `H3` (oncofetal expression) | Framing overlap; essay does not operationalize `H3` |
 
 ## Limitations
 
@@ -109,6 +109,6 @@ None. This is a narrative prize essay; no software, datasets, or atlases are rel
 - Read Venkatesh et al. Nature 549:533 (2017) — the primary NLGN3/ADAM10 paper with the genetic knockouts; key for the therapeutic target claim.
 - Check the status of ADAM10 inhibitor clinical trials in high-grade glioma (pediatric and adult) that this essay said were upcoming as of 2019.
 - For project relevance: check whether NLGN3 or ADAM10 appear in the project's observed top-mutated neural gene list — they are not in the current list (NKAIN2, KCNIP4, TAFA2/FAM19A2, RIT2, CALN1, RBFOX1, LSAMP, SGCZ, OPCML), which suggests the project's signal may originate from a different class of neural gene (large synaptic scaffold proteins vs. the signaling ligand/receptor axis studied here).
-- For H4 resolution: stratify the project's cross-cancer neural-gene mutation frequency analysis by whether CNS/glioma studies are included or excluded. If the enrichment disappears without CNS studies, H4 (brain-cancer artifact) is the leading explanation and this paper's biology is the correct context but the wrong scope.
-- For H1 generalization: read Magnon et al. Science 2013 (prostate/adrenergic nerves) and Renz et al. Cancer Cell 2018 (pancreatic/cholinergic nerves) to assess whether the neural-dependency mechanism generalizes beyond glioma in ways relevant to the project's pan-cancer mutation analysis.
+- For `H4` resolution: stratify the project's cross-cancer neural-gene mutation frequency analysis by whether CNS/glioma studies are included or excluded. If the enrichment disappears without CNS studies, `H4` (brain-cancer artifact) is the leading explanation and this paper's biology is the correct context but the wrong scope.
+- For `H1` generalization: read Magnon et al. Science 2013 (prostate/adrenergic nerves) and Renz et al. Cancer Cell 2018 (pancreatic/cholinergic nerves) to assess whether the neural-dependency mechanism generalizes beyond glioma in ways relevant to the project's pan-cancer mutation analysis.
 - Consider whether the neuron-to-glioma synapse model predicts any specific somatic mutation patterns: if glioma cells must express functional AMPA receptors and gap junctions, are mutations in these components under negative selection (loss-of-function mutations depleted) in glioma sequencing data? This would be testable in the project's pipeline.

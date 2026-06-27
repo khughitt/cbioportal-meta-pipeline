@@ -138,28 +138,28 @@ spans:
 
 ## Relevance
 
-This review is directly load-bearing for hypothesis **h08** (agnostic covariate-signature
+This review is directly load-bearing for **hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and** (agnostic covariate-signature
 association):
 
-1. **H08a positive-control specification (MMR/MSI arm).** The paper confirms the canonical
+1. **Positive-control specification (MMR/MSI arm).** The paper confirms the canonical
    MMR-failure signatures — SBS6, SBS15, SBS26, SBS44 (SNV), ID1, ID2, ID7 (indel) — as the
-   expected recovery targets when MSI status is used as a covariate in the h08 association scan.
+   expected recovery targets when MSI status is used as a covariate in the hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and association scan.
    It also names the gene-level indicators (MLH1 promoter methylation, MSH2/MSH6/PMS2 LOF) that
    should serve as the MMR-loss proxy covariate.
 
 2. **Multiple MMR signatures complicate a clean positive control.** The review notes ≥7 distinct
    SNV signatures link to MSI-H, with overlapping tissue and mechanistic contributions. This
    means a single "MMR covariate → single signature" recovery test is an oversimplification; the
-   h08 scan should expect a broad, multi-signature association with MSI rather than a sharp
+   scan should expect a broad, multi-signature association with MSI rather than a sharp
    single-factor signal.
 
 3. **MSI is a continuous, not binary, phenotype.** The paper's argument that Bethesda-based
    MSI-H/MSS classification is a coarse approximation is relevant to how MSI is encoded as a
-   covariate in the h08 scan. A continuous MSI score (e.g. from MSISensor) may perform better
+   covariate in the hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and scan. A continuous MSI score (e.g. from MSISensor) may perform better
    than the binary clinical label.
 
 4. **APOBEC–MMR coupling.** The mechanistic link (EXO1-generated ssDNA → APOBEC3 substrate)
-   provides a reverse-causation hypothesis for the APOBEC/SBS2-SBS13 arm of h08: APOBEC3A/B
+   provides a reverse-causation hypothesis for the APOBEC/SBS2-SBS13 arm of hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and: APOBEC3A/B
    expression is expected to associate with SBS2/13, but some of the SBS2/13 signal may track
    *with* partial MMR activity — making APOBEC3 expression and MMR status co-regulators rather
    than independent predictors.
@@ -170,7 +170,7 @@ association):
    samples.
 
 6. **Cross-study MMR signal heterogeneity.** Tissue-specific MSI loci and tissue-specific
-   MMR-associated signatures suggest that the within-tissue conditioning design of h08
+   MMR-associated signatures suggest that the within-tissue conditioning design of hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and
    (Prediction 4) is essential — pooling across tissues would blur the MMR covariate↔signature
    link.
 
@@ -179,12 +179,12 @@ association):
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
 | MSI-H / MSS binary label | `msi_status` clinical field post-t083 | Continuous MSISensor score preferred per paper; project ingests binary label |
-| MMR-linked SNV signatures (SBS6/15/26/44) | h08 positive-control MMR arm | Recovery target for within-tissue covariate scan |
+| MMR-linked SNV signatures (SBS6/15/26/44) | hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and positive-control MMR arm | Recovery target for within-tissue covariate scan |
 | Indel signatures ID1/ID2/ID7 | Not yet in pipeline scope | Would require indel-spectrum extraction step |
 | MSH2/MLH1/MSH6/PMS2 LOF | `ch_priority_gene` flag (partial overlap) | CH gene list is distinct; MMR gene LOF requires separate annotation |
 | EMAST / tetranucleotide instability | No current representation | Beyond binary MSI; future subtying |
 | Continuous MSI score | `hypermutation_score` (partial analog) | Hypermutator score is TMB-based, not MS-instability-based |
-| MMR–APOBEC coupling via EXO1 | h08 reverse-causation guard | APOBEC3 expression association with SBS2/13 may partly reflect MMR state |
+| MMR–APOBEC coupling via EXO1 | hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and reverse-causation guard | APOBEC3 expression association with SBS2/13 may partly reflect MMR state |
 
 ## Limitations
 
@@ -211,15 +211,15 @@ MSIseq, MMRDetect (ref 60/63 in paper).
 - Check current COSMIC v3.4 catalog for updated MMR signature set (SBS6/15/26/44 may have
   refined spectra or companion signatures added post-2022).
 - Investigate whether MSISensor continuous scores are available in cBioPortal clinical tables
-  for studies already downloaded — if so, encode as a continuous covariate for h08 rather than
+  for studies already downloaded — if so, encode as a continuous covariate for hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and rather than
   the binary MSI flag.
 - Consider indel signature extraction (ID1/ID2/ID7) as a complementary positive control arm
-  for h08 MMR recovery, alongside SNV signatures.
+  for hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and MMR recovery, alongside SNV signatures.
 - The APOBEC–MMR coupling via EXO1 (omikli mechanism) is a candidate alternative explanation
-  for the APOBEC arm of h08 and should be flagged as a reverse-causation candidate in the
+  for the APOBEC arm of hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and and should be flagged as a reverse-causation candidate in the
   pre-registration if the APOBEC arm is added.
-- Paper ref 52 (Meier 2018, Genome Res): MMR deficiency signatures in C. elegans and human
+- Paper ref 52: MMR deficiency signatures in C. elegans and human
   cancers — primary data source for cell-line MMR signature characterization; consider
   summarizing alongside this review.
-- Paper ref 63 (Degasperi 2020, Nat Cancer): practical framework for signature analysis with
-  inter-tissue variation; directly relevant to the h08 within-tissue conditioning design.
+- Paper ref 63, Degasperi et al. [@Degasperi2020]: practical framework for signature analysis with
+  inter-tissue variation; directly relevant to the hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and within-tissue conditioning design.

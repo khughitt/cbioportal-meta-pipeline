@@ -87,7 +87,7 @@ presented. Coverage spans:
    predictive of immunotherapy response in multiple cancers, partly via high TMB and partly via
    APOBEC3B upregulation. HRD-associated signatures (SBS3) guide PARP inhibitor use (synthetic
    lethality). POLE deficiency (SBS10) predicts immunotherapy sensitivity and is now used in
-   pretreatment triage. H3K27M mutations in histone H3 define a WHO tumour category (diffuse
+   pretreatment triage. H3K27M mutations in histone `H3` define a WHO tumour category (diffuse
    midline glioma) with OS < 1 year vs. >4 years for wild-type.
 
 6. **Liquid biopsy (ctDNA) extends biomarker reach.** CancerSEEK achieved 70% correct detection
@@ -102,20 +102,20 @@ presented. Coverage spans:
 
 ## Relevance
 
-**h08 (agnostic covariate–signature-exposure association; positive-control recovery of
+**hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and (agnostic covariate–signature-exposure association; positive-control recovery of
 UV/smoking/APOBEC/MMR):**
 
 - Section "Driver mutations and mutational signatures" + Box 1 directly enumerate the canonical
-  exposure→driver-hotspot links that form the positive-control arm of H08a:
+  exposure→driver-hotspot links that form the positive-control arm:
   UV→SBS7→BRAF V600E (melanoma), smoking→SBS4→KRAS G12C (lung), APOBEC→PIK3CA hotspot (pan-cancer),
   POLE→SBS10 (ultra-mutator), aflatoxin→TP53 R249S. These pairings are textbook confirmations
-  that H08's agnostic scan should recover unprompted.
+  that the hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and agnostic scan should recover unprompted.
 - The paper emphasises that the signature–driver relationship is **bidirectional**: signatures
   cause specific driver hotspots *and* driver mutations alter the signature landscape. This
-  bidirectionality is precisely the reverse-causation concern flagged in H08's alternative
+  bidirectionality is precisely the reverse-causation concern flagged in the hypothesis's alternative
   explanation R2. The review provides no resolution strategy beyond noting the conceptual
-  complexity — mediation logic (as stipulated in H08) is the appropriate guard.
-- The APOBEC3B upregulation → APOBEC signatures (SBS2/13) link explicitly validates H08's
+  complexity — mediation logic (as stipulated in the hypothesis) is the appropriate guard.
+- The APOBEC3B upregulation → APOBEC signatures (SBS2/13) link explicitly validates the hypothesis's
   Prediction 2: *APOBEC3A/B expression* should be the strongest correlate of SBS2/13, outranking
   clinical labels.
 - The clinical-biomarker section establishes that signature exposures are already
@@ -137,12 +137,12 @@ UV/smoking/APOBEC/MMR):**
 
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
-| Mutational signatures (COSMIC SBS) | `topic:signature-decomposition-unmatched-normal`; h08 exposure matrix H | Paper reviews NMF/COSMIC approach used in cBioPortal studies |
+| Mutational signatures (COSMIC SBS) | `topic:signature-decomposition-unmatched-normal`; hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and exposure matrix H | Paper reviews NMF/COSMIC approach used in cBioPortal studies |
 | Background mutation rate / mutability model | Hypermutator annotation pipeline; TMB denominators | The paper's probabilistic methods are conceptually equivalent to the pipeline's hypermutator score |
-| Driver vs. passenger mutation | `bailey2018_driver` flag; annotate_drivers.py overlay | Bailey 2018 (reviewed in passing) is the pipeline's canonical driver list |
-| Signature-linked driver hotspots (Box 1) | H08a positive-control set (UV→SBS7, smoking→SBS4, APOBEC→SBS2/13, POLE→SBS10) | Direct mapping; these hotspots are H08's ground truth |
+| Driver vs. passenger mutation | `bailey2018_driver` flag; annotate_drivers.py overlay | Bailey et al. [@Bailey2018] is the pipeline's canonical driver list |
+| Signature-linked driver hotspots (Box 1) | Positive-control set (UV→SBS7, smoking→SBS4, APOBEC→SBS2/13, POLE→SBS10) | Direct mapping; these hotspots are the hypothesis's ground truth |
 | ctDNA / liquid biopsy | Out of scope for current pipeline | Flagged as future avenue in the review |
-| Clonal haematopoiesis contamination | `ch_priority_gene` flag; Bolton 2020 list; `annotate_ch.py` | The pipeline's CH-aware annotation directly addresses the ctDNA false-positive problem |
+| Clonal haematopoiesis contamination | `ch_priority_gene` flag; Bolton et al. [@Bolton2020] list; `annotate_ch.py` | The pipeline's CH-aware annotation directly addresses the ctDNA false-positive problem |
 
 ## Limitations
 
@@ -152,7 +152,7 @@ UV/smoking/APOBEC/MMR):**
 - The "benchmark" section covers only a limited subset of driver prediction tools; newer
   methods published after mid-2022 are not included.
 - The gold-standard problem the paper identifies (Section "Constructing experimental datasets")
-  applies equally to the cBioPortal pipeline: our annotation relies on Bailey 2018 (a
+  applies equally to the cBioPortal pipeline: our annotation relies on Bailey et al. [@Bailey2018] (a
   consensus-based, not purely experimental, list) and COSMIC reference signatures — both
   acknowledged as imperfect benchmarks in this review.
 - Liquid-biopsy / ctDNA discussion is surface-level for our purposes; primary ctDNA literature
@@ -175,21 +175,21 @@ pipeline:
 ## Follow-up
 
 - **Immediate:** Box 1 and the signature-driver section provide a compact literature basis for
-  the H08a positive-control pre-registration (already committed 2026-05-30). No new reading
+  the hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and positive-control pre-registration (already committed 2026-05-30). No new reading
   is required on the positive-control set from this review alone.
 - **Questions raised:**
   - The paper notes that dN/dS estimation is confounded by multiple gene copies and recessive
-    deleterious mutations (citing Zapata 2016). Does our pipeline's use of per-sample allele
+    deleterious mutations (citing a paper in this review's reference list). Does our pipeline's use of per-sample allele
     frequency implicitly inherit this bias?
   - The benchmark failure mode (learning gene-level rather than variant-level discrimination,
     ~28 pp inflation) is directly relevant to any future attempt to score individual variants in
     our frequency tables. Worth pre-registering the distinction before building such a layer.
   - APOBEC3B upregulation as a predictor of immunotherapy response (refs 98–99 in paper):
     since the pipeline has expression data for some studies, testing APOBEC3A/B expression vs.
-    SBS2/13 exposure would be a concrete H08 positive-control experiment.
+    SBS2/13 exposure would be a concrete hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and positive-control experiment.
 - **Papers to read next (from this review's reference list):**
   - Robinson et al. 2019 (ref 28) — clinical/molecular covariates of mutational process activity
-    (direct H08 precedent — a PheWAS-style association of covariates with signature exposures).
+    (direct hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and precedent — a PheWAS-style association of covariates with signature exposures).
   - Brown et al. 2019 (ref 12) — background mutability and driver identification in cancer;
     dN/dS role of background processes.
   - Landrum et al. 2022 (ref 108) — current driver mutation predictors learn driver genes not

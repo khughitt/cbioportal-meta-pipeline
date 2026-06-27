@@ -50,7 +50,7 @@ signeR applies an empirical Bayesian treatment of Poissonian NMF to mutational s
 
 ## Key Findings
 
-**Simulation benchmarks vs LBA (Alexandrov 2013) and EMu (Fischer 2013):**
+**Simulation benchmarks vs LBA (Alexandrov et al. [@Alexandrov2013CellRep]) and EMu:**
 - All 500/500 signeR runs correctly estimated 4 signatures from a 4-signature synthetic dataset; only 51/500 EMu runs recovered the correct rank (449/500 found 3).
 - On accuracy (sum of squared errors between true and estimated P): signeR mean SSE = 0.095 (SD 0.016) vs EMu 0.23 (SD 0.007) with opportunities (P < 2.2e-16, Wilcoxon); signeR 0.044 (SD 0.029) vs LBA 0.203 (SD 0.012) without opportunities (P < 2.2e-16).
 - signeR estimates cluster at a single log-likelihood value; EMu estimates bifurcate across two modes (one for the 3- and one for the 4-signature runs), indicating sensitivity to initialization.
@@ -61,19 +61,19 @@ signeR applies an empirical Bayesian treatment of Poissonian NMF to mutational s
 
 ## Relevance
 
-**Directly relevant to h08 (agnostic covariate→signature-exposure association).**
+**Directly relevant to hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and (agnostic covariate→signature-exposure association).**
 
-1. **DES as a primitive h08 association test.** The Differential Exposure Score is conceptually the same operation h08 proposes (covariate group → signature exposure), implemented as Kruskal-Wallis over MCMC posterior samples rather than on point-estimate exposures. signeR's built-in DES can serve as a baseline or sanity-check for the h08 association layer, especially for binary/categorical clinical covariates (BRCA status, Lauren's subtype).
+1. **DES as a primitive association test.** The Differential Exposure Score is conceptually the same operation hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and proposes (covariate group → signature exposure), implemented as Kruskal-Wallis over MCMC posterior samples rather than on point-estimate exposures. signeR's built-in DES can serve as a baseline or sanity-check for the agnostic association layer, especially for binary/categorical clinical covariates (BRCA status, Lauren's subtype).
 
-2. **Positive-control recovery via DES.** The breast cancer APOBEC recovery (S1/S5 = COSMIC Sigs 2/13, DES significant for BRCA+ group) and HRD recovery (S3 = COSMIC Sig 3) replicate exactly the kind of "recovery of known aetiology from agnostic association" that H08a demands. The paper effectively demonstrates a proto-positive-control for H08a's APOBEC arm (APOBEC3 expression ↔ SBS2/13) even though it uses a binary germline-mutation group rather than mRNA expression.
+2. **Positive-control recovery via DES.** The breast cancer APOBEC recovery (S1/S5 = COSMIC Sigs 2/13, DES significant for BRCA+ group) and HRD recovery (S3 = COSMIC Sig 3) replicate exactly the kind of "recovery of known aetiology from agnostic association" that the positive-control arm demands. The paper effectively demonstrates a proto-positive-control for the APOBEC arm (APOBEC3 expression ↔ SBS2/13) even though it uses a binary germline-mutation group rather than mRNA expression.
 
-3. **Uncertainty-propagation in exposure estimation.** Because signeR propagates posterior uncertainty in E through the association test (applying Kruskal-Wallis to each MCMC sample), the DES is naturally calibrated against the uncertainty in exposure attribution. H08's association layer could benefit from the same principle if it relies on per-sample exposure point estimates from SigProfiler/deconstructSigs rather than a Bayesian method.
+3. **Uncertainty-propagation in exposure estimation.** Because signeR propagates posterior uncertainty in E through the association test (applying Kruskal-Wallis to each MCMC sample), the DES is naturally calibrated against the uncertainty in exposure attribution. The agnostic association layer could benefit from the same principle if it relies on per-sample exposure point estimates from SigProfiler/deconstructSigs rather than a Bayesian method.
 
-4. **Rank selection as a prerequisite for h08.** H08 requires de-novo extraction (q019) upstream of the association scan. signeR's BIC-based rank selection — robust to initialization, no extra approximation — is directly applicable for that de-novo step on the aggregated cBioPortal cohort.
+4. **Rank selection as a prerequisite for the agnostic association scan.** Hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and requires de novo extraction (question:0019-does-de-novo-extraction-on-the-aggregated-cohort-surface-factors-not-in) upstream of the association scan. signeR's BIC-based rank selection — robust to initialization, no extra approximation — is directly applicable for that de novo step on the aggregated cBioPortal cohort.
 
-5. **Sample classification for patient stratification.** The posterior classification output (kNN on MCMC exposure samples) suggests that signature-based patient groups are clinically predictive (gastric: 75% Lauren's concordance among confidently classified). This supports H08b's framing that novel covariate↔signature associations can surface actionable patient subgroups.
+5. **Sample classification for patient stratification.** The posterior classification output (kNN on MCMC exposure samples) suggests that signature-based patient groups are clinically predictive (gastric: 75% Lauren's concordance among confidently classified). This supports the discovery-arm framing that novel covariate↔signature associations can surface actionable patient subgroups.
 
-**Limitations for h08's scale:** signeR's computational design targets individual cohorts (21–114 samples). Its per-sample WGS assumption, MCMC cost scaling (O(K·N·G) per iteration), and R-package architecture are not designed for the thousands-of-sample, multi-study, panel-sequencing context of the cBioPortal meta-analysis. The successor tool signeR 2.0 (Drummond et al., 2023; `cite:Drummond2023`) directly extends the DES framework with survival and staging regression — more directly applicable to h08's multi-covariate design.
+**Limitations for the agnostic association hypothesis's scale:** signeR's computational design targets individual cohorts (21–114 samples). Its per-sample WGS assumption, MCMC cost scaling (O(K·N·G) per iteration), and R-package architecture are not designed for the thousands-of-sample, multi-study, panel-sequencing context of the cBioPortal meta-analysis. The successor tool signeR 2.0 [@Drummond2023] directly extends the DES framework with survival and staging regression — more directly applicable to the hypothesis's multi-covariate design.
 
 ## Project Framework Mapping
 
@@ -81,18 +81,18 @@ signeR applies an empirical Bayesian treatment of Poissonian NMF to mutational s
 |---|---|---|
 | Mutation count matrix M (K × G) | per-sample 96-channel SBS spectrum | Project aggregates counts to cancer×study level; per-sample spectra needed for signeR |
 | Signature matrix P (K × N) | COSMIC SBS reference W matrix | signeR can discover de-novo; project can refit against COSMIC |
-| Exposure matrix E (N × G) | per-sample signature exposures H | What h08 treats as outcome variable in its association scan |
+| Exposure matrix E (N × G) | per-sample signature exposures H | What hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and treats as outcome variable in its association scan |
 | Opportunity matrix W | trinucleotide frequencies per genome | Project does not currently compute this; WES panels require panel-callable BED |
-| Differential Exposure Score | h08 covariate→signature association | DES is the binary/ordinal special case; h08 extends to continuous covariates and expression |
-| Posterior sample classification | patient stratification by signature | h08b discovery application |
-| MCMC BIC rank selection | number-of-signatures hyperparameter | Required for q019 de-novo extraction on aggregated cohort |
+| Differential Exposure Score | Covariate→signature association | DES is the binary/ordinal special case; hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and extends to continuous covariates and expression |
+| Posterior sample classification | patient stratification by signature | Discovery-arm application |
+| MCMC BIC rank selection | number-of-signatures hyperparameter | Required for question:0019-does-de-novo-extraction-on-the-aggregated-cohort-surface-factors-not-in de novo extraction on aggregated cohort |
 
 ## Limitations
 
 - **Scale.** MCMC is computationally expensive per sample; not designed for thousands of panel-sequenced tumors. Rank selection requires one full MCMC-EM run per candidate N.
 - **Panel sequencing.** Opportunity matrix W assumes full trinucleotide frequency counts; not straightforward for targeted/panel data where many trinucleotides are uncallable. The project's panel-callable-size infrastructure (build_panel_callable_sizes) partially addresses this at cohort level.
 - **Rank selection assumes unimodal BIC.** Algorithm 2 (binary search) only guarantees finding the global maximum for unimodal BIC curves; multimodal curves (e.g., ambiguous data) may yield wrong rank.
-- **DES is univariate per clinical group.** It tests one grouping variable at a time via Kruskal-Wallis; not designed for multivariate, FDR-controlled, phenome-wide association across a covariate grid (what h08 proposes).
+- **DES is univariate per clinical group.** It tests one grouping variable at a time via Kruskal-Wallis; not designed for multivariate, FDR-controlled, phenome-wide association across a covariate grid (what hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and proposes).
 - **No continuous covariate regression.** DES requires categorical group labels; continuous covariates (age, TMB, mRNA module scores) require the signeR 2.0 extensions.
 - **Identifiability.** As with all NMF methods, P and E are only jointly identifiable up to permutation and scale; results depend on the BIC-selected rank.
 
@@ -103,12 +103,12 @@ signeR applies an empirical Bayesian treatment of Poissonian NMF to mutational s
 - **Input:** VCF files or prebuilt M matrix; computes trinucleotide context internally
 - **License:** Bioconductor (open source) [UNVERIFIED — exact CRAN/Bioconductor license field not checked]
 - **Hardware:** Standard desktop/laptop; no GPU requirement
-- **Successor:** signeR 2.0 (Drummond et al. 2023, BMC Bioinformatics) extends to survival and staging regression via DES
+- **Successor:** signeR 2.0 [@Drummond2023] extends to survival and staging regression via DES
 
 ## Follow-up
 
-- **signeR 2.0** (`cite:Drummond2023` already in references.bib): the direct extension with multi-covariate clinical regression — more applicable to h08's association layer.
-- **deconstructSigs** (Rosenthal et al. 2016): a refitting approach (E-only estimation given fixed P, N); relevant to h08's restricted-assignment arm on cBioPortal panel data.
-- **EMu** (Fischer et al. 2013): probabilistic NMF with EM; benchmark comparison target in this paper; less robust than signeR per simulations here.
-- **Shiraishi et al. 2015:** independent-feature NMF parametrization; different model class from the one signeR (and COSMIC) use.
-- **Questions for the project:** Does the cBioPortal aggregated cohort have sufficient WGS/WES sample counts per cancer type to run signeR de-novo extraction (q019)? What is the cost of MCMC-EM at N = 10–30 for cohorts of ~200–500 samples?
+- **signeR 2.0** [@Drummond2023]: the direct extension with multi-covariate clinical regression — more applicable to the agnostic association layer.
+- **deconstructSigs** [@Rosenthal2016]: a refitting approach (E-only estimation given fixed P, N); relevant to the restricted-assignment arm on cBioPortal panel data.
+- **EMu**: probabilistic NMF with EM; benchmark comparison target in this paper; less robust than signeR per simulations here.
+- **Shiraishi independent-feature NMF parametrization:** different model class from the one signeR (and COSMIC) use.
+- **Questions for the project:** Does the cBioPortal aggregated cohort have sufficient WGS/WES sample counts per cancer type to run signeR de novo extraction (question:0019-does-de-novo-extraction-on-the-aggregated-cohort-surface-factors-not-in)? What is the cost of MCMC-EM at N = 10–30 for cohorts of ~200–500 samples?

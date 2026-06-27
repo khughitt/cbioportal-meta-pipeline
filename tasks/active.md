@@ -940,12 +940,3 @@ Acquire the reference resources backing the data-driven neural-gene score (t216)
 - created: 2026-06-27
 
 Reduce the remaining prose_lints warnings from science validate: bare-author-year, short-form-ids, and unsupported-citation-syntax. Work in small batches by file family; prefer canonical citation and entity reference syntax rather than broad search/replace, and rerun science validate after each batch.
-
-## [t232] Audit and resolve Science unverified markers
-- priority: P2
-- status: active
-- aspects: []
-- group: science-health-cleanup
-- created: 2026-06-27
-
-Review the 50 [UNVERIFIED] warnings from science validate/refs check. For each marker, either verify the claim against the cited source and remove or reword the marker, downgrade unsupported claims to explicit uncertainty, or create a targeted follow-up task when verification requires new source acquisition. Preserve uncertainty labels when they are epistemically meaningful.

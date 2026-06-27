@@ -31,12 +31,13 @@ mutation-count constraint, `question:0018`).
 
 ## Access and Scope
 
-- Accessions: syn21226493 (Synapse BPC project landing) [UNVERIFIED — confirm at verification]
+- Accessions: syn21226493 (Synapse BPC project landing)
 - Source URL: https://www.synapse.org/Synapse:syn21226493
 - Access: controlled (Synapse account + AACR GENIE BPC Data Use Agreement); CC-BY-NC-4.0
 - Organism/population: Homo sapiens
 - Modality: multi-institution targeted-panel sequencing + PRISSMM-curated EHR clinical data
-- Sample size: per-cohort releases; total [UNVERIFIED]
+- Sample size: per-cohort releases; use the release-specific Synapse tables or AACR cohort pages
+  rather than a single total.
 
 ## Connections to Project
 

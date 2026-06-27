@@ -33,7 +33,7 @@ The h08 method note currently lists the positive-control map as UV/SBS7, smoking
 ## Current Evidence
 
 - `paper:Machado2022` grounds SBS9/SBS7a as tissue-of-origin processes in normal lymphocytes — SBS9 should be an expected positive in DLBCL/lymphoid strata, not a novel hit.
-- `paper:Ji2023` reports SBS54 outperforming established dMMR signatures at MSI-vs-MSS discrimination; however SBS54 has historically been flagged as possible germline contamination in some COSMIC notes [UNVERIFIED].
+- `paper:Ji2023` reports SBS54 outperforming established dMMR signatures at MSI-vs-MSS discrimination; however SBS54's COSMIC provenance and possible germline-contamination flags should be checked against the exact COSMIC version loaded by the pipeline before inclusion.
 - `paper:Owusu2025` experimentally resolves the seven COSMIC MMRd signatures and flags SBS57 as an SNP-indel alignment artefact — informs which MMR signatures are real discriminators.
 
 ## Thoughts

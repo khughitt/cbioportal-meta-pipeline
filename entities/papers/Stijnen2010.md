@@ -100,12 +100,12 @@ rma.glmm(measure = "PLO",
   `lme4::glmer` (with `family = binomial`).
 - **SAS:** `PROC NLMIXED` (the paper's reference implementation).
 - **Stan / brms:** `brms::brm(k | trials(n) ~ 1 + (1 | study), family = binomial)`.
-- **Stata:** `metaprop` (Nyaga 2014) with `random` and `ftt`/`logit`/`glmm` options.
+- **Stata:** `metaprop` (Nyaga 2014 [@Nyaga2014]) with `random` and `ftt`/`logit`/`glmm` options.
 
 ## Follow-up
 
 - **Lin & Xu 2020** — contemporary review that cites this as the recommended pooling method.
-- **Nyaga 2014** — Stata wrapper that operationalises Stijnen's GLMM for single-proportion
+- **Nyaga 2014 [@Nyaga2014]** — Stata wrapper that operationalises Stijnen's GLMM for single-proportion
   meta-analysis.
 - For this project: Stijnen's paper is the citation anchor for the planned
   `gene_cancer_study_pooled.feather` output. Add a `random-intercept binomial GLMM` code

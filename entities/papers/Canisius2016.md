@@ -110,7 +110,7 @@ matrix aggregated across heterogeneous studies (different panels, different coho
 
 ## Follow-up
 
-- Read Mina 2020 (SELECT) next for the covariate-aware extension.
+- Read Mina 2020 [@Mina2020] (SELECT) next for the covariate-aware extension.
 - Read van de Haar 2019 for the caution story on naive epistasis detection.
 - Decide between DISCOVER (closed-form) and WeSME (sampling-based) as the project's primary
   null model before implementing the cross-study co-occurrence rule.

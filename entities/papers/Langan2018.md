@@ -86,8 +86,8 @@ available in the published supplementary material.
 
 ## Follow-up
 
-- **Viechtbauer 2010** — tool-of-record paper for `metafor`.
-- **IntHout 2016** — HKSJ practical guidance + prediction intervals.
+- **Viechtbauer 2010 [@Viechtbauer2010]** — tool-of-record paper for `metafor`.
+- **IntHout 2016 [@IntHout2016]** — HKSJ practical guidance + prediction intervals.
 - **Stijnen 2010** — what to do when per-study counts are too sparse for normal-approximate
   within-study variances.
 - For this project: add a `gene_cancer_study_pooled.feather` output that carries

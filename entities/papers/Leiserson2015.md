@@ -90,5 +90,5 @@ exclusivity across studies?" CoMEt's exact-test machinery is the template.
 
 ## Follow-up
 
-- Review Leiserson 2016 (WExT) for the weighted variant that bridges CoMEt and WeSME.
+- Review Leiserson 2016 [@Leiserson2016] (WExT) for the weighted variant that bridges CoMEt and WeSME.
 - Defer CoMEt adoption until the pair-level DISCOVER/WeSME layer is in place.

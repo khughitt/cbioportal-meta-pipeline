@@ -84,7 +84,7 @@ Yoshida explicitly identifies a set of driver mutations that occur **frequently 
 - **High in normal, lower in cancer**: NOTCH1 in skin, esophagus, and bronchial tissues. In a mouse model, *Notch1*-mutant clones in normal esophageal epithelium **inhibited the proliferation of cancer cells**, suggesting a tumorigenesis-suppressive role.
 - **Higher in cancer than normal**: TP53 across tissues, FGFR3 in bladder, PTEN in endometrium.
 
-This normal-vs-cancer asymmetry is framed as evidence that clonal remodeling of normal tissue does not straightforwardly predict malignancy. (Specific quantitative normal-vs-cancer frequency ratios — e.g., "NOTCH1 ~66% of normal esophageal clones vs. ~15% of tumors" — are not stated in this review text; those figures belong to the cited primary literature such as Martincorena 2018 / Yokoyama 2019.)
+This normal-vs-cancer asymmetry is framed as evidence that clonal remodeling of normal tissue does not straightforwardly predict malignancy. (Specific quantitative normal-vs-cancer frequency ratios — e.g., "NOTCH1 ~66% of normal esophageal clones vs. ~15% of tumors" — are not stated in this review text; those figures belong to the cited primary literature such as Martincorena 2018 [@Martincorena2018] / Yokoyama 2019.)
 
 ### Clonal hematopoiesis (CHIP)
 
@@ -162,6 +162,6 @@ Not applicable — this is a review article; no software, datasets, or models ar
 
 - Read Yoshida et al. 2020 (*Nature*) — tobacco smoking and bronchial epithelial mutations — the primary study most directly relevant to lung cancer cohorts in the pipeline.
 - Read Yoshida et al. 2025 (*Nature*) — gastric epithelium somatic mutation landscape — directly relevant to stomach cancer studies in cBioPortal.
-- Revisit Martincorena 2017 (*Science*) on dN/dS ≈ 1 in normal tissues, which Yoshida's review likely synthesizes.
+- Revisit Martincorena 2017 [@Martincorena2017] (*Science*) on dN/dS ≈ 1 in normal tissues, which Yoshida's review likely synthesizes.
 - Consider: does the normal-tissue driver discordance (NOTCH1 in esophagus) produce detectable signal in our esophageal squamous vs adenocarcinoma frequency outputs? A spot-check comparing NOTCH1 ranks across esophageal study types would test this.
 - Track forthcoming quantitative epimutation studies; if tissue-specific epimutation rates become available, they could improve the background-model for driver-negative clonal contamination.

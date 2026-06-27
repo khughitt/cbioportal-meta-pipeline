@@ -104,5 +104,5 @@ FoundationOne vs GENIE assays).
   (analogous to the existing `run_dndscv.R`).
 - Compare FishHook-style per-gene background correction to the simpler
   UniProt-protein-length normalization the pipeline currently uses.
-- Cross-reference Lawrence 2014 (MutSigCV) for the conceptual predecessor of covariate-
+- Cross-reference Lawrence 2014 [@Lawrence2014] (MutSigCV) for the conceptual predecessor of covariate-
   aware background modeling.

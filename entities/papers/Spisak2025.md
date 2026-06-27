@@ -126,7 +126,7 @@ was used to infer directionality consistent with TLS extension errors.
 
 ## Relevance
 
-**Direct relevance to h08 (agnostic covariate ↔ signature-exposure association).**
+**Direct relevance to hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and (agnostic covariate ↔ signature-exposure association).**
 
 - **Positive-control framing (H08a):** This paper provides the mechanistic justification for
   why smoking→SBS4 and UV→SBS7 should correlate with SBS5 burden, not merely with their own
@@ -167,7 +167,7 @@ was used to infer directionality consistent with TLS extension errors.
 |---|---|---|
 | SBS5 "funneling" signature | COSMIC SBS5 (restricted assignment output) | Directly the same; SBS5 attribution from pipeline will carry this interpretation |
 | Damage-specific signatures (SBS4, SBS7, SBS18…) | COSMIC signatures used in H08a positive controls | SBS4 (smoking→lung), SBS7 (UV→skin) are pre-registered H08a arms |
-| Semipartial R² of damage-specific sig on SBS5 | Signature exposure association statistic | Analogous to h08's per-sample regression of signature exposures on covariates |
+| Semipartial R² of damage-specific sig on SBS5 | Signature exposure association statistic | Analogous to the hypothesis:0007 per-sample regression of signature exposures on covariates |
 | NER repair rate r_NER as genomic covariate | Not currently in pipeline | Would require external NER rate maps |
 | TLS vs repair-error mode by cell type | Not modeled in pipeline | Relevant when interpreting inter-study SBS5 variance |
 | Polζ as funneling polymerase | Not currently used | Downstream mechanistic interpretation only |

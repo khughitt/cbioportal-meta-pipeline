@@ -122,7 +122,7 @@ No software or model released with this paper. The GraphPad Prism 5 project file
 
 - **ArmitageDoll1954** — original multistage carcinogenesis model using the power-law; Belikov explicitly extends/replaces this framework.
 - **Nordling 1953** — companion early multistage paper.
-- Compare Belikov's k values to driver-gene counts from Bailey 2018 (Table S1 already in this project) to test whether incidence-derived k and consensus driver counts per cancer type are correlated.
+- Compare Belikov's k values to driver-gene counts from Bailey 2018 [@Bailey2018] (Table S1 already in this project) to test whether incidence-derived k and consensus driver counts per cancer type are correlated.
 - Investigate whether cancer types with low k (melanoma k=4, brain k=4) indeed have fewer driver mutations on average in our cBioPortal data versus high-k types (prostate k=41, lung k=30).
 - Examine whether Belikov's b (inter-event interval) correlates with median age at diagnosis — this is a direct test of the model's implied relationship between b, k, and peak incidence age.
 - Consider whether the "maximal populational susceptibility" parameter (A/1000) could serve as a baseline cancer-type prevalence prior for our cross-study meta-analysis.

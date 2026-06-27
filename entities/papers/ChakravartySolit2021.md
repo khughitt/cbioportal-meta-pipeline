@@ -138,7 +138,7 @@ Natural next-reads for our pipeline, based on the review's declared scope:
 
 - **Zehir et al. 2017** (MSK-IMPACT 10,000 cohort) — concrete instance of the
   matched-normal, panel-based paradigm the review advocates.
-- **AACR GENIE Consortium 2017 (and subsequent releases)** — multi-institution
+- **AACR GENIE Consortium 2017 [@AACRGENIEConsortium2017] (and subsequent releases)** — multi-institution
   aggregation of the panel class the review describes.
 - **Pugh et al. 2022** (AACR GENIE Biopharma Collaborative / analytical
   comparability work) — the harmonisation layer the review implies is needed
@@ -148,8 +148,8 @@ Natural next-reads for our pipeline, based on the review's declared scope:
 - **cfDNA / MSK-ACCESS, Guardant360, FoundationOne Liquid CDx** primary
   papers — concrete realisations of the "ultra-sensitive cfDNA" category the
   abstract highlights.
-- **Clonal-hematopoiesis / panel-filtering work** (e.g. Ptashkin 2018,
-  Razavi 2019) — fill the CH-filtering gap if the review itself treats it
+- **Clonal-hematopoiesis / panel-filtering work** (e.g. Ptashkin 2018 [@Ptashkin2018],
+  related cfDNA filtering studies) — fill the CH-filtering gap if the review itself treats it
   only at a high level.
 
 <!-- UNVERIFIED: the specific reference set the review forward-cites could not

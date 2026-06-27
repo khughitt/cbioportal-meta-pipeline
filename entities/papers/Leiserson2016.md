@@ -18,7 +18,7 @@ related:
 
 - **Authors:** Leiserson MDM, Reyna MA, Raphael BJ
 - **Year:** 2016
-- **Journal:** Bioinformatics 32(17):i736-i745
+- **Journal:** Bioinformatics 32(17):736-745
 - **DOI:** 10.1093/bioinformatics/btw462
 - **PMID:** 27587696
 - **BibTeX key:** Leiserson2016

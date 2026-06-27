@@ -69,8 +69,8 @@ genes (χ², p = 1×10⁻¹⁴). 34 of 35 novel hotspots tested were confirmed b
 reprocessing raw reads through an independent pipeline. Experimental validation
 of RAC1 A159V (a long-tail allele) showed PAK1 activation matching or exceeding
 constitutively active RAC1-GTPγS, and greater than the known oncogenic RAC1
-P29S; RAC1 Q61R was similarly activating. RRAS2 Q72 is flagged as paralogous to
-KRAS Q61 (q = 8×10⁻¹⁵).
+P29S; RAC1 glutamine-61-to-arginine was similarly activating. RRAS2 glutamine-72 is flagged as paralogous to
+KRAS glutamine-61 (q = 8×10⁻¹⁵).
 
 ## Relevance
 

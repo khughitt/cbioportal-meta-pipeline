@@ -31,7 +31,7 @@ dataset_usage:
 
 Establishes the COSMIC v3 reference catalog of mutational signatures by re-analyzing
 ~24k tumors with the SigProfiler NMF pipeline, expanding beyond the SBS-only v2 catalog
-(Alexandrov 2013) to include doublet-base substitutions (DBS) and small insertions/deletions
+(Alexandrov 2013 [@Alexandrov2013Nature]) to include doublet-base substitutions (DBS) and small insertions/deletions
 (ID), and providing curated etiological annotations for each signature.
 
 ## Methods

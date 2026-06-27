@@ -94,10 +94,10 @@ published in-vitro mutational signature studies.
 
 ## Relevance
 
-**h08 (agnostic covariate-signature association; H08a positive-control recovery; H08b discovery):**
+**hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and (agnostic covariate-signature association; H08a positive-control recovery; H08b discovery):**
 
 The paper provides direct experimental evidence that global hypomethylation is not itself a
-mutational process generating characteristic SBS patterns. This is directly relevant to h08
+mutational process generating characteristic SBS patterns. This is directly relevant to hypothesis:0007
 in two ways:
 
 - **Null for a candidate confound (H08a/b):** The cross-study meta-analysis pipeline holds
@@ -158,4 +158,4 @@ when characterising studies in the pipeline.
   in MSI-high colorectal cancer (MLH1 promoter methylation silencing)? That mechanistic link
   is distinct from hypomethylation itself being mutagenic.
 - Are there COSMIC signatures attributed to CIN-related processes (e.g., SV signatures) that
-  might show up as positively associated with DNMT-expression modules in an h08 scan?
+  might show up as positively associated with DNMT-expression modules in a hypothesis:0007 scan?

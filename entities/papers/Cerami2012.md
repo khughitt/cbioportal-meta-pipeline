@@ -88,6 +88,6 @@ portals, IGV, the UCSC Cancer Genomics Browser, and IntOGen.
 ## Follow-up
 
 - Gao2013 — companion paper on integrative analysis and API.
-- Authors' stated roadmap (targeted for Q3 2012): add >=5 additional cancer types
+- Authors' stated roadmap (targeted for the third quarter of 2012): add >=5 additional cancer types
   and >1,000 samples, full miRNA support, interactive OncoPrints, batch dataset
   download, per-study summary reports, and expanded cross-cancer query capabilities.

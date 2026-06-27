@@ -74,7 +74,7 @@ pipeline:
 - Lineage stratification → already implicit via `cancer` / `cancer_detailed`; make explicit.
 - Cohort-composition effects → the pipeline runs across **many independent studies**;
   cross-study reproducibility assessment is a natural output.
-- Functional priors → Sanchez-Vega 2018 pathways already processed.
+- Functional priors -> Sanchez-Vega 2018 [@SanchezVega2018] pathways already processed.
 
 ## Project Framework Mapping
 

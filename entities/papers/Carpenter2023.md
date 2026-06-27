@@ -70,13 +70,13 @@ This paper provides the first direct, controlled comparison of the mutagenic act
 
 ## Relevance
 
-This paper is directly relevant to **h08** (agnostic covariate↔signature-exposure association; positive-control recovery of APOBEC3 aetiology):
+This paper is directly relevant to **hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and** (agnostic covariate↔signature-exposure association; positive-control recovery of APOBEC3 aetiology):
 
 - **H08a positive control, APOBEC3 arm.** H08a requires that an agnostic covariate association recovers APOBEC3 expression↔SBS2/13 within-tissue without being told the link. This study provides the gold-standard mechanistic warrant that A3A and A3B expression are genuine causal drivers of SBS2/SBS13, not mere correlates. It calibrates what "signal" to expect: A3A expression is a stronger per-unit predictor of YTCW-biased APOBEC3 mutations than A3B, while both contribute to the composite signal in real tumors. The H08a arm must therefore either test *A3A* and *A3B* mRNA jointly or use a combined APOBEC3A/B expression score to avoid underpowering on A3B alone.
 
 - **Sub-signature resolution.** The YTCW vs. RTCW distinction between A3A and A3B means that the composite SBS2+SBS13 bucket in COSMIC is a mixture of (at least) two enzymatic sources. Any attempt in this project to attribute SBS2/13 exposure to a single covariate should account for this composite nature; pentanucleotide or YTCW/RTCW fractionation provides finer resolution.
 
-- **A3A expression level caveat.** The study notes that exogenous A3A in HAP1-TK-M9 is ~5-fold over breast-tumor physiological levels; A3B expression approximates in vivo levels. For the h08 expression↔signature association, the relevant predictor is endogenous mRNA expression in the tumor being decomposed — the mechanistic dose-response established here justifies using endogenous A3A/B mRNA, while cautioning that in the model system A3A's apparent mutagenic potency may be inflated relative to in vivo conditions.
+- **A3A expression level caveat.** The study notes that exogenous A3A in HAP1-TK-M9 is ~5-fold over breast-tumor physiological levels; A3B expression approximates in vivo levels. For the hypothesis:0007 expression↔signature association, the relevant predictor is endogenous mRNA expression in the tumor being decomposed — the mechanistic dose-response established here justifies using endogenous A3A/B mRNA, while cautioning that in the model system A3A's apparent mutagenic potency may be inflated relative to in vivo conditions.
 
 - **Cross-study mutation meta-analysis context.** In the cbioportal pipeline, per-study APOBEC3 mutation loads (TCW-context C→T/G ratios) are aggregated across studies. The finding that most breast tumors carry intermediate YTCW percentages attributable to combinatorial A3A+A3B activity means that study-level APOBEC3 signal will reflect whichever enzyme(s) are active in the dominant clones captured at sequencing — a source of inter-study variance not captured by a single COSMIC SBS2 or SBS13 attribution.
 

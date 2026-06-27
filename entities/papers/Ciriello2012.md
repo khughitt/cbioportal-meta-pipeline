@@ -74,7 +74,7 @@ method (Dendrix, CoMEt, MEGSA, TiMEx, WeSME, SELECT) either builds on or benchma
 
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
-| Functional-interaction network prior | Sanchez-Vega 2018 pathway mappings | Already in pipeline as `process_sanchez_vega_pathways.py`. |
+| Functional-interaction network prior | Sanchez-Vega 2018 [@SanchezVega2018] pathway mappings | Already in pipeline as `process_sanchez_vega_pathways.py`. |
 | Subnetwork-level ME test | Module-level extension of the pair-level layer | Future work. |
 | Permutation null | Replaced / supplemented by DISCOVER / WeSME | Method has since been superseded in precision but not in framing. |
 
@@ -94,6 +94,6 @@ method (Dendrix, CoMEt, MEGSA, TiMEx, WeSME, SELECT) either builds on or benchma
 ## Follow-up
 
 - Read Babur 2015 (Mutex) for the next-generation network-aware variant.
-- Read Leiserson 2015 (CoMEt) for the set-level extension.
+- Read Leiserson 2015 [@Leiserson2015] (CoMEt) for the set-level extension.
 - Use MEMo primarily as the *conceptual citation* in any project write-up, and DISCOVER /
   SELECT as the operational methods.

@@ -87,5 +87,5 @@ used by the entire Raphael-group lineage (Multi-Dendrix, CoMEt, WExT).
 
 ## Follow-up
 
-- Read Leiserson 2013 (Multi-Dendrix) for the joint-multi-pathway extension.
-- Read Leiserson 2015 (CoMEt) for the exact-test replacement of the permutation step.
+- Read Leiserson 2013 [@Leiserson2013] (Multi-Dendrix) for the joint-multi-pathway extension.
+- Read Leiserson 2015 [@Leiserson2015] (CoMEt) for the exact-test replacement of the permutation step.

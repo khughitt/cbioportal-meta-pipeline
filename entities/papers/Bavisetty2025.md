@@ -91,6 +91,6 @@ This paper is primarily a conceptual/mechanistic contribution to gene regulatory
 ## Follow-up
 
 - Read the Park et al. (2023) meta-analysis of 122 biological BN models cited as reference [10] — this is the dataset underlying the key empirical claims.
-- Consider whether the canalizing depth / bias framing maps onto Bailey 2018 driver gene classes: do Bailey drivers tend to regulate high-bias, nested-canalizing circuits?
+- Consider whether the canalizing depth / bias framing maps onto Bailey 2018 [@Bailey2018] driver gene classes: do Bailey drivers tend to regulate high-bias, nested-canalizing circuits?
 - The Huang et al. (2005) paper on cell fates as high-dimensional attractor states (Phys Rev Lett 94:128701) is foundational context cited here.
 - Compare with other canalization papers in this batch for synthesis.

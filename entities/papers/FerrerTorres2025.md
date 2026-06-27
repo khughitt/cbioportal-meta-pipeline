@@ -69,17 +69,17 @@ Jointly extracting mutational signatures from single-base substitution (SBS) and
 
 ## Relevance
 
-**Direct relevance to h08 (agnostic covariate-to-signature association; positive-control recovery).**
+**Direct relevance to hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and (agnostic covariate-to-signature association; positive-control recovery).**
 
-- **Positive-control recovery (H08a):** This paper shows that the HRd-associated SBS3 signature can be substantially refined by multimodal extraction, yielding sub-signatures with cleaner links to BRCA1 and BRCA2 genotypes. For the h08 positive-control design (recovering UV/smoking/APOBEC/MMR links agnostically), the corollary is that SBS+ID joint inference may be necessary to recover clean HRd↔BRCA associations — a SBS-only agnostic scan on this project's mutation tables would likely conflate m-SBS3a, m-SBS3b, SBS5, SBS8, SBS39, and SBS40 into a messy factor. This is directly relevant to q018 (feasibility of downstream signature extraction on the cBioPortal aggregated cohort): if the pipeline only captures SBS, clinically important HRd sub-signatures will be inaccessible.
+- **Positive-control recovery (H08a):** This paper shows that the HRd-associated SBS3 signature can be substantially refined by multimodal extraction, yielding sub-signatures with cleaner links to BRCA1 and BRCA2 genotypes. For the hypothesis:0007 positive-control design (recovering UV/smoking/APOBEC/MMR links agnostically), the corollary is that SBS+ID joint inference may be necessary to recover clean HRd↔BRCA associations — a SBS-only agnostic scan on this project's mutation tables would likely conflate m-SBS3a, m-SBS3b, SBS5, SBS8, SBS39, and SBS40 into a messy factor. This is directly relevant to question:0018 (feasibility of downstream signature extraction on the cBioPortal aggregated cohort): if the pipeline only captures SBS, clinically important HRd sub-signatures will be inaccessible.
 
 - **Modality gap.** The current cbioportal pipeline ingests somatic SNV/indel calls but the cross-study aggregation (`gene_cancer_study.feather`) operates at gene-mutation level, not at trinucleotide-context mutation-count level required for SBS+ID NMF. Running multimodal signature extraction would require per-sample SBS96+ID83 mutation count matrices, which exist only for WGS/WES studies in cBioPortal — not panel studies.
 
-- **SBS39 / confounding signatures.** The paper provides strong evidence that SBS39 is *not* an HRd signature and is confounded with SBS3 in unimodal analyses. This directly informs the h08 positive-control design: any association of an SBS39-like factor with BRCA1/BRCA2 annotations should be treated as a confounding artifact rather than a true HRd link.
+- **SBS39 / confounding signatures.** The paper provides strong evidence that SBS39 is *not* an HRd signature and is confounded with SBS3 in unimodal analyses. This directly informs the hypothesis:0007 positive-control design: any association of an SBS39-like factor with BRCA1/BRCA2 annotations should be treated as a confounding artifact rather than a true HRd link.
 
 - **MMRd positive control (H08a arm 3).** The colorectal cancer MMRd analysis demonstrates that multimodal m-SBS44+ID7 is more cleanly associated with MMRd than standard SBS signatures. For the H08a MMR-loss/MSI↔SBS6/15/26 positive-control arm, indel information (ID signatures) may need to be incorporated to achieve reliable recovery in practice.
 
-- **Refitting vs de novo.** The demonstration that MuSiCal refitting onto a pre-built multimodal catalog achieves comparable results to de novo extraction is practically important for the h08 implementation, where per-study sample sizes may be too small for de novo NMF but refitting onto a reference catalog is feasible.
+- **Refitting vs de novo.** The demonstration that MuSiCal refitting onto a pre-built multimodal catalog achieves comparable results to de novo extraction is practically important for the hypothesis:0007 implementation, where per-study sample sizes may be too small for de novo NMF but refitting onto a reference catalog is feasible.
 
 ## Project Framework Mapping
 
@@ -88,9 +88,9 @@ Jointly extracting mutational signatures from single-base substitution (SBS) and
 | SBS+ID joint NMF (multimodal) | Potential extension to cross-study sig. extraction | Current pipeline does not do per-sample SBS96+ID83; would require a new rule |
 | m-SBS3a / m-SBS3b sub-signatures | HRd signature sub-types | Relevant when evaluating BRCA1/BRCA2-linked studies in cBioPortal |
 | Refitting with MuSiCal or SigProfiler Assignment | `run_restricted_sigprofiler_assignment.py` | Current restricted assignment is SBS-only; extending to ID83 is feasible |
-| HRd classifier benchmark (CHORD, GIS, HRDetect) | Comparison benchmark for h08 positive-control | Provides expected effect sizes for BRCA1/BRCA2-linked signatures |
+| HRd classifier benchmark (CHORD, GIS, HRDetect) | Comparison benchmark for hypothesis:0007 positive-control | Provides expected effect sizes for BRCA1/BRCA2-linked signatures |
 | SBS39 as confounded / non-HRd | Artifact/confound signatures (SBS27/43/45–60 list) | SBS39 should be treated cautiously in HRd-association analyses |
-| Per-sample signature exposures as survival predictors | Signature exposure as covariate in h08 association scan | Direct methodological parallel |
+| Per-sample signature exposures as survival predictors | Signature exposure as covariate in hypothesis:0007 association scan | Direct methodological parallel |
 
 ## Limitations
 
@@ -111,7 +111,7 @@ Jointly extracting mutational signatures from single-base substitution (SBS) and
 
 ## Follow-up
 
-- **For h08:** Evaluate whether the cbioportal pipeline could incorporate SBS+ID joint extraction for WGS/WES studies, at minimum for the tcga_mc3 unified MAF which has matched-normal calling and would yield clean indel calls.
-- **For h08 positive-control design:** Consider incorporating ID6/ID8 indel signatures alongside SBS2/13 (APOBEC) and SBS4 (smoking) arms — this paper demonstrates their value for HRd recovery.
+- **For hypothesis:0007:** Evaluate whether the cbioportal pipeline could incorporate SBS+ID joint extraction for WGS/WES studies, at minimum for the tcga_mc3 unified MAF which has matched-normal calling and would yield clean indel calls.
+- **For hypothesis:0007 positive-control design:** Consider incorporating ID6/ID8 indel signatures alongside SBS2/13 (APOBEC) and SBS4 (smoking) arms — this paper demonstrates their value for HRd recovery.
 - **Tool evaluation:** Test MuSiCal refitting onto a pan-cancer multimodal SBS+ID catalog as a complement to the current `run_restricted_sigprofiler_assignment.py` (SBS-only restricted assignment).
 - Papers to read: Sorensen et al. 2023 (pan-cancer MMRd signatures, cited as [72]) for the MMRd arm of H08a; Levaticet al. 2022 (Nature Communications, cited as [12]) on mutational signatures as drug-sensitivity markers in cell lines.

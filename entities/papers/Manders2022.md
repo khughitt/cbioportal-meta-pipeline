@@ -75,19 +75,19 @@ MutationalPatterns v3.4.0 is a near-complete rewrite of the R/Bioconductor Mutat
 
 ## Relevance
 
-**h08 — Agnostic covariate–signature-exposure association (positive-control recovery of UV/smoking/APOBEC/MMR).**
+**hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and — Agnostic covariate–signature-exposure association (positive-control recovery of UV/smoking/APOBEC/MMR).**
 
-This paper is directly relevant to the h08 positive-control prong (H08a). Several points of contact:
+This paper is directly relevant to the hypothesis:0007 positive-control prong (H08a). Several points of contact:
 
-1. **Signature refitting is the core analytical primitive.** The h08 pipeline must assign per-sample COSMIC signature exposures before running any covariate association. MutationalPatterns v3.4.0's `fit_to_signatures_strict` with `max_delta` tuning is a concrete, benchmarked implementation that reduces the overfitting artifact (too many signatures assigned to a sample), which would otherwise generate spurious covariate hits.
+1. **Signature refitting is the core analytical primitive.** The hypothesis:0007 pipeline must assign per-sample COSMIC signature exposures before running any covariate association. MutationalPatterns v3.4.0's `fit_to_signatures_strict` with `max_delta` tuning is a concrete, benchmarked implementation that reduces the overfitting artifact (too many signatures assigned to a sample), which would otherwise generate spurious covariate hits.
 
 2. **Bootstrapped refitting quantifies confidence in exposures.** The H08a positive-control arms (UV→SBS7, smoking→SBS4, APOBEC3-expression→SBS2/13) all require trustworthy per-sample exposure estimates. Bootstrapped contributions allow the association layer to weight samples by refitting confidence — a natural FDR guard.
 
 3. **MMR/MSI positive control is illustrated here.** The MSH2 knockout results (SBS20/26/44 recovered, indel ID1/ID2/ID7 elevated) directly demonstrate the kind of positive-control recovery the H08a MMR arm requires: MMR-loss status as covariate, SBS6/15/26/44 exposures as outcome.
 
-4. **Extended context and regional analyses.** The `split_muts_region` and regional spectrum tools could support the h08 covariate scan if any covariate (e.g. chromatin state) requires restricting to genomic subsets before fitting.
+4. **Extended context and regional analyses.** The `split_muts_region` and regional spectrum tools could support the hypothesis:0007 covariate scan if any covariate (e.g. chromatin state) requires restricting to genomic subsets before fitting.
 
-5. **Damaging potential scores.** A downstream application of h08 discovery hits (H08b) would be to assess whether novel covariate-associated signatures also show elevated damaging potential — MutationalPatterns provides this function directly.
+5. **Damaging potential scores.** A downstream application of the hypothesis:0007 discovery arm would be to assess whether novel covariate-associated signatures also show elevated damaging potential — MutationalPatterns provides this function directly.
 
 **Cross-study meta-analysis relevance.** The package's ability to pool samples (`pool_mut_mat`) and support all mutation types from a single VCF is directly useful if the cBioPortal pipeline extends to indel or DBS signature analysis.
 
@@ -95,12 +95,12 @@ This paper is directly relevant to the h08 positive-control prong (H08a). Severa
 
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
-| `fit_to_signatures_strict` (backwards selection) | Signature refitting / per-sample exposure estimates | Core input to h08 covariate association |
+| `fit_to_signatures_strict` (backwards selection) | Signature refitting / per-sample exposure estimates | Core input to hypothesis:0007 covariate association |
 | `fit_to_signatures_bootstrapped` | Confidence-weighted exposures | Natural weight for association layer |
 | `get_known_signatures` (COSMIC v3.1/3.2, SIGNAL, SparseSignatures) | COSMIC reference catalogue | Same catalogues used by SigProfiler refitting in the pipeline |
 | Lesion segregation (`calculate_lesion_segregation`, rl20) | (not currently in pipeline) | Detects unmatched-normal contamination confound |
 | Regional mutation spectra (`split_muts_region`) | (not in current pipeline) | Could stratify by replication timing as a covariate |
-| Signature damaging potential score | (not in pipeline) | Post-hoc prioritization of h08 novel hits |
+| Signature damaging potential score | (not in pipeline) | Post-hoc prioritization of hypothesis:0007 novel hits |
 | NMF / Bayes-NMF de novo extraction | De novo signature extraction | Complementary to SigProfiler |
 
 ## Limitations
@@ -126,7 +126,7 @@ This paper is directly relevant to the h08 positive-control prong (H08a). Severa
 
 ## Follow-up
 
-- **Related tools benchmarked in Table 1:** SigProfiler (Python, human/mouse/rat/yeast), SignatureAnalyzer (Python), deconstructSigs (R), sparseSignatures (R), signeR (R), somaicSignatures (R), Maftools (R), decompTumor2Sig (R) — consult for comparison when selecting a refitting back-end for h08.
+- **Related tools benchmarked in Table 1:** SigProfiler (Python, human/mouse/rat/yeast), SignatureAnalyzer (Python), deconstructSigs (R), sparseSignatures (R), signeR (R), somaicSignatures (R), Maftools (R), decompTumor2Sig (R) — consult for comparison when selecting a refitting back-end for hypothesis:0007.
 - **Lesion segregation** could be a useful diagnostic for identifying cBioPortal studies using unmatched normals (where C>N and T>N strand asymmetry would accumulate from germline leakage rather than true somatic mutagenesis). Worth evaluating alongside the `topic:signature-decomposition-unmatched-normal` context.
-- **Bootstrapped contribution output** (`fit_to_signatures_bootstrapped`) provides natural uncertainty estimates for h08's per-sample signature exposures. Consider as input weights in the association model rather than point estimates.
+- **Bootstrapped contribution output** (`fit_to_signatures_bootstrapped`) provides natural uncertainty estimates for hypothesis:0007's per-sample signature exposures. Consider as input weights in the association model rather than point estimates.
 - The `determine_regional_similarity` sliding-window function could test whether VDJ-region somatic hypermutation creates a systematic artifact in B-cell malignancy studies in cBioPortal — relevant to the CH contamination audit.

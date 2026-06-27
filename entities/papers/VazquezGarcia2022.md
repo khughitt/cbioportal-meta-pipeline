@@ -85,22 +85,22 @@ processes and peritoneal spread together co-determine immune resistance in HGSOC
 
 ## Relevance
 
-**To h08 (agnostic covariate–signature-exposure association):** This paper is a direct
-exemplar of the mechanistic layer underlying h08's positive-control target. The paper
+**To hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and (agnostic covariate–signature-exposure association):** This paper is a direct
+exemplar of the mechanistic layer underlying hypothesis:0007's positive-control target. The paper
 demonstrates that WGS-derived structural-variation mutational signatures (HRD-Dup, HRD-Del,
 FBI, TD) stratify tumours by both genomic process *and* by downstream immune phenotype,
-gene-expression programme (JAK–STAT, TGFβ), and HLA LOH. In h08 terms:
+gene-expression programme (JAK–STAT, TGFβ), and HLA LOH. In hypothesis:0007 terms:
 
 - The signature exposures (HRD-Dup/Del vs. FBI) are the `H` column outcomes.
 - The co-measured mRNA modules (JAK–STAT, TGFβ, NF-κB, IFN) are exactly the kind of
   **expression covariate** the agnostic association pipeline should recover — the paper
   shows these associations are strong, consistent, and biologically causal.
 - HLA LOH frequency (6p LOH) is a structured clinical/genomic feature analogous to the
-  MSI or POLE covariates listed as h08 positive controls.
+  MSI or POLE covariates listed as hypothesis:0007 positive controls.
 - **APOBEC3 context:** SBS2/13 (APOBEC) is not the focus here; the relevant signatures are
   SBS3 (HRD) and rearrangement signatures. This paper shows that downstream
   covariate associations can go well beyond SNV-signature aetiologies to link structural
-  rearrangement mutational processes to TME immunophenotype — an expanded scope for h08b.
+  rearrangement mutational processes to TME immunophenotype — an expanded scope for the discovery arm of hypothesis:0007.
 
 **To the cross-study somatic mutation meta-analysis:** HGSOC is represented in several
 cBioPortal studies. HRD status and CCNE1 amplification are well-characterised drivers that
@@ -113,8 +113,8 @@ mutation frequency patterns in ovarian cancer.
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
 | HRD-Dup / HRD-Del / FBI / TD mutational subtypes | WGS structural-variation signatures; analogous to COSMIC rearrangement signatures | Paper uses SV patterns rather than SNV SBS catalogue |
-| SIGNALS per-cell 6p LOH | HLA loss / immune editing covariate | Clinical covariate for h08 association |
-| JAK–STAT / TGFβ / NF-κB expression modules | mRNA expression modules from export_study_expression.py | These are exactly the co-measured covariates h08 would test |
+| SIGNALS per-cell 6p LOH | HLA loss / immune editing covariate | Clinical covariate for hypothesis:0007 association |
+| JAK–STAT / TGFβ / NF-κB expression modules | mRNA expression modules from export_study_expression.py | These are exactly the co-measured covariates hypothesis:0007 would test |
 | TME immune cell composition by site | Not currently captured in cBioPortal pipeline | Would require scRNA deconvolution data |
 | MSK-IMPACT 468-gene panel | cBioPortal targeted panel studies | Same platform; msk_impact studies in cBioPortal |
 
@@ -122,7 +122,7 @@ mutation frequency patterns in ovarian cancer.
 
 - **SNV-based mutational signatures not the primary focus.** The study uses structural variation
   (copy number rearrangement) signatures rather than the SBS/ID/DBS trinucleotide catalogues
-  used by COSMIC and the cbioportal pipeline. h08's positive controls (UV/SBS7, smoking/SBS4,
+  used by COSMIC and the cbioportal pipeline. hypothesis:0007's positive controls (UV/SBS7, smoking/SBS4,
   APOBEC/SBS2+13, MMR/SBS6) are not directly assessed here.
 - **Small discovery cohort (n = 42).** Despite multi-site sampling, power for rare subgroups
   is limited; the larger validation relies on targeted sequencing (IMPACT) rather than WGS.
@@ -145,10 +145,10 @@ mutation frequency patterns in ovarian cancer.
 - **Cross-study:** Examine HRD/BRCA1/BRCA2/CCNE1/CDK12 mutation frequencies across
   cBioPortal ovarian cancer studies to see whether the mutational subtype proportions
   replicate in public data.
-- **h08 connection:** When implementing the covariate-association pipeline, add HRD status /
+- **hypothesis:0007 connection:** When implementing the covariate-association pipeline, add HRD status /
   HRD score as a candidate covariate. The strong JAK–STAT vs. TGFβ split between HRD-Dup
   and FBI tumours would serve as a positive-control test case for the expression-module
-  correlation arm of h08.
+  correlation arm of hypothesis:0007.
 - **Related papers to read:** Macintyre et al. 2018 (copy number signatures in ovarian
   cancer), Macintyre/Shah group HGSOC landscape paper (SIGNALS algorithm introduction),
   TCGA ovarian cancer analyses for comparison.

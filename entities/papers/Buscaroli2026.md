@@ -69,17 +69,17 @@ BASCULE is a Bayesian framework that unifies de novo mutational signature discov
 
 ## Relevance
 
-**Direct relevance to h08 (agnostic covariate-signature association; positive-control recovery):**
+**Direct relevance to hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and (agnostic covariate-signature association; positive-control recovery):**
 
-BASCULE is a methodological alternative or complement to the restricted SigProfiler assignment currently planned for h08. Several connections:
+BASCULE is a methodological alternative or complement to the restricted SigProfiler assignment currently planned for hypothesis:0007. Several connections:
 
-1. **Catalogue-aware de novo extraction addresses the same problem as h08's positive-control design.** BASCULE's bNMF ensures de novo signatures are statistically distinct from known ones, which is precisely the concern behind h08's use of restricted assignment (SBS4, SBS7, SBS2/13) as positive controls — if those signals exist, they should appear whether you fit or discover them. BASCULE provides a framework that could run both steps simultaneously rather than sequentially.
+1. **Catalogue-aware de novo extraction addresses the same problem as hypothesis:0007's positive-control design.** BASCULE's bNMF ensures de novo signatures are statistically distinct from known ones, which is precisely the concern behind hypothesis:0007's use of restricted assignment (SBS4, SBS7, SBS2/13) as positive controls — if those signals exist, they should appear whether you fit or discover them. BASCULE provides a framework that could run both steps simultaneously rather than sequentially.
 
-2. **SBS+DBS joint clustering is a concrete instantiation of h08's "cross-decomposition concordance" idea.** H08 proposes that concordance between a latent mutation factor and a latent expression module is stronger evidence of shared upstream biology; BASCULE demonstrates that concordance between SBS and DBS factors already resolves subtypes invisible to SBS alone. This validates the cross-modality principle and suggests that adding expression as a third modality (BASCULE's conclusions section explicitly mentions this as future work) is a natural extension.
+2. **SBS+DBS joint clustering is a concrete instantiation of hypothesis:0007's "cross-decomposition concordance" idea.** This hypothesis proposes that concordance between a latent mutation factor and a latent expression module is stronger evidence of shared upstream biology; BASCULE demonstrates that concordance between SBS and DBS factors already resolves subtypes invisible to SBS alone. This validates the cross-modality principle and suggests that adding expression as a third modality (BASCULE's conclusions section explicitly mentions this as future work) is a natural extension.
 
-3. **Positive-control recovery (h08a) demonstrated implicitly.** BASCULE's breast and lung results recover UV (SBS7 family), smoking (SBS4+DBS2), APOBEC (SBS2/13+DBS2/11), MMR deficiency (SBS44/MSI), and HRD (SBS3/SBS13) without being explicitly told to — precisely the positive controls h08a pre-registers. The Pancreatic survival finding (APOBEC cluster G2 has 83% lower hazard than G0) is particularly relevant: it shows that APOBEC-exposure stratification has independent prognostic value even after adjusting for age and gender.
+3. **Positive-control recovery (H08a) demonstrated implicitly.** BASCULE's breast and lung results recover UV (SBS7 family), smoking (SBS4+DBS2), APOBEC (SBS2/13+DBS2/11), MMR deficiency (SBS44/MSI), and HRD (SBS3/SBS13) without being explicitly told to — precisely the positive controls the H08a arm pre-registers. The Pancreatic survival finding (APOBEC cluster G2 has 83% lower hazard than G0) is particularly relevant: it shows that APOBEC-exposure stratification has independent prognostic value even after adjusting for age and gender.
 
-4. **Tool option for h08 implementation.** BASCULE's Nextflow / Singularity packaging and GPU backend make it a feasible drop-in for the pipeline's signature-extraction step, as an alternative to `run_restricted_sigprofiler_assignment.py`. The BIC-based model selection sidesteps the manual K-selection problem.
+4. **Tool option for hypothesis:0007 implementation.** BASCULE's Nextflow / Singularity packaging and GPU backend make it a feasible drop-in for the pipeline's signature-extraction step, as an alternative to `run_restricted_sigprofiler_assignment.py`. The BIC-based model selection sidesteps the manual K-selection problem.
 
 5. **Catalogue standardisation as a confound to be aware of.** The Discussion notes that heterogeneous catalogues from different groups require harmonisation (currently done by cosine similarity and human oversight). This is directly relevant to the cross-study aggregation context, where studies may be processed by different tools.
 
@@ -89,7 +89,7 @@ BASCULE is a methodological alternative or complement to the restricted SigProfi
 |---|---|---|
 | bNMF catalogue component β^c | `run_restricted_sigprofiler_assignment.py` | Functionally equivalent: fix known signatures, infer exposures |
 | bNMF de novo component β^d | `run_sigprofiler_extraction.py` (unrestricted NMF) | BASCULE does both simultaneously with separation prior |
-| Dirichlet Process patient clustering on α tensor | Planned h08 association layer | BASCULE clusters; h08 regresses exposures against covariates — complementary goals |
+| Dirichlet Process patient clustering on α tensor | Planned hypothesis:0007 association layer | BASCULE clusters; hypothesis:0007 regresses exposures against covariates — complementary goals |
 | BIC-based K^d selection | Manual K selection in current pipeline | BASCULE automates this step |
 | Post-fit linear-combination heuristic | Not currently implemented | Useful heuristic for dropping artefactual de novo signatures |
 | Pyro / SVI inference | scikit-learn NMF (current) | Different inference paradigm; Bayesian approach propagates uncertainty |

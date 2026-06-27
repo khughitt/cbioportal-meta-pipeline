@@ -33,7 +33,7 @@ Using CRISPR-Cas9 knockouts of canonical MMR genes (MLH1, MSH2, MSH6) in isogeni
 
 ## Methods
 
-**Experimental design:** CRISPR-Cas9 frameshift knockouts of eight genes in human haploid HAP1 cells — canonical MMR genes (MLH1, MSH2, MSH6) and associated/interacting genes (ARID1A, EXO1, SETD2, NSD1, SMARCA4). Single cells were clonally expanded for one month (t0), then cultured for a further three months before re-expansion into three technical replicates (t1). De novo mutations were defined as variants present in t1 but not t0.
+**Experimental design:** CRISPR-Cas9 frameshift knockouts of eight genes in human haploid HAP1 cells — canonical MMR genes (MLH1, MSH2, MSH6) and associated/interacting genes (ARID1A, EXO1, SETD2, NSD1, SMARCA4). Single cells were clonally expanded for one month (baseline timepoint), then cultured for a further three months before re-expansion into three technical replicates (endpoint timepoint). De novo mutations were defined as endpoint variants absent from baseline.
 
 **Sequencing and variant calling:** Whole-genome sequencing on Illumina NovaSeq 6000 (2×151 bp paired-end). Somatic variants called with consensus between Strelka2 and MuTect2; additional filters applied: mappability (CRG GEM Alignability 36-mers, ≤2 mismatches), repeat-region masking (RepeatMasker), and exclusion of variants within ±6 bp of deletions.
 
@@ -59,17 +59,17 @@ Using CRISPR-Cas9 knockouts of canonical MMR genes (MLH1, MSH2, MSH6) in isogeni
 
 ## Relevance
 
-This paper is directly relevant to hypothesis **h08** (agnostic covariate–signature-exposure association recovering known aetiologies):
+This paper is directly relevant to hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and (agnostic covariate–signature-exposure association recovering known aetiologies):
 
 - **H08a positive-control arm — MMR/MSI recovery:** The paper exhaustively maps which COSMIC SBS and ID signatures are mechanistically produced by MLH1/MSH2/MSH6 loss. This characterisation provides the ground-truth positive-control labels needed for the H08a MMR↔SBS6/15/26 arm: within a dataset where MSI status is measured, the agnostic association must recover this mapping.
 
 - **SBS57 as a confounding signature in pipeline:** SBS57 is flagged as a potential artifact driven by SNP–indel alignment errors at thymine repeat boundaries — the same filtering sensitivity the cbioportal pipeline faces. The paper's strict filtering criteria (consensus calling, repeat masking, ±6 bp deletion exclusion) offer actionable guidance for distinguishing true MMRd signal from this artifact class in the cross-study aggregation. Studies with matched normals (the `matched_normal_studies` config key) are less susceptible.
 
-- **Biological context dependence of MMR signatures:** The systematic in vitro vs in vivo comparison demonstrates that signature weights are not portable across biological contexts: SBS6 requires extended time for damage accumulation, SBS44 is replication rate-dependent. This is a caution for h08: interpreting a "low SBS6 weight" in short-passage tumour data as evidence against MMRd would be misleading. The within-tissue, per-study normalisation design of h08 partially mitigates this.
+- **Biological context dependence of MMR signatures:** The systematic in vitro vs in vivo comparison demonstrates that signature weights are not portable across biological contexts: SBS6 requires extended time for damage accumulation, SBS44 is replication rate-dependent. This is a caution for hypothesis:0007: interpreting a "low SBS6 weight" in short-passage tumour data as evidence against MMRd would be misleading. The within-tissue, per-study normalisation design of hypothesis:0007 partially mitigates this.
 
-- **SBS1 / CpG deamination connection to MMR:** The first in vitro confirmation that MutSα repairs 5-methylcytosine deamination products means SBS1 (normally treated as a pure clock signature) is partially an MMR-activity readout. This could be relevant for h08b discovery: an agnostic scan may surface MMR-pathway expression as partially associated with SBS1, which this paper would retrospectively explain.
+- **SBS1 / CpG deamination connection to MMR:** The first in vitro confirmation that MutSα repairs 5-methylcytosine deamination products means SBS1 (normally treated as a pure clock signature) is partially an MMR-activity readout. This could be relevant for H08b discovery: an agnostic scan may surface MMR-pathway expression as partially associated with SBS1, which this paper would retrospectively explain.
 
-- **TS27 / tensor signatures as an alternative framework:** The paper's use of tensor signatures (Vohringer 2021) alongside COSMIC SBS provides a richer characterisation linking SBS57 to replication strand bias (TS27). The h08 pipeline currently plans COSMIC SBS refitting; consideration of tensor signatures for a follow-up could sharpen MMR-linked associations.
+- **TS27 / tensor signatures as an alternative framework:** The paper's use of tensor signatures (Vohringer 2021) alongside COSMIC SBS provides a richer characterisation linking SBS57 to replication strand bias (TS27). The hypothesis:0007 pipeline currently plans COSMIC SBS refitting; consideration of tensor signatures for a follow-up could sharpen MMR-linked associations.
 
 ## Project Framework Mapping
 
@@ -99,5 +99,5 @@ No standalone software tool or model released with this preprint. Cell lines can
 
 - The unresolved mechanism of SBS57 in non-MMRd tumour contexts (POLEd, SBS17, SBS12 clusters) warrants investigation — these are likely biologically distinct from the MMRd alignment-artifact mechanism.
 - ID12 (2-bp deletions at repeats, now proposed as MMRd-associated) could be checked in the cross-study aggregation for correlation with MSI-positive study subsets.
-- The paper's SBS6 vs SBS44 context-dependence finding is worth encoding as a caveat in h08's positive-control design: within-tumour MMR-loss association tests should target the ensemble of MMR signatures (SBS6/14/15/20/21/26/44), not rely on any single one, because relative weights shift with replication kinetics.
+- The paper's SBS6 vs SBS44 context-dependence finding is worth encoding as a caveat in hypothesis:0007's positive-control design: within-tumour MMR-loss association tests should target the ensemble of MMR signatures (SBS6/14/15/20/21/26/44), not rely on any single one, because relative weights shift with replication kinetics.
 - Consider whether the strict variant filtering criteria from this paper (consensus calling + RepeatMasker + ±6 bp deletion exclusion) are already applied in the cbioportal pipeline's data ingestion, or whether SBS57-type artifacts may be present in the aggregated MAF data from studies using only single callers.

@@ -81,27 +81,27 @@ This study identifies a distinct germline predisposition pattern in Ewing sarcom
 
 ## Relevance
 
-**Connection to h08 (agnostic covariate-signature association):** This paper is relevant indirectly but importantly as biological context for the H_normgerm sub-topic group. The core h08 hypothesis asks whether agnostic association of per-sample signature exposures against covariates (including germline-derived features) can recover known aetiologies and surface novel ones.
+**Connection to hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and (agnostic covariate-signature association):** This paper is relevant indirectly but importantly as biological context for the H_normgerm sub-topic group. The core hypothesis:0007 asks whether agnostic association of per-sample signature exposures against covariates (including germline-derived features) can recover known aetiologies and surface novel ones.
 
 Gillani et al. provide several pieces of context:
 
-1. **DDR germline variants as upstream determinants of somatic mutational processes.** The paper mechanistically links heterozygous *FANCC* loss-of-function to HRD-associated rearrangement signatures in Ewing sarcoma. This is a germline-to-somatic-signature causal chain of the type h08 aims to detect from the covariate-association direction. If cBioPortal Ewing sarcoma studies include germline carrier status (or proxies such as high HRD exposure scores or SBS3 enrichment), a h08 scan might recover this association directionally.
+1. **DDR germline variants as upstream determinants of somatic mutational processes.** The paper mechanistically links heterozygous *FANCC* loss-of-function to HRD-associated rearrangement signatures in Ewing sarcoma. This is a germline-to-somatic-signature causal chain of the type hypothesis:0007 aims to detect from the covariate-association direction. If cBioPortal Ewing sarcoma studies include germline carrier status (or proxies such as high HRD exposure scores or SBS3 enrichment), a hypothesis:0007 scan might recover this association directionally.
 
 2. **Distinct sarcoma subtype signature of absence (no TP53).** The observation that Ewing sarcoma uniquely lacks germline *TP53* enrichment is itself a signature feature. In cBioPortal cross-study analyses, TP53 somatic mutation rates are markedly lower in Ewing sarcoma relative to osteosarcoma. This is a known positive-control data point for the "structured enrichment across cancer types" framing of the meta-analysis.
 
 3. **Low-prevalence moderate-penetrance variants and statistical power.** The per-variant frequencies (0.8%–1.5% in cases) illustrate the power challenge when seeking germline-correlated somatic signature enrichment in small per-study cBioPortal cohorts. Aggregation across studies (as in the cross-study pipeline) is the appropriate strategy, but even aggregated Ewing sarcoma cohorts in cBioPortal are likely underpowered to detect these individual DDR gene signals without pre-stratification.
 
-4. **FANCC / Fanconi pathway → HRD-like somatic signatures.** COSMIC SBS3 and the HRD signature landscape are known downstream consequences of Fanconi pathway deficiency. The h08 agnostic scan, if run on Ewing sarcoma data with HRD-related signatures (SBS3, ID6, CN signatures), might recover Fanconi pathway germline burden as an upstream covariate — a testable positive-control extension beyond the current H08a arms (UV, smoking, APOBEC3).
+4. **FANCC / Fanconi pathway → HRD-like somatic signatures.** COSMIC SBS3 and the HRD signature landscape are known downstream consequences of Fanconi pathway deficiency. The hypothesis:0007 agnostic scan, if run on Ewing sarcoma data with HRD-related signatures (SBS3, ID6, CN signatures), might recover Fanconi pathway germline burden as an upstream covariate — a testable positive-control extension beyond the current H08a arms (UV, smoking, APOBEC3).
 
 5. **Relevance to cross-study aggregation framework.** The distinct subtype-specific enrichment pattern (Ewing vs. osteosarcoma vs. rhabdomyosarcoma) mirrors the rationale for the cross-study pipeline's cancer-type stratification. Studies that collapse histologic subtypes would obscure the Ewing-specific DDR signal exactly as the underpowered pan-ancestry analysis in this paper did.
 
-**Direct relevance to h08:** Peripheral (this paper is germline epidemiology, not signature decomposition). Indirect relevance is meaningful: it establishes the germline→DDR-pathway→HRD-signature causal axis as a documented phenomenon in Ewing sarcoma, which h08's agnostic scan could in principle recover from the somatic side if SBS3/HRD signatures are included.
+**Direct relevance to hypothesis:0007:** Peripheral (this paper is germline epidemiology, not signature decomposition). Indirect relevance is meaningful: it establishes the germline→DDR-pathway→HRD-signature causal axis as a documented phenomenon in Ewing sarcoma, which hypothesis:0007's agnostic scan could in principle recover from the somatic side if SBS3/HRD signatures are included.
 
 ## Project Framework Mapping
 
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
-| Heterozygous pathogenic germline DDR variants | Germline predisposition covariate (H_normgerm sub-topic) | Potential upstream covariate for h08 agnostic scan |
+| Heterozygous pathogenic germline DDR variants | Germline predisposition covariate (H_normgerm sub-topic) | Potential upstream covariate for hypothesis:0007 agnostic scan |
 | FANCC/Fanconi pathway → HRD-like rearrangements | SBS3 / HRD signature exposure | Germline-to-somatic causal chain detectable via signature assignment |
 | European-ancestry case-control enrichment analysis | Cross-study ancestry-stratified aggregation | Same population-stratification concern motivates the pipeline's per-study approach |
 | Pediatric sarcoma subtype stratification | Cancer-type stratification in gene x cancer matrix | Collapsing histologic subtypes masks DDR signal; same logic applies cross-study |
@@ -124,7 +124,7 @@ No model or computational tool released. Sequencing data deposited in dbGaP (phs
 
 ## Follow-up
 
-- **Somatic HRD signatures in FANCC carriers:** A follow-up study linking germline *FANCC* carrier status to tumor-level SBS3, ID6, or CN-HRD signatures in Ewing sarcoma would validate the germline→somatic chain and provide a direct h08-relevant positive control.
+- **Somatic HRD signatures in FANCC carriers:** A follow-up study linking germline *FANCC* carrier status to tumor-level SBS3, ID6, or CN-HRD signatures in Ewing sarcoma would validate the germline→somatic chain and provide a direct hypothesis:0007-relevant positive control.
 - **Larger, diverse cohorts:** Pan-ancestry replication with sufficient power (particularly African and admixed American populations) is needed to determine whether DDR enrichment generalizes beyond European ancestry.
 - **CHEK2 in Ewing sarcoma:** *CHEK2* p.Ile200Thr (low-penetrance founder variant) was excluded and analyzed separately; its role in Ewing sarcoma susceptibility merits targeted analysis with sufficient power.
 - **Structural variant germline burden:** As germline structural variant discovery improves, Fanconi pathway deletions and other non-coding DDR alterations may further increase the explained germline fraction.

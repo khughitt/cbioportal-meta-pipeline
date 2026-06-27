@@ -57,24 +57,24 @@ SigProfilerAssignment is a signature-refitting tool (desktop + web) that assigns
 
 ## Relevance
 
-**Direct relevance to h08 (agnostic covariate–signature-exposure association).**
+**Direct relevance to hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and (agnostic covariate–signature-exposure association).**
 
-h08 proposes treating per-sample signature exposure vectors (H, the NMF coefficient matrix) as phenotypes and running a phenome-wide association against clinical and molecular covariates to recover known aetiologies (UV/SBS7, smoking/SBS4, APOBEC/SBS2+13, MMR/SBS6+15) as positive controls. SigProfilerAssignment is the natural **assignment engine** for generating per-sample H vectors from COSMIC reference signatures — the refitting step that precedes the association analysis.
+hypothesis:0007 proposes treating per-sample signature exposure vectors (H, the NMF coefficient matrix) as phenotypes and running a phenome-wide association against clinical and molecular covariates to recover known aetiologies (UV/SBS7, smoking/SBS4, APOBEC/SBS2+13, MMR/SBS6+15) as positive controls. SigProfilerAssignment is the natural **assignment engine** for generating per-sample H vectors from COSMIC reference signatures — the refitting step that precedes the association analysis.
 
 Key connections:
-1. **Positive-control recovery.** SigProfilerAssignment's high-precision refitting (F1 > 0.90 at 10% noise) means that the H vectors fed into the h08 association will have low false-positive signature activations, which is critical for specificity of the downstream covariate associations.
-2. **Sparse refitting aligns with h08's within-tissue design.** The forward stagewise selection suppresses spurious co-activations that could generate artifactual covariate correlations — an important property when running multiplicity-corrected associations across hundreds of signatures and covariates.
-3. **CN signature support.** h08 could extend beyond SBS to CN signatures without a different tool, enabling association of chromosomal instability exposures with clinical variables (e.g., stage, survival, treatment).
-4. **Per-mutation assignment.** The probabilistic mutation-level output could enable a finer-grained variant of h08 where driver-gene mutation burdens are attributed to specific signatures before association, linking mutational aetiology directly to driver gene activation.
+1. **Positive-control recovery.** SigProfilerAssignment's high-precision refitting (F1 > 0.90 at 10% noise) means that the H vectors fed into the hypothesis:0007 association will have low false-positive signature activations, which is critical for specificity of the downstream covariate associations.
+2. **Sparse refitting aligns with hypothesis:0007's within-tissue design.** The forward stagewise selection suppresses spurious co-activations that could generate artifactual covariate correlations — an important property when running multiplicity-corrected associations across hundreds of signatures and covariates.
+3. **CN signature support.** hypothesis:0007 could extend beyond SBS to CN signatures without a different tool, enabling association of chromosomal instability exposures with clinical variables (e.g., stage, survival, treatment).
+4. **Per-mutation assignment.** The probabilistic mutation-level output could enable a finer-grained variant of hypothesis:0007 where driver-gene mutation burdens are attributed to specific signatures before association, linking mutational aetiology directly to driver gene activation.
 5. **Cross-study meta-analysis context.** The cbioportal pipeline aggregates heterogeneous cBioPortal studies as pseudo-cohorts; SigProfilerAssignment accepts standard VCF/MAF inputs and can be applied per-study before the cross-study aggregation step, inserting cleanly into the existing Snakemake DAG.
 
 ## Project Framework Mapping
 
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
-| Signature refitting (assignment) | Downstream step after cross-study aggregation | H matrix generation for h08 association |
+| Signature refitting (assignment) | Downstream step after cross-study aggregation | H matrix generation for hypothesis:0007 association |
 | COSMIC SBS/DBS/ID/CN reference signatures | Known signature catalogue | COSMICv3.3; 79 SBS signatures used in benchmarking |
-| Per-sample activity vector a | Exposure / H column | Input to phenome-wide association in h08 |
+| Per-sample activity vector a | Exposure / H column | Input to phenome-wide association in hypothesis:0007 |
 | Forward stagewise sparse selection | Sparse regularisation | Prevents false-positive activations; complements NNLS |
 | Probabilistic per-mutation assignment | Mutation-level attribution | Novel; could augment driver-gene aetiology analysis |
 | Noise robustness (0-10%) | Study heterogeneity robustness | Relevant for cross-study aggregation where panel/WES mixing adds noise |
@@ -103,5 +103,5 @@ Key connections:
 - Islam et al. 2022 (*Cell Genomics*) — SigProfilerExtractor (de-novo extraction companion); benchmarking dataset source.
 - Steele et al. 2022 (*Nature*) — CN signature compendium; motivates CN assignment support.
 - Degasperi et al. 2022 (*Science*) — SignatureToolsLib + UK WGS cohort; direct competitor.
-- Consider integrating SigProfilerAssignment as a Snakemake rule (e.g., `assign_signatures`) that runs per-study or on the merged MC3 pseudo-study, producing `studies/{id}/mut/signatures/activities.feather` as input for h08 association analysis.
+- Consider integrating SigProfilerAssignment as a Snakemake rule (e.g., `assign_signatures`) that runs per-study or on the merged MC3 pseudo-study, producing `studies/{id}/mut/signatures/activities.feather` as input for hypothesis:0007 association analysis.
 - Question worth raising: does the forward stagewise tolerance (1%/5%) need tuning for the cross-study setting where mutation counts per sample vary by orders of magnitude (panel ~100 muts vs. WGS ~10,000 muts)?

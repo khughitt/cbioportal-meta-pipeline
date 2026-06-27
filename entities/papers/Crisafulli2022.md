@@ -54,7 +54,7 @@ The ARETHUSA proof-of-concept clinical trial demonstrates that temozolomide (TMZ
 **MMR gene mutations:**
 - MSH6 mutations recur across patients post-TMZ; p.T1219I variant detected in tissue and/or ctDNA of 16/17 (94%) patients who benefited from TMZ treatment (Subtype B). The p.T1219I variant was absent in all pre-TMZ samples and in Subtype A patients.
 - All MSH6 SNVs (100%) lie in nucleotide contexts favored by SBS11, confirming TMZ as the causal agent, not germline or spontaneous mutation.
-- Additional recurrent MSH6 variants: p.G557D (n=2), p.T1008I (n=2), p.Q1122* (n=2), plus multiple stop-codon acquisitions.
+- Additional recurrent MSH6 variants: p.G557D (n=2), p.T1008I (n=2), premature stop at glutamine 1122 (n=2), plus multiple stop-codon acquisitions.
 
 **Intratumor heterogeneity:**
 - Multi-coring of a single liver lesion showed differential TMZ molecular impact: one coring had high clonal and subclonal TMZ signature, others had only subclonal or no detectable effect. At least 25–30% TMZ-resistant cells required for clonal threshold detection, as few as 2–6% for subclonal detection.
@@ -69,28 +69,28 @@ The ARETHUSA proof-of-concept clinical trial demonstrates that temozolomide (TMZ
 
 ## Relevance
 
-**Direct connection to h08 (agnostic covariate–signature–exposure association):**
+**Direct connection to hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and (agnostic covariate–signature–exposure association):**
 
-This paper is a critical positive-control reference for h08's goal of recovering known treatment-induced signatures alongside endogenous etiological signatures. COSMIC SBS11 (alkylating-agent signature) is a canonical treatment-induced signature with a defined nucleotide-context profile (C>T in TCN triplets favored by TMZ). The paper demonstrates:
+This paper is a critical positive-control reference for hypothesis:0007's goal of recovering known treatment-induced signatures alongside endogenous etiological signatures. COSMIC SBS11 (alkylating-agent signature) is a canonical treatment-induced signature with a defined nucleotide-context profile (C>T in TCN triplets favored by TMZ). The paper demonstrates:
 
-1. **Signature detection from treatment exposure:** SBS11 can be quantitatively detected in tumor tissue and ctDNA and correlates dose-dependently with number of TMZ cycles — precisely the kind of covariate–signature–exposure relationship that h08 aims to recover. In a cross-study meta-analysis context, samples from patients treated with TMZ-based regimens (e.g., glioblastoma, some colorectal trials) would be expected to carry elevated SBS11 and should ideally be flagged as treatment-exposed confounders or positive controls.
+1. **Signature detection from treatment exposure:** SBS11 can be quantitatively detected in tumor tissue and ctDNA and correlates dose-dependently with number of TMZ cycles — precisely the kind of covariate–signature–exposure relationship that hypothesis:0007 aims to recover. In a cross-study meta-analysis context, samples from patients treated with TMZ-based regimens (e.g., glioblastoma, some colorectal trials) would be expected to carry elevated SBS11 and should ideally be flagged as treatment-exposed confounders or positive controls.
 
-2. **MMR deficiency as a secondary signature generator:** TMZ-induced MMR gene inactivation (primarily MSH6) converts an MMRp tumor into an acquired MMRd tumor, thereby amplifying overall TMB and inducing indel accumulation over time. This illustrates how a treatment exposure can generate a secondary, biologically downstream signature (MMRd-like) distinguishable from the primary alkylating-agent SBS11. For h08's aetiology inference, this is a concrete example of a confounder chain: treatment → SBS11 → acquired MMRd → elevated indels.
+2. **MMR deficiency as a secondary signature generator:** TMZ-induced MMR gene inactivation (primarily MSH6) converts an MMRp tumor into an acquired MMRd tumor, thereby amplifying overall TMB and inducing indel accumulation over time. This illustrates how a treatment exposure can generate a secondary, biologically downstream signature (MMRd-like) distinguishable from the primary alkylating-agent SBS11. For hypothesis:0007's aetiology inference, this is a concrete example of a confounder chain: treatment → SBS11 → acquired MMRd → elevated indels.
 
 3. **Clonal vs. subclonal decomposition of signatures:** The subtype A/B1/B2 stratification, and the ITH multi-coring experiment, underscore that the same COSMIC signature can appear at clonal or subclonal VAF levels depending on the proportion of affected cells. For the cbioportal cross-study pipeline, this is relevant to how per-study mutation call VAF thresholds interact with signature detection sensitivity — if a study uses higher VAF cutoffs, subclonal treatment-induced signatures will be systematically missed.
 
-4. **Liquid biopsy as longitudinal signature tracker:** ctDNA-based bTMB tracks the SBS11-associated tumor fraction over time, providing a dynamic view of signature exposure. This is conceptually analogous to tracking signature exposures as clinical/treatment covariates in an agnostic association scan — a key component of h08.
+4. **Liquid biopsy as longitudinal signature tracker:** ctDNA-based bTMB tracks the SBS11-associated tumor fraction over time, providing a dynamic view of signature exposure. This is conceptually analogous to tracking signature exposures as clinical/treatment covariates in an agnostic association scan — a key component of hypothesis:0007.
 
 **Cross-study meta-analysis relevance:**
 - cBioPortal mCRC studies may include patients enrolled in or treated analogously to ARETHUSA. Patients receiving TMZ-based regimens could exhibit elevated SBS11 in their somatic mutation profiles, inflating the TMB estimates and potentially confounding cancer-type-level mutation frequency comparisons. The pipeline's hypermutator annotation (task t081) would ideally flag such patients.
-- The paper's demonstration that MMRp tumors can become hypermutated pharmacologically (bTMB up to 2,276 mut/Mb in two patients) is directly relevant to pipeline decisions about hypermutator thresholds (the 10 mut/Mb Campbell 2017 and 100 mut/Mb ultra-hypermutator categories) and the GMM-based per-cancer-type TMB fitting.
+- The paper's demonstration that MMRp tumors can become hypermutated pharmacologically (bTMB up to 2,276 mut/Mb in two patients) is directly relevant to pipeline decisions about hypermutator thresholds (the 10 mut/Mb Campbell threshold [@Campbell2017Hypermutation] and 100 mut/Mb ultra-hypermutator categories) and the GMM-based per-cancer-type TMB fitting.
 - The MSH6 p.T1219I variant's high recurrence (94% of TMZ-responding patients) across studies could create a spurious "hotspot" signal in cross-study aggregation if samples from TMZ-treated patients are included without annotation.
 
 ## Project Framework Mapping
 
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
-| COSMIC SBS11 (alkylating-agent signature) | Mutational signature (treatment-induced) | Positive-control signature for h08; should be recoverable in TMZ-treated study arms |
+| COSMIC SBS11 (alkylating-agent signature) | Mutational signature (treatment-induced) | Positive-control signature for hypothesis:0007; should be recoverable in TMZ-treated study arms |
 | Subtype A / B1 / B2 patient stratification | Hypermutator annotation categories | B2 patients exceed 100 mut/Mb ultra-hypermutator threshold |
 | bTMB (blood TMB from ctDNA) | Per-sample TMB | Pipeline computes tissue TMB; ctDNA-derived TMB is analogous but requires separate panel-size normalization |
 | MGMT methylation status | Matched-normal / annotation covariate | Not currently in pipeline schema; relevant as a treatment-selection biomarker |
@@ -119,6 +119,6 @@ This paper is a critical positive-control reference for h08's goal of recovering
 
 - Compare with Poon2021 (COSMIC signature landscape) and LeeSix2018 (treatment-associated signatures) for the expected profile of SBS11 in population-scale datasets and how to distinguish it from endogenous signatures.
 - The MSH6 p.T1219I recurrent mutation raises a specific question: does this variant appear at anomalously high frequency in cBioPortal mCRC studies that may have included TMZ-treated patients? Worth a targeted query in the cross-study aggregation output.
-- For h08 positive-control recovery: SBS11 should be recoverable in glioma/glioblastoma cBioPortal studies (TMZ is standard of care there) and could serve as a benchmark alongside UV (SBS7), smoking (SBS4), APOBEC (SBS2/13), and MMR (SBS6/15/21/26) signatures.
+- For hypothesis:0007 positive-control recovery: SBS11 should be recoverable in glioma/glioblastoma cBioPortal studies (TMZ is standard of care there) and could serve as a benchmark alongside UV (SBS7), smoking (SBS4), APOBEC (SBS2/13), and MMR (SBS6/15/21/26) signatures.
 - Connection to hypermutator pipeline (t081): patients like AR02007 (bTMB 2,276 mut/Mb) would be extreme hypermutators requiring correct annotation as treatment-induced rather than intrinsic hypermutators (POLE/MSI); the `hypermutator_reason` taxonomy should consider a `treatment_alkylating` category.
 - The MAYA trial (Morano et al., Ann Oncol 2022) extended ARETHUSA's design with TMZ + low-dose ipilimumab + nivolumab and reached the primary endpoint (8-month PFS 36%); reading alongside Crisafulli2022 would round out the clinical picture.

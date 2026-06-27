@@ -78,11 +78,11 @@ The most significantly enriched gene sets among convergent oncogenic transcripti
 These same processes are convergently regulated at the phosphoproteomic level within 2 hours of kinase inhibitor treatment, before cell cycle arrest or widespread transcriptional changes, establishing that posttranslational regulation precedes and reinforces transcriptional regulation.
 
 **3. NOLC1 as the key integrative node.**
-NOLC1 (and its paralog TCOF1) emerged as the most prominent common target regulated **both** transcriptionally by MYC and posttranslationally (phosphorylation of T607/T610 in NOLC1, S1410 in TCOF1) by oncogenic kinase signaling. CGE functional validation established that:
-- Mutation of NOLC1 phosphorylation sites T607/T610 reduced cell proliferation (p = 0.0025)
+NOLC1 (and its paralog TCOF1) emerged as the most prominent common target regulated **both** transcriptionally by MYC and posttranslationally (phosphorylation of threonines 607/610 in NOLC1, S1410 in TCOF1) by oncogenic kinase signaling. CGE functional validation established that:
+- Mutation of NOLC1 phosphorylation sites threonine 607/610 reduced cell proliferation (p = 0.0025)
 - Mutation of the MYC binding E-box in the NOLC1 promoter reduced proliferation (p = 8.5×10⁻⁴)
 - Both modes of regulation are independently required
-- The phosphorylation site T607 is conserved from humans to Drosophila
+- The phosphorylation site at threonine 607 is conserved from humans to Drosophila
 
 **4. Feed-forward logic explains oncogene cooperation.**
 The finding that both MYC (transcriptional) and RAS/MAPK (posttranslational) inputs are independently required for full NOLC1 activation provides a quantitative mechanistic explanation for classical MYC–RAS oncogene cooperation: neither alone can optimally activate the growth program; both are needed. This implies that in a given tissue, whichever is rate-limiting (MYC or kinase activity) will be the selective target for mutation.
@@ -97,14 +97,14 @@ Of the 10 Hanahan–Weinberg hallmarks, only the three proliferation-related one
 In human HNSCC biopsies, TCOF1 (and to a lesser extent NOLC1) expression co-localizes with the proliferative invasive front, not the central tumor or adjacent normal muscle, supporting clinical relevance. Ribosomal proteins, by contrast, are highest in adjacent normal muscle cells (high constitutive protein synthesis capacity), distinguishing the tumor-specific signature from general translational activity.
 
 **8. Metabolic convergence.**
-Concurrently with ribosome biogenesis changes, drug treatment reduced nucleotide monophosphates (UMP, AMP, GMP) and altered glycolytic flux in sensitive but not resistant lines, implicating oncogenic kinase signaling in metabolic reprogramming converging on anabolic support for ribosome production. HK2 phosphorylation at Y461 (not the previously described T473) was functionally validated by CGE as required for proliferation.
+Concurrently with ribosome biogenesis changes, drug treatment reduced nucleotide monophosphates (UMP, AMP, GMP) and altered glycolytic flux in sensitive but not resistant lines, implicating oncogenic kinase signaling in metabolic reprogramming converging on anabolic support for ribosome production. HK2 phosphorylation at tyrosine 461 (not the previously described threonine 473) was functionally validated by CGE as required for proliferation.
 
 **9. Scope covers ~46% of worldwide cancer mortality.**
 The cancer types studied (breast, prostate, colorectal, lung, CML, rhabdomyosarcoma, Ewing's sarcoma, HNSCC) collectively account for roughly 46% of global cancer mortality, supporting generalizability.
 
 ## Relevance
 
-This paper speaks directly to the central tension in the **q042 / tissue-specificity framing**: why do specific oncogenes associate so strongly with specific cancer types?
+This paper speaks directly to the central tension in the **question:0042 / tissue-specificity framing**: why do specific oncogenes associate so strongly with specific cancer types?
 
 **Kauko et al. provide a convergence resolution to the tissue-specificity puzzle.** Their data shows that the downstream biology — the actual growth-driving mechanism — is largely shared: MYC upregulation → ribosome biogenesis/translation enhancement, flanked by kinase-mediated phosphorylation of the same targets. What is tissue-specific is *which upstream oncogene* is mutated, not *what it ultimately does to the cell*. This meshes with cell-of-origin models: a given tissue/lineage will have chromatin access (open enhancers) for its characteristic TFs (e.g., ER in breast, AR in prostate, TCF4/β-catenin in colon), making those oncogenic TFs "competent" to drive MYC upregulation in that cellular context. Another driver in the same tissue would need to be competent to bind those enhancers; a given oncogene may lack that competence in a different tissue because the relevant chromatin is closed.
 
@@ -112,7 +112,7 @@ This paper speaks directly to the central tension in the **q042 / tissue-specifi
 
 **Relationship to paper:Sack2018.** Sack et al. (2018) address why specific cancer types rely on specific metabolic programs. Kauko et al. show that metabolic reprogramming (glycolysis, nucleotide synthesis) converges downstream of diverse oncogenes via the same growth signaling axes, overlapping with the anabolic demands of elevated ribosome biogenesis. This consistency strengthens the Sack model while grounding it in a specific mechanistic chain (oncogenic kinase → phosphoproteome → ribosome/metabolic program).
 
-**Implication for route-1/route-2 framing and q042:** If convergent downstream biology (MYC → ribosome biogenesis) is the common endpoint, then observing that a particular oncogene preferentially mutates in a particular cancer type may primarily reflect:
+**Implication for route-1/route-2 framing and question:0042:** If convergent downstream biology (MYC → ribosome biogenesis) is the common endpoint, then observing that a particular oncogene preferentially mutates in a particular cancer type may primarily reflect:
 1. **Cell-of-origin chromatin accessibility**: which TF binding sites are open in the progenitor cell (the Kauko et al. ChIP-seq data shows that oncogenic TFs collaborate with tissue-specific co-factors at shared MYC enhancers).
 2. **Quantitative rate-limiting constraints**: which leg of the MYC/kinase feed-forward loop is sub-saturating in a given cell type, making that node the selective bottleneck.
 
@@ -147,7 +147,7 @@ No standalone software tools or pre-trained models are released with the paper. 
 ## Follow-up
 
 **Papers to read next:**
-- Bailey 2018 (Cell) — PanCanAtlas driver census; establishes the prior on tissue-specific driver frequencies; Kauko et al.'s convergence finding provides a downstream rationale for why those frequencies exist.
+- Bailey [@Bailey2018] — PanCanAtlas driver census; establishes the prior on tissue-specific driver frequencies; Kauko et al.'s convergence finding provides a downstream rationale for why those frequencies exist.
 - Hanahan & Weinberg hallmarks papers (2000, 2011) — the Kauko framing explicitly maps to hallmarks.
 - Paull et al. (master regulator computational approach) — Kauko et al. discuss and critique this work as identifying >400 master regulators, compared with their far fewer key nodes.
 

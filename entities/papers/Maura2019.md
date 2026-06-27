@@ -64,13 +64,13 @@ This paper provides a systematic evaluation of de novo signature extraction vs. 
 
 ## Relevance
 
-**Direct relevance to h08 (agnostic covariate–signature-exposure association):**
+**Direct relevance to hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and (agnostic covariate–signature-exposure association):**
 
-- The paper is a methodological cornerstone for the H08a positive-control arm. Its characterization of inter-sample bleeding is the primary reason why fitting approaches must be run within biologically homogeneous strata — exactly what H08a's within-tissue conditioning is designed to enforce (H08 hypothesis, Prediction 4 / Alternative R1-R4).
-- The paper explicitly demonstrates that SBS3 (BRCA/HRD) is a false positive in MM attributable to flat-signature confusion, directly motivating the need in H08 to validate signature assignments with orthogonal evidence before treating them as candidate aetiologies.
+- The paper is a methodological cornerstone for the H08a positive-control arm. Its characterization of inter-sample bleeding is the primary reason why fitting approaches must be run within biologically homogeneous strata — exactly what H08a's within-tissue conditioning is designed to enforce (hypothesis:0007, Prediction 4 / Alternative R1-R4).
+- The paper explicitly demonstrates that SBS3 (BRCA/HRD) is a false positive in MM attributable to flat-signature confusion, directly motivating the need in hypothesis:0007 to validate signature assignments with orthogonal evidence before treating them as candidate aetiologies.
 - The NNMF-shortlist fitting approach recommended here is a concrete implementation of the "restricted assignment" logic already partially present in the cbioportal pipeline (`run_restricted_sigprofiler_assignment.py`), providing authoritative methodological backing.
 - The c-AID and APOBEC kataegis findings are relevant benchmarks for the H08a positive-control design: APOBEC (SBS2/13) recovery within MM/CLL WGS is a confirmatory arm if MM/CLL data are included in the cross-study analysis.
-- The AML inter-sample bleeding case (platinum signature disappearing after t-AML removal) is the hematological analogue of the confounding described in H08 hypothesis Alternative R4 (batch/assay artifact), illustrating that study composition — not just tissue type — confounds naive signature attribution.
+- The AML inter-sample bleeding case (platinum signature disappearing after t-AML removal) is the hematological analogue of the confounding described in hypothesis:0007 Alternative R4 (batch/assay artifact), illustrating that study composition — not just tissue type — confounds naive signature attribution.
 - For the cross-study meta-analysis more broadly: the paper validates that a subset of cBioPortal MM/CLL studies using WGS carry interpretable signatures (SBS1, SBS2, SBS5, SBS8, SBS9, SBS13, MM1), and establishes that WES may miss localized processes (c-AID) that WGS detects — a relevant caveat when pooling mixed-assay cBioPortal studies.
 
 ## Project Framework Mapping
@@ -80,15 +80,15 @@ This paper provides a systematic evaluation of de novo signature extraction vs. 
 | De novo NNMF extraction | `run_sigprofiler_extraction` (planned) / `run_restricted_sigprofiler_assignment.py` | Paper distinguishes extraction from fitting; pipeline currently focuses on fitting |
 | Fitting all 30 COSMIC signatures (deconstructSigs default) | Unconstrained fitting — explicitly flagged as problematic | Motivates the restricted-assignment approach already in pipeline |
 | NNMF shortlist fitting | `run_restricted_sigprofiler_assignment.py` | Direct implementation of paper's recommended step 3 |
-| Inter-sample bleeding | Cross-study confounding (R4 in h08 alternative explanations) | Bleeding across cancer types = tissue collinearity risk |
+| Inter-sample bleeding | Cross-study confounding (R4 in hypothesis:0007 alternative explanations) | Bleeding across cancer types = tissue collinearity risk |
 | Localized hypermutation / kataegis | Not currently in scope | Requires genome-wide mutation positions; cBioPortal MAFs may lack positional granularity |
 | HRDetect | Not currently implemented | Structural variant data required; not uniformly available in cBioPortal |
-| Biological subgroup stratification (M-CLL vs U-CLL) | Within-tissue strata (h08 design) | Paper's solution to bleeding is the analogue of h08's within-tissue conditioning |
+| Biological subgroup stratification (M-CLL vs U-CLL) | Within-tissue strata (hypothesis:0007 design) | Paper's solution to bleeding is the analogue of hypothesis:0007's within-tissue conditioning |
 
 ## Limitations
 
 - The MM cohort is small (n=30), limiting power to detect rare signatures and making the HRD-absence conclusion probabilistic rather than definitive. The authors acknowledge a larger cohort could reveal a subset with true BRCA-mediated HRD.
-- The recommended workflow requires prior biological knowledge of which signatures to expect — a circularity that the paper acknowledges but does not fully resolve for novel cancer types or for fully agnostic discovery settings (the exact gap that h08 aims to fill).
+- The recommended workflow requires prior biological knowledge of which signatures to expect — a circularity that the paper acknowledges but does not fully resolve for novel cancer types or for fully agnostic discovery settings (the exact gap that hypothesis:0007 aims to fill).
 - Localized hypermutation analysis depends on accurate positional mapping to immunoglobulin loci, which is not uniformly available across cBioPortal study MAFs and requires specialized SNV callers to achieve high sensitivity.
 - AML findings (platinum and HSPC signatures) are partially based on only 2 unpublished t-AML cases; the t-AML bleeding conclusion is robust, but the HSPC signature characterization requires independent replication.
 - The paper uses COSMIC v2 (30 signatures); the framework has since expanded to COSMIC v3+ with >60 SBS signatures, potentially altering some assignments.
@@ -104,5 +104,5 @@ This paper provides a systematic evaluation of de novo signature extraction vs. 
 
 - The recommended three-step framework (Fig. 8) should be reviewed against the current pipeline implementation in `run_restricted_sigprofiler_assignment.py` to assess whether the de novo extraction step is present or assumed.
 - For H08a positive-control design: the APOBEC-kataegis and c-AID findings in MM/CLL confirm that localized processes can be missed by genome-wide extraction — the cross-study analysis should be treated as genome-wide only, with explicit acknowledgment that localized signatures (c-AID) are likely diluted below detection.
-- The AML platinum-signature bleeding case motivates adding study composition (proportion of therapy-related samples) as a nuisance covariate in the h08 association scan.
+- The AML platinum-signature bleeding case motivates adding study composition (proportion of therapy-related samples) as a nuisance covariate in the hypothesis:0007 association scan.
 - Relevant adjacent papers: Degasperi et al. 2022 (SigProfiler v3+ catalogue, already summarized), Davies et al. 2017 (HRDetect original), Alexandrov et al. 2020 (COSMIC v3).

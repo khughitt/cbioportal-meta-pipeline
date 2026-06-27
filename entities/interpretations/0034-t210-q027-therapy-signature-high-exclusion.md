@@ -33,26 +33,26 @@ prior_interpretations:
 - interpretation:0033-t209-h10-sample-level-unknown-naive-rules
 ---
 
-# Interpretation: t210 q027 therapy-signature-high exclusion impact arm
+# Interpretation: t210 `q027` therapy-signature-high exclusion impact arm
 
 ## Verdict
 
-**Verdict:** [?] The q027 measured-signature arm now runs end-to-end, but it is non-arbitrating for H10 because the primary configured substrate contains one interpretable patient study.
+**Verdict:** [?] The `q027` measured-signature arm now runs end-to-end, but it is non-arbitrating for `H10` because the primary configured substrate contains one interpretable patient study.
 
-This task implements the distinct q027 arm that t207-t209 deliberately deferred.
+This task implements the distinct `q027` arm that t207-t209 deliberately deferred.
 The exclusion set is derived from measured SBS11/SBS31/SBS35/SBS87 exposure, not from clinical treatment labels.
-For the first configured pass, WP1 selected `difg_glass_2019` as the only primary patient substrate that passed the mutation-count and comparator gate, and the downstream q027 target ran on GLASS/SBS11.
+For the first configured pass, WP1 selected `difg_glass_2019` as the only primary patient substrate that passed the mutation-count and comparator gate, and the downstream `q027` target ran on GLASS/SBS11.
 
 The run finds 36 SBS11-high GLASS samples and non-trivial single-study frequency shifts when those samples are excluded.
-Those shifts should not be read as cross-study H10 evidence.
-Every q027 impact row is `underpowered_non_arbitrating` because the primary pass has only one contributing study, below the pre-specified two-study threshold.
-That outcome was knowable after WP1 selected only one primary patient study; the downstream impact tables are reusable scaffolding and a single-study sensitivity check, not a late-stage discovery that q027 was underpowered.
+Those shifts should not be read as cross-study `H10` evidence.
+Every `q027` impact row is `underpowered_non_arbitrating` because the primary pass has only one contributing study, below the pre-specified two-study threshold.
+That outcome was knowable after WP1 selected only one primary patient study; the downstream impact tables are reusable scaffolding and a single-study sensitivity check, not a late-stage discovery that `q027` was underpowered.
 
 ## Substrate
 
-WP1 audited the five treatment-signature candidates named in the t210 plan from the H10 exposure-label work.
+WP1 audited the five treatment-signature candidates named in the t210 plan from the `H10` exposure-label work.
 It did not exhaustively scan all 198 configured cBioPortal studies for SBS11/SBS31/SBS35/SBS87-evaluable patient cohorts.
-Therefore, "no second substrate" means no second substrate in this planned candidate set, not proof that no other configured study could support q027 after a broader search.
+Therefore, "no second substrate" means no second substrate in this planned candidate set, not proof that no other configured study could support `q027` after a broader search.
 
 | Study | Target signatures | Primary patient denominator | Count-floor-passing samples | Retained comparator support | WP1 gate |
 |---|---|---:|---:|---:|---|
@@ -62,8 +62,8 @@ Therefore, "no second substrate" means no second substrate in this planned candi
 | `sclc_cancercell_gardner_2017` | `SBS31`, `SBS35` | no, PDX sensitivity-only | 20 / 20 | 0 | fail |
 | `pptc_2019` | `SBS11`, `SBS31`, `SBS35`, `SBS87` | no, PDX sensitivity-only | 1 / 118 | 0 | fail |
 
-The resulting q027 config is therefore intentionally scoped to `difg_glass_2019` with CNS lookup signatures plus the explicit therapy-signature add-ons `SBS11`, `SBS31`, `SBS35`, and `SBS87`.
-The COSMIC reference audit confirmed all requested therapy signatures were present for the q027 refit.
+The resulting `q027` config is therefore intentionally scoped to `difg_glass_2019` with CNS lookup signatures plus the explicit therapy-signature add-ons `SBS11`, `SBS31`, `SBS35`, and `SBS87`.
+The COSMIC reference audit confirmed all requested therapy signatures were present for the `q027` refit.
 
 ## Signature Labels
 
@@ -86,7 +86,7 @@ This is a strong measured-signature stratum within GLASS, not just a weak non-ze
 
 ## Impact Read
 
-The q027 impact ratio table has 20,822 GLASS gene-cancer rows and 150 columns.
+The `q027` impact ratio table has 20,822 GLASS gene-cancer rows and 150 columns.
 All rows are `underpowered_non_arbitrating` for the primary, sensitivity, evaluable-only, and hypermutator-excluded marginal contrasts.
 
 | Contrast | Removed samples | Power status | Delta summary |
@@ -100,7 +100,7 @@ All rows are `underpowered_non_arbitrating` for the primary, sensitivity, evalua
 
 The full-denominator contrast compares 444 all samples against 408 non-high samples.
 It answers the deliverable question but dilutes the measured-signature effect because 284 below-floor samples remain in both arms.
-The evaluable-only contrast compares 160 count-floor-passing samples against 124 evaluable non-high samples and is therefore the cleaner "what changes among samples where q027 is measurable" read.
+The evaluable-only contrast compares 160 count-floor-passing samples against 124 evaluable non-high samples and is therefore the cleaner "what changes among samples where `q027` is measurable" read.
 
 The largest full-denominator descriptive deltas are concentrated in genes with many mutations inside the SBS11-high GLASS subset.
 
@@ -124,17 +124,17 @@ The largest evaluable-only deltas are larger, as expected when the below-floor d
 
 This is useful as a deliverable-sensitivity check.
 It says that a measured SBS11-high GLASS subset can materially inflate some single-study glioma gene frequencies.
-It does not say that treatment-signature-high samples are a reproducible cross-study driver-frequency contaminant, because there is no second primary patient study in this q027 substrate.
+It does not say that treatment-signature-high samples are a reproducible cross-study driver-frequency contaminant, because there is no second primary patient study in this `q027` substrate.
 
 ## Hypermutator Marginal Read
 
-The existing hypermutator flag does not remove the q027 SBS11-high GLASS samples in this run.
+The existing hypermutator flag does not remove the `q027` SBS11-high GLASS samples in this run.
 All 444 GLASS samples have `is_hypermutator == False`, including all 36 SBS11-high samples.
 The SBS11-high samples carry `hypermutator_reason == gmm_upper_mode_below_floor`, but that reason does not set the final hypermutator flag.
 
-Consequently, the hypermutator-excluded q027 deltas are identical to the inclusive q027 deltas.
-This answers the marginal-value question directly for this substrate: q027 is not redundant with the current `is_hypermutator` exclusion layer here.
-The caveat is the same as above: this marginal value is demonstrated only as a one-study GLASS sensitivity check, so it remains non-arbitrating for H10.
+Consequently, the hypermutator-excluded `q027` deltas are identical to the inclusive `q027` deltas.
+This answers the marginal-value question directly for this substrate: `q027` is not redundant with the current `is_hypermutator` exclusion layer here.
+The caveat is the same as above: this marginal value is demonstrated only as a one-study GLASS sensitivity check, so it remains non-arbitrating for `H10`.
 
 ## Relation To t207-t209
 
@@ -143,10 +143,10 @@ Those tasks repaired the distinction between treatment-exposed, unknown, confirm
 
 t210 answers a different question.
 A sample can be clinically treatment-positive without being SBS11/SBS31/SBS35/SBS87-high, and a sample can be signature-high even when treatment metadata is incomplete.
-The q027 labels therefore should not be merged into `samples_treatment_exposure.feather` or interpreted as a replacement for the t207-t209 denominator labels.
+The `q027` labels therefore should not be merged into `samples_treatment_exposure.feather` or interpreted as a replacement for the t207-t209 denominator labels.
 
-The q027 result strengthens one narrow point from the earlier H10 notes: clinical labels and measured signature outcomes must stay separate.
-It does not change the locked H10 status.
+The `q027` result strengthens one narrow point from the earlier `H10` notes: clinical labels and measured signature outcomes must stay separate.
+It does not change the locked `H10` status.
 
 ## Caveats
 
@@ -160,23 +160,23 @@ Measured SBS11 exposure reduces exposure-label misclassification, but it does no
 
 The third limitation is count-floor missingness.
 The 284 below-floor samples are unevaluable, not SBS11-negative.
-Any future expansion of q027 should preserve this semantics; widening the analysis by silently treating below-floor samples as negative would recreate the silent-fallback problem that t209 fixed for clinical labels.
+Any future expansion of `q027` should preserve this semantics; widening the analysis by silently treating below-floor samples as negative would recreate the silent-fallback problem that t209 fixed for clinical labels.
 The full-denominator contrast necessarily retains below-floor samples in the non-high arm, so it should be read alongside the evaluable-only contrast rather than as the sole effect-size estimate.
 
 ## Operational Provenance
 
-The final q027 workflow writes to an isolated output directory:
+The final `q027` workflow writes to an isolated output directory:
 `/data/packages/cbioportal/q027-therapy-signature-high-2026-06-01`.
-It reads source mutation/sample/hypermutator inputs from `/data/packages/cbioportal/full` through `q027_source_out_dir`, so the q027 probe does not overwrite the full-config H10 substrate.
+It reads source mutation/sample/hypermutator inputs from `/data/packages/cbioportal/full` through `q027_source_out_dir`, so the `q027` probe does not overwrite the full-config `H10` substrate.
 
 An early local run used the full output directory before this isolation was added.
 That was detected by checking the full `samples_annotated.feather` shape and restored by rerunning the full `all_h10_treatment_impact` target on `code/config/config-full.yml`.
-The restored full substrate has 383,477 samples across 198 studies, and the final full H10 target reported no work remaining before the isolated q027 run was accepted.
+The restored full substrate has 383,477 samples across 198 studies, and the final full `H10` target reported no work remaining before the isolated `q027` run was accepted.
 
 ## Implications
 
 `question:0027-does-excluding-treatment-signature-high-samples` is now technically answered for the currently feasible substrate but not scientifically arbitrated.
-The answer is: excluding SBS11-high samples changes the GLASS glioma frequency table descriptively, but the configured q027 evidence is too thin to adjudicate H10.
+The answer is: excluding SBS11-high samples changes the GLASS glioma frequency table descriptively, but the configured `q027` evidence is too thin to adjudicate `H10`.
 
-The most useful next step is not another broad H10 verdict update.
-If H10 remains a priority, the next work should either identify a second primary patient substrate with enough therapy-signature-evaluable samples, or do a GLASS-specific clinical timing audit to determine whether SBS11-high status is separable from recurrence/progression in this cohort.
+The most useful next step is not another broad `H10` verdict update.
+If `H10` remains a priority, the next work should either identify a second primary patient substrate with enough therapy-signature-evaluable samples, or do a GLASS-specific clinical timing audit to determine whether SBS11-high status is separable from recurrence/progression in this cohort.

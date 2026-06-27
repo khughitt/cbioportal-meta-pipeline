@@ -20,17 +20,17 @@ related:
 - task:t211
 ---
 
-# Interpretation: t211 q027 broad therapy-signature substrate discovery
+# Interpretation: t211 `q027` broad therapy-signature substrate discovery
 
 ## Verdict
 
-**Verdict:** [?] The configured-study discovery audit found no second primary patient q027 substrate beyond GLASS.
+**Verdict:** [?] The configured-study discovery audit found no second primary patient `q027` substrate beyond GLASS.
 
 t211 broadened the t210 feasibility search from the five planned treatment-signature candidates to all 198 configured studies in `code/config/config-full.yml`.
 The audit produced 684 study/cancer-type strata.
-Only `difg_glass_2019` passed the q027 discovery gate, so the t210 measured-signature arm remains a one-study GLASS/SBS11 result and remains non-arbitrating for H10.
+Only `difg_glass_2019` passed the `q027` discovery gate, so the t210 measured-signature arm remains a one-study GLASS/SBS11 result and remains non-arbitrating for `H10`.
 
-This is a stronger negative readiness result than t210, but it is still not an H10 biological verdict.
+This is a stronger negative readiness result than t210, but it is still not an `H10` biological verdict.
 It says the current configured cBioPortal substrate does not provide a second adequate patient cohort for SBS11/SBS31/SBS35/SBS87-high exclusion under the conservative count-floor, comparator, and explicit-treatment-expectation rules.
 
 ## Audit Scope
@@ -44,7 +44,7 @@ The final discovery table has:
 | Category | Strata |
 |---|---:|
 | Total audited study/cancer strata | 684 |
-| Passed q027 discovery gate | 1 |
+| Passed `q027` discovery gate | 1 |
 | No treatment-signature expectation | 417 |
 | Unsupported cancer-type lookup | 222 |
 | Candidate/near-miss rows with supported lookup | 45 |
@@ -61,7 +61,7 @@ SBS87 discovery now requires explicit thiopurine drug names such as thiopurine, 
 This is not a new substrate.
 It is the same GLASS glioma substrate used by t210.
 The broad metadata scan also saw a platinum token in the raw GLASS text, so the discovery row lists SBS31/SBS35 in addition to SBS11.
-The already-run t210 q027 arm remains the cleaner configured GLASS pass because it used the planned TMZ/SBS11 target.
+The already-run t210 `q027` arm remains the cleaner configured GLASS pass because it used the planned TMZ/SBS11 target.
 
 ## Near Misses
 
@@ -75,8 +75,8 @@ The best non-GLASS candidates do not pass the gate.
 | `sclc_cancercell_gardner_2017` | Small Cell Lung Cancer | SBS11/SBS31/SBS35 | 20 count-floor-passing samples but PDX sensitivity-only and no retained comparator. |
 | `pptc_2019` | Glioma / lymphoblastic strata | SBS31/SBS35 | PDX sensitivity-only and count/comparator limited. |
 
-Several generic chemotherapy studies have non-zero count-floor support, but generic chemotherapy metadata is not treated as an explicit q027 treatment-signature expectation.
-Those rows are useful triage information, not primary q027 substrates.
+Several generic chemotherapy studies have non-zero count-floor support, but generic chemotherapy metadata is not treated as an explicit `q027` treatment-signature expectation.
+Those rows are useful triage information, not primary `q027` substrates.
 
 ## Implementation Notes
 
@@ -89,18 +89,18 @@ Two full-config integration issues were repaired during t211:
 - broad-discovery mode records mutation-context count errors as explicit non-passing rows instead of aborting the entire 198-study scan.
 
 These changes are discovery-audit behavior only.
-They do not modify q027 assignment, q027 impact tables, or canonical frequency outputs.
+They do not modify `q027` assignment, `q027` impact tables, or canonical frequency outputs.
 
 ## Implications
 
-The configured cBioPortal substrate cannot currently arbitrate q027 through a second patient cohort.
-The project should not run an expanded q027 impact target yet, because it would still be GLASS-only after the discovery pass.
+The configured cBioPortal substrate cannot currently arbitrate `q027` through a second patient cohort.
+The project should not run an expanded `q027` impact target yet, because it would still be GLASS-only after the discovery pass.
 
-The remaining H10 options are now clearer:
+The remaining `H10` options are now clearer:
 
-1. Pause H10/q027 with the current non-arbitrating result.
+1. Pause `H10`/`q027` with the current non-arbitrating result.
 2. Run a GLASS-specific timing audit to ask whether SBS11-high status is separable from recurrence/progression and TMZ episode.
-3. Acquire or add an external treatment-rich WES/WGS substrate before attempting another cross-study q027 impact pass.
+3. Acquire or add an external treatment-rich WES/WGS substrate before attempting another cross-study `q027` impact pass.
 
-The strongest immediate scientific move is the GLASS timing audit if H10 remains active.
-It will not solve cross-study power, but it can determine whether the one observed q027 signal is at least clinically interpretable inside GLASS.
+The strongest immediate scientific move is the GLASS timing audit if `H10` remains active.
+It will not solve cross-study power, but it can determine whether the one observed `q027` signal is at least clinically interpretable inside GLASS.

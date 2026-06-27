@@ -30,17 +30,17 @@ relations:
   target: interpretation:0031-t207-h10-treatment-impact-target-blocked-by-missing-full-config-raw
 ---
 
-# Interpretation: t207 H10 treatment impact full-config exposure-label pass
+# Interpretation: t207 `H10` treatment impact full-config exposure-label pass
 
 ## Verdict
 
-**Verdict:** [?] Non-arbitrating for the biological H10 impact claim, but successful as a full-config exposure-label plumbing and denominator-sensitivity pass.
+**Verdict:** [?] Non-arbitrating for the biological `H10` impact claim, but successful as a full-config exposure-label plumbing and denominator-sensitivity pass.
 
 The full `all_h10_treatment_impact` target now runs on `code/config/config-full.yml` and emits the planned impact feathers plus datapackage manifest.
-The result should not be read as the q027 therapy-signature-high answer, because this pass excludes samples by curated treatment-exposure labels rather than by measured SBS11/SBS31/SBS35/SBS87 exposure.
+The result should not be read as the `q027` therapy-signature-high answer, because this pass excludes samples by curated treatment-exposure labels rather than by measured SBS11/SBS31/SBS35/SBS87 exposure.
 
 The strongest conclusion is methodological.
-The H10 treatment-denominator layer is executable on the full configured substrate, and the output shows where treatment labels can move gene-cancer means and ranks.
+The `H10` treatment-denominator layer is executable on the full configured substrate, and the output shows where treatment labels can move gene-cancer means and ranks.
 It does not yet adjudicate whether DNA-damaging therapy signatures materially contaminate the headline frequency deliverable, because the primary mutagenic-treatment contrast is still label-thin and mostly a single-study bladder contrast.
 
 ## Findings Summary
@@ -61,7 +61,7 @@ The target produced:
 
 The ratio table has 776,686 gene-cancer rows and 51 columns.
 The impact table has the same row count and 32 columns.
-The manifest records the two summary resources under the H10 treatment-denominator diagnostic dataset.
+The manifest records the two summary resources under the `H10` treatment-denominator diagnostic dataset.
 
 The sample-treatment annotation sidecar covers 198 configured studies and 383,477 samples.
 It labels 1,232 samples as broad treatment-exposed, 50 as primary mutagenic-treatment signal, 281 as mutagenic-treatment sensitivity-only, 831 as positive naive or pretreatment, 55,218 as treatment-metadata-unknown, and 326,746 as no-detected-treatment-signal.
@@ -104,19 +104,19 @@ The evidence is strong for these propositions:
 - the final impact table reports the planned contrast-specific means, deltas, ranks, power statuses, and count audit fields;
 - the previous missing-raw-data blocker has been resolved.
 
-The evidence is weak or non-arbitrating for the biological H10 impact claim.
-The primary DNA-damaging-therapy label set is too thin to treat the primary mutagenic contrast as a pan-cancer H10 test.
+The evidence is weak or non-arbitrating for the biological `H10` impact claim.
+The primary DNA-damaging-therapy label set is too thin to treat the primary mutagenic contrast as a pan-cancer `H10` test.
 The no-detected-treatment comparator is useful but is not a confirmed treatment-naive baseline.
 The confirmed-naive contrast is conceptually clean but empirically underpowered in this table because the positively naive studies do not provide at least two contributing studies for any gene-cancer row.
 
 ## Data Quality And Pipeline Robustness
 
 The run surfaced and fixed an important sample-identity assumption before the final target completed.
-Several TMB, hypermutator, and H10 treatment-frequency paths were assuming that `sample_id` was globally unique.
+Several TMB, hypermutator, and `H10` treatment-frequency paths were assuming that `sample_id` was globally unique.
 That assumption fails for recurring cBioPortal sample IDs across studies, especially in large MSK substrates.
-The implementation now carries `study_id` through the TMB/hotspot/GMM/hypermutator path and joins H10 treatment annotations on `(study_id, sample_id)` where available.
+The implementation now carries `study_id` through the TMB/hotspot/GMM/hypermutator path and joins `H10` treatment annotations on `(study_id, sample_id)` where available.
 
-This is a workflow robustness finding, not an H10 biological result.
+This is a workflow robustness finding, not an `H10` biological result.
 It increases confidence that the final treatment-impact table is keyed to the intended per-study samples rather than cross-study sample-name collisions.
 
 The full run also required Feather-safe coercion of mixed object clinical metadata columns and missing-`hgvsp_short` handling in hotspot detection.
@@ -129,7 +129,7 @@ The result supports a methodological proposition: treatment-denominator sensitiv
 The result modestly supports the concern that treatment-related cohort labels can perturb gene-cancer frequency summaries in some settings.
 The support is modest because the observed deltas mix label ascertainment, cancer-type composition, panel coverage, and treatment-class specificity.
 
-The result leaves the main H10 causal proposition unresolved.
+The result leaves the main `H10` causal proposition unresolved.
 It does not show that therapy-induced signatures inflate mutation frequencies through SBS11/SBS31/SBS35/SBS87 context-specific burden.
 It also does not show that excluding therapy-signature-high samples changes the canonical pooled frequency table beyond noise.
 
@@ -139,11 +139,11 @@ The result disputes only a narrow operational concern from the superseded blocke
 
 `question:0024-treatment-exposed-cohort-chemotherapy-signature` advances from audit-only to executable exposure-label substrate.
 The project now has a full-config treatment-label annotation, per-study treatment-aware frequency views, and cross-study impact summaries.
-However, the q024 answer remains partial because the current label layer has high unknown metadata and unmeasured false-negative recall.
+However, the `q024` answer remains partial because the current label layer has high unknown metadata and unmeasured false-negative recall.
 
 `question:0027-does-excluding-treatment-signature-high-samples` remains active and unanswered.
-The q027 exclusion set should be derived from per-sample SBS11/SBS31/SBS35/SBS87 exposures, not from clinical treatment labels alone.
-This t207 pass should be cited as the exposure-label arm or denominator-plumbing precursor to q027, not as the q027 result.
+The `q027` exclusion set should be derived from per-sample SBS11/SBS31/SBS35/SBS87 exposures, not from clinical treatment labels alone.
+This t207 pass should be cited as the exposure-label arm or denominator-plumbing precursor to `q027`, not as the `q027` result.
 
 ## Hypothesis-Level Implications
 
@@ -151,8 +151,8 @@ This t207 pass should be cited as the exposure-label arm or denominator-plumbing
 The denominator machinery now exists, and the first full-config exposure-label output makes the hypothesis testable.
 The current evidence does not justify promoting, rejecting, or retiring the hypothesis.
 
-The most defensible reading is that H10 has passed an infrastructure gate, not an empirical confirmation gate.
-The project can now ask sharper H10 questions with deterministic label sets, measured signature exposures, and contrast-specific power flags.
+The most defensible reading is that `H10` has passed an infrastructure gate, not an empirical confirmation gate.
+The project can now ask sharper `H10` questions with deterministic label sets, measured signature exposures, and contrast-specific power flags.
 
 ## Limitations & Residual Uncertainty
 
@@ -170,12 +170,12 @@ They should not be folded into the primary patient denominator without a separat
 
 ## Updated Priorities
 
-The next H10 step should add deterministic sample-level mutagenic-treatment labels for the high-priority mixed cohorts already identified in the t206 audit.
+The next `H10` step should add deterministic sample-level mutagenic-treatment labels for the high-priority mixed cohorts already identified in the t206 audit.
 The clearest candidates are `difg_glass_2019` for temozolomide exposure and `blca_cornell_2016` for post-chemotherapy/platinum-containing exposure.
 Those rules should be tested against raw `SAMPLE_ID` joins and rerun through the same WP4 impact target.
 
-In parallel or immediately after that, implement the q027 signature-high arm using measured SBS11/SBS31/SBS35/SBS87 exposures.
+In parallel or immediately after that, implement the `q027` signature-high arm using measured SBS11/SBS31/SBS35/SBS87 exposures.
 That arm should produce a separate interpretation because it asks a different question from the exposure-label denominator pass.
 
 The current tables should be retained as the full-config baseline for exposure-label denominator sensitivity.
-They should not be promoted into canonical frequency-table outputs until the project decides whether H10 treatment handling is a core deliverable or an opt-in diagnostic layer.
+They should not be promoted into canonical frequency-table outputs until the project decides whether `H10` treatment handling is a core deliverable or an opt-in diagnostic layer.

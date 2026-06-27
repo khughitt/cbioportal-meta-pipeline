@@ -14,23 +14,23 @@ related:
 - task:t207
 ---
 
-# H10 treatment-denominator schema and impact pass
+# `H10` treatment-denominator schema and impact pass
 
 ## Purpose
 
-Implement the H10 denominator layer without collapsing broad treatment history into the narrower DNA-damaging-therapy prediction.
-This pass answers the exposure-label arm of H10:
+Implement the `H10` denominator layer without collapsing broad treatment history into the narrower DNA-damaging-therapy prediction.
+This pass answers the exposure-label arm of `H10`:
 
 - does any broad treatment-exposed cohort composition change the public mutation-frequency deliverable?
 - do cohorts with an a priori mutagenic-treatment expectation change SBS11/SBS31/SBS35/SBS87-sensitive gene-cancer rankings?
 
 It does not answer the full `question:0027-does-excluding-treatment-signature-high-samples`.
-The q027 signature-high arm excludes samples by measured SBS11/SBS31/SBS35/SBS87 exposure, which is a different sample set from treatment-exposure labels.
-That arm should be implemented as a complementary pass using the hardened per-sample signature exposure machinery from t178/t179 and the h08 signature outputs, or explicitly deferred in the t207 interpretation.
+The `q027` signature-high arm excludes samples by measured SBS11/SBS31/SBS35/SBS87 exposure, which is a different sample set from treatment-exposure labels.
+That arm should be implemented as a complementary pass using the hardened per-sample signature exposure machinery from t178/t179 and the `h08` signature outputs, or explicitly deferred in the t207 interpretation.
 The two arms adjudicate each other: exposure-label effects without signature-high effects point toward cohort ascertainment, while signature-high effects in unlabelled cohorts point toward metadata recall limits.
 
 This is a design plan for `task:t207`.
-It follows the t206 audit scaffold and manual-review note, and it should not reinterpret the t206 audit as an H10 result.
+It follows the t206 audit scaffold and manual-review note, and it should not reinterpret the t206 audit as an `H10` result.
 The upstream analysis-readiness artifact is `doc/plans/2026-06-01-t206-h10-treatment-exposure-audit-analysis-plan.md`.
 
 ## Scope Decomposition
@@ -43,7 +43,7 @@ It should encode the curated labels, annotate samples or studies deterministical
 
 The existing hypermutator-inclusive/exclusive contract remains unchanged.
 In current frequency tables, `_exclusive` means hypermutator-excluded.
-Treatment-aware outputs should use explicit H10 names rather than reusing `_exclusive` alone.
+Treatment-aware outputs should use explicit `H10` names rather than reusing `_exclusive` alone.
 
 ## Architecture
 
@@ -58,10 +58,10 @@ code/scripts/create_h10_treatment_freq_tables.py                 NEW
   mutations + samples_annotated + treatment annotations + panel coverage -> long per-study cohort-view table
 
 code/scripts/create_h10_treatment_impact_table.py                NEW
-  per-study cohort-view tables -> gene-cancer H10 impact summary
+  per-study cohort-view tables -> gene-cancer `H10` impact summary
 
 code/workflows/Snakefile                                         MODIFY
-  add opt-in H10 treatment-denominator rules and all_h10_treatment_impact target
+  add opt-in `H10` treatment-denominator rules and all_h10_treatment_impact target
 
 code/scripts/tests/test_annotate_treatment_exposure.py            NEW
 code/scripts/tests/test_create_h10_treatment_freq_tables.py       NEW
@@ -91,7 +91,7 @@ Required cohort views:
 | `no_detected_treatment_signal` | retained comparator group: samples negative for broad, primary mutagenic, sensitivity-only, and unknown treatment labels; includes positive naive/pre-treatment samples but is not limited to them |
 | `confirmed_naive_or_pretreatment` | sensitivity/QA comparator: only samples from positively classified treatment-naive or pre-treatment studies |
 | `broad_treatment_excluded` | excludes broad confirmed treatment-exposed cohorts; cohort-composition sensitivity |
-| `mutagenic_treatment_excluded_primary` | excludes primary DNA-damaging-therapy labels; primary H10 treatment denominator |
+| `mutagenic_treatment_excluded_primary` | excludes primary DNA-damaging-therapy labels; primary `H10` treatment denominator |
 | `mutagenic_treatment_excluded_with_pdx_sensitivity` | additionally excludes PDX sensitivity-only labels; sensitivity only |
 
 ## Key Decisions
@@ -99,7 +99,7 @@ Required cohort views:
 ### Key decision: layered labels instead of a flat treatment list
 
 Chosen approach: encode broad treatment exposure, mutagenic-treatment expectation, sample-level rules, positive naive/pre-treatment evidence, missing metadata, and PDX sensitivity as separate config fields.
-Rejected alternative: a single `treatment_exposed_studies` list used for the primary H10 test.
+Rejected alternative: a single `treatment_exposed_studies` list used for the primary `H10` test.
 Reason: the t206 manual review showed that ICB, endocrine, targeted, and castration-resistant cohorts are broad treatment-history signals but not direct SBS11/SBS31/SBS35/SBS87 expectations.
 
 ### Key decision: sample-level labels when evidence is sample-level
@@ -138,9 +138,9 @@ The `positive_naive_or_pretreatment` flag is still used distinctly through the `
 That view is expected to be thin, because only `lung_nci_2022`, `lusc_cptac_2021`, and `mbl_dkfz_2017` are positively clean in the t206 audit.
 The mutagenic primary exclusion view instead starts from `all_samples` and removes only primary mutagenic-treatment labels.
 
-### Key decision: opt-in H10 impact tables first
+### Key decision: opt-in `H10` impact tables first
 
-Chosen approach: build an opt-in H10 impact target that writes separate H10 treatment tables.
+Chosen approach: build an opt-in `H10` impact target that writes separate `H10` treatment tables.
 Rejected alternative: immediately extending canonical `gene_cancer_study_ratio_annotated.feather`.
 Reason: the canonical table already uses inclusive/exclusive terminology for hypermutator handling; adding treatment exclusion there before the semantics are tested would invite consumer confusion.
 
@@ -207,7 +207,7 @@ Required columns:
 | `sample_id` | string | sample ID as used downstream |
 | `study_id` | string | source study |
 | `treatment_exposed_broad` | bool | broad treatment-history cohort label |
-| `mutagenic_treatment_signal` | bool | primary H10 DNA-damaging-treatment label |
+| `mutagenic_treatment_signal` | bool | primary `H10` DNA-damaging-treatment label |
 | `mutagenic_treatment_signal_sensitivity_only` | bool | PDX or other sensitivity-only mutagenic label |
 | `positive_naive_or_pretreatment` | bool | positively classified clean baseline |
 | `treatment_metadata_unknown` | bool | study metadata unavailable or unresolved |
@@ -243,11 +243,11 @@ num_hypermutator_excluded
 ratio_hypermutator_excluded
 ```
 
-The hypermutator-excluded companion columns are required because H10 needs to know whether treatment effects persist after the existing hypermutator layer.
+The hypermutator-excluded companion columns are required because `H10` needs to know whether treatment effects persist after the existing hypermutator layer.
 They should be explicitly named and should not replace the existing canonical `ratio_exclusive`.
 For reproduction tests, map canonical `create_freq_tables.py` names explicitly:
 
-| H10 treatment-view column | Canonical `create_freq_tables.py` column |
+| `H10` treatment-view column | Canonical `create_freq_tables.py` column |
 |---|---|
 | `num` in `cohort_view == "all_samples"` | `num_inclusive` |
 | `n_samples` in `cohort_view == "all_samples"` | `n_samples_inclusive` |
@@ -265,7 +265,7 @@ Definition of done:
 - zero-denominator rows emit `NaN` ratios, not zero;
 - PDX sensitivity-only samples are excluded only in the PDX sensitivity view.
 
-### WP4: Cross-study H10 impact aggregation
+### WP4: Cross-study `H10` impact aggregation
 
 Depends on: WP3.
 Entry point: `code/scripts/create_h10_treatment_impact_table.py`.
@@ -281,9 +281,9 @@ Required summary fields:
 | `mean_no_detected_treatment_signal` | mean ratio in the retained no-detected-signal comparator cohort |
 | `mean_confirmed_naive_or_pretreatment` | mean ratio in the positively classified naive/pre-treatment sensitivity cohort |
 | `mean_broad_treatment_excluded` | broad treatment-history sensitivity mean |
-| `mean_mutagenic_treatment_excluded_primary` | primary H10 treatment-excluded mean |
+| `mean_mutagenic_treatment_excluded_primary` | primary `H10` treatment-excluded mean |
 | `mean_mutagenic_treatment_excluded_with_pdx_sensitivity` | PDX sensitivity mean |
-| `delta_no_detected_contrast` | `mean_all_samples - mean_no_detected_treatment_signal`; main comparator contrast for H10 exposure-label enrichment |
+| `delta_no_detected_contrast` | `mean_all_samples - mean_no_detected_treatment_signal`; main comparator contrast for `H10` exposure-label enrichment |
 | `delta_confirmed_naive_contrast` | `mean_all_samples - mean_confirmed_naive_or_pretreatment`; clean but usually underpowered sensitivity contrast |
 | `delta_broad` | `mean_all_samples - mean_broad_treatment_excluded` |
 | `delta_mutagenic_primary` | `mean_all_samples - mean_mutagenic_treatment_excluded_primary` |
@@ -306,7 +306,7 @@ Required summary fields:
 `delta_mutagenic_primary` estimates denominator dilution: how much the deliverable changes when primary mutagenic-treatment labels are removed.
 
 With `sample_level_rules: {}` and only `blca_dfarber_mskcc_2014` as a primary study-level mutagenic-treatment label, the first implementation is expected to produce many `no_contrast` or `underpowered_non_arbitrating` rows.
-That first result should be read as a plumbing and denominator-semantics checkpoint, not as a falsification of H10.
+That first result should be read as a plumbing and denominator-semantics checkpoint, not as a falsification of `H10`.
 The first biologically informative pass should wait for at least one deterministic sample-level mutagenic-treatment rule, preferably `blca_cornell_2016` or `difg_glass_2019`, or the interpretation must label the run as a no-contrast checkpoint.
 
 Definition of done:
@@ -336,14 +336,14 @@ Definition of done:
 - targeted unit tests pass;
 - `doc/interpretations/YYYY-MM-DD-t207-h10-treatment-impact.md` reports primary mutagenic exclusion separately from broad-treatment sensitivity;
 - the interpretation states that `no_detected_treatment_signal` is not confirmed treatment-naive.
-- the interpretation states whether the q027 signature-high arm was run, deferred, or left for a follow-up.
-- `summary/mut/table/gene_cancer_h10_treatment_impact.datapackage.json` lists the new H10 summary outputs, entity cross-references, config snapshot, and provenance inputs.
+- the interpretation states whether the `q027` signature-high arm was run, deferred, or left for a follow-up.
+- `summary/mut/table/gene_cancer_h10_treatment_impact.datapackage.json` lists the new `H10` summary outputs, entity cross-references, config snapshot, and provenance inputs.
 
 ## QA Checkpoints
 
 Input assertions:
 
-- all study IDs in the H10 config block exist in `studies`;
+- all study IDs in the `H10` config block exist in `studies`;
 - all configured sample-level rule columns exist in the raw clinical sample file;
 - every output sample has exactly one `study_id` and one `sample_id`;
 - every raw clinical sample ID used for sample-level rules joins to exactly one canonical `samples_annotated.feather` row;
@@ -373,9 +373,9 @@ Failure mode:
 ## Open Questions
 
 - Whether `brain_cptac_2020` should enter the primary sample-level rule set or remain sensitivity-only after subtype and timing review.
-- Whether AML relapse/treatment fields should be modeled in the same H10 pass or deferred to a hematologic-specific treatment semantics pass.
-- Whether the first impact note should promote any H10 output into canonical annotated frequency tables or keep it as an opt-in diagnostic artifact.
-- Whether q027's signature-high arm should be implemented inside `t207` after the exposure-label plumbing lands, or split into a follow-up task that consumes the h08 per-sample signature exposures.
+- Whether AML relapse/treatment fields should be modeled in the same `H10` pass or deferred to a hematologic-specific treatment semantics pass.
+- Whether the first impact note should promote any `H10` output into canonical annotated frequency tables or keep it as an opt-in diagnostic artifact.
+- Whether `q027`'s signature-high arm should be implemented inside `t207` after the exposure-label plumbing lands, or split into a follow-up task that consumes the `h08` per-sample signature exposures.
 
 ## Non-Goals
 
@@ -387,11 +387,11 @@ Failure mode:
 
 ## Acceptance Criteria
 
-- The H10 config schema encodes broad treatment, mutagenic-treatment, PDX sensitivity-only, positive-naive, and unknown-metadata labels separately.
+- The `H10` config schema encodes broad treatment, mutagenic-treatment, PDX sensitivity-only, positive-naive, and unknown-metadata labels separately.
 - Sample-level mixed-cohort labels are applied only when a deterministic clinical rule maps to sample IDs.
 - Treatment-aware per-study frequency views preserve panel-aware callable denominators.
 - The cross-study impact table reports no-detected-signal comparator contrast, confirmed-naive sensitivity contrast, primary mutagenic exclusion, broad treatment sensitivity, PDX sensitivity, rank shifts, and contrast-specific power statuses.
 - The final interpretation does not call `no_detected_treatment_signal` a confirmed naive baseline.
-- The final interpretation does not present the exposure-label pass as the q027 signature-high answer unless the signature-high arm is also run.
+- The final interpretation does not present the exposure-label pass as the `q027` signature-high answer unless the signature-high arm is also run.
 - The new summary outputs have a datapackage manifest.
 - Verification includes targeted pytest, ruff, Snakemake dry-run for `all_h10_treatment_impact`, and `uv run --frozen science validate --verbose`.

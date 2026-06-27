@@ -15,30 +15,30 @@ related:
 - task:t210
 ---
 
-# t210 q027 therapy-signature-high exclusion impact arm
+# t210 `q027` therapy-signature-high exclusion impact arm
 
 ## Goal
 
-Implement the q027 arm of H10 as a measured-signature exclusion test:
+Implement the `q027` arm of `H10` as a measured-signature exclusion test:
 flag samples with high measured SBS11/SBS31/SBS35/SBS87 exposure, rerun gene-cancer frequency summaries with those samples excluded, and report how pooled frequencies and ranks change.
 
 This is deliberately separate from the t207-t209 exposure-label arm.
 Clinical treatment labels answer "known or suspected treatment exposure."
-q027 asks whether samples carrying therapy-associated mutational signatures measurably affect the frequency deliverable.
+`q027` asks whether samples carrying therapy-associated mutational signatures measurably affect the frequency deliverable.
 
 ## Background
 
-t207-t209 built the H10 denominator machinery and repaired the known clinical-label comparator leak.
+t207-t209 built the `H10` denominator machinery and repaired the known clinical-label comparator leak.
 That substrate now produces exposure-label cohort views, impact tables, and a datapackage on `code/config/config-full.yml`.
 
-The q027 input is different.
-The current H10 full-config output has no SBS signature exposure table, and the existing H08 signature run is MC3-only and does not include SBS11/SBS31/SBS35/SBS87 in its assigned signature set.
-The q027 plan therefore starts by creating a therapy-signature exposure substrate rather than reusing t207 labels as if they were signature outcomes.
+The `q027` input is different.
+The current `H10` full-config output has no SBS signature exposure table, and the existing `H08` signature run is MC3-only and does not include SBS11/SBS31/SBS35/SBS87 in its assigned signature set.
+The `q027` plan therefore starts by creating a therapy-signature exposure substrate rather than reusing t207 labels as if they were signature outcomes.
 
 ## Scope
 
-Primary scope is a **probe-sized q027 implementation** over studies with plausible therapy-signature signal and enough mutation counts to make per-sample assignment meaningful.
-The initial candidate set should include the H10 clinical-label positives from t206-t209:
+Primary scope is a **probe-sized `q027` implementation** over studies with plausible therapy-signature signal and enough mutation counts to make per-sample assignment meaningful.
+The initial candidate set should include the `H10` clinical-label positives from t206-t209:
 
 | Study | Rationale | Expected therapy signature |
 |---|---|---|
@@ -53,12 +53,12 @@ Do not run a full 198-study signature assignment as the first pass.
 
 ## Inputs
 
-- `code/config/config-full.yml` for study IDs, raw data directory, and H10 clinical treatment labels.
+- `code/config/config-full.yml` for study IDs, raw data directory, and `H10` clinical treatment labels.
 - Per-study mutation and sample tables under `/data/packages/cbioportal/full/studies/{study}/`.
 - Raw cBioPortal clinical sample files under `/data/raw/cbioportal/{study}/data_clinical_sample.txt`.
 - `data/cosmic_cancer_type_signatures.tsv` for the baseline cancer-type restricted signature lookup.
 - Existing signature assignment code: `code/scripts/run_restricted_sigprofiler_assignment.py`.
-- Existing H10 impact code: `code/scripts/create_h10_treatment_freq_tables.py` and `code/scripts/create_h10_treatment_impact_table.py`.
+- Existing `H10` impact code: `code/scripts/create_h10_treatment_freq_tables.py` and `code/scripts/create_h10_treatment_impact_table.py`.
 
 ## Approach
 
@@ -82,7 +82,7 @@ at least one primary patient study must have `>=25` count-floor-passing samples 
 
 ### WP2: Therapy-signature assignment substrate
 
-Add a q027-specific config, for example `code/config/config-q027-therapy-signature-high.yml`, with:
+Add a `q027`-specific config, for example `code/config/config-q027-therapy-signature-high.yml`, with:
 
 - `studies`: the WP1-passing candidate studies;
 - `signature_assignment_lookup_keys`: the corresponding cancer-family keys;
@@ -124,7 +124,7 @@ Rows failing the count floor are not called negative; they must be labeled uneva
 
 ### WP4: Frequency and impact outputs
 
-Implement q027 frequency views parallel to H10 treatment views, without overloading the t207 label names.
+Implement `q027` frequency views parallel to `H10` treatment views, without overloading the t207 label names.
 Preferred outputs:
 
 - `studies/{id}/mut/table/gene_cancer_q027_signature_high_views.feather`;
@@ -154,27 +154,27 @@ Power statuses should follow t207 precedence:
 ### WP5: Interpretation
 
 Write `doc/interpretations/2026-06-01-t210-q027-therapy-signature-high-exclusion.md`.
-The note must state whether q027 is:
+The note must state whether `q027` is:
 
 - interpretable for at least one cancer type;
 - non-arbitrating because no samples are therapy-signature-high;
 - non-arbitrating because signature assignment is underpowered or count-floor limited.
 
-The note should compare, but not conflate, the q027 signature-high labels with t207-t209 clinical treatment labels.
+The note should compare, but not conflate, the `q027` signature-high labels with t207-t209 clinical treatment labels.
 
 ## Key Decisions
 
 ### Use measured signatures, not treatment labels
 
-Chosen: define the q027 exclusion set from SBS11/SBS31/SBS35/SBS87 exposure.
+Chosen: define the `q027` exclusion set from SBS11/SBS31/SBS35/SBS87 exposure.
 Rejected: reuse `mutagenic_treatment_signal` from t207-t209.
-Reason: q027 specifically asks whether signature-high samples alter frequency tables; treatment labels and signature-high samples are different sets.
+Reason: `q027` specifically asks whether signature-high samples alter frequency tables; treatment labels and signature-high samples are different sets.
 
 ### Probe first, not full-config signature assignment
 
-Chosen: run a scoped candidate-study feasibility pass before any full-config q027 workflow.
+Chosen: run a scoped candidate-study feasibility pass before any full-config `q027` workflow.
 Rejected: run per-sample SigProfiler assignment across all 198 configured studies immediately.
-Reason: panel samples often have low SBS counts, and the existing full-config H10 run has no signature substrate; a broad run could consume substantial time while producing mostly unevaluable samples.
+Reason: panel samples often have low SBS counts, and the existing full-config `H10` run has no signature substrate; a broad run could consume substantial time while producing mostly unevaluable samples.
 
 ### Absolute exposure threshold as primary
 
@@ -182,11 +182,11 @@ Chosen: primary high rule is at least 50 SBS assigned to the target therapy sign
 Rejected: use any non-zero exposure as primary.
 Reason: tiny non-zero refit weights can reflect assignment bleed, especially in low-count samples; the primary rule should privilege materially burdened samples.
 
-### Keep q027 outputs separate from H10 treatment views
+### Keep `q027` outputs separate from `H10` treatment views
 
 Chosen: write `q027_signature_high_*` files and cohort views.
 Rejected: add more columns to `gene_cancer_h10_treatment_impact_ratio.feather`.
-Reason: t207-t209 is an exposure-label denominator layer; q027 is an outcome-signature layer and needs independent provenance.
+Reason: t207-t209 is an exposure-label denominator layer; `q027` is an outcome-signature layer and needs independent provenance.
 
 ## Validation
 
@@ -197,7 +197,7 @@ Tests:
 - `annotate_q027_signature_high.py` labels high, low, and unevaluable samples correctly on synthetic exposures;
 - frequency views reproduce canonical `all_samples` counts and remove exactly the `therapy_signature_high` samples in primary and sensitivity views;
 - impact table reports `no_contrast` before `underpowered_non_arbitrating`;
-- datapackage is produced for the q027 impact outputs.
+- datapackage is produced for the `q027` impact outputs.
 
 Workflow checks:
 
@@ -221,7 +221,7 @@ uv run --frozen science validate --verbose
 
 ## Acceptance Criteria
 
-- `task:t210` has a q027-specific config, scripts, tests, Snakemake target, outputs, datapackage, and interpretation.
-- The q027 interpretation explicitly separates measured signature-high exclusion from t207-t209 clinical-label exclusion.
+- `task:t210` has a `q027`-specific config, scripts, tests, Snakemake target, outputs, datapackage, and interpretation.
+- The `q027` interpretation explicitly separates measured signature-high exclusion from t207-t209 clinical-label exclusion.
 - If the run is non-arbitrating, the reason is named as no signal, low count-floor support, no comparator, or underpowered cross-study support.
-- H10 remains proposed unless q027 produces an interpretable effect that materially changes frequency/rank outputs and survives the pre-specified sensitivity checks.
+- `H10` remains proposed unless `q027` produces an interpretable effect that materially changes frequency/rank outputs and survives the pre-specified sensitivity checks.

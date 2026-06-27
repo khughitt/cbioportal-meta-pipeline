@@ -23,13 +23,13 @@ tasks t048–t056.
 Anchor methods verified by this run:
 
 - DerSimonian–Laird random-effects pooling (seminal).
-- REML (Viechtbauer / `metafor`) and the Langan 2018 between-study variance comparison.
+- REML (Viechtbauer / `metafor`) and the Langan 2018 [@Langan2018] between-study variance comparison.
 - Hartung–Knapp–Sidik–Jonkman adjustment for small-K pooled CIs.
-- Stijnen 2010 / Nyaga 2014 GLMM-based pooling of binomial proportions.
-- Barendregt 2013 (Freeman–Tukey arcsine) and Lin & Xu 2020 (arcsine vs logit/GLMM).
-- Higgins & Thompson 2002 (I²) and IntHout 2016 (prediction intervals).
-- Rare-events: Stijnen 2010 (beta-binomial GLMM), Tsujimoto 2024 (continuity corrections),
-  Efthimiou 2019 (network MH for rare events), Piaget-Rossel 2019 (homogeneous-effect
+- Stijnen 2010 [@Stijnen2010] / Nyaga 2014 [@Nyaga2014] GLMM-based pooling of binomial proportions.
+- Barendregt 2013 [@Barendregt2013] (Freeman–Tukey arcsine) and Lin & Xu 2020 [@LinXu2020] (arcsine vs logit/GLMM).
+- Higgins & Thompson 2002 [@Higgins2002] (I²) and IntHout 2016 [@IntHout2016] (prediction intervals).
+- Rare-events: Stijnen 2010 [@Stijnen2010] (beta-binomial GLMM), Tsujimoto 2024 [@Tsujimoto2024] (continuity corrections),
+  Efthimiou 2019 [@Efthimiou2019] (network MH for rare events), Piaget-Rossel 2019 [@PiagetRossel2019] (homogeneous-effect
   framework for rare events).
 - Martínez-Jiménez 2020 (IntOGen compendium) as a cancer-genomics-native consensus-voting
   pipeline that sits between "naive pooling" and "random-effects per-gene meta-analysis".
@@ -38,19 +38,19 @@ Anchor methods verified by this run:
 
 | ID | Query | Source | Purpose |
 |----|-------|--------|---------|
-| q1 | `DerSimonian-Laird random effects meta-analysis` | pubmed | Seminal random-effects anchor |
-| q2 | `meta-analysis pooling proportions Freeman-Tukey arcsine logit` | pubmed | Proportions-specific transforms |
-| q3 | `metafor Viechtbauer package meta-analysis` | pubmed | R-package authority |
-| q4 | `Hartung Knapp random effects meta-analysis adjustment` | pubmed | Small-K CI adjustment |
-| q5 | `meta-analysis rare events Mantel-Haenszel Peto odds ratio` | pubmed | Zero-cell / rare-events |
-| q6 | `Bayesian hierarchical meta-analysis proportions` | pubmed | Bayesian hierarchical alternative |
-| q7 | `Paule Mandel meta-analysis estimator` | pubmed | Alt τ² estimator |
-| q8 | `Higgins Thompson heterogeneity meta-analysis I2` | pubmed | Heterogeneity statistics |
-| q9 | `Sidik Jonkman tau squared estimator meta-analysis` | pubmed | Alt τ² estimator |
-| q10 | `Barendregt meta-analysis prevalence arcsine` | pubmed | Seminal proportions paper |
-| q11 | OpenAlex: DOI anchors for DerSimonian1986, Viechtbauer2010, Langan2018, Stijnen2010, Lin2020, Barendregt2013, Higgins2002, IntHout2016, MartinezJimenez2020 | openalex | Identifier verification |
-| q12 | OpenAlex: `Nyaga meta-analysis proportions confidence intervals` | openalex | metaprop / Nyaga 2014 |
-| q13 | OpenAlex: `generalized linear mixed model meta-analysis proportions binomial` | openalex | GLMM alternative to transforms |
+| query-01 | `DerSimonian-Laird random effects meta-analysis` | pubmed | Seminal random-effects anchor |
+| query-02 | `meta-analysis pooling proportions Freeman-Tukey arcsine logit` | pubmed | Proportions-specific transforms |
+| query-03 | `metafor Viechtbauer package meta-analysis` | pubmed | R-package authority |
+| query-04 | `Hartung Knapp random effects meta-analysis adjustment` | pubmed | Small-K CI adjustment |
+| query-05 | `meta-analysis rare events Mantel-Haenszel Peto odds ratio` | pubmed | Zero-cell / rare-events |
+| query-06 | `Bayesian hierarchical meta-analysis proportions` | pubmed | Bayesian hierarchical alternative |
+| query-07 | `Paule Mandel meta-analysis estimator` | pubmed | Alt τ² estimator |
+| query-08 | `Higgins Thompson heterogeneity meta-analysis I2` | pubmed | Heterogeneity statistics |
+| query-09 | `Sidik Jonkman tau squared estimator meta-analysis` | pubmed | Alt τ² estimator |
+| query-10 | `Barendregt meta-analysis prevalence arcsine` | pubmed | Seminal proportions paper |
+| query-11 | OpenAlex: DOI anchors for DerSimonian1986, Viechtbauer2010, Langan2018, Stijnen2010, Lin2020, Barendregt2013, Higgins2002, IntHout2016, MartinezJimenez2020 | openalex | Identifier verification |
+| query-12 | OpenAlex: `Nyaga meta-analysis proportions confidence intervals` | openalex | metaprop / Nyaga 2014 [@Nyaga2014] |
+| query-13 | OpenAlex: `generalized linear mixed model meta-analysis proportions binomial` | openalex | GLMM alternative to transforms |
 
 ## Sources and Run Metadata
 
@@ -71,10 +71,10 @@ Anchor methods verified by this run:
 | # | Citation | Year | IDs | Tier | Why it matters |
 |---|---|---|---|---|---|
 | 1 | DerSimonian R & Laird N. "Meta-analysis in clinical trials." *Control Clin Trials* | 1986 | DOI: 10.1016/0197-2456(86)90046-2; OpenAlex: W2107328434 | Core now | Seminal random-effects estimator. Default option in `metafor::rma` when `method="DL"`. 38,911 citations. Must be cited when we switch away from naive pooling. |
-| 2 | Viechtbauer W. "Conducting Meta-Analyses in R with the metafor Package." *J Stat Softw* | 2010 | DOI: 10.18637/jss.v036.i03; OpenAlex: W2139168999 | Core now | Canonical `metafor` manual. Defines `rma`, `rma.mh`, `rma.glmm`, `escalc`; describes DL, REML, PM, SJ, HE, ML, EB estimators side-by-side. Primary tool-of-record if we add meta-analytic pooling in R. |
+| 2 | Viechtbauer W. "Conducting Meta-Analyses in R with the metafor Package." *J Stat Softw* | 2010 | DOI: `10.18637/jss.v036.i03`; OpenAlex: W2139168999 | Core now | Canonical `metafor` manual. Defines `rma`, `rma.mh`, `rma.glmm`, `escalc`; describes DL, REML, PM, SJ, HE, ML, EB estimators side-by-side. Primary tool-of-record if we add meta-analytic pooling in R. |
 | 3 | Langan D, Higgins JPT, Jackson D, et al. "A comparison of heterogeneity variance estimators in simulated random-effects meta-analyses." *Res Synth Methods* | 2018 | DOI: 10.1002/jrsm.1316; OpenAlex: W2885675882; PMID: 30067315 (not reconfirmed in this note) | Core now | Simulation comparison of DL, REML, PM, SJ, HE, ML, EB τ² estimators. Recommends **REML (with HKSJ for K<30)** as general default — the key modern guidance for *which* random-effects method to use. Directly answers "what should we run by default". |
 | 4 | Stijnen T, Hamza TH, Özdemir P. "Random effects meta-analysis of event outcome in the framework of the generalized linear mixed model with applications in sparse data." *Stat Med* | 2010 | DOI: 10.1002/sim.4040; OpenAlex: W2148361291 | Core now | Exact binomial / beta-binomial GLMM for sparse event meta-analysis — the principled alternative to continuity corrections and transforms when per-study mutation counts are small or zero for rare genes. Direct mapping: per-study (gene-mutated, total-sequenced) counts → `rma.glmm(measure="PLO")`. |
-| 5 | Lin L & Xu C. "Arcsine-based transformations for meta-analysis of proportions: Pros, cons, and alternatives." *Health Sci Rep* | 2020 | DOI: 10.1002/hsr2.178; OpenAlex: W3044366033 | Core now | 2020 critique of Freeman–Tukey arcsine for meta-analysis of proportions. Argues for **generalized linear mixed models (logit link)** and Bayesian alternatives over arcsine transforms. This is the paper that replaces Barendregt 2013 as the current-generation default recommendation for pooling proportions. |
+| 5 | Lin L & Xu C. "Arcsine-based transformations for meta-analysis of proportions: Pros, cons, and alternatives." *Health Sci Rep* | 2020 | DOI: 10.1002/hsr2.178; OpenAlex: W3044366033 | Core now | 2020 critique of Freeman–Tukey arcsine for meta-analysis of proportions. Argues for **generalized linear mixed models (logit link)** and Bayesian alternatives over arcsine transforms. This is the paper that replaces Barendregt 2013 [@Barendregt2013] as the current-generation default recommendation for pooling proportions. |
 | 6 | Barendregt JJ, Doi SA, Lee YY, Norman RE, Vos T. "Meta-analysis of prevalence." *J Epidemiol Community Health* | 2013 | DOI: 10.1136/jech-2013-203104; OpenAlex: W1585424492; PMID: 23963506 | Core now | The canonical Freeman–Tukey double arcsine paper for pooling prevalences. Context read for Lin & Xu 2020's critique. Still widely used in practice; know why we should NOT default to it. |
 | 7 | Nyaga VN, Arbyn M, Aerts M. "Metaprop: a Stata command to perform meta-analysis of binomial data." *Arch Public Health* | 2014 | DOI: 10.1186/2049-3258-72-39; OpenAlex: W2133564174 | Core now | The de-facto reference for **meta-analysis of single proportions** (no control arm) — exactly the "per-study mutation-ratio" problem this project has. Covers arcsine vs logit, Wilson/exact CIs, and multiple heterogeneity methods. R equivalent: `meta::metaprop`. |
 | 8 | Higgins JPT & Thompson SG. "Quantifying heterogeneity in a meta-analysis." *Stat Med* | 2002 | DOI: 10.1002/sim.1186; OpenAlex: W2126930838 | Core now | Seminal I² paper. Required cite for any heterogeneity diagnostic we report alongside pooled gene-cancer estimates. 36,213 citations. |
@@ -88,21 +88,21 @@ Anchor methods verified by this run:
 
 **Core now (read first):**
 
-1. Langan 2018 — which τ² estimator to pick. Closes the DL-vs-REML-vs-PM-vs-SJ debate with simulation data.
-2. Lin & Xu 2020 — what to do with proportions specifically. Modern critique of Freeman–Tukey.
-3. Stijnen 2010 — GLMM approach for sparse/zero-event pooling. Directly applicable to per-gene counts.
-4. Viechtbauer 2010 — `metafor` as the tool of record.
-5. Nyaga 2014 — single-proportion meta-analysis recipe (what we actually need — no control arm per study).
+1. Langan 2018 [@Langan2018] — which τ² estimator to pick. Closes the DL-vs-REML-vs-PM-vs-SJ debate with simulation data.
+2. Lin & Xu 2020 [@LinXu2020] — what to do with proportions specifically. Modern critique of Freeman–Tukey.
+3. Stijnen 2010 [@Stijnen2010] — GLMM approach for sparse/zero-event pooling. Directly applicable to per-gene counts.
+4. Viechtbauer 2010 [@Viechtbauer2010] — `metafor` as the tool of record.
+5. Nyaga 2014 [@Nyaga2014] — single-proportion meta-analysis recipe (what we actually need — no control arm per study).
 
 **Relevant next:**
 
-6. DerSimonian & Laird 1986 — seminal citation obligation.
-7. Higgins & Thompson 2002 — I² obligation.
-8. IntHout 2016 — prediction intervals obligation.
-9. Barendregt 2013 — know why Freeman–Tukey is not our default.
+6. DerSimonian & Laird 1986 [@DerSimonian1986] — seminal citation obligation.
+7. Higgins & Thompson 2002 [@Higgins2002] — I² obligation.
+8. IntHout 2016 [@IntHout2016] — prediction intervals obligation.
+9. Barendregt 2013 [@Barendregt2013] — know why Freeman–Tukey is not our default.
 10. Martínez-Jiménez 2020 — cancer-genomics-native aggregation baseline to compare against.
-11. Tsujimoto 2024 — zero-event continuity corrections.
-12. Efthimiou 2019 — network MH extension.
+11. Tsujimoto 2024 [@Tsujimoto2024] — zero-event continuity corrections.
+12. Efthimiou 2019 [@Efthimiou2019] — network MH extension.
 
 **Peripheral monitor:**
 
@@ -112,13 +112,13 @@ Anchor methods verified by this run:
 
 - **Hartung–Knapp–Sidik–Jonkman (HKSJ) primary sources** (Hartung 2001, Sidik & Jonkman 2002 /
   2005) were not retrieved as individual records in this run — they are well covered by
-  Langan 2018 and IntHout 2016. Flag as known gap if a future reviewer wants primary cites.
-- **Paule–Mandel (1982)** primary paper not retrieved; covered by Langan 2018. Flag as
+  Langan 2018 [@Langan2018] and IntHout 2016 [@IntHout2016]. Flag as known gap if a future reviewer wants primary cites.
+- **Paule–Mandel (1982)** primary paper not retrieved; covered by Langan 2018 [@Langan2018]. Flag as
   potential gap.
-- **dmetar / "Doing Meta-Analysis in R" handbook** (Harrer, Cuijpers, Furukawa, Ebert 2021,
+- **dmetar / "Doing Meta-Analysis in R" handbook** (2021 Harrer/Cuijpers/Furukawa/Ebert,
   CRC Press) did not surface in OpenAlex — likely because it is a book rather than a
   journal article. Manually record as a reference book in `papers/references.bib`
-  `@book` entry when adding `dmetar` to the pipeline's dependency list.
+  BibTeX book entry when adding `dmetar` to the pipeline's dependency list.
 - **Bayesian hierarchical pooling of cancer mutation frequencies (`brms` / `rstanarm` / Stan)**:
   no dedicated genomics-application paper found. The closest methodology references are
   Williams, Rast & Bürkner (2018/2019) tutorials — not retrieved this run. Flag as gap; the
@@ -129,12 +129,12 @@ Anchor methods verified by this run:
 - **Genomics applications of meta-analytic pooling to somatic-mutation frequencies**: the
   search surfaced essentially zero cancer-genomics papers that run random-effects meta-analysis
   at the per-gene-per-cancer-type level. IntOGen-style consensus voting (Martínez-Jiménez 2020)
-  and Bailey 2018 26-tool consensus are the closest analogues, but neither runs a
+  and Bailey 2018 [@Bailey2018] 26-tool consensus are the closest analogues, but neither runs a
   random-effects model. This confirms the "largest methodology gap" framing in
   `topic:cross-study-meta-analysis-cancer-genomics`. **This project would be novel if we
   actually produce per-gene pooled mutation rates with τ² / I² / prediction intervals.**
 - **Rare-event methods not covered (Peto one-step OR)**: we did not pull a primary Peto
-  1980s reference; Efthimiou 2019 covers it indirectly.
+  1980s reference; Efthimiou 2019 [@Efthimiou2019] covers it indirectly.
 
 ## Recommended Next Actions
 
@@ -144,10 +144,10 @@ Anchor methods verified by this run:
      equivalent Stan / brms random-intercept binomial model. This handles zero counts natively,
      respects the binomial data-generating process, and scales to thousands of genes.
    - Report **I², τ², and a 95% prediction interval** alongside the pooled estimate
-     (Higgins & Thompson 2002; IntHout 2016).
+     (Higgins & Thompson 2002 [@Higgins2002]; IntHout 2016 [@IntHout2016]).
    - For K < 30 studies per gene-cancer pair, apply **HKSJ variance adjustment**.
    - Keep **arcsine / Freeman–Tukey** as a disclosed alternative only; do **not** use it as the
-     default (Lin & Xu 2020).
+     default (Lin & Xu 2020 [@LinXu2020]).
    - Compare pooled estimate against **naive sample-weighted ratio** and against **IntOGen
      consensus** to show value-add.
 

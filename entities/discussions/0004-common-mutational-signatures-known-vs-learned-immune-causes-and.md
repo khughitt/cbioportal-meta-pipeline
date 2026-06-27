@@ -9,6 +9,11 @@ related:
 - topic:mutational-signatures
 source_refs:
 - paper:Alexandrov2020
+- cite:Alexandrov2013CellRep
+- cite:Alexandrov2013Nature
+- cite:NikZainal2012
+- cite:Kucab2019
+- cite:Degasperi2022
 focus_type: topic
 focus_ref: topic:mutational-signatures
 mode: qa
@@ -31,14 +36,9 @@ This project (`cbioportal`) does **not** currently extract signatures (see
 `topic:mutational-signatures`). The discussion is therefore framed around what a downstream
 signature step *would* import as assumptions, and where those assumptions are most fragile.
 
-> Reference discipline: only `Alexandrov2020` (COSMIC v3 / PCAWG signatures) is in
-> `papers/references.bib`. The other works named below — Alexandrov 2013 (the original NMF
-> framework), Nik-Zainal 2012 (breast-cancer signatures/kataegis), Kucab 2019, Petljak 2019,
-> Degasperi 2022, and the SigProfiler/SignatureAnalyzer tooling — are **[UNVERIFIED]** here:
-> surveyed from background knowledge, not adopted into the bib (consistent with the
-> candidate-refs-not-in-bib convention). Treat their exact claims as needing verification
-> before citation. `Degasperi2022` does exist in the bib but is not yet wired into a signature
-> topic note.
+> Reference discipline: claims below are backed by the cited mutational-signature framework,
+> catalog, breast-cancer, experimental-mutagen, and GEL WGS papers.
+> Related tooling papers are cited only where they support a methodological claim.
 
 ## Current Position
 
@@ -68,9 +68,7 @@ project's likely input. The naive `Exposure → Signature` model is almost never
 observational tumor catalogs: tissue and repair capacity are common causes of both exposure and
 spectrum, and selection sits on the burden side, so any "X causes signature S" claim must
 condition on tissue, treatment, and ancestry and separate spectrum-attribution from
-burden-attribution. Finally, every non-`Alexandrov2020` work named here remains **[UNVERIFIED]**
-— surveyed from background knowledge, not adopted into the bib — so their specific claims need
-verification before citation.
+burden-attribution.
 
 ## Q1 — Most common signatures: known (labelled) vs learned (latent)
 
@@ -79,7 +77,7 @@ verification before citation.
 Both COSMIC "known" signatures and a project's "learned" factors come from the **same
 generative model**: a non-negative matrix factorization (NMF) of the 96-channel SBS catalog,
 `M ≈ W·H`, where `W` are signature spectra and `H` their per-sample exposures
-(Alexandrov 2013 [UNVERIFIED], `Alexandrov2020`). The difference is not algorithmic; it is what you do
+[@Alexandrov2013CellRep; @Alexandrov2020]. The difference is not algorithmic; it is what you do
 *after* factorization:
 
 | | "Known" (COSMIC / labelled) | "Learned" (de novo latent) |
@@ -101,7 +99,7 @@ softer than it sounds: the unbiased step is the NMF; the bias enters at (a) rank
 Across pan-cancer cohorts the consistently high-prevalence SBS signatures are:
 
 - **SBS1** — spontaneous 5-methylcytosine deamination; a near-universal **clock-like** signature
-  correlating with age (Alexandrov 2013 [UNVERIFIED]; Nik-Zainal 2012 [UNVERIFIED]). Present in essentially all tissues.
+  correlating with age across many cancer types [@Alexandrov2013Nature; @Alexandrov2020].
 - **SBS5** — the second clock-like signature; flat spectrum, ubiquitous, **aetiology still
   poorly understood** despite being one of the most common — a key honesty check on "we
   understand signatures."
@@ -128,7 +126,7 @@ in the de novo step, and only if rank `k` is large enough to resolve it without 
 
 **Rarely, and almost never as a *direct* mutagenic signature.** The dominant labelled
 aetiologies are exogenous mutagens (UV, tobacco, aflatoxin), endogenous enzymatic processes
-(APOBEC, POLE), and DNA-repair defects (MMR, HR/BRCA-associated SBS3; Nik-Zainal 2012 [UNVERIFIED]). The
+(APOBEC, POLE), and DNA-repair defects (MMR, HR/BRCA-associated SBS3; [@NikZainal2012; @Alexandrov2020]). The
 immune system enters causal stories at three removes, none of which is a clean "immune
 signature":
 
@@ -166,8 +164,8 @@ Three structural reasons the field is biased toward "things we already think cau
 2. **Aetiology assignment is correlational and post-hoc.** Most labels were assigned by
    correlating an extracted spectrum with a known exposure (smokers have SBS4; melanomas have
    SBS7). Correlation across heterogeneous cohorts, confounded by tissue, ancestry, age, and
-   treatment. Experimental validation (mutagen-exposed organoids/cell lines, e.g. Kucab 2019
-   **[UNVERIFIED]**) exists for *some* signatures but not most.
+   treatment. Experimental validation in mutagen-exposed cell systems exists for *some*
+   signatures, especially environmental agents, but not most [@Kucab2019].
 3. **SBS5 is the cautionary tale.** It is among the most common signatures and remains
    essentially unexplained — direct evidence that abundance does not imply we have identified
    the cause, and that "unknown" factors are not rare leftovers but central.

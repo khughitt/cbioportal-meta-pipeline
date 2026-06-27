@@ -943,7 +943,7 @@ Reduce the remaining prose_lints warnings from science validate: bare-author-yea
 
 ## [t232] Audit and resolve Science unverified markers
 - priority: P2
-- status: proposed
+- status: active
 - aspects: []
 - group: science-health-cleanup
 - created: 2026-06-27

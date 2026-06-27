@@ -25,13 +25,13 @@ for the pre-registered design (`pre-registration:0003-h08-positive-control-agnos
 positive-control recovery of known aetiologies (UV/smoking/APOBEC/MMR) as validation before claiming
 novel hits?**
 
-This determines the H08b **novelty bar**: h08's positive-control prong (H08a) can proceed regardless,
-but the discovery prong (H08b) only adds value over what the field already has.
+This determines the discovery-prong **novelty bar**: hypothesis:0007's positive-control prong can proceed regardless,
+but the discovery prong only adds value over what the field already has.
 
-## Headline Finding (the one that matters for h08)
+## Headline Finding (the one that matters for hypothesis:0007)
 
 **The agnostic covariate↔signature-activity association is not a novel method — it is an established
-sub-field with several named tools and at least two large systematic scans.** h08's methodological
+sub-field with several named tools and at least two large systematic scans.** hypothesis:0007's methodological
 contribution must therefore be reframed: *not* "invent agnostic signature-aetiology association"
 (done) but a narrower, defensible delta. The genuinely under-occupied niche, after this scan:
 
@@ -43,18 +43,18 @@ contribution must therefore be reframed: *not* "invent agnostic signature-aetiol
    `paper:Luo2023a` is the closest (signatures × TME) but uses immune-deconvolution features, not
    de-novo expression modules, and is survival-oriented.
 2. **The cross-decomposition concordance framing** (latent mutation factor `H` ↔ latent expression
-   module, as co-equal unsupervised decompositions of the same patients) is h08's distinctive
+   module, as co-equal unsupervised decompositions of the same patients) is hypothesis:0007's distinctive
    epistemic move and was **not** found as a stated design in prior work.
 3. **Explicit pre-registered positive-control gating** (recover the known map *before* trusting novel
    hits, with a frozen pass rule) is methodologically standard-implied but **not pre-registered** in
    any prior paper — all do post-hoc validation.
 
-**Net effect on h08:** H08a (positive control) is well-supported as *feasible* — multiple papers
+**Net effect on hypothesis:0007:** the positive-control prong is well-supported as *feasible* — multiple papers
 recover UV/smoking/APOBEC/MMR unprompted (see table), so the gate is achievable, not aspirational.
-H08b (discovery) needs its scope **narrowed to the expression-module / cross-decomposition delta**;
+the discovery prong needs its scope **narrowed to the expression-module / cross-decomposition delta**;
 a generic "associate signatures with covariates" discovery claim would be **scooped**. This should be
-recorded against `pre-registration:0003-h08-positive-control-agnostic-association-must-recover-known-signature` (whose §Null Result Plan already defers H08b
-to a separate registration) — the H08b pre-reg, when authored, must cite this scan and claim only the
+recorded against `pre-registration:0003-h08-positive-control-agnostic-association-must-recover-known-signature` (whose §Null Result Plan already defers the discovery prong
+to a separate registration) — that pre-registration, when authored, must cite this scan and claim only the
 expression-module niche.
 
 ## What prior work has done (catalogued)
@@ -69,10 +69,10 @@ expression-module niche.
 | **PPF** (Poisson process factorization) | locus-specific genomic covariates (incl. CNV) via log-linear exposure | recent methods paper | `paper:Zito2025` |
 | **SuperSigs** | **supervised** etiology metadata (aging, obesity, smoking) — NB-NMF + SVM | builds signatures *from* etiology (the opposite framing) | `paper:Afsari2021` |
 
-`paper:Robinson2019` (TCSM) is the **direct conceptual predecessor of h08**: explicitly framed as the
+`paper:Robinson2019` (TCSM) is the **direct conceptual predecessor of hypothesis:0007**: explicitly framed as the
 first method to model how tumor covariates change signature exposure *to infer etiology*, and it
-validates by recovering the textbook map. h08's H08a is, essentially, a pre-registered re-run of the
-TCSM validation logic on the MC3 substrate; this is fine for a positive control but means H08a is
+validates by recovering the textbook map. The positive-control prong is, essentially, a pre-registered re-run of the
+TCSM validation logic on the MC3 substrate; this is fine for a positive control but means that prong is
 **confirmatory-of-method**, not novel.
 
 ### B. Large systematic association scans (discovery studies)
@@ -81,18 +81,18 @@ TCSM validation logic on the MC3 substrate; this is fine for a positive control 
 |---|---|---|---|---|
 | **Sørensen 2023** | 736 DNA-repair-gene deficiencies | 6,065 WGS / 32 types | BRCA1/2→deletions, MMR→MSI indels, TP53→SVs; +novel ATRX/IDH1/PTEN/SMARCA4 | `paper:Sorensen2023` |
 | **Vali-Pour 2022** | rare germline variants | large pan-cancer | MBD4→SBS1 (novel), BRCA→SBS3, APOBEC3-del→SBS2/13 | `paper:ValiPour2022` |
-| **Luo 2023** | TME / immune deconvolution | 8,000+ TCGA | clock-like + AID/APOBEC most widespread | `paper:Luo2023a` |
+| **Luo 2023 [@Luo2023a]** | TME / immune deconvolution | 8,000+ TCGA | clock-like + AID/APOBEC most widespread | `paper:Luo2023a` |
 
-`paper:Sorensen2023` is the closest published analogue to the **h08 scan shape** (systematic
+`paper:Sorensen2023` is the closest published analogue to the **hypothesis:0007 scan shape** (systematic
 predictive association, gene-deficiency covariates, explicit positive-control recovery + novel hits).
-h08's expression-module axis is the main thing it does not cover.
+hypothesis:0007's expression-module axis is the main thing it does not cover.
 
 ### C. Single-covariate exemplars (classic anchors)
 
 - `paper:Kim2016` — somatic **ERCC2 → NER-deficiency signature** in urothelial cancer; signature also
   smoking-associated. The archetype of a single covariate↔signature association.
 - `paper:Adler2023` — smoking (SBS4) + APOBEC (SBS2/13) processes generate functional protein-
-  truncating variants; supports functional interpretation of h08 arms B and C.
+  truncating variants; supports functional interpretation of hypothesis:0007 arms B and C.
 
 ## Query Set
 
@@ -148,20 +148,20 @@ today; `papis --from scihub` mirror was unreachable. The 4 acquired came via the
 endpoints. (Honest correction: an earlier draft claimed "9 of 10 acquired" — that was written before
 verification and was false; the downloads had failed. Corrected here to the 4 that genuinely landed.)
 
-## Implications for h08 (action items)
+## Implications for hypothesis:0007 (action items)
 
-1. **Narrow H08b scope** to the expression-module / cross-decomposition-concordance delta before
+1. **Narrow the discovery-prong scope** to the expression-module / cross-decomposition-concordance delta before
    authoring its pre-registration; a generic covariate↔signature discovery claim is scooped by
    `paper:Robinson2019` / `paper:Sorensen2023`.
 2. **Cite `paper:Robinson2019` (TCSM) as the method predecessor** in
-   `method:h08-agnostic-association-model` — h08's H08a is a pre-registered re-validation of the TCSM
+   `method:h08-agnostic-association-model` — the positive-control prong is a pre-registered re-validation of the TCSM
    logic, which is a strength (reproducible positive control) but should be stated honestly, not as
    novelty.
 3. **`paper:Sorensen2023` is the design template** for the scan shape (systematic + positive controls
-   + novel hits with FDR); align h08's reporting with it.
-4. **H08a feasibility is corroborated** — multiple independent papers recover the textbook map
+   + novel hits with FDR); align hypothesis:0007's reporting with it.
+4. **Positive-control feasibility is corroborated** — multiple independent papers recover the textbook map
    unprompted, so the 2-of-3 / top-3 gate in `pre-registration:0003-h08-positive-control-agnostic-association-must-recover-known-signature` is achievable.
-5. t177 marked **done**; these implications are reflected in the h08 method note. The future H08b
+5. t177 marked **done**; these implications are reflected in the hypothesis:0007 method note. The future discovery-prong
    pre-reg must claim only the expression-module niche.
 
 ## Process Reflection

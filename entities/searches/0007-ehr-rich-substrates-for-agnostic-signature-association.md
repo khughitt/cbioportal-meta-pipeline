@@ -34,7 +34,7 @@ by the zenodo/GEO adapters — so ranking is LLM-knowledge-driven, cross-referen
 
 ## Candidate substrates
 
-| Substrate | Mutations | Signature-grade? | Clinical / EHR richness | Access | Verdict for h08 |
+| Substrate | Mutations | Signature-grade? | Clinical / EHR richness | Access | Verdict for hypothesis:0007 |
 |---|---|---|---|---|---|
 | **GENIE BPC** (`dataset:aacr-genie-bpc`) | Panel | Pooled/refit only | **Highest public EHR-adjacency:** PRISSMM treatment, ICD-O, RECIST timelines, outcomes | Synapse + DUA | **Best EHR covariate source**; panel caps to cohort-level signatures |
 | **TCGA MC3** (`dataset:tcga-mc3`) | WES consensus | **Per-sample de-novo OK** (2.9M PASS / 9,104 samples / 32 types) | Structured clinical + (via PanCanAtlas) co-measured mRNA | Public | **Best signature engine**; already ingested as `tcga_mc3` |
@@ -51,9 +51,9 @@ by the zenodo/GEO adapters — so ranking is LLM-knowledge-driven, cross-referen
   **MSK-CHORD** (NLP-derived EHR features) — structured *derivatives* of EHR text, not the text.
 - **Fundamental tension** between the two selection axes: the EHR-richest substrates (BPC, CHORD)
   are **panel-sequenced** (weak per-sample signatures), while the best per-sample substrate (MC3
-  WES + co-expression) carries only structured clinical metadata. → h08 runs on **two tracks**:
+  WES + co-expression) carries only structured clinical metadata. → hypothesis:0007 runs on **two tracks**:
   - *Signature-grade:* MC3 (per-sample de-novo) × PanCanAtlas expression + structured clinical →
-    positive-control + expression-discovery prong (H08a/b).
+    positive-control + expression-discovery prongs.
   - *EHR-covariate:* GENIE BPC / MSK-CHORD with **cohort-pooled** signatures × rich EHR terms →
     tests whether EHR-like covariates add aetiology signal the structured fields cannot.
 - Expression as covariate is **already exported** for cBioPortal studies carrying mRNA

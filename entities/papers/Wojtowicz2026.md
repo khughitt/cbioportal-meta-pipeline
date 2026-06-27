@@ -115,13 +115,14 @@ The result is a vector of 32 × 3 = 96 independent conditional probabilities —
 - **RePrintPy** open-source Python package: https://github.com/wojtowicz-lab/RePrintPy
 - Computes RePrints from COSMIC or custom signature matrices via CLI
 - Generates similarity dendrograms, heatmaps, and exports RePrint matrices for integration with downstream pipelines
-- License: not stated in preprint [UNVERIFIED]
+- License: not stated in the preprint; check the repository before reuse
 - Hardware requirements: minimal (CPU-only; operates on 96-dimensional vectors)
 
 ## Follow-up
 
 - Run RePrintPy on the signatures extracted from the cbioportal cross-study dataset to pre-stratify by repair mechanism before running h08 covariate associations.
-- The Wojtowicz et al. 2021 (Repairsig) paper (cited here) deconvolves damage vs repair contributions; read alongside this paper for complementary perspective — `cite:Wojtowicz2021` [UNVERIFIED: confirm whether Wojtowicz2021 is already in the bibliography].
+- The Wojtowicz et al. 2021 (Repairsig) paper cited by this preprint deconvolves damage vs
+  repair contributions; add it to the bibliography before using it as local evidence.
 - Amgalan et al. 2023 (Genome Medicine) — influence network model for relations between biological processes and signatures — cited here as additional prior work relevant to h08b.
 - The SBS8 → NER assignment is a concrete H08b test case: does the h08 covariate scan pick up a UV/NER-related covariate for SBS8 in skin or lung cohorts?
 - Consider whether RePrint-derived clusters can serve as a multiple-testing correction grouping in the h08 covariate scan (test cluster-level exposure rather than per-signature).

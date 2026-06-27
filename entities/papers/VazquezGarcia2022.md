@@ -138,7 +138,7 @@ mutation frequency patterns in ovarian cancer.
 
 - **SIGNALS algorithm** for per-cell allele imbalance inference from scRNA-seq (previously
   published alongside the broader HGSOC genomic landscape paper, Shah lab).
-- Data and code deposition referenced in the paper; specific repository URL [UNVERIFIED].
+- Data and code deposition are referenced in the paper; the specific repository URL is not captured in this note.
 
 ## Follow-up
 

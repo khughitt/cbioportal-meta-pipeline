@@ -100,8 +100,8 @@ PhyloSignare (PS) is a phylogeny-aware wrapper around existing refitting methods
 - **Input data files** for the paper: https://github.com/SayakaMiura/PhyloSignare/input_files
 - **Source data for figures**: https://github.com/SayakaMiura/PhyloSignare/Sourcedata
 - Simulated datasets obtained from: https://github.com/elkebir-group/PhySigs (PhySigs repo, downloaded 2019)
-- License: not stated in the paper [UNVERIFIED]
-- Language: not stated; likely Python or R [UNVERIFIED]
+- License: not stated in the paper; check the repository before reuse
+- Language: not stated in the paper; infer from repository metadata before implementation work
 - Hardware: standard laptop/workstation; no GPU requirement implied
 
 ## Follow-up

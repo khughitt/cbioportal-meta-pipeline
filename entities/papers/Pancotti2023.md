@@ -93,7 +93,7 @@ This paper is directly relevant to h08 in several ways:
 ## Limitations
 
 - Simulated catalogues use random uniform exposures (each signature equally likely to contribute), which does not match real tumour biology where a small number of processes dominate per cancer type. This may underestimate extraction performance in biologically structured cohorts.
-- The COSMIC v3.3 catalogue used as input; since then COSMIC v3.4 has been released [UNVERIFIED], potentially altering the similarity landscape.
+- The COSMIC v3.3 catalogue was used as input; later COSMIC releases may alter the similarity landscape.
 - AA is applied to the COSMIC signature matrix directly (60 signatures × 96 contexts), not to a patient × mutation catalogue. Thus archetypes describe the geometry of the signature space rather than patient subpopulations.
 - Archetypal profiles need not be biologically interpretable on their own (they are extremal convex combinations of observed signatures); the authors note archetypes should complement rather than replace COSMIC.
 - The 29-archetype representation explains 95% of variance but loses 5%; individual low-frequency signatures may be poorly represented.
@@ -104,7 +104,8 @@ This paper is directly relevant to h08 in several ways:
 - **Code and archetypal profiles:** https://github.com/compbiomed-unito/archetypal-analysis-cosmic
 - **Synthetic catalogue generation:** SigsPack R package (https://github.com/bihealth/SigsPack)
 - **AA implementation:** Python Archetypal Analysis Package (https://data.csiro.au/collection/csiro:40600v1)
-- **License:** Not specified in paper [UNVERIFIED]; code repository is public
+- **License:** Not specified in the paper; code repository is public, but repository license should
+  be checked before reuse.
 
 ## Follow-up
 

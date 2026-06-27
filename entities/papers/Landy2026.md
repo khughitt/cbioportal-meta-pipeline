@@ -188,9 +188,9 @@ bottlenecks relevant to h08:
 - **R package:** `bayesNMF` — GitHub: [jennalandy/bayesNMF](https://github.com/jennalandy/bayesNMF)
 - **Reproducibility code:** GitHub: [jennalandy/bayesNMF_PAPER](https://github.com/jennalandy/bayesNMF_PAPER)
 - **Data:** PCAWG via ICGC ARGO data portal (docs.icgc-argo.org/docs/data-access/)
-- **License:** Not stated in manuscript [UNVERIFIED]
+- **License:** Not stated in the manuscript; check the repository before reuse.
 - **Hardware requirements:** No GPU required; MCMC runtime ~4-16 minutes for single-cancer
-  analyses at N≤20, G≈64 on unspecified hardware [UNVERIFIED exact hardware specs]
+  analyses at N≤20, G≈64; exact hardware specifications are not stated in the manuscript.
 
 ## Follow-up
 

@@ -172,7 +172,7 @@ the pipeline and avoiding complications of signature-fitting.
 - **CHORD R package:** https://github.com/UMCUGenetics/CHORD
 - **mutSigExtractor R package:** https://github.com/UMCUGenetics/mutSigExtractor (context
   extraction from VCF/TSV mutation data)
-- License: not explicitly stated in the paper text [UNVERIFIED]
+- License: not explicitly stated in the paper text; check the repositories before reuse
 - Input: somatic VCF files (SNV/indel + SV) processed through the HMF pipeline or equivalent;
   relative mutation context fractions computed per sample
 - Output: BRCA1-type HRD probability, BRCA2-type HRD probability, HRD classification (≥0.5)

@@ -111,7 +111,8 @@ This paper is directly germane to h08 in several ways:
 
 ## Limitations
 
-- Preprint (2021-04-30); peer-reviewed publication status is unconfirmed [UNVERIFIED].
+- Preprint (2021-04-30); peer-reviewed publication status should be rechecked before treating
+  the findings as final.
 - Small cohort (N=6 donors, ages 0–81); tissue availability varied by donor, limiting subgroup analyses.
 - WGS at ~20x depth may underdetect low-frequency somatic variants; single-cell colony expansion avoids amplification artifacts but introduces potential selection bias during in vitro culture.
 - SBS9 mechanistic model (polymerase-eta bypass in late-replicating regions) is a hypothesis consistent with the data but not directly proven; alternative contributions from AID or other mechanisms cannot be fully excluded [SPECULATION by authors].
@@ -125,7 +126,7 @@ This paper is directly germane to h08 in several ways:
 
 ## Follow-up
 
-- Seek published version of this preprint (likely Nature or Science, ~2022–2023) for peer-reviewed confirmation of findings [UNVERIFIED].
+- Seek a published version of this preprint for peer-reviewed confirmation of findings.
 - Compare SBS9 exposure levels across cbioportal lymphoid malignancy studies as a potential covariate proxy for germinal center transit.
 - LeeSix2018 (HSPC WGS) provides the baseline HSPC mutation rate (~16 mut/cell/year) that this paper references and extends into lymphocyte subsets.
 - Papers to read: Zhang 2019 (B lymphocyte single-cell WGS across lifespan, ref 13 in this paper); Alexandrov 2020 (mutational signatures repertoire, ref 36); Maura 2019 (practical guide to signature analysis in hematological malignancies, ref 40).

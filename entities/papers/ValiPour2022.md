@@ -57,19 +57,19 @@ Vali-Pour et al. perform the largest gene-based rare-variant association study (
 
 ## Relevance
 
-**Direct relevance to h08 (agnostic covariate↔signature-exposure association).**
+**Direct relevance to hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and.**
 
-This paper is a germline-RVAS analogue of h08's agnostic-association concept. Where h08 targets somatic covariates (expression modules, clinical fields) vs. signature exposures, Vali-Pour et al. target *germline* rare pLoF variants vs. somatic mutational components. Several connections matter:
+This paper is a germline-RVAS analogue of the hypothesis's agnostic-association concept. Where the hypothesis targets somatic covariates (expression modules, clinical fields) vs. signature exposures, Vali-Pour et al. target *germline* rare pLoF variants vs. somatic mutational components. Several connections matter:
 
-- **Positive-control concordance.** The study recovers known exposure→signature links — dHR ↔ SBS3/microhomology deletions, dMMR ↔ MMR1/indels, APOBEC exposure ↔ SBS13 — using an agnostic multi-phenotype scan. This is exactly the type of positive-control recovery h08 proposes to validate before trusting novel hits. The success of the germline scan strengthens the argument that the same signal is detectable in somatic data.
+- **Positive-control concordance.** The study recovers known exposure→signature links — dHR ↔ SBS3/microhomology deletions, dMMR ↔ MMR1/indels, APOBEC exposure ↔ SBS13 — using an agnostic multi-phenotype scan. This is exactly the type of positive-control recovery the hypothesis proposes to validate before trusting novel hits. The success of the germline scan strengthens the argument that the same signal is detectable in somatic data.
 
-- **APOBEC3 / APEX1 axis.** The finding that *APEX1* germline variants associate with APOBEC signature components supports the mechanistic chain between base-excision repair efficiency and APOBEC mutagenesis. For h08, this implies that APOBEC3A/B *expression* levels (targeted in h08 Prediction 2) have a plausible upstream mechanism — APEX1 activity modulates the abasic-site substrate that APOBEC acts on.
+- **APOBEC3 / APEX1 axis.** The finding that *APEX1* germline variants associate with APOBEC signature components supports the mechanistic chain between base-excision repair efficiency and APOBEC mutagenesis. For the hypothesis, this implies that APOBEC3A/B *expression* levels (targeted in Prediction 2) have a plausible upstream mechanism — APEX1 activity modulates the abasic-site substrate that APOBEC acts on.
 
-- **MSH3-specific dMMR phenotype.** The two-form MMR distinction (MSH2/MLH1 → SNV+indel; MSH3 → indel-only) provides a refined mutational-component taxonomy for h08: the project's dMMR signature extraction should resolve these two subtypes, and the h08 scan should find that within-cancer expression of *MSH3* vs *MSH2* differentially tracks these components.
+- **MSH3-specific dMMR phenotype.** The two-form MMR distinction (MSH2/MLH1 → SNV+indel; MSH3 → indel-only) provides a refined mutational-component taxonomy for the hypothesis: the project's dMMR signature extraction should resolve these two subtypes, and the scan should find that within-cancer expression of *MSH3* vs *MSH2* differentially tracks these components.
 
-- **Methodological parallels.** The paper's use of dimensionality reduction (ICA + VAE) to construct orthogonal mutational phenotypes, followed by multi-model testing with FDR control, closely parallels the planned h08 association pipeline. Their demonstration that ICA and VAE are complementary (different genes discovered by each) motivates using both in h08.
+- **Methodological parallels.** The paper's use of dimensionality reduction (ICA + VAE) to construct orthogonal mutational phenotypes, followed by multi-model testing with FDR control, closely parallels the planned association pipeline. Their demonstration that ICA and VAE are complementary (different genes discovered by each) motivates using both in the hypothesis's implementation.
 
-- **Network/pathway signal.** The enrichment of hits within PPI networks implies that germline mutations in support genes (regulators of BRCA1, MSH2, etc.) alter the same signatures as the canonical drivers. For h08, this suggests that expression modules of these networks (not just the canonical mutator genes) may serve as robust signature predictors.
+- **Network/pathway signal.** The enrichment of hits within PPI networks implies that germline mutations in support genes (regulators of BRCA1, MSH2, etc.) alter the same signatures as the canonical drivers. For the hypothesis, this suggests that expression modules of these networks (not just the canonical mutator genes) may serve as robust signature predictors.
 
 **Relevance to cross-study somatic mutation meta-analysis.** The paper uses TCGA WES (consistent with the cbioportal pipeline's primary input) and identifies that the power to detect these associations is sensitive even to small reductions in sample size. This motivates aggregating across cBioPortal studies — the larger the effective N per cancer type, the more of this signature-germline (and by extension signature-somatic-covariate) landscape becomes statistically accessible.
 
@@ -77,13 +77,13 @@ This paper is a germline-RVAS analogue of h08's agnostic-association concept. Wh
 
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
-| Somatic mutational components (ICA / VAE derived) | Signature exposures (SigProfiler refitting output `H`) | Paper extracts de-novo components from mutation features; h08 uses pre-defined COSMIC reference |
+| Somatic mutational components (ICA / VAE derived) | Signature exposures (SigProfiler refitting output `H`) | Paper extracts de-novo components from mutation features; hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and uses pre-defined COSMIC reference |
 | dHR components (dHR_ICA, dHR_VAE) | SBS3 / ID6 signature exposures | Microhomology-deletion enrichment is the key dHR feature |
 | dMMR components (dMMR_ICA, dMMR_VAE) | SBS6/15/26/MMR1 + ID1/2 | Small indels at microsatellites are the key dMMR feature |
 | APOBEC_VAE2 component | SBS2 / SBS13 exposure | C>G at non-CpG sites as APOBEC signature 13 proxy |
-| SKAT-O gene-based burden+variance test | (not currently in pipeline) | h08 uses sample-level covariates; different association layer |
+| SKAT-O gene-based burden+variance test | (not currently in pipeline) | hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and uses sample-level covariates; different association layer |
 | 15 mutational models (3 inheritance × 5 variant sets) | Not applicable (somatic covariates, not germline) | Analogy: multiple pLoF models ↔ multiple covariate types |
-| FDR by randomisation of somatic component matrix | Planned FDR-controlled association for h08 | Same principle — permute the outcome label |
+| FDR by randomisation of somatic component matrix | Planned FDR-controlled association for hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and | Same principle — permute the outcome label |
 
 ## Limitations
 
@@ -102,8 +102,8 @@ This paper is a germline-RVAS analogue of h08's agnostic-association concept. Wh
 
 ## Follow-up
 
-- **For h08:** replicate the APOBEC3A/B expression → SBS2/13 recovery in the cBioPortal pipeline; use the paper's ICA/VAE component definitions as a reference for what "APOBEC" and "dMMR" signatures should look like in agnostic extraction.
+- **For hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and:** replicate the APOBEC3A/B expression → SBS2/13 recovery in the cBioPortal pipeline; use the paper's ICA/VAE component definitions as a reference for what "APOBEC" and "dMMR" signatures should look like in agnostic extraction.
 - **MSH3 phenotype:** check whether the pipeline's dMMR extraction resolves the MSH3-specific ≥2 nt indel component from the MLH1/MSH2 SNV+indel component.
-- **APEX1 mechanism:** the paper motivates adding *APEX1* expression as a candidate covariate in the h08 scan alongside APOBEC3A/B expression.
-- **Network view of signatures:** consider whether PPI-network modules (e.g. HR network, MMR network) can be used as composite covariate features for h08, rather than single-gene expression levels.
+- **APEX1 mechanism:** the paper motivates adding *APEX1* expression as a candidate covariate in the hypothesis's scan alongside APOBEC3A/B expression.
+- **Network view of signatures:** consider whether PPI-network modules (e.g. HR network, MMR network) can be used as composite covariate features for the hypothesis, rather than single-gene expression levels.
 - Papers to read: Levatic 2022 (mutational signatures as drug-sensitivity markers, already in `doc/papers/`); Park et al. 2023 on germline cancer predisposition (already in `doc/papers/`).

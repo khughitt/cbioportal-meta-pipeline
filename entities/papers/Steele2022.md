@@ -45,7 +45,7 @@ mutational event signatures because CNAs are subject to strong positive/negative
 
 This is an invited narrative review. Primary sources surveyed include:
 
-- **SBS/DBS/ID landscape:** TCGA, ICGC, Alexandrov 2013 and 2020 flagship papers, NMF-based
+- **SBS/DBS/ID landscape:** TCGA, ICGC, Alexandrov et al. [@Alexandrov2013Nature; @Alexandrov2020] flagship papers, NMF-based
   COSMIC catalogues, experimental in-vitro signature libraries.
 - **CN profiling techniques:** karyotyping, CGH arrays, SNP arrays, WGS/WES-derived logR +
   B-allele frequency (BAF) copy-number profiles, allele-specific callers (ascatNGS, Sequenza,
@@ -89,15 +89,15 @@ primary literature.
     categories (a "CN summary vector"), then NMF-decomposed. Post-hoc linkage to biological
     processes via driver mutations, WGD status, or transcriptomic data. Can reveal novel processes
     but may not capture all known biology.
-- **Pan-cancer CN signature catalogue (Steele 2021):** 21 CN signatures from 11 210 cancers
+- **Pan-cancer CN signature catalogue:** 21 CN signatures from 11 210 cancers
   across multiple sequencing platforms. New signatures linked to HRD, extrachromosomal circular
   DNA, and haploidisation.
 - **Genomic mapping of CN signatures** (post-hoc): signature attributions can be projected back
   onto individual genomic segments, revealing which chromosomal regions are shaped by which CN
   process. Illustrated with a dedifferentiated liposarcoma (DDLPS) case: MDM2 chr12 amplification
   linked to the chromothripsis-amplification signature (CN8).
-- **Clinical utility:** CN signatures predict prognosis in ovarian cancer (Macintyre 2018),
-  prostate cancer (Wang 2021), and multiple myeloma (Maclachlan 2021); HRD-associated CN
+- **Clinical utility:** CN signatures predict prognosis in ovarian cancer,
+  prostate cancer, and multiple myeloma studies; HRD-associated CN
   signatures underpin genomic scar assays (myChoice CDx) for PARP inhibitor patient selection.
 - **Selection bias caveat:** unlike SBS passenger mutations (largely neutral), CN changes are
   under strong positive/negative selection. This means CN signatures are not a purely unbiased
@@ -108,30 +108,30 @@ primary literature.
 
 ## Relevance
 
-### Connection to h08
+### Connection to hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and
 
-The review is directly background-constituting for **h08 (agnostic covariate↔signature-exposure
+The review is directly background-constituting for **hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and (agnostic covariate↔signature-exposure
 association)**:
 
-- **Positive-control grounding (H08a):** The aetiological map this review synthesises — UV→SBS7,
+- **Positive-control grounding:** The aetiological map this review synthesises — UV→SBS7,
   smoking→SBS4, APOBEC3→SBS2/13, MMR-loss→SBS6/15/26, POLE→SBS10 — is exactly the positive
-  control panel that h08's pre-registration commits to recovering before trusting any novel
+  control panel that the hypothesis's pre-registration commits to recovering before trusting any novel
   associations. The review's authoritative summary (from the Alexandrov group) provides citation
   support for each anchor link.
 - **NMF framework orientation:** The review clarifies the distinction between NMF-derived
-  signature weights (W) and per-sample exposures (H); h08 targets H as the outcome of a
+  signature weights (W) and per-sample exposures (H); the hypothesis targets H as the outcome of a
   phenome-wide association against clinical/expression covariates.
-- **CN signatures as a potential extension:** H08b's discovery prong could, in principle, be
+- **CN signatures as a potential extension:** The discovery prong could, in principle, be
   extended to CN signature exposures as outcomes, providing an orthogonal mutation-mode view.
   The review identifies which CN signatures have known biological interpretations (HRD,
   chromothripsis, WGD) that could serve as positive controls analogous to the SBS positive-
   control suite.
 - **Signature prediction of treatment response:** The review's treatment-stratification examples
   (PARP inhibitor, platinum, tamoxifen) are concrete precedents that clinical covariate→signature
-  associations can have translational utility — motivation for H08b's discovery arm.
+  associations can have translational utility — motivation for the discovery arm.
 - **Selection-pressure caveat for CN signatures:** The observation that CN landscapes are under
   positive/negative selection (unlike most SBS passengers) is relevant to R3 (selection/
-  immunoediting on burden) in the h08 alternative-explanations inventory: for CN signatures the
+  immunoediting on burden) in the hypothesis's alternative-explanations inventory: for CN signatures the
   selection confound is more severe than for SBS.
 
 ### Connection to the cbioportal cross-study meta-analysis
@@ -148,8 +148,8 @@ association)**:
 
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
-| SBS/DBS/ID mutational signatures | Signature exposures targeted by h08 | Positive-control aetiologies directly used |
-| Per-sample signature exposure (H matrix) | h08 outcome variable | NMF H column = per-sample activity |
+| SBS/DBS/ID mutational signatures | Signature exposures targeted by hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and | Positive-control aetiologies directly used |
+| Per-sample signature exposure (H matrix) | hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and outcome variable | NMF H column = per-sample activity |
 | CN summary vector (LOH × CN × segment size) | Potential future CN feature | Not in current pipeline scope |
 | Mechanism-agnostic CN signature | Parallel to cross-study agnostic aggregation | Philosophy alignment |
 | Positive/negative selection on CNAs | R3 alternative (selection on burden) | More severe for CN than SBS |
@@ -172,7 +172,7 @@ association)**:
 
 ## Model / Tool Availability
 
-- **SigProfiler** (Alexandrov lab): used for the Steele 2021 pan-cancer CN signature extraction;
+- **SigProfiler** (Alexandrov lab): used for the cited pan-cancer CN signature extraction;
   software cited for decomposition.
 - **myChoice CDx** (Myriad Genetics): commercial HRD assay incorporating CN-based genomic scars;
   mentioned as a clinical implementation.
@@ -182,13 +182,13 @@ association)**:
 
 ## Follow-up
 
-- Steele et al. 2021 (bioRxiv 2021.2004.2030.441940, not peer reviewed at time of writing) —
+- The cited pan-cancer 21 CN signature preprint (bioRxiv 2021.2004.2030.441940, not peer reviewed at time of writing) —
   the pan-cancer 21 CN signature paper; check peer-review status and read for the full catalogue.
-- Macintyre et al. 2018 (Nat Genet 50:1262) — founding ovarian CN signature paper; already a
-  source in the current project's h08 framing.
+- The founding ovarian CN signature paper cited by this review is already a
+  source in the current project's hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and framing.
 - Degasperi et al. 2022 — already summarised as `paper:Degasperi2022`; complements this review
   with COSMIC v3.3 SBS/DBS/ID catalogue update.
-- Alexandrov 2020 (Nature 578:94) — primary citation for the pan-cancer SBS landscape; check
-  that `paper:Alexandrov2020` summary covers the full PCAWG catalogue adequately for h08 context.
-- For h08 CN extension: Maclachlan et al. 2021 (Nat Commun 12:5172) multiple myeloma CN
+- Alexandrov et al. [@Alexandrov2020] — primary citation for the pan-cancer SBS landscape; check
+  that `paper:Alexandrov2020` summary covers the full PCAWG catalogue adequately for the hypothesis context.
+- For a CN extension to the hypothesis: the multiple myeloma CN
   signatures using hierarchical Dirichlet processes — methodologically distinct from NMF.

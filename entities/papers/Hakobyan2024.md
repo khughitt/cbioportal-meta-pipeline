@@ -129,34 +129,34 @@ melanoma; aging/SBS1 → TP53 mutations in pancreatic cancer), confirming biolog
 
 ## Relevance
 
-This paper is directly relevant to hypothesis **h08** (agnostic covariate-signature association,
+This paper is directly relevant to **hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and** (agnostic covariate-signature association,
 positive-control recovery of known aetiologies):
 
-- **H08a positive-control linkages recovered here:** The signature-pathway regression framework
+- **Positive-control linkages recovered here:** The signature-pathway regression framework
   recovers the UV→RTK-RAS driver link in melanoma and the aging/clock→TP53 link in pancreatic
-  adenocarcinoma — two of the three positive controls in h08's pre-registration (UV→SBS7 in
+  adenocarcinoma — two of the three positive controls in the hypothesis's pre-registration (UV→SBS7 in
   skin is implicit; smoking→SBS4 is not examined in this pathway-level study, but UV and
   clock-like are confirmed). This demonstrates that covariate-association methods can recover
   known exposure→signature→driver chains from the same TCGA/PCAWG data we would use.
 
-- **APOBEC-HRD interaction as a positive control for h08:** The positive APOBEC-HRD
+- **APOBEC-HRD interaction as a positive control for the hypothesis:** The positive APOBEC-HRD
   signature-signature interaction (breast, esophageal, pancreatic) is consistent with APOBEC
   expression being a mechanistic upstream input to the HRD signature. This provides an
-  experimental grounding for h08's prediction that APOBEC3 mRNA expression will associate more
+  experimental grounding for the hypothesis's prediction that APOBEC3 mRNA expression will associate more
   strongly with SBS2/13 than any single clinical label.
 
 - **SBS5 and SBS40 (clock-like / unknown aetiology) prominently emerge:** Both signatures are
   centrally embedded in the interaction networks and drive several survival effects; their
   aetiology remains only partly understood. The paper identifies SBS40 as behaviorally distinct
   from SBS5 (later-stage, subclonal, distinct interaction preferences) — directly motivating
-  h08b's aim to use expression modules to resolve upstream causes of these clock-like signatures.
+  the hypothesis's discovery arm to use expression modules to resolve upstream causes of these clock-like signatures.
 
-- **Within-tissue, multi-tissue design mirrors h08's analysis strategy:** Using within-tissue
+- **Within-tissue, multi-tissue design mirrors the hypothesis's analysis strategy:** Using within-tissue
   independence tests corrected for the tissue-composition structure is exactly the design
-  required by h08's Prediction 4 (associations attenuate when not conditioned on tissue). This
+  required by the hypothesis's Prediction 4 (associations attenuate when not conditioned on tissue). This
   paper provides a methodological template.
 
-- **Signature-pathway interaction methods complement h08's expression-based approach:** The
+- **Signature-pathway interaction methods complement the hypothesis's expression-based approach:** The
   CoDa metric for compositional signature data and bootstrapped null models would be directly
   applicable when regressing signature exposures against co-measured expression covariates
   (export_study_expression.py outputs). CoDa handles the shared-attribution problem that would
@@ -171,11 +171,11 @@ positive-control recovery of known aetiologies):
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
 | Signature activities matrix (patients × signatures) | `H` matrix from NMF / SigProfiler assignment | Paper uses COSMIC SBS v3.2 pre-computed extractions |
-| CoDa metric for compositional signatures | potential addition to h08 association layer | Addresses shared-attribution compositional problem |
-| Signature-pathway co-occurrence (Fisher) | signature-covariate association (h08 agnostic scan) | Pathway binary is one type of covariate; expression module is another |
-| Within-tissue bootstrap null | within-tissue FDR in h08 design | Same principle; paper uses percentile bootstrap, h08 plans BH FDR |
+| CoDa metric for compositional signatures | potential addition to hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and association layer | Addresses shared-attribution compositional problem |
+| Signature-pathway co-occurrence (Fisher) | signature-covariate association in hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and agnostic scan | Pathway binary is one type of covariate; expression module is another |
+| Within-tissue bootstrap null | within-tissue FDR in hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and design | Same principle; paper uses percentile bootstrap, the hypothesis plans BH FDR |
 | dMMR/MSI-high samples (C1 cluster) | `is_hypermutator` / `msi_h` annotation | Paper clusters confirm that dMMR co-segregates with specific driver profiles |
-| SBS40 (subclonal/late-stage) vs SBS5 (clonal) | unannotated clock-like target signatures for h08b | Paper's survival findings motivate resolving their expression correlates |
+| SBS40 (subclonal/late-stage) vs SBS5 (clonal) | unannotated clock-like target signatures for the hypothesis's discovery arm | Paper's survival findings motivate resolving their expression correlates |
 | mutsigapp R package | external tool (web app available) | Code + web app released; method reproducible |
 
 ## Limitations
@@ -208,17 +208,17 @@ positive-control recovery of known aetiologies):
 ## Follow-up
 
 - The mutsigapp web app enables querying PCAWG/TCGA signature interactions by tissue, which
-  could inform which signature pairs to prioritize as h08 positive controls.
-- The CoDa approach to compositional signature data should be evaluated for inclusion in h08's
-  association layer (relevant to the multi-signature attribution problem flagged in h08's R4
+  could inform which signature pairs to prioritize as positive controls for hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and.
+- The CoDa approach to compositional signature data should be evaluated for inclusion in the hypothesis's
+  association layer (relevant to the multi-signature attribution problem flagged in the hypothesis's R4
   alternative).
 - The survival stratification by signature interaction (e.g., MMR+SBS5 in colorectal vs
-  MMR+SBS40) raises a question for h08b: do expression modules that distinguish SBS5 from SBS40
+  MMR+SBS40) raises a question for the hypothesis's discovery arm: do expression modules that distinguish SBS5 from SBS40
   activity also predict survival in these tissues?
 - The negative APOBEC-MMR interaction in breast, stomach, and uterine adenocarcinomas (mutual
-  exclusivity) should be compared against h08's APOBEC3 expression-SBS2/13 positive control:
+  exclusivity) should be compared against the hypothesis's APOBEC3 expression-SBS2/13 positive control:
   if APOBEC expression associates with SBS2/13 but not dMMR signatures, the mutual exclusivity
   may be a clone-selection effect rather than a mechanistic interaction.
 - Papers to read alongside: any work on the clonal vs subclonal origin of SBS40 vs SBS5 (to
-  understand the survival divergence); Alexandrov 2020 (signature extraction), Degasperi 2022
+  understand the survival divergence); Alexandrov et al. [@Alexandrov2020] on signature extraction, Degasperi et al. [@Degasperi2022]
   (refitting approaches).

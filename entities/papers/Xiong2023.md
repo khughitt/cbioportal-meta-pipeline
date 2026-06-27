@@ -84,15 +84,15 @@ This study establishes a causal, polysynaptic neural circuit running from the ce
 
 ## Relevance
 
-**H1 (tumors hijack top-down neural circuitry) — direct, strong support.** This paper is the most direct available causal demonstration of H1: it shows that the brain (specifically a well-defined limbic-brainstem circuit) drives tumor innervation and progression via the autonomic nervous system, not passively, but through a feedforward loop initiated by the tumor itself (cancer-induced anxiety activates CeM, which amplifies sympathetic output back to the tumor). This is precisely the kind of top-down circuit engagement H1 predicts.
+**`H1` (tumors hijack top-down neural circuitry) — direct, strong support.** This paper is the most direct available causal demonstration of the `H1` local note label: it shows that the brain (specifically a well-defined limbic-brainstem circuit) drives tumor innervation and progression via the autonomic nervous system, not passively, but through a feedforward loop initiated by the tumor itself (cancer-induced anxiety activates CeM, which amplifies sympathetic output back to the tumor). This is precisely the kind of top-down circuit engagement `H1` predicts.
 
-**H2 (via immune modulation) — supported as the proximate mechanism.** The data show that CeM→LPGi→sympathetic→NE circuit suppresses antitumor immunity (CD8⁺ T cells, IFN-γ effectors, M1 macrophages) and expands immunosuppressive populations (Tregs, exhausted T cells). H2 is not an alternative to H1 here — it is the mechanistic pathway through which H1 operates.
+**`H2` (via immune modulation) — supported as the proximate mechanism.** The data show that CeM→LPGi→sympathetic→NE circuit suppresses antitumor immunity (CD8⁺ T cells, IFN-γ effectors, M1 macrophages) and expands immunosuppressive populations (Tregs, exhausted T cells). `H2` is not an alternative to `H1` here — it is the mechanistic pathway through which `H1` operates.
 
-**H3 (aberrant oncofetal/developmental expression) — not addressed.** The study does not examine gene expression programs in tumor cells and says nothing about oncofetal or developmental transcriptional states.
+**`H3` (aberrant oncofetal/developmental expression) — not addressed.** The study does not examine gene expression programs in tumor cells and says nothing about oncofetal or developmental transcriptional states.
 
-**H4 (brain/CNS cancer cohort artifact) — important indirect bearing.** The paper demonstrates a *systemic* brain→periphery circuit in a *non-CNS* cancer (breast). Neural circuit engagement is not confined to brain tumors. This is directly relevant to interpreting the "top mutated genes dominated by neural genes" pattern in our cBioPortal cohort: it means that neural pathway activity (and potentially expression of neural genes) could be a general feature of many solid tumors, not merely a confound of having CNS cancer studies in the cohort.
+**`H4` (brain/CNS cancer cohort artifact) — important indirect bearing.** The paper demonstrates a *systemic* brain→periphery circuit in a *non-CNS* cancer (breast). Neural circuit engagement is not confined to brain tumors. This is directly relevant to interpreting the "top mutated genes dominated by neural genes" pattern in our cBioPortal cohort: it means that neural pathway activity (and potentially expression of neural genes) could be a general feature of many solid tumors, not merely a confound of having CNS cancer studies in the cohort.
 
-**H5 (misannotation) — not addressed.** The study does not involve mutation frequency analysis or gene annotation.
+**`H5` (misannotation) — not addressed.** The study does not involve mutation frequency analysis or gene annotation.
 
 **Critical distinction for our pipeline's question:** This paper establishes that neural involvement in breast cancer is *systemic circuit-level*, not cell-intrinsic somatic mutation of neural genes within tumor cells. The study examines the peripheral nervous system of the host, not the mutational landscape of the tumor genome. Therefore:
 - It does NOT predict that neural genes (NKAIN2, KCNIP4, RBFOX1, LSAMP, etc.) should appear at elevated SOMATIC MUTATION frequency in breast tumors.
@@ -105,12 +105,12 @@ This study establishes a causal, polysynaptic neural circuit running from the ce
 |---|---|---|
 | Breast cancer mouse models (4T1, MMTV-PyMT) | Not directly represented (pipeline uses human cBioPortal data) | Mouse-to-human translation gap is substantial |
 | Brain→sympathetic→NE→immune circuit | Not a pipeline variable; orthogonal to mutation frequency | Circuit acts at the level of tumor microenvironment, not somatic genome |
-| CeM CRH neurons as anxiety hub | Background motivation for H1 hypothesis | Provides mechanistic grounding for why neural genes matter in cancer biology |
+| CeM CRH neurons as anxiety hub | Background motivation for `H1` hypothesis | Provides mechanistic grounding for why neural genes matter in cancer biology |
 | Intratumoral NE content (ELISA) | Not a cBioPortal clinical variable | NE levels are not available in mutation data; no mapping possible |
 | Immune cell composition (flow cytometry) | Not currently extracted; some cBioPortal studies have immune deconvolution data | Could be a future integration if TIMER2 or CIBERSORT scores are fetched |
 | Alprazolam → circuit suppression → slowed tumor growth | Not a pipeline variable | Suggests antianxiety medications could be a clinical covariate worth examining |
 | TH⁺ sympathetic innervation density | Not in mutation tables; would require spatial/IHC data | Informative for understanding why neural gene expression (not mutation) elevates in TME |
-| H1: top-down neural circuitry | Hypothesis H1 in project framework | Strong mechanistic support for H1 in a non-CNS cancer |
+| `H1`: top-down neural circuitry | Hypothesis `H1` in project framework | Strong mechanistic support for `H1` in a non-CNS cancer |
 
 ## Limitations
 
@@ -137,8 +137,8 @@ Raw data available in the JCI Supplemental Supporting Data Values file or from t
 
 ## Follow-up
 
-- **For our mutation meta-analysis:** This paper does not justify expecting elevated somatic mutation frequencies in neural genes due to the CeM→tumor circuit. The mechanism is at the level of autonomic innervation and host immune remodeling, not tumor cell mutation. Our primary alternative explanations for the neural gene pattern remain H4 (CNS cancer cohort composition) and gene-length confounding.
-- **Testing H1 with our data:** A tractable proxy for "neural circuit engagement" in cBioPortal studies is intratumoral sympathetic innervation, which is not directly measurable from mutation tables. However, if expression data is available (via `export_study_expression.py`), checking whether TH (gene: TH), NF-L (gene: NEFL), or CRH (gene: CRH) expression is elevated in breast cancer vs other solid tumors would provide a data-driven test of whether the neural microenvironment signature is detectable at the expression level.
-- **Defining neural genes from data (H4 test):** The paper's use of TH and NF-L as sympathetic nerve markers is relevant: TH and NEFL are expression-based neural identifiers that could anchor a data-driven neural gene set (not human/AI labels). Combined with expression datasets from the Human Protein Atlas or GTEx (brain enrichment), these markers could define a reference neural gene list for testing whether our top-mutated genes are enriched for neural expression patterns.
+- **For our mutation meta-analysis:** This paper does not justify expecting elevated somatic mutation frequencies in neural genes due to the CeM→tumor circuit. The mechanism is at the level of autonomic innervation and host immune remodeling, not tumor cell mutation. Our primary alternative explanations for the neural gene pattern remain `H4` (CNS cancer cohort composition) and gene-length confounding.
+- **Testing `H1` with our data:** A tractable proxy for "neural circuit engagement" in cBioPortal studies is intratumoral sympathetic innervation, which is not directly measurable from mutation tables. However, if expression data is available (via `export_study_expression.py`), checking whether TH (gene: TH), NF-L (gene: NEFL), or CRH (gene: CRH) expression is elevated in breast cancer vs other solid tumors would provide a data-driven test of whether the neural microenvironment signature is detectable at the expression level.
+- **Defining neural genes from data (`H4` test):** The paper's use of TH and NF-L as sympathetic nerve markers is relevant: TH and NEFL are expression-based neural identifiers that could anchor a data-driven neural gene set (not human/AI labels). Combined with expression datasets from the Human Protein Atlas or GTEx (brain enrichment), these markers could define a reference neural gene list for testing whether our top-mutated genes are enriched for neural expression patterns.
 - **Clinical covariate:** Antianxiety medication use (including benzodiazepines such as alprazolam) is a candidate clinical covariate in cBioPortal studies. If available, testing whether patients on antianxiety medication show different mutation frequencies in neural genes or different tumor immune profiles would be a human-level analog of the alprazolam experiment here.
 - **Relevant genes for expression-based neural label definition:** TH (tyrosine hydroxylase), NEFL/NF-L (neurofilament light), CRH (corticotropin-releasing hormone), ADRB1/ADRB2/ADRA2A (adrenergic receptors as tumor/immune readouts), PTPRC (CD45), FOXP3 (Tregs), IFNG (IFN-γ effectors).

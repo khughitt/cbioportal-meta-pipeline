@@ -135,7 +135,7 @@ Evidence sources: `code/workflows/Snakefile`, `code/scripts/`, `tasks/active.md`
 
 - **Axis 1 - Data QA:** WARN - t178/t179 added sidecar audits and count-floor columns, but signature exposure outputs are not yet wired as default QA'd substrates.
   - substrates with a wired-in QA step: clean base partial via sidecars; downstream no
-  - consumer-contract QA: WARN - h08 downstream contract is still being specified.
+  - consumer-contract QA: WARN - `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` downstream contract is still being specified.
   - companion DAG-validation (output-ownership): WARN
 - **Axis 2 - Consistency/quality:** PASS - reference version, caller provenance, and count-floor policy are explicit.
 - **Axis 3 - Portability/commons:** WARN - signature outputs are analysis substrates and should be manifest-backed before reuse.
@@ -144,7 +144,7 @@ Evidence sources: `code/workflows/Snakefile`, `code/scripts/`, `tasks/active.md`
 | # | Axis | Finding | Severity | Disposition | Task |
 | --- | --- | --- | --- | --- | --- |
 | 1 | 1 | Add wired QA for exposure schema, sample/signature key uniqueness, non-negative exposures, audit sidecar completeness, count-floor missingness, and de-novo/refit decision vocabulary. | structural | backlog | task:t191 |
-| 2 | 2 | Treatment-exposure and additional covariate strata remain planned h08 confound controls. | quality | backlog | task:t181; task:t180 |
+| 2 | 2 | Treatment-exposure and additional covariate strata remain planned `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` confound controls. | quality | backlog | task:t181; task:t180 |
 
 ## Chain: Replication-timing reference and burden comparisons
 

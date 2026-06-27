@@ -30,11 +30,11 @@ These are the **only** tables consumers should read for cross-study mutation-fre
   `n_total_samples_in_cancer_{inclusive,exclusive}` columns expose the per-cancer denominator
   used for sample-weighted callability. `lawrence2014_required_n` and
   `lawrence2014_saturation_fraction` compare the inclusive per-cancer cohort size with explicit
-  Lawrence 2014 required-N references. `cancer_saturation_status` is `saturated`,
+  Lawrence 2014 [@Lawrence2014] required-N references. `cancer_saturation_status` is `saturated`,
   `undersampled`, or `no_lawrence_reference`; the last value means no explicit Lawrence
   reference was available for that cancer label, so no hidden threshold was applied.
 
-- **Bailey 2018** (`bailey2018_driver`): per-(gene, cancer_type) boolean. True if the (gene,
+- **Bailey 2018** [@Bailey2018] (`bailey2018_driver`): per-(gene, cancer_type) boolean. True if the (gene,
   cancer_type) pair is in Bailey's per-cancer roster OR if the gene is a Bailey pan-cancer
   driver (PANCAN). Closes the interpretation gap between "high frequency in our data" and
   "known driver."
@@ -42,7 +42,7 @@ These are the **only** tables consumers should read for cross-study mutation-fre
   cancer-type rows for a gene). Tier 1 = strong evidence (curated mechanism + mutation pattern);
   Tier 2 = weaker curated evidence. Role is the raw CGC string (`oncogene`, `TSG`, `fusion`, or
   combinations).
-- **Sanchez-Vega 2018** (`sanchez_vega_pathway`, `sanchez_vega_og_tsg`): per-gene. Pathway is
+- **Sanchez-Vega 2018** [@SanchezVega2018] (`sanchez_vega_pathway`, `sanchez_vega_og_tsg`): per-gene. Pathway is
   a comma-separated list when a gene is in multiple of the 10 canonical pathways (rare).
   `og_tsg` is SV's curated OG/TSG call.
 
@@ -81,7 +81,7 @@ are added (tasks t051, t053), they will follow the same pattern: a `<catalog>_so
 
 This addresses the OncoKB-version-drift concern documented in
 `topic:cross-study-harmonization` and `topic:variant-interpretation-oncokb-vus`. Per
-Suehnholz 2024, OncoKB Level 1/2 actionability rose 8.9% → 31.6% in 5 years on the same
+	Suehnholz 2024 [@Suehnholz2024], OncoKB Level 1/2 actionability rose 8.9% → 31.6% in 5 years on the same
 cohort — any catalog overlay must be version-stamped to be longitudinally meaningful.
 
 ## Pipeline DAG (annotation chain)

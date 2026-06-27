@@ -72,32 +72,32 @@ SBS8 — a common but mechanistically unresolved COSMIC mutational signature —
 
 ## Relevance
 
-**Direct relevance to h08 (agnostic covariate-signature association):**
+**Direct relevance to hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and (agnostic covariate-signature association):**
 
-This paper provides strong prior evidence for what the H08a positive-control recovery experiment should find for SBS8. Specifically:
+This paper provides strong prior evidence for what the hypothesis:0007 positive-control recovery experiment should find for SBS8. Specifically:
 
 - **SBS8 aetiology is replication-timing-driven, not exposure-driven.** SBS8 does not map to any known exogenous mutagen or specific transcriptional strand bias — it emerges from endogenous replication machinery operating in late-replicating heterochromatin. This is precisely the class of "endogenous, process-linked" signatures that an agnostic covariate scan should be able to surface via genomic covariates (replication timing, chromatin context) rather than clinical exposures.
 
-- **Positive control scope:** The H08a pre-registration targets UV→SBS7, smoking→SBS4, and APOBEC3-expr→SBS2/13 as the three recovery arms. SBS8 is explicitly not among the positive-control signatures, but this paper documents the *kind* of evidence a successful association looks like — a strong, reproducible, within-tissue, context-dependent signature-covariate link that holds across multiple independent cohorts.
+- **Positive control scope:** The hypothesis:0007 pre-registration targets UV→SBS7, smoking→SBS4, and APOBEC3-expr→SBS2/13 as the three recovery arms. SBS8 is explicitly not among the positive-control signatures, but this paper documents the *kind* of evidence a successful association looks like — a strong, reproducible, within-tissue, context-dependent signature-covariate link that holds across multiple independent cohorts.
 
-- **SBS40 parallel:** Singh et al. note that SBS40 and SBS8 share late-replication preference and unknown aetiology. H08b (discovery) lists SBS40 as a target for novel covariate association. The epigenomic similarity described here implies that any latent expression module found to associate with SBS8 should be tested on SBS40 simultaneously (a free prediction).
+- **SBS40 parallel:** Singh et al. note that SBS40 and SBS8 share late-replication preference and unknown aetiology. Hypothesis:0007 discovery lists SBS40 as a target for novel covariate association. The epigenomic similarity described here implies that any latent expression module found to associate with SBS8 should be tested on SBS40 simultaneously (a free prediction).
 
-- **Checkpoint expression as a covariate:** The paper demonstrates that ATR / CHEK1 / CHEK2 expression covaries with SBS8 in late-replicating regions. This is an existence proof that the type of mRNA-expression covariate association targeted by H08 (expression modules vs signature exposures) can recover mechanistically informative links for a signature of unknown or debated aetiology.
+- **Checkpoint expression as a covariate:** The paper demonstrates that ATR / CHEK1 / CHEK2 expression covaries with SBS8 in late-replicating regions. This is an existence proof that the type of mRNA-expression covariate association targeted by hypothesis:0007 (expression modules vs signature exposures) can recover mechanistically informative links for a signature of unknown or debated aetiology.
 
 - **Cross-study replication:** The analysis spans 18 ICGC WGS cohorts with diverse tissue-of-origin, exactly the multi-cohort context available in the cBioPortal meta-analysis. The consistency of SBS8's late-replication enrichment across cohorts (combined p < 1e-05) supports that replication-timing-linked covariates will be detectable even at cBioPortal-scale panel data if the within-tissue design is maintained.
 
-- **Non-malignant tissue contrast:** The observation that SBS8 is near-absent in normal tissues and accumulates with stage informs the design of the H08 control arm: analyses restricted to tumor genomes will see a clearer SBS8 signal than mixed tumor/normal analyses, consistent with the pipeline's tumor-only input data.
+- **Non-malignant tissue contrast:** The observation that SBS8 is near-absent in normal tissues and accumulates with stage informs the design of the hypothesis:0007 control arm: analyses restricted to tumor genomes will see a clearer SBS8 signal than mixed tumor/normal analyses, consistent with the pipeline's tumor-only input data.
 
 ## Project Framework Mapping
 
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
-| SBS8 signature weight per epigenomic context | Per-sample signature exposure `H[SBS8, sample]` from NMF | The paper uses `deconstructSigs` within contexts; H08 uses `SigProfiler` restricted assignment |
+| SBS8 signature weight per epigenomic context | Per-sample signature exposure `H[SBS8, sample]` from NMF | The paper uses `deconstructSigs` within contexts; hypothesis:0007 uses `SigProfiler` restricted assignment |
 | MRE state (HMM composite context) | Potential covariate in the agnostic association layer | Replication timing is a derived feature; not yet in cBioPortal clinical tables but derivable for TCGA MC3 |
 | Late vs early replicating regions | Genomic annotation covariate (replication timing) | Repli-seq not in standard cBioPortal data; indirect via histone-state proxies |
 | ATR / CHEK1 / CHEK2 expression | mRNA expression covariate module | Directly computable from TCGA expression data via `export_study_expression.py` |
-| Pathological stage | `stage` clinical column (already ingested) | Stage-SBS8 association is a direct H08 test |
-| SBS40 (similar to SBS8) | Co-discovery target in H08b | Both are broad-spectrum, unknown-aetiology signatures with late-replication preference |
+| Pathological stage | `stage` clinical column (already ingested) | Stage-SBS8 association is a direct hypothesis:0007 test |
+| SBS40 (similar to SBS8) | Co-discovery target in hypothesis:0007 | Both are broad-spectrum, unknown-aetiology signatures with late-replication preference |
 
 ## Limitations
 
@@ -126,6 +126,6 @@ This paper provides strong prior evidence for what the H08a positive-control rec
 
 - **Questions this raises for the project:**
   - In the cBioPortal pipeline's restricted SigProfiler output, does SBS8 weight per sample correlate with any available clinical stage, MSI status, or TMB variable? (Test the stage-SBS8 link with available data, as a low-cost check of the paper's finding using panel data.)
-  - Can ATR/CHEK1/CHEK2 expression be included as a candidate covariate in the H08 agnostic scan for TCGA MC3 samples with paired expression data?
+  - Can ATR/CHEK1/CHEK2 expression be included as a candidate covariate in the hypothesis:0007 agnostic scan for TCGA MC3 samples with paired expression data?
   - Does SBS40 show the same stage-progression pattern as SBS8, as would be predicted from their epigenomic similarity?
   - The paper notes SBS8 is depleted in exons — since cBioPortal panels predominantly capture coding regions, does this mean SBS8 is systematically under-estimated in panel-based decompositions relative to WGS?

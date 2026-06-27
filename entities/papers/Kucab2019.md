@@ -87,15 +87,15 @@ This paper establishes a first comprehensive experimental reference compendium o
 
 ## Relevance
 
-**Direct relevance to h08 (agnostic covariate↔signature-exposure association; positive-control recovery):**
+**Direct relevance to hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and (agnostic covariate↔signature-exposure association; positive-control recovery):**
 
 This paper is the canonical experimental reference catalog linking specific environmental agents to their mutational signature "fingerprints." It is directly relevant to:
 
-- **H08a positive control design.** The paper provides ground-truth cosine similarities between experimentally generated signatures and the COSMIC catalog (SBS4 ↔ tobacco/BaP/BPDE; SBS7 ↔ UV/SSR; SBS22 ↔ AAI; SBS11/SBS-PT ↔ platinum). Any pipeline that claims to recover known etiology associations should reproduce these correspondences; the Kucab signatures serve as an independent validation layer.
-- **Known vs. ambiguous signals.** The paper explicitly notes that 38/79 agents did not generate detectable signatures despite cytotoxicity, reinforcing the point (relevant to h08) that absence of a signature is not absence of exposure — the pipeline's agnostic scan must tolerate this asymmetry.
+- **Hypothesis:0007 positive-control design.** The paper provides ground-truth cosine similarities between experimentally generated signatures and the COSMIC catalog (SBS4 ↔ tobacco/BaP/BPDE; SBS7 ↔ UV/SSR; SBS22 ↔ AAI; SBS11/SBS-PT ↔ platinum). Any pipeline that claims to recover known etiology associations should reproduce these correspondences; the Kucab signatures serve as an independent validation layer.
+- **Known vs. ambiguous signals.** The paper explicitly notes that 38/79 agents did not generate detectable signatures despite cytotoxicity, reinforcing the point (relevant to hypothesis:0007) that absence of a signature is not absence of exposure — the pipeline's agnostic scan must tolerate this asymmetry.
 - **Mechanistic interpretation of strand asymmetries.** The TC-NER footprint on BaP/BPDE signatures (C>A strand asymmetry, early RTD enrichment) provides a mechanistic positive control: any agnostic scan recovering the BaP↔lung signature link should ideally also recover the TC-NER mechanistic signature as a co-feature.
-- **APOBEC, MMR, and endogenous processes are notably absent from environmental exposures tested here.** The compendium covers exogenous agents; APOBEC (SBS2/13) and MMR-loss (SBS6/15/26) signatures arise from endogenous processes, not from any of the 79 agents. This cleanly separates the exogenous-agent catalog from the endogenous-process catalog relevant to H08a arms 2 (APOBEC3 expression) and 3 (MMR/MSI).
-- **Cross-study aggregation context.** In the cbioportal pipeline, the annotated ratio table carries COSMIC-matched signature exposures downstream. Knowing which COSMIC signatures have strong experimental causal anchors (from this compendium) vs. only epidemiological associations helps prioritize which h08 recovery arms are genuinely "positive controls" vs. weaker tests.
+- **APOBEC, MMR, and endogenous processes are notably absent from environmental exposures tested here.** The compendium covers exogenous agents; APOBEC (SBS2/13) and MMR-loss (SBS6/15/26) signatures arise from endogenous processes, not from any of the 79 agents. This cleanly separates the exogenous-agent catalog from the endogenous-process catalog relevant to the hypothesis:0007 APOBEC-expression and MMR/MSI arms.
+- **Cross-study aggregation context.** In the cbioportal pipeline, the annotated ratio table carries COSMIC-matched signature exposures downstream. Knowing which COSMIC signatures have strong experimental causal anchors (from this compendium) vs. only epidemiological associations helps prioritize which hypothesis:0007 recovery arms are genuinely "positive controls" vs. weaker tests.
 
 **Broader relevance:**
 - Provides a resource for "reverse aetiology" queries: given a mutation profile, which environmental agents are consistent? This is the inverse problem to the h08b discovery prong.
@@ -106,7 +106,7 @@ This paper is the canonical experimental reference catalog linking specific envi
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
 | Putative treatment-associated SBS signature | COSMIC SBS reference signature | Paper signatures compared to project's restricted SigProfiler assignment targets |
-| Cosine similarity to cancer-derived signatures | h08 positive-control recovery criterion (top-3 rank + FDR q<0.05) | Kucab cossim values set empirical expectation for what "recovery" looks like |
+| Cosine similarity to cancer-derived signatures | hypothesis:0007 positive-control recovery criterion (top-3 rank + FDR q<0.05) | Kucab cossim values set empirical expectation for what "recovery" looks like |
 | Background signature (control iPSCs, SBS18-like) | Endogenous / artifact signatures flagged in the pipeline | Relevant to audit F1 / SBS27/43/45-60 artifact flags |
 | Mutagenicity index (N_treat − N_ctrl)/N_ctrl | TMB / hypermutator annotation | Conceptually parallel; both normalize mutation load to a baseline |
 | Metabolic activation (S9 mix) | Not modeled in current pipeline | cBioPortal studies capture end-state tumor mutations; metabolic state unknown |
@@ -130,9 +130,9 @@ This paper is the canonical experimental reference catalog linking specific envi
 
 ## Follow-up
 
-- **Alexandrov et al. 2020 (Nature)** — the COSMIC v3 SBS catalog that incorporates and expands on these experimentally validated signatures; already in `doc/papers/` as Alexandrov2020 (referenced in h08).
+- **Alexandrov et al. 2020 (Nature)** — the COSMIC v3 SBS catalog that incorporates and expands on these experimentally validated signatures; already in `doc/papers/` as Alexandrov2020 (referenced in hypothesis:0007).
 - **Degasperi et al. 2022** — extends the framework to a larger cancer cohort and refines tissue-specific signatures; already in `doc/papers/`.
 - Questions this raises for the project:
-  - The Kucab compendium covers exogenous agents but not APOBEC or MMR endogenous processes. Does the h08 positive-control arm for APOBEC (SBS2/13) have a comparable "ground-truth" experimental reference from a different source?
+  - The Kucab compendium covers exogenous agents but not APOBEC or MMR endogenous processes. Does the hypothesis:0007 positive-control arm for APOBEC (SBS2/13) have a comparable "ground-truth" experimental reference from a different source?
   - For the cross-study aggregation pipeline, can the Kucab agent-to-signature mapping table be used as a lookup to flag studies enriched in particular exposures (e.g., high-platinum chemotherapy studies) that might inflate certain signatures?
-  - The paper notes that 38/79 agents produced no detectable signature at IC40–60. At lower (chronic) doses used in real human populations, are some of these agents implicated in tumor signatures through accumulation rather than acute damage? This is relevant to h08b (discovery of novel exposures).
+  - The paper notes that 38/79 agents produced no detectable signature at IC40–60. At lower (chronic) doses used in real human populations, are some of these agents implicated in tumor signatures through accumulation rather than acute damage? This is relevant to hypothesis:0007 discovery of novel exposures.

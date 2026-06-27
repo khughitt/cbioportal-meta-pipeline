@@ -168,7 +168,7 @@ potentially susceptible to calling artifacts; the paper acknowledges the discuss
 
 ## Relevance
 
-This paper provides the precise operational definition of "cancer driver" used by q042 and the
+This paper provides the precise operational definition of "cancer driver" used by question:0042-driver-normal-expression-tissue-cell-type-specificity and the
 associated discussion on tissue/cell-type specificity of drivers. Key points:
 
 1. **Selection-based, per-tumor-type definition.** A gene is a driver in a given cancer type if its
@@ -178,14 +178,14 @@ associated discussion on tissue/cell-type specificity of drivers. Key points:
    once identified.
 
 2. **Per-cancer-type rosters vs. pan-cancer broadcast.** The compendium maintains per-tumor-
-   type driver lists, not a single pan-cancer flag. This is a cleaner source for q042's "restricted vs.
+   type driver lists, not a single pan-cancer flag. This is a cleaner source for question:0042's "restricted vs.
    shared" substrate than the Bailey2018 annotation in our pipeline feathers, which broadcasts
    pan-cancer CGC membership to all cancer types.
 
-3. **The 360/12 split is the empirical substrate for q042.** 360 genes that drive one or two tumor
+3. **The 360/12 split is the empirical substrate for question:0042.** 360 genes that drive one or two tumor
    types represent the tissue-restricted substrate; 12 cancer-wide genes are the shared core.
    The question of *why* most drivers are tissue-specific (lineage addiction, cell-of-origin
-   expression context, tissue-specific mutational processes) is precisely what q042 asks and what
+   expression context, tissue-specific mutational processes) is precisely what question:0042 asks and what
    the linked discussion (2026-06-07) explores.
 
 4. **Mode-of-action classification.** The Act/LoF/Amb labels — derived from the dN/dS
@@ -239,12 +239,12 @@ associated discussion on tissue/cell-type specificity of drivers. Key points:
 
 - Compare the IntOGen per-cancer-type driver rosters directly against our pipeline's
   `bailey2018_driver` overlay to quantify how many genes are Bailey-only (pan-cancer broadcast)
-  vs. IntOGen-confirmed per type — addresses q042's tissue-specificity question concretely.
+  vs. IntOGen-confirmed per type — addresses question:0042's tissue-specificity question concretely.
 - The 152 potentially new drivers (non-CGC) are a candidate list for hypothesis generation about
   understudied cancer genes; cross-reference with expression data in our feathers.
 - For the lineage-specificity discussion: the 360-gene restricted set + the 12 cancer-wide genes
   are the empirical starting point; next step is to ask whether restricted drivers show higher
-  tissue-specific expression in matched normal tissue (q042).
+  tissue-specific expression in matched normal tissue (question:0042).
 - Consider downloading IntOGen compendium and joining to our `gene_cancer_study_ratio_annotated.feather`
   on (gene, cancer_type) to add `intogen_driver` and `intogen_moa` columns alongside
   `bailey2018_driver`.

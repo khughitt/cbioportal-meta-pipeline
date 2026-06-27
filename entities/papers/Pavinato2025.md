@@ -64,7 +64,7 @@ is drawn from:
 - Mouse and human melanoma models using `Tyr::CreERT2 BrafV600E Pten−/−` and related
   lines (Baggiolini et al. 2021, Science, ref [1]) — the Baggiolini lab's own foundational work.
 - Human embryonic stem cell (hESC) and human pluripotent stem cell (hPSC) models of
-  pediatric glioma (H3.3K27M and H3.3G34R mutations; refs [28, 44]).
+  pediatric glioma (K27M and G34R mutations in histone 3.3; refs [28, 44]).
 - COSMIC v100 data for cross-tumor driver mutation frequencies (Figure 1B).
 - PIK3CA^H1047R^ studies in esophagus vs. skin epidermis (refs [25, 26]).
 - Basal cell carcinoma (BCC) extracellular matrix studies (ref [46]).
@@ -129,7 +129,7 @@ the same mutation:
   which activates a progenitor signature and drives partial dedifferentiation). This is the
   Baggiolini et al. 2021 (Science) finding — the authors' own lab's foundational work on
   "developmental chromatin programs determining oncogenic competence."
-- **H3.3K27M glioma**: this histone mutation induces cancer only in neural progenitor cells,
+- **Histone 3.3 K27M glioma**: this histone mutation induces cancer only in neural progenitor cells,
   not in differentiated somatic cells.
 
 The differentiation-state axis is linked to **metabolism**: as cells differentiate they change their
@@ -150,7 +150,7 @@ oncogenic competence:
 - **Neuronal microenvironment**: NF1 patients develop optic pathway gliomas; optic nerve
   neuronal activity directly contributes to tumor initiation (Pan et al. 2021, Nature). This
   illustrates how the local nervous system is a component of the oncogenic microenvironment.
-- **Intraorgan microenvironmental heterogeneity**: H3.3G34R, ATRX, and TP53 mutations
+- **Intraorgan microenvironmental heterogeneity**: the histone 3.3 G34R variant, ATRX, and TP53 mutations
   drive high-grade glioma only in forebrain, not hindbrain, progenitor cells — confirmed in
   hPSC-based models (Funato et al. 2021). BCC driven by oncogenic Smo affects tail/ear
   but not back skin epidermis. Cutaneous vs. acral melanoma carry entirely different driver
@@ -192,7 +192,7 @@ relevant to `question:0042-driver-normal-expression-tissue-cell-type-specificity
 
 **Why drivers are tissue-specific even when broadly expressed.** The core explanatory move
 in Pavinato2025 — that competence lives in the cell state, not in the gene's expression level —
-directly addresses the puzzle that motivates q042. A gene like BRAF or PIK3CA is broadly
+directly addresses the puzzle that motivates question:0042. A gene like BRAF or PIK3CA is broadly
 expressed, so its expression pattern cannot explain why its mutations drive cancer in some
 tissues but not others. Pavinato2025 resolves this by pointing to the transcriptional, epigenetic,
 metabolic, and microenvironmental context: these factors determine whether the same activated
@@ -222,7 +222,7 @@ is not in contradiction with the classical multistage carcinogenesis model; rath
 oncogenic competence determines how many and which combinations of driver mutations are
 required. This is a permissive-state framing: some cells are pre-primed (competent) and need
 fewer mutational hits; others are refractory and require more. This is mechanistically relevant to
-age-incidence relationships and the route-2 framing of q042.
+age-incidence relationships and the route-2 framing of question:0042.
 
 **For the project's gene × cancer frequency tables.** The pipeline captures the empirical
 *output* of oncogenic competence — high-frequency mutation of a given gene in a given cancer

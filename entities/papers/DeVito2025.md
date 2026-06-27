@@ -33,7 +33,7 @@ related:
 
 ## Key Contribution
 
-This mini-review presents and contextualises two recent Bayesian NMF frameworks for multi-study mutational signature analysis: (1) **Multi-Study NMF** (Grabski et al. 2025, Genome Biology), which decomposes mutation count matrices across S studies with a shared signature matrix and study-specific binary inclusion indicators, plus a semi-supervised recovery–discovery mode that simultaneously refits COSMIC-catalogue signatures and discovers novel ones; and (2) **Bayesian Probit Multi-Study NMF (BaP Multi-NMF)** (Hansen et al. 2025, arXiv:2502.01468), which encodes exposure sparsity via a probit mixture prior and incorporates sample-level covariates directly into the exposure model. Together, the two models address the growing need for integrative, multi-cohort signature analyses that go beyond single-dataset NMF or ad hoc meta-analyses.
+This mini-review presents and contextualises two recent Bayesian NMF frameworks for multi-study mutational signature analysis: (1) **Multi-Study NMF**, which decomposes mutation count matrices across S studies with a shared signature matrix and study-specific binary inclusion indicators, plus a semi-supervised recovery–discovery mode that simultaneously refits COSMIC-catalogue signatures and discovers novel ones; and (2) **Bayesian Probit Multi-Study NMF (BaP Multi-NMF)**, which encodes exposure sparsity via a probit mixture prior and incorporates sample-level covariates directly into the exposure model. Together, the two models address the growing need for integrative, multi-cohort signature analyses that go beyond single-dataset NMF or ad hoc meta-analyses.
 
 ## Methods
 
@@ -45,12 +45,12 @@ M_s ~ Poisson(P A_s E_s)
 
 where P (I×K) is the shared signature matrix, A_s is a study-specific diagonal binary indicator matrix selecting which of the K signatures are active in study s, and E_s (K×J_s) is the study-specific exposure matrix.
 
-**Grabski 2025 (Multi-Study NMF):**
+**Multi-Study NMF:**
 - Gamma priors with hierarchical hyperpriors on signature and exposure entries; Bernoulli(q) prior on each A_{sk} entry, inducing sparsity in cross-study signature sharing.
 - Semi-supervised recovery–discovery extension: the Poisson mean is split into P^R A_s^R E_s^R (known COSMIC signatures, with strong but not rigid priors) plus P^D A_s^D E_s^D (novel signatures inferred de novo).
 - Applied to breast-cancer samples from TCGA and PCAWG across age groups 20–29, 30–39, 40–49.
 
-**Hansen 2025 (BaP Multi-NMF):**
+**BaP Multi-NMF:**
 - Columns of P and E_s normalised to sum-to-one; Dirichlet priors on signatures (p_k ~ Dirichlet(α^p)) and on exposures conditioned on a latent binary activity indicator a_{sjk}.
 - The binary indicator is modelled via probit regression on sample-level covariates x_{sj}: a*_{sjk} ~ N(β_{sk}^T x_{sj}, 1), with hierarchical normal priors on β_{sk} and Gamma priors on precision τ_{sk}.
 - This yields a bi-clustering of patients and signatures; covariate effects on signature activity are estimated jointly with the NMF.
@@ -69,23 +69,23 @@ where P (I×K) is the shared signature matrix, A_s is a study-specific diagonal 
    - SBS93 (unknown etiology) co-clusters with SBS3 (HRD) and other DNA-repair signatures.
    - Cancer types form three main patient clusters (breast+head; stomach+colorectal+esophagus; lung adenoCA+SCC), with notable inter-cancer border cases (some breast cancers resembling head cancers; some stomach cancers resembling esophageal).
 
-4. **Three novel signatures (D1, D2, D3) were discovered** by the recovery–discovery framework in the 7-cancer-type analysis, in addition to the known COSMIC catalogue signatures.
+4. **Three novel signatures (`D1`, `D2`, `D3`) were discovered** by the recovery–discovery framework in the 7-cancer-type analysis, in addition to the known COSMIC catalogue signatures.
 
 5. **Covariate integration improves both signature estimation and biological interpretation.** Incorporating sex, smoking status, or inherited susceptibility as covariates into the probit model improves exposure estimates relative to treating covariates as post-hoc annotations.
 
 ## Relevance
 
-This review is directly relevant to **hypothesis h08** (agnostic covariate–signature-exposure association; positive-control recovery of UV/smoking/APOBEC/MMR).
+This review is directly relevant to `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`, the agnostic covariate-signature-exposure association hypothesis for positive-control recovery of UV, smoking, APOBEC, and MMR processes.
 
-- **H08a (positive-control recovery):** BaP Multi-NMF's built-in probit covariate model is the closest published analog to the association design in H08a. It demonstrates that smoking status and sex can be linked to signature activity within a joint Bayesian NMF — i.e. the recovery of known aetiology links (smoking→SBS4) is achievable without post-hoc correlation. This supports the feasibility of the H08a design and provides a benchmark architecture.
+- **Positive-control recovery:** BaP Multi-NMF's built-in probit covariate model is the closest published analog to the positive-control association design. It demonstrates that smoking status and sex can be linked to signature activity within a joint Bayesian NMF — i.e. the recovery of known aetiology links (smoking->SBS4) is achievable without post-hoc correlation. This supports the feasibility of the positive-control arm and provides a benchmark architecture.
 
-- **H08b (discovery):** The recovery–discovery split (P^R for known, P^D for novel) is directly applicable to our multi-study aggregation: we can anchor COSMIC catalogue signatures and simultaneously discover study- or cancer-type-specific novel processes. The cross-study sharing structure (study-specific A_s matrices) maps onto our scenario of ~300 heterogeneous cBioPortal studies.
+- **Discovery arm:** The recovery-discovery split (`P^R` for known, `P^D` for novel) is directly applicable to our multi-study aggregation: we can anchor COSMIC catalogue signatures and simultaneously discover study- or cancer-type-specific novel processes. The cross-study sharing structure (study-specific `A_s` matrices) maps onto our scenario of ~300 heterogeneous cBioPortal studies.
 
 - **Multi-study integration design:** The paper distinguishes multi-study analysis (shared variable labels across matrices) from multimodal integration (shared subject labels across matrices). Our pipeline occupies the multi-study regime for mutation count data, and the multimodal regime when expression and mutation are co-measured on the same samples — a distinction the framework makes explicit and useful.
 
-- **Software gap:** The review notes R implementations in separate GitHub repositories (Grabski 2025, Hansen 2025). For integration into the Python/Snakemake pipeline, a wrapper or port would be needed. SigProfilerExtractor (Python) and bayesNMF (Python, arXiv:2502.18674) are listed as alternatives in Table 1 for those preferring Python-native tools.
+- **Software gap:** The review notes R implementations in separate GitHub repositories for the two highlighted Bayesian multi-study NMF methods. For integration into the Python/Snakemake pipeline, a wrapper or port would be needed. SigProfilerExtractor (Python) and bayesNMF (Python, arXiv:2502.18674) are listed as alternatives in Table 1 for those preferring Python-native tools.
 
-- **Cross-study aggregation connection:** The project's `gene_cancer_study_ratio_annotated.feather` aggregates across cBioPortal studies in a meta-analytic manner. If per-sample mutation spectra were retained (rather than aggregated mutation ratios), the Grabski/Hansen models could be applied directly — this maps to the feasibility question raised in q018.
+- **Cross-study aggregation connection:** The project's `gene_cancer_study_ratio_annotated.feather` aggregates across cBioPortal studies in a meta-analytic manner. If per-sample mutation spectra were retained (rather than aggregated mutation ratios), the reviewed multi-study NMF models could be applied directly — this maps to the feasibility question raised in `question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross`.
 
 ## Project Framework Mapping
 
@@ -94,14 +94,14 @@ This review is directly relevant to **hypothesis h08** (agnostic covariate–sig
 | Study-specific count matrix M_s | Per-study mutation table (studies/{id}/mut/) | Each study is a cBioPortal cohort; counts would be 96-motif SBS |
 | Shared signature matrix P | COSMIC SBS catalogue / de-novo factors W | The pipeline currently uses SigProfilerAssignment for refitting |
 | Study-specific binary indicator A_s | Study-level signature-activity flags | Not currently tracked in feather outputs |
-| Exposure matrix E_s | Per-sample signature attribution (H) | Not in current pipeline outputs; feasibility question = q018 |
+| Exposure matrix E_s | Per-sample signature attribution (`H`) | Not in current pipeline outputs; feasibility question = `question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross` |
 | Sample-level covariates x_{sj} | Clinical fields in samples_annotated.feather | age, sex, MSI, TMB, oncotree_code etc. already ingested |
 | Recovery component P^R | Restricted COSMIC catalogue assignment | run_restricted_sigprofiler_assignment.py |
-| Discovery component P^D | De-novo NMF factors (q019 scope) | Currently unimplemented; q019 asks about feasibility |
+| Discovery component P^D | De-novo NMF factors (`question:0019-does-de-novo-extraction-on-the-aggregated-cohort-surface-factors-not-in` scope) | Currently unimplemented; `question:0019-does-de-novo-extraction-on-the-aggregated-cohort-surface-factors-not-in` asks about feasibility |
 
 ## Limitations
 
-- **Mini-review scope:** The paper does not introduce new methodology but summarises two primary papers (Grabski 2025, Hansen 2025). Quantitative performance comparisons (sensitivity, specificity, computational cost) are not presented; readers must consult the primary papers.
+- **Mini-review scope:** The paper does not introduce new methodology but summarises two primary Bayesian multi-study NMF papers. Quantitative performance comparisons (sensitivity, specificity, computational cost) are not presented; readers must consult the primary papers.
 - **W_s limitation in BaP Multi-NMF:** The per-sample scaling matrix W_s = diag(w_{s1}, ..., w_{sJ_s}) is fixed at observed total mutation counts, which may be informative of signature activity in hypermutator tumors (extreme genomic instability) — a limitation the authors acknowledge.
 - **R implementations only:** Both primary tools are implemented in R; integration into Python-based pipelines requires additional work.
 - **Small early-onset breast cancer cohorts:** The TCGA 20–29 group (n=7) result is intriguing but statistically fragile; the authors appropriately note caution.
@@ -109,13 +109,13 @@ This review is directly relevant to **hypothesis h08** (agnostic covariate–sig
 
 ## Model / Tool Availability
 
-- **Grabski 2025 (Multi-Study NMF):** R code at https://github.com/igrabski/MultiStudyNMF.
-- **Hansen 2025 (BaP Multi-NMF):** R code at https://github.com/blhansen/BAPmultiNMF.
+- **Multi-Study NMF:** R code at https://github.com/igrabski/MultiStudyNMF.
+- **BaP Multi-NMF:** R code at https://github.com/blhansen/BAPmultiNMF.
 - Table 1 in the review provides a comprehensive taxonomy of 30+ signature analysis tools organised by topic (Dirichlet mixture specs, regularization, ensembling, multi-study, covariates, etc.)
 
 ## Follow-up
 
-- Read the two primary papers in full: Grabski IN et al., Genome Biol. 2025;26(1):98 (Multi-Study NMF) and Hansen B et al., arXiv:2502.01468 (BaP Multi-NMF).
-- Assess whether BaP Multi-NMF's probit covariate model can serve as the within-study association layer for H08a, or whether a lighter post-hoc regression on SigProfilerAssignment outputs is preferable.
-- Check Table 1's "Covariates and spatial variation" row: Robinson 2019, Grabski 2025, Hansen 2025, SigProfilerTopography — at least one of these may provide a direct Python-compatible implementation of covariate-aware signature analysis for H08.
-- q018 feasibility: the paper implicitly confirms that per-sample WES/WGS spectra are the appropriate substrate (not aggregated ratios); panel data require refit, not de-novo extraction.
+- Read the two primary papers in full: the Genome Biology 2025 Multi-Study NMF paper and the 2025 BaP Multi-NMF preprint.
+- Assess whether BaP Multi-NMF's probit covariate model can serve as the within-study association layer for the positive-control arm, or whether a lighter post-hoc regression on SigProfilerAssignment outputs is preferable.
+- Check Table 1's "Covariates and spatial variation" row: Robinson et al. [@Robinson2019], the two reviewed 2025 Bayesian multi-study NMF papers, and SigProfilerTopography — at least one of these may provide a direct Python-compatible implementation of covariate-aware signature analysis for `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`.
+- `question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross` feasibility: the paper implicitly confirms that per-sample WES/WGS spectra are the appropriate substrate (not aggregated ratios); panel data require refit, not de-novo extraction.

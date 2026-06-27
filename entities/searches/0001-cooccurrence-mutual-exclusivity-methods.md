@@ -83,52 +83,52 @@ plus 2022-2026 methods and any benchmark / review papers.
 
 **Core now (read first):**
 
-1. **Canisius 2016 — DISCOVER** — the most directly applicable null model for what the pipeline
+1. **Canisius 2016 [@Canisius2016] — DISCOVER** — the most directly applicable null model for what the pipeline
    is about to build.
-2. **van de Haar 2019 — Epistasis: A Delicate Affair** — read this *before* writing any
+2. **van de Haar 2019 [@VanDeHaar2019] — Epistasis: A Delicate Affair** — read this *before* writing any
    cross-study co-occurrence code. It is the cautionary tale.
-3. **Mina 2020 — SELECT** — current-generation covariate-aware method; defines the bar.
-4. **Kim 2017 — WeSME** — pragmatic permutation-style alternative; simpler to implement and
+3. **Mina 2020 [@Mina2020] — SELECT** — current-generation covariate-aware method; defines the bar.
+4. **Kim 2017 [@Kim2017] — WeSME** — pragmatic permutation-style alternative; simpler to implement and
    reason about in a Snakemake rule than DISCOVER's Poisson-binomial.
-5. **Imielinski 2017 — FishHook** — background-rate framework that complements exclusivity
+5. **Imielinski 2017 [@Imielinski2017] — FishHook** — background-rate framework that complements exclusivity
    testing on the other axis (gene-level significance).
 
 **Relevant next:**
 
-6. Leiserson 2015 — CoMEt (extension to set-level exclusivity).
-7. Ciriello 2012 — MEMo (foundational framing + network module layer).
-8. Vandin 2012 — Dendrix (coverage-exclusivity weight function).
-9. Leiserson 2013 — Multi-Dendrix (multi-pathway extension).
-10. Babur 2015 — Mutex (pathway-prior variant).
-11. Hua 2016 — MEGSA (likelihood-ratio framework, power-analysis comparisons).
-12. Constantinescu 2016 — TiMEx (evolutionary / waiting-time interpretation).
-13. Leiserson 2016 — WExT (weighted-exact-test bridge).
-14. Kim 2015 — MEMCover (cross-cancer-type integration — closest prior art).
-15. Mina 2017 — Conditional Selection (SELECT conceptual precursor).
-16. Mina & Ciriello 2022 — review (current framing).
-17. Wang 2024 — pathway-prior DISCOVER adaptation.
+6. Leiserson 2015 [@Leiserson2015] — CoMEt (extension to set-level exclusivity).
+7. Ciriello 2012 [@Ciriello2012] — MEMo (foundational framing + network module layer).
+8. Vandin 2012 [@Vandin2012] — Dendrix (coverage-exclusivity weight function).
+9. Leiserson 2013 [@Leiserson2013] — Multi-Dendrix (multi-pathway extension).
+10. Babur 2015 [@Babur2015] — Mutex (pathway-prior variant).
+11. Hua 2016 [@Hua2016] — MEGSA (likelihood-ratio framework, power-analysis comparisons).
+12. Constantinescu 2016 [@Constantinescu2016] — TiMEx (evolutionary / waiting-time interpretation).
+13. Leiserson 2016 [@Leiserson2016] — WExT (weighted-exact-test bridge).
+14. Kim 2015 [@Kim2015] — MEMCover (cross-cancer-type integration — closest prior art).
+15. Mina 2017 [@Mina2017] — Conditional Selection (SELECT conceptual precursor).
+16. Mina & Ciriello 2022 [@Mina2022] — review (current framing).
+17. Wang 2024 [@Wang2024] — pathway-prior DISCOVER adaptation.
 
 **Peripheral monitor:**
 
-18. Van Daele 2022 — OMEN (network-based variant).
-19. Shuaibi 2024 — latent-variable preprint.
-20. Spinou 2025 — pediatric pathway-informed variant.
+18. Van Daele 2022 [@VanDaele2022] — OMEN (network-based variant).
+19. Shuaibi 2024 [@Shuaibi2024] — latent-variable preprint.
+20. Spinou 2025 [@Spinou2025] — pediatric pathway-informed variant.
 
 ## Coverage Notes and Gaps
 
 - **No recent (2022-2026) comprehensive benchmark** of mutual-exclusivity methods on a
-  standardized test set was found. The 2016 MEGSA paper, the 2018 Zhang & Zhang review
-  (PMID: 28113329), and the 2019 van de Haar perspective remain the closest things to a
+  standardized test set was found. The 2016 MEGSA paper [@Hua2016], the 2018 Zhang & Zhang review
+  [@Zhang2018DiscoverMutated], and the 2019 van de Haar perspective [@VanDeHaar2019] remain the closest things to a
   comparative reference. This is a **real gap** — the project could contribute here by
   benchmarking DISCOVER vs. WeSME vs. SELECT on cross-study cBioPortal data.
 - **Cross-study (not cross-cancer-type) aggregation of co-occurrence statistics** is nearly
-  absent from the literature. MEMCover (2015) integrates across cancer types within one cohort
+  absent from the literature. MEMCover (2015) [@Kim2015] integrates across cancer types within one cohort
   (TCGA); there is no published method that pools DISCOVER/WeSME/CoMEt *p*-values across
   independent studies with different panels. This is arguably a methodological contribution the
   project could target directly.
 - **Clonal-hematopoiesis confounding** as a co-occurrence artifact is not systematically
   addressed in the named methods (DISCOVER/SELECT/WeSME/CoMEt all assume somatic calls are
-  tumor-intrinsic). Cross-link to the existing Bolton 2020 reference in
+  tumor-intrinsic). Cross-link to the existing Bolton 2020 reference [@Bolton2020] in
   `doc/background/papers/Bolton2020.md` and the `annotate_ch.py` pipeline step.
 - **Panel-heterogeneity handling** (GENIE vs MSK-IMPACT vs WES): only FishHook-style covariate
   regression and the coverage-weighting in WExT/WeSME address this explicitly. Formalize this as
@@ -137,7 +137,7 @@ plus 2022-2026 methods and any benchmark / review papers.
   focused. Extending to CNV is future scope (also an explicit "Out of Scope" item in
   `specs/research-question.md`, but worth a marker).
 - **Dendrix original PMID not confirmed via a direct `esearch` for the exact name "Dendrix"** —
-  the paper at PMID 21653252 is the canonical reference (Vandin/Upfal/Raphael 2011/2012 *Genome
+  the paper at PMID 21653252 is the canonical reference (Vandin/Upfal/Raphael 2011/2012 [@Vandin2012] *Genome
   Res*) but the tool name "Dendrix" is in the supplement, not the title; verified via the method
   description, but flagged here as a citation-hygiene note.
 

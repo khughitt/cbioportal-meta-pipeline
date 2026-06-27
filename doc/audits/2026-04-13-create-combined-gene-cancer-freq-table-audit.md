@@ -93,17 +93,17 @@ their current form.
 - **Status:** fail
 - **Location:** `code/scripts/create_combined_gene_cancer_freq_table.py` whole-file — no CH or
   matched-normal logic anywhere.
-- **Evidence:** Per `topic:clonal-hematopoiesis-contamination` (synthesizing Bolton 2020 over
+- **Evidence:** Per `topic:clonal-hematopoiesis-contamination` (synthesizing Bolton et al. [@Bolton2020] over
   24,146 MSK-IMPACT patients): the 7-gene CH-priority list (DNMT3A, PPM1D, TET2, TP53, ASXL1,
-  CHEK2, PRPF8) is systematically inflated in tumor-only-called cohorts. Cheng 2015 quantifies
+  CHEK2, PRPF8) is systematically inflated in tumor-only-called cohorts. Cheng et al. [@Cheng2015] quantify
   the matched-normal advantage at ~9 extra spurious germline calls per unmatched-normal sample
-  that population-AF filters cannot remove. Pugh 2022: 52% of GENIE v9.1 is tumor-only. Pooling
+  that population-AF filters cannot remove. Pugh et al. [@Pugh2022]: 52% of GENIE v9.1 is tumor-only. Pooling
   matched + unmatched cohorts in `mean(ratio)` for these 7 genes will overstate per-cancer rates.
 - **Why this matters:** CH-driver genes are among the highest-frequency hits in clinical-
   sequencing cohorts. Their pooled cross-study rates in our outputs are biased upward by an
   amount that varies with the matched-normal fraction of contributing studies. TP53 in
   particular dominates pan-cancer aggregations and is a CH driver under therapy-selection
-  (Bolton 2020).
+  (Bolton et al. [@Bolton2020]).
 - **Recommended action:** Implement task t050 (CH-aware filter) — add `ch_priority_gene` boolean
   column to outputs, ingest per-study `matched_normal` flag from cBioPortal study definitions,
   and report matched-normal vs tumor-only stratified ratios for the 7 priority genes.
@@ -122,7 +122,7 @@ their current form.
   feathers carry only `(cancer_type, symbol, per-study counts, per-study ratios, mean, mean_adj)`.
 - **Evidence:** Code-path inspection + `topic:cancer-driver-genes` synthesis: high-frequency
   rankings without external-catalog overlay cannot distinguish "known driver", "long-tail
-  candidate", "tissue-borrowed driver", or "artifact." Bailey 2018 publishes the 299-gene
+  candidate", "tissue-borrowed driver", or "artifact." Bailey et al. [@Bailey2018] publish the 299-gene
   PanCanAtlas consensus + per-cancer rosters (Table S1, downloadable). The Bailey overlay is
   *already wired* via `code/scripts/annotate_drivers.py` and Snakemake rule
   `annotate_drivers_in_gene_cancer_table` (output:
@@ -130,13 +130,13 @@ their current form.
   `gene_cancer_study.feather` itself remains unannotated.
 - **Why this matters:** Consumers reading the un-annotated `gene_cancer_study.feather` cannot
   contextualize their long-tail rankings against the field's reference driver list. Per Bailey
-  2018, 19% of driver mutations are tissue-borrowed (driver in a different cancer than the
-  patient's primary). Per Bandlamudi 2026, ~1/3 of detected drivers are in non-canonical tissue
+  et al. [@Bailey2018], 19% of driver mutations are tissue-borrowed (driver in a different cancer than the
+  patient's primary). Per Bandlamudi et al. [@Bandlamudi2026], ~1/3 of detected drivers are in non-canonical tissue
   contexts and behave differently. Both insights are invisible without overlay.
 - **Recommended action:** Promote consumption of the *annotated* feather
   (`gene_cancer_study_annotated.feather`) as the canonical downstream input. Either retire or
   prominently flag the un-annotated `gene_cancer_study.feather` as "raw, no driver overlay
-  applied." Stamp the Bailey 2018 catalog version in the output.
+  applied." Stamp the Bailey et al. [@Bailey2018] catalog version in the output.
 - **Blocker status:** blocks t067 closure for downstream consumers expecting interpretable
   driver context.
 - **Resolution status:** open
@@ -152,7 +152,7 @@ their current form.
 - **Location:** whole-file — no `cohort_stage` ingestion.
 - **Evidence:** Per `topic:cohort-selection-bias-representativeness`: AR mutations 18% in MSK
   metastatic prostate vs 1% in TCGA primary; ESR1 11% vs 4%; EGFR T790M 11.3% vs 2.2%
-  (Zehir 2017, AACR GENIE 2017). The script pools studies regardless of primary / metastatic /
+  (Zehir et al. [@Zehir2017], AACR GENIE 2017). The script pools studies regardless of primary / metastatic /
   pre-treated stage; resistance-associated alterations will be elevated in cohorts dominated
   by clinical-sequencing studies relative to TCGA-derived studies, but the output presents this
   as a single cross-study rate.
@@ -175,7 +175,7 @@ their current form.
 - **Checklist item:** `panel-mutation-data.md` `panel.04`
 - **Status:** fail
 - **Location:** whole-file.
-- **Evidence:** Code-path inspection + Cheng 2015 / Zehir 2017 / Bandlamudi 2026: MSK-IMPACT
+- **Evidence:** Code-path inspection + Cheng et al. [@Cheng2015] / Zehir et al. [@Zehir2017] / Bandlamudi et al. [@Bandlamudi2026]: MSK-IMPACT
   spans IMPACT-341 (2014) → 410 → 468 → 505. Genes added in later versions are uncallable in
   earlier-cohort samples but are silently treated as "not mutated" by naive aggregation.
 - **Why this matters:** For genes added in IMPACT-468 or IMPACT-505 (e.g., a number of
@@ -195,12 +195,12 @@ their current form.
 - **Checklist item:** `panel-mutation-data.md` `panel.02`
 - **Status:** fail
 - **Location:** whole-file — no `matched_normal` column.
-- **Evidence:** Per `topic:clonal-hematopoiesis-contamination` and Pugh 2022 (52% of GENIE v9.1
+- **Evidence:** Per `topic:clonal-hematopoiesis-contamination` and Pugh et al. [@Pugh2022] (52% of GENIE v9.1
   is tumor-only). Required prerequisite for the F3 stratification.
 - **Why this matters:** Without per-study matched-normal annotation, F3's CH-stratification
   cannot be implemented, and the matched-vs-unmatched pooling concern affects every gene
-  weakly (not just CH-priority genes — see Cheng 2015's "~9 extra spurious germline calls per
-  unmatched sample" finding).
+  weakly (not just CH-priority genes — see the "~9 extra spurious germline calls per
+  unmatched sample" finding from Cheng et al. [@Cheng2015]).
 - **Recommended action:** Ingest per-study `matched_normal` flag from cBioPortal study
   definitions / GENIE per-assay metadata. Add as a column on `gene_cancer_study.feather`.
 - **Blocker status:** requires disposition; prerequisite for F3 fix.
@@ -216,7 +216,7 @@ their current form.
 - **Location:** `code/scripts/create_combined_gene_cancer_freq_table.py:66-67` — outputs written
   with no metadata about input data versions, pipeline version, or catalog versions used in any
   upstream filtering.
-- **Evidence:** Per Suehnholz 2024: OncoKB Level 1/2 actionability rose 8.9% → 31.6% in 5 years
+- **Evidence:** Per Suehnholz et al. [@Suehnholz2024]: OncoKB Level 1/2 actionability rose 8.9% → 31.6% in 5 years
   on the same MSK-IMPACT cohort. Without version stamping, any longitudinal claim derived from
   our outputs cannot be reproduced or compared across re-runs.
 - **Why this matters:** Reproducibility. Two runs of this script against differently-versioned
@@ -259,7 +259,7 @@ their current form.
 - **Checklist item:** `cross-study-aggregation.md` `agg.10`
 - **Status:** fail
 - **Location:** whole-file — outputs have no per-cancer expected-driver-count context.
-- **Evidence:** Per Lawrence 2014 saturation analysis: only 4 of 21 cancer types were close to
+- **Evidence:** Per Lawrence et al. [@Lawrence2014] saturation analysis: only 4 of 21 cancer types were close to
   driver-discovery saturation in 2014, with per-type required-N estimates ranging from ~650
   (neuroblastoma) to ~5,300 (melanoma). Long-tail rankings for cancer types below saturation
   contain a non-trivial false-positive rate. Our outputs present long-tail rankings without
@@ -269,7 +269,7 @@ their current form.
   same gene at the long tail of well-saturated melanoma. Consumers cannot make this distinction
   without per-cancer saturation context.
 - **Recommended action:** Add a `cancer_saturation_status` column derived from per-cancer cohort
-  size + Lawrence 2014's per-cancer required-N. Flag long-tail rankings for under-sampled
+  size + the per-cancer required-N estimates from Lawrence et al. [@Lawrence2014]. Flag long-tail rankings for under-sampled
   cancers.
 - **Blocker status:** requires disposition.
 - **Resolution status:** open

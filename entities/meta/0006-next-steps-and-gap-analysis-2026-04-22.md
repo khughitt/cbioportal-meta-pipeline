@@ -14,7 +14,7 @@ id: meta:0006-next-steps-and-gap-analysis-2026-04-22
 - **Cross-study aggregation execution moved from design to validated implementation**: the `t070` MSK-IMPACT per-sample panel-version fix landed as a full implementation branch and its PoC comparison verified the predicted ~30x TMB correction and 401 MSK false-to-true hypermutator flips.
 - **The first end-to-end pipeline artifact was produced and interpreted**: `t100` completed on 2026-04-17, yielding the first annotated PoC run plus the integration interpretation at `doc/interpretations/2026-04-17-poc-run.md`.
 - **Hypermutator calibration was tightened immediately after the PoC**: `t105` closed the composite-flag overcalling issue surfaced by `t100`, bringing BRCA and SKCM rates back into biologically plausible ranges.
-- **A new normal-tissue / signature-analysis branch was built out**: `t111` landed the Li2021 normal-tissue spectra extraction pipeline, wrote its interpretation, and directly enabled q007/q008/q010-style downstream analyses.
+- **A new normal-tissue / signature-analysis branch was built out**: `t111` landed the Li2021 normal-tissue spectra extraction pipeline, wrote its interpretation, and directly enabled `q007`/`q008`/`q010`-style downstream analyses.
 - **Project metadata and knowledge assets were migrated over the last 14 hours**: tasks migrated (`4328958`), paper metadata migrated (`8fdb53a`, `2c65fed`), and the knowledge graph plus local mappings were refreshed.
 - **Question formalization is materially stronger than in the 2026-04-17 snapshot**: `science-tool project index --format json` now returns 10 active questions under `doc/questions/`, closing the earlier “index is empty” problem.
 
@@ -72,7 +72,7 @@ id: meta:0006-next-steps-and-gap-analysis-2026-04-22
 | Workflow provenance / retained run artifacts | Missing | regressing | Interpretations exist, but no `datapackage.json` manifests are on disk for auditing run state or supersession. |
 | Question formalization / project indexability | Stronger | improving | `doc/questions/` now has 10 active questions, but the core research question is still not decomposed into formal hypotheses. |
 | Task-state fidelity | Weak | regressing | Several active tasks no longer match reality (`t026`, `t043`, `t060`, `t070`, `t077`). |
-| Normal-tissue / signature-analysis branch | Partial | improving | `t111` built the infrastructure and `t109` is active, but no first downstream q007/q008 result has been produced yet. |
+| Normal-tissue / signature-analysis branch | Partial | improving | `t111` built the infrastructure and `t109` is active, but no first downstream `q007`/`q008` result has been produced yet. |
 | Cross-project sync | Partial | improving | Sync is 3 days stale rather than 6, but still worth refreshing before another design-heavy session. |
 
 ### High-Impact Gaps
@@ -87,14 +87,14 @@ The project’s stated research question is about cross-study mutation structure
 The workspace currently has interpretation documents for `t100`, `t070`, and `t111`, but no retained manifests under `results/`. That prevents a proper run inventory and makes supersession/status checks impossible from the filesystem alone. In a pipeline-heavy project, that is a real operational blind spot.
 
 **Gap 4 — The normal-tissue branch has infrastructure but not yet a decisive first analytic payoff.**  
-`t111` materially improved feasibility for q007/q008/q010, and `t109` is active. But until either q007 correction effects or q008 contamination magnitude is quantified, the branch remains “promising infrastructure” rather than evidence-bearing analysis.
+`t111` materially improved feasibility for `q007`/`q008`/`q010`, and `t109` is active. But until either `q007` correction effects or `q008` contamination magnitude is quantified, the branch remains “promising infrastructure” rather than evidence-bearing analysis.
 
 ### Status Transitions
 
 **Newly unblocked since 2026-04-17:**
 
 - **t077** is functionally unblocked because `t079` and `t081` are closed, even though the task file still says `blocked`.
-- **q007 / q008 / q010 downstream work** is meaningfully unblocked by `t111` and its interpretation; the necessary normal-tissue spectra table now exists.
+- **`q007` / `q008` / `q010` downstream work** is meaningfully unblocked by `t111` and its interpretation; the necessary normal-tissue spectra table now exists.
 
 **Newly blocked since 2026-04-17:**
 
@@ -137,7 +137,7 @@ No major new plan-to-task gap was found in `doc/plans/`.
 **Options:**
 
 1. **Aggregation-first:** reconcile task statuses, then do `t076` followed by `t101` and `t077`.
-2. **Signature-first:** keep pushing `t109`, then `t110`, and try to answer q008/q009 before returning to pooled frequency modeling.
+2. **Signature-first:** keep pushing `t109`, then `t110`, and try to answer `q008`/`q009` before returning to pooled frequency modeling.
 3. **Hygiene-first reset, then choose:** spend one short session reconciling statuses and blockers, then pivot immediately to option 1 unless new evidence says otherwise.
 
 **Recommendation:** **Option 3, then Option 1.**  

@@ -45,7 +45,7 @@ consumed_by:
 
 ## Summary
 
-The PanCanAtlas harmonized re-analysis of the full TCGA cohort — uniformly processed MC3 mutations, copy number, expression, and the Bailey 2018 / Sanchez-Vega 2018 / Hoadley 2018 / Kandoth 2013 pan-cancer driver and pathway consensus products.
+The PanCanAtlas harmonized re-analysis of the full TCGA cohort — uniformly processed MC3 mutations, copy number, expression, and the PanCanAtlas driver and pathway consensus products [@Bailey2018; @SanchezVega2018; @Hoadley2018; @Kandoth2013].
 
 ## Access and Scope
 
@@ -57,10 +57,11 @@ The PanCanAtlas harmonized re-analysis of the full TCGA cohort — uniformly pro
 
 ## Access verification log
 
-- 2026-06-01 (codex, t201): verified the PanCanAtlas study directories needed by h08 expression
-  substrates are present under `/data/raw/cbioportal/`, including RSEM files for the h08 arms, and
+- 2026-06-01 (codex, `task:t201`): verified the PanCanAtlas study directories needed by
+  `plan:0007-t199-h08-association-core` are present under `/data/raw/cbioportal/`, including
+  RSEM files for the expression arms, and
   that the child clinical dataset `dataset:tcga-pancanatlas-clinical` was downloaded and verified by
-  t199 WP0.
+  `task:t199` WP0.
 
 ## Connections to Project
 

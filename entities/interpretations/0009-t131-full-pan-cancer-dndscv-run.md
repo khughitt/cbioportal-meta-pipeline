@@ -30,7 +30,7 @@ distort the headline three-way comparison: (a) a tiebreaker artifact in the
 per-gene min-q rollup (`min_qglobal == 0` for 829 genes, fall-through is
 alphabetical), and (b) inflated `mean_inclusive` in the t077 pooled meta-analysis
 output (raw-frequency top-15 dominated by snoU13 / Y_RNA / fragile-site genes at
-implausible 65–83% rates). Both are fixable; the q011 falsifier directional
+implausible 65–83% rates). Both are fixable; the `q011` falsifier directional
 signal is preserved but should be re-read after the fixes land.
 
 ## Findings Summary
@@ -89,7 +89,7 @@ top-N transforms:
 
 v2 top-15: TP53, KRAS, NRAS, PIK3CA, **TTN**, FBXW7, KMT2D, PTEN, RB1, TET2,
 ARID1A, ARID2, DNMT3A, BRAF, SETD2 — 14/15 are canonical pan-cancer drivers
-(TTN being the persistent Lawrence 2014 length artifact even after dNdScv
+(TTN being the persistent Lawrence et al. [@Lawrence2014] length artifact even after dNdScv
 correction at this scale).
 
 **TTN at rank #5 is not a tiebreaker bug**: its `n_cancers_significant_q05 = 48`
@@ -133,7 +133,7 @@ the nesting assumption the pooled meta-analysis was designed for. The
 inflation of common-fragile-site / pseudogene rows is consistent with this:
 those gene loci are most sensitive to coverage-vs-callability mismatches.
 
-### F5 — q011 falsifier signal preserved in direction; magnitudes shifted vs PoC (`suggestive`, `empirical_data_evidence`)
+### F5 — `q011` falsifier signal preserved in direction; magnitudes shifted vs PoC (`suggestive`, `empirical_data_evidence`)
 
 Spearman correlation of each ranking against `log10(PubTator mention count)`
 (positive = better-ranked genes get more literature attention; n = 18,028):
@@ -145,7 +145,7 @@ Spearman correlation of each ranking against `log10(PubTator mention count)`
 | dndscv (v1 broken) | +0.183 (p=6.6e-136) | +0.055 | +0.128 |
 | dndscv (v2 fixed) | +0.184 (p=3.1e-137) | n/a | n/a |
 
-Direction is consistent with q011's pre-registered conjecture (length confounds
+Direction is consistent with `q011`'s pre-registered conjecture (length confounds
 literature attention through the mutation-count mediator), but **the magnitudes
 are unstable** between PoC and full run, and the correlations cannot be
 trusted while F4 (raw / length_adj inflation) is unresolved. The PubTator
@@ -189,12 +189,12 @@ replicates the PoC direction; F6 partially diverges from PoC.
 
 **Aggregator-circularity:** PubTator is a literature aggregator, not a curated
 review; using it for a rank-correlation test against three orthogonal mutation
-rankings is appropriate. Bailey 2018 driver list is curated by humans using
+rankings is appropriate. Bailey et al. [@Bailey2018] driver list is curated by humans using
 multiple methods including dNdScv-style selection signals — there is mild
 **circularity** in using Bailey driver recovery as the validation metric for a
 dNdScv-based ranking. Document explicitly: dNdScv was one of seven inputs
-Bailey 2018 used. The "62/100" figure should be read as "agreement with the
-Bailey 2018 consensus that included dNdScv", not as independent corroboration.
+Bailey et al. [@Bailey2018] used. The "62/100" figure should be read as "agreement with the
+Bailey et al. [@Bailey2018] consensus that included dNdScv", not as independent corroboration.
 
 **Sample sizes:** n_genes_with_pubtator = 18,028; n_genes_with_full_signals =
 18,645. Spearman p-values are tiny but effect sizes (ρ ≈ ±0.1 to ±0.5) are
@@ -229,7 +229,7 @@ Concerns surfaced during interpretation, recorded as `methodological` findings:
 
 ## Proposition-Level Updates
 
-This project does not yet have S-P-O propositions formalized for q011 or t131;
+This project does not yet have S-P-O propositions formalized for `q011` or t131;
 the closest first-class entities are the open question `q011` and the t131
 design plan. Proposed proposition deltas (for the knowledge graph if/when it
 catches up):
@@ -239,14 +239,14 @@ catches up):
   proposition "min-q rollup is sufficient for cross-cancer ranking".
 - **P2 (new):** `n_cancers_significant_q05_tiebreaker_recovers_canonical_drivers` —
   supported by F3. Stance: `supports` a fixed rollup design.
-- **P3 (q011 conjecture, partial update):** `gene_length_confounds_literature_attention`
+- **P3 (`q011` conjecture, partial update):** `gene_length_confounds_literature_attention`
   — directional evidence preserved in dNdScv vs length-adj split (F5), but
   magnitudes unstable. Stance: `supports modestly`; flag as `fragile` until
   F4 is diagnosed.
 - **P4 (new):** `pooled_meta_analysis_under_t139_bypass_inflates_fragile_site_loci` —
   supported by F4 (snoU13/Y_RNA/MACROD2/FHIT pile-up). Status: **conjecture;
   needs targeted diagnostic** (see DQ2).
-- **P5 (existing — Lawrence 2014 length confounding):** `dndscv_corrects_for_gene_length`
+- **P5 (existing — Lawrence et al. [@Lawrence2014] length confounding):** `dndscv_corrects_for_gene_length`
   — *partially refuted at pan-cancer scale* by TTN landing at v2 rank #5 and
   AHNAK/AHNAK2 surviving in the q=0 cluster. dNdScv reduces but does not
   eliminate the long-gene signal under very large cohorts. Stance: `disputes
@@ -255,33 +255,33 @@ catches up):
 
 ## Question-Level Implications
 
-**q011 — Does gene length confound literature attention independently of
+**`q011` — Does gene length confound literature attention independently of
 mutation count?**
 
 Status: **partially addressed**. The PubTator correlation pattern at full scale
 (raw +0.002, length_adj −0.109, dndscv +0.184) is qualitatively consistent with
-the q011 conjecture's pre-registered direction (length-mediated attention),
+the `q011` conjecture's pre-registered direction (length-mediated attention),
 but the magnitudes diverge from the PoC (raw was +0.127, dndscv +0.055 in the
 PoC). This divergence is most parsimoniously explained by F4 (raw-axis
-contamination) — once that is fixed, the q011 panel can be re-read.
+contamination) — once that is fixed, the `q011` panel can be re-read.
 
 The pre-registered Phase-2 regression (t129) remains the more defensible test;
 the t131 PubTator panel was always the cheap Phase-1 readout. The current
-verdict for q011 is **directionally consistent but not decisive**; the formal
+verdict for `q011` is **directionally consistent but not decisive**; the formal
 falsifier (partial slope of `log(length)` after controlling for
 `log(mutation_count)`) has not been computed yet.
 
 **Indirect implications for adjacent questions:**
 
-- **q003 (replication timing as gene-level rate confounder):** The persistent
+- **`q003` (replication timing as gene-level rate confounder):** The persistent
   presence of TTN, AHNAK, AHNAK2, ABCA13 in the top dNdScv ranking even after
   trinucleotide context correction is consistent with a residual rate-axis
   confounder beyond length and trinucleotide context — replication-timing being
-  the leading candidate. Strengthens the case for q003 as a high-priority
+  the leading candidate. Strengthens the case for `q003` as a high-priority
   follow-up.
-- **q006 (CH priority gene completeness):** The pan-cancer table flags only
-  7 CH priority genes (the Bolton 2020 panel). Run did not surface new CH
-  candidates; q006 unchanged.
+- **`q006` (CH priority gene completeness):** The pan-cancer table flags only
+  7 CH priority genes (the Bolton et al. [@Bolton2020] panel). Run did not surface new CH
+  candidates; `q006` unchanged.
 
 ## Evidence vs. Open Questions
 
@@ -289,10 +289,10 @@ Question status updates (relative to pre-run state):
 
 | Question | Status | Change |
 |---|---|---|
-| q011 (length × literature) | active | partially addressed; awaiting fix to F4 then re-read |
-| q003 (RT as rate confounder) | active | indirectly strengthened (TTN/AHNAK persistence) |
-| q006 (CH gene completeness) | active | unchanged |
-| q007 (cross-tissue rate variation null model) | active | mildly informative — full run shows some cancer types dominate top-N (Bladder, Endometrial, Ovarian) which is consistent with the cross-tissue variation hypothesis |
+| `q011` (length × literature) | active | partially addressed; awaiting fix to F4 then re-read |
+| `q003` (RT as rate confounder) | active | indirectly strengthened (TTN/AHNAK persistence) |
+| `q006` (CH gene completeness) | active | unchanged |
+| `q007` (cross-tissue rate variation null model) | active | mildly informative — full run shows some cancer types dominate top-N (Bladder, Endometrial, Ovarian) which is consistent with the cross-tissue variation hypothesis |
 
 ## New Questions Raised
 
@@ -310,7 +310,7 @@ Question status updates (relative to pre-run state):
 3. **Q-new-3 (P2, theoretical):** Why do common-fragile-site genes (FHIT,
    MACROD2, IMMP2L, GRID2, CNTNAP2, LSAMP) rank so high by raw frequency at
    pan-cancer scale? Is this real CFS biology surfacing or an SNV
-   miscall artifact at fragile loci? Adjacent to q003 (replication-timing
+   miscall artifact at fragile loci? Adjacent to `q003` (replication-timing
    confounding).
 4. **Q-new-4 (P2, methodological):** dNdScv at full sample size leaves TTN at
    rank #5 (v2). Is the residual large-protein signal a coverage artifact, a
@@ -331,14 +331,14 @@ None raised this session beyond the running interpretation request.
   fixes to F2 and F4.** v1 dNdScv top-N is alphabetical; raw/length top-N is
   fragile-site/pseudogene-dominated. Both are diagnosable today; both block
   publication-ready conclusions.
-- **q011 magnitude reads are unstable** between PoC and full run (raw_pubtator
+- **`q011` magnitude reads are unstable** between PoC and full run (raw_pubtator
   ρ shifted from +0.127 to +0.002; dndscv ρ from +0.055 to +0.184). The
   direction is preserved; the magnitudes should not be trusted until F4 is
   resolved. The Phase-2 partial-slope regression (t129) is the better test.
-- **Bailey 2018 driver-recovery as a validation metric is mildly circular**
+- **Bailey et al. [@Bailey2018] driver-recovery as a validation metric is mildly circular**
   because Bailey used dNdScv as one of seven driver-detection inputs.
 - **No external comparison run.** We have not benchmarked our pan-cancer
-  dNdScv output against the published Martincorena 2017 / IntOGen pan-cancer
+  dNdScv output against the published Martincorena et al. [@Martincorena2017] / IntOGen pan-cancer
   ranking. That comparison should be added before publication.
 
 ## Updated Priorities
@@ -357,7 +357,7 @@ None raised this session beyond the running interpretation request.
   is this a t139-bypass side-effect or independent?). If it is t139-related,
   bumps t139 from P2 to P1.
 - **t146 (P2):** External validation of pan-cancer dNdScv output against
-  Martincorena 2017 / IntOGen pan-cancer ranking. Read their published top-N
+  Martincorena et al. [@Martincorena2017] / IntOGen pan-cancer ranking. Read their published top-N
   per cancer; compute rank-rank Spearman; spot-check disagreements.
 - **t147 (P2):** Stratify dNdScv per-cancer runs by hypermutator-filtered cohorts
   (using the existing t081 `is_hypermutator` annotation). Compare per-cancer

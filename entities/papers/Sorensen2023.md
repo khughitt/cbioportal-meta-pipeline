@@ -37,11 +37,11 @@ This paper presents a pan-cancer, systematic screen of 736 DNA damage response (
 
 **Data:** 6,065 WGS genomes from two independent cohorts — PCAWG (n=2,568; primary tumours from ICGC/TCGA) and Hartwig Medical Foundation (n=3,497; predominantly metastatic). Thirty-two cancer types covered. For 77 HMF tumours the primary site was unknown (annotated separately).
 
-**DDR gene set:** 736 genes curated from three prior DDR gene lists (Knijnenburg 2018, Pearl 2015, Olivieri 2020). Variants were filtered from VCFs (GRCH37/hg19 coordinates), requiring PASS status, ≥2 PCAWG callers, absent in >200 samples (SNP exclusion), VAF ≥0.2, gnomAD germline frequency ≤0.5%.
+**DDR gene set:** 736 genes curated from three prior DDR gene lists, including Knijnenburg et al. [@Knijnenburg2018GenomicMolecula], Pearl 2015, and Olivieri 2020. Variants were filtered from VCFs (GRCH37/hg19 coordinates), requiring PASS status, ≥2 PCAWG callers, absent in >200 samples (SNP exclusion), VAF ≥0.2, gnomAD germline frequency ≤0.5%.
 
 **LOF annotation:** Pathogenicity assigned by CADD phred ≥25 (ClinVar supplemented). LOH was inferred from copy-number profiles (minor allele CN <0.2); deep deletion when total CN <0.3. Biallelic LOF defined as pathogenic variant + LOH, pathogenic variant + deep deletion, or two pathogenic variants. Monoallelic LOF = single pathogenic event. Variants of unknown significance (VUS, CADD 10–25) were excluded from training sets but their tumours are tracked.
 
-**Mutational summary features:** Signature Tools Lib (Degasperi 2020) was used to assign organ-specific SBS signature exposures (converted to COSMIC SBS1–30; SBS1 excluded as age-proxy). Indels were counted by context (microhomology, repetitive, other). Structural variants were categorised by type (deletion, inversion, tandem duplication, translocation), size (1–10 kb, 10–100 kb, 100 kb–1 Mb, 1–10 Mb, >10 Mb), and clustered vs non-clustered.
+**Mutational summary features:** Signature Tools Lib was used to assign organ-specific SBS signature exposures (converted to COSMIC SBS1–30; SBS1 excluded as age-proxy) [@Degasperi2020]. Indels were counted by context (microhomology, repetitive, other). Structural variants were categorised by type (deletion, inversion, tandem duplication, translocation), size (1–10 kb, 10–100 kb, 100 kb–1 Mb, 1–10 Mb, >10 Mb), and clustered vs non-clustered.
 
 **Modelling:** For each of 535 DDR-gene × cancer-type combinations (>5 biallelic or >10 monoallelic events in either cohort), a weighted LASSO logistic regression model (R `glmnet` v4.0) was trained. Per-sample weights balanced class imbalance; lambda selected 1 SD from minimum binomial deviance; k-fold cross-validation (k = number of LOF events, ≤ features capped at 1 per 10 mutated tumours). Performance evaluated by precision-recall AUC enrichment over the true-positive rate (PR-AUC-E). Monte Carlo permutation null (10,000–30,000 permutations per model) tested significance; Benjamini–Hochberg FDR <0.05 and PR-AUC-E >0.2 were the shortlisting thresholds. Final shortlist: 48 models across 24 DDR genes.
 
@@ -75,23 +75,23 @@ This paper presents a pan-cancer, systematic screen of 736 DNA damage response (
 
 ## Relevance
 
-This paper is directly relevant to **h08** on two levels:
+This paper is directly relevant to **hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and** on two levels:
 
-**H08a positive-control recovery:** The study provides strong empirical confirmation that signature-to-DDR-gene associations are recoverable from WGS-scale mutational patterns in an unbiased, data-driven manner. The methods here are analogous to the h08 positive-control design (UV↔SBS7, smoking↔SBS4, MMR-loss↔MSI signatures), demonstrating that the mapping can be made with acceptable statistical power at n~dozens of LOF events per gene-cancer stratum. The authors' explicit recovery of BRCA1/2 (SBS3/HRD), MSH3/MSH6 (SBS-MMR/MSI), TP53 (elevated SVs), and CDK12 (tandem duplication phenotype) validates the general principle underlying h08a.
+**Positive-control recovery:** The study provides strong empirical confirmation that signature-to-DDR-gene associations are recoverable from WGS-scale mutational patterns in an unbiased, data-driven manner. The methods here are analogous to the hypothesis:0007 positive-control design (UV↔SBS7, smoking↔SBS4, MMR-loss↔MSI signatures), demonstrating that the mapping can be made with acceptable statistical power at n~dozens of LOF events per gene-cancer stratum. The authors' explicit recovery of BRCA1/2 (SBS3/HRD), MSH3/MSH6 (SBS-MMR/MSI), TP53 (elevated SVs), and CDK12 (tandem duplication phenotype) validates the general principle underlying hypothesis:0007.
 
-**H08b discovery / novel associations:** The novel links (ATRX/IDH1→SBS8 depletion in CNS; SMARCA4→SBS4/27 in cancers of unknown primary; PTEN→SV depletion) demonstrate that beyond the known canonical map, systematic association scans surface biologically plausible, clinically actionable new signature aetiologies. This is the key h08b promise.
+**Discovery / novel associations:** The novel links (ATRX/IDH1→SBS8 depletion in CNS; SMARCA4→SBS4/27 in cancers of unknown primary; PTEN→SV depletion) demonstrate that beyond the known canonical map, systematic association scans surface biologically plausible, clinically actionable new signature aetiologies. This is the key hypothesis:0007 discovery promise.
 
-**Methodological relevance for cbioportal pipeline:** The paper uses LASSO regression on mutational summary statistics (SBS exposures + indel counts + SV counts) as features, which maps cleanly onto the outputs already generated by the cbioportal pipeline (`gene_cancer_study_ratio_annotated.feather` and the TMB/signature annotation layers). The feature engineering (organ-specific SBS assignments via Signature Tools Lib, SV categorisation by type + size + clustering) is a reference implementation for the types of covariates the h08 association layer should expose. The PR-AUC enrichment metric (PR-AUC-E = PR-AUC − baseline) is a useful benchmark for the within-cancer-type association design.
+**Methodological relevance for cbioportal pipeline:** The paper uses LASSO regression on mutational summary statistics (SBS exposures + indel counts + SV counts) as features, which maps cleanly onto the outputs already generated by the cbioportal pipeline (`gene_cancer_study_ratio_annotated.feather` and the TMB/signature annotation layers). The feature engineering (organ-specific SBS assignments via Signature Tools Lib, SV categorisation by type + size + clustering) is a reference implementation for the types of covariates the hypothesis:0007 association layer should expose. The PR-AUC enrichment metric (PR-AUC-E = PR-AUC − baseline) is a useful benchmark for the within-cancer-type association design.
 
-**Reverse-causation warning:** The colorectal MMR-driven spurious LOF models illustrate a key pitfall for the cbioportal pipeline's h08 scan: when a high-TMB / hypermutator phenotype (MSH3-driven MSI) generates apparent LOF calls elsewhere via passenger mutations, association models can capture MSH3's effect but attribute it to co-mutated genes. The h08 design guard (hypermutator exclusion / stratification) directly addresses this.
+**Reverse-causation warning:** The colorectal MMR-driven spurious LOF models illustrate a key pitfall for the cbioportal pipeline's hypothesis:0007 scan: when a high-TMB / hypermutator phenotype (MSH3-driven MSI) generates apparent LOF calls elsewhere via passenger mutations, association models can capture MSH3's effect but attribute it to co-mutated genes. The hypothesis:0007 design guard (hypermutator exclusion / stratification) directly addresses this.
 
 ## Project Framework Mapping
 
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
 | SBS signature exposures (Signature Tools Lib, organ-specific then converted to COSMIC) | `run_restricted_sigprofiler_assignment.py` output | Different tool (SigProfiler vs SigTools) but same COSMIC SBS framework |
-| LASSO regression model per DDR-gene × cancer stratum | h08 association layer (to be built) | Paper uses DDR-LOF status as outcome; h08 uses signature exposure as outcome with covariates as predictors — transpose of the same design |
-| PR-AUC enrichment (PR-AUC-E) as performance metric | Not yet defined in project | Adopt for h08 within-tissue benchmarking |
+| LASSO regression model per DDR-gene × cancer stratum | hypothesis:0007 association layer (to be built) | Paper uses DDR-LOF status as outcome; hypothesis:0007 uses signature exposure as outcome with covariates as predictors — transpose of the same design |
+| PR-AUC enrichment (PR-AUC-E) as performance metric | Not yet defined in project | Adopt for hypothesis:0007 within-tissue benchmarking |
 | Biallelic vs monoallelic LOF stratification | Not in current pipeline (mutation presence/absence only) | Potential extension for DDR-specific analyses |
 | SV categorisation (type × size × clustering) | Not currently in pipeline | Would require WGS-level SV calls; cBioPortal studies are predominantly panel/WES |
 | Reverse causality check via co-mutation fraction | hypermutator flag + `ch_priority_gene` stratification | Partial overlap; direct co-mutation check is an extension |
@@ -104,7 +104,7 @@ This paper is directly relevant to **h08** on two levels:
 - VUS excluded from training (CADD 10–25), potentially leaving some true LOF events unmodelled.
 - Sample sizes for rare biallelic events are small (as few as 7–10 events per model), limiting power and increasing permutation uncertainty.
 - Cohort-specificity: some models are significant only in HMF (metastatic) or only in PCAWG (primary), and the biological cause of cross-cohort differences is not always resolvable.
-- SBS signature assignment uses organ-specific reference signatures (cohort-tailored via Degasperi 2020), which may not transfer directly to panel sequencing data at cBioPortal scale.
+- SBS signature assignment uses organ-specific reference signatures (cohort-tailored via Degasperi et al. [@Degasperi2020]), which may not transfer directly to panel sequencing data at cBioPortal scale.
 
 ## Model / Tool Availability
 

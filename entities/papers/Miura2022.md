@@ -66,12 +66,12 @@ PhyloSignare (PS) is a phylogeny-aware wrapper around existing refitting methods
 
 ## Relevance
 
-**Direct connection to h08 (agnostic covariate ↔ signature-exposure association):**
+**Direct connection to hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and (agnostic covariate ↔ signature-exposure association):**
 
-- **Positive-control recovery (H08a):** This paper confirms at branch resolution the three canonical exposure→signature links that H08a must recover: smoking→SBS4, APOBEC activity→SBS2/SBS13 (with the further observation that APOBEC3 deaminases are cited as the mechanism), and age-related→SBS1. These are exactly the "must-pass" positive controls in the pre-registered H08a design (UV→SBS7 / smoking→SBS4 / APOBEC3-expression→SBS2/SBS13). The lung cancer dynamics here provide quantitative priors: SBS4 should be the dominant trunk signal in any lung cohort, and SBS2/13 should rise toward tips / later evolution.
-- **Signature bleeding / false positives:** PS's core problem (spurious signatures from naive per-branch refitting) is directly analogous to the false-positive risk in h08's per-sample refit step. The iS statistic and candidate-pooling strategy are reusable concepts for a within-tissue, per-sample association: pooling samples from the same tissue/study before refitting reduces spurious detections in low-mutation-count samples (the same mechanism as low-variant branches).
-- **APOBEC dynamics and expression:** The paper cites APOBEC3 deaminases as the mutagenic mechanism for S2/S13, which aligns with h08's prediction 2 (APOBEC3A/B mRNA expression should be the strongest APOBEC signature correlate). The temporal rise of APOBEC signatures in tips implies that expression-level APOBEC activity increases during clonal evolution, a feature measurable in the TRACERx expression dataset and recoverable within tissue using the h08 association design.
-- **Cross-study aggregation context:** The cBioPortal pipeline aggregates per-study mutation tables without per-patient clone phylogenies. PS is not directly applicable, but its insights calibrate expectations: (a) signature composition varies substantially within patients, so study-level pooling will average over real intratumoral heterogeneity, and (b) the dominant signatures in bulk tumour samples (S4, S2/13 in lung) should be the ones most detectable by the h08 scan.
+- **Positive-control recovery:** This paper confirms at branch resolution the three canonical exposure→signature links that hypothesis:0007 must recover: smoking→SBS4, APOBEC activity→SBS2/SBS13 (with the further observation that APOBEC3 deaminases are cited as the mechanism), and age-related→SBS1. These are exactly the "must-pass" positive controls in the pre-registered hypothesis:0007 design (UV→SBS7 / smoking→SBS4 / APOBEC3-expression→SBS2/SBS13). The lung cancer dynamics here provide quantitative priors: SBS4 should be the dominant trunk signal in any lung cohort, and SBS2/13 should rise toward tips / later evolution.
+- **Signature bleeding / false positives:** PS's core problem (spurious signatures from naive per-branch refitting) is directly analogous to the false-positive risk in hypothesis:0007's per-sample refit step. The iS statistic and candidate-pooling strategy are reusable concepts for a within-tissue, per-sample association: pooling samples from the same tissue/study before refitting reduces spurious detections in low-mutation-count samples (the same mechanism as low-variant branches).
+- **APOBEC dynamics and expression:** The paper cites APOBEC3 deaminases as the mutagenic mechanism for S2/S13, which aligns with hypothesis:0007's prediction 2 (APOBEC3A/B mRNA expression should be the strongest APOBEC signature correlate). The temporal rise of APOBEC signatures in tips implies that expression-level APOBEC activity increases during clonal evolution, a feature measurable in the TRACERx expression dataset and recoverable within tissue using the hypothesis:0007 association design.
+- **Cross-study aggregation context:** The cBioPortal pipeline aggregates per-study mutation tables without per-patient clone phylogenies. PS is not directly applicable, but its insights calibrate expectations: (a) signature composition varies substantially within patients, so study-level pooling will average over real intratumoral heterogeneity, and (b) the dominant signatures in bulk tumour samples (S4, S2/13 in lung) should be the ones most detectable by the hypothesis:0007 scan.
 
 ## Project Framework Mapping
 
@@ -79,10 +79,10 @@ PhyloSignare (PS) is a phylogeny-aware wrapper around existing refitting methods
 |---|---|---|
 | Branch-specific variant counts (96-dim) | Per-sample mutation spectrum | PS branches ≈ project's per-sample inputs |
 | COSMIC v2 restricted signature set (per cancer type) | `run_restricted_sigprofiler_assignment.py` candidate set | Both restrict to cancer-type-relevant signatures |
-| iS (importance score) — excludes spurious signatures | Planned h08 association quality filter | iS is a within-fit exclusion test; h08 uses FDR across covariates |
-| Pooling from neighbouring branches to raise variant count | Study-level pooling for low-sample-count cohorts | Analogous low-count remedy; PS pools genomically, h08 pools cohort-wise |
+| iS (importance score) — excludes spurious signatures | Planned hypothesis:0007 association quality filter | iS is a within-fit exclusion test; hypothesis:0007 uses FDR across covariates |
+| Pooling from neighbouring branches to raise variant count | Study-level pooling for low-sample-count cohorts | Analogous low-count remedy; PS pools genomically, hypothesis:0007 pools cohort-wise |
 | Trunk vs tip signature dynamics | Early vs late mutation strata | Not currently modelled in cross-study pipeline (no phylogeny available) |
-| COSMIC S4 (smoking), S2/S13 (APOBEC), S1 (age) | H08a positive-control signatures | Same three aetiologies the h08 pre-registration must recover |
+| COSMIC S4 (smoking), S2/S13 (APOBEC), S1 (age) | hypothesis:0007 positive-control signatures | Same three aetiologies the hypothesis:0007 pre-registration must recover |
 
 ## Limitations
 
@@ -106,7 +106,7 @@ PhyloSignare (PS) is a phylogeny-aware wrapper around existing refitting methods
 
 ## Follow-up
 
-- The iS score formula (Eqs 1–3) could be adapted as a signature-retention criterion during the h08 per-sample restricted refit: retain a COSMIC component only if its exclusion degrades fit by iS > some threshold.
+- The iS score formula (Eqs 1–3) could be adapted as a signature-retention criterion during the hypothesis:0007 per-sample restricted refit: retain a COSMIC component only if its exclusion degrades fit by iS > some threshold.
 - The TRACERx lung dataset analysed here overlaps with datasets accessible via cBioPortal; cross-referencing study IDs could extend the cross-study aggregation with clone-level resolution for a subset of patients.
-- Comparison with PhySigs (Christensen et al. 2020) deserves attention: PhySigs directly models signature evolution along the phylogeny via a parsimony framework; PS is a pre-filter wrapper. For h08's purposes (bulk cross-study refitting, no phylogenies available), PS's pooling heuristic is more directly transferable.
+- Comparison with PhySigs (Christensen et al. 2020) deserves attention: PhySigs directly models signature evolution along the phylogeny via a parsimony framework; PS is a pre-filter wrapper. For hypothesis:0007's purposes (bulk cross-study refitting, no phylogenies available), PS's pooling heuristic is more directly transferable.
 - The convergent smoking→APOBEC signature shift observed here is consistent with an immune-pressure / selection mechanism discussed in `discussion:0004-common-mutational-signatures-known-vs-learned-immune-causes-and` (immune editing removing high-TMB clones, leaving APOBEC-diversified clones). Explicit testing of this hypothesis requires immune cell abundance data alongside the signature dynamics.

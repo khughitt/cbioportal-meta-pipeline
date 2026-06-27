@@ -109,7 +109,7 @@ approximately equal. [UNVERIFIED: precise numerical values for mutation rates]
 
 ## Relevance
 
-**Central relevance to h06 (pre-malignant n-1 driver carriage) and to the project's
+**Central relevance to hypothesis:0006-pre-malignant-n-minus-1-driver-carriage and to the project's
 age-of-onset thread:**
 
 The Knudson model is the cleanest empirical demonstration that *the number of required rate-limiting
@@ -125,14 +125,14 @@ project's interest in differential median age of cancer onset across types:
   follow the same pre-loading logic: one germline hit reduces the somatic waiting time by one
   Poisson event.
 
-For hypothesis h06 specifically, Knudson's framework provides mechanistic grounding: the
+For hypothesis:0006 specifically, Knudson's framework provides mechanistic grounding: the
 pre-malignant cohorts in cBioPortal that already carry n-1 drivers are populations that have
 *completed n-1 hits* and are one rate-limiting event away from malignancy — which is why they
-are enriched and detectable. The h06 framing of "residual late-stage drivers" as checkpoint
+are enriched and detectable. The hypothesis:0006 framing of "residual late-stage drivers" as checkpoint
 genes (TP53, RB1) is directly connected: RB1 itself is the Knudson gene, and its loss as a
 late hit in pre-malignant-to-invasive transitions follows exactly this logic.
 
-For question q041 (driver complexity vs. median age at diagnosis), this paper provides the
+For question:0041-driver-complexity-vs-median-age-at-diagnosis, this paper provides the
 theoretical anchor: within a multistage model, median age at diagnosis is approximately
 inversely related to the number of rate-limiting somatic hits that have already been bypassed
 (germline or pre-malignant carriage). The project can use cross-cancer comparisons of median
@@ -145,9 +145,9 @@ on average.
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
 | Two-hit model | Multistage carcinogenesis framework | Rate-limiting hits map to canonical driver events counted in cBioPortal studies |
-| Germline first hit | Pre-malignant n-1 driver carriage (h06) | Inheriting hit 1 = pre-malignant clone already carrying one driver; both reduce somatic waiting time |
+| Germline first hit | Pre-malignant n-1 driver carriage (hypothesis:0006) | Inheriting hit 1 = pre-malignant clone already carrying one driver; both reduce somatic waiting time |
 | Bilateral vs. unilateral laterality | Hereditary vs. sporadic cancer stratification | In cBioPortal, germline annotation / family history flags function as the modern surrogate |
-| Age-incidence log-linear slope | Median age at diagnosis per cancer type | Slope encodes hit number; q041 tests whether cross-cancer variation in median age tracks hit-count proxies |
+| Age-incidence log-linear slope | Median age at diagnosis per cancer type | Slope encodes hit number; question:0041 tests whether cross-cancer variation in median age tracks hit-count proxies |
 | Poisson mean tumors per carrier (~3) | Penetrance fraction in hereditary syndromes | Incomplete penetrance = Poisson probability of zero tumors; directly modelled by this framework |
 | Equal germinal and somatic mutation rates | Uniform mutation rate baseline assumption | Supports treating germline and somatic events as draws from the same underlying process |
 
@@ -183,18 +183,18 @@ fully re-derivable from first principles.
   shortly after Knudson's original.
 - **Friend et al. 1986** (Nature) — cloning of RB1 provided the molecular confirmation of the
   two-hit prediction; LOH at 13q14 in sporadic tumors matched the hereditary-hit location.
-- **Knudson 2001** (Nature Reviews Cancer) — Knudson's own retrospective on 30 years of two-hit
+- **Knudson's Nature Reviews Cancer retrospective** — Knudson's own retrospective on 30 years of two-hit
   biology; covers the generalisation to BRCA1/BRCA2, TP53 (Li-Fraumeni), and APC (FAP).
-- **Armitage & Doll 1954** (British Journal of Cancer) — the complementary multistage model
+- **Armitage and Doll** [@ArmitageDoll1954] — the complementary multistage model
   relating the k-th power of age to cancer incidence; Knudson's two-hit is a special case (k=2).
-- **Tomasetti & Vogelstein 2015** (Science) — modern revival connecting number of stem-cell
+- **Tomasetti and Vogelstein** [@TomasettiVogelstein2015] — modern revival connecting number of stem-cell
   divisions (thus somatic hit opportunities) to lifetime cancer risk across tissues.
 - **Questions raised for this project:**
-  - (q041) Does cross-cancer median age at diagnosis correlate with a proxy for "required somatic
+  - (question:0041) Does cross-cancer median age at diagnosis correlate with a proxy for "required somatic
     hit count" — e.g., mean number of cBioPortal-observed driver events per tumor, or number of
     pathway nodes mutated per cancer type?
   - Does the fraction of cases in cBioPortal hereditary-cancer cohorts (BRCA, Lynch, Li-Fraumeni)
     shift the age-at-diagnosis distribution in exactly the direction Knudson's model predicts?
-  - For h06: are the residual "late-stage" drivers in pre-malignant-to-invasive transitions
+  - For hypothesis:0006: are the residual "late-stage" drivers in pre-malignant-to-invasive transitions
     systematically the same genes as the Knudson-class tumor suppressors (RB1, TP53) that require
     biallelic inactivation to complete malignancy?

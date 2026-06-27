@@ -72,17 +72,17 @@ The result is a vector of 32 × 3 = 96 independent conditional probabilities —
 
 ## Relevance
 
-**Direct relevance to h08 (agnostic covariate–signature-exposure association):**
+**Direct relevance to hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and (agnostic covariate–signature-exposure association):**
 
-- H08a's positive-control arm requires recovering known exposure→signature links (UV/SBS7, smoking/SBS4, APOBEC/SBS2-13, MMR-loss/SBS6-15-26). The RePrint framework confirms the mechanistic structure of several of these clusters (MMRd, PAH/NER, ROS), providing an orthogonal, repair-pathway-level rationale for why the agnostic covariate approach should work: signatures that share a repair mechanism will respond similarly to the same upstream covariate perturbations.
+- The hypothesis:0007 positive-control arm requires recovering known exposure→signature links (UV/SBS7, smoking/SBS4, APOBEC/SBS2-13, MMR-loss/SBS6-15-26). The RePrint framework confirms the mechanistic structure of several of these clusters (MMRd, PAH/NER, ROS), providing an orthogonal, repair-pathway-level rationale for why the agnostic covariate approach should work: signatures that share a repair mechanism will respond similarly to the same upstream covariate perturbations.
 
-- **SBS8's NER assignment** is directly relevant: if an agnostic covariate scan recovers a DNA-damage proxy associated with SBS8 (currently COSMIC-annotated as unknown origin), that is precisely the kind of H08b discovery the hypothesis targets. RePrint here provides prior mechanistic evidence to interpret such a hit.
+- **SBS8's NER assignment** is directly relevant: if an agnostic covariate scan recovers a DNA-damage proxy associated with SBS8 (currently COSMIC-annotated as unknown origin), that is precisely the kind of hypothesis:0007 discovery the hypothesis targets. RePrint here provides prior mechanistic evidence to interpret such a hit.
 
-- **SBS12 and SBS33 → MMRd** are relevant to the MMR-loss / MSI positive control (H08a arm): the agnostic scan should associate MSI status with SBS6/15/26 *and* possibly SBS12/33, consistent with what RePrint predicts. A positive hit for SBS12/33 would support H08b.
+- **SBS12 and SBS33 → MMRd** are relevant to the MMR-loss / MSI positive control (hypothesis:0007 arm): the agnostic scan should associate MSI status with SBS6/15/26 *and* possibly SBS12/33, consistent with what RePrint predicts. A positive hit for SBS12/33 would support hypothesis:0007 discovery.
 
-- The paper underscores that raw similarity misleads: two signatures sharing a repair pathway can have very different raw spectra (divergent damage distributions). For h08's covariate scan, this means a single "signature similarity" filter would miss repair-mechanism groupings — RePrint provides complementary structure.
+- The paper underscores that raw similarity misleads: two signatures sharing a repair pathway can have very different raw spectra (divergent damage distributions). For hypothesis:0007's covariate scan, this means a single "signature similarity" filter would miss repair-mechanism groupings — RePrint provides complementary structure.
 
-- The **guilt-by-association** analogy maps onto h08's logic: just as a signature of unknown aetiology inherits a repair pathway from its cluster neighbours, a signature of unknown upstream cause would inherit candidate covariates from cluster neighbours with known exposures. RePrint could serve as a pre-stratification step before running the h08 association scan.
+- The **guilt-by-association** analogy maps onto hypothesis:0007's logic: just as a signature of unknown aetiology inherits a repair pathway from its cluster neighbours, a signature of unknown upstream cause would inherit candidate covariates from cluster neighbours with known exposures. RePrint could serve as a pre-stratification step before running the hypothesis:0007 association scan.
 
 **Cross-study meta-analysis context:** The cbioportal pipeline aggregates across ~300 studies with heterogeneous exposure histories. RePrint-based grouping of signatures could reduce the effective number of independent outcome variables in the covariate scan (cluster-level aggregation), improving multiple-testing correction and interpretability.
 
@@ -91,10 +91,10 @@ The result is a vector of 32 × 3 = 96 independent conditional probabilities —
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
 | RePrint transformation | Signature representation layer | Could be applied to per-study or pooled signatures before covariate association |
-| Homogeneous / Broad clusters | Signature aetiology groups | Maps to COSMIC aetiology labels used in h08a positive-control arms |
-| Guilt-by-association prediction | h08b discovery | Same logic: unknown signature inherits aetiology from cluster neighbours |
+| Homogeneous / Broad clusters | Signature aetiology groups | Maps to COSMIC aetiology labels used in hypothesis:0007 positive-control arms |
+| Guilt-by-association prediction | hypothesis:0007 discovery | Same logic: unknown signature inherits aetiology from cluster neighbours |
 | COSMIC v3.4 signatures | COSMIC reference used in pipeline | Pipeline uses restricted SigProfiler assignment against COSMIC |
-| Kucab 2019 / Zou 2021 experimentally annotated signatures | Gold standard for aetiology assignment | Provide mechanistic ground truth for validating h08a recovery |
+| Kucab compendium [@Kucab2019] / cited Zou experimentally annotated signatures | Gold standard for aetiology assignment | Provide mechanistic ground truth for validating hypothesis:0007 recovery |
 
 ## Limitations
 
@@ -106,9 +106,9 @@ The result is a vector of 32 × 3 = 96 independent conditional probabilities —
 
 4. **Prediction requires a subtree with ≥ 3 annotated signatures.** The guilt-by-association criterion is conservative: isolated or sparsely-annotated signatures cannot be predicted. SBS34 received no prediction validation (no close neighbours with sufficient annotation).
 
-5. **Causality not established.** RePrint similarity infers shared repair pathways but cannot distinguish which damaged nucleotide triggered repair, nor assign exposures. Upstream aetiological inference (exposure → damage → repair → signature) still requires additional evidence — which is precisely what h08 aims to provide.
+5. **Causality not established.** RePrint similarity infers shared repair pathways but cannot distinguish which damaged nucleotide triggered repair, nor assign exposures. Upstream aetiological inference (exposure → damage → repair → signature) still requires additional evidence — which is precisely what hypothesis:0007 aims to provide.
 
-6. **No per-sample analysis.** RePrint operates at the signature (population-level) rather than per-sample exposure level. Linking to sample-level covariates (as in h08) requires the downstream association layer described separately.
+6. **No per-sample analysis.** RePrint operates at the signature (population-level) rather than per-sample exposure level. Linking to sample-level covariates (as in hypothesis:0007) requires the downstream association layer described separately.
 
 ## Model / Tool Availability
 
@@ -120,9 +120,9 @@ The result is a vector of 32 × 3 = 96 independent conditional probabilities —
 
 ## Follow-up
 
-- Run RePrintPy on the signatures extracted from the cbioportal cross-study dataset to pre-stratify by repair mechanism before running h08 covariate associations.
+- Run RePrintPy on the signatures extracted from the cbioportal cross-study dataset to pre-stratify by repair mechanism before running hypothesis:0007 covariate associations.
 - The Wojtowicz et al. 2021 (Repairsig) paper cited by this preprint deconvolves damage vs
   repair contributions; add it to the bibliography before using it as local evidence.
 - Amgalan et al. 2023 (Genome Medicine) — influence network model for relations between biological processes and signatures — cited here as additional prior work relevant to h08b.
-- The SBS8 → NER assignment is a concrete H08b test case: does the h08 covariate scan pick up a UV/NER-related covariate for SBS8 in skin or lung cohorts?
-- Consider whether RePrint-derived clusters can serve as a multiple-testing correction grouping in the h08 covariate scan (test cluster-level exposure rather than per-signature).
+- The SBS8 → NER assignment is a concrete hypothesis:0007 discovery test case: does the hypothesis:0007 covariate scan pick up a UV/NER-related covariate for SBS8 in skin or lung cohorts?
+- Consider whether RePrint-derived clusters can serve as a multiple-testing correction grouping in the hypothesis:0007 covariate scan (test cluster-level exposure rather than per-signature).

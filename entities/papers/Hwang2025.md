@@ -96,30 +96,30 @@ Using a uniquely large isogenic panel of ~40 CRISPR-knockout TK6 lymphoblastoid 
 
 ## Relevance
 
-**Direct relevance to h08 (agnostic covariate→signature-exposure association):**
+**Direct relevance to hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and (agnostic covariate→signature-exposure association):**
 
-1. **Positive-control mechanistic anchors.** This paper provides cell-culture experimental proof for several of the canonical exposure→signature links that h08's H08a positive-control arm must rediscover in tumor data:
+1. **Positive-control mechanistic anchors.** This paper provides cell-culture experimental proof for several of the canonical exposure→signature links that hypothesis:0007's positive-control arm must rediscover in tumor data:
    - **MMR deficiency → SBS6/14/15/20/21/26/44 (RefSig MMR1):** mechanistically confirmed; the MSH2-/- spectrum directly recapitulates RefSig MMR1. The cross-study pipeline can use MMR-pathway mutation status (MSH2, MLH1, MSH6, PMS2) as a positive-control covariate against SBS6/26 exposure in colorectal/endometrial cancers.
-   - **TMZ chemotherapy → SBS11:** SBS11 confirmed as the C>T-dominant signature from O6-meG/T mispairs in MGMT-deficient + MMR-competent setting. In the cBioPortal glioblastoma studies (e.g., TCGA-GBM), TMZ treatment history in clinical metadata could serve as a covariate to recover SBS11 exposure — a near-certain h08 positive control unique to GBM.
-   - **Clock/aging → SBS40:** polymerase zeta TLS activity confirmed as a major contributor. This explains why SBS40 is tissue-ubiquitous (TLS is active in all dividing cells) and may help interpret why h08's agnostic scan would not find a single strong *external* covariate for SBS5/40 — the signal is internal (replication machinery), not an environmental exposure.
+   - **TMZ chemotherapy → SBS11:** SBS11 confirmed as the C>T-dominant signature from O6-meG/T mispairs in MGMT-deficient + MMR-competent setting. In the cBioPortal glioblastoma studies (e.g., TCGA-GBM), TMZ treatment history in clinical metadata could serve as a covariate to recover SBS11 exposure — a near-certain hypothesis:0007 positive control unique to GBM.
+   - **Clock/aging → SBS40:** polymerase zeta TLS activity confirmed as a major contributor. This explains why SBS40 is tissue-ubiquitous (TLS is active in all dividing cells) and may help interpret why hypothesis:0007's agnostic scan would not find a single strong *external* covariate for SBS5/40 — the signal is internal (replication machinery), not an environmental exposure.
 
-2. **MMRd sub-signatures as covariates for double-deficiency hits.** The MSH2 double-knockout results (MSH2-/- ATAD5-/-, MSH2-/- FANCD2-/-) show that MMRd background is further modulated by secondary repair defects. In tumor data, this suggests that the precise allocation of SBS26 vs SBS44 (the leading/lagging strand-biased components) might associate with co-occurring FA-pathway or ATAD5 mutations — a potential h08b discovery target.
+2. **MMRd sub-signatures as covariates for double-deficiency hits.** The MSH2 double-knockout results (MSH2-/- ATAD5-/-, MSH2-/- FANCD2-/-) show that MMRd background is further modulated by secondary repair defects. In tumor data, this suggests that the precise allocation of SBS26 vs SBS44 (the leading/lagging strand-biased components) might associate with co-occurring FA-pathway or ATAD5 mutations — a potential discovery target for hypothesis:0007.
 
-3. **SBS11 as a study-level batch covariate in the cross-study meta-analysis.** Studies enriched for glioblastoma patients who received TMZ will show elevated SBS11. Without conditioning on treatment history (a clinical covariate already ingested via `convert_to_feather.py`), SBS11 would appear as a "glioblastoma-enriched" signature. The h08 within-tissue analysis + TMZ treatment covariate should cleanly decompose this. The paper directly validates that SBS11 is *not* observed in non-MMRd cells — reinforcing that it is not a general alkylation artifact but a specific MMRd + TMZ product.
+3. **SBS11 as a study-level batch covariate in the cross-study meta-analysis.** Studies enriched for glioblastoma patients who received TMZ will show elevated SBS11. Without conditioning on treatment history (a clinical covariate already ingested via `convert_to_feather.py`), SBS11 would appear as a "glioblastoma-enriched" signature. The hypothesis:0007 within-tissue analysis + TMZ treatment covariate should cleanly decompose this. The paper directly validates that SBS11 is *not* observed in non-MMRd cells — reinforcing that it is not a general alkylation artifact but a specific MMRd + TMZ product.
 
 4. **XRCC1/APE1 as candidate tumor genomic covariates.** The BER re-sensitization finding (XRCC1-/- or APE1-/- in MSH2-/- background) points to XRCC1 and APE1 mutation status as potential covariates in the pipeline's cross-study data. In colorectal/endometrial MMRd tumors, XRCC1-inactivating mutations might coincide with an unusual SBS pattern or with treatment response metadata.
 
-5. **TLS polymerase zeta as the source of clock signatures.** This paper strongly supports the interpretation that SBS5/SBS40 (both "clock-like") reflect replication-associated TLS, not environmental exposures. For h08b discovery, this means that any covariate that emerges from an agnostic scan for SBS5/SBS40 is likely a *correlate of proliferation rate or PCNA occupancy*, not an exogenous mutagen — a useful interpretive prior for flagging reverse-causation (h08 alternative R3).
+5. **TLS polymerase zeta as the source of clock signatures.** This paper strongly supports the interpretation that SBS5/SBS40 (both "clock-like") reflect replication-associated TLS, not environmental exposures. For hypothesis:0007 discovery, this means that any covariate that emerges from an agnostic scan for SBS5/SBS40 is likely a *correlate of proliferation rate or PCNA occupancy*, not an exogenous mutagen — a useful interpretive prior for flagging reverse-causation (hypothesis:0007 alternative R3).
 
 ## Project Framework Mapping
 
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
-| SBS40/SBS5 (background/clock) | h08 unexplained signatures | TLS-driven; proliferation-linked, not exposure-linked |
+| SBS40/SBS5 (background/clock) | hypothesis:0007 unexplained signatures | TLS-driven; proliferation-linked, not exposure-linked |
 | RefSig MMR1 | MMRd positive-control signature | Cross-study: MSI-H tumors (colorectal, endometrial) |
 | SBS11 | TMZ/MGMT-deficiency signature | GBM-specific; recoverable via treatment-history covariate |
 | MGMT epigenetic silencing | Tumor genomic/epigenomic context | Clinical MGMT status field in cBioPortal GBM studies |
-| MSH2/FANCD2 double-knockout SBS26/44 shift | Co-mutation signature context | Potential h08b: MMRd sub-signature modulated by secondary defects |
+| MSH2/FANCD2 double-knockout SBS26/44 shift | Co-mutation signature context | Potential hypothesis:0007 discovery: MMRd sub-signature modulated by secondary defects |
 | XRCC1/APE1 BER re-sensitization | BER gene mutation status | Potential covariate in MMRd tumor subsets |
 | Clonogenic survival + WGS | Phenotype–genotype linkage | Not available in bulk tumor data; caution in extrapolation |
 
@@ -131,7 +131,7 @@ Using a uniquely large isogenic panel of ~40 CRISPR-knockout TK6 lymphoblastoid 
 - **18 cell doublings may under-represent lifetime accumulation.** The study is designed to detect short-term accrual; slowly acting processes (e.g., SBS1 spontaneous deamination at CpG) are near-undetectable.
 - **Limited MSI detection sensitivity.** Standard 5-locus MSIplus panel could not detect MSI in single MSH2-/- cells; genome-wide MANTIS was required, and only double knockouts crossed the detection threshold.
 - **Chemotherapy resistance model.** TMZ resistance modeled by sequential MMR-then-BER knockouts reflects one (genetic) acquisition route; epigenetic MGMT restoration or other resistance mechanisms in clinical tumors are not captured.
-- **No matched RNA data.** Signature-expression covariate links (relevant to h08) cannot be directly tested in this study; the connection between TLS polymerase expression levels and SBS40 is inferred, not demonstrated.
+- **No matched RNA data.** Signature-expression covariate links (relevant to hypothesis:0007) cannot be directly tested in this study; the connection between TLS polymerase expression levels and SBS40 is inferred, not demonstrated.
 
 ## Model / Tool Availability
 
@@ -142,7 +142,7 @@ Using a uniquely large isogenic panel of ~40 CRISPR-knockout TK6 lymphoblastoid 
 
 ## Follow-up
 
-- **Verify SBS11 prevalence in cBioPortal GBM studies:** run restricted SigProfiler assignment on TCGA-GBM (or tcga_mc3 GBM subset) and correlate SBS11 exposure with TMZ treatment history in clinical metadata — a direct h08 positive-control test with clean mechanistic grounding from this paper.
-- **Check XRCC1 mutation frequency in MMRd colorectal tumors** in the cross-study data; if enriched, consider as a candidate h08b covariate for sub-signature allocation (SBS26 vs SBS44 modulation).
-- **Read alongside:** Zou et al. 2021 (Nat Cancer) — the CRISPR screen in hPSCs that identified MMRd-related signatures; Kucab et al. 2019 (Cell) — compendium of environmental mutagen signatures (methodological complement).
-- **h08 design implication:** the lack of any strong single external covariate for SBS40 (now explained as TLS-driven) should be incorporated into h08's prior expectations — the agnostic scan may correctly return no clean environmental hit for SBS40, which is a *true negative*, not a failure.
+- **Verify SBS11 prevalence in cBioPortal GBM studies:** run restricted SigProfiler assignment on TCGA-GBM (or tcga_mc3 GBM subset) and correlate SBS11 exposure with TMZ treatment history in clinical metadata — a direct hypothesis:0007 positive-control test with clean mechanistic grounding from this paper.
+- **Check XRCC1 mutation frequency in MMRd colorectal tumors** in the cross-study data; if enriched, consider as a candidate hypothesis:0007 discovery covariate for sub-signature allocation (SBS26 vs SBS44 modulation).
+- **Read alongside:** the cited Nat Cancer CRISPR screen in hPSCs that identified MMRd-related signatures; Kucab compendium of environmental mutagen signatures [@Kucab2019] as a methodological complement.
+- **hypothesis:0007 design implication:** the lack of any strong single external covariate for SBS40 (now explained as TLS-driven) should be incorporated into hypothesis:0007's prior expectations — the agnostic scan may correctly return no clean environmental hit for SBS40, which is a *true negative*, not a failure.

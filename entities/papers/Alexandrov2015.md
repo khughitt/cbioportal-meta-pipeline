@@ -35,7 +35,7 @@ This paper conducts the first comprehensive large-scale survey of mutational sig
 
 ## Methods
 
-- **Data:** 10,250 matched cancer-normal genome pairs (607 WGS + 9,643 WES) from 36 cancer types, sourced from TCGA, ICGC, and peer-reviewed publications. Gastric cancer data came from four independent studies (Wang 2014, Zang 2012, Wang 2011, TCGA 2014): 372 WES + 100 WGS samples.
+- **Data:** 10,250 matched cancer-normal genome pairs (607 WGS + 9,643 WES) from 36 cancer types, sourced from TCGA, ICGC, and peer-reviewed publications. Gastric cancer data came from four independent studies listed by the paper: 372 WES + 100 WGS samples.
 - **Mutation filtering:** Germline variants removed using dbSNP, 1000 Genomes, NHLBI GO ESP, and 69 Complete Genomics panel. Technology/institute artefacts removed by a panel-of-normals approach (>250 normal WGS + >500 normal WES BAM files); any mutation in ≥2 reads in ≥2 normals discarded.
 - **Signature decomposition:** Two-step MATLAB NMF framework (Alexandrov et al. Cell Rep. 2013): (1) de novo extraction per cancer type to derive consensus signatures; (2) constrained linear decomposition per sample using the Frobenius norm with non-negativity and sum-to-total constraints. Exome-derived signatures normalized from exome to whole-genome trinucleotide frequencies.
 - **Statistical tests:** Mann-Whitney U-test for indel and structural variant counts; Fisher's exact test for histological associations.
@@ -57,12 +57,12 @@ This paper conducts the first comprehensive large-scale survey of mutational sig
 
 ## Relevance
 
-**Direct relevance to h08 (agnostic covariate-to-signature association):**
+**Direct relevance to hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and (agnostic covariate-to-signature association):**
 
-- Signature 3 (SBS3) is one of the key cancer-biology-grounded signatures the cbioportal cross-study pipeline would encounter. This paper establishes that SBS3 is active in gastric cancer at detectable prevalence in both WES (~7%) and WGS (~12%) — relevant to the h08 positive-control arm's coverage of known signatures.
-- More directly, this paper illustrates the core h08 hypothesis in miniature: a mutational signature is associated with a clinical/molecular covariate (BRCA1/2 status, histological subtype, indel pattern) that implies an aetiology (HR deficiency). The finding that signature 3 occurs even *without* BRCA1/2 mutations is a canonical example of why agnostic association is needed — the genetic marker (BRCA1/2) is not the only upstream cause.
-- The histological co-variables (Lauren type, growth pattern) in Table 1 are exactly the kind of structured clinical covariates h08 proposes to associate agnostically against signature exposures. This paper provides a ground-truth association (intestinal-type gastric cancer → SBS3) that could serve as a validation point for an h08 implementation covering gastric studies in cBioPortal.
-- **H08a positive-control scope:** UV↔SBS7, smoking↔SBS4, and APOBEC↔SBS2/13 are the three confirmatory arms in the pre-registered design. SBS3 is not among them, but the framework here — systematic cross-cancer-type prevalence survey — parallels what h08 would do per-signature for all structured covariates.
+- Signature 3 (SBS3) is one of the key cancer-biology-grounded signatures the cbioportal cross-study pipeline would encounter. This paper establishes that SBS3 is active in gastric cancer at detectable prevalence in both WES (~7%) and WGS (~12%) — relevant to the hypothesis:0007 positive-control arm's coverage of known signatures.
+- More directly, this paper illustrates the core hypothesis:0007 logic in miniature: a mutational signature is associated with a clinical/molecular covariate (BRCA1/2 status, histological subtype, indel pattern) that implies an aetiology (HR deficiency). The finding that signature 3 occurs even *without* BRCA1/2 mutations is a canonical example of why agnostic association is needed — the genetic marker (BRCA1/2) is not the only upstream cause.
+- The histological co-variables (Lauren type, growth pattern) in Table 1 are exactly the kind of structured clinical covariates hypothesis:0007 proposes to associate agnostically against signature exposures. This paper provides a ground-truth association (intestinal-type gastric cancer → SBS3) that could serve as a validation point for a hypothesis:0007 implementation covering gastric studies in cBioPortal.
+- **Positive-control scope:** UV↔SBS7, smoking↔SBS4, and APOBEC↔SBS2/13 are the three confirmatory arms in the pre-registered design. SBS3 is not among them, but the framework here — systematic cross-cancer-type prevalence survey — parallels what hypothesis:0007 would do per-signature for all structured covariates.
 
 **Cross-study aggregation context:** The paper's 10,250-sample, 36-cancer-type sweep is methodologically analogous to what the cbioportal pipeline does. The gastric cohort draws from TCGA and three published studies — cBioPortal hosts most of these, making the gastric cancer signature-3 finding directly replicable within the pipeline's existing study universe.
 
@@ -95,8 +95,8 @@ This paper conducts the first comprehensive large-scale survey of mutational sig
 
 ## Follow-up
 
-- **Waddell et al. 2015 (Nature 518):** The pancreatic cancer platinum-therapy study showing all responders had signature 3, cited as the clinical motivation here. Directly relevant to h08 positive-control and to translational use of signature-exposure associations.
-- **Alexandrov et al. 2020 (Nature):** The comprehensive PCAWG signature atlas — an order-of-magnitude larger version of what this paper does; the primary reference for h08 already in `specs/hypotheses/h08`.
-- **Does signature 3 prevalence in gastric studies within cBioPortal replicate the 7–12% figure?** Would be a straightforward validation task once per-sample SigProfiler assignment is integrated downstream of the cross-study aggregation (see question q018).
+- **Waddell et al. 2015 (Nature 518):** The pancreatic cancer platinum-therapy study showing all responders had signature 3, cited as the clinical motivation here. Directly relevant to hypothesis:0007 positive-control and to translational use of signature-exposure associations.
+- **Alexandrov et al. 2020 (Nature):** The comprehensive PCAWG signature atlas — an order-of-magnitude larger version of what this paper does; the primary reference for hypothesis:0007.
+- **Does signature 3 prevalence in gastric studies within cBioPortal replicate the 7–12% figure?** Would be a straightforward validation task once per-sample SigProfiler assignment is integrated downstream of the cross-study aggregation (see question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross).
 - **What are the gastric cancer studies in cBioPortal with matched-normal sequencing?** Matched-normal status is needed to reliably detect signature 3 (the paper requires it for the cell-line analysis and it is central to the pipeline's `matched_normal_studies` config list).
 - **Could the Lauren-type/histology association be reproduced within cBioPortal gastric studies?** This would require that the relevant TCGA gastric STAD and other gastric studies expose Lauren type as a clinical variable — worth checking.

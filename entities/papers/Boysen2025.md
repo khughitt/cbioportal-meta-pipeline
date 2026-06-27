@@ -68,17 +68,17 @@ No new computational or experimental results are presented.
 
 ## Relevance
 
-**Directly relevant to h08** (agnostic covariate–signature-exposure association; positive-control recovery of UV/smoking/APOBEC/MMR signatures).
+**Directly relevant to hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and** (agnostic covariate–signature-exposure association; positive-control recovery of UV/smoking/APOBEC/MMR signatures).
 
-1. **Etiology confidence tiers.** The review provides a useful operational vocabulary for h08: signatures differ enormously in the strength of their causal evidence chain. Positive-control signatures for h08 should be selected from those with the highest confidence tier (experimental reproduction of the full exposure→adduct→mutation chain): SBS4 (smoking), SBS7a/b (UV, CPD-induced C>T at TpC), SBS22 (aristolochic acid), SBS24 (aflatoxin), SBS18 (ROS/8-oxodG-like). APOBEC (SBS2/13) and MMR-deficiency (SBS3/SBS6/SBS26) signatures are well-validated functionally but their molecular details are still contested; treat these as tier-2 positive controls.
+1. **Etiology confidence tiers.** The review provides a useful operational vocabulary for hypothesis:0007: signatures differ enormously in the strength of their causal evidence chain. Positive-control signatures for hypothesis:0007 should be selected from those with the highest confidence tier (experimental reproduction of the full exposure→adduct→mutation chain): SBS4 (smoking), SBS7a/b (UV, CPD-induced C>T at TpC), SBS22 (aristolochic acid), SBS24 (aflatoxin), SBS18 (ROS/8-oxodG-like). APOBEC (SBS2/13) and MMR-deficiency (SBS3/SBS6/SBS26) signatures are well-validated functionally but their molecular details are still contested; treat these as tier-2 positive controls.
 
-2. **Unknown-etiology signatures pose h08 confounding risk.** Of 64 signatures with unknown etiologies, many are relatively common and will appear in our cross-study meta-analysis. Associating clinical covariates (smoking, therapy, tissue-of-origin) with these signatures may produce statistically significant hits that are mechanistically uninterpretable — or that conflate distinct underlying processes. The 64-unknown figure is a useful upper bound on how many signatures in COSMIC could yield uninterpretable associations.
+2. **Unknown-etiology signatures pose hypothesis:0007 confounding risk.** Of 64 signatures with unknown etiologies, many are relatively common and will appear in our cross-study meta-analysis. Associating clinical covariates (smoking, therapy, tissue-of-origin) with these signatures may produce statistically significant hits that are mechanistically uninterpretable — or that conflate distinct underlying processes. The 64-unknown figure is a useful upper bound on how many signatures in COSMIC could yield uninterpretable associations.
 
 3. **SBS5 / SBS40 ambiguity.** Both are clock-like and pervasive across cancer types; the review explicitly states their etiologies are unknown, even though they increase with age. For the cross-study aggregation pipeline, these signatures will dominate "background" in many cancer types. Any covariate (age, sequencing depth) that correlates with overall mutation burden will spuriously associate with SBS5/SBS40.
 
-4. **Trinucleotide context as a discriminator.** The review illustrates (Figure 2) that SBS4 vs. SBS29 (both C>A-dominated tobacco signatures) are distinguishable by trinucleotide context — emphasizing that aggregate mutation-type counts used in the cross-study pipeline are insufficient to resolve exposures; full 96-channel profiles are needed for h08 signature attribution.
+4. **Trinucleotide context as a discriminator.** The review illustrates (Figure 2) that SBS4 vs. SBS29 (both C>A-dominated tobacco signatures) are distinguishable by trinucleotide context — emphasizing that aggregate mutation-type counts used in the cross-study pipeline are insufficient to resolve exposures; full 96-channel profiles are needed for hypothesis:0007 signature attribution.
 
-5. **Adductomics–signature integration as a future validation resource.** If the Boysen/Alexandrov/Cooke group succeeds in building the proposed integrated pipeline, the resulting mechanistically validated signature–exposure pairs could provide a gold-standard benchmark for h08's agnostic covariate recovery approach: we could test whether our pipeline recovers the known chemical exposure associations for validated signatures.
+5. **Adductomics–signature integration as a future validation resource.** If the Boysen/Alexandrov/Cooke group succeeds in building the proposed integrated pipeline, the resulting mechanistically validated signature–exposure pairs could provide a gold-standard benchmark for hypothesis:0007's agnostic covariate recovery approach: we could test whether our pipeline recovers the known chemical exposure associations for validated signatures.
 
 6. **Nanopore adductomics for normal-vs-tumor comparison.** The proposed single-cell, native-DNA nanopore sequencing of adducts is relevant if the project expands to include clonal hematopoiesis (CH) or normal tissue contexts, where matched-normal sequencing is available (the pipeline already supports `matched_normal_studies`).
 
@@ -86,9 +86,9 @@ No new computational or experimental results are presented.
 
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
-| COSMIC SBS signature etiology tiers | h08 positive-control signature set | Use etiology confidence to stratify which signatures are reliable positive controls vs. confounders |
-| 64 signatures with unknown etiology | Unknown-etiology confounders | Signatures to flag/exclude from interpretable h08 associations |
-| Exposome (smoking, UV, chemicals) | Clinical covariates in cross-study meta-analysis | The covariates h08 seeks to recover agnostically |
+| COSMIC SBS signature etiology tiers | hypothesis:0007 positive-control signature set | Use etiology confidence to stratify which signatures are reliable positive controls vs. confounders |
+| 64 signatures with unknown etiology | Unknown-etiology confounders | Signatures to flag/exclude from interpretable hypothesis:0007 associations |
+| Exposome (smoking, UV, chemicals) | Clinical covariates in cross-study meta-analysis | The covariates hypothesis:0007 seeks to recover agnostically |
 | DNA adductome | Intermediate layer between exposure and signature | Not currently represented in cbioportal pipeline; would require external data |
 | TLS polymerase error rate | Signature generation model | Explains why same exposure can produce different signatures in different cell types |
 | Cosine similarity ≥ 0.90 acceptance criterion | Signature fitting quality threshold | Relevant when using SigProfiler or similar tools for per-study signature extraction |
@@ -113,5 +113,5 @@ No new computational or experimental results are presented.
 - Read Kanaly et al. (2006) for the foundational adductome concept; cited as ref 96 in this paper.
 - Read Cooke et al. (2023) *Sci. Total Environ.* 856:159192 (ref 92) for the next-generation adductomics vision paper co-authored by several of the same group.
 - Tomkova et al. (2024) *Nat. Genet.* (ref 85): new mechanism for C>T at CpG via Pol ε replication errors — relevant to SBS1 etiology and to the matched-normal study design in the pipeline.
-- Consider whether h08 should explicitly stratify by signature etiology confidence tier (using the COSMIC hierarchy of evidence) rather than treating all signatures uniformly.
-- The 64 signatures with unknown etiologies: check which of these appear at appreciable frequency in the cbioportal study set — they may need to be treated as nuisance / latent-factor variables in the h08 covariate association model.
+- Consider whether hypothesis:0007 should explicitly stratify by signature etiology confidence tier (using the COSMIC hierarchy of evidence) rather than treating all signatures uniformly.
+- The 64 signatures with unknown etiologies: check which of these appear at appreciable frequency in the cbioportal study set — they may need to be treated as nuisance / latent-factor variables in the hypothesis:0007 covariate association model.

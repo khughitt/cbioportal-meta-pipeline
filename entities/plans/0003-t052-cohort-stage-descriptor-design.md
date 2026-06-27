@@ -30,7 +30,7 @@ source_refs:
 
 Ingest per-sample primary-vs-metastatic and treatment-status annotation from cBioPortal
 clinical sample tables and roll it up to a per-study cohort-composition descriptor.
-Validate the design by reproducing the published Zehir 2017 stage-driven bias signals
+Validate the design by reproducing the published Zehir et al. [@Zehir2017] stage-driven bias signals
 (AR 18% MSK metastatic vs 1% TCGA primary; ESR1 11% vs 4%) on the existing PoC pipeline
 run, augmented with `prad_tcga_pan_can_atlas_2018` for the AR comparison.
 
@@ -43,7 +43,7 @@ This task delivers:
 2. **Per-study composition rollup** — a summary feather with per-study percentages and
    dominance classes (`primary_dominant` / `metastatic_dominant` / `mixed`).
 3. **Diagnostic interpretation** — a one-shot stratified-rate comparison against the
-   Zehir 2017 published numbers, with per-comparison verdicts and an aggregate
+   Zehir et al. [@Zehir2017] published numbers, with per-comparison verdicts and an aggregate
    closure-state.
 
 Out of scope for t052:
@@ -137,10 +137,10 @@ The annotation script parses these into pandas nullable booleans (`True` / `Fals
 | pattern | pattern_kind | default_is_metastatic | default_is_pre_treated | priority | source |
 |---|---|---|---|---|---|
 | `*_tcga_pan_can_atlas_*` | glob | false | false | 100 | TCGA accrual largely targets primary untreated specimens (Cancer Genome Atlas Research Network 2008); fallback default — sample-level metadata always wins |
-| `tcga_mc3` | study_id | false | false | 50 | Ellrott 2018 MC3 pseudo-study: TCGA matched-normal pan-cancer MAF, primary tumors |
-| `msk_impact_*` | glob | unknown | unknown | 100 | MSK-IMPACT clinical sequencing: mixed primary/metastatic, sample-level fields override (Zehir 2017) |
+| `tcga_mc3` | study_id | false | false | 50 | Ellrott et al. [@Ellrott2018] MC3 pseudo-study: TCGA matched-normal pan-cancer MAF, primary tumors |
+| `msk_impact_*` | glob | unknown | unknown | 100 | MSK-IMPACT clinical sequencing: mixed primary/metastatic, sample-level fields override (Zehir et al. [@Zehir2017]) |
 | `genie` | study_id | unknown | unknown | 100 | AACR GENIE: clinical sequencing, mixed; sample-level SAMPLE_TYPE drives override |
-| `metastatic_solid_tumors_mich_2017` | study_id | true | unknown | 10 | Robinson 2017 MET500: all metastatic by design |
+| `metastatic_solid_tumors_mich_2017` | study_id | true | unknown | 10 | MET500 cBioPortal study: all metastatic by design |
 | `pog570_bcgsc_2020` | study_id | true | true | 10 | BCGSC POG-570: metastatic, post-treatment by design |
 
 **Caveat noted in the source for the TCGA family glob**: SKCM in the TCGA pan-can-atlas

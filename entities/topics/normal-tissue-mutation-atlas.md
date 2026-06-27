@@ -49,8 +49,8 @@ instability, with most clonal expansions producing milder or sub-clinical conseq
 ## Key Concepts
 
 - **Somatic mutation rate per cell per year.** Per-tissue rate, derivable from cell-by-cell
-  phylogenies (Lee-Six 2018, 2019). Varies by tissue; scales roughly with stem-cell
-  turnover (Tomasetti & Vogelstein 2015 framework).
+  phylogenies (Lee-Six et al. [@LeeSix2018]). Varies by tissue; scales roughly with stem-cell
+  turnover (Tomasetti and Vogelstein [@TomasettiVogelstein2015] framework).
 - **Clonal expansion.** A somatic mutation in a stem cell that confers replicative
   advantage produces a clonal patch in the tissue. Detectable in normal tissue WGS as
   elevated VAF for the clone-marker mutation.
@@ -59,7 +59,7 @@ instability, with most clonal expansions producing milder or sub-clinical conseq
   most cases but molecularly equivalent to the early mutations of cancer.
 - **Clonal hematopoiesis (CH).** The blood-specific name for the same phenomenon: clonal
   expansion of hematopoietic stem cells carrying mutations in DNMT3A, TET2, ASXL1, JAK2,
-  TP53, PPM1D, … with prevalence of ~10% by age 70 (Jaiswal 2014, Genovese 2014).
+  TP53, PPM1D, … with prevalence of ~10% by age 70 in classic population-scale CH studies.
 - **Cross-species mutation rate scaling.** Cagan 2022 showed mammalian per-cell-per-year
   somatic mutation rate scales inversely with lifespan; informs which between-tissue
   variation is mechanistically grounded.
@@ -68,13 +68,14 @@ instability, with most clonal expansions producing milder or sub-clinical conseq
 
 **Well-established:**
 - Multiple tissues carry driver-mutation-positive clones at high prevalence in
-  apparently-healthy adults (Martincorena 2015 skin; 2018 esophagus; Yokoyama 2019
-  esophagus; Lee-Six 2018 colon; Moore 2020 endometrium; Brunner 2019 liver; Yoshida 2020
+  apparently-healthy adults (`Martincorena 2015` skin; Martincorena et al. [@Martincorena2018] esophagus; `Yokoyama 2019`
+  esophagus; Lee-Six et al. [@LeeSix2018] blood; `Moore 2020` endometrium; `Brunner 2019` liver; `Yoshida 2020`
   lung).
-- CH prevalence rises sharply with age, exceeding 10% by age 70 in blood (Jaiswal 2014,
-  Genovese 2014, Coombs 2017, Bolton 2020).
+- CH prevalence rises sharply with age, exceeding 10% by age 70 in blood in population-scale
+  CH studies, with related clinical-sequencing evidence from Coombs et al. [@Coombs2017]
+  and Bolton et al. [@Bolton2020].
 - Per-cell-per-year somatic mutation rate accumulates roughly linearly through life
-  (Lee-Six 2019); inter-tissue rate variation spans ~1–2 orders of magnitude across the
+  (Lee-Six et al. [@LeeSix2018]); inter-tissue rate variation spans ~1–2 orders of magnitude across the
   tissues that have been measured.
 - Driver-clone landscape in normal tissue partially overlaps the cancer driver landscape —
   with characteristic exceptions (NOTCH1 dominates normal esophagus more than EAC; TP53
@@ -111,10 +112,10 @@ instability, with most clonal expansions producing milder or sub-clinical conseq
 - **Direct support for `hypothesis:0005`** (cross-tissue normal background atlas + the
   null-substitution claim).
 - **Sibling support for `hypothesis:0001`** (within-sample non-tumor signal contamination
-  — the *atlas* is the calibrated population-level form of the *correction* h01 applies
+  — the *atlas* is the calibrated population-level form of the *correction* `hypothesis:0001-non-tumor-signal-contamination` applies
   per sample).
-- **Question:** `q007` (Li 2021 as null model) is the precursor; this topic generalizes
-  q007 to a meta-analytic cross-tissue null.
+- **Question:** `question:0007-cross-tissue-somatic-mutation-rate-variation-as-null-model` (Li 2021 as null model) is the precursor; this topic generalizes
+  that question to a meta-analytic cross-tissue null.
 - **Big-version research direction:** "cancer is the small-N tail of a continuum of
   clonal somatic genomic instability." If the atlas confirms driver-clone prevalence
   exceeding cancer rates in multiple tissues, the project-level framing of cBioPortal
@@ -126,28 +127,28 @@ instability, with most clonal expansions producing milder or sub-clinical conseq
 
 ## Key References
 
-- **Martincorena 2018** *Science* 362:911 — NOTCH1 in normal esophagus; the canonical
+- **Martincorena et al. [@Martincorena2018]** *Science* 362:911 — NOTCH1 in normal esophagus; the canonical
   "normal tissue is full of driver-positive clones" paper.
-- **Lee-Six 2019** *Nature* 561:473 — colon-crypt phylogenies; per-cell-per-year mutation
+- **Lee-Six et al. [@LeeSix2018]** *Nature* 561:473 — hematopoietic phylogenies; per-cell-per-year mutation
   rate.
-- **Li 2021** — multi-tissue body-map of somatic mutation rates; the closest existing
+- **Li et al. [@Li2021]** — multi-tissue body-map of somatic mutation rates; the closest existing
   cross-tissue reference in the project library.
-- **Cagan 2022** *Nature* 604:517 — cross-species mutation rate scaling with lifespan.
-- **Jaiswal 2014** *NEJM* 371:2488 — clonal hematopoiesis at population scale; the
+- **`Cagan 2022`** *Nature* 604:517 — cross-species mutation rate scaling with lifespan.
+- **`Jaiswal 2014`** *NEJM* 371:2488 — clonal hematopoiesis at population scale; the
   blood-specific anchor.
 
 ## Datasets referenced
 
 Studies/resources discussed in this topic (not yet first-class `dataset:` entities):
 
-- "Martincorena 2015 (skin)"
-- "Martincorena 2018 (esophagus)"
+- "`Martincorena 2015` (skin)"
+- "Martincorena et al. [@Martincorena2018] (esophagus)"
 - "Yokoyama 2019 (esophagus)"
 - "Lee-Six 2018 (colon)"
 - "Lee-Six 2019 (blood, hematopoietic phylogeny)"
-- "Moore 2020 (endometrium)"
+- "`Moore 2020` (endometrium)"
 - "Brunner 2019 (liver)"
-- "Yoshida 2020 (lung)"
-- "Cagan 2022 (cross-species mutation rate scaling)"
-- "Park 2024 (somatic mutation as biological clocks)"
+- "`Yoshida 2020` (lung)"
+- "`Cagan 2022` (cross-species mutation rate scaling)"
+- "`Park 2024` (somatic mutation as biological clocks)"
 - "HMF / Hartwig (potential normal-cohort component)"

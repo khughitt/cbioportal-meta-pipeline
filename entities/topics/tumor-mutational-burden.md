@@ -21,7 +21,8 @@ related:
 
 TMB (mutations per megabase of coding sequence) is a clinically-used summary statistic — TMB-H
 (typically ≥10 mut/Mb) is an FDA-recognized pan-cancer biomarker for pembrolizumab eligibility
-(Suehnholz 2024 confirms +9.2 pp pan-cancer Level 1 contribution). Its definition and
+with a +9.2 pp pan-cancer Level 1 contribution reported by Suehnholz et al. [@Suehnholz2024].
+Its definition and
 measurement vary substantially between panels and WES, and naive panel-derived TMB is not
 directly comparable to WES-derived TMB without per-panel calibration.
 
@@ -32,7 +33,7 @@ directly comparable to WES-derived TMB without per-panel calibration.
   point: include indels, fusions, structural variants? (Most TMB definitions: SNV + small indels
   only.)
 - **Panel TMB.** Computed per-panel using the panel's own callable-coding length as denominator.
-  Zehir 2017: MSK-IMPACT panel-TMB correlates R²=0.76 with WES on matched samples. Reasonable
+  Zehir et al. [@Zehir2017]: MSK-IMPACT panel-TMB correlates R²=0.76 with WES on matched samples. Reasonable
   but not perfect.
 - **TMB-H thresholds vary by setting.** FDA pembrolizumab indication uses 10 mut/Mb; some
   research / clinical-trial protocols use 16 mut/Mb. Threshold choice affects classification of
@@ -45,9 +46,9 @@ directly comparable to WES-derived TMB without per-panel calibration.
 
 - **Friends-of-Cancer-Research / Buchhalter** TMB harmonization work proposes a calibration
   framework for panel-vs-WES TMB. Not yet adopted as a published correction in cBioPortal.
-- **Pugh 2022** mentions a TMB harmonization model for GENIE but does not quantify it; per-
+- **GENIE harmonization.** Pugh et al. [@Pugh2022] mention a TMB harmonization model for GENIE but do not quantify it; per-
   assay TMB values across the 91 GENIE panels remain uncorrected.
-- **Bandlamudi 2026** uses the standard MSK-IMPACT TMB and reports it as a per-sample annotation,
+- **MSK-IMPACT use.** Bandlamudi et al. [@Bandlamudi2026] use the standard MSK-IMPACT TMB and report it as a per-sample annotation,
   not as a cross-panel-comparable value.
 - Consensus emerging: report panel-TMB with an explicit panel-version flag; don't aggregate
   across panels without per-panel calibration.
@@ -71,13 +72,13 @@ per-sample annotation feather carrying TMB + hypermutator status + audit trail:
 | Column | Type | Source |
 |---|---|---|
 | `study_id`, `sample_id`, `cancer_type`, `cancer_type_detailed` | | carried from per-study samples |
-| `tmb`, `tmb_log10`, `mutation_count` | float / int | `compute_per_sample_tmb` (protein-altering variant_class filter per Chalmers 2017 / FMI convention) |
+| `tmb`, `tmb_log10`, `mutation_count` | float / int | `compute_per_sample_tmb` (protein-altering variant_class filter per Chalmers et al. [@Chalmers2017] / FMI convention) |
 | `panel_callable_mb`, `tmb_source` | float / str | `build_panel_callable_sizes` (sources: `bed_sum` / `config_override` / `wes_default`) |
 | `msi_type`, `msi_score` | str / float | `msi_normalization.normalize_msi_columns` (parsed from `MSI_TYPE` / `MSI_STATUS` / `MSI_SCORE` / `MSI_SENSOR_SCORE`; normalized to `{MSI-H, MSI-L, MSS, Indeterminate}`) |
 | `pole_hotspot_detected`, `pold1_hotspot_detected` | bool | `detect_polymerase_hotspots` (canonical 8-site POLE + 6-site POLD1 literature sets) |
 | `tmb_zscore_within_cancer`, `gmm_posterior_upper` | float | `fit_per_cancer_tmb_gmm` (pinned `random_seed` for reproducibility; Hartigan dip test + ΔBIC selection) |
 | `hypermutation_score`, `is_hypermutator`, `hypermutator_reason` | float / bool / str | `annotate_hypermutators` canonical 8-row decision table (plan finding #4) |
-| `is_hypermutator_absolute` (≥10 mut/Mb Campbell 2017), `is_hypermutator_ultra` (≥100 mut/Mb), `is_hypermutator_relative` (per-histology top-20% Samstein 2019) | bool | `annotate_hypermutators` parallel flags per t089 dual-view recommendation |
+| `is_hypermutator_absolute` (≥10 mut/Mb Campbell et al. [@Campbell2017Hypermutation]), `is_hypermutator_ultra` (≥100 mut/Mb), `is_hypermutator_relative` (per-histology top-20% Samstein et al. [@Samstein2019]) | bool | `annotate_hypermutators` parallel flags per t089 dual-view recommendation |
 
 The cross-study `gene_cancer_study*.feather` outputs carry paired
 `num_inclusive` / `num_exclusive` / `ratio_inclusive` / `ratio_exclusive` per-study columns
@@ -87,7 +88,7 @@ plus pooled `mean_inclusive` / `mean_exclusive` (t098). Downstream consumers (e.
 `mean_inclusive` unless t079 pre-registration explicitly overrides.
 
 **Residual follow-ups** not part of t081:
-1. Panel-vs-WES FoCR Phase II calibration (Vega 2021) not yet applied to our computed TMB
+1. Panel-vs-WES FoCR Phase II calibration [@Vega2021] not yet applied to our computed TMB
    values — the pipeline reports raw per-panel TMB with a panel-source provenance column;
    cross-panel calibration is a future task (see `topic:cross-panel-normalization-methods`).
 2. Downstream aggregations using `mean_inclusive` implicitly INCLUDE hypermutators — be wary
@@ -96,7 +97,8 @@ plus pooled `mean_inclusive` / `mean_exclusive` (t098). Downstream consumers (e.
 
 ## Key References
 
-Zehir2017 (panel-TMB ~ WES-TMB R² calibration); Pugh2022 (acknowledges panel-TMB harmonization
-need without solving it); Bandlamudi2026 (current MSK-IMPACT TMB usage); Suehnholz2024 (TMB-H as
+Zehir et al. [@Zehir2017] (panel-TMB ~ WES-TMB R² calibration); Pugh et al. [@Pugh2022]
+(acknowledges panel-TMB harmonization need without solving it); Bandlamudi et al.
+[@Bandlamudi2026] (current MSK-IMPACT TMB usage); Suehnholz et al. [@Suehnholz2024] (TMB-H as
 Level 1 pan-cancer biomarker contribution to actionability landscape). Follow-up search t025 for
 Friends-of-Cancer-Research / Buchhalter TMB harmonization paper still queued.

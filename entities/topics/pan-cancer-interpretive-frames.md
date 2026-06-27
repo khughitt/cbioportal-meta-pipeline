@@ -23,9 +23,9 @@ related:
 ## Summary
 
 When clustering cancer types by molecular features, the field has converged on three
-non-equivalent organizing frames: **cell-of-origin / tissue lineage** (Hoadley 2018),
-**alteration-type axis (M-class vs C-class)** (Ciriello 2013), and **canonical signaling
-pathway membership** (Sanchez-Vega 2018). Each frame produces a different cancer-cancer
+non-equivalent organizing frames: **cell-of-origin / tissue lineage** [@Hoadley2018],
+**alteration-type axis (M-class vs C-class)** [@Ciriello2013], and **canonical signaling
+pathway membership** [@SanchezVega2018]. Each frame produces a different cancer-cancer
 similarity structure, surfaces different cross-tissue convergences, and has different
 implications for trial design and biological interpretation. None is the "right" frame —
 they are complementary lenses on the same underlying data.
@@ -39,7 +39,7 @@ clustering does and doesn't capture.
 
 ### The Three Frames
 
-### Cell-of-origin (Hoadley 2018, PanCanAtlas)
+### Cell-of-origin (Hoadley et al. [@Hoadley2018], PanCanAtlas)
 
 - **Method:** integrative iCluster on 4 platforms (CNA, methylation, mRNA, miRNA),
   ~10,000 TCGA tumors, 33 cancer types. **Mutations excluded from clustering input due
@@ -54,7 +54,7 @@ clustering does and doesn't capture.
   mutations-only clustering. Mutations were excluded from input due to sparsity, not
   because they were tested and found uninformative.
 
-### Alteration-type axis (Ciriello 2013, Nat Genet)
+### Alteration-type axis (Ciriello et al. [@Ciriello2013], Nat Genet)
 
 - **Method:** 479 "Selected Functional Events" (high-level GISTIC SCNAs + recurrent gene
   mutations + 13 epigenetically silenced genes) on 3,299 TCGA tumors / 12 cancer types;
@@ -63,13 +63,13 @@ clustering does and doesn't capture.
   with SCNA burden; 17 M-subclasses + 14 C-subclasses. KIRC, GBM, LAML, COADREAD, UCEC-
   endometrioid land in M. OV, BRCA, LUSC, HNSC, UCEC-serous land in C. **TP53 is the
   C-class exception** (chromosomal-instability enabler).
-- **Hoadley 2018 partially walks this back** — adding methylation/mRNA/miRNA shifts ~2/3
+- **Hoadley et al. [@Hoadley2018] partially walk this back** — adding methylation/mRNA/miRNA shifts ~2/3
   of tumors to clustering by tissue rather than by alteration-type. But the **M/C
   hyperbola itself remains a real, observable structure** even after Hoadley's reanalysis;
   the squamous, basal, and pan-GI cross-tissue clusters Ciriello first surfaced *are*
   preserved by Hoadley.
 
-### Pathway membership (Sanchez-Vega 2018, PanCanAtlas)
+### Pathway membership (TCGA pathway analysis [@SanchezVega2018], PanCanAtlas)
 
 - **Method:** 10 curated canonical signaling pathways (RTK-RAS, PI3K, Notch, Wnt, TP53,
   cell-cycle, Myc, TGF-β, Hippo, Nrf2). Per-(sample, pathway) binary alteration call from
@@ -92,7 +92,7 @@ clustering does and doesn't capture.
 |---|---|---|---|
 | **Cell-of-origin** (Hoadley) | Tissue lineage / developmental program | Why most lineage-matched tumors look similar across many platforms | Mutation-specific signal; treats mutations as overlay only |
 | **Alteration-type** (Ciriello) | M-class vs C-class hyperbola | Genome-instability axis; cross-tissue squamous / BRCA-deficient subclasses | Lineage; pathway-level convergence |
-| **Pathway membership** (Sanchez-Vega) | Functional signaling output | Cross-cancer convergence on shared pathway dysregulation; mutual-exclusivity signal | Driver-specific allele effects; non-canonical pathways; tissue context |
+| **Pathway membership** [@SanchezVega2018] | Functional signaling output | Cross-cancer convergence on shared pathway dysregulation; mutual-exclusivity signal | Driver-specific allele effects; non-canonical pathways; tissue context |
 
 The frames are **not competing; they are complementary**. A complete cross-cancer view
 includes:

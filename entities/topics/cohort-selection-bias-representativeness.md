@@ -34,14 +34,14 @@ reflect *cohort composition* as much as biology.
   advanced or refractory disease.
 - **Treatment-history confounding.** Resistance-associated alterations are elevated by orders
   of magnitude in pretreated cohorts:
-  - **AR mutations 18% in MSK metastatic prostate vs 1% in TCGA primary** (Zehir 2017)
-  - **ESR1 mutations 11% in MSK metastatic breast vs 4% in TCGA primary** (Zehir 2017)
+  - **AR mutations 18% in MSK metastatic prostate vs 1% in TCGA primary** [@Zehir2017]
+  - **ESR1 mutations 11% in MSK metastatic breast vs 4% in TCGA primary** [@Zehir2017]
   - **EGFR T790M 11.3% of GENIE EGFR mutations vs 2.2% of TCGA EGFR mutations** (AACR GENIE 2017)
-- **Demographic representation gaps.** Pugh 2022 GENIE v9.1: 72% White, 14% race unknown / not
+- **Demographic representation gaps.** Pugh et al. [@Pugh2022] GENIE v9.1: 72% White, 14% race unknown / not
   collected, 6% Black, 5% Asian. Geographic distribution skewed to US academic centers.
 - **Specimen-state heterogeneity.** Primary vs metastatic biopsy; FFPE vs frozen; tumor-purity
-  varies (PAAD ~33% in MC3, LAML ~44% — Ellrott 2018 — well below most TCGA cohorts).
-- **Selective biopsy of metastatic sites.** Nguyen 2022 MSK-MET: lymph node 2,305, liver 2,289,
+  varies (PAAD ~33% in MC3, LAML ~44% in Ellrott et al. [@Ellrott2018] — well below most TCGA cohorts).
+- **Selective biopsy of metastatic sites.** Nguyen et al. [@Nguyen2022] MSK-MET: lymph node 2,305, liver 2,289,
   lung 982, bone 726 are most-sampled met sites — clinically accessible / actionable sites
   over-represented.
 
@@ -53,7 +53,7 @@ vs naive) where stage is a covariate of interest, but cross-study aggregations (
 typically pool without stratification.
 
 Concretely:
-- **TCGA-vs-GENIE concordance metric exists** (Pugh 2022: median weighted RMSD 0.32 across
+- **TCGA-vs-GENIE concordance metric exists** (Pugh et al. [@Pugh2022]: median weighted RMSD 0.32 across
   cancer types) but no per-gene correction recipe.
 - **Per-cohort age / treatment / specimen-state metadata is in cBioPortal clinical sample
   tables** but inconsistently formatted across studies.
@@ -81,6 +81,7 @@ ratio.
 
 ## Key References
 
-Zehir2017 (cleanest quantification of advanced-disease bias); AACR GENIE 2017 (referral bias
-in EGFR T790M); Pugh2022 (demographic gaps); Nguyen2022 (metastatic-site sampling bias);
-Bandlamudi2026 (advanced-disease selection in 50k cohort).
+Zehir et al. [@Zehir2017] (cleanest quantification of advanced-disease bias); AACR GENIE 2017
+(referral bias in EGFR T790M); Pugh et al. [@Pugh2022] (demographic gaps); Nguyen et al.
+[@Nguyen2022] (metastatic-site sampling bias); Bandlamudi et al. [@Bandlamudi2026]
+(advanced-disease selection in 50k cohort).

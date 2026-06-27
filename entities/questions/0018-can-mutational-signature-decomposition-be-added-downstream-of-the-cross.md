@@ -49,7 +49,7 @@ This is the activation gate that `pre-registration:0003-h08-positive-control-agn
 
 - **Empirical panel-vs-WES sparsity (decisive).** In the existing brca-2026-04-22 pilot refit, MSK-IMPACT panel samples carried a **median of 3 SBS per sample** (IQR 2–5, max 41), against a **median of 52** for the WES substrate (`tcga_mc3`) — a >15× gap, with panels falling far below any usable per-sample floor.
 - **Literature floors.** SigProfilerExtractor [@Islam2022] and the tool comparison of [@Medo2024] bound the per-sample counts and cohort sizes at which extraction/fitting is reliable; flat signatures (SBS3/5/40) are the least separable at low counts. `task:t179` operationalises this as a per-sample SBS-count floor (~383 WES, ~100 matched-normal) — panel medians near 3 sit two orders of magnitude below it.
-- **Caller provenance.** Consensus calling (≥2 callers) is essential for artefact-free de novo extraction; single callers inject reproducible spurious signatures [@Jiang2025]. `tcga_mc3` is a 7-caller consensus MAF — the clean substrate — whereas heterogeneous per-study cBioPortal MAFs are not (`task:t178` carries a per-study `caller_consensus` flag, default *unknown*).
+- **Caller provenance.** Consensus calling (≥2 callers) is essential for artefact-free de novo extraction; single callers inject reproducible spurious signatures [@Jiang2025a]. `tcga_mc3` is a 7-caller consensus MAF — the clean substrate — whereas heterogeneous per-study cBioPortal MAFs are not (`task:t178` carries a per-study `caller_consensus` flag, default *unknown*).
 - **Refit is the right instrument here.** SigProfilerAssignment [@DiazGay2023] is the assignment/refit fallback when de novo is underpowered; the h08 scan uses refit against a pinned COSMIC v3.4 reference (`task:t178`), not de novo, so it does not require the larger cohorts de novo extraction would.
 
 ## Thoughts
@@ -66,5 +66,5 @@ This is the activation gate that `pre-registration:0003-h08-positive-control-agn
 ## Related
 
 - Topic notes: `topic:mutational-signatures`, `topic:signature-extraction-fitting-methods`
-- Article notes: [@Islam2022], [@Medo2024], [@Jiang2025], [@DiazGay2023]
+- Article notes: [@Islam2022], [@Medo2024], [@Jiang2025a], [@DiazGay2023]
 - Methods/Datasets: `method:h08-agnostic-association-model`; analysis plan `doc/plans/2026-05-31-h08-positive-control-scan-analysis-plan.md`; `tcga_mc3`

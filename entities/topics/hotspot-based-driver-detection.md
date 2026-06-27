@@ -19,8 +19,9 @@ related:
 ## Summary
 
 Hotspot methods identify drivers from single-residue (1D) or 3D-spatial recurrence rather than
-gene-level mutation counts. Two reference catalogs cover this space — **Chang 2016** (1D
-residue-level, 470 hotspots / 275 genes, github.com/taylor-lab/hotspots) and **Gao 2017** (3D
+gene-level mutation counts. Two reference catalogs cover this space — Chang et al. [@Chang2016]
+(1D residue-level, 470 hotspots / 275 genes, github.com/taylor-lab/hotspots) and Gao et al.
+[@Gao2017] (3D
 spatial, 943 clusters / 3,404 residues / 503 genes, 3dhotspots.org). The two catalogs are
 **largely complementary**: only ~3% of 3D-cluster residues are also 1D hotspots; ~97% are rare
 residues that gain power from spatial neighbors. Both catalogs apply cleanly as overlays on our
@@ -28,11 +29,11 @@ gene × cancer outputs.
 
 ## Key Concepts
 
-- **1D residue-level (Chang 2016).** Per-codon recurrence test using a trinucleotide-context-
+- **1D residue-level (Chang et al. [@Chang2016]).** Per-codon recurrence test using a trinucleotide-context-
   aware binomial model. Background rate from per-gene mutation rate × per-codon mutability ×
   trinucleotide context, with truncation of top 99th-percentile positions to prevent dominant
   hotspots from inflating their own gene's baseline.
-- **3D spatial (Gao 2017).** Per-gene permutation test over clusters defined as central residue
+- **3D spatial (Gao et al. [@Gao2017]).** Per-gene permutation test over clusters defined as central residue
   + neighbors within 5 Å on PDB structures. Cluster mutation count vs decoy clusters with same
   total but shuffled residue indices. Uses BioJava + RCSB PDB, requires ≥90% UniProt↔PDB
   identity.
@@ -48,7 +49,8 @@ gene × cancer outputs.
 
 The two reference catalogs are operationally treated as sources of variant-level functional
 annotation:
-- **OncoKB consumes both** — Chang 2016 hotspots and Gao 2017 3D clusters feed into OncoKB's
+- **OncoKB consumes both** — Chang et al. [@Chang2016] hotspots and Gao et al. [@Gao2017] 3D
+  clusters feed into OncoKB's
   variant-effect ("Oncogenic" / "Likely Oncogenic") calls.
 - **cBioPortal annotates per-mutation** with hotspot / 3D-cluster flags from both catalogs.
 - Per-residue clinical interpretation is an emerging axis: a hotspot residue is a stronger
@@ -57,17 +59,19 @@ annotation:
 ## Controversies & Open Questions
 
 - **Method-to-method overlap is small** within the 3D family (only 15 residues common across
-  Gao 2017 + Mutation3D + HotMAPS + Hotspot3D). Each tool encodes different sensitivity /
+  Gao et al. [@Gao2017] + Mutation3D + HotMAPS + Hotspot3D). Each tool encodes different sensitivity /
   specificity trade-offs; consensus lists are noisier than for gene-level driver detection.
-- **Power at long-tail frequencies.** Both Chang 2016 and Gao 2017 are limited by cohort size
-  for very-rare residues; AKT1 D323 (a known driver) misses 3D significance at n ≈ 11,000.
+- **Power at long-tail frequencies.** Both Chang et al. [@Chang2016] and Gao et al. [@Gao2017]
+  are limited by cohort size
+  for very-rare residues; `AKT1 D323` (a known driver) misses 3D significance at n ≈ 11,000.
   Cohort scale-ups will promote more long-tail residues.
 - **Panel-aware re-discovery.** Running the discovery methods on panel cohorts with a panel-
   restricted null is not done by either paper — open methodological question.
 
 ## Relevance to This Project
 
-The Chang 2016 hotspot list and Gao 2017 3D-cluster list are both downloadable as static
+The Chang et al. [@Chang2016] hotspot list and Gao et al. [@Gao2017] 3D-cluster list are both
+downloadable as static
 reference catalogs. Concrete pipeline addition (extension of the Bailey overlay pattern):
 
 1. Ingest both catalogs as `data/cancerhotspots_1d.feather` (from

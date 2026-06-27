@@ -111,9 +111,9 @@ The PLPM's module-discovery component is directly related to what the project's 
 
 The ILP formulation is therefore a natural upstream complement to t078: instead of testing whether a pre-specified gene set is mutually exclusive, it discovers which gene sets are mutually exclusive. The recovered modules are data-driven analogs of the "hallmark-like units" discussed in `discussion:0007-hallmark-ordering-and-data-driven-modules` — and, because the partition is label-free, they do not presuppose the canonical hallmark boundary assignments.
 
-**Practical implication for t078:** Results from the PLPM (or any mutual-exclusivity module-discovery step) could *define* the input modules for pathway-level MHN analysis (h04), rather than using the Sanchez-Vega 2018 10-pathway annotation. This creates a fully data-driven pipeline: discover modules (PLPM/WeSME) → order modules (MHN) → annotate post hoc against hallmark gene sets.
+**Practical implication for t078:** Results from the PLPM (or any mutual-exclusivity module-discovery step) could *define* the input modules for pathway-level MHN analysis (hypothesis:0004-mhn-pathway-ordering), rather than using the Sanchez-Vega et al. [@SanchezVega2018] 10-pathway annotation. This creates a fully data-driven pipeline: discover modules (PLPM/WeSME) → order modules (MHN) → annotate post hoc against hallmark gene sets.
 
-### Progression inference and MHN (h04)
+### Progression inference and MHN (hypothesis:0004-mhn-pathway-ordering)
 
 The PLPM's progression-ordering component occupies a similar niche to MHN (Schill 2020; Schill 2024; Vocht 2026), but the two methods differ substantially:
 
@@ -127,19 +127,19 @@ The PLPM's progression-ordering component occupies a similar niche to MHN (Schil
 | Noise model | Edit-distance / flip model | Likelihood under exponential holding times |
 | Output | Partition + total ordering of modules | Continuous hazard rates + pairwise edge directions |
 
-The PLPM is more interpretable at the module level and does not require a pre-specified gene list, but it sacrifices the continuous-time generative story, the diagnostic-cohort observation-event correction, and the ability to infer partial orderings or cycles. For the project's h04 goal of ordered pathway-level inference, the PLPM and MHN are therefore best treated as **complementary**: the PLPM discovers the modules (label-free partition), and MHN then orders them with the observation-event correction that prevents collider bias.
+The PLPM is more interpretable at the module level and does not require a pre-specified gene list, but it sacrifices the continuous-time generative story, the diagnostic-cohort observation-event correction, and the ability to infer partial orderings or cycles. For the project's hypothesis:0004-mhn-pathway-ordering goal of ordered pathway-level inference, the PLPM and MHN are therefore best treated as **complementary**: the PLPM discovers the modules (label-free partition), and MHN then orders them with the observation-event correction that prevents collider bias.
 
-### Identifiability assumptions and confounders relative to q012
+### Identifiability assumptions and confounders relative to question:0012-mutation-ordering-cross-sectional-inference
 
-The paper's Theorems 2.2 and 2.3 establish identifiability conditions for the PLPM. In the context of q012 and the project's cross-sectional cBioPortal data, several important gaps apply:
+The paper's Theorems 2.2 and 2.3 establish identifiability conditions for the PLPM. In the context of question:0012-mutation-ordering-cross-sectional-inference and the project's cross-sectional cBioPortal data, several important gaps apply:
 
-1. **Cross-sectional under-identification (q012 core concern).** The PLPM, like all cross-sectional methods, cannot distinguish true temporal progression from pure fitness asymmetry. The identifiability theorems assume the PLPM generative model is correct — i.e., that early-module mutations are genuinely prerequisite. This is an assumption about biology, not a statistical test.
+1. **Cross-sectional under-identification (question:0012-mutation-ordering-cross-sectional-inference core concern).** The PLPM, like all cross-sectional methods, cannot distinguish true temporal progression from pure fitness asymmetry. The identifiability theorems assume the PLPM generative model is correct — i.e., that early-module mutations are genuinely prerequisite. This is an assumption about biology, not a statistical test.
 
 2. **No observation-event / collider-bias correction.** The PLPM has no analog of Schill 2024's observation-event model. Diagnostic-cohort selection means that a sample enters the dataset partly because of its genomic state; genes that raise detectability (EGFR in LUAD, TP53 in CRC) will appear anti-correlated with co-occurring drivers in naive mutual-exclusivity analysis, potentially mislabeling biologically co-occurring genes as same-module (mutually exclusive). The project would need to apply an observation-event correction *before* running the PLPM, or separately validate PLPM module assignments against an observation-corrected model.
 
 3. **No error model for panel callability.** The Theorem 2.3 noise model treats each entry as independently flipped with a constant probability q. Real panel sequencing introduces structured missingness: a gene not on the panel is always 0, and different samples in the same study may have different callable gene sets. This is a form of non-random, non-i.i.d. "noise" that violates the theorem's assumptions and can create spurious mutual exclusivity (two genes that are both absent from some panels look exclusive). The same callability correction required for t078 would be required before applying the PLPM.
 
-4. **Per-histology pooling.** The paper applies the PLPM to individual cancer types (CRC, GBM) rather than pooling across histologies. Simpson's-paradox artifacts from pan-cancer pooling (a recurring confound in q012) are avoided by design in these experiments, but would need to be explicitly gated in any pipeline application.
+4. **Per-histology pooling.** The paper applies the PLPM to individual cancer types (CRC, GBM) rather than pooling across histologies. Simpson's-paradox artifacts from pan-cancer pooling (a recurring confound in question:0012-mutation-ordering-cross-sectional-inference) are avoided by design in these experiments, but would need to be explicitly gated in any pipeline application.
 
 5. **Hypermutator tumors.** Hypermutator / MMR-deficient tumors violate the progression assumption (they saturate multiple pathway sets simultaneously), making them likely to appear as high-flip-count outliers. The project's t081 hypermutator filter should be applied before running the PLPM.
 
@@ -151,14 +151,14 @@ The paper's Theorems 2.2 and 2.3 establish identifiability conditions for the PL
 |---|---|---|
 | Pathway Linear Progression Model (PLPM) | Data-driven mutation module discovery | Blueprint for label-free hallmark analog inference (discussion:2026-06-07) |
 | Mutually exclusive gene module (pathway set S_k) | Co-occurrence-null gene cluster (t078 output) | Same signal; PLPM global optimization vs. t078 pairwise/set tests |
-| Linear ordered sequence S_1 < ... < S_K | Pathway-level MHN progression order (h04) | PLPM gives discrete total order; MHN gives continuous directed graph |
+| Linear ordered sequence S_1 < ... < S_K | Pathway-level MHN progression order (hypothesis:0004-mhn-pathway-ordering) | PLPM gives discrete total order; MHN gives continuous directed graph |
 | Edit distance / flip count | Fit quality metric | Analogous to MHN log-likelihood; PLPM minimizes flips, MHN maximizes likelihood |
 | NP-hardness (Theorem 2.1) | Computational constraint | Practical implication: pre-filter to ≤50-100 driver genes before ILP |
-| Noisy identifiability (Theorem 2.3) | Cross-sectional under-identification (q012) | Theory gives closed-form m* requirement; project cohort sizes may meet this for pathway-level K |
+| Noisy identifiability (Theorem 2.3) | Cross-sectional under-identification (question:0012-mutation-ordering-cross-sectional-inference) | Theory gives closed-form m* requirement; project cohort sizes may meet this for pathway-level K |
 | ILP (CPLEX) | External solver dependency | No published package; project would need CPLEX/Gurobi or open-source MILP solver |
-| APC → TP53/PIK3CA → KRAS (CRC result) | Known CRC progression benchmark (h04 calibration) | Matches Gerstung 2020 PCAWG ordering; useful as a validation baseline |
-| Rb1 → PI3K → p53 (GBM result) | GBM pathway ordering (not in current h04 scope) | Six-stage model with bootstrap-stable pathway assignments |
-| Bootstrap stability analysis | Robustness / leave-one-study-out (h04 falsifiability) | PLPM uses 100 bootstrap resamples; project would analogously fold-validate |
+| APC → TP53/PIK3CA → KRAS (CRC result) | Known CRC progression benchmark (hypothesis:0004-mhn-pathway-ordering calibration) | Matches Gerstung et al. [@Gerstung2020] PCAWG ordering; useful as a validation baseline |
+| Rb1 → PI3K → p53 (GBM result) | GBM pathway ordering (not in current hypothesis:0004-mhn-pathway-ordering scope) | Six-stage model with bootstrap-stable pathway assignments |
+| Bootstrap stability analysis | Robustness / leave-one-study-out (hypothesis:0004-mhn-pathway-ordering falsifiability) | PLPM uses 100 bootstrap resamples; project would analogously fold-validate |
 | K (number of stages) as user parameter | Number of pathway-level modules | Must be selected by model-comparison (score vs. K); not estimated from data |
 | No observation-event model | Missing collider-bias correction vs. Schill2024 | This is the most important gap relative to the MHN family for cBioPortal diagnostic cohorts |
 
@@ -184,9 +184,9 @@ The `mhn` Python package (Vocht 2026; https://github.com/spang-lab/LearnMHN) pro
 
 ## Follow-up
 
-- **Evaluate as a module-discovery front-end for h04.** The principled pipeline is: (1) discover mutually exclusive modules via PLPM (or WeSME / SELECT from t078) on per-histology driver gene sets; (2) order the modules with observation-event MHN (Vocht 2026 / Schill 2024); (3) annotate modules post hoc against Sanchez-Vega 2018 / hallmark gene sets. Assess whether PLPM modules or Sanchez-Vega pathway labels give more stable MHN-level ordering.
+- **Evaluate as a module-discovery front-end for hypothesis:0004-mhn-pathway-ordering.** The principled pipeline is: (1) discover mutually exclusive modules via PLPM (or WeSME / SELECT from t078) on per-histology driver gene sets; (2) order the modules with observation-event MHN (Vocht 2026 / Schill 2024); (3) annotate modules post hoc against Sanchez-Vega et al. [@SanchezVega2018] / hallmark gene sets. Assess whether PLPM modules or Sanchez-Vega pathway labels give more stable MHN-level ordering.
 - **Re-implement the ILP using an open-source solver** (OR-Tools or PuLP + CBC/SCIP) for a small proof-of-concept: apply to CRC from GENIE (matched to Wood et al. 8-gene set) and verify that APC → TP53/PIK3CA → KRAS is recovered — this doubles as a pipeline validation against known biology.
 - **Apply Theorem 2.3 to the project's cohort sizes.** Compute the theoretical sample-size lower bound m* for K ∈ {3, 5, 10} stages and n ∈ {14, 27, 50} driver genes at realistic noise rates (q ≈ 0.05) to confirm that per-histology GENIE cohort sizes (e.g., ~3,600 LUAD samples) satisfy identifiability requirements.
-- **Check q012 for update.** Add a note that the PLPM is relevant to the module-discovery sub-question raised in `discussion:0007-hallmark-ordering-and-data-driven-modules`: specifically, that it is a single-method alternative to the "t078 pairwise exclusivity → post hoc partition" approach, and that it lacks the observation-event correction required before deployment on diagnostic cohorts.
-- **Read Beerenwinkel 2007 (CBN)** for the continuous-time antecedent of both PLPM and MHN; and Caravagna 2016 (CAPRI / TRONCO) for the CAPRESE/CAPRI formulation that also jointly infers topology and selects a model from cross-sectional data — comparisons across these methods are part of the t132 literature search scope.
+- **Check question:0012-mutation-ordering-cross-sectional-inference for update.** Add a note that the PLPM is relevant to the module-discovery sub-question raised in `discussion:0007-hallmark-ordering-and-data-driven-modules`: specifically, that it is a single-method alternative to the "t078 pairwise exclusivity → post hoc partition" approach, and that it lacks the observation-event correction required before deployment on diagnostic cohorts.
+- **Read Beerenwinkel 2007 (CBN)** for the continuous-time antecedent of both PLPM and MHN; and Caravagna et al. [@Caravagna2016] for the CAPRESE/CAPRI formulation that also jointly infers topology and selects a model from cross-sectional data — comparisons across these methods are part of the t132 literature search scope.
 - **Consider runtime alternatives.** If exact ILP is too slow for the project's driver gene sets, the WeSME algorithm (weighted set-cover based mutual-exclusivity module discovery) or the PathoLogic relaxation of the PLPM are approximate polynomial alternatives that scale better; include in t132 scope.

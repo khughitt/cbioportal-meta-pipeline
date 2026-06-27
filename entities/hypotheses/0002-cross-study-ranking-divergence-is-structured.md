@@ -48,19 +48,19 @@ remaining confounder beyond length and trinucleotide context.
   ±5 positions for any reasonable N ≥ 25), in every well-powered cancer-type with ≥3
   contributing studies.
 - **P2 (replication, candidates).** For non-canonical / long-tail candidates (genes that
-  enter the top-100 of any scheme but are not in the Bailey 2018 driver list), leave-one-out
+  enter the top-100 of any scheme but are not in the Bailey et al. [@Bailey2018] driver list), leave-one-out
   rank stability is materially lower (<30% within ±5 positions) and the *direction* of
   rank change correlates with which study is held out (i.e. the candidate is study-specific,
   not study-replicated).
 - **P3 (divergence is structured).** The set difference (top-100_raw \ top-100_length-adj)
-  is enriched for long genes (>1500 aa) at the canonical Lawrence 2014 list (TTN, MUC16,
+  is enriched for long genes (>1500 aa) at the canonical Lawrence et al. [@Lawrence2014] list (TTN, MUC16,
   OBSCN, RYR2, LRP1B, USH2A, CSMD1/3, FAT1/4, …); the set difference (top-100_length-adj \
   top-100_raw) is enriched for short proteins (<200 aa) plus short canonical drivers (KRAS,
   TP53, RHOA, CDKN2A); the set difference (top-100_dNdScv \ top-100_raw) overlaps Bailey
-  2018 to a greater extent than either of the previous two. **Concrete pre-registered
+  et al. [@Bailey2018] to a greater extent than either of the previous two. **Concrete pre-registered
   expectation: Jaccard@100 (raw, length-adj) ≤ 0.10 — empirical PoC value 0.015.**
 - **P4 (residual confounder identification).** Genes that survive in the dNdScv top-100 but
-  are not in Bailey 2018 (TTN, AHNAK, AHNAK2, ABCA13 at full pan-cancer scale) are enriched
+  are not in Bailey et al. [@Bailey2018] (TTN, AHNAK, AHNAK2, ABCA13 at full pan-cancer scale) are enriched
   for late-replicating regions and common-fragile-site overlap, identifying replication
   timing and CFS instability as the dominant *remaining* gene-level confounders after
   length and trinucleotide correction.
@@ -78,16 +78,18 @@ remaining confounder beyond length and trinucleotide context.
 ## Current Uncertainty
 
 - Leave-one-study-out cross-validation has not yet been run on this project. The baseline
-  rank-stability numbers above are pre-registered expectations from PCAWG / Bailey 2018
+  rank-stability numbers above are pre-registered expectations from PCAWG / Bailey et al. [@Bailey2018]
   follow-on consensus stability literature and from the t131 PoC-vs-full-run shifts;
-  empirical numbers may differ. `q013` / `t149` is the required project-internal test before
+  empirical numbers may differ. `question:0013-cross-study-replication-rate` / `t149` is the required project-internal test before
   P1 or P2 should be cited as a result.
 - The "structured divergence" claim has been demonstrated for the raw-vs-length-adjusted
-  pair (Jaccard@100 = 0.015, q011 notebook) and partially for the dNdScv-vs-others pair
+  pair (Jaccard@100 = 0.015, `question:0011-gene-length-as-literature-attention-confounder`
+  notebook) and partially for the dNdScv-vs-others pair
   (t131); the three-way structured-divergence claim requires the t144/t145 fixes plus
-  external validation against IntOGen / Martincorena 2017 (`t146`).
+  external validation against IntOGen / Martincorena et al. [@Martincorena2017] (`t146`).
 - Replication timing as the dominant residual is a *prediction*, not a measurement; testing
-  it requires `q003`-style RT-stratified rate analysis on the full pan-cancer table.
+  it requires `question:0003-replication-timing-as-gene-level-mutation-rate-confounder`-style
+  RT-stratified rate analysis on the full pan-cancer table.
 
 ## Predictions
 
@@ -124,10 +126,10 @@ remaining confounder beyond length and trinucleotide context.
 - **Gene-length discussion empirical result (2026-04-24):** Spearman ρ(raw, length-adj) =
   0.372; Jaccard@100 = 0.015 against the PoC cohort. Direct support for P3 — the rankings
   are *almost disjoint* at the head, in a structured way.
-- **Lawrence 2014 (paper):** establishes the long-gene-passenger pattern as the canonical
+- **Lawrence et al. [@Lawrence2014]:** establishes the long-gene-passenger pattern as the canonical
   failure mode of raw-frequency ranking; identifies the same set (TTN, MUC16, OBSCN, RYR2,
   LRP1B) the project recovers.
-- **Bailey 2018 (paper):** 26-tool consensus driver list; serves as the validation oracle
+- **Bailey et al. [@Bailey2018]:** 26-tool consensus driver list; serves as the validation oracle
   with the documented circularity caveat (dNdScv was one of seven Bailey inputs).
 
 ## Disputing Evidence
@@ -149,7 +151,7 @@ remaining confounder beyond length and trinucleotide context.
   stability for both the canonical-driver set and the top-100-from-any-scheme candidate set.
   Bootstrap CIs. This is now tracked explicitly as `t149`.
 - **Decisive disputing test:** External rank-rank Spearman against IntOGen + Martincorena
-  2017 (`t146`); if our top-100 disagrees with both at ρ < 0.5, the project's aggregation
+  et al. [@Martincorena2017] (`t146`); if our top-100 disagrees with both at ρ < 0.5, the project's aggregation
   is producing a non-replicable ranking.
 - **Replication-timing residual test:** Per-gene RT-late status × dNdScv-residual-rank
   Spearman.
@@ -166,9 +168,10 @@ mechanism is recorded as **eliminated** (t163 null coefficient) and CFS as an **
 
 ## Related Work
 
-- **Questions subsumed/refined:** q013 (cross-study replication rate), q003 (replication
-  timing), q011 (length × literature) — all are sub-claims of the structured-divergence
-  picture.
+- **Questions subsumed/refined:** `question:0013-cross-study-replication-rate`,
+  `question:0003-replication-timing-as-gene-level-mutation-rate-confounder`, and
+  `question:0011-gene-length-as-literature-attention-confounder` — all are sub-claims of the
+  structured-divergence picture.
 - **Sibling hypotheses:** `h01` (the contamination axis — same residual genes, different
   causal explanation); `h03` (the literature-attention follow-on of the length axis).
 - **Methodological prerequisites:** `t141` (parallelize meta-analysis), `t144` (dNdScv

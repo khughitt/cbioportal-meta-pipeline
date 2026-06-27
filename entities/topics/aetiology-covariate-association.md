@@ -61,13 +61,13 @@ APOBEC→SBS2/13, MMR-deficiency→SBS6/15/26/44 — has been recovered by every
 to well-powered data, establishing it as a methodological positive-control benchmark. What remains
 contested is the best statistical architecture for agnostic discovery of novel aetiologies, how to
 handle tissue-of-origin as a master confounder, and how to adjudicate causality once an association
-is found. These questions are the direct antecedents of hypothesis h08.
+is found. These questions are the direct antecedents of hypothesis `h08`.
 
 ## Key Concepts
 
 **Signature exposure (H matrix).** Per-sample scalar assigned by NMF or restricted refitting
 quantifying "how much" of a given mutational process operated in that tumour. Distinct from the
-signature spectrum (W matrix), which captures "which process." Approaches to h08 treat H as the
+signature spectrum (W matrix), which captures "which process." Approaches to `h08` treat H as the
 outcome variable.
 
 **Textbook aetiology map.** A subset of COSMIC SBS signatures has robust, replicated aetiological
@@ -146,7 +146,7 @@ stop-gain burden in the expected gene set.
 signature determinants.** paper:Zito2025 showed that jointly fitting signature intensities with
 genomic-locus covariates recovers SBS1 with near-perfect cosine similarity via the methylation
 coefficient, and quantifies the replication-timing effect (late timing → +113% oxidative-damage
-SBS18 activity). This establishes that per-sample-level covariate associations (the target of h08)
+SBS18 activity). This establishes that per-sample-level covariate associations (the target of `h08`)
 operate on top of large genome-level modifiers that are signature-specific.
 
 ## Controversies & Open Questions
@@ -163,7 +163,7 @@ negligible; for correlated pairs (SBS3/SBS5, SBS2/SBS13) it may matter.]
 alone.** paper:Afsari2021 notes that obesity may accelerate cell division rather than directly
 cause DNA damage; paper:Adler2023 flags that APOBEC3A upregulation could be downstream of
 replication stress rather than upstream. paper:Rosales2017 and paper:Drummond2023 surface group
-differences but do not resolve direction. The expression↔signature edge in the h08 DAG has a
+differences but do not resolve direction. The expression↔signature edge in the `h08` DAG has a
 bidirected component (paper:Kim2016's clonality argument is the strongest counter-example, using
 temporal ordering of clonal expansion to argue ERCC2 loss precedes signature accumulation). No
 consensus method for causal adjudication from cross-sectional tumour data exists beyond mediation
@@ -189,15 +189,15 @@ paper:Park2023 and paper:Drummond2023 designs).
 paper:Rosales2017) assume WGS or WES. Per-sample signature assignment on targeted panels is
 unreliable below ~100 mutations per sample (paper:Park2023 raises heteroskedastic concerns at low
 count). The cBioPortal corpus is dominated by targeted panels; this is a material constraint for
-any direct h08 implementation on that substrate rather than on MC3.
+any direct `h08` implementation on that substrate rather than on MC3.
 
 **Germline vs. somatic covariate space.** paper:ValiPour2022 showed that germline rare pLoF
-variants in 42 genes explain a detectable fraction of somatic signature variance. h08's agnostic
+variants in 42 genes explain a detectable fraction of somatic signature variance. `h08`'s agnostic
 scan targets somatic and clinical covariates rather than germline; the germline signal constitutes
 a background that should be treated as a confounder or stratification variable if ancestry and
 germline sequencing are available.
 
-## Implications for h08 and the Cross-Study Signature-Aetiology Aggregation
+## Implications for `h08` and the Cross-Study Signature-Aetiology Aggregation
 
 **The textbook-map recovery is well-precedented and confirmatory, not novel.** TCSM
 (paper:Robinson2019) already demonstrates recovery of UV/smoking/APOBEC/MMR by an agnostic
@@ -212,8 +212,8 @@ gating framework itself.
 **Design consequence — within-tissue stratification is non-negotiable.** paper:Robinson2019 showed
 cancer type absorbs smoking/UV signal if used as the sole covariate; paper:Afsari2021 showed
 tissue-specific signature spectra; paper:Kim2016 showed tobacco→SBS5 (not SBS4) in bladder. Any
-h08 association run without within-tissue conditioning will conflate tissue-of-origin with genuine
-covariate effects. The method:h08-agnostic-association-model adjustment set is correct.
+`h08` association run without within-tissue conditioning will conflate tissue-of-origin with genuine
+covariate effects. The `method:h08-agnostic-association-model` adjustment set is correct.
 
 **The Diffsig Dirichlet-multinomial architecture (paper:Park2023) is the best current answer to
 low-count uncertainty.** For panel-sequenced samples with few mutations per patient, naive NNLS
@@ -231,7 +231,7 @@ direct feasibility check before committing to a heavier Diffsig or TCSM-style mo
 
 **SBS54 should enter the MMR/MSI positive-control set.** paper:Ji2023 showed SBS54 outperforms
 all seven established dMMR signatures at discriminating MSI from MSS colorectal and gastric cancer
-(FDR 1.1×10⁻¹⁶). If SBS54 is absent from the restricted SigProfiler assignment used in the h08
+(FDR 1.1×10⁻¹⁶). If SBS54 is absent from the restricted SigProfiler assignment used in the `h08`
 positive-control run, the MSI arm could miss; it should be added to the active-signature
 denominator for the MSI stratum.
 
@@ -246,9 +246,9 @@ signatures where the trinucleotide preference intersects stop-codon codons (SBS4
 a confirmed covariate→signature association should be accompanied by elevated stop-gain burden in
 the signature-implicated driver genes (TP53, FAT1, APC). This is an orthogonal cross-check that
 does not depend on signature decomposition at all and is directly computable from the pipeline's
-existing per-gene mutation-frequency tables via the Bailey 2018 driver overlay.
+existing per-gene mutation-frequency tables via the Bailey et al. [@Bailey2018] driver overlay.
 
-**The PPF genomic-covariate framework (paper:Zito2025) is the locus-level analogue of h08** but
+**The PPF genomic-covariate framework (paper:Zito2025) is the locus-level analogue of `h08`** but
 requires WGS with positional information — not available at cBioPortal panel scale. Its key
 practical lesson is that apparent covariate effects (e.g., replication timing→signature) can be
 estimated as confounders: any per-tissue association between a clinical covariate and signature H
@@ -261,7 +261,7 @@ logic.** paper:ValiPour2022 showed that PPI-network modules of germline repair g
 signature components, not just single genes. The analogous somatic claim is that expression
 modules of HR, MMR, or APOBEC-pathway genes should predict respective signature exposures as
 composite features, with higher power and robustness than any single mRNA. This is the mechanistic
-rationale for the NMF module design in the h08 pre-registration.
+rationale for the NMF module design in the `h08` pre-registration.
 
 **Reverse causation must be addressed per-hit.** Every paper in this topic that reports an
 expression→signature association acknowledges the possibility that signature accumulation reshapes

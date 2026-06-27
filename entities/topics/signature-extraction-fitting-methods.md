@@ -46,10 +46,10 @@ related:
 Mutational-signature analysis decomposes a tumour's somatic mutation catalogue into contributions
 from distinct biological or technical mutagenic processes. Two complementary tasks exist: de novo
 *extraction* (discovering signatures from data) and *fitting* / *assignment* (measuring per-sample
-exposures to a known catalogue). For h08 — the agnostic within-tissue covariate ↔
+exposures to a known catalogue). For `h08` — the agnostic within-tissue covariate ↔
 signature-exposure association — the per-sample exposure matrix H is the outcome variable of
 every association test. The quality, calibration, and biological specificity of H therefore
-determine whether h08 can recover known aetiologies (UV/SBS7, smoking/SBS4, APOBEC/SBS2-13,
+determine whether `h08` can recover known aetiologies (UV/SBS7, smoking/SBS4, APOBEC/SBS2-13,
 MMR/MSI) as positive controls and surface novel covariate links. This topic synthesises the
 methodological state of the art, the settled questions, the active tensions, and the concrete
 implications for the cbioportal cross-study pipeline.
@@ -62,7 +62,7 @@ implications for the cbioportal cross-study pipeline.
 (samples × 96-channel SBS contexts) as M ≈ W H, where W (signatures × contexts) and H
 (samples × exposures) are non-negative. For fitting, W is fixed at the COSMIC catalogue; for
 de novo extraction, both W and H are learned. The resulting H column for each sample is the
-per-sample exposure vector used as h08's outcome.
+per-sample exposure vector used as `h08`'s outcome.
 
 **The COSMIC catalogue.** COSMIC SBS v3.x (60 non-artefactual signatures in v3.3; 79 total)
 is the dominant reference. Individual signatures range from spiky and distinctive (SBS7a/UV,
@@ -78,14 +78,14 @@ as low as 0.15–0.34 (vs 0.90+ for SBS2/SBS13 and SBS1). paper:Medo2024 shows t
 error scales with Shannon equitability index. paper:Lee2023a and paper:Battuello2024 both find
 flat signatures (SBS5/SBS40) cannot be reliably separated by targeted panels. paper:Pancotti2023
 traces this to the COSMIC signature geometry: near-uniform profiles lie at the centre of the
-simplex, making them co-linear with any mixture. The h08 association scan must treat associations
+simplex, making them co-linear with any mixture. The `h08` association scan must treat associations
 with SBS5/SBS3/SBS40 as requiring additional validation.
 
 ---
 
 ## Established Consensus
 
-### Causal ground truth for the h08 positive controls
+### Causal ground truth for the `h08` positive controls
 
 paper:Zou2018 provides isogenic CRISPR-Cas9 causal validation: MSH6 knockout reproduces COSMIC
 Signature 20 (MMR-deficiency); EXO1 loss generates signatures resembling SBS3 (HR deficiency)
@@ -95,7 +95,7 @@ normal epithelium is not hypermutated — MMR-deficiency-associated SBSs (SBS20,
 SBS44) and indels (ID1/ID2/ID7) appear only after second-hit LOH and clonal expansion, providing
 ground truth for the MMR positive control. paper:Steele2022 (Alexandrov lab review) maps the
 canonical aetiological links: UV → SBS7, smoking → SBS4, APOBEC3A/B → SBS2/SBS13, MMR-loss →
-SBS6/15/26, POLE proofreading mutations → SBS10a/b. These ground truths are the targets h08
+SBS6/15/26, POLE proofreading mutations → SBS10a/b. These ground truths are the targets `h08`
 must recover before trusting novel associations.
 
 Key caution from paper:Zou2018: POLE *loss* does not reproduce SBS10; the tumour signature
@@ -116,7 +116,7 @@ de novo signatures that masquerade as biological discoveries.
 
 A minimum mutation burden of ~383 SBSs is required for stable WES SBS-96 profiles (paper:Jiang2025a),
 consistent with the 64–323 mutation threshold from paper:Battuello2024. Both converge on the same
-practical filter: low-burden samples should be excluded from signature decomposition before h08
+practical filter: low-burden samples should be excluded from signature decomposition before `h08`
 covariate association.
 
 ### SigProfilerExtractor is the strongest de novo extraction tool
@@ -167,10 +167,10 @@ associations in h08b.
 
 ### Multi-study Bayesian frameworks match the pipeline's cross-study structure
 
-paper:DeVito2025 reviews Grabski 2025 (Multi-Study NMF) and Hansen 2025 (BaP Multi-NMF), which
-jointly model S study-specific count matrices with a shared signature matrix and study-specific
-binary inclusion indicators. BaP Multi-NMF's probit model directly incorporates sample-level
-covariates into the exposure estimation, making it the closest published analog to h08's
+De Vito et al. [@DeVito2025] review Multi-Study NMF and BaP Multi-NMF frameworks, which jointly
+model S study-specific count matrices with a shared signature matrix and study-specific binary
+inclusion indicators. BaP Multi-NMF's probit model directly incorporates sample-level
+covariates into the exposure estimation, making it the closest published analog to `h08`'s
 covariate-association design. The cbioportal pipeline's per-study MAF structure maps directly
 onto these models' study-specific data structure.
 
@@ -231,11 +231,11 @@ right tool.
 paper:Buscaroli2026 (BASCULE) clusters patients jointly on SBS+DBS+ID exposure tensors (Dirichlet
 Process) and shows DBS-resolved sub-clusters invisible to SBS alone. paper:VazquezGarcia2022
 shows structural-variation mutational subtypes (HRD-Dup vs. FBI) predict TME immune programmes.
-Both advocate a cluster-based integrative approach that differs from h08's regression-based
-association design. The regression approach (h08; sigDriver from paper:Wong2022) is better suited
+Both advocate a cluster-based integrative approach that differs from `h08`'s regression-based
+association design. The regression approach (`h08`; sigDriver from paper:Wong2022) is better suited
 to continuous covariates and multiple testing correction across hundreds of covariates; the
 clustering approach is better suited to discovery of subtype structure. These are complementary
-rather than competing, but for h08 specifically the regression architecture is the correct choice.
+rather than competing, but for `h08` specifically the regression architecture is the correct choice.
 
 ---
 
@@ -290,7 +290,7 @@ rather than competing, but for h08 specifically the regression architecture is t
   benchmarked against SigProfilerExtractor on real cross-study aggregated data.
 
 - Extended signature channels (DBS, ID, CN, SV) beyond SBS-96 are supported by only a subset
-  of tools (SigProfilerExtractor, SignatureAnalyzer, BASCULE). For the h08 pipeline, DBS and
+  of tools (SigProfilerExtractor, SignatureAnalyzer, BASCULE). For the `h08` pipeline, DBS and
   ID signatures are potentially informative (paper:Buscaroli2026 shows DBS resolves sub-clusters;
   paper:Jin2024 proposes 9 new ID signatures) but require per-sample indel counts that are
   variable across studies.
@@ -305,9 +305,9 @@ rather than competing, but for h08 specifically the regression architecture is t
 
 ---
 
-## Implications for h08 and the Cross-Study Signature-Aetiology Aggregation
+## Implications for `h08` and the Cross-Study Signature-Aetiology Aggregation
 
-### Upstream prerequisites before running h08
+### Upstream prerequisites before running `h08`
 
 **Variant-calling provenance audit.** Per paper:Jiang2025a, per-study caller information should
 be extracted and single-caller studies flagged as higher-risk for artifactual de novo signatures.
@@ -317,7 +317,7 @@ generate spurious covariate hits.
 
 **Minimum mutation count filter.** Per paper:Jiang2025a and paper:Battuello2024, exclude
 per-sample profiles with <383 SBSs (WES) or implement the matched-normal-adjusted threshold
-(64 mutations minimum when matched). This should be an explicit filter in the h08 signature
+(64 mutations minimum when matched). This should be an explicit filter in the `h08` signature
 decomposition step, separate from the existing hypermutator annotation.
 
 **Hypermutator exclusion.** The planned hypermutator annotation pipeline (t081/t092-t099)
@@ -327,7 +327,7 @@ paper:Lee2023a (separate hypermutated subset in SATS). POLE samples require sepa
 paper:Zou2018 establishes that POLE loss ≠ SBS10; only POLE hotspot mutations drive the
 ultra-hypermutator signature.
 
-### Tool choice for the h08 fitting step (q018)
+### Tool choice for the `h08` fitting step (`q018`)
 
 The literature supports a mutation-count-stratified approach:
 - **Panel studies (<500 mutations/sample):** SigProfilerSingleSample with full COSMICv3;
@@ -360,7 +360,7 @@ systematic over-assignment and low cross-tool concordance (paper:Wu2023; paper:J
 is a target, require Ensemble-Unanimous calling or use CHORD's raw-context classifier
 (paper:Nguyen2020) instead of NNLS-fitted SBS3.
 
-### De novo extraction (q019): feasibility conditions
+### De novo extraction (`q019`): feasibility conditions
 
 De novo extraction on the aggregated cross-study cohort is feasible only under these conditions
 (paper:Islam2022; paper:Pancotti2023):
@@ -369,7 +369,7 @@ De novo extraction on the aggregated cross-study cohort is feasible only under t
 - Consensus variant calling across contributing studies; single-caller contamination will inject
   artifactual de novo signatures (paper:Jiang2025a).
 - Within-tissue (per-cancer-type) extraction, not pan-cancer pooling, to avoid tissue collinearity
-  confounding h08's within-tissue conditioning requirement.
+  confounding `h08`'s within-tissue conditioning requirement.
 
 Simultaneous catalogue-aware + de novo methods (ReDeNovo: paper:Kesimoglu2026; BASCULE:
 paper:Buscaroli2026) offer an advantage: they prevent de novo signatures from being spurious
@@ -387,7 +387,7 @@ analogous, with study provenance substituting for geography.
 paper:Wong2022 (sigDriver) demonstrates that kernel regression of per-sample signature exposures
 against a structured predictor (genomic hotspot presence) surfaces both positive and negative
 associations (PIK3CA E542K/E545K positively APOBEC-associated; PIK3CA H1047R negatively
-SBS39-associated). The regression architecture is a direct template for h08's covariate
+SBS39-associated). The regression architecture is a direct template for `h08`'s covariate
 association layer.
 
 Out-of-catalogue signal is the biggest driver of false positive h08b discoveries: if an active
@@ -407,7 +407,7 @@ whether the attributed signature's profile shifts in the direction of the putati
   paper:Zhang2026a).
 
 - **Artefact signatures (SBS27/43/45–60 COSMIC artefact set):** should be excluded from the
-  COSMIC reference before h08 fitting (paper:Wan2022; paper:Jiang2025a).
+  COSMIC reference before `h08` fitting (paper:Wan2022; paper:Jiang2025a).
 
 - **Treatment-induced signatures (SBS11/temozolomide, SBS31+35/platinum, SBS87/thiopurine,
   SBS32/azathioprine):** paper:Lee2022 shows SBS35 appears in all intestinal crypts of a FOLFOX-
@@ -418,7 +418,7 @@ whether the attributed signature's profile shifts in the direction of the putati
 - **Hypomethylation is not a SBS process:** paper:Besselink2023 demonstrates that global DNA
   hypomethylation at cancer-equivalent levels does not increase SBS burden or enrich any COSMIC
   signature, including MMR-related ones. Any covariate association with a DNMT-expression module
-  in h08 would not reflect a direct mutagenic effect of methylation loss; causal reinterpretation
+  in `h08` would not reflect a direct mutagenic effect of methylation loss; causal reinterpretation
   would be required. The primary consequence of hypomethylation is chromosomal instability —
   relevant to the pipeline's CIN annotation but not to SBS exposures.
 
@@ -428,7 +428,7 @@ paper:VazquezGarcia2022 shows that structural-variation mutational subtypes (HRD
 predict distinct TME immune programmes (JAK-STAT vs TGFβ) — connecting mutational processes
 to expression modules via a pathway orthogonal to SBS signatures. paper:Buscaroli2026 shows
 joint SBS+DBS clustering resolves sub-types invisible to SBS alone. These results motivate
-extending the h08 exposure matrix H to include DBS, ID, and structural rearrangement signatures
+extending the `h08` exposure matrix H to include DBS, ID, and structural rearrangement signatures
 as additional outcome variables if the per-study mutation calls support them. The DBS channel is
 most informative for studies with WGS; ID signatures require reliable indel calling.
 
@@ -448,7 +448,7 @@ most informative for studies with WGS; ID signatures require reliable indel call
 | Bayesian posterior uncertainty | bayesNMF or BASCULE | R/Python; not yet in pipeline |
 | Multi-study joint extraction | Grabski/Hansen models | R; cross-study sharing structure |
 | Raw-context HRD detection | CHORD | No signature fitting needed |
-| Signature–covariate association | sigDriver / direct regression | Template for h08 association layer |
+| Signature–covariate association | sigDriver / direct regression | Template for `h08` association layer |
 | Phylogeny-aware per-branch refitting | PhyloSignare | NSCLC-validated; not applicable without clone trees |
 
 All tools operate on per-sample or per-cohort SBS-96 matrices. The pipeline must generate

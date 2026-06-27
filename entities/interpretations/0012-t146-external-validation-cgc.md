@@ -26,17 +26,17 @@ prior_interpretations:
 
 ## Question
 
-Task t146 asks whether the post-fix pan-cancer dNdScv ranking (interpretation:0010-t144-tiebreaker-fix-rerun) recovers external curated driver lists at a rate above chance, addressing the Bailey-circularity caveat (Bailey 2018 was used to build the project's primary driver overlay, so reporting Bailey recovery as the headline external-validation number is partially circular).
+Task t146 asks whether the post-fix pan-cancer dNdScv ranking (interpretation:0010-t144-tiebreaker-fix-rerun) recovers external curated driver lists at a rate above chance, addressing the Bailey-circularity caveat (Bailey et al. [@Bailey2018] was used to build the project's primary driver overlay, so reporting Bailey recovery as the headline external-validation number is partially circular).
 
 ## Method
 
 `code/scripts/validate_dndscv_external.py` ranks pooled dNdScv genes by `min_qglobal` ascending, breaking ties by `n_cancers_significant_q05` descending (t144 tiebreaker). For K ∈ {10, 25, 50, 100, 250, 500}, computes recovery@K, Jaccard@K, and a one-sided Fisher exact odds-ratio enrichment versus three reference lists already shipped in the annotated feather:
 
-- **Bailey 2018**: `bailey2018_driver` column (199 of 20,091 ranked-universe genes; 1.0%).
+- **Bailey et al. [@Bailey2018]**: `bailey2018_driver` column (199 of 20,091 ranked-universe genes; 1.0%).
 - **CGC tier 1**: `cgc_tier_1` column (566 / 20,091; 2.8%).
 - **CGC tier 1 or 2**: union (727 / 20,091; 3.6%).
 
-CGC is curated independently of Bailey 2018 (different inclusion criteria, ongoing curation), so CGC recovery is a partially-independent external check. Universe is the dNdScv-tested gene set (`dndscv_pooled.feather`, 20,091 genes).
+CGC is curated independently of Bailey et al. [@Bailey2018] (different inclusion criteria, ongoing curation), so CGC recovery is a partially-independent external check. Universe is the dNdScv-tested gene set (`dndscv_pooled.feather`, 20,091 genes).
 
 Outputs at `/data/packages/cbioportal/pan-cancer/summary/external-validation/dndscv_external_validation.feather`.
 
@@ -55,11 +55,11 @@ Outputs at `/data/packages/cbioportal/pan-cancer/summary/external-validation/dnd
 
 All Fisher one-sided p-values < 1e-300 (numerically zero). The top-25 recovers 92% of CGC tier-1 (23/25) and 84% of Bailey (21/25). The top-100 recovers 88% of CGC tier-1 (88/100) — a 299-fold enrichment over chance.
 
-This is a **strong positive result for h02 P3** (canonical drivers occupy the dNdScv top): the post-fix ranking delivers the canonical-driver core that h02 predicts, against an external list (CGC) that is largely independent of the project's Bailey 2018 overlay.
+This is a **strong positive result for `hypothesis:0002-cross-study-ranking-divergence-is-structured` P3** (canonical drivers occupy the dNdScv top): the post-fix ranking delivers the canonical-driver core that `hypothesis:0002-cross-study-ranking-divergence-is-structured` predicts, against an external list (CGC) that is largely independent of the project's Bailey et al. [@Bailey2018] overlay.
 
 ### F2 — Bailey vs CGC gap at K=100 is biologically expected
 
-CGC tier-1 recovery (88%) materially exceeds Bailey recovery (61%) at K=100. Bailey 2018 is a tighter consensus list (199 genes); CGC tier-1 is broader (566 genes). The gap reflects Bailey's higher specificity rather than a project-internal anomaly: the dNdScv top-100 includes ~27 CGC-tier-1 genes that did not make Bailey's pan-cancer driver consensus (e.g. lower-frequency drivers and non-significant-in-Bailey-but-curated-in-CGC genes such as KMT2C, ZFHX3, NSD1).
+CGC tier-1 recovery (88%) materially exceeds Bailey recovery (61%) at K=100. Bailey et al. [@Bailey2018] is a tighter consensus list (199 genes); CGC tier-1 is broader (566 genes). The gap reflects Bailey's higher specificity rather than a project-internal anomaly: the dNdScv top-100 includes ~27 CGC-tier-1 genes that did not make Bailey's pan-cancer driver consensus (e.g. lower-frequency drivers and non-significant-in-Bailey-but-curated-in-CGC genes such as KMT2C, ZFHX3, NSD1).
 
 ### F3 — recovery decays past K=100 as expected
 
@@ -71,19 +71,19 @@ CGC tier-1+2 union (727 genes) gives K=100 recovery of 90% vs 88% for tier-1 alo
 
 ## Verdict
 
-**Partial supportive** for h02. The dNdScv post-fix top-25 to top-100 recovers canonical drivers at a strongly above-chance rate against an external (CGC) list. The Bailey-circularity caveat is materially addressed: even on a list curated independently of Bailey 2018, recovery is 88-92% at K=25-100.
+**Partial supportive** for `hypothesis:0002-cross-study-ranking-divergence-is-structured`. The dNdScv post-fix top-25 to top-100 recovers canonical drivers at a strongly above-chance rate against an external (CGC) list. The Bailey-circularity caveat is materially addressed: even on a list curated independently of Bailey et al. [@Bailey2018], recovery is 88-92% at K=25-100.
 
-The full t146 pass — IntOGen 2024 (independently constructed from a different cohort union with a different ensemble of methods) plus Martincorena 2017 (the dNdScv method paper's own driver list) — remains blocked on dataset acquisition (`task:t171`).
+The full t146 pass — IntOGen 2024 (independently constructed from a different cohort union with a different ensemble of methods) plus Martincorena et al. [@Martincorena2017] (the dNdScv method paper's own driver list) — remains blocked on dataset acquisition (`task:t171`).
 
 ## Caveats
 
 - **CGC is not fully independent of dNdScv**: dNdScv signals are part of the evidence base CGC curators consider. So CGC enrichment is a partial-independence check, stronger than Bailey-only but weaker than IntOGen 2024 will be once available.
-- **Pan-cancer aggregator confound**: this validation uses `min_qglobal` ranking, which inherits the q=0 floor pile-up at K=100+ that motivates `task:t155` and the candidate hypothesis h08. The K=10 / K=25 numbers are therefore the most aggregator-robust; the K=500 numbers absorb aggregator-choice variance and should be treated as suggestive only.
+- **Pan-cancer aggregator confound**: this validation uses `min_qglobal` ranking, which inherits the q=0 floor pile-up at K=100+ that motivates `task:t155` and the candidate `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`. The K=10 / K=25 numbers are therefore the most aggregator-robust; the K=500 numbers absorb aggregator-choice variance and should be treated as suggestive only.
 - **The Fisher p-values are uninterpretable beyond "extremely significant"**: when a 100-element set drawn from 20,091 contains 88 from a 566-gene reference list, the chance baseline is so small that any reasonable test gives p ≈ 0. Use the odds ratio as the effect-size measure, not the p-value.
 
 ## Follow-up
 
-- Re-run this script after `task:t171` lands IntOGen 2024 + Martincorena 2017 lists.
+- Re-run this script after `task:t171` lands IntOGen 2024 + Martincorena et al. [@Martincorena2017] lists.
 - The K=10 result (8 of 10 in CGC tier-1; 8 of 10 in Bailey) is striking enough to be worth a one-line per-gene listing (which two of the top-10 are NOT canonical drivers, and why).
 - Re-run after `task:t155` (aggregator comparison) settles the q=0 ranking method.
 

@@ -76,14 +76,14 @@ The central identifiability issue: given a set of tumors with mutation sets
 
 1. **Occurrence order within a tumor (clonal vs subclonal).** Requires VAF/CCF. Higher
    CCF → earlier, in a single tumor. This *is* directly temporal, and is the dominant
-   signal used by PCAWG (Gerstung 2020, *Nature* 578:122) to reconstruct pan-cancer
+   signal used by PCAWG (Gerstung 2020 [@Gerstung2020], *Nature* 578:122) to reconstruct pan-cancer
    chronologies. But it depends on retaining allele counts and correcting for purity/CNA.
 2. **Population-level progression order.** If a lineage must acquire A *before* B to
    reach a fit cancerous state, then tumors with only A should be more frequent than
    tumors with only B. This is the assumption behind **Conjunctive Bayesian Networks**
    (Beerenwinkel 2007), **oncogenetic trees** (Desper 1999), **CAPRI / TRONCO**
-   (Caravagna 2016 *PLoS Comput Biol*), and **Mutual Hazard Networks** (MHN — Schill
-   2020 *Bioinformatics*). These methods infer directed edges from *only* binary
+   (Caravagna 2016 [@Caravagna2016]), and **Mutual Hazard Networks** (MHN; see the
+   observation-bias extension in Schill 2024 [@Schill2024]). These methods infer directed edges from *only* binary
    presence/absence data across a cohort.
 3. **Ordering along subclonal trees.** Requires multi-region or single-cell data.
    Not available in cBioPortal.
@@ -137,7 +137,7 @@ win even if an ordering method works:
   consistent with repair-first. `t081` will flag these as hypermutators.
 - **Contradicting for TP53 specifically.** TP53, the poster-child repair/checkpoint
   gene, is often a **late** clonal-expansion event in many solid tumors (breast,
-  CLL, MDS, pancreatic progression from IPMN). PCAWG (Gerstung 2020) puts TP53
+	  CLL, MDS, pancreatic progression from IPMN). PCAWG (Gerstung 2020 [@Gerstung2020]) puts TP53
   among the *late* pan-cancer events on average, with APC, KRAS, and several
   chromatin remodelers ranked earlier. So "repair gene → immune-evasion gene"
   collapses if "repair" includes TP53: TP53 is not usually mechanistically acting
@@ -150,7 +150,7 @@ win even if an ordering method works:
   (mismatch repair / HR / NER / BER / polymerase proofreading / checkpoint /
   damage sensing). Expect MMR / POLE / POLD1 to precede most things in their
   cancer types; expect TP53 to follow APC in CRC, follow HER2 amp in breast, etc.
-  This is also what Sanchez-Vega 2018 pathway framing (already in the project —
+	  This is also what Sanchez-Vega 2018 [@SanchezVega2018] pathway framing (already in the project —
   `process_sanchez_vega_pathways.py`) supports.
 
 ### Path dependency / canalization
@@ -194,18 +194,18 @@ To answer each sub-question:
 
 | Priority | Action | Why now | Dependencies |
 |---|---|---|---|
-| P2 | New literature search: **temporal / ordering methods for bulk cross-sectional cancer data** — MHN (Schill 2020), CBN (Beerenwinkel 2007), CAPRI/TRONCO (Caravagna 2016), REVOLVER (Caravagna 2018), HINTRA, PMCE, SCITE-as-context, PCAWG chronology (Gerstung 2020 *Nature* 578:122). Deliverable: `doc/searches/YYYY-MM-DD-mutation-ordering-methods.md` with method × assumption table and recommendation. | Decides whether this is a method-selection exercise or a novel-methods exercise. Likely the former (MHN is a strong fit). | none |
+| P2 | New literature search: **temporal / ordering methods for bulk cross-sectional cancer data** — MHN (Schill 2024 [@Schill2024]), CBN (Beerenwinkel 2007), CAPRI/TRONCO (Caravagna 2016 [@Caravagna2016]), REVOLVER (Caravagna 2018 [@Caravagna2018]), HINTRA, PMCE, SCITE-as-context, PCAWG chronology (Gerstung 2020 [@Gerstung2020], *Nature* 578:122). Deliverable: `doc/searches/YYYY-MM-DD-mutation-ordering-methods.md` with method × assumption table and recommendation. | Decides whether this is a method-selection exercise or a novel-methods exercise. Likely the former (MHN is a strong fit). | none |
 | P2 | New question file: `q012-mutation-ordering-cross-sectional-inference.md` — restate the four sub-questions as a project question with required evidence and stop-rule (per template). | Canonicalises the discussion into a tracked question so it can be prioritised against the other open questions. | none |
 | P2 | Feasibility spike: audit what fraction of the current studies retain VAF (`tumor_f` / `t_alt_count`+`t_ref_count`) in their MAFs *before* `convert_to_feather.py` drops them. One-afternoon task: read each MAF header, tally. Output: `doc/audits/YYYY-MM-DD-vaf-availability-audit.md`. | Hard gate on the whole workstream. If <50% of studies carry VAF, clonal-ordering is off the table and we are restricted to CBN/MHN-style population-level inference. | none |
 | P3 | Pipeline addition: extend `convert_to_feather.py` to retain `t_alt_count`, `t_ref_count`, and precomputed `tumor_f`/VAF per variant in a new `studies/{id}/mut/variants.feather` (or columns on the existing variant-level feather). Required for any clonality-based ordering work and cheap to add. | Unblocks both this line of work and any future CCF / signature-per-sample / driver-evolution analyses. | VAF-availability audit above |
-| P3 | If `t078` is implemented first, follow with an MHN fit per histology using exactly the same sample-specific-background-rate null that DISCOVER uses. Compare recovered edges to Gerstung 2020 pan-cancer chronology Table 1 as a calibration test. | Shares infrastructure with `t078`; the only new code is the CTMC fit. Produces *directed* companion to co-occurrence results. | `t078` (co-occurrence pipeline), VAF retention optional |
+| P3 | If `t078` is implemented first, follow with an MHN fit per histology using exactly the same sample-specific-background-rate null that DISCOVER uses. Compare recovered edges to Gerstung 2020 [@Gerstung2020] pan-cancer chronology Table 1 as a calibration test. | Shares infrastructure with `t078`; the only new code is the CTMC fit. Produces *directed* companion to co-occurrence results. | `t078` (co-occurrence pipeline), VAF retention optional |
 | P3 | Pathway-level ordering as the **primary** reporting granularity (Sanchez-Vega 10-pathway groups), with per-gene ordering as a secondary drill-down. Explicit stratification by hypermutator / signature class from `t081` / `t111`. | Answers the user's biology question in a form that is interpretable and powered. Mitigates the "TP53 is not really a repair gene" failure mode. | pathway annotations (already in project), `t081`, `t111` |
 | P4 | Defer longer-than-triple chains until calibration on pairs + triples is done. | Power drops steeply; no point chasing long chains before pair-level is validated. | pair / triple results |
 
 ## Synthesis
 
 The question is scientifically real and has a dedicated methods literature that already
-addresses it — **Mutual Hazard Networks (Schill 2020)** is essentially the method
+addresses it — **Mutual Hazard Networks (see Schill 2024 [@Schill2024])** is essentially the method
 designed for what the user wants to do, using exactly the data we have (cross-sectional
 binary mutation calls). This is a method-selection exercise, not a novel-methods
 exercise.
@@ -234,6 +234,6 @@ However, three things are true simultaneously:
 it is, add an MHN fit on the same samples × same genes × same callability mask as
 `t078`, stratified per histology and per hypermutator class, reported primarily at
 Sanchez-Vega pathway level with gene-level as a drill-down. Calibrate against PCAWG
-(Gerstung 2020) chronology before reporting anything novel. Start by filing `q012` and
+(Gerstung 2020 [@Gerstung2020]) chronology before reporting anything novel. Start by filing `q012` and
 running the VAF-availability audit so we know which regime (clonality-aware vs
 population-only) is even available to us.

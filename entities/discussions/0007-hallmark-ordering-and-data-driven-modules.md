@@ -31,7 +31,8 @@ mode: standard
 ## Focus
 
 Two linked questions, raised as a coarser-grain extension of the gene/pathway ordering
-work (`question:0012`, `hypothesis:0004`):
+work (`question:0012-mutation-ordering-cross-sectional-inference`,
+`hypothesis:0004-mhn-pathway-ordering`):
 
 1. **Is there a preferred ordering among the *hallmarks* of cancer?** I.e. do the gene/
    pathway sets associated with each hallmark tend to be acquired in a characteristic
@@ -78,7 +79,8 @@ Sanchez-Vega pathway grain: **intrinsic genome-instability / mutator events prec
 lineage drivers, which precede checkpoint / late events.** Genome-instability-first is
 also consistent with its 2011-update status as an *enabling characteristic* rather than a
 core hallmark. → The temporal-evolution paper is therefore best treated as an **external
-calibration target / prior art** for h04, not a separate workstream.
+calibration target / prior art** for `hypothesis:0004-mhn-pathway-ordering`, not a separate
+workstream.
 
 For the **label-free module question**, the relevant methods literature already exists:
 
@@ -147,7 +149,8 @@ perturb the module), while **across modules they co-occur**. So:
    mutually-exclusive module assembly, or clustering over the signed association graph. Only
    the *output* of that step is the set of data-driven "hallmark-like" modules. Keep the two
    layers separate: association substrate (`t078`) ≠ module inference (added).
-2. **Order the modules** with the same per-histology MHN fit as `h04` (observation-event
+2. **Order the modules** with the same per-histology MHN fit as
+   `hypothesis:0004-mhn-pathway-ordering` (observation-event
    MHN, `paper:Vocht2026` / `paper:Schill2024`).
 3. **Annotate post hoc** — enrich each data-driven module against curated hallmark / CHG /
    `paper:Iorio2018SLAPenrich` pathway sets — to ask the user's real question: **do the
@@ -155,10 +158,11 @@ perturb the module), while **across modules they co-occur**. So:
    This is the direct, data-first answer to the "don't over-constrain on the magic discrete
    set" caveat: the human labels become a *validation overlay*, not an input.
 
-### Same confounders as h04/q012, only more severe
+### Same confounders as the pathway-ordering hypothesis and ordering question, only more severe
 
 Hallmark/module ordering is a higher-moment statistic than frequency, so **every confounder
-already catalogued for `q012` / `h04` applies, harder**: cross-sectional
+already catalogued for `question:0012-mutation-ordering-cross-sectional-inference` /
+`hypothesis:0004-mhn-pathway-ordering` applies, harder**: cross-sectional
 under-identification (`P(A)>P(B)∧P(A,B)` is consistent with both order *and* pure fitness
 asymmetry); diagnostic-cohort collider bias (`paper:Schill2024`); clonal-hematopoiesis and
 normal-tissue contamination inflating apparent-early events (`topic:clonal-hematopoiesis-
@@ -169,11 +173,11 @@ heterogeneity) but does not remove these.
 
 ## Relationship to existing entities
 
-- **Coarser-grain sibling of `h04`.** Recommend implementing hallmark ordering as (a) an
-  aggregation/relabeling layer over h04's per-histology pathway-MHN using a hallmark
+- **Coarser-grain sibling of `hypothesis:0004-mhn-pathway-ordering`.** Recommend implementing hallmark ordering as (a) an
+  aggregation/relabeling layer over the pathway hypothesis's per-histology pathway-MHN using a hallmark
   grouping, reported **alongside** (b) a data-driven module grouping that *tests whether the
   hallmark partition is even the right one*. Not a parallel pipeline.
-- **`q012`** is the inference-feasibility question; this discussion is the
+- **`question:0012-mutation-ordering-cross-sectional-inference`** is the inference-feasibility question; this discussion is the
   hallmark-grain + label-free-module framing of the same machinery.
 - **`t078` / `t137`**, once production-wired — `t137` ("t078 SELECT pipeline integration
   wiring") still needs the production prerequisites (`gene_sample_long.feather`,
@@ -195,21 +199,23 @@ heterogeneity) but does not remove these.
 | Priority | Action | Why | Dependencies |
 |---|---|---|---|
 | ✅ done 2026-06-07 | Summarized all five into `doc/papers/`: `paper:Gourmet2024`, `paper:RaphaelVandin2015`, `paper:Iorio2018SLAPenrich`, `paper:Deshpande2026`, `paper:Wang2025a`. | Establishes prior art + calibration target; some are method blueprints. | — |
-| P3 | Add a candidate hypothesis (sibling to h04) framed as a **test, not a foregone result**: *do* data-driven mutual-exclusivity modules ordered by per-histology MHN reproduce a genome-instability-early → immune-evasion-late sequence, and *to what degree* do the inferred modules align with vs. diverge from the canonical hallmark partition? Explicit falsifiers: (i) TP53 / checkpoint dominance places genome-instability **late**, not early; (ii) the ordering is **not robust to CCF correction** (the `paper:Gourmet2024` VAF→CCF discordance reproduced in our data); (iii) modules do not stably map to hallmarks (low partition agreement). | Canonicalizes the *open* question; Gourmet2024 is the calibration prior, not the assumed answer. | this discussion; h04 scoping |
-| P3 | When h04's pathway-MHN runs, add a hallmark-grouping aggregation view + a `RaphaelVandin2015`-style data-driven module view as a second grouping; compare orderings. | Delivers the hallmark answer as a thin layer over existing machinery. | h04 (blocked on t078, t133) |
+| P3 | Add a candidate hypothesis (sibling to `hypothesis:0004-mhn-pathway-ordering`) framed as a **test, not a foregone result**: *do* data-driven mutual-exclusivity modules ordered by per-histology MHN reproduce a genome-instability-early → immune-evasion-late sequence, and *to what degree* do the inferred modules align with vs. diverge from the canonical hallmark partition? Explicit falsifiers: (i) TP53 / checkpoint dominance places genome-instability **late**, not early; (ii) the ordering is **not robust to CCF correction** (the `paper:Gourmet2024` VAF→CCF discordance reproduced in our data); (iii) modules do not stably map to hallmarks (low partition agreement). | Canonicalizes the *open* question; Gourmet2024 is the calibration prior, not the assumed answer. | this discussion; hypothesis:0004 scoping |
+| P3 | When the `hypothesis:0004-mhn-pathway-ordering` pathway-MHN runs, add a hallmark-grouping aggregation view + a `RaphaelVandin2015`-style data-driven module view as a second grouping; compare orderings. | Delivers the hallmark answer as a thin layer over existing machinery. | hypothesis:0004 (blocked on t078, t133) |
 | P4 | Use average age only as an orthogonal covariate / falsification overlay on the recovered ordering (age gradient consistency), never as the primary order proxy. | Captures the epidemiological signal without the confounds of age-as-order. | ordering output |
 
 ## Synthesis
 
 `paper:Gourmet2024` **reports a VAF-based preferred ordering** of hallmarks (genome
 instability first, immune evasion last, in 27/32 cancer types), which echoes at hallmark
-grain what `h04` predicts at pathway grain — **but that headline is sensitivity-dependent**:
+grain what `hypothesis:0004-mhn-pathway-ordering` predicts at pathway grain — **but that headline is sensitivity-dependent**:
 their own CCF-based analysis moves genome instability to mid-order. So the defensible claim
 is "a preferred ordering is *reported under VAF, pending CCF correction*," not the
 unqualified "there is a preferred ordering." The novel, defensible contribution
 for this project is **not** re-deriving that ordering with a weak age proxy, but (i)
-calibrating h04 against it, and (ii) **inferring hallmark-like modules label-free**
+calibrating `hypothesis:0004-mhn-pathway-ordering` against it, and (ii) **inferring hallmark-like modules label-free**
 (mutual exclusivity + MHN, à la `paper:RaphaelVandin2015`) and asking whether the data's
 own partition matches the human hallmark set — directly honoring the "don't over-constrain
-on the magic discrete set" caveat. Fold into the h04/q012 orbit; do not start a parallel
-ordering workstream; reuse every confounder correction already scoped for q012.
+on the magic discrete set" caveat. Fold into the `hypothesis:0004-mhn-pathway-ordering` /
+`question:0012-mutation-ordering-cross-sectional-inference` orbit; do not start a parallel
+ordering workstream; reuse every confounder correction already scoped for
+`question:0012-mutation-ordering-cross-sectional-inference`.

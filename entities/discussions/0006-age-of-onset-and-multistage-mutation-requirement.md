@@ -112,9 +112,9 @@ The full background and citations live in `topic:multistage-carcinogenesis-and-a
 
 | Priority | Item | Where |
 |---|---|---|
-| **P3** | `question:0041` — driver-complexity vs median age at diagnosis, with the age->detection confound controls; calibrate against Belikov 2017. Descriptive, low-cost, gated on a clean per-histology age table + driver annotations. | `question:0041`, needs `gene_cancer_study_annotated.feather` + clinical `AGE` |
+| **P3** | `question:0041` — driver-complexity vs median age at diagnosis, with the age->detection confound controls; calibrate against Belikov 2017 [@Belikov2017]. Descriptive, low-cost, gated on a clean per-histology age table + driver annotations. | `question:0041`, needs `gene_cancer_study_annotated.feather` + clinical `AGE` |
 | **P4** | Candidate methodological question: **age as a covariate inflating mutation/driver burden** project-wide (touches TMB, SBS1/SBS5 clock signatures `q023`). File only if the confound recurs beyond this thread. | not yet filed |
-| **P4** | Add context papers to the library if the thread advances: Tomasetti-Vogelstein-Nowak 2015 PNAS (3-drivers), Martincorena 2017 (dN/dS driver counts), Wu 2016 *Nature* (extrinsic rebuttal), Gröbner/Ma 2018 (pan-pediatric). | `topic:multistage-carcinogenesis-and-age-of-onset` |
+| **P4** | Add context papers to the library if the thread advances: Tomasetti-Vogelstein-Nowak 2015 PNAS (3-drivers), Martincorena 2017 [@Martincorena2017] (dN/dS driver counts), Wu 2016 *Nature* (extrinsic rebuttal), Gröbner/Ma 2018 (pan-pediatric). | `topic:multistage-carcinogenesis-and-age-of-onset` |
 | **done** | `paper:MoolgavkarKnudson1981` summary is now **full-text from the PDF** (user-provided 2026-06-07): two-stage model fitted to lung-in-nonsmokers + breast, with exact parameters and the incidence formula confirmed. | `doc/papers/MoolgavkarKnudson1981.md` |
 
 ## Synthesis

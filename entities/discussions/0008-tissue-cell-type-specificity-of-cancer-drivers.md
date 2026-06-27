@@ -84,14 +84,14 @@ common growth program (MYC → ribosome biogenesis / translation; NOLC1 node), s
 mutated may reflect cell-of-origin accessibility more than divergent downstream biology — a
 **temper** on "each tissue has its own driver biology" (invasion/metastasis hallmarks, notably, do
 *not* converge). (ii) `paper:dosSantos2023`: tumors **lose 20–51% of their tissue-of-origin
-expression** and gain ectopic expression ("loss of identity"), which is exactly why q042's
+expression** and gain ectopic expression ("loss of identity"), which is exactly why `question:0042-driver-normal-expression-tissue-cell-type-specificity`'s
 specificity score must be computed on a **normal** reference, never tumor RNA.
 
 ## Critical Analysis
 
 - **The test must separate the two mechanisms.** Route-2 drivers (APC/KRAS) are **expected low-Tau
   "false negatives"** for an expression-restriction test; counting them as refutation would be a
-  mistake. `q042` measures route-1 enrichment, with route-2 modeled, not ignored.
+  mistake. `question:0042-driver-normal-expression-tissue-cell-type-specificity` measures route-1 enrichment, with route-2 modeled, not ignored.
 - **Confounds are the project's usual set.** Gene length (`h03` — length-match the background *and*
   note COSMIC's literature-attention bias); expression level (Tau is mechanically high for
   lowly/narrowly expressed genes — `paper:KryuchkovaMostacci2017` — so match on expression too);
@@ -112,11 +112,12 @@ specificity score must be computed on a **normal** reference, never tumor RNA.
 ## Relationship to existing entities
 
 - **`hypothesis:0012` is a special case** — "are neural genes top-mutated because they are
-  tissue-restricted developmental genes?" `q035`/`q036` define the *same approach*
-  (specificity-of-a-gene-set + fetal-vs-adult expression), and `q042` **will reuse that planned
+  tissue-restricted developmental genes?" `question:0035-label-free-neural-gene-definition` /
+  `question:0036-oncofetal-fetal-vs-adult-neural-expression` define the *same approach*
+  (specificity-of-a-gene-set + fetal-vs-adult expression), and `question:0042-driver-normal-expression-tissue-cell-type-specificity` **will reuse that planned
   machinery** — which is **not yet built**: `t216` (build the expression-atlas score) and `t225`
-  (acquire GTEx/HPA/Allen/PanglaoDB/BrainSpan references) are still proposed tasks. q042 shares
-  q035/q036's *prerequisite*, not an existing capability.
+  (acquire GTEx/HPA/Allen/PanglaoDB/BrainSpan references) are still proposed tasks. `question:0042-driver-normal-expression-tissue-cell-type-specificity` shares
+  the neural-question prerequisite, not an existing capability.
 - **`topic:oncofetal-developmental-reprogramming`** — lineage/developmental genes overlap the
   oncofetal axis; restricted-oncogene lineage factors are often developmental TFs.
 - **`hypothesis:0003`** — the length null and annotation-attention bias apply directly.
@@ -132,8 +133,8 @@ specificity score must be computed on a **normal** reference, never tumor RNA.
 
 | Priority | Item | Where |
 |---|---|---|
-| **P3** | `question:0042` — restricted-vs-pan-cancer driver Tau, OG vs TSG, length+expression-matched background, bulk + cell-type grains. Substrate (roster + role labels) on disk; gated on vendoring a normal-expression reference + Tau. | `question:0042`, `data/cosmic_cgc.tsv` + new expression ingest |
-| **P3** | Promote a **hypothesis** ("restricted oncogenes > TSGs > matched background in cell-type Tau; pan-cancer drivers broad") once the specificity reference exists and a pilot shows the effect direction. | from `q042` |
+| **P3** | `question:0042-driver-normal-expression-tissue-cell-type-specificity` — restricted-vs-pan-cancer driver Tau, OG vs TSG, length+expression-matched background, bulk + cell-type grains. Substrate (roster + role labels) on disk; gated on vendoring a normal-expression reference + Tau. | `question:0042-driver-normal-expression-tissue-cell-type-specificity`, `data/cosmic_cgc.tsv` + new expression ingest |
+| **P3** | Promote a **hypothesis** ("restricted oncogenes > TSGs > matched background in cell-type Tau; pan-cancer drivers broad") once the specificity reference exists and a pilot shows the effect direction. | from `question:0042-driver-normal-expression-tissue-cell-type-specificity` |
 | **P4** | Decide the expression reference + grain: GTEx (tissue) vs HPA / Tabula Sapiens (cell type). Cell-type grain is the rigorous version (MM/plasma-cell), bulk the cheap approximation. | ingest task |
 | **done** | The 3 previously-paywalled papers (`paper:Garraway2006`, `paper:Haigis2019`, `paper:MartinezJimenez2020`) are now **full-text from PDF** (deepened 2026-06-07; `[UNVERIFIED]` markers removed; PDFs in `papers/pdfs/`). | `doc/papers/` |
 | **note** | Batch added 3 papers — `paper:Pavinato2025` (oncogenic competence), `paper:Kauko2025` (oncogene convergence on MYC/translation), `paper:dosSantos2023` (cancer loss-of-identity) — folded into Current Position + Critical Analysis. | `doc/papers/` |

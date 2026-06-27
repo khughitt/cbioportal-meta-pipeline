@@ -70,7 +70,7 @@ spectrum, and selection sits on the burden side, so any "X causes signature S" c
 condition on tissue, treatment, and ancestry and separate spectrum-attribution from
 burden-attribution.
 
-## Q1 — Most common signatures: known (labelled) vs learned (latent)
+## Prompt 1 — Most common signatures: known (labelled) vs learned (latent)
 
 ### The two framings are the same math, different epistemic commitments
 
@@ -122,7 +122,7 @@ the labelled representation answers *"which of the processes we have already nam
 The first can discover; the second can only recognize. Anything genuinely novel shows up only
 in the de novo step, and only if rank `k` is large enough to resolve it without over-splitting.
 
-## Q2 — How often is the immune system inferred as an upstream cause?
+## Prompt 2 — How often is the immune system inferred as an upstream cause?
 
 **Rarely, and almost never as a *direct* mutagenic signature.** The dominant labelled
 aetiologies are exogenous mutagens (UV, tobacco, aflatoxin), endogenous enzymatic processes
@@ -146,12 +146,12 @@ signature":
 
 **Bottom line:** in the standard catalog, the immune system is essentially never the *labelled*
 upstream cause. Its strongest claim is the APOBEC-antiviral link (mediator, not label) and a
-weak ROS/inflammation association. This is itself a candidate **labelling blind spot** (see Q3):
+weak ROS/inflammation association. This is itself a candidate **labelling blind spot** (see Prompt 3):
 the catalog was built to recognize chemical/enzymatic mutagens, so an immune-driven process
 would more likely be absorbed into SBS5-like "unexplained flat" factors or APOBEC than be
 discovered as its own aetiology.
 
-## Q3 — Confirmation bias and the confounders behind each labelled aetiology
+## Prompt 3 — Confirmation bias and the confounders behind each labelled aetiology
 
 ### How likely are we biased toward processes we already think are causative? — High.
 
@@ -176,7 +176,7 @@ Three structural reasons the field is biased toward "things we already think cau
 |---|---|---|
 | **SBS4** | Tobacco smoking | **Confounders:** alcohol co-use, occupational/air-pollution PAH exposure, ancestry. **Mediator:** the actual mutagen is benzo[a]pyrene–DNA adducts processed by transcription-coupled NER — "smoking" is a behavioral proxy for a chemical mechanism that other PAH sources also produce. **Alt:** SBS4-like spectra appear in some non-smokers (other combustion exposures). |
 | **SBS7a–d** | UV light | **Confounders:** latitude, skin pigmentation/ancestry, immunosuppression (transplant patients). **Mediator:** CPD/6-4 photoproduct formation + repair capacity — inter-individual NER efficiency modulates dose→signature. **Alt:** tanning-bed vs solar UV indistinguishable in spectrum; the "cause" is conflated with behavior. |
-| **SBS2/SBS13** | APOBEC enzymes | **Upstream causes contested:** viral infection (HPV), replication stress, episodic "kataegis" bursts, possibly innate-immune activation (see Q2). **Confounder:** strong tissue tropism (breast/bladder) confounds APOBEC with tissue. **Mediator:** APOBEC is itself the *mediator* of some upstream trigger we mostly cannot name. |
+| **SBS2/SBS13** | APOBEC enzymes | **Upstream causes contested:** viral infection (HPV), replication stress, episodic "kataegis" bursts, possibly innate-immune activation (see Prompt 2). **Confounder:** strong tissue tropism (breast/bladder) confounds APOBEC with tissue. **Mediator:** APOBEC is itself the *mediator* of some upstream trigger we mostly cannot name. |
 | **SBS1** | 5mC deamination (age clock) | **Confounder:** cell-division rate, not chronological age per se — proliferative tissues accrue SBS1 faster. **Alt:** "age" is a proxy for mitotic count; tissue stem-cell dynamics, not time, drive it. |
 | **SBS6/15/20/26** | MMR deficiency / MSI | **Confounders:** Lynch-syndrome germline status, tissue, hypermutation co-occurrence. **Mediator:** loss of a specific MMR gene (MLH1 methylation vs MSH2 mutation) gives subtly different spectra collapsed into one label. |
 | **SBS3** | HR deficiency (BRCA) | **Confounder:** platinum/PARP-inhibitor treatment history (treatment-induced signatures mimic/overlay). **Alt:** flat, hard to distinguish from SBS5 / sequencing noise — low identifiability. |

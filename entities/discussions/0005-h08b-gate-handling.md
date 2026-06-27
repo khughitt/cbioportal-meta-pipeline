@@ -60,7 +60,7 @@ H08b may proceed only as **exploratory/prototype** work until a future gate is e
 
 The practical rules are:
 
-- Do not describe H08b output as confirmatory evidence for H08.
+- Do not describe H08b output as confirmatory evidence for `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`.
 - Do not use H08b results to update H08a.
 - Do not treat a discovered SBS40/SBS5 expression-module hit as upstream causal evidence without the causal-direction guard from `question:0025`.
 - Label `task:t182` outputs as exploratory discovery prototypes.
@@ -91,7 +91,7 @@ Neither condition is met today.
 
 ## Implications
 
-The next defensible H08b action is a small t182 prototype focused on whether the existing H08 substrate can separate SBS40 from SBS5 after age and tissue conditioning.
+The next defensible H08b action is a small t182 prototype focused on whether the existing substrate can separate SBS40 from SBS5 after age and tissue conditioning.
 The expected deliverable is a feasibility/triage note, not a promotion verdict.
 
 UV repair remains deferred unless a better UV exposure substrate appears.
@@ -99,6 +99,6 @@ A future repaired positive-control gate would need to address both the UV proxy 
 
 ## Synthesis
 
-The H08 program remains useful but not promoted.
+The `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` program remains useful but not promoted.
 The current evidence supports a disciplined exploratory path: learn whether the expression-module machinery can produce coherent SBS40/SBS5 candidates, while keeping the hypothesis-promotion boundary intact.
 This preserves the value of the APOBEC success without letting a single strong arm override the failed positive-control gate.

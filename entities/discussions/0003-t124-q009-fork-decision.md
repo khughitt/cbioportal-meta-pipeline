@@ -1,6 +1,6 @@
 ---
 type: discussion
-title: 't124: should q009 pursue true SBS1 context/topography or retire the panel/WES
+title: 't124: should question:0009 pursue true SBS1 context/topography or retire the panel/WES
   proxy route?'
 status: active
 created: '2026-04-24'
@@ -25,20 +25,20 @@ focus_ref: task:t124
 mode: standard
 ---
 
-# Discussion: t124 — q009 fork decision
+# Discussion: t124 — question:0009 fork decision
 
 ## Focus
 
-`t124` is the explicit go/no-go gate for q009 (SBS1 LRR bias as a contamination quality flag). After three pilots — `t110` (SBS1/SBS5 ratio, negative), `t122` (all-mutation gene-level CE/CL burden, suggestive but coverage-confounded), and `t123` (CpG-proxy CE/CL burden, collapsed under panel zero-inflation) — the project must choose between:
+`t124` is the explicit go/no-go gate for `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` (SBS1 LRR bias as a contamination quality flag). After three pilots — `t110` (SBS1/SBS5 ratio, negative), `t122` (all-mutation gene-level CE/CL burden, suggestive but coverage-confounded), and `t123` (CpG-proxy CE/CL burden, collapsed under panel zero-inflation) — the project must choose between:
 
 - (A) staging a true mutation-context / SBS1-attribution topography implementation, or
 - (B) writing an explicit retirement/defer decision for the panel/WES proxy route.
 
-The decision matters because q009's stated purpose is a **per-study quality flag** computable on cBioPortal data, not a research-grade SBS1 mechanism replication. The three pilots have each tested a different formulation; what has *not* yet been tested is the version of the test that most closely matches Yaacov 2023's actual statistic.
+The decision matters because `question:0009-sbs1-lrr-bias-as-normal-contamination-flag`'s stated purpose is a **per-study quality flag** computable on cBioPortal data, not a research-grade SBS1 mechanism replication. The three pilots have each tested a different formulation; what has *not* yet been tested is the version of the test that most closely matches Yaacov 2023's [@Yaacov2023] actual statistic.
 
 ## Current Position
 
-The project's recorded position (q009 file, `t124` task body) frames the fork as binary: implement true topography, or retire. The interpretation documents stop short of declaring retirement, but the language has tilted toward it as each pilot has narrowed.
+The project's recorded position (`question:0009-sbs1-lrr-bias-as-normal-contamination-flag` file, `t124` task body) frames the fork as binary: implement true topography, or retire. The interpretation documents stop short of declaring retirement, but the language has tilted toward it as each pilot has narrowed.
 
 What the three pilots actually establish:
 
@@ -46,15 +46,15 @@ What the three pilots actually establish:
 - **`t122`** tested *all-mutation* per-sample CE vs CL burden against the gene-level RT map. Suggestive: relative CL/CE ratio elevated in the unmatched cohort, but absolute burden dominated by panel-vs-WES coverage. Not a clean signal.
 - **`t123`** tested a per-sample *coding-CpG C>T proxy* for SBS1, restricted to assignment samples. Collapsed: 1,205/1,210 panel samples had `CL == 0`; only 58 unmatched samples carried any proxy mutation at all. Sparsity made the test uninformative.
 
-**What has not been tested:** the *Yaacov 2023 statistic itself* — pooled SBS1-attributed mutations (from SigProfilerAssignment's probabilistic per-mutation assignment, not a CpG approximation) mapped to constitutive RT bins, computing LRR enrichment at the **per-study** aggregate level, not per-sample.
+**What has not been tested:** the *Yaacov 2023 [@Yaacov2023] statistic itself* — pooled SBS1-attributed mutations (from SigProfilerAssignment's probabilistic per-mutation assignment, not a CpG approximation) mapped to constitutive RT bins, computing LRR enrichment at the **per-study** aggregate level, not per-sample.
 
 The current narrative has slid toward retirement faster than the evidence warrants, because each pilot tested a *different* formulation and the closest-to-mechanism formulation is the one not yet tried.
 
 ## Critical Analysis
 
-### What Yaacov 2023 actually claims
+### What the Yaacov paper actually claims
 
-Yaacov 2023 (Sci Reports) shows that SBS1 mutations in normal tissue accumulate preferentially in late-replicating regions, with `R = 0.967` between independent normal cohorts and Wilcoxon `P < 2.2 × 10⁻¹⁶` for the normal-vs-cancer LRR-bias delta. The unit of analysis is *per-tissue pooled mutations* against constitutive RT regions covering ~40% of the genome. Per-sample tests are not the published frame.
+Yaacov 2023 [@Yaacov2023] shows that SBS1 mutations in normal tissue accumulate preferentially in late-replicating regions, with `R = 0.967` between independent normal cohorts and Wilcoxon `P < 2.2 × 10⁻¹⁶` for the normal-vs-cancer LRR-bias delta. The unit of analysis is *per-tissue pooled mutations* against constitutive RT regions covering ~40% of the genome. Per-sample tests are not the published frame.
 
 This matters because all three project pilots ran *per-sample* tests. The mechanism's published statistical power lives at the per-tissue (or per-study, in our framing) aggregate level. **The pilots have not falsified the Yaacov mechanism on this data; they have falsified three different per-sample approximations of it.**
 
@@ -70,9 +70,9 @@ Per-study aggregate is therefore **plausibly powered**, even on panel data. The 
 
 ### The conceptual problem with "matched vs unmatched" framing
 
-All three pilots framed q009 as "does the unmatched cohort show more LRR bias than the matched cohort?" That is a calibration test, not a contamination flag. A flag, by the definition in q009's own preamble, should be *computable on a single study* without requiring a matched control — otherwise the flag itself depends on having matched-normal data, which the unmatched studies precisely lack.
+All three pilots framed `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` as "does the unmatched cohort show more LRR bias than the matched cohort?" That is a calibration test, not a contamination flag. A flag, by the definition in the question's own preamble, should be *computable on a single study* without requiring a matched control — otherwise the flag itself depends on having matched-normal data, which the unmatched studies precisely lack.
 
-The Yaacov 2023 statistic supports a single-study test: compute LRR bias of pooled SBS1-attributed mutations *within a study*, and compare to the published normal-tissue LRR bias (a known constant, ~0.55–0.65 LRR fraction among SBS1 mutations in normal). A study whose tumor-derived SBS1 mutations show LRR bias significantly above the *cancer* baseline (where SBS1 is unbiased) and approaching the *normal* baseline carries detectable normal-tissue SBS1 leakage.
+The Yaacov 2023 statistic [@Yaacov2023] supports a single-study test: compute LRR bias of pooled SBS1-attributed mutations *within a study*, and compare to the published normal-tissue LRR bias (a known constant, ~0.55–0.65 LRR fraction among SBS1 mutations in normal). A study whose tumor-derived SBS1 mutations show LRR bias significantly above the *cancer* baseline (where SBS1 is unbiased) and approaching the *normal* baseline carries detectable normal-tissue SBS1 leakage.
 
 This formulation has not been tested. The matched-vs-unmatched framing was a convenience because MC3 was already in the pipeline; it confounded coverage with mechanism.
 
@@ -80,17 +80,17 @@ This formulation has not been tested. The matched-vs-unmatched framing was a con
 
 1. **Per-study SBS1 attribution may be unstable on small panel cohorts.** SigProfilerAssignment's per-mutation probabilistic assignment is well-conditioned only when the per-sample fit converges. Pooling per-sample assignments across a study assumes the per-sample fits are accurate enough to aggregate. For panel samples with ~50 mutations, individual fits are noisy. Mitigation: pool the *96-context spectrum* across the study first, then attribute on the pooled spectrum, which is exactly what `t109` already implemented.
 2. **Constitutive RT regions cover ~40% of the genome, but panel coverage is non-random.** Panels target driver genes which cluster in early-replicating, gene-dense regions. The CE/CL gene set from `t121` has `CE = 11,394` and `CL = 3,132` — already a 3.6:1 imbalance before panel filtering. After panel filtering, the CL gene count may drop to single digits per panel. Mitigation: either restrict the test to whole-exome studies, or use a panel-coverage-aware denominator (mutations per Mb of CE-covered panel territory vs LRR-covered panel territory).
-3. **The Yaacov 2023 normal-tissue baseline was derived from WGS.** Converting it to a panel-coverage-equivalent expected value requires non-trivial recalculation. Without that, the single-study test has no calibrated expectation to compare against.
+3. **The Yaacov 2023 [@Yaacov2023] normal-tissue baseline was derived from WGS.** Converting it to a panel-coverage-equivalent expected value requires non-trivial recalculation. Without that, the single-study test has no calibrated expectation to compare against.
 
 ### Failure modes of pursuing option B (retirement)
 
 1. **Three negative pilots were three different tests.** Retiring on the basis of "we tried three things" conflates three independent failures into one verdict; if any of the three corresponds to the published mechanism, retirement is premature.
-2. **The reusable artifacts are not at risk.** `t121` (gene-level RT map), `t109` (cancer-type signature restriction), `t111` (normal-tissue reference spectra) all serve other questions (q003, q007, q008) regardless of q009's outcome. Retirement does not free much engineering capacity.
+2. **The reusable artifacts are not at risk.** `t121` (gene-level RT map), `t109` (cancer-type signature restriction), `t111` (normal-tissue reference spectra) all serve other questions (`question:0003-replication-timing-as-gene-level-mutation-rate-confounder`, `question:0007-cross-tissue-somatic-mutation-rate-variation-as-null-model`, `question:0008-signature-decomposition-tissue-background-subtraction`) regardless of `question:0009-sbs1-lrr-bias-as-normal-contamination-flag`'s outcome. Retirement does not free much engineering capacity.
 3. **WGS data is not currently in scope but is plausibly within a year.** The Hartwig (HMF) and PCAWG follow-on cohorts are increasingly cBioPortal-adjacent. If WGS lands, the test becomes trivially powered. Retirement now means re-litigating later.
 
 ### What a proper t124 resolution looks like
 
-The fork as currently posed is a false binary. There is a third option neither the task body nor the interpretation docs name: **scope one targeted per-study aggregate test using the actual Yaacov statistic**, with explicit power criteria, and let the result decide retirement.
+The fork as currently posed is a false binary. There is a third option neither the task body nor the interpretation docs name: **scope one targeted per-study aggregate test using the actual Yaacov statistic** [@Yaacov2023], with explicit power criteria, and let the result decide retirement.
 
 That option is much closer to option A than option B in framing, but bounded enough that it doesn't commit to "true topography support" as an open-ended infrastructure goal. It is one test, one power budget, and one yes/no outcome.
 
@@ -102,11 +102,11 @@ The implicit causal claim is `unmatched_normal_status → SBS1_LRR_bias_inflatio
 
 To resolve `t124` defensibly, the project needs one or more of:
 
-1. **A per-study aggregate LRR-bias measurement of SBS1-attributed mutations.** Use `t109/t110` per-sample assignments, restrict to mutations with high SBS1 posterior (e.g., `>0.7`), aggregate across all samples in a study, map onto `t121` CE/CL gene set, compute LRR fraction and 95% CI. This is the closest computationally feasible analog of the Yaacov 2023 statistic on this data.
+1. **A per-study aggregate LRR-bias measurement of SBS1-attributed mutations.** Use `t109/t110` per-sample assignments, restrict to mutations with high SBS1 posterior (e.g., `>0.7`), aggregate across all samples in a study, map onto `t121` CE/CL gene set, compute LRR fraction and 95% CI. This is the closest computationally feasible analog of the Yaacov 2023 statistic [@Yaacov2023] on this data.
 2. **A panel-coverage-corrected expected LRR fraction** for the relevant panels (MSK-IMPACT 341/410/468). The denominator is the count of CE-covered vs CL-covered base pairs in panel coordinates, not gene counts. Without this correction, observed LRR fractions are confounded by panel design.
 3. **A power statement** before running the test. If pooled SBS1-attributed mutation counts are projected to fall below the threshold for a 95%-CI-distinguishable LRR bias delta (say, `n < 500`), the test is acknowledged as underpowered before it runs and retirement is the principled outcome.
 
-If (1) returns a clean positive (unmatched studies show LRR fraction above the cancer baseline), q009 has a real result.
+If (1) returns a clean positive (unmatched studies show LRR fraction above the cancer baseline), `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` has a real result.
 If (1) returns negative *with adequate power*, retirement is justified by a test that actually matches the mechanism.
 If (1) is underpowered, defer (not retire) pending WGS inputs.
 
@@ -114,18 +114,18 @@ If (1) is underpowered, defer (not retire) pending WGS inputs.
 
 | Priority | Action | Why now | Dependencies |
 |---|---|---|---|
-| **P1** | Add a new task `t126`: per-study aggregate SBS1 LRR-bias test using `t109/t110` SBS1-attributed mutations + `t121` gene RT map, with explicit pre-run power statement | Closes `t124` defensibly: one targeted test that matches Yaacov 2023's actual statistic and the q009 framing of a single-study quality flag | `t109`, `t110`, `t121` (all done) |
+| **P1** | Add a new task `t126`: per-study aggregate SBS1 LRR-bias test using `t109/t110` SBS1-attributed mutations + `t121` gene RT map, with explicit pre-run power statement | Closes `t124` defensibly: one targeted test that matches Yaacov 2023's [@Yaacov2023] actual statistic and the `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` framing of a single-study quality flag | `t109`, `t110`, `t121` (all done) |
 | P1 [actionable now] | Update `t124` task body to reflect the trichotomy (proper-statistic test → retire / pass / defer), not the current binary | Removes the false binary and unblocks a defensible decision | none |
-| P2 | If `t126` is underpowered or negative, write a single retirement note covering all three pilots + the proper-statistic test, and update `q009` status to `deferred` with revisit-condition `WGS inputs ingested` | Consolidates the q009 record into one defensible verdict rather than four overlapping interpretation docs | depends on `t126` outcome |
-| P2 | Carry the q008 work forward in parallel — `t111` infrastructure for normal-tissue spectrum subtraction is independent of q009's outcome | q008 is the "built but unexploited" risk flagged in `next-steps-2026-04-24`; q009 retirement should not stall it | `t111` (done) |
-| P3 | Document the Yaacov 2023 normal-tissue LRR baseline as a project constant in `data/` if `t126` is run | Reusable for any future WGS-based test of the same mechanism | `paper:Yaacov2023` |
+| P2 | If `t126` is underpowered or negative, write a single retirement note covering all three pilots + the proper-statistic test, and update `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` status to `deferred` with revisit-condition `WGS inputs ingested` | Consolidates the question:0009 record into one defensible verdict rather than four overlapping interpretation docs | depends on `t126` outcome |
+| P2 | Carry the `question:0008-signature-decomposition-tissue-background-subtraction` work forward in parallel — `t111` infrastructure for normal-tissue spectrum subtraction is independent of `question:0009-sbs1-lrr-bias-as-normal-contamination-flag`'s outcome | question:0008 is the "built but unexploited" risk flagged in `next-steps-2026-04-24`; question:0009 retirement should not stall it | `t111` (done) |
+| P3 | Document the Yaacov 2023 [@Yaacov2023] normal-tissue LRR baseline as a project constant in `data/` if `t126` is run | Reusable for any future WGS-based test of the same mechanism | `paper:Yaacov2023` |
 
 ## Synthesis
 
-`t124` should not be resolved as a binary "implement true topography support" vs "retire the proxy." Both options misread what the three pilots actually established: each pilot tested a different per-sample approximation; none tested the per-study aggregate version of the Yaacov 2023 statistic, which is both the published frame and the only formulation consistent with q009's stated goal of a single-study contamination flag.
+`t124` should not be resolved as a binary "implement true topography support" vs "retire the proxy." Both options misread what the three pilots actually established: each pilot tested a different per-sample approximation; none tested the per-study aggregate version of the Yaacov 2023 statistic [@Yaacov2023], which is both the published frame and the only formulation consistent with `question:0009-sbs1-lrr-bias-as-normal-contamination-flag`'s stated goal of a single-study contamination flag.
 
-The recommended resolution is to add one scoped task (`t126`) implementing exactly that test — pooled SBS1-attributed mutations mapped to the existing CE/CL gene set, with a panel-coverage-corrected denominator and an explicit power statement *before* the run. The expected effort is small: all input artifacts (`t109`/`t110` per-sample assignments, `t121` gene RT map) already exist. The test is bounded, has yes/no/underpowered outcomes, and either resolves q009 with real evidence or grounds retirement in a measurement that matches the mechanism.
+The recommended resolution is to add one scoped task (`t126`) implementing exactly that test — pooled SBS1-attributed mutations mapped to the existing CE/CL gene set, with a panel-coverage-corrected denominator and an explicit power statement *before* the run. The expected effort is small: all input artifacts (`t109`/`t110` per-sample assignments, `t121` gene RT map) already exist. The test is bounded, has yes/no/underpowered outcomes, and either resolves `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` with real evidence or grounds retirement in a measurement that matches the mechanism.
 
-If `t126` returns clean evidence either way, retire `t124` as a decision point and update `q009` accordingly. If `t126` is underpowered, defer (not retire) `q009` with `WGS inputs ingested` as the revisit condition. Treat the q008/q010 branch as independent — those questions stand on `t111` infrastructure regardless of how q009 lands.
+If `t126` returns clean evidence either way, retire `t124` as a decision point and update `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` accordingly. If `t126` is underpowered, defer (not retire) `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` with `WGS inputs ingested` as the revisit condition. Treat the `question:0008-signature-decomposition-tissue-background-subtraction` / `question:0010-cuplr-style-tof-classifier-for-suspect-normal-samples` branch as independent — those questions stand on `t111` infrastructure regardless of how question:0009 lands.
 
 The single highest-leverage immediate move is rewriting `t124`'s task body to reflect the trichotomy and adding `t126`. That can happen in this session.

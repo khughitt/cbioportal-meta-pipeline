@@ -44,7 +44,8 @@ analogous bias contaminates the "is this gene well-studied" axis.
   normalization is judged "necessary but not sufficient" — it catches first-order bias but
   misses regional mutation-rate covariates (replication timing, chromatin state, expression).
   The audit rates protein-length-only as "pass-with-caveat."
-- MutSigCV / dNdScv / SLAPenrich all explicitly model gene length in their null. Bailey 2018's
+- MutSigCV / dNdScv / SLAPenrich all explicitly model gene length in their null
+  [@Lawrence2014; @Martincorena2017; @Iorio2018SLAPenrich]. Bailey 2018's [@Bailey2018]
   299-driver consensus is what "the field" uses; the pipeline currently does NOT reproduce
   a discovery-grade null model.
 - Literature-bias question has not been examined in this project previously — it's a novel
@@ -62,16 +63,17 @@ panel callability, cohort composition, and selection signal. The literature-atte
 also not independent evidence unless gene-level publication counts are residualized against
 mutation burden and accessibility features.
 
-## Q1. Is adjusting for gene length standard practice in cancer-gene discovery?
+## Prompt 1. Is adjusting for gene length standard practice in cancer-gene discovery?
 
 **Yes, for discovery; inconsistently, for descriptive lists.** Every serious driver-discovery
-tool in the last 15 years models gene length in the null — MutSigCV (Lawrence 2013, 2014),
-MuSiC (Dees 2012), dNdScv (Martincorena 2017), OncodriveFML, SLAPenrich (Iorio 2018), Chang
-2016's per-codon hotspot model. The difference length-aware correction makes is large: Lawrence
-2014 specifically demonstrates that without background correction, **long genes like TTN
+tool in the last 15 years models gene length in the null — MutSigCV [@Lawrence2014],
+MuSiC-style SMG tests [@Kandoth2013], dNdScv [@Martincorena2017], OncodriveFML,
+SLAPenrich [@Iorio2018SLAPenrich], and Chang 2016's per-codon hotspot model [@Chang2016].
+The difference length-aware correction makes is large: Lawrence 2014 [@Lawrence2014]
+specifically demonstrates that without background correction, **long genes like TTN
 (~35 kb CDS), MUC16, OBSCN, RYR2, and LRP1B appear as top "drivers"** — these are the canonical
 false positives cited in that paper and are essentially never endorsed by the consensus
-lists that correct for length (Bailey 2018).
+lists that correct for length [@Bailey2018].
 
 Where it breaks down is in **secondary reporting**: review articles, news pieces, and many
 pan-cancer descriptive summaries still quote "top mutated genes" as raw-count or raw-frequency
@@ -87,7 +89,7 @@ over-ranks heterochromatic / replication-late genes (this is `question:0003`). S
 normalization is standard where discovery rigor is required, patchy where rankings are
 informal, and length-only is a floor, not a ceiling.
 
-## Q2. Are long genes over-represented in the literature for length-correlated reasons?
+## Prompt 2. Are long genes over-represented in the literature for length-correlated reasons?
 
 **Almost certainly yes, and for several independent reasons that compound.** No paper I'm aware
 of has tried to quantify the specific "literature attention ∝ gene length" slope — it would
@@ -118,29 +120,30 @@ several smaller independent channels.** The concerning implication is that "this
 important because it's both highly mutated AND well-studied" is not independent corroboration
 — both axes share gene length as a common cause.
 
-## Q3. What has the literature done about length / size biases on each axis?
+## Prompt 3. What has the literature done about length / size biases on each axis?
 
 **Mutation side.** Extensively studied and operationalized:
-- Lawrence 2013 (MutSigCV): explicit length-and-covariate null, the field reference.
-- Martincorena 2017 (dNdScv): selection-based ratio that is length-aware by construction
+- Lawrence 2014 (MutSigCV) [@Lawrence2014]: explicit length-and-covariate null, the field reference.
+- Martincorena 2017 (dNdScv) [@Martincorena2017]: selection-based ratio that is length-aware by construction
   (non-synonymous vs synonymous per gene, trinucleotide-aware).
-- Bailey 2018: 26-tool consensus that triages raw-count top-hits as "likely false-positive
-  long-gene artifacts" unless ≥2 tools agree.
-- Chang 2016: per-codon hotspot null that further refines within-gene position-level bias.
-- SLAPenrich (Iorio 2018): length and per-sample rate in the null; our best off-the-shelf
+- Bailey 2018 [@Bailey2018]: 26-tool consensus that triages raw-count top-hits as "likely
+  false-positive long-gene artifacts" unless ≥2 tools agree.
+- Chang 2016 [@Chang2016]: per-codon hotspot null that further refines within-gene position-level bias.
+- SLAPenrich (Iorio 2018) [@Iorio2018SLAPenrich]: length and per-sample rate in the null; our best off-the-shelf
   pathway-level analogue to what we already do for genes.
 
 **Literature side.** Much less formal work. What exists:
-- Gillis & Pavlidis 2014 ("Assessing identity...in bioinformatics") and its follow-ups
+- Gillis & Pavlidis 2013 [@Gillis2013] ("Assessing identity...in bioinformatics") and its follow-ups
   documented that gene-level analyses concentrate on a small set of "popular" genes and
   that popularity correlates with technical attributes. They don't isolate length cleanly.
-- Stoeger & Nunes Amaral 2018 ("Large-scale investigation of the reasons why potentially
-  important genes are ignored"): the landmark paper on this question. They model
+- Stoeger & Nunes Amaral 2018 [@Stoeger2018] ("Large-scale investigation of the reasons why
+  potentially important genes are ignored"): the landmark paper on this question. They model
   publication count per gene and find that a small number of **chemical and experimental
   accessibility features** predict publication count orders-of-magnitude better than
   biological importance — and gene / transcript length is one of those features. Worth
   a dedicated `paper:` summary.
-- Haynes 2018, Edwards 2011 ("Too many roads not taken"): commentary-level — lab reagent
+- Haynes 2018 [@Haynes2018] and Edwards 2011 [@Edwards2011] ("Too many roads not taken"):
+  commentary-level — lab reagent
   availability and prior publication drive future publication (rich-get-richer).
 - NCBI / NIH analyses: gene mention frequency in PubMed follows a heavy-tailed distribution;
   the long tail of unstudied genes is huge (~20% of protein-coding genes have <5 papers).
@@ -152,7 +155,7 @@ the reporting level; the literature side is known to be confounded by accessibil
 including length, per Stoeger 2018, but no one has isolated the length slope specifically in
 a cancer context.** This is a publishable gap.
 
-## Q4. How would the top-N list shift under length adjustment?
+## Prompt 4. How would the top-N list shift under length adjustment?
 
 Two comparisons to run, ordered by effort:
 
@@ -161,7 +164,7 @@ Two comparisons to run, ordered by effort:
 protein length joined. Sort by `mean_inclusive` vs `mean_inclusive / protein_length` and
 compute the Spearman correlation + Jaccard overlap at N = 10, 50, 100, 500, 1000.
 
-**What I expect to see** (based on Lawrence 2014 and everything downstream):
+**What I expect to see** (based on Lawrence 2014 [@Lawrence2014] and everything downstream):
 - Top ~30 dominated by *recognized drivers* (TP53, KRAS, PIK3CA, APC, PTEN, BRAF, EGFR,
   BRCA1/2, CDKN2A, NRAS, IDH1, SMAD4, FBXW7, NF1). Most of these are *short-to-medium*
   proteins (PIK3CA ~1,068 aa; KRAS 189 aa; IDH1 414 aa; TP53 393 aa). These will *rise*
@@ -169,8 +172,8 @@ compute the Spearman correlation + Jaccard overlap at N = 10, 50, 100, 500, 1000
   to the top of the adjusted list in a way that reflects biology.
 - Top ~100 (unadjusted) will contain TTN, MUC16, OBSCN, RYR2/3, LRP1B, USH2A, CSMD1/3,
   FAT1/4, PKHD1, DNAH-family, ZFHX4, SYNE1. These are the textbook long-gene passengers.
-  Under length adjustment they crash out of the top 100 (Lawrence 2014 essentially showed
-  this for TCGA pan-cancer and it replicated across every follow-up).
+  Under length adjustment they crash out of the top 100 (Lawrence 2014 [@Lawrence2014]
+  essentially showed this for TCGA pan-cancer and it replicated across every follow-up).
 - Top ~500 starts to include *genuinely large* bona fide cancer genes that will lose rank
   unfairly: ATM (3,056 aa), BRCA2 (3,418 aa), NF1 (2,818 aa), APC (2,843 aa), MLL / KMT2A-C
   family, ARID1A (2,285 aa). These are long AND real drivers. A pure length division
@@ -192,21 +195,22 @@ cohort and compare to our raw and length-adjusted rankings. The pipeline already
 three-way comparison (raw / length-adjusted / selection-adjusted) and is the cleanest
 answer to "what does length adjustment actually buy, and where does it break?"
 
-## Q5. What other biases confound mutation counts and literature counts?
+## Prompt 5. What other biases confound mutation counts and literature counts?
 
 **Mutation-count biases** (most already tracked in the audit):
-- **Regional mutation rate / replication timing.** Large — ~10× between early- and
-  late-replicating regions (Lawrence 2014). Not captured by length. `question:0003`.
+- **Regional mutation rate / replication timing.** Large — ~10x between early- and
+  late-replicating regions (Lawrence 2014 [@Lawrence2014]). Not captured by length.
+  `question:0003`.
 - **Chromatin state / heterochromatin.** Co-varies with replication timing; both channels are
   what MutSigCV covariates capture that length misses.
 - **Sequence-context / trinucleotide.** Genes rich in CpG dinucleotides get more C>T
   transitions under aging / SBS1 signature exposure. This is actually a *gene-composition*
-  bias distinct from length. dNdScv and Chang 2016 correct for it.
+  bias distinct from length. dNdScv and Chang 2016 [@Chang2016] correct for it.
 - **Panel coverage and target-capture bias.** Targeted panels (MSK-IMPACT, FoundationOne)
   enrich for known cancer genes. Counts from those studies are not comparable to WES counts.
   `task:t086` tracks this.
 - **Matched-normal vs unmatched calling.** Affects germline leakage, CH contamination
-  (Coombs 2018), normal-tissue mutations. `topic:clonal-hematopoiesis-contamination`.
+  (Coombs 2018 [@Coombs2018]), normal-tissue mutations. `topic:clonal-hematopoiesis-contamination`.
 - **Gene-symbol drift over time.** HGNC alias mapping not yet done (`task:t082`). Older
   studies may use superseded symbols; raw joins lose or duplicate counts. This biases toward
   "stable long-standing symbols" which tends to mean longer, earlier-characterized genes.
@@ -219,8 +223,8 @@ answer to "what does length adjustment actually buy, and where does it break?"
 
 **Literature-count biases** (new territory for this project):
 - **Rich-get-richer citation dynamics.** Prior publication predicts future publication
-  more strongly than any biological attribute (Stoeger 2018). A gene that got lucky in 1995
-  has a 30-year head start.
+  more strongly than any biological attribute (Stoeger 2018 [@Stoeger2018]). A gene that got
+  lucky in 1995 has a 30-year head start.
 - **Reagent / antibody / knockout-mouse availability.** These all correlate with length
   (more antibodies for larger proteins, more surface epitopes) but also with accessibility.
 - **Disease-association priors.** A gene mentioned in a disease-gene database (OMIM, CGC)
@@ -262,9 +266,9 @@ answer to "what does length adjustment actually buy, and where does it break?"
 
 | Priority | Action | Why now | Dependencies |
 |---|---|---|---|
-| P1 [actionable now] | Add a marimo notebook under `code/notebooks/` comparing top-N gene rankings from `gene_cancer_study_ratio_annotated.feather` sorted by `mean_inclusive` vs `mean_inclusive / protein_length`. Report Spearman, Jaccard@10/50/100/500, and a labeled scatterplot with TTN-family vs canonical-driver callouts. | We already have both columns; this is a ~1 hour task that settles Q4 concretely. | Pipeline has run with current config. |
+| P1 [actionable now] | Add a marimo notebook under `code/notebooks/` comparing top-N gene rankings from `gene_cancer_study_ratio_annotated.feather` sorted by `mean_inclusive` vs `mean_inclusive / protein_length`. Report Spearman, Jaccard@10/50/100/500, and a labeled scatterplot with TTN-family vs canonical-driver callouts. | We already have both columns; this is a ~1 hour task that settles Prompt 4 concretely. | Pipeline has run with current config. |
 | P1 | New question `q011-gene-length-as-literature-attention-confounder.md` in `doc/questions/`. Frame the regression model, datasets, pre-registered expectation. | Captures the novel framing from this discussion so it doesn't get lost. | None. |
-| P2 | New task: `length × PubMed-mention regression` pipeline step. Inputs: PubTator gene counts (filtered for 2010+, human-only), UniProt lengths, CGC / Bailey driver list, cBioPortal per-gene mutation count. Outputs: length slope estimates with and without mutation-count adjustment; per-gene "attention residual" column. | Directly addresses Q2 and Q5-lit. | Requires HGNC/NCBI-Gene ID join between PubTator and UniProt. |
+| P2 | New task: `length x PubMed-mention regression` pipeline step. Inputs: PubTator gene counts (filtered for 2010+, human-only), UniProt lengths, CGC / Bailey driver list, cBioPortal per-gene mutation count. Outputs: length slope estimates with and without mutation-count adjustment; per-gene "attention residual" column. | Directly addresses Prompts 2 and 5-lit. | Requires HGNC/NCBI-Gene ID join between PubTator and UniProt. |
 | P2 | Paper summary `doc/papers/Stoeger2018.md` using `science:research-papers`. | Methodological reference for the literature-bias side. | None. |
 | P2 | Opt dNdScv into `rule all` in a side config (`config-pan-cancer-dndscv.yml`), accepting the cost. Then emit a three-way ranking comparison report. | Closes the "length-only is below the 2013 bar" finding. Addresses `topic:mutation-rate-normalization` directly. | R env (`feedback:R-reproducibility-pipeline-tasks` — dndscv rule must use conda env YAML, not system R). |
 | P3 | Add `length_is_fallback` indicator column in `create_combined_gene_cancer_freq_table.py` (already tracked as `t086`). | Transparency about which genes got median-imputed length. | None. |
@@ -274,7 +278,7 @@ answer to "what does length adjustment actually buy, and where does it break?"
 
 `code/notebooks/q011_length_adjustment_topn_comparison.py` against the
 `poc-2026-04-17` cohort (21,998 genes with non-zero `mean_inclusive`,
-19,180 with UniProt length, 200 Bailey 2018 drivers).
+19,180 with UniProt length, 200 Bailey 2018 [@Bailey2018] drivers).
 
 - **Spearman ρ(mean_inclusive, mean_adj) = 0.372** — much weaker than the
   pre-discussion intuition (which expected ρ in the 0.7-0.9 range). Length
@@ -301,7 +305,7 @@ answer to "what does length adjustment actually buy, and where does it break?"
   AND short-protein artifacts (BAGE2, PYY2, DEFB119, TMSB4X, SPRR4, CXCL12 at
   93 aa, etc).
 - **Length-only failure mode is dominant, not marginal**: 86 of the top-100
-  length-adjusted entries are short proteins (<200 aa) with no Bailey 2018
+  length-adjusted entries are short proteins (<200 aa) with no Bailey 2018 [@Bailey2018]
   driver flag. Pure length division swings the ranking from "long-gene
   passengers win" to "tiny-protein artifacts win" — the bias is symmetric and
   equally bad in the opposite direction.
@@ -332,7 +336,7 @@ and is not, as far as I know, published.
 
 Two concrete commitments come out of this:
 1. Run the cheap top-N comparison now (length-adjusted vs raw) and publish the result as a
-   notebook. This is ~1 hour and settles Q4 empirically for our cohort.
+   notebook. This is ~1 hour and settles Prompt 4 empirically for our cohort.
 2. Register a new question for the literature-attention regression and scope a task for it.
    This is the genuinely novel analytical contribution the discussion has surfaced.
 

@@ -22,12 +22,12 @@ related:
 ## Summary
 
 Operational classification of individual somatic variants as oncogenic / likely-oncogenic /
-VUS / benign, and tier-assignment of therapy-actionability. **OncoKB** (Chakravarty 2017) is
-the precision-oncology knowledge base baked into cBioPortal; **CGC** (Tate 2019) is the
-gene-level companion; **Cancer Hotspots / 3D Hotspots** (Chang 2016 / Gao 2017) are the variant-
-level recurrence catalogs that feed OncoKB's oncogenicity calls. Our pipeline currently
-aggregates raw counts without functional filtering; this topic defines the gap between "variant
-count" and "functional variant count."
+VUS / benign, and tier-assignment of therapy-actionability. **OncoKB** (Chakravarty et al.
+[@Chakravarty2017]) is the precision-oncology knowledge base baked into cBioPortal; **CGC** (Tate
+et al. [@Tate2019]) is the gene-level companion; **Cancer Hotspots / 3D Hotspots** (Chang et al.
+[@Chang2016] / Gao et al. [@Gao2017]) are the variant-level recurrence catalogs that feed OncoKB's
+oncogenicity calls. Our pipeline currently aggregates raw counts without functional filtering; this
+topic defines the gap between "variant count" and "functional variant count."
 
 ## Key Concepts
 
@@ -41,7 +41,8 @@ count" and "functional variant count."
 - **VUS = "Variant of Unknown Significance"** — not in OncoKB or Cancer Hotspots, no curated
   call. **Critical**: absence from OncoKB is not evidence of benignity; it usually means
   uncurated.
-- **Cancer Gene Census (CGC, Tate 2019).** Tier 1 (719 genes in v86) requires ≥2 publications
+- **Cancer Gene Census (CGC, Tate et al. [@Tate2019]).** Tier 1 (719 genes in v86) requires ≥2
+  publications
   on somatic mutations + ≥2 on functional involvement. Tier 2 (31 genes) has weaker evidence.
   Gene-level reference, not variant-level.
 - **Cancer Hotspots / 3D Hotspots.** Variant-level functional annotation via residue-level (1D)
@@ -53,9 +54,10 @@ Operational stack:
 1. Variant calls → annotated against OncoKB for oncogenicity + therapy tier.
 2. OncoKB-Oncogenic + Cancer Hotspots residues → "functional" filter for gene-level aggregations.
 3. CGC overlay → "is the gene a known cancer gene" filter at the gene level.
-4. Bailey 2018 consensus → "is the gene a driver per pan-cancer consensus" overlay.
+4. Bailey et al. [@Bailey2018] consensus → "is the gene a driver per pan-cancer consensus" overlay.
 
-**Version drift is dramatic.** Suehnholz 2024: re-annotating 47,271 MSK-IMPACT tumors against
+**Version drift is dramatic.** Suehnholz et al. [@Suehnholz2024]: re-annotating 47,271 MSK-IMPACT
+tumors against
 OncoKB v2017v1.8 vs v2022v3.17 shifted Level 1/2 actionability from 8.9% → 31.6%. Level 1 gene
 count grew from 14 to 45 + MSI-H + TMB-H. Pin OncoKB version on every annotated output.
 
@@ -68,7 +70,8 @@ weeks via the Clinical Genomics Annotation Committee.
   dramatically with OncoKB version and depends on which catalogs are combined (OncoKB ∪
   hotspots ∪ CGC ∪ Bailey). Best practice: report multiple "% functional" definitions side-by-
   side, each pinned to a specific catalog version.
-- **VUS reclassification rates.** Suehnholz 2024 shows tumors with only non-actionable drivers
+- **VUS reclassification rates.** Suehnholz et al. [@Suehnholz2024] show tumors with only
+  non-actionable drivers
   fell from 44.2% → 22.8% in 5 years — implying many former VUSs were promoted to actionable.
   Our gene-level outputs are insensitive to this; variant-level outputs would be sensitive.
 - **Tissue-context for OncoKB tiers.** A KRAS G12C variant is OncoKB Level 1 in NSCLC (sotorasib)
@@ -84,8 +87,8 @@ Concrete pipeline additions:
 2. **Hotspot-fraction per gene** — fraction of mutations in known hotspots per (gene, cancer).
    Already discussed in `topic:hotspot-based-driver-detection`.
 3. **CGC overlay** — gene-level "is in CGC" boolean. Task t051 queued.
-4. **OncoKB version stamping** — task t053 queued. Critical given Suehnholz 2024's drift
-   quantification.
+4. **OncoKB version stamping** — task t053 queued. Critical given the drift quantified by Suehnholz
+   et al. [@Suehnholz2024].
 
 ## Key References
 

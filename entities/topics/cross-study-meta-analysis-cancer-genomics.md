@@ -59,9 +59,9 @@ is about *which statistical machinery should do the combining once the biases ar
 ## Current State of Knowledge
 
 This is the **largest methodology gap in cross-study panel-based cancer genomics.** Published
-consortia papers (AACR GENIE 2017, Pugh 2022, Bandlamudi 2026, Nguyen 2022) generally aggregate
+consortia papers (AACR GENIE 2017, Pugh et al. [@Pugh2022], Bandlamudi et al. [@Bandlamudi2026], Nguyen et al. [@Nguyen2022]) generally aggregate
 counts across cohorts without explicit meta-analytic statistics. Where harmonization is
-attempted (Pugh 2022's TMB harmonization model; the Bailey 2018 26-tool consensus voting), it's
+attempted (the TMB harmonization model in Pugh et al. [@Pugh2022]; the Bailey et al. [@Bailey2018] 26-tool consensus voting), it's
 rarely accompanied by published variance estimates / heterogeneity statistics.
 
 The non-cancer meta-analytic literature (medical / behavioral / genomic — e.g.,
@@ -80,7 +80,7 @@ meta-analytic stats specifically).
   panels with high recurrence in their narrow gene set can produce extreme per-gene rates that
   dominate naive pooling.
 - **What's the right reference background for per-study effect sizes?** Per-cohort whole-coding
-  rate? Per-cancer-type expected rate? Per-gene-context expected rate (Lawrence 2014 / dNdScv
+  rate? Per-cancer-type expected rate? Per-gene-context expected rate (Lawrence et al. [@Lawrence2014] / dNdScv
   approach)? Each gives different biological interpretation.
 
 ## Relevance to This Project
@@ -101,19 +101,19 @@ Populated by the 2026-04-13 focused search
 
 **General meta-analysis methodology (Core now):**
 
-- **DerSimonian & Laird 1986** (`cite:DerSimonian1986`) — seminal random-effects estimator.
-- **Viechtbauer 2010** (`cite:Viechtbauer2010`) — `metafor` R package, tool-of-record.
+- **DerSimonian and Laird [@DerSimonian1986]** — seminal random-effects estimator.
+- **Viechtbauer [@Viechtbauer2010]** — `metafor` R package, tool-of-record.
 - **Langan et al. 2018** (`cite:Langan2018`) — simulation comparison of τ² estimators;
   recommends REML + HKSJ as modern default.
 - **Stijnen, Hamza & Özdemir 2010** (`cite:Stijnen2010`) — GLMM framework for sparse-data
   meta-analysis; methodological foundation for pooling (events, n) counts directly.
-- **Nyaga, Arbyn & Aerts 2014** (`cite:Nyaga2014`) — single-proportion meta-analysis
+- **Nyaga, Arbyn, and Aerts [@Nyaga2014]** — single-proportion meta-analysis
   (Stata `metaprop`); matches our per-study single-proportion framing.
 - **Lin & Xu 2020** (`cite:LinXu2020`) — modern critique of Freeman-Tukey arcsine for
   proportions; recommends GLMM / Bayesian hierarchical alternatives.
 - **Barendregt et al. 2013** (`cite:Barendregt2013`) — canonical Freeman-Tukey double-arcsine
   paper; context read for Lin & Xu 2020 critique.
-- **Higgins & Thompson 2002** (`cite:Higgins2002`) — I² heterogeneity statistic.
+- **Higgins and Thompson [@Higgins2002]** — I² heterogeneity statistic.
 - **IntHout et al. 2016** (`cite:IntHout2016`) — prediction intervals + HKSJ practical
   guidance.
 
@@ -137,11 +137,11 @@ Populated by the 2026-04-13 focused search
 ## Recommended default for this project
 
 Based on the 2026-04-13 search: **GLMM with logit link** on per-study (mutated-samples,
-total-samples) counts (Stijnen 2010; Lin & Xu 2020; Nyaga 2014) — implemented via
+total-samples) counts (Stijnen et al. [@Stijnen2010]; Lin and Xu [@LinXu2020]; Nyaga et al. [@Nyaga2014]) — implemented via
 `metafor::rma.glmm(measure = "PLO", method = "ML")` in R, or equivalent
 `brms::brm(k | trials(n) ~ 1 + (1 | study), family = binomial)` for the Bayesian
 alternative. Report pooled estimate with 95% CI (HKSJ-adjusted when K < 30), I², τ², and
-a 95% prediction interval (IntHout 2016) alongside the existing naive sample-weighted
+a 95% prediction interval (IntHout et al. [@IntHout2016]) alongside the existing naive sample-weighted
 ratio. See `search:0002-cross-study-meta-analysis-stats` §Recommended Next Actions
 for the full rationale.
 
@@ -151,7 +151,7 @@ for the full rationale.
   The IntOGen consensus-voting approach is the closest analogue. **This represents a novel
   contribution opportunity for this project.**
 - HKSJ primary sources (Hartung 2001, Sidik 2005) and Paule-Mandel 1982 not individually
-  retrieved; covered indirectly by Langan 2018 and IntHout 2016.
+  retrieved; covered indirectly by Langan et al. [@Langan2018] and IntHout et al. [@IntHout2016].
 - No dedicated Bayesian-hierarchical cancer-mutation-frequency-pooling paper found; cite
   Stijnen 2010 as methods foundation and Williams/Rast/Bürkner `brms` tutorials (not
   retrieved) for implementation patterns.

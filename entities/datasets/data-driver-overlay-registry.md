@@ -27,15 +27,15 @@ The local package is written at
 
 ## Package Contents
 
-The package contains the processed Bailey 2018 driver roster, COSMIC Cancer Gene Census gene
-registry, and Sanchez-Vega 2018 pathway templates.
+The package contains the processed Bailey et al. [@Bailey2018] driver roster, COSMIC Cancer Gene Census gene
+registry, and TCGA pathway templates [@SanchezVega2018].
 The manifest records resource paths, byte sizes, and SHA-256 hashes so downstream projects can
 verify that the annotation layer matches the source snapshot.
 
 ## Access
 
 The upstream sources have mixed access and redistribution terms.
-Bailey 2018 and Sanchez-Vega 2018 derive from article supplements; COSMIC CGC requires a COSMIC
-account and is not a general redistribution asset.
+Bailey et al. [@Bailey2018] and the TCGA pathway templates [@SanchezVega2018] derive from article
+supplements; COSMIC CGC requires a COSMIC account and is not a general redistribution asset.
 Generated local overlays should therefore be shared only where the corresponding upstream terms
 permit it.

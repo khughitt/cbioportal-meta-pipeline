@@ -17,6 +17,7 @@ ontology_terms:
 datasets: []
 source_refs:
 - cite:Huang2023a
+- cite:Schmitt2025
 related:
 - paper:Venkatesh2019
 - paper:Mancusi2023
@@ -242,10 +243,11 @@ studies, which this review does not provide.
 - Does not provide an unbiased, data-driven definition of "neural genes" in cancer — the
   candidate genes are identified post-hoc from mechanistic studies.
 - Quantitative claims (e.g., clinical trial outcomes, gene expression fold-changes) are sourced
-  from primary literature; [UNVERIFIED] for any specific numerical claim cited here.
-- SCLC synaptic synapse paper (Schmitt et al. 2023) was a bioRxiv preprint at time of
-  publication; peer-review status should be confirmed before treating Nrxn1/Nlgn1/Dcc/Reln
-  as fully established. [UNVERIFIED]
+  from primary literature; trace any specific numerical claim to the cited primary paper before
+  reuse.
+- The SCLC synapse paper cited as Schmitt et al. 2023 was later published as a Nature article
+  [@Schmitt2025], supporting Nrxn1/Nlgn1/Dcc/Reln as primary evidence rather than preprint-only
+  evidence.
 - The review does not quantify how much of the high mutation frequency of neural genes in
   cBioPortal could be explained by the mechanisms it describes versus gene-length confound
   (H3/Lawrence 2014 bias). These are orthogonal analytical questions.
@@ -266,10 +268,8 @@ cited:
 
 ## Follow-up
 
-- **Schmitt et al. 2023 (bioRxiv 2023.01.19.524045):** Full text of the SCLC synaptic gene
-  paper — the closest existing example of an unbiased screen identifying neural genes in a
-  non-CNS cancer. Verify peer-review status; if published, this is the primary evidence for
-  Nrxn1, Nlgn1, Dcc, Reln in SCLC.
+- **Schmitt et al. 2025** [@Schmitt2025]: primary evidence for functional SCLC-neuron synapses
+  and Nrxn1, Nlgn1, Dcc, Reln in SCLC.
 - **Regan et al. 2022 (iScience 25:104498):** Neural development gene signature in colon cancer
   CSCs (ALDH+ cells) with EGR2 as functional driver — relevant for defining whether "neural
   genes in CRC" reflects oncofetal reprogramming (H3) or contamination (H4).

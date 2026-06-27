@@ -231,8 +231,9 @@ connections:
   (Code S2) deposited on Zenodo (ref 44 and 45 in the paper).
 - **Signature tables:** Reference SBS and DBS signatures, QC status, and organ-specific
   exposure matrices available in supplementary tables and via Zenodo download.
-- **License:** Not stated explicitly in the manuscript; code is via the `signature.tools.lib`
-  package (GPL-3 in the repo [UNVERIFIED]).
+- **License:** Not stated explicitly in the manuscript; the `signature.tools.lib` repository
+  uses a BSD-like license restricted to non-profit academic research and excluding clinical-care
+  use.
 
 ## Follow-up
 

@@ -27,7 +27,7 @@ related:
 - **Year:** 2025
 - **Journal:** Journal of Cancer Biology
 - **Volume/Issue/Pages:** 6(2):108–114
-- **DOI/URL:** [UNVERIFIED] (no DOI given in PDF; published by ProBiologists, open-access)
+- **DOI/URL:** https://doi.org/10.46439/cancerbiology.6.080
 - **BibTeX key:** DeVito2025
 - **Source:** PDF
 
@@ -109,8 +109,8 @@ This review is directly relevant to **hypothesis h08** (agnostic covariate–sig
 
 ## Model / Tool Availability
 
-- **Grabski 2025 (Multi-Study NMF):** R code; GitHub repository referenced in Genome Biology paper (Genome Biol. 2025 Apr 16;26(1):98). [UNVERIFIED exact repo URL]
-- **Hansen 2025 (BaP Multi-NMF):** R code; GitHub repository referenced in arXiv:2502.01468. [UNVERIFIED exact repo URL]
+- **Grabski 2025 (Multi-Study NMF):** R code at https://github.com/igrabski/MultiStudyNMF.
+- **Hansen 2025 (BaP Multi-NMF):** R code at https://github.com/blhansen/BAPmultiNMF.
 - Table 1 in the review provides a comprehensive taxonomy of 30+ signature analysis tools organised by topic (Dirichlet mixture specs, regularization, ensembling, multi-study, covariates, etc.)
 
 ## Follow-up

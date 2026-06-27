@@ -80,13 +80,14 @@ Within the signature-method ecosystem this project tracks, ReDeNovo sits alongsi
 - A de novo signature could theoretically be a linear combination of known ones (acknowledged as a limitation; no false positives of this type were observed in tests, but the check is not implemented).
 - Biological validation relies on literature consistency as a proxy for ground truth; false negatives cannot be assessed from secondary evidence alone.
 - Only SBS (trinucleotide context) signatures are evaluated; no extension to DBS, ID, or other variant classes.
-- Computational cost relative to comparators is not reported in the main text. [UNVERIFIED]
+- Computational cost relative to comparators is not reported in the main text.
 
 ## Model / Tool Availability
 
 - **Repository:** https://github.com/ncbi/redenovo
-- **License:** Not explicitly stated in paper (NIH intramural work; likely public domain or permissive) [UNVERIFIED]
-- **Language / dependencies:** Not stated in main text [UNVERIFIED]
+- **License:** MIT license in the repository.
+- **Language / dependencies:** Python package with a conda `environment.yml`; repository
+  metadata identifies Python as the primary language.
 - **Input:** Mutation count matrix M (n × 96 for SBS) + COSMIC catalogue; outputs activity matrix A and signature matrix P
 - **Default parameters:** δ (novelty cosine threshold), φ and γ (activity support) have defaults but are user-adjustable
 

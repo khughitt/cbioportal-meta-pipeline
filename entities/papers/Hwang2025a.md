@@ -101,11 +101,11 @@ No datasets, code, or experimental models are generated or released.
 ### Barriers to clinical translation (survey data)
 
 11. Survey of n = 188 on specific knowledge gap barriers: the "lack of fundamental knowledge" bottleneck breaks down as follows (approximate from Figure 2 pie chart):
-    - Technological/methodological limitations: ~4.8% [UNVERIFIED — approximate from pie chart]
+    - Technological/methodological limitations: ~4.8% (visual estimate from pie chart)
     - Insufficient cross-disciplinary integration: ~6.9%
     - Lack of scientists with dual expertise: ~12.2%
-    - Lack of fundamental neuroscience knowledge: portion unclear [UNVERIFIED]
-    - Lack of fundamental cancer biology knowledge: portion unclear [UNVERIFIED]
+    - Lack of fundamental neuroscience knowledge: portion unclear from the figure
+    - Lack of fundamental cancer biology knowledge: portion unclear from the figure
     (Note: exact breakdowns are visual estimates from Figure 2; the paper reports the total n but not per-category percentages in the text.)
 
 ## Relevance
@@ -161,9 +161,10 @@ The paper does NOT itself provide a computational recipe for label-free neural-g
 No software, datasets, or computational resources are released with this paper. It is a commentary. The referenced technologies (viral vectors, spatial omics platforms, bioelectronic devices, bispecific antibody-drug conjugates) are referenced via third-party publications, not released here.
 
 The paper cites the following resources/tools as relevant to the field (none released by this paper):
-- Retrograde viral vector systems for CNS-to-tumor circuit tracing [UNVERIFIED — no specific vector or repository named]
-- Spatial omics platforms (inferred from "spatial and molecular targeting" language)
-- Bioelectronic neuromodulation devices [UNVERIFIED — no specific device named]
+- Retrograde viral vector systems for CNS-to-tumor circuit tracing, without naming a specific
+  vector implementation or repository.
+- Spatial omics platforms, inferred from the paper's "spatial and molecular targeting" language.
+- Bioelectronic neuromodulation devices, without naming a specific device implementation.
 - NF1 mouse model with lamotrigine [citing Pan et al. 2021, Nature Genetics] — model exists in published form
 
 ## Follow-up

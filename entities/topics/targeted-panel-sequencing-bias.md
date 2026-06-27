@@ -44,8 +44,9 @@ Cross-study aggregation that ignores panel content is therefore not just noisy â
   different exonic regions to different depths. This is the right denominator for ratio
   computations, not "is the gene on the panel."
 - **Matched-vs-unmatched normal calling.** MSK-IMPACT runs paired buffy coat for ~98% of
-  cases (Zehir 2017), giving per-patient germline subtraction. GENIE is **52% tumor-only**
-  (Pugh 2022), relying on centralized population-frequency / artifact filtering. Tumor-only
+  cases (Zehir et al. [@Zehir2017]), giving per-patient germline subtraction. GENIE is **52%
+  tumor-only**
+  (Pugh et al. [@Pugh2022]), relying on centralized population-frequency / artifact filtering. Tumor-only
   pipelines also fail to subtract clonal-hematopoiesis variants (see
   `topic:clonal-hematopoiesis-contamination`).
 - **Panel design choices that distinguish vendors.** MSK-IMPACT covers TERT promoter +
@@ -54,7 +55,7 @@ Cross-study aggregation that ignores panel content is therefore not just noisy â
   their full BED.
 - **Cohort selection on top of panel selection.** Clinical-sequencing cohorts are dominated
   by advanced / metastatic / pre-treated disease, biasing observed gene-frequencies for
-  resistance-associated alterations. Zehir 2017 quantifies AR mutations 18% in metastatic
+  resistance-associated alterations. Zehir et al. [@Zehir2017] quantify AR mutations 18% in metastatic
   prostate vs 1% in TCGA, ESR1 11% in metastatic breast vs 4% in TCGA. This is a *cohort*
   bias on top of the *panel* bias.
 
@@ -65,14 +66,14 @@ not publish ready-to-use harmonization corrections**. This recurring theme spans
 
 - AACR GENIE 2017 documents the 44-gene core + 12-panel structure but does not publish a
   weighted normalization scheme.
-- Pugh 2022 reports a TCGA-vs-GENIE concordance check (median weighted RMSD 0.32) and
+- Pugh et al. [@Pugh2022] report a TCGA-vs-GENIE concordance check (median weighted RMSD 0.32) and
   mentions a TMB harmonization model â€” neither quantified, neither released as a tool.
-- Chakravarty & Solit 2021 reviews panel platforms but emphasizes clinical utility / cfDNA /
+- Chakravarty and Solit [@ChakravartySolit2021] review panel platforms but emphasize clinical utility / cfDNA /
   signatures rather than cross-platform comparability.
-- Bandlamudi 2026 introduces a "non-canonical context" framework that implicitly *requires*
+- Bandlamudi et al. [@Bandlamudi2026] introduce a "non-canonical context" framework that implicitly *requires*
   panel-aware analysis (otherwise the ~1/3 non-canonical drivers are confounded with panel
   coverage), but does not publish a panel-correction recipe.
-- Ellrott 2018 (MC3) re-calls all TCGA exomes uniformly â€” solving panel heterogeneity for
+- Ellrott et al. [@Ellrott2018] (MC3) re-called all TCGA exomes uniformly â€” solving panel heterogeneity for
   the TCGA portion of any cross-study cohort by converting it to a single WES MAF.
 
 ## Controversies & Open Questions
@@ -85,7 +86,7 @@ not publish ready-to-use harmonization corrections**. This recurring theme spans
   panel or four?** The progressive addition of genes means earlier samples are missing
   callable regions for later-added genes. Current practice (cBioPortal) treats them as one
   pooled cohort.
-- **Are TMB and signature calls panel-comparable at all?** Alexandrov 2020 says signature
+- **Are TMB and signature calls panel-comparable at all?** Alexandrov et al. [@Alexandrov2020] say signature
   decomposition needs WES/WGS power (panel data needs SigMA or coarse flags); TMB needs
   per-panel calibration that no consortium has published.
 
@@ -112,7 +113,7 @@ Three concrete actions emerged from cross-batch reading:
    + Snakemake rule already wired (Batch 5+6 detour). Manual prerequisite: download GENIE
    release from Synapse `syn24179663`. Once ingested, `summary/mut/table/*` outputs should
    either restrict to a panel-intersection BED or report a callable-region-weighted ratio.
-2. **Switch the TCGA portion of our cohort to MC3** (Ellrott 2018; Synapse `syn7214402` or
+2. **Switch the TCGA portion of our cohort to MC3** (Ellrott et al. [@Ellrott2018]; Synapse `syn7214402` or
    GDC). One unified MAF replaces heterogeneous per-study cBioPortal TCGA MAFs (~25% more
    calls, single schema, documented filter vocabulary). **Not yet implemented.**
 3. **Flag the cohort-vs-panel two-axis bias explicitly** in any cross-study output: every

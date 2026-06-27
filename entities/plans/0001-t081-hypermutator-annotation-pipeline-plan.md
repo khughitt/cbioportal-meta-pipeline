@@ -81,10 +81,10 @@ These are cited in the audit `doc/meta/bias-audit-cross-study-aggregation-pipeli
 
 1. **cBioPortal MAFs are complete within their called set** — all somatic mutations called by the study's pipeline are present. We do *not* model upstream caller differences (MuTect2 vs Strelka vs Varscan etc.). Impact: a study that uses a stricter caller will appear lower-TMB than one with a permissive caller, even for the same sample. Partly mitigated by per-cancer-type z-score (within-cancer-type comparisons are cancer-dominant, not caller-dominant) but **flagged as residual bias**.
 2. **Panel callable-Mb is approximated as "sum of exonic bases in the panel BED"** — we do *not* use per-sample coverage metrics (most studies don't publish them). This means a sample with 20% of panel regions below coverage threshold still has its TMB computed against the nominal panel size. Bias direction: TMB of low-coverage samples is *underestimated*.
-3. **Variant-class filter for the TMB numerator** — we count only protein-altering variants (`Missense_Mutation`, `Nonsense_Mutation`, `Frame_Shift_Del/Ins`, `In_Frame_Del/Ins`, `Splice_Site`, `Translation_Start_Site`, `Nonstop_Mutation`). We exclude `Silent`, `Intron`, `3'UTR`, `5'UTR`, `RNA`, `IGR`. This matches Chalmers 2017 F1CDx / FMI TMB convention. A pan-cancer "nonsynonymous" mutational burden is the comparable unit across WES and panel.
-4. **POLE / POLD1 hotspot list is literature-curated, not exhaustive** — we use the canonical 8-site POLE list (P286R, V411L, S297F, S459F, A456P, L424V, M295V, F367L) and 6-site POLD1 list (P327L, R689W, S478N, L474P, D316H, D316N) from Campbell 2017, Rayner 2016, Ma 2018. Rare hotspots are missed. Low-impact error — covered in bulk by the tmb_zscore signal.
+3. **Variant-class filter for the TMB numerator** — we count only protein-altering variants (`Missense_Mutation`, `Nonsense_Mutation`, `Frame_Shift_Del/Ins`, `In_Frame_Del/Ins`, `Splice_Site`, `Translation_Start_Site`, `Nonstop_Mutation`). We exclude `Silent`, `Intron`, `3'UTR`, `5'UTR`, `RNA`, `IGR`. This matches Chalmers et al. [@Chalmers2017] F1CDx / FMI TMB convention. A pan-cancer "nonsynonymous" mutational burden is the comparable unit across WES and panel.
+4. **POLE / POLD1 hotspot list is literature-curated, not exhaustive** — we use the canonical 8-site POLE list (P286R, V411L, S297F, S459F, A456P, L424V, M295V, F367L) and 6-site POLD1 list (P327L, R689W, S478N, L474P, D316H, D316N) from Campbell et al. [@Campbell2017Hypermutation], `Rayner 2016`, and `Ma 2018`. Rare hotspots are missed. Low-impact error — covered in bulk by the tmb_zscore signal.
 5. **MSI status availability is study-dependent** — only a subset of cBioPortal studies publish `MSI_TYPE` / `MSI_STATUS` / `MSI_SCORE`. Where present, calling methods vary (MSIsensor, MANTIS, PCR-based pentaplex, immunohistochemistry of MMR proteins). We treat MSI-H as a strong signal but do not assume MSS means not-hypermutated; MSS samples can still be ultra-hypermutated via POLE.
-6. **GMM bimodality assumption** — per-cancer-type log10(TMB) is approximately bimodal when hypermutators exist (Campbell 2017 demonstrated for CRC, UCEC, SKCM). For cancers with no hypermutators (most sarcomas, many pediatric tumors) the GMM will either fit a single-component solution or produce spurious bimodality. We guard against both with a Hartigan's dip test + minimum-sample-size threshold.
+6. **GMM bimodality assumption** — per-cancer-type log10(TMB) is approximately bimodal when hypermutators exist (Campbell et al. [@Campbell2017Hypermutation] demonstrated this for CRC, UCEC, SKCM). For cancers with no hypermutators (most sarcomas, many pediatric tumors) the GMM will either fit a single-component solution or produce spurious bimodality. We guard against both with a Hartigan's dip test + minimum-sample-size threshold.
 7. **Raw mutation count conflates drivers and passengers** — hypermutators have more of both. When we later use `is_hypermutator` to exclude samples from per-gene aggregation, we are *under-counting* driver events in MSI-CRC, POLE-UCEC, UV-SKCM cancers. That is the whole point (those drivers are swamped by passengers otherwise), but the exclusion has interpretive cost: pooled driver rates for those cancers should be understood as "among non-hypermutators of this cancer type". Document in every output.
 
 ---
@@ -93,7 +93,7 @@ These are cited in the audit `doc/meta/bias-audit-cross-study-aggregation-pipeli
 
 These belong in the output docstring of every consumer of `is_hypermutator`, and in the pre-registration (t079). Listed here so the plan reviewer doesn't have to reconstruct them.
 
-- **Exclusion-rate sanity check per cancer type** — publish per-cancer-type exclusion rates alongside any hypermutator-excluded output. Target ranges from Zehir 2017 / Chalmers 2017: MSK-IMPACT 10k overall ≈ 3–5%, UCEC ≈ 20–25%, CRC ≈ 10–15%, SKCM ≈ 5–10%, pediatric tumors ≈ 0%.
+- **Exclusion-rate sanity check per cancer type** — publish per-cancer-type exclusion rates alongside any hypermutator-excluded output. Target ranges from Zehir et al. [@Zehir2017] / Chalmers et al. [@Chalmers2017]: MSK-IMPACT 10k overall ≈ 3–5%, UCEC ≈ 20–25%, CRC ≈ 10–15%, SKCM ≈ 5–10%, pediatric tumors ≈ 0%.
 - **Per-study panel-composition bias** — WES studies will have more variance in raw counts than panel studies for the same underlying TMB, because panels sample only ~1–2 Mb. Use `tmb` (normalized), never raw `mutation_count`, for cross-study comparisons.
 - **Bimodality fit diagnostics** — for each per-cancer-type GMM, export `bic_1_component`, `bic_2_component`, `hartigans_dip_pvalue`, `n_samples`, `fit_quality`. Consumers can gate on `fit_quality` before trusting `is_hypermutator_gmm`.
 - **Sample-level vs patient-level filtering semantics** — `is_hypermutator` is sample-level. If a patient has a hypermutator sample and a non-hypermutator sample, the patient still contributes to non-hypermutator aggregates via the non-hypermutator sample. Document.
@@ -123,10 +123,10 @@ validation runs only; it does NOT need to be in the main analysis config.
 - **`tcga_mc3` with `cancer_type == "UCEC"` subset:** ~25% hypermutator expected (Cancer Genome
   Atlas 2013 TCGA-UCEC analysis; POLE-ultramutated subset ~7%).
 - **`tcga_mc3` with `cancer_type == "COAD"` or `"READ"`:** MSI-H rate ~15%; hypermutator rate
-  matches (Kandoth 2013, Ellrott 2018).
-- **`tcga_mc3` with `cancer_type == "SKCM"`:** UV-hypermutator tail ~5% (Hayward 2017).
+  matches Kandoth et al. [@Kandoth2013] and Ellrott et al. [@Ellrott2018].
+- **`tcga_mc3` with `cancer_type == "SKCM"`:** UV-hypermutator tail ~5% (`Hayward 2017`).
 - **`msk_impact_2017`** (if added to the validation config): overall hypermutator rate ~3–5%
-  (Zehir 2017); CRC-hypermutator ~10–15%.
+  (Zehir et al. [@Zehir2017]); CRC-hypermutator ~10–15%.
 - **Acceptance:** flagged rate within ±20% relative of the literature rate per cancer type with
   ≥ 50 samples.
 
@@ -154,7 +154,7 @@ implementer's README.
 | `code/scripts/convert_to_feather.py` | (a) Ingest `MSI_TYPE` / `MSI_STATUS` / `MSI_SCORE` from `data_clinical_sample.txt` when present; write `msi_type` (normalized categorical) + `msi_score` (float) into `samples.feather`. Zero-impact when columns absent. (b) **Add `study_id` column** to `samples.feather` (currently absent — F3 fix). | Tasks 2, 4 |
 | `code/scripts/convert_to_feather.py` | Retain `variant_class` and `hgvsp_short` (already done — verified at `convert_to_feather.py:95,104`). No change. | — |
 | `code/config/config-10k-genes.yml` | Add top-level `hypermutator:` block with `gmm_min_samples: 100`, `gmm_min_delta_bic: 10`, `gmm_min_dip_pvalue: 0.1`, `zscore_fallback_threshold: 1.5`, `score_threshold: 0.5`, `exclude_from_aggregation: false` (default False — flips to True only if t079 pre-registration decides so). Also `wes_default_callable_mb: 30`. **GMM random seed reuses the existing top-level `random_seed` config key** (already used by `cluster_genes.py` / `cluster_cancer_types.py`); no new seed key needed. | Task 1 |
-| `code/config/config-10k-genes.yml` | Add `panel_callable_mb_override:` map for published panel sizes (MSK-IMPACT-341: 1.014 Mb, IMPACT-410: 1.162 Mb, IMPACT-468: 1.446 Mb — Cheng 2015, Zehir 2017, Bandlamudi 2026). | Task 1 |
+| `code/config/config-10k-genes.yml` | Add `panel_callable_mb_override:` map for published panel sizes (MSK-IMPACT-341: 1.014 Mb, IMPACT-410: 1.162 Mb, IMPACT-468: 1.446 Mb — Cheng et al. [@Cheng2015], Zehir et al. [@Zehir2017], Bandlamudi et al. [@Bandlamudi2026]). | Task 1 |
 | `code/workflows/Snakefile` | New rules: `build_panel_callable_sizes`, `compute_per_sample_tmb`, `detect_polymerase_hotspots`, `combine_samples_tmb`, `fit_per_cancer_tmb_gmm`, `annotate_hypermutators`. See Snakemake-specific appendix for exact targets. | Tasks 1–6 |
 | `code/scripts/create_freq_tables.py` | **Major change (F1 fix):** accept optional `samples_annotated.feather` input; when present, emit per-entity tables with paired `num_inclusive` / `num_exclusive` / `ratio_inclusive` / `ratio_exclusive` / `n_samples_inclusive` / `n_samples_exclusive` columns. `num` / `ratio` aliases to the inclusive pair are safe here (consumers — `create_combined_freq_tables.py:19`, `create_combined_gene_cancer_freq_table.py:78`, `create_combined_gene_cancer_mutation_matrices.py:22` — all pivot per-study `ratio` values, so aliasing is transparent). | Task 7 |
 | `code/scripts/create_combined_sample_table.py` | Add `study_id`, `is_hypermutator`, `hypermutation_score`, `hypermutator_reason`, `tmb`, `tmb_log10`, `tmb_zscore_within_cancer`, `pole_hotspot_detected`, `pold1_hotspot_detected`, `msi_type` columns to combined output. **Canonical join key becomes (`study_id`, `sample_id`)** — documented in the file docstring. | Task 7 |
@@ -250,7 +250,7 @@ F3 fix for `study_id` as a first-class column on every sample-level artifact.
 **Validation criteria:**
 - Unit tests pass.
 - Integration: on `msk_impact_2017`, median `tmb` across the cohort should be ~3–6 mut/Mb
-  (Chalmers 2017, Zehir 2017); zero samples with `mutation_count == 0` (MSK-IMPACT requires ≥1
+  (Chalmers et al. [@Chalmers2017], Zehir et al. [@Zehir2017]); zero samples with `mutation_count == 0` (MSK-IMPACT requires ≥1
   call to be in the cohort). Assert.
 - Spot-check: sample with >5000 mutations in a panel study → log warning (likely CH-contaminated
   tumor-only or corrupted count; not a test failure, but surface for investigation).
@@ -276,7 +276,7 @@ F3 fix for `study_id` as a first-class column on every sample-level artifact.
    POLD1_HOTSPOTS = frozenset(["P327L", "R689W", "S478N", "L474P",
                                "D316H", "D316N"])
    ```
-   Citations in docstring: Campbell 2017, Rayner 2016, Ma 2018.
+   Citations in docstring: Campbell et al. [@Campbell2017Hypermutation], `Rayner 2016`, `Ma 2018`.
 3. Script:
    - Input: `mut.feather` (per study).
    - Strip `p.` prefix from `hgvsp_short`; match against hotspot sets gated on `symbol in {"POLE", "POLD1"}`.

@@ -43,14 +43,15 @@ reference spectra and study-level overlays already built in the project.
 
 ### Core Propositions
 
-- **P1 (presence).** For at least one canonical CH gene set (Bolton 2020 7-gene panel) and at
+- **P1 (presence).** For at least one canonical CH gene set (Bolton et al. [@Bolton2020]
+  7-gene panel) and at
   least one tissue with documented normal-clonal expansion (esophagus, breast, skin), the
   per-gene mutation rate in unmatched-normal cBioPortal studies is significantly elevated
   relative to matched-normal studies of the same cancer-type, after stratifying on cohort
   composition and panel callability.
 - **P2 (mechanism partition).** The elevation in P1 partitions into at least three
-  distinguishable channels: (a) CH leakage (Coombs 2017, Bolton 2020), (b) normal-tissue
-  clonal contamination (Martincorena 2018, Yokoyama 2019), and (c) replication-stress / CFS
+  distinguishable channels: (a) CH leakage [@Coombs2017; @Bolton2020], (b) normal-tissue
+  clonal contamination [@Martincorena2018], and (c) replication-stress / CFS
   loci (FHIT, MACROD2, IMMP2L, GRID2, LSAMP, …). Each channel has a distinct gene-level
   signature recoverable from existing project artifacts.
 - **P3 (correctability).** Per-tissue/per-process background subtraction using the project's
@@ -76,9 +77,10 @@ reference spectra and study-level overlays already built in the project.
   matched-vs-unmatched-normal calling, cohort composition (primary vs metastatic), and
   per-study cancer-type heterogeneity. The corrections need to be applied as a stack, not
   in isolation.
-- The "expected normal background" is itself imperfect — Li 2021 covers 9 tissues, not the
-  full set; matching cBioPortal cancer-types to Li 2021 tissues is itself a modeling choice.
-- The CH priority gene panel (Bolton 2020 7-gene) may be incomplete (`q006`); residual CH
+- The "expected normal background" is itself imperfect — Li et al. [@Li2021] cover 9 tissues, not the
+  full set; matching cBioPortal cancer-types to that tissue set is itself a modeling choice.
+- The CH priority gene panel (Bolton et al. [@Bolton2020] 7-gene) may be incomplete
+  (`question:0006-ch-priority-gene-completeness`); residual CH
   leakage outside the 7 genes would be silently absorbed into apparent driver rates.
 
 ## Predictions
@@ -88,8 +90,9 @@ reference spectra and study-level overlays already built in the project.
   characterizable gene set (CH + tissue normal-clone + CFS) rather than spreading evenly.
 - After correction, the residual matched-vs-unmatched gap on CH genes drops by ≥50% on
   average; the gap on canonical drivers stays within ±10% (no over-correction).
-- Esophageal NOTCH1 rates (`q001`) drop after normal-tissue spectrum subtraction by an amount
-  consistent with Martincorena 2018's reported normal-esophagus NOTCH1 burden in the same
+- Esophageal NOTCH1 rates (`question:0001-normal-epithelial-clone-contamination-in-esophageal-studies`)
+  drop after normal-tissue spectrum subtraction by an amount
+  consistent with the normal-esophagus NOTCH1 burden reported by Martincorena et al. [@Martincorena2018] in the same
   age range.
 
 ## Falsifiability
@@ -106,14 +109,15 @@ reference spectra and study-level overlays already built in the project.
 
 ## Supporting Evidence
 
-- **Literature.** Martincorena 2018 — NOTCH1 in normal esophagus at rates exceeding the
-  cancer rate in the same tissue. Coombs 2017 / Bolton 2020 — CH leakage signature. Yaacov
-  2023 — normal-tissue replication-timing bias for SBS1. Li 2021 — body-map normal somatic
-  mutation rates as null model. Lee-Six 2018 — normal-colon clonal expansions; the same
-  drivers dominate normal expansions and the cancers.
+- **Literature.** Martincorena et al. [@Martincorena2018] — NOTCH1 in normal esophagus at rates exceeding the
+  cancer rate in the same tissue. Coombs et al. [@Coombs2017] and Bolton et al. [@Bolton2020]
+  — CH leakage signature. Yaacov et al. [@Yaacov2023] — normal-tissue replication-timing bias
+  for SBS1. Li et al. [@Li2021] — body-map normal somatic mutation rates as null model.
+  Lee-Six et al. [@LeeSix2018] — normal hematopoietic clonal dynamics.
 - **Empirical (project).** t110 BRCA matched-vs-unmatched comparison (negative for the SBS1
   ratio specifically but established the comparison framework). t126 SBS1 LRR-bias-per-study
-  (q009 retired but methodology validated). t131 full pan-cancer dNdScv run surfaced
+  (`question:0009-sbs1-lrr-bias-as-normal-contamination-flag` retired but methodology validated).
+  t131 full pan-cancer dNdScv run surfaced
   CFS-overlapping genes (FHIT, MACROD2, IMMP2L, …) at the head of the raw distribution after
   the t145 fix — consistent with channel (c).
 - **Infrastructure built (un-exploited).** `t111` per-tissue reference spectra (built
@@ -135,7 +139,8 @@ reference spectra and study-level overlays already built in the project.
 
 ## Evidence Needed To Shift Belief
 
-- **Decisive supporting test (P1):** Run `t127` (first q008 quantitative pass) over the 10k
+- **Decisive supporting test (P1):** Run `t127` (first
+  `question:0008-signature-decomposition-tissue-background-subtraction` quantitative pass) over the 10k
   config with `t111` reference spectra, comparing per-gene rates before and after subtraction
   on `tcga_mc3` (matched) vs `msk_impact_2017` (unmatched) for breast cancer. Expectation:
   CH gene rates drop in unmatched, drivers unchanged.
@@ -151,7 +156,15 @@ reference spectra and study-level overlays already built in the project.
 
 - **Topics:** `topic:clonal-hematopoiesis-contamination`,
   `topic:signature-decomposition-unmatched-normal`, `topic:mutation-rate-normalization`.
-- **Questions subsumed:** q001, q002, q004, q005, q006, q007, q008, q010 (q009 retired).
+- **Questions subsumed:** `question:0001-normal-epithelial-clone-contamination-in-esophageal-studies`,
+  `question:0002-normal-breast-cna-background-chr1q-chr16q`,
+  `question:0004-mca-burden-in-esophageal-vs-other-study-tissues`,
+  `question:0005-gli1-normal-tissue-hotspot-inflation`,
+  `question:0006-ch-priority-gene-completeness`,
+  `question:0007-cross-tissue-somatic-mutation-rate-variation-as-null-model`,
+  `question:0008-signature-decomposition-tissue-background-subtraction`,
+  `question:0010-cuplr-style-tof-classifier-for-suspect-normal-samples`
+  (`question:0009-sbs1-lrr-bias-as-normal-contamination-flag` retired).
 - **Sibling hypotheses:** `hypothesis:0005-healthy-somatic-background-atlas` (the
   cross-individual, cross-tissue, cross-age generalization of the "normal background"
   notion); `hypothesis:0002-cross-study-ranking-divergence-is-structured` (methodological

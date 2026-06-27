@@ -27,7 +27,7 @@ Cross-sectional cBioPortal / GENIE data contain enough joint-distribution struct
 **Mutual Hazard Networks** (Schill 2020; observation-event extension Schill 2024; Python
 implementation Vocht 2026) can recover a directed progression order at the **Sanchez-Vega
 2018 pathway level** which is biologically interpretable and consistent with PCAWG
-(Gerstung 2020) chronologies. The recovered order, per histology, follows a pattern: **(i)
+chronologies [@Gerstung2020]. The recovered order, per histology, follows a pattern: **(i)
 intrinsic mutators (MMR, POLE, POLD1) → (ii) lineage-specifying drivers (RTK/RAS, Wnt, NRF2,
 PI3K, etc.) → (iii) checkpoint loss / expansion-permitting events (TP53, RB1, cell-cycle)**.
 Gene-level ordering, used as a drill-down on top of pathway-level, recovers known
@@ -52,7 +52,7 @@ MHN pass under our panel + cohort-size distribution.
   frequency.
 - **P2 (per-histology gene-level recovery).** Gene-level MHN fits per histology, after
   hypermutator stratification (`t081`) and CH/normal-tissue contamination correction (`h01`),
-  recover at least 70% of the per-histology orderings tabulated in PCAWG Gerstung 2020
+  recover at least 70% of the per-histology orderings tabulated in Gerstung et al. [@Gerstung2020]
   Table 1 (CRC: APC → KRAS → TP53; LUAD: STK11 → KEAP1; thyroid: BRAF → TERT; breast:
   TP53 ⇄ PIK3CA → late events).
 - **P3 (collider-bias resolution helps).** Schill 2024's observation-event-augmented MHN
@@ -113,7 +113,7 @@ MHN pass under our panel + cohort-size distribution.
   panel + cohort-size distribution) fails to recover ≥70% of injected edges, the inference
   pipeline is not powered for this data and the hypothesis is operationally falsified.
 - If the inferred order on PCAWG-overlapping cancer types disagrees with PCAWG (recovery of
-  ≤30% of Gerstung 2020 Table 1 orderings), the method is not validated and the biology
+  ≤30% of Gerstung et al. [@Gerstung2020] Table 1 orderings), the method is not validated and the biology
   claim cannot be defended.
 
 ## Promotion criteria
@@ -138,10 +138,10 @@ Promote to `phase: active` when **all three** are met:
 - **Schill 2020 (paper):** original MHN with TCGA pan-cancer validation against known
   per-histology orderings (APC → KRAS → TP53 in CRC; TP53 → PIK3CA in breast; IDH1 → TP53
   → ATRX in glioma).
-- **PCAWG Gerstung 2020 Nature 578:122:** independent ground truth for pan-cancer
-  chronology, derived from within-tumor VAF/CCF on whole-genome data.
-- **Sanchez-Vega 2018 Cell:** project already has the 10-pathway annotation pipeline in
-  place (`process_sanchez_vega_pathways.py`); aggregation infrastructure exists.
+- **PCAWG chronology:** independent ground truth for pan-cancer chronology, derived from
+  within-tumor VAF/CCF on whole-genome data [@Gerstung2020].
+- **TCGA pathway analysis:** project already has the 10-pathway annotation pipeline in
+  place (`process_sanchez_vega_pathways.py`); aggregation infrastructure exists [@SanchezVega2018].
 - **Discussion (2026-04-24):** detailed prior analysis of identifiability, confounders, and
   method-selection rationale.
 
@@ -151,7 +151,7 @@ Promote to `phase: active` when **all three** are met:
   consistent with both "A precedes B in time" *and* "A-only clones are simply fitter than
   B-only clones." MHN/CBN resolve this only under no-reversal and constant-hazard
   assumptions, both arguably violated in cancer.
-- TP53 appears late in PCAWG (Gerstung 2020) for many histologies, contradicting the naive
+- TP53 appears late in PCAWG chronology [@Gerstung2020] for many histologies, contradicting the naive
   "all repair genes first" reading of the mutator-phenotype hypothesis. The pathway-level
   framing handles this (TP53 is checkpoint, not intrinsic mutator) but only if the framing
   itself is correct; if hypermutator-driven cohorts are mis-classified, the predicted order
@@ -164,7 +164,7 @@ Promote to `phase: active` when **all three** are met:
 - **Decisive supporting test:** Reproduce the Vocht 2026 LUAD demo on `genie` LUAD samples
   in our pipeline; if recovered top-3 trajectories agree with their Figure 2 set-wise, the
   pipeline is validated. Then run on CRC, breast, thyroid, glioma; compare per-histology
-  recovered ordering against PCAWG Gerstung 2020 Table 1.
+  recovered ordering against Gerstung et al. [@Gerstung2020] Table 1.
 - **Decisive disputing test:** Bootstrap resampling of the cohort gives edge-set Jaccard <
   0.5 at the pathway level; the inference is too unstable to support claims.
 - **Identifiability test:** Apply the Schill 2024 observation-event extension and compare
@@ -173,7 +173,8 @@ Promote to `phase: active` when **all three** are met:
 
 ## Related Work
 
-- **Questions:** `q012` (this hypothesis is the directed-ordering frame for q012).
+- **Questions:** `question:0012-mutation-ordering-cross-sectional-inference` (this hypothesis is the
+  directed-ordering frame for that question).
 - **Discussions:** `discussion:0002-mutation-ordering-and-path-dependency`.
 - **Topics:** `topic:co-occurrence-and-mutual-exclusivity`.
 - **Tasks (existing):** `t078` (DISCOVER co-occurrence — provides callability mask + null
@@ -184,5 +185,5 @@ Promote to `phase: active` when **all three** are met:
 - **Sibling hypotheses:** `h06` (pre-malignant n-1 driver carriage — observed-ordering
   complement to MHN-inferred ordering).
 - **External:** Schill 2020 Bioinformatics; Schill 2024 (collider-bias resolution); Vocht
-  2026 Bioinformatics Advances; Gerstung 2020 *Nature* 578:122; Beerenwinkel 2007 (CBN);
-  Caravagna 2016 (CAPRI).
+  2026 Bioinformatics Advances; PCAWG chronology [@Gerstung2020]; Beerenwinkel 2007 (CBN);
+  CAPRI [@Caravagna2016].

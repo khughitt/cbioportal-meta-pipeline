@@ -91,28 +91,28 @@ Sources of evidence include:
 
 ## Relevance
 
-This paper is directly relevant to understanding the user's observation that many top-mutated genes in the cBioPortal pipeline have neural/neuronal annotations. It bears on hypotheses H1 through H3, but most strongly bridges H1 and H2:
+This paper is directly relevant to understanding the user's observation that many top-mutated genes in the cBioPortal pipeline have neural/neuronal annotations. It bears on hypotheses `H1` through `H3`, but most strongly bridges `H1` and `H2`:
 
-**H1 (neural circuitry hijack):** Mravec 2008 provides mechanistic grounding for why cancer cells would express receptors for neural signals — neurons innervate tumors (neuro-neoplastic synapse), and tumor cells use the same neurotransmitter-receptor machinery as the tissues they originate from. If neural genes (ion channels, synaptic proteins) are under direct evolutionary pressure during tumorigenesis (to co-opt autonomic input), recurrent mutation in those genes could reflect functional selection, not artifact.
+**`H1` (neural circuitry hijack):** Mravec et al. [@Mravec2008] provide mechanistic grounding for why cancer cells would express receptors for neural signals — neurons innervate tumors (neuro-neoplastic synapse), and tumor cells use the same neurotransmitter-receptor machinery as the tissues they originate from. If neural genes (ion channels, synaptic proteins) are under direct evolutionary pressure during tumorigenesis (to co-opt autonomic input), recurrent mutation in those genes could reflect functional selection, not artifact.
 
-**H2 (immune modulation):** The paper's core thesis is that the brain modulates tumor immunity. Genes whose mutations alter neuro-immune crosstalk (e.g., those affecting sympathetic innervation density or cholinergic anti-inflammatory pathway activity) could be recurrently mutated as a means of escaping immune surveillance. This is consistent with tumors acquiring mutations that shift the local autonomic balance toward SNS dominance and away from vagal/parasympathetic anti-inflammatory tone.
+**`H2` (immune modulation):** The paper's core thesis is that the brain modulates tumor immunity. Genes whose mutations alter neuro-immune crosstalk (e.g., those affecting sympathetic innervation density or cholinergic anti-inflammatory pathway activity) could be recurrently mutated as a means of escaping immune surveillance. This is consistent with tumors acquiring mutations that shift the local autonomic balance toward SNS dominance and away from vagal/parasympathetic anti-inflammatory tone.
 
-**H3 (oncofetal / developmental expression):** Not directly addressed by this paper, but the emphasis on neurotrophic factors driving tumor innervation (nerve growth factor, semaphorins) echoes developmental neural biology — consistent with oncofetal co-option of developmental programs.
+**`H3` (oncofetal / developmental expression):** Not directly addressed by this paper, but the emphasis on neurotrophic factors driving tumor innervation (nerve growth factor, semaphorins) echoes developmental neural biology — consistent with oncofetal co-option of developmental programs.
 
-**H4 (brain/CNS-cancer artifact):** The paper provides no data on mutation frequencies of neural-annotated genes across cancer types. It does not constitute evidence for or against H4 directly. However, the documented reality of tumor innervation means that neural-annotated genes can be functionally expressed in non-CNS tumors, weakening the "artifact" interpretation.
+**`H4` (brain/CNS-cancer artifact):** The paper provides no data on mutation frequencies of neural-annotated genes across cancer types. It does not constitute evidence for or against `H4` directly. However, the documented reality of tumor innervation means that neural-annotated genes can be functionally expressed in non-CNS tumors, weakening the "artifact" interpretation.
 
-**H5 (misannotation):** Not addressed.
+**`H5` (misannotation):** Not addressed.
 
 **Hormone/neuroendocrine questions:** The paper is the primary conceptual reference for why stress hormones (cortisol, catecholamines), pituitary hormones (ACTH, PRL, GH, oxytocin), and neuropeptides (SP, NPY, NO, melatonin) are mechanistically linked to cancer progression. It directly answers the user's questions about HPA axis involvement and neuroendocrine-immune integration.
 
-**Data-driven neural-gene definition:** The paper provides no data-driven definition of "neural genes" relevant to somatic mutation analysis. The gene-function connections are purely mechanistic/pharmacological. Any observed high mutation frequency in ion channel or synaptic genes in cBioPortal cannot be explained by this review alone — one would need to distinguish gene-length confounding (H4) from functional selection (H1/H2).
+**Data-driven neural-gene definition:** The paper provides no data-driven definition of "neural genes" relevant to somatic mutation analysis. The gene-function connections are purely mechanistic/pharmacological. Any observed high mutation frequency in ion channel or synaptic genes in cBioPortal cannot be explained by this review alone — one would need to distinguish gene-length confounding (`H4`) from functional selection (`H1`/`H2`).
 
 ## Project Framework Mapping
 
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
 | HPA axis → cortisol → NK suppression | Stress covariate → immune evasion axis | No cBioPortal clinical field directly captures cortisol; depression/anxiety history is sometimes present |
-| SNS → norepinephrine → beta-adrenergic tumor signaling | Potential covariate in h08 agnostic scan | Beta-adrenergic receptor genes (ADRB1, ADRB2) are standard gene targets; could appear in cross-study mutation tables |
+| SNS → norepinephrine → beta-adrenergic tumor signaling | Potential covariate in `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` agnostic scan | Beta-adrenergic receptor genes (ADRB1, ADRB2) are standard gene targets; could appear in cross-study mutation tables |
 | Cholinergic anti-inflammatory pathway (CAP) | Vagal tone → NF-kB axis | CHRNA7 (alpha7-nicotinic receptor) is the key molecular node; could be checked in gene-cancer frequency tables |
 | Neuro-neoplastic synapse | Tumor innervation as selection pressure | Provides conceptual basis for why NTRK1/2/3, NGFR, and other neurotrophin-receptor genes could appear mutated in non-CNS tumors |
 | Tumor-derived circulating signals (CEA, PSA, CA125, HMGB1) | Not in current pipeline | These are clinical biomarker fields occasionally in cBioPortal clinical tables |
@@ -126,7 +126,7 @@ This paper is directly relevant to understanding the user's observation that man
 - The heterogeneity of cancer types is largely collapsed — mechanisms established in one cancer (e.g., ovarian for NE-angiogenesis) are generalized across cancers without systematic cancer-type stratification.
 - The paper predates the tumor microenvironment (TME) and single-cell revolution; immune and stromal cell composition of tumors, now understood to be shaped by neural inputs, is not systematically considered.
 - Causal direction is ambiguous throughout: altered brain activity in cancer patients (reduced prefrontal activation resembling depression) could be consequence, not cause, of cancer. The authors acknowledge this but cannot resolve it with available data.
-- The "neuro-neoplastic synapse" concept was new in 2008 and based on limited evidence; the field has since grown substantially (see Magnon 2013 onwards), providing both confirmation and more mechanistic nuance.
+- The "neuro-neoplastic synapse" concept was new in 2008 and based on limited evidence; the field has since grown substantially, with later cancer-neuroscience reviews providing both confirmation and more mechanistic nuance [@Magnon2023].
 - No genetic or genomic evidence is presented — the paper operates at the systems physiology level. It cannot directly speak to which genes are somatically mutated as a consequence of neural hijacking, nor does it distinguish length-confounded mutation frequency from functionally selected mutations.
 - Human data on vagotomy and cancer risk remained controversial even in 2008 and has not been definitively resolved since, partly because vagotomy is done for benign disease (peptic ulcer) and confounders (H. pylori, smoking, reflux) all independently affect cancer risk.
 - The stress-cancer link via psychosocial factors remains contested in the literature cited (the paper notes some reviews challenge these conclusions), and cannot easily be separated from reverse causation (cancer causing psychological distress).
@@ -139,8 +139,8 @@ No software tools, computational models, or datasets are released with this pape
 
 - **Magnon2023** (`paper:Magnon2023`): follow-up 15+ years later on neural regulation of cancer, specifically adrenergic and cholinergic nerve fiber growth into tumors — directly extends the neuro-neoplastic synapse concept introduced here.
 - **Venkatesh2019** (`paper:Venkatesh2019`): neuron-glioma synaptic interactions; most directly relevant to CNS tumors but illustrates how the neural-hijack hypothesis has matured since 2008.
-- **Hanahan2023** (`paper:Hanahan2023`): Hallmarks of Cancer 2022 update, which now explicitly includes "neuronal signaling" as an emerging hallmark — the conceptual territory Mravec 2008 staked out.
+- **Hanahan2023** (`paper:Hanahan2023`): Hallmarks of Cancer 2022 update, which now explicitly includes "neuronal signaling" as an emerging hallmark — the conceptual territory Mravec et al. [@Mravec2008] staked out.
 - For the cBioPortal analysis: test whether genes encoding adrenergic receptors (ADRB1, ADRB2), muscarinic/nicotinic receptors (CHRNA7, CHRM1-5), or neuropeptide receptors (TACR1 for substance P, NPY1R/NPY2R for neuropeptide Y) show elevated mutation frequency in the cross-study pipeline, to probe whether receptor-level mutations could allow tumor escape from neural modulation.
 - The cortisol/glucocorticoid axis raises the question: do tumors enriched for glucocorticoid receptor (NR3C1) mutations show a different cross-study mutation profile? This is testable in the existing pipeline outputs.
-- Examine whether the pipeline's "top mutated genes" list changes substantially after correcting for gene length — if neural genes (typically large, e.g., RBFOX1 ~1.7 Mb) drop out after length normalization, that strongly favors H4; if they persist, H1/H2 deserves more investigation.
+- Examine whether the pipeline's "top mutated genes" list changes substantially after correcting for gene length — if neural genes (typically large, e.g., RBFOX1 ~1.7 Mb) drop out after length normalization, that strongly favors `H4`; if they persist, `H1`/`H2` deserves more investigation.
 - The cholinergic anti-inflammatory pathway node CHRNA7 is worth examining in the gene-cancer-study count table as a potentially cancer-type-stratified recurrently mutated target.

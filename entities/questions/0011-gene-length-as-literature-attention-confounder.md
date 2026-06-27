@@ -10,7 +10,7 @@ datasets:
 - PubTator gene mentions (/data/proj/lit-explore/pubtator/2026-01-16/counts/gene_concept_ids.feather)
 - UniProt H. sapiens protein lengths
 - cBioPortal gene_cancer_study_ratio_annotated.feather
-- COSMIC Cancer Gene Census / Bailey 2018 299-driver list
+- COSMIC Cancer Gene Census / Bailey et al. [@Bailey2018] 299-driver list
 source_refs:
 - paper:Lawrence2014
 - paper:Bailey2018
@@ -31,7 +31,7 @@ panel (n=18,028 genes). Spearman ρ vs `log10(PubTator mention count)`:
 | length-adjusted | −0.109 | −0.009 |
 | dndscv | +0.184 | +0.055 |
 
-Direction is **consistent with the q011 conjecture** (length-mediated attention)
+Direction is **consistent with this question's conjecture** (length-mediated attention)
 but the magnitudes are **unstable** between PoC and full run. The instability is
 driven by two independent data-quality issues surfaced by the same run
 (see `interpretation:0009-t131-full-pan-cancer-dndscv-run`): (a) BH-FDR
@@ -40,7 +40,7 @@ the dNdScv ranking (filed as `t144`), and (b) inflated `mean_inclusive` in the
 t077 pooled meta-analysis (snoU13 / Y_RNA / fragile-site genes at 65–84% rates,
 collapsing raw-axis Bailey driver recovery to zero — filed as `t145`).
 
-**Verdict:** PoC + full-run direction supports q011 modestly; magnitudes
+**Verdict:** PoC + full-run direction supports the length-attention conjecture modestly; magnitudes
 unreliable until t144 and t145 are resolved. The Phase-2 partial-slope
 regression (t129) remains the cleaner test.
 ---
@@ -49,7 +49,7 @@ regression (t129) remains the cleaner test.
 
 ## Summary
 
-Gene length is a well-known confounder for mutation-count-based rankings (Lawrence 2014:
+Gene length is a well-known confounder for mutation-count-based rankings (Lawrence et al. [@Lawrence2014]:
 TTN, MUC16, OBSCN, RYR2, LRP1B all appear as false-positive "drivers" without length
 correction). The question here is whether gene length *also* drives literature attention —
 PubMed mention count per gene — through channels that are partly mediated by mutation count
@@ -59,12 +59,12 @@ independent corroboration of biological importance.
 
 ## Why It Matters
 
-- **Methodological:** the project's pipeline uses Bailey 2018 driver flags and PubMed-derived
+- **Methodological:** the project's pipeline uses Bailey et al. [@Bailey2018] driver flags and PubMed-derived
   literature priors (implicitly, via citations in interpretations). If length confounds both
   axes, those priors are not independent of the mutation evidence.
 - **Discovery framing:** ranking genes by "consensus across mutation frequency and literature
   attention" amplifies the length bias rather than canceling it out.
-- **Novelty:** Stoeger & Nunes Amaral 2018 (*PLOS Biology*) showed that chemical / experimental
+- **Novelty:** Stoeger et al. [@Stoeger2018] showed that chemical / experimental
   accessibility features predict gene-level publication count more strongly than biological
   importance, but they did not isolate the length slope in a cancer-specific cohort. A
   cancer-focused replication using PubTator + cBioPortal is feasible and as far as we know
@@ -72,12 +72,12 @@ independent corroboration of biological importance.
 
 ## Current Evidence
 
-- Lawrence 2014 quantifies the mutation-side length effect; long genes occupy top-N raw
+- Lawrence et al. [@Lawrence2014] quantify the mutation-side length effect; long genes occupy top-N raw
   frequency lists they do not deserve. (Direct evidence for the mediated channel.)
-- Stoeger 2018: gene popularity in PubMed is dominated by accessibility features, not
+- Stoeger et al. [@Stoeger2018]: gene popularity in PubMed is dominated by accessibility features, not
   biological importance. Gene / transcript length is one of those features. (Direct evidence
   that length-on-publications is real outside of cancer.)
-- Edwards 2011 ("Too many roads not taken") and Haynes 2018: rich-get-richer dynamics in
+- Edwards et al. [@Edwards2011] ("Too many roads not taken") and Haynes et al. [@Haynes2018]: rich-get-richer dynamics in
   publication rates. Prior publications predict future publications more than biology does.
 - BioGRID / STRING-derived analyses: PPI degree correlates with protein length and
   with publication count — an independent length → attention channel.
@@ -157,4 +157,4 @@ conjecture.
 - Adjacent question: `question:0003-replication-timing-as-gene-level-mutation-rate-confounder`
   (other gene-level mutation-rate confounders besides length)
 - External datasets: PubTator BioCXML 2026-01-16 release; UniProt 2025-XX release;
-  Bailey 2018 PanCanAtlas Table S1; COSMIC CGC v100.
+  Bailey et al. [@Bailey2018] PanCanAtlas Table S1; COSMIC CGC v100.

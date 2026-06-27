@@ -32,14 +32,14 @@ commits_to:
 
 ## Hypotheses Under Test
 
-- **H1** (primary, confirmatory — from `specs/research-question.md`):
+- **`H1`** (primary, confirmatory — from `specs/research-question.md`):
   *Aggregating somatic mutation evidence across heterogeneous cBioPortal studies reveals
   gene-cancer associations that are more robust and more generalizable than any single
   study, and exposes clusters of cancer types with shared mutational structure.*
-- **G1** (methodological gate, confirmatory): GLMM-logit random-intercept meta-analysis
+- **`G1`** (methodological gate, confirmatory): GLMM-logit random-intercept meta-analysis
   converges on the majority of (gene, cancer) cells in our cohort, yielding stable
   between-study variance estimates that credibly expose panel- and cohort-effect
-  heterogeneity. G1 is a prerequisite gate — if G1 fails, H1's evidence is not
+  heterogeneity. `G1` is a prerequisite gate — if `G1` fails, `H1`'s evidence is not
   evaluable and the method has to be revised before re-registering.
 
 ## Analysis Under Pre-Registration
@@ -62,7 +62,7 @@ u_s ~ N(0, τ²_{g,c})
 - `x_s`: per-study covariate vector (see below).
 - `u_s`: study random intercept; `τ²` is the between-study variance at this cell.
 - `γ`: covariate coefficients (shared across g for computational tractability; revisited
-  if G1 fails on convergence).
+  if `G1` fails on convergence).
 
 Implemented via `metafor::rma.glmm(measure="PLO", ...)` in R (see *Environment* below).
 
@@ -70,7 +70,7 @@ Implemented via `metafor::rma.glmm(measure="PLO", ...)` in R (see *Environment* 
 
 | Covariate | Type | Source |
 |---|---|---|
-| `panel_class` | factor: {large_hybrid_capture, small_amplicon, WES, MC3} | per-study metadata; MC3 is Ellrott 2018 |
+| `panel_class` | factor: {large_hybrid_capture, small_amplicon, WES, MC3} | per-study metadata; MC3 is Ellrott et al. [@Ellrott2018] |
 | `matched_normal` | bool | per-study metadata; populated by t050 / `annotate_ch.py` |
 
 **Deferred**: `cohort_stage` (primary / metastatic / mixed) depends on task `t052` which
@@ -101,11 +101,11 @@ documented limitation).
 For each pooled cell, emit:
 
 - `pooled_logit` (β̂_{g,c}) + back-transformed `pooled_rate`
-- `pooled_ci_lo`, `pooled_ci_hi` (95% CI, HKSJ-adjusted when K < 30 per Langan 2018 +
-  IntHout 2016)
+- `pooled_ci_lo`, `pooled_ci_hi` (95% CI, HKSJ-adjusted when K < 30 per Langan et al. [@Langan2018] +
+  IntHout et al. [@IntHout2016])
 - `tau2` (between-study variance estimate)
-- `i2` (Higgins & Thompson 2002)
-- `pi_lo`, `pi_hi` (95% prediction interval per IntHout 2016)
+- `i2` (Higgins and Thompson [@Higgins2002])
+- `pi_lo`, `pi_hi` (95% prediction interval per IntHout et al. [@IntHout2016])
 - `k_studies` (contributing studies after filter)
 - `n_total` (summed n across contributing studies)
 - `y_total` (summed y)
@@ -119,11 +119,11 @@ feather` downstream as a consumer-facing annotation).
 
 | Alternative | Rejected because |
 |---|---|
-| **DerSimonian-Laird (DL)** on log-OR with a reference rate | Continuity-transforms sparse cells (most gene × cancer × study cells have 0-5 mutations); Langan 2018 shows DL is inferior to REML and to GLMM for small studies / rare events; requires choosing an arbitrary reference rate. |
+| **DerSimonian-Laird (DL)** on log-OR with a reference rate | Continuity-transforms sparse cells (most gene × cancer × study cells have 0-5 mutations); Langan et al. [@Langan2018] show DL is inferior to REML and to GLMM for small studies / rare events; requires choosing an arbitrary reference rate. |
 | **Mantel-Haenszel** | Does not naturally accept per-study covariates (panel_class, matched_normal). Our data are heterogeneous on axes that M-H cannot model. |
 | **Fixed-effects (inverse-variance)** | Assumes no between-study heterogeneity. The bias audit (`meta:0001-bias-audit-cross-study-aggregation-pipeline-preprocessing-clustering`) documents four separate sources of between-study heterogeneity (panel, matched-normal, cohort-stage, annotation drift); fixed-effects pooling would be systematically mis-specified. |
-| **Freeman-Tukey double-arcsine** (Barendregt 2013) | Lin & Xu 2020 explicitly deprecates arcsine for proportion meta-analysis in favor of GLMM-logit when cells are sparse; back-transform is non-unique; transform assumptions fail for very rare events. |
-| **Bayesian hierarchical model** (brms-style) | Equivalent modeling framework, pragmatically rejected for this round: (a) fit time ~orders of magnitude slower at the ~15k-cell scale; (b) no established metafor-equivalent package; (c) hyperprior choice would require its own pre-registration. Registered as a possible future comparator if GLMM-logit fails G1. |
+| **Freeman-Tukey double-arcsine** (Barendregt et al. [@Barendregt2013]) | Lin and Xu [@LinXu2020] explicitly deprecate arcsine for proportion meta-analysis in favor of GLMM-logit when cells are sparse; back-transform is non-unique; transform assumptions fail for very rare events. |
+| **Bayesian hierarchical model** (brms-style) | Equivalent modeling framework, pragmatically rejected for this round: (a) fit time ~orders of magnitude slower at the ~15k-cell scale; (b) no established metafor-equivalent package; (c) hyperprior choice would require its own pre-registration. Registered as a possible future comparator if GLMM-logit fails `G1`. |
 
 ### Environment (reproducibility)
 
@@ -172,7 +172,7 @@ pooled biological interpretation is reported.
 
 ## Expected Outcomes
 
-**If H1 holds** and the model is correctly specified:
+**If `H1` holds** and the model is correctly specified:
 
 - **Distribution of I²**: right-skewed across cells, with a long tail of high-I²
   (`> 75%`) cells concentrated in gene × cancer combinations where panel content or
@@ -184,9 +184,9 @@ pooled biological interpretation is reported.
   correlation in low-I² cells.
 - **Pooled CIs narrower than any single-study CI** for the cells with high `k_studies`;
   tightening proportional to the square root of `k` in the low-heterogeneity regime.
-- **Convergence**: G1 passes if ≥ 90% of filtered cells converge. Between 75-90% triggers
+- **Convergence**: `G1` passes if ≥ 90% of filtered cells converge. Between 75-90% triggers
   a convergence-diagnostic review but the confirmatory analysis proceeds on the
-  converged subset. Below 75% triggers falling back to REML-logit with HKSJ (Langan 2018
+  converged subset. Below 75% triggers falling back to REML-logit with HKSJ (Langan et al. [@Langan2018]
   recommendation) as a pre-registered escape hatch, re-running under the same decision
   criteria.
 
@@ -196,29 +196,29 @@ pooled biological interpretation is reported.
   GENIE 91-panel, FoundationOne fragments, TCGA MC3) is documented in
   `topic:targeted-panel-sequencing-bias` and `topic:cross-panel-normalization-methods` —
   high I² in the affected cells is the biologically informed prior.
-- GLMM-logit is well-behaved on sparse counts per Stijnen 2010 and Nyaga 2014; we do not
+- GLMM-logit is well-behaved on sparse counts per Stijnen et al. [@Stijnen2010] and Nyaga et al. [@Nyaga2014]; we do not
   expect convergence issues in the majority of cells with `y_total ≥ 1`.
-- Rank stability (pooled vs per-study) is the concrete H1 test — Samstein 2019 shows
+- Rank stability (pooled vs per-study) is the concrete `H1` test — Samstein et al. [@Samstein2019] show
   small panels still give usable gene-level rankings, so pooled rank should track per-
   study rank in low-heterogeneity cells.
 
 ## Decision Criteria
 
-### H1 — Primary hypothesis
+### `H1` — Primary hypothesis
 
 | Evidence | Threshold | Decision |
 |---|---|---|
-| **Support H1** | In the top-quartile-signal cells (by pooled rate): ≥ 70% have `i2 < 75%`, AND pooled-vs-per-study rank Spearman ρ ≥ 0.70, AND pooled CIs narrower than the single-study median CI by ≥ 30% on average. | Aggregation *is* gaining us robustness over single-study. Report pooled tables as primary outputs. |
-| **Weaken H1** | Top-quartile cells have 40-70% I² > 75%, OR rank ρ falls to 0.40-0.70, OR CI tightening is 10-30%. | Aggregation partially works but heterogeneity or cohort composition dominates in a meaningful minority of cells. Report pooled outputs but flag high-I² cells separately; run per-stratum (panel_class × matched_normal) pooled analyses as confirmatory follow-ups. |
-| **Refute H1** | ≥ 70% of top-quartile cells have I² > 75%, AND rank ρ < 0.40, AND pooled CIs not meaningfully narrower than single-study CIs. | Cross-study aggregation does not recover shared biology at our current panel / cohort composition. Document as a null result against H1 and pivot: either restrict to panel-matched sub-cohorts (MSK-IMPACT only, or TCGA MC3 only) or adopt a stratified pooling design (pool within panel_class, report per-stratum). |
+| **Support `H1`** | In the top-quartile-signal cells (by pooled rate): ≥ 70% have `i2 < 75%`, AND pooled-vs-per-study rank Spearman ρ ≥ 0.70, AND pooled CIs narrower than the single-study median CI by ≥ 30% on average. | Aggregation *is* gaining us robustness over single-study. Report pooled tables as primary outputs. |
+| **Weaken `H1`** | Top-quartile cells have 40-70% I² > 75%, OR rank ρ falls to 0.40-0.70, OR CI tightening is 10-30%. | Aggregation partially works but heterogeneity or cohort composition dominates in a meaningful minority of cells. Report pooled outputs but flag high-I² cells separately; run per-stratum (panel_class × matched_normal) pooled analyses as confirmatory follow-ups. |
+| **Refute `H1`** | ≥ 70% of top-quartile cells have I² > 75%, AND rank ρ < 0.40, AND pooled CIs not meaningfully narrower than single-study CIs. | Cross-study aggregation does not recover shared biology at our current panel / cohort composition. Document as a null result against `H1` and pivot: either restrict to panel-matched sub-cohorts (MSK-IMPACT only, or TCGA MC3 only) or adopt a stratified pooling design (pool within panel_class, report per-stratum). |
 
-### G1 — Methodological convergence gate
+### `G1` — Methodological convergence gate
 
 | Convergence rate | Decision |
 |---|---|
-| ≥ 90% of filtered cells converge | Proceed with confirmatory H1 evaluation on all converged cells. |
-| 75-90% | Diagnose the non-converged cell subset (typically very-rare-event cells with `y_total < 5`). If non-convergence is concentrated in those, report H1 on the converged set with explicit caveat for rare-event cells. |
-| < 75% | Fall back to REML-logit + HKSJ via `metafor::rma(measure="PLO", method="REML")` as a pre-registered escape hatch. Re-evaluate H1 against the same criteria. |
+| ≥ 90% of filtered cells converge | Proceed with confirmatory `H1` evaluation on all converged cells. |
+| 75-90% | Diagnose the non-converged cell subset (typically very-rare-event cells with `y_total < 5`). If non-convergence is concentrated in those, report `H1` on the converged set with explicit caveat for rare-event cells. |
+| < 75% | Fall back to REML-logit + HKSJ via `metafor::rma(measure="PLO", method="REML")` as a pre-registered escape hatch. Re-evaluate `H1` against the same criteria. |
 
 ## Null Result Plan
 
@@ -236,7 +236,7 @@ cancer type across studies. Distinguish between:
 The three cases must be disambiguated in the output schema — `status`, `i2`, and
 `k_studies` together are sufficient.
 
-**An aggregate null against H1** (the "refute" row above) would mean panel + cohort
+**An aggregate null against `H1`** (the "refute" row above) would mean panel + cohort
 heterogeneity dominates biological signal at our current data scale. Next step in that
 case is *not* "give up" but "switch to stratified pooling" — pool within
 (`panel_class`, `matched_normal`) strata, accept the resulting smaller per-stratum
@@ -255,7 +255,7 @@ sample sizes, and report per-stratum.
 
 **Pre-registered integrity checks before accepting results:**
 
-1. **Hold-out one study** (Jee 2024 small pan-cancer cohort ~500 samples) and re-fit;
+1. **Hold-out one study** (Jee et al. [@Jee2024] small pan-cancer cohort ~500 samples) and re-fit;
    pooled rates should be within CI of the all-studies fit.
 2. **Panel-class sensitivity**: drop MC3 (re-fit on panel-only studies) and re-fit; drop
    GENIE tumor-only fraction and re-fit. Pooled direction should be stable on the
@@ -306,8 +306,8 @@ choice.
 **Confirmatory (pre-registered here):**
 
 1. Pooled GLMM-logit fit on filtered cells with `panel_class` and `matched_normal`
-   covariates (H1 test + G1 gate).
-2. Convergence diagnostic + REML-logit escape-hatch if G1 fails.
+   covariates (`H1` test + `G1` gate).
+2. Convergence diagnostic + REML-logit escape-hatch if `G1` fails.
 3. I² distribution across cells, top-quartile-signal rank stability, CI tightening —
    all per the decision table above.
 4. Three pre-registered integrity checks (hold-out, panel-class sensitivity, random
@@ -317,7 +317,7 @@ choice.
 
 1. Sensitivity re-fit with `cohort_stage` covariate once `t052` lands.
 2. Per-stratum pooled fits (pool within `panel_class × matched_normal`) — as a
-   fall-back if H1 is weakened.
+   fall-back if `H1` is weakened.
 3. Sensitivity re-fit with graded `ch_contamination_prob` from t087 once available.
 4. Heterogeneity clustering — are the high-I² cells concentrated in particular gene
    families or cancer types? Reported as a figure, not a confirmatory test.
@@ -332,8 +332,8 @@ to an expected **~10,000-15,000 pooled cells**.
 
 | Category | Count (est.) | Correction |
 |---|---|---|
-| Confirmatory cells (H1) | ~10,000-15,000 | **Benjamini-Hochberg FDR at 5%**, stratified by cancer type (35 strata) |
-| G1 convergence gate | 1 | no correction (single-threshold decision) |
+| Confirmatory cells (`H1`) | ~10,000-15,000 | **Benjamini-Hochberg FDR at 5%**, stratified by cancer type (35 strata) |
+| `G1` convergence gate | 1 | no correction (single-threshold decision) |
 | Integrity checks | 3 | no correction (diagnostic) |
 | Exploratory re-fits | ≤ 5 | no per-exploratory correction; each exploratory table is labeled as such |
 | **Total** | **≈ 10,015-15,010** | BH-FDR within cancer type for the confirmatory cells |

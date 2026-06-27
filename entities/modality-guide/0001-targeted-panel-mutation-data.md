@@ -21,7 +21,8 @@ The dominant interpretive risks for panel data are documented in the topic stubs
   (the *problem* side).
 - `topic:cross-panel-normalization-methods` — the *methods* side: panel-intersection vs
   callable-denominator weighting; Friends of Cancer Research TMB Harmonization Project
-  (Merino 2020 Phase I; Vega 2021 Phase II); Buchhalter 2019 ~1 Mb TMB floor.
+  (Merino et al. [@Merino2020] Phase I; Vega et al. [@Vega2021] Phase II); Buchhalter et al.
+  [@Buchhalter2019] ~1 Mb TMB floor.
 - `topic:clonal-hematopoiesis-contamination` — matched- vs unmatched-normal calling differences.
 - `topic:cohort-selection-bias-representativeness` — clinical-sequencing cohort biases.
 
@@ -87,8 +88,8 @@ gene lists in cBioPortal study definitions (341 → 410 → 468 → 505).
 | panel.06 | Cohort-stage descriptor per study (primary / metastatic / pre-treated) | any cross-study aggregation | contested | `cohort_stage` ingested from cBioPortal study definitions; absence flagged in audit report |
 | panel.07 | Synonymous mutation handling consistent across studies | mutation-frequency outputs | settled | explicit filter rule (e.g., "non-synonymous coding only") documented in script header; consistent across studies |
 | panel.08 | Variant-call source provenance preserved | any aggregation | settled | per-call source (cBioPortal pre-annotated MAF version, Oncotator-canonical-isoform restriction noted) carried as a column or documented in script header |
-| panel.09 | TMB computed against per-panel callable-coding denominator + FoCR-style cross-panel calibration applied | any TMB output | contested | `tmb_callable_mb` per (sample, panel) used as denominator (not a fixed pan-cohort Mb); for cross-panel comparisons apply FoCR Phase-II per-panel linear calibration (Vega 2021) or document why omitted. Panels below ~667 kb callable (Vega 2021) or ~1 Mb (Buchhalter 2019) flagged as unreliable for clinical TMB cutoffs. Task: `t081` |
-| panel.10 | Long-tail gene calls cross-checked against an external driver catalog | any per-gene ranking output | contested | Bailey 2018 / CGC / OncoKB overlay applied; `is_known_driver: bool` annotation on outputs |
+| panel.09 | TMB computed against per-panel callable-coding denominator + FoCR-style cross-panel calibration applied | any TMB output | contested | `tmb_callable_mb` per (sample, panel) used as denominator (not a fixed pan-cohort Mb); for cross-panel comparisons apply FoCR Phase-II per-panel linear calibration (Vega et al. [@Vega2021]) or document why omitted. Panels below ~667 kb callable (Vega et al. [@Vega2021]) or ~1 Mb (Buchhalter et al. [@Buchhalter2019]) flagged as unreliable for clinical TMB cutoffs. Task: `t081` |
+| panel.10 | Long-tail gene calls cross-checked against an external driver catalog | any per-gene ranking output | contested | Bailey et al. [@Bailey2018] / CGC / OncoKB overlay applied; `is_known_driver: bool` annotation on outputs |
 | panel.11 | Partial-panel-coverage genes (NaN vs 0 disambiguation) handled at pooling | any cross-study pooled rate | contested | with callability joined: fill 0 where `gene_callable=True`; keep NaN where `gene_callable=False`. Replaces `.mean(skipna=True)` which drops on-panel-unmutated studies from the denominator. Task: `t076` |
 | panel.12 | Commercial-panel (FoundationOne / Tempus / Caris) BED-fallback policy documented | any cross-study aggregation including commercial panels | contested | since vendor BEDs are proprietary, one of: (a) exclude vendor from cross-panel rate tables, (b) use published gene list as proxy-BED and accept sub-gene bias, (c) infer callability empirically from variant-density. Choice documented per-run |
 
@@ -105,12 +106,13 @@ gene lists in cBioPortal study definitions (341 → 410 → 468 → 505).
 - **Pan-cancer aggregation hiding cohort-stage differences.** AR mutations at 18% in MSK
   metastatic prostate vs 1% in TCGA primary is not biology — it's cohort selection. Stratify or
   flag.
-- **Cross-panel TMB reported without per-panel calibration.** Vega 2021 shows that panel-level
+- **Cross-panel TMB reported without per-panel calibration.** Vega et al. [@Vega2021] show that panel-level
   TMB variance dominates biology at clinical cutoffs without linear calibration. Any TMB value
   pooled across vendors should either carry a calibration citation or a "uncalibrated — not
   comparable cross-vendor" warning.
 - **Sub-~667 kb panels used for TMB classification.** Below that callable-coding floor
-  (Vega 2021; Buchhalter 2019 ~1 Mb) stochastic noise dominates. Flag such panels explicitly.
+  (Vega et al. [@Vega2021]; Buchhalter et al. [@Buchhalter2019] ~1 Mb) stochastic noise dominates.
+  Flag such panels explicitly.
 - **Panel-intersection applied without signal-loss accounting.** Restricting to the GENIE
   44-gene core at v9.1 (91 panels) discards most long-tail genes. Reporting the post-
   intersection gene count alongside the pre-intersection count makes the trade-off explicit.

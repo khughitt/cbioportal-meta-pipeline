@@ -26,17 +26,19 @@ power; panel data needs SigMA or coarse "dominant signature" tags only.
 
 ## Key Concepts
 
-- **96 trinucleotide-context SBS framework** (Alexandrov 2013 / 2020). Tumor mutations classified
-  by base-substitution + 5'/3' flanking context; NMF factorizes the sample × context matrix into
-  signature × per-sample exposures.
+- **96 trinucleotide-context SBS framework** (Alexandrov et al.
+  [@Alexandrov2013Nature; @Alexandrov2020]). Tumor mutations classified by base-substitution +
+  5'/3' flanking context; NMF factorizes the sample × context matrix into signature × per-sample
+  exposures.
 - **DBS and ID extensions** (new in v3): doublet-base substitutions and small indel patterns,
   capturing mechanisms invisible to SBS-only (e.g., NHEJ-mediated microhomology deletions, ID6).
 - **Validated etiologies**: SBS1 (5mC-deamination/aging), SBS4 (smoking), SBS7a-d (UV),
   SBS2/SBS13 (APOBEC), SBS6/15/20/26 (MMR deficiency), SBS3 (HRD), SBS10a/b (POLE), several
   chemotherapy signatures (platinum, temozolomide, 5-FU). Roughly half of v3 SBS signatures
   remain idiopathic.
-- **Per-cancer signature exposures** are tabulated in Alexandrov 2020 — UV-dominant in melanoma,
-  smoking-dominant in lung adenocarcinoma, APOBEC across bladder/cervical/breast.
+- **Per-cancer signature exposures** are tabulated in Alexandrov et al. [@Alexandrov2020] —
+  UV-dominant in melanoma, smoking-dominant in lung adenocarcinoma, APOBEC across
+  bladder/cervical/breast.
 
 ## Current State of Knowledge
 
@@ -45,8 +47,9 @@ power; panel data needs SigMA or coarse "dominant signature" tags only.
 - **SigProfilerAssignment / deconstructSigs / sigfit / MutationalPatterns** for *refit* against
   the v3 reference catalog. Lighter-weight, WES-friendly.
 - **SigMA** (Gulhan et al. 2019) is purpose-built for low-mutation-count panel data.
-- Zehir 2017: panel-derived signature attribution worked at MSK-IMPACT scale for high-prevalence
-  signatures (UV, smoking, MMR, POLE, temozolomide) by restricting to the highest-TMB tail.
+- Zehir et al. [@Zehir2017]: panel-derived signature attribution worked at MSK-IMPACT scale for
+  high-prevalence signatures (UV, smoking, MMR, POLE, temozolomide) by restricting to the
+  highest-TMB tail.
   Caveat-laden.
 
 ## Controversies & Open Questions
@@ -70,11 +73,12 @@ Out-of-scope for current pipeline. If/when added, the realistic scope is:
 3. Add a `dominant_signature` cancer-type-level annotation to our metadata; explicit
    panel-vs-WES flag; never report panel-derived signature percentages without that flag.
 
-See task t024 (retired) and t021 (this topic). The follow-up search t024 was retired in favor
-of directly reading Alexandrov 2020 + Tate 2019 (done).
+See `task:t024` (retired) and `task:t021` (this topic). The follow-up search `task:t024` was retired
+in favor of directly reading Alexandrov et al. [@Alexandrov2020] and Tate et al. [@Tate2019] (done).
 
 ## Key References
 
-Alexandrov2020 (COSMIC v3 catalog), Tate2019 (COSMIC v86 — note: signatures in v86 are pre-v3),
-PCAWG2020 (WGS pan-cancer signature landscape), Zehir2017 (panel-data attribution feasibility
-example).
+- Alexandrov et al. [@Alexandrov2020] (COSMIC v3 catalog)
+- Tate et al. [@Tate2019] (COSMIC v86 — note: signatures in v86 are pre-v3)
+- PCAWG Consortium [@PCAWG2020] (WGS pan-cancer signature landscape)
+- Zehir et al. [@Zehir2017] (panel-data attribution feasibility example)

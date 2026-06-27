@@ -10,7 +10,7 @@ ontology_terms: []
 datasets:
 - cBioPortal per-study gene_cancer_study feathers
 - AACR GENIE per-panel mutation data
-- Bailey 2018 299-driver list (validation oracle)
+- Bailey et al. [@Bailey2018] 299-driver list (validation oracle)
 source_refs:
 - paper:Bailey2018
 related:
@@ -49,7 +49,7 @@ rank-±5 stability for canonical drivers and long-tail candidates separately.
 - No project run has performed LOO yet. The closest is the t131 PoC-vs-full-run shifts in
   PubTator correlations (raw +0.127 → +0.002; dNdScv +0.055 → +0.184), which are large and
   suggestive of regime instability.
-- Bailey 2018's 26-tool consensus gives an external rank-stability anchor: drivers that
+- Bailey et al. [@Bailey2018] 26-tool consensus gives an external rank-stability anchor: drivers that
   multiple tools agree on are by construction more replicable.
 - Cross-study Spearman correlation of per-gene per-cancer rates is computed in the
   pipeline but not reported as a quality metric.
@@ -59,7 +59,7 @@ rank-±5 stability for canonical drivers and long-tail candidates separately.
 - Compute cost is bounded — it's the existing pipeline run × number of studies. With t141
   parallelization, a full LOO sweep should be tractable.
 - The partition between "canonical driver" and "long-tail candidate" is itself a choice
-  that may bias the result; pre-register the partition (Bailey 2018 ∪ CGC tier 1, vs
+  that may bias the result; pre-register the partition (Bailey et al. [@Bailey2018] ∪ CGC tier 1, vs
   everything else) before running.
 - Per-cancer-type LOO is more interpretable than pan-cancer LOO; pan-cancer mixes
   cancer-specific signals.
@@ -69,8 +69,8 @@ rank-±5 stability for canonical drivers and long-tail candidates separately.
 
 ## Connections to Project
 
-- Related hypotheses: `h02-cross-study-ranking-divergence-is-structured` (this question
-  provides the empirical replication-rate measurement that h02 depends on).
+- Related hypotheses: `hypothesis:0002-cross-study-ranking-divergence-is-structured` (this question
+  provides the empirical replication-rate measurement that hypothesis depends on).
 - Required data or analyses: existing pipeline (post-t141), LOO wrapper, Bailey driver
   list join.
 - Tracking task: `t149`.
@@ -81,7 +81,7 @@ rank-±5 stability for canonical drivers and long-tail candidates separately.
 ## Related
 
 - Topic notes: `topic:mutation-rate-normalization`.
-- Article notes: Bailey 2018; Lawrence 2014 (long-gene-passenger pattern as the canonical
+- Article notes: Bailey et al. [@Bailey2018]; Lawrence et al. [@Lawrence2014] (long-gene-passenger pattern as the canonical
   failure of un-replicated raw rankings).
 - Methods/Datasets: same per-study feathers used for the main aggregation; no new data
   required.

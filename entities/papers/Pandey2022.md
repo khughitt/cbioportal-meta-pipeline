@@ -53,10 +53,10 @@ common format to each wrapped tool.
 
 | Tool | Algorithm | Reference |
 |---|---|---|
-| DeconstructSigs | Multiple linear regression (coefficients ≥ 0) | Rosenthal 2016 |
-| MutationalPatterns | Non-negative least squares (NNLS) | Blokzijl 2018 |
+| DeconstructSigs | Multiple linear regression (coefficients ≥ 0) | Rosenthal et al. [@Rosenthal2016] |
+| MutationalPatterns | Non-negative least squares (NNLS) | MutationalPatterns package paper |
 | Sigfit | Bayesian inference | Gori & Baez-Ortega 2018 |
-| Sigminer / Sigflow | Simulated annealing (SA) | Wang 2020 |
+| Sigminer / Sigflow | Simulated annealing (SA) | Sigminer / Sigflow package paper |
 
 **Signature catalogs supported:** COSMIC Legacy SBS (V2) and COSMIC V3 SBS, DBS, and ID
 signatures.
@@ -101,26 +101,26 @@ code at https://github.com/EESI/MetaMutationalSigs.
 
 ## Relevance
 
-**Direct relevance to h08 (agnostic covariate↔signature-exposure association).**
+**Direct relevance to hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and (agnostic covariate↔signature-exposure association).**
 
-The refitting step sits upstream of h08: before any covariate association can be run, a
+The refitting step sits upstream of the hypothesis: before any covariate association can be run, a
 per-sample signature-exposure vector H must be estimated. MetaMutationalSigs is a practical
 tool for exactly that estimation step; its cross-tool comparison functionality directly
-addresses a key methodological uncertainty for h08:
+addresses a key methodological uncertainty for the hypothesis:
 
 - **Choice-of-tool is a non-trivial variance source.** The LAML results confirm that different
   algorithms produce non-trivially different exposure estimates for the same sample. Any
-  downstream covariate association (h08a recovery of UV/smoking/APOBEC/MMR; h08b discovery)
+  downstream covariate association (positive-control recovery of UV/smoking/APOBEC/MMR; discovery)
   will have results that are sensitive to which refitting tool was used. Running multiple tools
   and checking that a covariate↔signature association holds across all of them is a concrete
   robustness test.
 
 - **COSMIC V3 vs Legacy is an analytic choice that matters.** The paper shows V3 provides both
   lower reconstruction error and higher inter-tool agreement, supporting the use of V3 as the
-  reference catalog for h08 (already implied by the cbioportal pipeline's use of
+  reference catalog for the hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and workflow (already implied by the cbioportal pipeline's use of
   `run_restricted_sigprofiler_assignment.py`).
 
-- **Positive-control recovery (h08a).** The LAML example demonstrates that different tools
+- **Positive-control recovery.** The LAML example demonstrates that different tools
   assign biologically distinct dominant signatures; this heterogeneity must be considered when
   defining "recovery" of a known exposure→signature link. A tool that incorrectly collapses to
   Signature 3 for all samples would not recover, say, the MMR/MSI↔SBS26 link.
@@ -128,7 +128,7 @@ addresses a key methodological uncertainty for h08:
 - **Cross-study meta-analysis context.** The cbioportal pipeline aggregates many studies.
   MetaMutationalSigs operates per-study on VCF-level inputs; once per-sample refitting is run
   within each study, the tool's CSV outputs are directly consumable by the cross-study
-  association layer planned for h08.
+  association layer planned for hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and.
 
 **Broader pipeline relevance.** The tool validates the choice of SigProfilerMatrixGenerator as
 the canonical input-matrix generator (already used in the pipeline). The Docker packaging is
@@ -139,10 +139,10 @@ relevant for reproducibility standards.
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
 | Refitting (reconstruct observed profile from COSMIC) | `run_restricted_sigprofiler_assignment.py` | Pipeline already implements restricted assignment; MetaMutationalSigs offers multi-tool comparison as a validation layer |
-| Signature contribution matrix (per-sample) | Columns of H in NMF/refitting decomposition | Used as exposures in h08 association scan |
+| Signature contribution matrix (per-sample) | Columns of H in NMF/refitting decomposition | Used as exposures in the hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and association scan |
 | COSMIC V3 SBS/DBS/ID catalog | Reference catalog for restricted assignment | V3 reduces inter-tool disagreement; confirms pipeline catalog choice |
 | RMSE between reconstructed and observed profile | Reconstruction error / goodness-of-fit diagnostic | Useful QC metric for per-study refitting quality |
-| Cosine similarity between tool results | Tool-concordance check | Natural robustness check for h08 associations |
+| Cosine similarity between tool results | Tool-concordance check | Natural robustness check for hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and associations |
 
 ## Limitations
 
@@ -184,11 +184,11 @@ relevant for reproducibility standards.
 - Compare MetaMutationalSigs' multi-tool output against the cbioportal pipeline's current
   `run_restricted_sigprofiler_assignment.py` (SigProfiler-based) on a shared TCGA study to
   quantify inter-tool variance in practice.
-- For h08, decide whether to run all four tools and require association replication across tools
+- For hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and, decide whether to run all four tools and require association replication across tools
   as a robustness gate, or to commit to a single tool (Sigflow/SigProfiler recommended by the
   RMSE results) with MetaMutationalSigs as an optional spot-check.
 - Consider whether the inter-tool disagreement documented here motivates registering tool choice
-  as a pre-analysis decision in the h08 pre-registration materials.
+  as a pre-analysis decision in the hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and pre-registration materials.
 - Related papers to read: Omichessan et al. 2019 (systematic review/comparison of de-novo vs
   refitting tools, cited heavily here); Degasperi et al. 2020 (Signal tool — quadratic
   programming / SA, web-based); Maura et al. 2019 (practical guide for signature analysis in

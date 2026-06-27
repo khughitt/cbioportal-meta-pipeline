@@ -80,18 +80,18 @@ Using WGS from 10,983 patients across 16 tumor types in the 100,000 Genomes Proj
 
 ## Relevance
 
-This paper is directly relevant to **hypothesis h08** (agnostic covariate–signature-exposure association) at multiple levels:
+This paper is directly relevant to **hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and** (agnostic covariate–signature-exposure association) at multiple levels:
 
-**H08a — positive-control recovery:** Everall et al. provide the ground-truth association map against which the h08 agnostic scan must be validated. Their large-scale systematic regression of signature exposures against histology, DNA repair gene status, therapy, and clinical features is exactly the canonical "known map" that H08a must recover unprompted:
+**Positive-control recovery:** Everall et al. provide the ground-truth association map against which the agnostic scan must be validated. Their large-scale systematic regression of signature exposures against histology, DNA repair gene status, therapy, and clinical features is exactly the canonical "known map" that the positive-control arm must recover unprompted:
 - UV ↔ SBS7a/7b (skin melanoma; strong and clonal)
 - Smoking ↔ SBS4/SBS92 (Lung-AdenoCA; SBS92 distinct from SBS4, see Fig. 3)
 - APOBEC ↔ SBS2/13 (bladder, head and neck, breast; predominantly subclonal — a timing clue)
 - MMR loss ↔ SBS15/26/44/SBS93/ID14 (CRC; MSH6, MLH1 inactivation)
 - POLE ↔ SBS10a/10b (uterine, CRC)
 
-**H08b — discovery candidate:** CN25 / MSH6 somatic, SBS17a/b / POLG inactivation, and the APOBEC–immunotherapy link are examples of associations whose mechanistic basis is not fully understood, suitable targets for an agnostic discovery scan. The expression module angle (APOBEC3A/B co-expression↔SBS2/13) identified in h08 is supported by Everall et al. observing that APOBEC is the single most prevalent exogenous signature class across the cohort (88% bladder, 69% breast) — strong signal in any co-expression module association.
+**Discovery candidate:** CN25 / MSH6 somatic, SBS17a/b / POLG inactivation, and the APOBEC–immunotherapy link are examples of associations whose mechanistic basis is not fully understood, suitable targets for an agnostic discovery scan. The expression module angle (APOBEC3A/B co-expression↔SBS2/13) identified in the hypothesis is supported by Everall et al. observing that APOBEC is the single most prevalent exogenous signature class across the cohort (88% bladder, 69% breast) — strong signal in any co-expression module association.
 
-**Cross-study meta-analysis context:** The 100KGP cohort (10,983 WGS) is larger and uses matched normals — it is the kind of high-quality WGS reference that validates cBioPortal-based panel-sequencing signature inferences. The CH-contamination problem (h01) is addressed here by the 100KGP matched-normal design; the subclonal fraction analysis (Fig. 7) is a resource for understanding which signatures in cBioPortal studies are most likely CH-confounded (CH signatures like DNMT3A are predominantly clonal; dMMR signatures are subclonal).
+**Cross-study meta-analysis context:** The 100KGP cohort (10,983 WGS) is larger and uses matched normals — it is the kind of high-quality WGS reference that validates cBioPortal-based panel-sequencing signature inferences. The CH-contamination problem (hypothesis:0001-non-tumor-signal-contamination) is addressed here by the 100KGP matched-normal design; the subclonal fraction analysis (Fig. 7) is a resource for understanding which signatures in cBioPortal studies are most likely CH-confounded (CH signatures like DNMT3A are predominantly clonal; dMMR signatures are subclonal).
 
 **SV signatures:** The new SV reference (SV1–SV10) is out of scope for the current cBioPortal pipeline (which aggregates point mutations / small indels from MAF files), but is relevant background for understanding chromothripsis (CN4–CN8, CN25) and HRD (SV3/SV5) in future modality expansions.
 
@@ -100,11 +100,11 @@ This paper is directly relevant to **hypothesis h08** (agnostic covariate–sign
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
 | 134 extracted signatures (SBS/DBS/ID/CN/SV) | Reference signature catalog for restricted assignment | Input to `run_restricted_sigprofiler_assignment.py` |
-| 26 new COSMIC signatures | Potential update to reference SBS catalog used in h08 | Check whether these appear in COSMIC v3.4 used by the pipeline |
-| Signature-histology regression (logistic/NB) | h08 agnostic association model output | Everall uses per-tissue logistic regression — same design as h08 |
-| Subclonal fraction per signature (Fig. 7) | CH-contamination annotation (h01, t081) | Clonal CH-like vs subclonal dMMR signals — relevant to matched-normal flag |
+| 26 new COSMIC signatures | Potential update to reference SBS catalog used in hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and | Check whether these appear in COSMIC v3.4 used by the pipeline |
+| Signature-histology regression (logistic/NB) | hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and agnostic association model output | Everall uses per-tissue logistic regression — same design as the project hypothesis |
+| Subclonal fraction per signature (Fig. 7) | CH-contamination annotation (hypothesis:0001-non-tumor-signal-contamination, t081) | Clonal CH-like vs subclonal dMMR signals — relevant to matched-normal flag |
 | Matched-normal 100KGP design | `matched_normal_studies` config parameter | Validates that CH signatures SBS5/SBS40 are depleted in matched-normal studies |
-| APOBEC subclonal timing | h08 positive control (APOBEC↔SBS2/13 arm) | Subclonality pattern predicts co-expression association will be late-developmental |
+| APOBEC subclonal timing | hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and positive control (APOBEC↔SBS2/13 arm) | Subclonality pattern predicts co-expression association will be late-developmental |
 
 ## Limitations
 
@@ -126,7 +126,7 @@ This paper is directly relevant to **hypothesis h08** (agnostic covariate–sign
 ## Follow-up
 
 - Compare the 26 new COSMIC signatures against the version of the COSMIC reference currently used in the pipeline's restricted-assignment step; determine whether SBS96–98 / DBS12–19 / ID19–22 require a catalog update.
-- Examine Supplementary Table 3 (etiologies for all 134 signatures) as an input to the h08 positive-control design — specifically which signatures have *confirmed* vs *unknown* aetiology and can serve as positive vs negative controls.
-- The SBS17a/b–POLG association (colorectal, Fig. 4/5) is a novel candidate for the h08 discovery prong; also the CN25–MSH6 link.
+- Examine Supplementary Table 3 (etiologies for all 134 signatures) as an input to the hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and positive-control design — specifically which signatures have *confirmed* vs *unknown* aetiology and can serve as positive vs negative controls.
+- The SBS17a/b–POLG association (colorectal, Fig. 4/5) is a novel candidate for the hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and discovery prong; also the CN25–MSH6 link.
 - The paper's clonality data (Fig. 7) provide empirical prior probabilities that APOBEC mutations are subclonal — useful for weighting in any cross-study signature-exposure model.
-- Consider citing as supporting evidence in the h08 pre-registration (H08a arms 1–3 have explicit empirical grounding in Everall et al.'s Figs. 3–5).
+- Consider citing as supporting evidence in the hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and pre-registration; its first three positive-control arms have explicit empirical grounding in Everall et al.'s Figs. 3–5.

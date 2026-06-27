@@ -58,7 +58,7 @@ Key biological assumptions stated in the paper:
 - Cells transform independently; NC divisions generate IC via a Poisson process with expectation ∫₀ᵗ μ₁ X(s) ds.
 - IC undergo a birth–death–mutation branching process: in interval dt, an IC divides into two ICs with probability α₂dt, dies or differentiates with probability β₂dt, or yields one IC + one MC with probability μ₂dt.
 
-The paper explicitly notes (in the "Mathematical Formulation" section) that the reference for the full derivation is Moolgavkar & Venzon 1979 (Math Biosci 47:55–77), and provides only an appendix sketch here.
+The paper explicitly notes (in the "Mathematical Formulation" section) that the reference for the full derivation is its 1979 mathematical-biology predecessor (Math Biosci 47:55–77), and provides only an appendix sketch here.
 
 ### The key incidence equation
 
@@ -107,7 +107,7 @@ Confirmed from the PDF — the paper explicitly models and fits data for the fol
 | **Colon cancer / familial polyposis** | Qualitative — adenomatous polyps as intermediate lesions; familial polyposis as germline first hit; Table 1 includes colon carcinoma |
 | **Other childhood tumors** | Qualitative — neuroblastoma, Wilms' tumour, acute lymphocytic leukemia mentioned; text-fig. 3 shows the generic IC-growth-disadvantage curve |
 
-**Retinoblastoma is not fitted quantitatively in this 1981 paper** — that work is in refs 12–13 (Knudson et al. 1975; Hethcote & Knudson 1978). Lung cancer (nonsmokers) and breast cancer are the two fully fitted examples here.
+**Retinoblastoma is not fitted quantitatively in this 1981 paper** — that work is in refs 12–13, covering earlier retinoblastoma modeling papers. Lung cancer (nonsmokers) and breast cancer are the two fully fitted examples here.
 
 ## Key Findings
 
@@ -156,7 +156,7 @@ The developmental structure of tissue growth is thus the direct determinant of t
 
 ## Relevance to the cbioportal Project
 
-This paper is foundational to the project's age-of-onset thread (question q041: driver-complexity-vs-median-age-at-diagnosis; topic:multistage-carcinogenesis-and-age-of-onset).
+This paper is foundational to the project's age-of-onset thread (question:0041-driver-complexity-vs-median-age-at-diagnosis; topic:multistage-carcinogenesis-and-age-of-onset).
 
 **Why the MVK model matters for cross-study mutation-frequency analyses:**
 
@@ -166,7 +166,7 @@ This paper is foundational to the project's age-of-onset thread (question q041: 
 
 - **Clonal expansion is the missing layer.** The pipeline counts driver mutations but carries no representation of intermediate-clone dynamics. For cancers where promotion (raised α₂ − β₂) dominates — colorectal adenoma→carcinoma, cervical dysplasia, Barrett's oesophagus — cross-study mutation frequency comparisons may be misleading if not conditioned on lesion stage.
 
-- **Connects to Bailey 2018 driver overlay.** Bailey 2018 identifies approved cancer drivers; the MVK model provides the theoretical basis for interpreting *why* different cancer types require different numbers of drivers, and for understanding why those counts must be placed in the context of tissue-specific proliferative background to predict onset age.
+- **Connects to the Bailey driver overlay.** Bailey et al. [@Bailey2018] identify approved cancer drivers; the MVK model provides the theoretical basis for interpreting *why* different cancer types require different numbers of drivers, and for understanding why those counts must be placed in the context of tissue-specific proliferative background to predict onset age.
 
 - **Caution about the pipeline's scope:** The MVK model generates predictions about *incidence-vs-age curves* in population-level registries. The cbioportal pipeline aggregates *prevalent somatic mutations* in clinical cohorts, which are shaped by age at diagnosis, sampling bias, sequencing panels, and study design. Clean MVK predictions live in population incidence, not in the pipeline's mutation-frequency tables — this limits direct quantitative translation, though the qualitative inference (target-cell counts and division rates matter as much as mutation rates) remains valid.
 
@@ -178,7 +178,7 @@ This paper is foundational to the project's age-of-onset thread (question q041: 
 | IC birth rate α₂, death rate β₂ | Not represented | Clonal expansion dynamics are outside current pipeline scope |
 | First mutation rate μ₁ | Per-gene mutation frequency (partial proxy) | Frequency tables aggregate somatic events but do not estimate per-cell-per-generation rates |
 | Second mutation rate μ₂ | Per-gene mutation frequency for second hit | TSG loss-of-heterozygosity / second-hit calls not currently tracked |
-| Two-hit requirement | Driver annotation (Bailey 2018 overlay) | Known TSGs implicitly included; two-hit structure not explicitly modelled |
+| Two-hit requirement | Driver annotation (Bailey et al. [@Bailey2018] overlay) | Known TSGs implicitly included; two-hit structure not explicitly modelled |
 | Promotion (increased α₂ − β₂) | Not represented | No analog for intermediate-clone fitness in current pipeline |
 | Age-specific incidence λ(t) | Not computed | Pipeline aggregates across ages; per-age-group mutation frequency not currently a target output |
 | Familial vs. sporadic first hit | Not represented | Germline variant calls are out of scope for the somatic MAF pipeline |
@@ -197,16 +197,16 @@ From the paper itself:
 
 ## Model / Tool Availability
 
-The MVK model is a mathematical framework derived in Moolgavkar & Venzon 1979 (Math Biosci 47:55–77) and applied here. No software tools were associated with a 1981 JNCI paper. Subsequent implementations appear in the TSCE2 and multi-stage extensions by Moolgavkar, Luebeck, and colleagues. The key equations are all reproduced in the paper's appendix and text.
+The MVK model is a mathematical framework derived in the authors' earlier mathematical-biology work and applied here. No software tools were associated with this 1981 JNCI paper. Subsequent implementations appear in TSCE2 and multi-stage extensions by later Moolgavkar-group work. The key equations are all reproduced in the paper's appendix and text.
 
 ## Follow-up
 
-- **Armitage & Doll 1954** (paper:ArmitageDoll1954) — the multistage power-law predecessor model; the 1981 paper explicitly discusses how MVK subsumes it.
-- **Knudson 1971** (paper:Knudson1971) — the two-hit retinoblastoma analysis whose genetic model MVK formalises stochastically.
-- **Moolgavkar & Venzon 1979** (Math Biosci 47:55–77) — the immediate predecessor developing the full mathematical derivation; cited here as ref 15. Full citation confirmed from PDF reference list.
+- **Armitage and Doll [@ArmitageDoll1954]** (paper:ArmitageDoll1954) — the multistage power-law predecessor model; the 1981 paper explicitly discusses how MVK subsumes it.
+- **Knudson [@Knudson1971]** (paper:Knudson1971) — the two-hit retinoblastoma analysis whose genetic model MVK formalises stochastically.
+- **The 1979 Math Biosci predecessor** — the immediate predecessor developing the full mathematical derivation; cited here as ref 15. Full citation confirmed from PDF reference list.
 - **Moolgavkar, Day & Stevens 1980** (JNCI 65:559–569) — the quantitative breast cancer application referenced extensively as ref 16; confirmed from PDF.
-- **Luebeck & Moolgavkar 2002** (Proc Natl Acad Sci) — later multi-stage TSCE extension fitting colorectal adenoma→carcinoma progression.
-- **Do the cross-study mutation-frequency differences in the cbioportal pipeline correlate with tissue-specific stem-cell division rates?** The MVK model predicts they should, and publicly available tissue stem-cell division rate estimates (Tomasetti & Vogelstein 2015) could be used to test this.
+- **Later TSCE extensions** — later multi-stage TSCE work fits colorectal adenoma→carcinoma progression.
+- **Do the cross-study mutation-frequency differences in the cbioportal pipeline correlate with tissue-specific stem-cell division rates?** The MVK model predicts they should, and publicly available tissue stem-cell division rate estimates [@TomasettiVogelstein2015] could be used to test this.
 - **Is there a way to infer net clonal expansion rates from multi-study VAF distributions in the pipeline outputs?** VAF distributions in cBioPortal MAFs might carry partial signal for this, though panel-sequencing data are noisy and clonal-expansion inference would require careful modelling of sampling depth and tumour purity.
 
 ## Relevance

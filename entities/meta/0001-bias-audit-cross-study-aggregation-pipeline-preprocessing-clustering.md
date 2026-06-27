@@ -72,12 +72,14 @@ pan-cancer variants).
 - **Evidence:**
   - Naive sample-weighted mean pooling was the original approach and is still the operative
     default in `create_combined_gene_cancer_freq_table.py:89`. The cross-study meta-analysis
-    search (2026-04-13) produced clear evidence that GLMM-logit (Stijnen 2010; Lin & Xu
-    2020) is the modern default, but the pipeline has not yet moved (t077 newly filed, P1).
+    search (2026-04-13) produced clear evidence that GLMM-logit (Stijnen et al. [@Stijnen2010];
+    Lin and Xu [@LinXu2020]) is the modern default, but the pipeline has not yet moved
+    (t077 newly filed, P1).
   - Protein-length normalization was chosen early (see `topic:mutation-rate-normalization`);
     it's a single-length-per-gene approximation that ignores transcript isoforms. No
     revisit since. Not wrong, but not revisited against alternatives (nucleotide-context
-    model from Lawrence 2014; dN/dS framing from Martincorena 2017).
+    model from Lawrence et al. [@Lawrence2014]; dN/dS framing from Martincorena et al.
+    [@Martincorena2017]).
   - Cluster k hardcoded in config (k=10 for genes, 10 for cancers in `config-full.yml`) with
     no visible selection rationale in the repo. The earliest config values appear to have
     been inherited into later variants.
@@ -106,7 +108,7 @@ pan-cancer variants).
 
 - **Rating:** not detected
 - **Evidence:** The project has demonstrably pivoted in response to evidence. Recent
-  examples: adding the CH-aware annotation after Bolton 2020 evidence; adding MC3 ingestion
+  examples: adding the CH-aware annotation after Bolton et al. [@Bolton2020] evidence; adding MC3 ingestion
   after audit F2; filing t077/t078/t079 after this session's literature searches turned up
   a clear methodological upgrade path. The backlog review today closed 6 tasks as done and
   retired 2 as out-of-scope — willingness to kill work that isn't paying off.
@@ -125,7 +127,8 @@ pan-cancer variants).
     search artifacts in `doc/searches/` were written by the same automation in the same hour).
 - **Mitigation:** Before acting on today's decisions (especially implementing t077), impose
   a deliberate cooling-off: revisit the pooling-method choice after ≥24 hours have passed
-  and re-read the primary Stijnen 2010 / Langan 2018 / Lin & Xu 2020 papers directly — not
+  and re-read the primary Stijnen et al. [@Stijnen2010] / Langan et al. [@Langan2018] /
+  Lin and Xu [@LinXu2020] papers directly — not
   just the search summary. Consider requesting an outside review of the recommended recipe
   before committing code (could be a `superpowers:requesting-code-review` run on the written
   guide, or a human collaborator if one is available).
@@ -212,12 +215,12 @@ pan-cancer variants).
 
 | Confound | Severity | Fixability | Mitigation (task) |
 |---|---|---|---|
-| **TMB / hypermutators** pool with non-hypermutators; inflates per-gene rates in MSI-CRC, POLE-endometrial, UV-skin | HIGH | EASY | File new task: hypermutator-exclusion config (exclude samples with total mutations > 10× cohort median, or implement Lawrence 2014 covariate). Current pipeline has **zero** TMB awareness. |
+| **TMB / hypermutators** pool with non-hypermutators; inflates per-gene rates in MSI-CRC, POLE-endometrial, UV-skin | HIGH | EASY | File new task: hypermutator-exclusion config (exclude samples with total mutations > 10× cohort median, or implement Lawrence et al. [@Lawrence2014] covariate). Current pipeline has **zero** TMB awareness. |
 | **Cohort-stage (metastatic vs primary)** pooled without stratification; AR/ESR1/EGFR-T790M rates distorted | HIGH | MEDIUM | **t052** (cohort-stage descriptor, P1) — wire `SAMPLE_CLASS` through pipeline so primary/metastatic/pretreated can be stratified. |
 | **Panel content** — gene-not-on-panel and gene-on-panel-unmutated both become 0 in the final wide matrix | HIGH | MEDIUM | **t076** (NaN-vs-0 handling, P1) — preserve panel-callability through the matrix so consumers can distinguish. |
 | **Unweighted cross-study pooling** — 20-sample study and 2000-sample study contribute equally to ratio mean | HIGH | MEDIUM | **t077** (GLMM-logit pooling, P1) — binomial model weights per-study contribution by `n`, natively. Interim fix: sample-size-weighted mean with a single-line config flag. |
 | **Clonal hematopoiesis leakage** in tumor-only panel studies for DNMT3A/PPM1D/TET2/TP53/ASXL1/CHEK2/PRPF8 | MEDIUM-HIGH | HARD for non-priority genes | `annotate_ch.py` handles 7-gene priority list already. Remaining CH-sensitive genes not flagged. Watch for CH-signal creep in other genes via search t059 (ASXL1/TET2 disambiguation). |
-| **Annotation-catalog version drift** (OncoKB Level 1/2 actionability drifted 8.9%→31.6% in 5 years, Suehnholz 2024) | MEDIUM | EASY | Already handled — t053 closed; `bailey2018_source` / `cgc_source` / `sanchez_vega_source` columns emitted by annotate.py. |
+| **Annotation-catalog version drift** (OncoKB Level 1/2 actionability drifted 8.9%→31.6% in 5 years, Suehnholz et al. [@Suehnholz2024]) | MEDIUM | EASY | Already handled — t053 closed; `bailey2018_source` / `cgc_source` / `sanchez_vega_source` columns emitted by annotate.py. |
 | **Gene-symbol aliases** (MLL2/KMT2D, LIN-28B/LIN28B) fragment counts across synonymous rows | MEDIUM | EASY | File new task: HGNC alias-mapping pass in `convert_to_feather.py`. |
 | **Cancer-type label normalization** — raw study strings with whitespace / case variation fragment aggregation | MEDIUM | EASY | File new task: cancer-type canonicalization (strip + case-normalize; optional OncoTree mapping). |
 | **Patient-ID collision** across studies — both studies may use "PATIENT_001" without a study prefix | LOW-MEDIUM | EASY | File new task: prefix patient_id with `study_id` in `create_combined_sample_table.py` and downstream combined matrices. |
@@ -270,8 +273,9 @@ pan-cancer variants).
 
 - **Recommended next actions:**
   - Apply today's task-file additions below.
-  - Impose a 24-hour cooling-off on the t077 / t078 implementation — re-read Stijnen 2010
-    and Langan 2018 *directly* (not the search summaries) before writing the GLMM-logit
+  - Impose a 24-hour cooling-off on the t077 / t078 implementation — re-read Stijnen et al.
+    [@Stijnen2010] and Langan et al. [@Langan2018] *directly* (not the search summaries)
+    before writing the GLMM-logit
     code.
   - Before the first run of t077 on the full dataset, write `doc/meta/pre-registration-
     cross-study-pooling.md` (via `/science:pre-register`) with falsifiable predictions,

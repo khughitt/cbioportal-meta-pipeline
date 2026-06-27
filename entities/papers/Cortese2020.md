@@ -90,26 +90,26 @@ Narrative review; no primary data generated. The paper draws on published precli
 
 ## Relevance
 
-### H1 (Neural circuitry hijack — top-down)
+### `H1` (Neural circuitry hijack — top-down)
 
 Partial but indirect support. The paper does not address CNS or top-down circuitry. All reviewed mechanisms are peripheral (PNS). Argument: the top-mutated neural genes in somatic data likely reflect PNS-expressed genes acting in the TME rather than CNS-circuit hijacking per se. However, the review does not provide gene-level expression data that would confirm or deny this.
 
-### H2 (Immune modulation — via neuro-immune axis) — PRIMARY RELEVANCE
+### `H2` (Immune modulation — via neuro-immune axis) — PRIMARY RELEVANCE
 
-Strong, direct support. This paper is the canonical mechanistic substrate for H2. Key causal chains documented:
+Strong, direct support. This paper is the canonical mechanistic substrate for the `H2` local note label. Key causal chains documented:
 - PNS regulates TAM polarity, MDSC immunosuppression, CD8+ T-cell exhaustion, NK-cell activity, and lymphocyte trafficking — all through secreted neuro-immune mediators whose encoding genes include CHRNA7, ADRB2, CCL2, CCR2, CX3CR1, CX3CL1, CXCL13, NGF, GDNF, BDNF, NTRK1, NTRK2, RET, NPY, HMGB1, TLR4, TRPV1, TRPV2.
 - The sympathetic/parasympathetic opposition (pro- vs anti-tumorigenic) implies that the net somatic mutation signal in neural-expressed genes reflects a balance of opposing forces modulated by tumor type and stage.
-- Mechanistic basis for why neural genes would show elevated somatic mutation frequency via H2: genes that are functionally important at the neuro-immune interface may be under selective pressure in the tumor, leading to recurrent mutation patterns independently of their genomic length.
+- Mechanistic basis for why neural genes would show elevated somatic mutation frequency via the `H2` local note label: genes that are functionally important at the neuro-immune interface may be under selective pressure in the tumor, leading to recurrent mutation patterns independently of their genomic length.
 
-### H3 (Aberrant developmental/oncofetal expression)
+### `H3` (Aberrant developmental/oncofetal expression)
 
-Moderate support. The review explicitly states that tumor cells "reactivate neural programs resembling those that regulate development" (nerve-mediated developmental and regenerative pathways, including neurotrophins/neurotrophin receptors). This provides biological grounding for H3: neural developmental genes expressed in tumors may be mutated or expressed aberrantly, creating an oncofetal transcriptional state that confounds "neural gene" annotation.
+Moderate support. The review explicitly states that tumor cells "reactivate neural programs resembling those that regulate development" (nerve-mediated developmental and regenerative pathways, including neurotrophins/neurotrophin receptors). This provides biological grounding for the `H3` local note label: neural developmental genes expressed in tumors may be mutated or expressed aberrantly, creating an oncofetal transcriptional state that confounds "neural gene" annotation.
 
-### H4 (Brain/CNS-cancer artifact)
+### `H4` (Brain/CNS-cancer artifact)
 
-Not addressed. The paper focuses exclusively on PNS; CNS-specific cancers (glioma, etc.) are not discussed. This paper does not resolve the H4 artifact hypothesis but implicitly supports the view that neural gene involvement in solid non-CNS tumors is a genuine biological phenomenon, not purely artifactual.
+Not addressed. The paper focuses exclusively on PNS; CNS-specific cancers (glioma, etc.) are not discussed. This paper does not resolve the `H4` artifact hypothesis but implicitly supports the view that neural gene involvement in solid non-CNS tumors is a genuine biological phenomenon, not purely artifactual.
 
-### H5 (Misannotation)
+### `H5` (Misannotation)
 
 Not addressed. The paper does not discuss gene annotation methodologies or the distinction between PNS-expressed and CNS-expressed gene products.
 
@@ -126,7 +126,7 @@ The paper provides NO computational or omics-based method for defining neural ge
 | CHRNA7 / alpha-7 nAChR on macrophages | Candidate neuro-immune interface gene | Not on standard neural-gene lists; functionally belongs to PNS-immune axis |
 | ADRB2 on CD8+ T cells and MDSCs | Immunosuppression mechanism | Adrenergic receptor expressed on immune cells — blurs "neural" vs "immune" gene boundary |
 | CCL2/CCR2 and CX3CR1/CX3CL1 in PNI | Chemokine axes in neural tropism | These are canonical immune genes that function in a neural context |
-| Tumor reactivation of neurotrophin programs | H3 oncofetal/developmental expression | NGF, BDNF, GDNF, neurturin, artemin + receptors NTRK1, NTRK2, RET |
+| Tumor reactivation of neurotrophin programs | `H3` oncofetal/developmental expression | NGF, BDNF, GDNF, neurturin, artemin + receptors NTRK1, NTRK2, RET |
 | Vagus nerve inflammatory reflex | Anti-tumorigenic cholinergic axis | Provides mechanistic rationale for why vagal/cholinergic genes would not be selected for mutation |
 | Cancer type heterogeneity in neural effects | Cross-study aggregation pipeline | Neural gene mutation signal will vary by cancer type; aggregation must stratify by cancer type |
 
@@ -146,10 +146,10 @@ No computational models or software released. All figures are schematic. The exp
 
 ## Follow-up
 
-- **Testable Q1:** Do genes encoding PNS-immune interface proteins (CHRNA7, ADRB2, CCL2, CCR2, CX3CR1, CX3CL1, NGF, GDNF, NTRK1, NTRK2, RET) show elevated somatic mutation frequencies in the cBioPortal pipeline outputs, and are these elevated after correcting for gene length and replication timing?
-- **Testable Q2:** Is the neural gene mutation signal in the pipeline concentrated in cancer types where PNI is clinically prominent (pancreatic, prostate, head-and-neck, colorectal) rather than in CNS-origin cancers? This would distinguish H2 (PNS-immune) from H4 (CNS artifact).
-- **Testable Q3:** Do the user's top-ranked neural genes (NKAIN2, KCNIP4, TAFA2/FAM19A2, RIT2, CALN1, RBFOX1, LSAMP, SGCZ, OPCML) encode proteins known to be expressed in PNS neurons or immune cells (not just brain)? Cross-referencing against GTEx peripheral-nerve expression or Human Protein Atlas PNS annotations would distinguish PNS-relevant from CNS-only neural genes.
-- **Testable Q4:** Does the beta-adrenergic / PD-1 axis documented here (sympathetic innervation upregulates PD-1 on T cells) predict co-occurrence of ADRB2 mutations with immune checkpoint gene alterations in the pipeline's cross-study data?
+- **Testable `Q1`:** Do genes encoding PNS-immune interface proteins (CHRNA7, ADRB2, CCL2, CCR2, CX3CR1, CX3CL1, NGF, GDNF, NTRK1, NTRK2, RET) show elevated somatic mutation frequencies in the cBioPortal pipeline outputs, and are these elevated after correcting for gene length and replication timing?
+- **Testable `Q2`:** Is the neural gene mutation signal in the pipeline concentrated in cancer types where PNI is clinically prominent (pancreatic, prostate, head-and-neck, colorectal) rather than in CNS-origin cancers? This would distinguish `H2` (PNS-immune) from `H4` (CNS artifact).
+- **Testable `Q3`:** Do the user's top-ranked neural genes (NKAIN2, KCNIP4, TAFA2/FAM19A2, RIT2, CALN1, RBFOX1, LSAMP, SGCZ, OPCML) encode proteins known to be expressed in PNS neurons or immune cells (not just brain)? Cross-referencing against GTEx peripheral-nerve expression or Human Protein Atlas PNS annotations would distinguish PNS-relevant from CNS-only neural genes.
+- **Testable `Q4`:** Does the beta-adrenergic / PD-1 axis documented here (sympathetic innervation upregulates PD-1 on T cells) predict co-occurrence of ADRB2 mutations with immune checkpoint gene alterations in the pipeline's cross-study data?
 - **Datasets/tools for label-free neural-gene definition from omics:**
   - GTEx v10 (nerve tibial tissue expression) — genes with tissue-enriched expression in peripheral nerve vs all tissues define a PNS-expression signature
   - Human Protein Atlas tissue specificity scores for peripheral neurons

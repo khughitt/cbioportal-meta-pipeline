@@ -127,12 +127,12 @@ genes not expressed in at least one tissue were removed.
 
 ## Relevance
 
-This paper is the methods anchor for **q042** (are cancer drivers biased toward tissue/cell-type-
+This paper is the methods anchor for **question:0042-driver-normal-expression-tissue-cell-type-specificity** (are cancer drivers biased toward tissue/cell-type-
 restricted normal expression?). It provides a citable, benchmarked recommendation — **use Tau** —
-with a clear formula and known failure modes, so any specificity score computed for the q042
+with a clear formula and known failure modes, so any specificity score computed for the question's
 analysis rests on a defensible methodological choice rather than an ad-hoc selection.
 
-**Specific implications for q042 and the cbioportal pipeline:**
+**Specific implications for question:0042-driver-normal-expression-tissue-cell-type-specificity and the cbioportal pipeline:**
 
 - **Metric choice:** Tau should be the default specificity score computed on normal reference
   expression data. Gini is an acceptable secondary check. z-score should be avoided.
@@ -143,12 +143,12 @@ analysis rests on a defensible methodological choice rather than an ad-hoc selec
   Tau on Human Protein Atlas single-cell RNA-seq or Tabula Sapiens; these are distinct analyses
   with different biological interpretations.
 
-- **Interaction with hypothesis h03 (gene-length confounds).** Finding #5 above — all metrics
+- **Interaction with hypothesis:0003-gene-length-confounds-literature-attention.** Finding #5 above — all metrics
   negatively correlate with mean expression level (r up to −0.93) — is a critical confound.
   Lowly expressed genes score as more tissue-specific by construction, which directly interacts
-  with the gene-length / detection-bias confound in h03: short/lowly-expressed genes may
+  with the gene-length / detection-bias confound in the hypothesis: short/lowly-expressed genes may
   appear both tissue-specific AND under-represented in mutation literature, making it difficult
-  to separate true tissue restriction from detection artifact. Any q042 analysis should therefore
+  to separate true tissue restriction from detection artifact. Any question:0042-driver-normal-expression-tissue-cell-type-specificity analysis should therefore
   stratify or residualize on mean expression level when using Tau scores.
 
 - **Tissue-set composition:** Including testis in the reference panel will dominate the
@@ -170,11 +170,11 @@ analysis rests on a defensible methodological choice rather than an ad-hoc selec
 
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
-| Tau metric (0 = ubiquitous, 1 = specific) | q042 specificity score | Canonical recommended metric |
+| Tau metric (0 = ubiquitous, 1 = specific) | question:0042-driver-normal-expression-tissue-cell-type-specificity specificity score | Canonical recommended metric |
 | Normal reference expression atlas | GTEx (tissue grain) / HPA / Tabula Sapiens (cell-type grain) | Must choose grain appropriate to research question |
-| Housekeeping genes (Tau ≈ 0) | Broadly expressed reference set | Contrast class for q042 enrichment analysis |
-| Tissue-specific genes (Tau ≈ 1) | Lineage-restricted driver candidates | Test set for q042 |
-| Negative correlation: specificity ↔ mean expression | Gene-length / expression confound in h03 | Must residualize or stratify in q042 analysis |
+| Housekeeping genes (Tau ≈ 0) | Broadly expressed reference set | Contrast class for question:0042-driver-normal-expression-tissue-cell-type-specificity enrichment analysis |
+| Tissue-specific genes (Tau ≈ 1) | Lineage-restricted driver candidates | Test set for question:0042-driver-normal-expression-tissue-cell-type-specificity |
+| Negative correlation: specificity ↔ mean expression | Gene-length / expression confound in hypothesis:0003-gene-length-confounds-literature-attention | Must residualize or stratify in question:0042-driver-normal-expression-tissue-cell-type-specificity analysis |
 | Testis-specific genes dominating high-Tau tail | Testis cancer type (TGCT) in cBioPortal | Consider excluding testis from Tau reference panel or analysing separately |
 | Log-transform before Tau calculation | Pre-processing step for any GTEx / HPA input | Set values < 1 TPM/RPKM to 0 or not-expressed |
 
@@ -212,20 +212,20 @@ tissue-specificity scores based on Tau for human and mouse genes across multiple
 
 ## Follow-up
 
-- **Compute Tau for q042:** Apply Tau to GTEx v8 bulk RNA-seq (54 tissues) and/or Human Protein
+- **Compute Tau for question:0042-driver-normal-expression-tissue-cell-type-specificity:** Apply Tau to GTEx v8 bulk RNA-seq (54 tissues) and/or Human Protein
   Atlas cell-type-resolved data. Cross-reference the resulting per-gene Tau scores against the
   pipeline's `gene_cancer_study_ratio_annotated.feather` to ask whether high-Tau (tissue-specific)
-  genes are over-represented among Bailey 2018 drivers.
+  genes are over-represented among Bailey et al. [@Bailey2018] drivers.
 - **Residualize on expression level:** Because Tau correlates strongly (negatively) with mean
   expression, regress out log mean expression before testing for driver enrichment among
   high-Tau genes — otherwise the test conflates tissue restriction with low overall expression.
-- **Testis sensitivity analysis:** Run q042 analysis with and without testis in the Tau reference
+- **Testis sensitivity analysis:** Run question:0042-driver-normal-expression-tissue-cell-type-specificity analysis with and without testis in the Tau reference
   panel; report whether conclusions change (expected to affect TGCT-relevant genes most).
 - **Single-cell Tau:** Explore Tau computed on Tabula Sapiens or HCA cell-type pseudobulks to ask
   the same question at cell-type grain — this may be a more mechanistically appropriate level for
   lineage addiction hypotheses.
 - **Bgee pre-computed scores:** Check whether Bgee's pre-computed Tau scores (which use a curated
-  multi-study RNA-seq compilation including GTEx) can serve as an off-the-shelf input for q042,
+  multi-study RNA-seq compilation including GTEx) can serve as an off-the-shelf input for question:0042-driver-normal-expression-tissue-cell-type-specificity,
   avoiding the need to recompute from raw GTEx.
-- Read next: Yanai et al. 2005 (original Tau paper), GTEx Consortium 2020 (tissue eQTL/expression
+- Read next: Yanai et al. 2005 (original Tau paper), the GTEx v8 tissue eQTL/expression
   atlas used as Tau input), and any papers benchmarking Tau on single-cell data.

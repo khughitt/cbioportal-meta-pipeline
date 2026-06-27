@@ -110,37 +110,37 @@ fitting recovers the expected signals without unsupervised extraction.
 
 ## Relevance
 
-**Direct relevance to h08 (agnostic covariate-signature association):**
+**Direct relevance to hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and:**
 
 YAPSA is a concrete implementation of the *supervised fitting* step (mapping a known signature
-catalog W onto samples to obtain per-sample exposures H) that h08 requires as its input. Key points
+catalog W onto samples to obtain per-sample exposures H) that the hypothesis requires as its input. Key points
 of contact:
 
-1. **Positive-control recovery (H08a).** YAPSA's ovarian cancer analysis successfully recovers
+1. **Positive-control recovery arm.** YAPSA's ovarian cancer analysis successfully recovers
    aging (SBS1/SBS5), APOBEC (SBS2/SBS13), HRR deficiency (SBS3/ID6/ID8), and MMR (ID1/ID2)
-   signatures — exactly the known-map positive controls h08a specifies (UV/SBS7 is absent here
+   signatures — exactly the known-map positive controls specified by the hypothesis (UV/SBS7 is absent here
    only because the cohort is ovarian, not skin). The agreement across COSMIC V2 and PCAWG V3
    collections (different W matrices) in detecting HRR signatures is strong evidence that the
    supervised fitting is robust.
 
-2. **Signature-specific cutoffs vs. false positives.** h08's association scan will only be
+2. **Signature-specific cutoffs vs. false positives.** The association scan will only be
    meaningful if the per-sample H values are specific (not inflated by false-positive calls).
    YAPSA's ROC-trained cutoffs directly address this; the cbioportal pipeline currently calls
    `run_restricted_sigprofiler_assignment.py` — evaluating YAPSA as an alternative or
    benchmarking tool is worth recording.
 
-3. **Confidence intervals as weights.** In the h08 association layer, samples with low-confidence
+3. **Confidence intervals as weights.** In the association layer, samples with low-confidence
    signature calls should be downweighted or excluded. YAPSA's profile-likelihood CIs provide an
    operationalizable uncertainty metric for this purpose (mark a call "low confidence" if CI
    includes zero).
 
 4. **Stratified analysis as a within-tissue design.** The SMC stratified analysis is conceptually
-   analogous to h08's within-tissue conditioning: both decompose the global signal into strata to
+   analogous to the hypothesis's within-tissue conditioning: both decompose the global signal into strata to
    reveal covariate-conditional signature enrichment. SMC's result that APOBEC concentrates in
-   high-mutation-density regions is a methodological proof-of-concept for h08 Prediction 3
+   high-mutation-density regions is a methodological proof-of-concept for the hypothesis's Prediction 3
    (expression modules may resolve APOBEC mediators more finely than clinical labels).
 
-5. **WES correction.** h08 plans to use tcga_mc3 (WGS) and potentially WES cBioPortal studies.
+5. **WES correction.** The hypothesis plans to use tcga_mc3 (WGS) and potentially WES cBioPortal studies.
    YAPSA's per-kit WES triplet-content correction is a concrete reference implementation for
    handling panel/WES heterogeneity.
 
@@ -148,7 +148,7 @@ of contact:
 calls include WES and panel data from diverse capture kits. YAPSA's WES-correction approach is
 directly applicable; however, the pipeline currently works at gene×cancer aggregation level rather
 than per-sample signature decomposition, so YAPSA would be invoked downstream of the existing
-pipeline outputs (as discussed in question q018).
+pipeline outputs (as discussed in question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross).
 
 ## Project Framework Mapping
 
@@ -156,17 +156,17 @@ pipeline outputs (as discussed in question q018).
 |---|---|---|
 | Mutational catalog V (samples × features) | Per-study mutation matrix (pre-aggregation) | YAPSA operates on raw per-sample catalogs; cbioportal pipeline aggregates across studies first |
 | Signature matrix W (COSMIC/PCAWG) | Reference signature sets | Pipeline uses SigProfiler; YAPSA provides both COSMIC V2 and PCAWG V3 |
-| Exposure matrix H | Per-sample signature exposures | h08's covariate-association outcome variable |
+| Exposure matrix H | Per-sample signature exposures | hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and covariate-association outcome variable |
 | Signature-specific cutoff | False-positive filter | Analogous to `is_hypermutator` flag gating in pipeline outputs |
 | Profile-likelihood CI | Signature-call uncertainty | Not currently computed in the pipeline |
-| SMC stratified analysis | Within-tissue covariate conditioning | h08 design analogous but at covariate-association level |
+| SMC stratified analysis | Within-tissue covariate conditioning | hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and design analogous but at covariate-association level |
 | WES triplet-content correction | Panel callable-size correction | Pipeline uses `build_panel_callable_sizes`; YAPSA corrects trinucleotide features |
-| LOH-HRD score + LSTs | Genomic instability annotation | Not currently in the pipeline; relevant to h01 (non-tumor signal) |
+| LOH-HRD score + LSTs | Genomic instability annotation | Not currently in the pipeline; relevant to hypothesis:0001-non-tumor-signal-contamination |
 
 ## Limitations
 
-- YAPSA performs **supervised fitting only** — it cannot extract de novo signatures. h08 also
-  needs de novo extraction (q019); YAPSA alone does not address that prong.
+- YAPSA performs **supervised fitting only** — it cannot extract de novo signatures. The hypothesis also
+  needs de novo extraction (question:0019-does-de-novo-extraction-on-the-aggregated-cohort-surface-factors-not-in); YAPSA alone does not address that prong.
 - The ROC-trained cutoffs are optimized on COSMIC/PCAWG training data. Their specificity on
   small panels or heterogeneous cBioPortal studies (which have variable mutation counts and
   diverse cancer types) is not characterized.
@@ -194,11 +194,11 @@ pipeline outputs (as discussed in question q018).
 
 - Compare YAPSA's signature-specific cutoff strategy against SigProfiler's restricted assignment
   (`run_restricted_sigprofiler_assignment.py`) on the same cBioPortal study subset — relevant to
-  choosing the supervised fitting tool for h08.
+  choosing the supervised fitting tool for hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and.
 - Evaluate YAPSA's profile-likelihood CIs as a quality filter for per-sample H values entering
-  the h08 covariate-association layer (low-confidence calls could be excluded or downweighted).
+  the hypothesis's covariate-association layer (low-confidence calls could be excluded or downweighted).
 - Read Maura et al. 2019 (Nat Commun, cited as ref 12 in this paper) for stratified signature
   analysis in hematological malignancies — an application domain with many cBioPortal studies.
 - The SMC stratified result that APOBEC is enriched in high-mutation-density regions connects
-  to the h08 positive-control arm: if APOBEC3 expression is the mediator, it should associate
+  to the hypothesis's positive-control arm: if APOBEC3 expression is the mediator, it should associate
   both with SBS2/SBS13 exposure and with local mutation density independently.

@@ -22,7 +22,7 @@ related:
 ## Summary
 
 This report records the cBioPortal-owned Phase 7 read notes for source-method limits
-on trajectory inference from cross-sectional mutation data. It supports meta Q2 by
+on trajectory inference from cross-sectional mutation data. It supports the meta-project trajectory question by
 separating biological trajectory claims from what cBioPortal-style data can defend.
 
 The two candidate anchors converge on the same method boundary: cBioPortal and GENIE
@@ -33,7 +33,7 @@ not as a standalone biological chronology.
 
 ## Candidate Notes
 
-### `phase6:c018` - H04 MHN pathway-ordering hypothesis
+### `phase6:c018` - `hypothesis:0004-mhn-pathway-ordering` MHN pathway-ordering hypothesis
 
 #### Source
 
@@ -72,7 +72,7 @@ in this federation.
 
 #### Key Evidence
 
-- H04 defines the primary endpoint as inferred edge direction or path position, not
+- `hypothesis:0004-mhn-pathway-ordering` defines the primary endpoint as inferred edge direction or path position, not
   marginal mutation frequency, because rare early events can have low prevalence.
 - The proposed strongest signal is pathway-level, per-histology ordering; gene-level
   ordering is a secondary drill-down expected to be less stable because of power and
@@ -97,7 +97,7 @@ in this federation.
 
 #### Limits
 
-- H04 is still proposed and explicitly gated; it does not yet provide validated
+- `hypothesis:0004-mhn-pathway-ordering` is still proposed and explicitly gated; it does not yet provide validated
   cBioPortal-derived ordering results.
 - Cross-sectional ordering remains under-identified without model assumptions such as
   no reversal and approximately stable hazards.
@@ -111,10 +111,10 @@ in this federation.
 - Meta may compare whether cBioPortal-derived analyses, once calibrated, repeatedly
   place intrinsic-mutator pathway events upstream of checkpoint-loss pathway events
   within specific histologies.
-- Meta may use H04 to justify a pathway-first comparison axis for trajectory evidence,
+- Meta may use `hypothesis:0004-mhn-pathway-ordering` to justify a pathway-first comparison axis for trajectory evidence,
   with gene-level examples treated as drill-downs rather than primary cross-project
   claims.
-- Meta may cite H04's promotion criteria as the required evidentiary threshold for
+- Meta may cite `hypothesis:0004-mhn-pathway-ordering` promotion criteria as the required evidentiary threshold for
   moving from plausible ordering inference to trajectory support.
 
 #### Follow-Up Reads
@@ -123,11 +123,11 @@ in this federation.
   treatment of genotype-dependent ascertainment.
 - Vocht 2026 package and GENIE LUAD demonstration, especially reproducibility of the
   top trajectories under this project's data processing.
-- PCAWG Gerstung 2020 chronology tables for benchmark orderings in overlapping
+- PCAWG chronology tables [@Gerstung2020] for benchmark orderings in overlapping
   histologies.
-- Sanchez-Vega 2018 pathway annotation details for the 10-pathway aggregation layer.
+- TCGA pathway annotation details [@SanchezVega2018] for the 10-pathway aggregation layer.
 
-### `phase6:c019` - Q012 cross-sectional mutation-ordering inference
+### `phase6:c019` - `question:0012-mutation-ordering-cross-sectional-inference` cross-sectional mutation-ordering inference
 
 #### Source
 
@@ -154,7 +154,7 @@ single-biopsy diagnostic snapshots.
 
 #### Phase 7 Status
 
-Use as the primary cBioPortal guardrail for Phase 7 exports. Q012 permits
+Use as the primary cBioPortal guardrail for Phase 7 exports. `question:0012-mutation-ordering-cross-sectional-inference` permits
 method-qualified discussion of ordering signals only after observation-event modeling,
 per-histology analysis, callability correction, contamination control, and benchmark
 calibration.
@@ -169,7 +169,7 @@ calibration.
 - The anchor lists major confounders: collider bias, clonal hematopoiesis
   contamination, normal-tissue contamination, panel heterogeneity, cancer-type pooling,
   signature-coupled TMB, and hypermutator status.
-- Q012 recommends reporting pathway-level results first, retaining gene-level results
+- `question:0012-mutation-ordering-cross-sectional-inference` recommends reporting pathway-level results first, retaining gene-level results
   as drill-down, and calibrating against PCAWG plus the Vocht 2026 GENIE LUAD demo.
 
 #### Supports
@@ -183,7 +183,7 @@ calibration.
 
 #### Limits
 
-- Q012 does not allow cross-sectional frequency asymmetry to be treated as direct
+- `question:0012-mutation-ordering-cross-sectional-inference` does not allow cross-sectional frequency asymmetry to be treated as direct
   temporal evidence.
 - It rejects cancer-type pooled ordering claims because Simpson's-paradox artifacts
   can create misleading directions.
@@ -197,7 +197,7 @@ calibration.
 
 - Meta may state that cBioPortal-style data can contribute directional trajectory
   evidence only as model-inferred ordering from cross-sectional snapshots.
-- Meta may use Q012 to separate symmetric co-occurrence evidence from directed
+- Meta may use `question:0012-mutation-ordering-cross-sectional-inference` to separate symmetric co-occurrence evidence from directed
   ordering evidence.
 - Meta may compare cBioPortal-derived ordering signals against PCAWG-style chronology
   rather than presenting them as independently observed timelines.
@@ -207,8 +207,8 @@ calibration.
 - Schill 2020 and Schill 2024 for MHN assumptions, observation-event correction, and
   collider-bias treatment.
 - Vocht 2026 for practical implementation and the GENIE LUAD demonstration.
-- Beerenwinkel 2007, Caravagna 2016, and Caravagna 2018 for alternative CBN, CAPRI /
-  TRONCO, and REVOLVER ordering approaches.
+- Beerenwinkel 2007, Caravagna et al. [@Caravagna2016], and Caravagna et al.
+  [@Caravagna2018] for alternative CBN, CAPRI / TRONCO, and REVOLVER ordering approaches.
 - Project notes on `t078`, `t081`, `t087`, and `t111` for callability, hypermutator,
   contamination, and signature requirements.
 

@@ -99,19 +99,19 @@ This paper describes the POG570 cohort — 570 advanced and metastatic tumors pr
 
 ## Relevance
 
-**h08 — agnostic covariate↔signature-exposure association:**
+**hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and — agnostic covariate↔signature-exposure association:**
 
-This paper is among the most directly relevant studies for h08. It delivers several positive-control anchors:
+This paper is among the most directly relevant studies for hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and. It delivers several positive-control anchors:
 
-1. **Treatment duration → specific signatures:** SBS31/DBS5 increasing with platinum duration (P=3.4×10⁻¹⁰), SBS17b with platinum+DNA-synthesis inhibitor combination, ID8 with radiation, SBS2 with tamoxifen — all within a multi-histology cohort with rich treatment covariates. These are exactly the kind of covariate↔exposure associations h08 proposes to recover agnostically from cross-study data.
+1. **Treatment duration → specific signatures:** SBS31/DBS5 increasing with platinum duration (P=3.4×10⁻¹⁰), SBS17b with platinum+DNA-synthesis inhibitor combination, ID8 with radiation, SBS2 with tamoxifen — all within a multi-histology cohort with rich treatment covariates. These are exactly the kind of covariate↔exposure associations the project hypothesis proposes to recover agnostically from cross-study data.
 
-2. **APOBEC3 expression as mediator:** The tamoxifen→SBS2 association with concomitant APOBEC3A mRNA elevation is a concrete example of the expression-module → signature link that H08's expression-modular design aims to recover systematically.
+2. **APOBEC3 expression as mediator:** The tamoxifen→SBS2 association with concomitant APOBEC3A mRNA elevation is a concrete example of the expression-module → signature link that the expression-module design aims to recover systematically.
 
-3. **Within-tissue vs pan-cancer confounding:** The paper shows associations that hold after accounting for tumor type (linear regression covariates); h08 Prediction 4 specifically asks whether conditioning on tissue reverses sign. Pleasance 2020 provides the empirical baseline — many therapy effects survive within-tissue conditioning.
+3. **Within-tissue vs pan-cancer confounding:** The paper shows associations that hold after accounting for tumor type (linear regression covariates); the project hypothesis specifically asks whether conditioning on tissue reverses sign. Pleasance et al. [@Pleasance2020] provide the empirical baseline — many therapy effects survive within-tissue conditioning.
 
-4. **Immune clusters predict ICI response in combination with TMB:** The TMB × T-cell signature interaction (P=0.0055) directly motivates h08's hypothesis that immune/inflammation expression modules will associate with signatures beyond what clinical labels alone capture. The immune cluster finding also warns of a reverse-causation scenario (immunoediting on burden, h08 alternative R3).
+4. **Immune clusters predict ICI response in combination with TMB:** The TMB × T-cell signature interaction (P=0.0055) directly motivates the hypothesis that immune/inflammation expression modules will associate with signatures beyond what clinical labels alone capture. The immune cluster finding also warns of a reverse-causation scenario (immunoediting on burden, the hypothesis's alternative R3).
 
-5. **Novel signatures MSBS6 (UV-independent melanoma) and MSBS3:** Illustrate that a subset of signatures in advanced/treated cohorts may lack a clear COSMIC aetiology — precisely the targets for h08's discovery prong (H08b).
+5. **Novel signatures MSBS6 (UV-independent melanoma) and MSBS3:** Illustrate that a subset of signatures in advanced/treated cohorts may lack a clear COSMIC aetiology — precisely the targets for the hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and discovery prong.
 
 **Cross-study meta-analysis relevance:** POG570 is a post-treatment advanced-cancer cohort distinct from TCGA primaries. The elevated SBS31/DBS5/SBS17b in treated patients is a key confound for any cross-study somatic mutation frequency analysis that mixes treated and untreated tumors. The pipeline's `matched_normal_studies` list and hypermutator annotation pipeline (AGENTS.md) should ideally flag therapy-induced hypermutation distinct from intrinsic DDR-deficiency or MSI hypermutation — this paper provides the signature-level evidence for that distinction.
 
@@ -122,10 +122,10 @@ This paper is among the most directly relevant studies for h08. It delivers seve
 | SBS31 / DBS5 (platinum-associated) | Therapy-induced signature | Confound in cross-study aggregation of treated cohorts |
 | SBS17b (platinum + DNA-synthesis inhibitor) | Therapy-induced signature | Late-arising; combination-therapy specific |
 | ID8 (radiation) | Therapy-induced signature | Deletions >5 bp with microhomology |
-| SBS2/APOBEC + APOBEC3A expression | Expression-module → signature | Mediator-level association for h08 |
+| SBS2/APOBEC + APOBEC3A expression | Expression-module → signature | Mediator-level association for hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and |
 | ITH (Shannon diversity via EXPANDS) | Intratumor heterogeneity | Correlated with TMB; independent of prognosis |
 | Immune clusters (CIBERSORT) | Immune expression modules | Eight clusters; cluster 5 = best survival |
-| ICI response: TMB × T-cell score | Combined biomarker | Motivates h08 expression × signature interaction |
+| ICI response: TMB × T-cell score | Combined biomarker | Motivates hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and expression × signature interaction |
 | POLQ / Polζ mutations + genotoxic therapy | DDR pathway mutagenesis | Distinct from MSI/POLE hypermutation |
 | POG570 cohort | External reference dataset | BC Cancer WGS + RNA-seq; 570 advanced cancers |
 
@@ -149,8 +149,8 @@ This paper is among the most directly relevant studies for h08. It delivers seve
 
 ## Follow-up
 
-- **Alexandrov et al. 2020** (COSMIC v3 signatures repertoire) — companion reference for the COSMIC matching; h08 positive-control arms build on that catalog.
+- **Alexandrov et al. 2020** (COSMIC v3 signatures repertoire) — companion reference for the COSMIC matching; hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and positive-control arms build on that catalog.
 - **Degasperi et al. 2022** (Signature Fit Multi-Step) — improved signature refitting methodology relevant to per-sample assignment on cBioPortal data.
 - **Kucab et al. 2019** — mutational signatures of environmental agents; complement to the therapy-associated signatures here.
 - The therapy-associated signatures (SBS31, SBS17b, ID8, DBS5) should be checked as potential confounders in the `is_hypermutator` annotation pipeline (task t081); long-treated patients may exceed TMB thresholds not due to DDR/MSI but due to chemotherapy-induced mutagenesis.
-- MSBS6 (UV-independent melanoma), MSBS3 (pancreatic/stomach), and MSBS5 (T>G, T>C, unknown) are candidate targets for h08 H08b discovery-prong: no COSMIC match → agnostic covariate scan.
+- MSBS6 (UV-independent melanoma), MSBS3 (pancreatic/stomach), and MSBS5 (T>G, T>C, unknown) are candidate targets for the hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and discovery prong: no COSMIC match → agnostic covariate scan.

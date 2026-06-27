@@ -66,29 +66,29 @@ This paper provides a systematic evaluation of the instability of NMF-based de n
 
 ## Relevance
 
-**h08 (agnostic covariate↔signature-exposure association; positive-control recovery of UV/smoking/APOBEC/MMR):**
+**hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and (agnostic covariate↔signature-exposure association; positive-control recovery of UV/smoking/APOBEC/MMR):**
 
-This paper is directly relevant to h08 in several ways:
+This paper is directly relevant to hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and in several ways:
 
-1. **Positive-control signatures:** The AA clustering confirms that canonical positive-control exposures (UV: SBS7b in Yellow; tobacco smoking: SBS4 in Green; MMR deficiency: Silver Blue/Pink/Blue groups) are represented by stable, low-flatness, well-separated archetypes. These are precisely the signatures most likely to pass as reliable positive controls in an h08 covariate-association sweep.
+1. **Positive-control signatures:** The AA clustering confirms that canonical positive-control exposures (UV: SBS7b in Yellow; tobacco smoking: SBS4 in Green; MMR deficiency: Silver Blue/Pink/Blue groups) are represented by stable, low-flatness, well-separated archetypes. These are precisely the signatures most likely to pass as reliable positive controls in the project covariate-association sweep.
 
-2. **Flat/ambiguous signatures as confounders:** High-flatness signatures (SBS3, SBS5, SBS40, SBS93 in Light Grey) group together under a single archetype whose own profile is nearly uniform. In an h08 association pipeline these would generate noisy, diffuse exposure estimates; prior filtering on flatness score (or restricting analysis to signatures with low AA reconstruction ambiguity) is advisable.
+2. **Flat/ambiguous signatures as confounders:** High-flatness signatures (SBS3, SBS5, SBS40, SBS93 in Light Grey) group together under a single archetype whose own profile is nearly uniform. In the hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and association pipeline these would generate noisy, diffuse exposure estimates; prior filtering on flatness score (or restricting analysis to signatures with low AA reconstruction ambiguity) is advisable.
 
-3. **NMF instability warning for cross-study de novo extraction:** The cbioportal pipeline aggregates many studies with heterogeneous sample sizes. The simulation results indicate that when fewer than ~3,000–5,000 samples are available and signatures are highly similar (APOBEC-related SBS2/SBS13, multiple MMR signatures), NMF extraction is unreliable. This argues for using the pre-computed COSMIC v3.3 reference for refitting rather than attempting per-study de novo extraction (consistent with the SigProfilerSingleSample / NNLS refitting approach contemplated in q018/q019).
+3. **NMF instability warning for cross-study de novo extraction:** The cbioportal pipeline aggregates many studies with heterogeneous sample sizes. The simulation results indicate that when fewer than ~3,000–5,000 samples are available and signatures are highly similar (APOBEC-related SBS2/SBS13, multiple MMR signatures), NMF extraction is unreliable. This argues for using the pre-computed COSMIC v3.3 reference for refitting rather than attempting per-study de novo extraction (consistent with the SigProfilerSingleSample / NNLS refitting approach contemplated in question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross and question:0019-does-de-novo-extraction-on-the-aggregated-cohort-surface-factors-not-in).
 
-4. **Dimensionality reduction perspective:** AA provides a compact 29-archetype basis for the 60-dimensional COSMIC space. In a downstream regression or association test (h08), projecting exposure vectors onto this basis could reduce collinearity among highly similar signature pairs (e.g., SBS6/SBS15/SBS21/SBS26 MMR cluster) while preserving biological interpretability — an alternative to ad-hoc signature merging.
+4. **Dimensionality reduction perspective:** AA provides a compact 29-archetype basis for the 60-dimensional COSMIC space. In a downstream regression or association test for hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and, projecting exposure vectors onto this basis could reduce collinearity among highly similar signature pairs (e.g., SBS6/SBS15/SBS21/SBS26 MMR cluster) while preserving biological interpretability — an alternative to ad-hoc signature merging.
 
-5. **Signature redundancy as a design constraint:** The paper's finding that several COSMIC v3.3 signatures have no experimentally validated aetiology and may be blends of others implies that any h08 association result implicating such signatures (e.g., SBS39, SBS40) should be treated with lower confidence until validated by orthogonal evidence.
+5. **Signature redundancy as a design constraint:** The paper's finding that several COSMIC v3.3 signatures have no experimentally validated aetiology and may be blends of others implies that any hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and association result implicating such signatures (e.g., SBS39, SBS40) should be treated with lower confidence until validated by orthogonal evidence.
 
 ## Project Framework Mapping
 
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
-| Flatness score (cosine sim to uniform) | Signature quality filter | Could gate which COSMIC signatures are included in h08 refitting |
+| Flatness score (cosine sim to uniform) | Signature quality filter | Could gate which COSMIC signatures are included in hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and refitting |
 | AA archetypes (29) | Dimensionality-reduced signature basis | Alternative to NMF components for covariate association |
 | SigProfilerExtractor F / C_min | Extraction reliability metrics | C_min more sensitive than C_mean for detecting instability |
 | Scenario 3 failure (11 mixed sigs) | Cross-study aggregation risk | Pipeline cohorts rarely reach 10,000 samples per cancer type |
-| Light Grey archetype group | Flat/artefact signature cluster | Candidates for exclusion from h08 association tests |
+| Light Grey archetype group | Flat/artefact signature cluster | Candidates for exclusion from hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and association tests |
 
 ## Limitations
 
@@ -110,7 +110,7 @@ This paper is directly relevant to h08 in several ways:
 ## Follow-up
 
 - Examine COSMIC v3.4 pairwise similarity matrix to see whether the number of high-flatness or highly similar signatures has changed.
-- For h08 pipeline design: evaluate whether pre-filtering COSMIC signatures by flatness < 0.5 and AA archetype membership improves covariate-association specificity.
-- Check whether SBS2/SBS13 (APOBEC) form a stable pair that warrants merging before h08 testing — the AA grouping (not explicitly discussed for APOBEC in this paper) would clarify this.
+- For hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and pipeline design: evaluate whether pre-filtering COSMIC signatures by flatness < 0.5 and AA archetype membership improves covariate-association specificity.
+- Check whether SBS2/SBS13 (APOBEC) form a stable pair that warrants merging before hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and testing — the AA grouping (not explicitly discussed for APOBEC in this paper) would clarify this.
 - Schill2024 (also in doc/papers/) addresses NMF stability from a different angle; compare recommendations.
-- The companion question q018 (de novo extraction on the aggregated cohort) should incorporate the sample-size thresholds from Table 2: scenario 3 requires 10,000 samples for 80% success — an important feasibility constraint for per-cancer-type extraction.
+- The companion question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross should incorporate the sample-size thresholds from Table 2: scenario 3 requires 10,000 samples for 80% success — an important feasibility constraint for per-cancer-type extraction.

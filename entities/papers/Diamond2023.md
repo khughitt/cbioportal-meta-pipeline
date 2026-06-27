@@ -82,32 +82,32 @@ Using whole-genome sequencing (WGS) of 39 therapy-related myeloid neoplasm (tMN)
 
 ## Relevance
 
-**Direct relevance to h08 (agnostic covariate→signature-exposure association):**
+**Direct relevance to hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and (agnostic covariate→signature-exposure association):**
 
-This paper establishes several positive-control reference points for hypothesis h08's recovery arm (H08a):
+This paper establishes several positive-control reference points for the hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and recovery arm:
 
-1. **Platinum signatures (SBS31/SBS35) have 100% penetrance** in patients with confirmed platinum exposure and sufficient latency for single-cell expansion. This makes them ideal positive controls for H08a's signature-to-exposure recovery: within a cross-study cohort, any study with platinum-treated hematologic patients should yield detectable SBS31/SBS35-to-platinum associations.
+1. **Platinum signatures (SBS31/SBS35) have 100% penetrance** in patients with confirmed platinum exposure and sufficient latency for single-cell expansion. This makes them ideal positive controls for signature-to-exposure recovery: within a cross-study cohort, any study with platinum-treated hematologic patients should yield detectable SBS31/SBS35-to-platinum associations.
 
-2. **SBS-MM1 (melphalan)** shows incomplete penetrance (7/17 cases) due to the leukapheresis escape mechanism. This is a cautionary note for h08: the covariate "melphalan exposure" will be a noisy predictor of SBS-MM1 in any cohort that includes ASCT patients, because ~60% of melphalan-exposed cases will lack the signature. The effect-size ranking in an agnostic scan may therefore underestimate the true melphalan→SBS-MM1 link.
+2. **SBS-MM1 (melphalan)** shows incomplete penetrance (7/17 cases) due to the leukapheresis escape mechanism. This is a cautionary note for the project hypothesis: the covariate "melphalan exposure" will be a noisy predictor of SBS-MM1 in any cohort that includes ASCT patients, because ~60% of melphalan-exposed cases will lack the signature. The effect-size ranking in an agnostic scan may therefore underestimate the true melphalan→SBS-MM1 link.
 
-3. **Therapeutic context shapes mutational signature spectrum in AML/tMN.** The dichotomy between chemo-mutagenized and non-mutagenized tMN maps directly onto the h08 framework: a per-sample covariate (treatment history, here melphalan/platinum vs non-mutagenic agents) explains a large fraction of inter-sample variance in SBS exposure. This is precisely the kind of variance the h08 association layer aims to capture — though in this paper it requires curated treatment records, not an agnostic scan.
+3. **Therapeutic context shapes mutational signature spectrum in AML/tMN.** The dichotomy between chemo-mutagenized and non-mutagenized tMN maps directly onto the hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and framework: a per-sample covariate (treatment history, here melphalan/platinum vs non-mutagenic agents) explains a large fraction of inter-sample variance in SBS exposure. This is precisely the kind of variance the association layer aims to capture — though in this paper it requires curated treatment records, not an agnostic scan.
 
-4. **Structural context matters for signature interpretation.** The finding that driver mutations in tMN are selected (not chemotherapy-induced) while the structural complexity (chromothripsis, CNAs) is chemotherapy-driven illustrates that signature exposures can be mechanistically decoupled from driver selection. For h08, this means signature-exposure associations may reflect mutagenesis without necessarily revealing which clone was selected — a nuance relevant to the reverse-causation guard (R2) in the hypothesis.
+4. **Structural context matters for signature interpretation.** The finding that driver mutations in tMN are selected (not chemotherapy-induced) while the structural complexity (chromothripsis, CNAs) is chemotherapy-driven illustrates that signature exposures can be mechanistically decoupled from driver selection. For the project hypothesis, this means signature-exposure associations may reflect mutagenesis without necessarily revealing which clone was selected — a nuance relevant to the reverse-causation guard (R2) in the hypothesis.
 
 **Broader pipeline relevance:**
-- This paper is a strong empirical anchor for the **hematologic malignancy arm** of h08's positive controls. The cBioPortal cross-study pipeline likely includes multiple tMN/AML/lymphoma studies where platinum- and melphalan-treated patients appear. If the per-study treatment metadata is available (e.g., via clinical tables), the SBS31/SBS35/SBS-MM1 associations are recoverable in principle.
-- The cohort's use of the **single-cell expansion model** (chemotherapy signatures only detectable after clonal dominance of an exposed single cell) is relevant to the cBioPortal pipeline's panel-sequencing limitation (q018): targeted panels will miss sub-clonal signatures, which is why this study required WGS.
+- This paper is a strong empirical anchor for the **hematologic malignancy arm** of hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and positive controls. The cBioPortal cross-study pipeline likely includes multiple tMN/AML/lymphoma studies where platinum- and melphalan-treated patients appear. If the per-study treatment metadata is available (e.g., via clinical tables), the SBS31/SBS35/SBS-MM1 associations are recoverable in principle.
+- The cohort's use of the **single-cell expansion model** (chemotherapy signatures only detectable after clonal dominance of an exposed single cell) is relevant to the cBioPortal pipeline's panel-sequencing limitation (question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross): targeted panels will miss sub-clonal signatures, which is why this study required WGS.
 - The demonstration that **chromothripsis and complex SVs are enriched in chemo-mutagenized tMN** is relevant to t081/t092 (hypermutator annotation): high structural complexity may co-occur with, but is mechanistically distinct from, hypermutation driven by MMR loss or POLE. The pipeline's hypermutator annotation currently handles TMB/POLE/MSI but not complex SV-based hypermutators; this paper illustrates the gap.
 
 ## Project Framework Mapping
 
 | Paper Concept | Project Concept | Notes |
 |---|---|---|
-| SBS31 / SBS35 (platinum intercalation) | Known positive-control signatures for h08 H08a | Complete penetrance makes these ideal test cases |
+| SBS31 / SBS35 (platinum intercalation) | Known positive-control signatures for hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and | Complete penetrance makes these ideal test cases |
 | SBS-MM1 (melphalan alkylation) | Positive control with incomplete penetrance | ~41% penetrance in melphalan-exposed; leukapheresis escape dilutes association |
-| SBS-HSC / SBS1 (clock-like, hematopoietic) | Clock-like background (SBS1/SBS5 in h08) | tMN baseline; analogous to TCGA MC3 AML background |
+| SBS-HSC / SBS1 (clock-like, hematopoietic) | Clock-like background (SBS1/SBS5 in hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and) | tMN baseline; analogous to TCGA MC3 AML background |
 | Chemo-mutagenized vs non-mutagenized tMN dichotomy | Hypermutator stratification (t081) | Chemo-mutagenized tMN are hypermutated vs de novo AML; distinct from POLE/MSI hypermutators |
-| Single-cell expansion model | Panel vs WGS constraint (q018) | Signature detectable only after clonal dominance; panels miss sub-clonal events |
+| Single-cell expansion model | Panel vs WGS constraint (question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross) | Signature detectable only after clonal dominance; panels miss sub-clonal events |
 | Leukapheresis escape | Study-level matched-normal configuration | Matched-normal design affects whether clonal escape events are captured |
 | Chemotherapy signatures as temporal barcodes | Mutation timing / clonal evolution | Method independent of clock-based molecular time; validates prior SBS5-based timing |
 
@@ -130,5 +130,5 @@ This paper establishes several positive-control reference points for hypothesis 
 
 **Questions this raises for the project:**
 - Does the cBioPortal cross-study pipeline have access to treatment history (agent type) in clinical tables for AML/MDS/tMN studies? If so, the SBS31/SBS35 positive control could be run within-study on a subset of those studies.
-- Are post-ASCT hematologic malignancy studies (e.g., myeloma relapse studies) in the cBioPortal corpus? These would be exactly the cases where SBS-MM1 should appear in WGS-based datasets but not panel-based ones — useful for calibrating the panel adequacy question in q018.
-- The leukapheresis escape mechanism means "melphalan-exposed" is a noisy treatment covariate. Does the h08 agnostic scan need to account for treatment-subgroup heterogeneity within a study, or is the between-study variance sufficient?
+- Are post-ASCT hematologic malignancy studies (e.g., myeloma relapse studies) in the cBioPortal corpus? These would be exactly the cases where SBS-MM1 should appear in WGS-based datasets but not panel-based ones — useful for calibrating the panel adequacy question in question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross.
+- The leukapheresis escape mechanism means "melphalan-exposed" is a noisy treatment covariate. Does the hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and agnostic scan need to account for treatment-subgroup heterogeneity within a study, or is the between-study variance sufficient?

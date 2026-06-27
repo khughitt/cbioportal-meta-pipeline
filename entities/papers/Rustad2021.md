@@ -66,17 +66,17 @@ Both COSMIC v2 and v3.1 references were used, along with disease-specific additi
 
 ## Relevance
 
-**Direct relevance to h08 (agnostic covariate–signature association; positive-control recovery).** This paper is a primary methodological reference for signature fitting in hematological cancer contexts:
+**Direct relevance to hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and (agnostic covariate–signature association; positive-control recovery).** This paper is a primary methodological reference for signature fitting in hematological cancer contexts:
 
-- **H08a positive control arm — APOBEC recovery.** `mmsig` demonstrates that APOBEC signatures (SBS2/SBS13) are recoverable at low admixture (~4% contribution threshold) with high sensitivity and specificity using COSMIC v3.1. The paper also shows that APOBEC expression/activity (IGHV-mutated CLL → nc-AID/SBS9; MM plasma cells → APOBEC deaminase/SBS2) produces biologically coherent exposures — exactly the positive controls h08 requires. The mmsig paper is thus a worked example of what a "passing" APOBEC recovery looks like.
+- **Positive control arm — APOBEC recovery.** `mmsig` demonstrates that APOBEC signatures (SBS2/SBS13) are recoverable at low admixture (~4% contribution threshold) with high sensitivity and specificity using COSMIC v3.1. The paper also shows that APOBEC expression/activity (IGHV-mutated CLL → nc-AID/SBS9; MM plasma cells → APOBEC deaminase/SBS2) produces biologically coherent exposures — exactly the positive controls the project hypothesis requires. The mmsig paper is thus a worked example of what a "passing" APOBEC recovery looks like.
 
-- **Signature fitting tool for the pipeline.** If the cbioportal pipeline moves toward per-sample signature exposure estimation (q018), `mmsig` is an actionable candidate for heme malignancy substudies. Its 95% CI construction and transcriptional strand bias check provide the uncertainty quantification that the h08 association layer needs to avoid false-positive exposures as outcomes.
+- **Signature fitting tool for the pipeline.** If the cbioportal pipeline moves toward per-sample signature exposure estimation (question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross), `mmsig` is an actionable candidate for heme malignancy substudies. Its 95% CI construction and transcriptional strand bias check provide the uncertainty quantification that the hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and association layer needs to avoid false-positive exposures as outcomes.
 
 - **Reference-version lesson.** The dramatic sensitivity of estimated exposures to COSMIC v2 vs. v3.1 is a calibration warning for the cross-study meta-analysis: studies whose signature decompositions were run on v2 cannot be directly compared to v3.1-based decompositions. If pooling signature exposures across cBioPortal studies, the reference version must be harmonized.
 
-- **Low-count caveat for panel sequencing.** Targeted capture panels yield too few mutations for reliable per-sample fitting (mean ~20 mutations for MM, ~1 for CLL in this paper). This directly informs q018's feasibility verdict: panel-sequenced studies from cBioPortal cannot contribute per-sample signature exposures and should enter the h08 analysis only as cohort-pooled or restricted-assignment inputs.
+- **Low-count caveat for panel sequencing.** Targeted capture panels yield too few mutations for reliable per-sample fitting (mean ~20 mutations for MM, ~1 for CLL in this paper). This directly informs the feasibility verdict for question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross: panel-sequenced studies from cBioPortal cannot contribute per-sample signature exposures and should enter the hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and analysis only as cohort-pooled or restricted-assignment inputs.
 
-- **Chemotherapy artifact signatures.** The treatment of SBS-MM1 (melphalan) and SBS35 (platinum) as clinically annotated confounders rather than disease-process signatures maps directly to h08's reverse-causation guard (R2 in the hypothesis). Knowing which signatures track treatment rather than biology prevents misattributing a clinical covariate association.
+- **Chemotherapy artifact signatures.** The treatment of SBS-MM1 (melphalan) and SBS35 (platinum) as clinically annotated confounders rather than disease-process signatures maps directly to the hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and reverse-causation guard. Knowing which signatures track treatment rather than biology prevents misattributing a clinical covariate association.
 
 ## Project Framework Mapping
 
@@ -87,14 +87,14 @@ Both COSMIC v2 and v3.1 references were used, along with disease-specific additi
 | SBS1 / SBS5 (clock-like, always included) | Universal background signatures | mmsig forces these in; pipeline must handle their ubiquity in any cross-study pooling |
 | SBS-MM1 (melphalan), SBS35 (platinum) | Treatment-artifact flags | Analogous to `hypermutator_reason` — known confounders that need clinical annotation |
 | Transcriptional strand bias as specificity check | Not currently in pipeline | Could be used to validate uncertain signature calls in any future heme cohort analysis |
-| IGHV mutation status (CLL) | Clinical covariate (h08 input) | Known upstream of SBS9 — a textbook positive control for h08 in a CLL substudy |
-| 95% CI from 1,000 bootstrapped profiles | Uncertainty estimation | Needed for h08 association layer to avoid false-positive exposures |
+| IGHV mutation status (CLL) | Clinical covariate (hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and input) | Known upstream of SBS9 — a textbook positive control for the hypothesis in a CLL substudy |
+| 95% CI from 1,000 bootstrapped profiles | Uncertainty estimation | Needed for the hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and association layer to avoid false-positive exposures |
 
 ## Limitations
 
 - **Hematological-only validation.** `mmsig` is explicitly validated on MM, CLL, and AML. Generalization to carcinomas with very different signature landscapes (e.g., UV-driven melanoma, smoking-driven LUAD) is not demonstrated. The error-suppression heuristic may not be well-calibrated for tissues with dominant signatures that are "flat."
 
-- **WGS required for most signatures.** The paper confirms that exome and panel sequencing provide insufficient mutation counts for reliable per-sample fitting in heme malignancies, limiting clinical applicability and confirming q018's feasibility concern.
+- **WGS required for most signatures.** The paper confirms that exome and panel sequencing provide insufficient mutation counts for reliable per-sample fitting in heme malignancies, limiting clinical applicability and confirming the feasibility concern in question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross.
 
 - **Tool forces SBS1/SBS5 in all samples.** This design choice means mmsig cannot detect samples where one of these ubiquitous signatures is genuinely absent (e.g., certain pediatric tumors). The forcing also slightly inflates SBS1/SBS5 estimates and may suppress other signatures.
 
@@ -112,7 +112,7 @@ Both COSMIC v2 and v3.1 references were used, along with disease-specific additi
 
 ## Follow-up
 
-- **q018 feasibility:** This paper's WES/panel results directly inform whether cBioPortal panel studies can contribute per-sample signature exposures to the h08 association layer — the verdict is likely no for most panel studies.
+- **question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross feasibility:** This paper's WES/panel results directly inform whether cBioPortal panel studies can contribute per-sample signature exposures to the hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and association layer — the verdict is likely no for most panel studies.
 - **Pipeline signature fitting:** Consider whether mmsig or SigProfilerAssignment is preferred for a heme-focused substudy; mmsig's 95% CI and transcriptional strand bias check are clinically attractive.
 - **COSMIC version audit:** Confirm which COSMIC version is used in any cBioPortal study meta-data; cross-version pooling of signature exposures is unreliable.
 - **Related papers already in doc/papers/:** Alexandrov2020 (COSMIC v3 reference), Degasperi2022 (pan-cancer signature fitting), Maura2019 (MM signature landscape — same group), Hubschmann2021 (heme signature fitting benchmark).

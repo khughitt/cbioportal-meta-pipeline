@@ -51,12 +51,12 @@ mutation-only pipeline can and cannot say about neuro-oncology.
   **expression axis the pipeline does not currently measure**; mutation-layer contributions are
   limited to (a) confound control and (b) a few narrow, testable footprints (stress/repair,
   neuro-active-drug exposure, canonical-effector dN/dS).
-- Gives the five new topic notes and h12 a shared home and a consistent reading.
+- Gives the five new topic notes and `hypothesis:0012-neural-gene-enrichment-length-histology-artifact` a shared home and a consistent reading.
 
 ## Boundaries
 
 - **Inside:** the neural-gene mutation-enrichment question and its confounds (length, CNS, NET);
-  label-free neural-gene definition; oncofetal (H3) vs selection (H1) discrimination;
+  label-free neural-gene definition; oncofetal (`H3`) vs selection (`H1`) discrimination;
   neuro→mutation footprints (stress/HPA, drug exposure); the generalized length-aware enrichment guard.
 - **Outside (remains its own concept/work):** building an expression modality (a scope decision
   for the project, not this theme); clinical neuro-oncology; the assay-regime confound
@@ -64,9 +64,9 @@ mutation-only pipeline can and cannot say about neuro-oncology.
 
 ## Current Project Links
 
-- Hypothesis: `hypothesis:0012` (null-first); builds on `hypothesis:0003`.
+- Hypothesis: `hypothesis:0012-neural-gene-enrichment-length-histology-artifact` (null-first); builds on `hypothesis:0003-gene-length-confounds-literature-attention`.
 - Topics: the five `topic:` notes in `related`.
-- Questions: q032–q040.
+- Questions: `q032`–`q040`.
 - Method: `method:length-aware-geneset-enrichment`.
 - Plan / tasks: `doc/plans/2026-06-06-neural-gene-enrichment-meta-analysis-plan.md`; group
   `neural-gene-meta-analysis` (t215–t221) + search tasks for label-free neural datasets.
@@ -84,16 +84,16 @@ mutation-only pipeline can and cannot say about neuro-oncology.
 
 ## Downstream Work
 
-- The neural-gene meta-analysis program (t215–t221) and the generalized enrichment guard (q038).
-- Substrate-gated leads connecting neuro-biology to the mutation/signature core (q039, q040).
+- The neural-gene meta-analysis program (t215–t221) and the generalized enrichment guard (`q038`).
+- Substrate-gated leads connecting neuro-biology to the mutation/signature core (`q039`, `q040`).
 - Possible future: a scoped decision on whether the project adds an expression modality, which is
   where the field's real signal would be visible.
 
 ## Open Questions
 
-- Does any neural enrichment survive length + CNS + NET correction at all? (q032–q034)
-- If so, is it oncofetal byproduct (H3) or selection (H1)? (q036/q037)
-- Is there a real stress/repair or drug-exposure mutational footprint? (q039/q040)
+- Does any neural enrichment survive length + CNS + NET correction at all? (`q032`–`q034`)
+- If so, is it oncofetal byproduct (`H3`) or selection (`H1`)? (`q036`/`q037`)
+- Is there a real stress/repair or drug-exposure mutational footprint? (`q039`/`q040`)
 
 ## Update Triggers
 

@@ -94,8 +94,8 @@ genes, and none of the candidate genes appear in it.** Across all 21 papers:
    mutation without any selection."
 
 **Conclusion the batch forces:** the prior should be **null-first**. The most parsimonious
-explanation of the candidate list is **H5 (gene length) + H4 (CNS-glioma and neuroendocrine
-histology in the cohort)**, not H1 (active neural hijacking). The literature is rich and the
+explanation of the candidate list is **`H5` (gene length) + `H4` (CNS-glioma and neuroendocrine
+histology in the cohort)**, not `H1` (active neural hijacking). The literature is rich and the
 biology is real — it is simply *orthogonal to somatic mutation frequency*. This is set out as
 `hypothesis:0012`.
 
@@ -103,19 +103,19 @@ biology is real — it is simply *orthogonal to somatic mutation frequency*. Thi
 
 | Explanation | Verdict from the batch | Key papers |
 |---|---|---|
-| **H1 — tumors hijack top-down neural circuitry** | Real biology, but acts via expression/innervation, **not** tumor-genome mutation. Cannot, on its own, predict a mutation-frequency signal. | Mancusi2023, Keough2022, Wang2025, Xiong2023, Venkatesh2019 |
-| **H2 — neural signal via immune modulation** | Strongly supported as *biology* (NE/ADRB2→MDSC/Treg/CD8 exhaustion; CGRP→T-cell exhaustion; GABA from B cells). Again expression-level, not mutational. | Kizil2024, Pu2025, Cortese2020, Mravec2008 |
-| **H3 — byproduct of oncofetal / developmental de-repression** | **Most plausible biological route IF any residual signal survives length+histology correction.** SOX2/MYCN-driven oncofetal reprogramming broadly de-represses the fetal transcriptome, of which neural developmental genes are the largest class. Testable label-free via fetal-vs-adult expression (BrainSpan). | Cao2023 (pivotal), Huang2023, Hanahan2023 |
-| **H4 — artifact of brain/CNS + neuroendocrine tumors in the cohort** | Directly implicated. Peripheral-cancer papers (Fan2024, Lu2026) *weaken* a pure-CNS artifact, but CNS gliomas (LSAMP/OPCML are recurrent glioma genes) and **neuroendocrine neoplasms** (MEN1/DAXX/ATRX; CHGA/SYP/NCAM1/INSM1 lineage markers) are concrete histology confounds. | Kulke2012, Ahmed2020, Tan2024, Lu2026 |
-| **H5 — misannotation / non-neural function / length** | Length confound is the leading null; "misannotation" is partly dissolved by H3 (these genes are *legitimately* fetal-neural, not mislabeled). | Lu2026, Cao2023; project h03 |
+| **`H1` — tumors hijack top-down neural circuitry** | Real biology, but acts via expression/innervation, **not** tumor-genome mutation. Cannot, on its own, predict a mutation-frequency signal. | Mancusi2023, Keough2022, Wang2025, Xiong2023, Venkatesh2019 |
+| **`H2` — neural signal via immune modulation** | Strongly supported as *biology* (NE/ADRB2→MDSC/Treg/CD8 exhaustion; CGRP→T-cell exhaustion; GABA from B cells). Again expression-level, not mutational. | Kizil2024, Pu2025, Cortese2020, Mravec2008 |
+| **`H3` — byproduct of oncofetal / developmental de-repression** | **Most plausible biological route IF any residual signal survives length+histology correction.** SOX2/MYCN-driven oncofetal reprogramming broadly de-represses the fetal transcriptome, of which neural developmental genes are the largest class. Testable label-free via fetal-vs-adult expression (BrainSpan). | Cao2023 (pivotal), Huang2023, Hanahan2023 |
+| **`H4` — artifact of brain/CNS + neuroendocrine tumors in the cohort** | Directly implicated. Peripheral-cancer papers (Fan2024, Lu2026) *weaken* a pure-CNS artifact, but CNS gliomas (LSAMP/OPCML are recurrent glioma genes) and **neuroendocrine neoplasms** (MEN1/DAXX/ATRX; CHGA/SYP/NCAM1/INSM1 lineage markers) are concrete histology confounds. | Kulke2012, Ahmed2020, Tan2024, Lu2026 |
+| **`H5` — misannotation / non-neural function / length** | Length confound is the leading null; "misannotation" is partly dissolved by `H3` (these genes are *legitimately* fetal-neural, not mislabeled). | Lu2026, Cao2023; project `h03` |
 
 ## Tensions and nuances between papers
 
-- **H1 vs H3 are entangled, not exclusive.** `paper:Cao2023` reframes "neural hijacking" in
+- **`H1` vs `H3` are entangled, not exclusive.** `paper:Cao2023` reframes "neural hijacking" in
   non-neural tumors as a *special case* of oncofetal de-repression (the same Wnt/Hedgehog/Hippo
   axes that drive stemness reactivate SOX2/OLIG2/BMI1 neural-developmental TFs). For our
-  mutation question this matters: H1-as-selection predicts recurrent, clustered, functional
-  mutations in specific effectors; H3-as-byproduct predicts diffuse, length-scaled,
+  mutation question this matters: `H1`-as-selection predicts recurrent, clustered, functional
+  mutations in specific effectors; `H3`-as-byproduct predicts diffuse, length-scaled,
   non-recurrent mutation across many developmentally-regulated genes. These make **opposite
   empirical predictions** in our data.
 - **Peripheral vs CNS.** Fan2024/Lu2026/Cortese2020 document deep neural biology in non-CNS
@@ -134,19 +134,19 @@ No paper releases a computational neural-gene set, but the recommendations conve
 - **Adult tissue specificity:** GTEx (brain regions + tibial nerve), Human Protein Atlas
   tissue-specificity (tau/Z-scores). Distinguishes CNS-only from PNS-expressed genes
   (Cortese2020's point — our candidates are mostly CNS-structural).
-- **Developmental stage (for H3):** BrainSpan, Allen Developing Human Brain Atlas, Human Cell
+- **Developmental stage (for `H3`):** BrainSpan, Allen Developing Human Brain Atlas, Human Cell
   Atlas fetal — fetal-vs-adult brain expression ratio operationalizes the oncofetal axis
   directly (Cao2023).
 - **Single-cell / marker sets:** Allen Brain Cell Atlas, PanglaoDB, CellMarker 2.0, Neftel
   2019 / Filbin 2018 glioma OPC/NPC state signatures (Keough2022, Hwang2025a).
 - **Positive-control gene set:** the canonical effectors above (NLGN3, ADRB2, NTRK1/2, CHRM3,
-  GRIN2A/B, GAD1, NGF, BDNF) — for an H1 somatic-selection test via dN/dS.
+  GRIN2A/B, GAD1, NGF, BDNF) — for an `H1` somatic-selection test via dN/dS.
 
 ## Downstream entities created from this batch
 
 - **Hypothesis:** `hypothesis:0012-neural-gene-enrichment-length-histology-artifact` (null-first).
 - **Questions:** `question:0032`–`question:0037` (length null, CNS exclusion, NET exclusion,
-  label-free definition, fetal-vs-adult H3 test, canonical-gene dN/dS H1 test).
+  label-free definition, fetal-vs-adult `H3` test, canonical-gene dN/dS `H1` test).
 - **Topics:** five topic notes (see `related`).
 - **Plan:** `doc/plans/2026-06-06-neural-gene-enrichment-meta-analysis-plan.md`.
 - **Tasks:** group `neural-gene-meta-analysis` (t215–t221) in `tasks/active.md`.

@@ -32,7 +32,7 @@ prior_interpretations: []
 
 ## Mode
 
-`dev` — t111 built the null-model-spectra extraction pipeline from scratch. The real-data execution did produce ~56 spectra rows and ~47 burden rows as empirical output, but those rows are **inputs to downstream analyses** (q007, q008, q010), not tests of a hypothesis. This document summarizes the infrastructure outcomes, the methodological lessons, and the narrow empirical observations that serve as sanity checks on the pipeline.
+`dev` — t111 built the null-model-spectra extraction pipeline from scratch. The real-data execution did produce ~56 spectra rows and ~47 burden rows as empirical output, but those rows are **inputs to downstream analyses** (`q007`, `q008`, `q010`), not tests of a hypothesis. This document summarizes the infrastructure outcomes, the methodological lessons, and the narrow empirical observations that serve as sanity checks on the pipeline.
 
 ## Infrastructure Outcomes
 
@@ -111,9 +111,9 @@ Pooled `snvs_per_mb` Liver 1.19 / Pancreas 0.20 = 6.0× range. Li 2021 Liver 69 
 
 ## Downstream Tasks Unblocked
 
-- **q007** (cross-tissue somatic mutation rate variation as null model) — **partially addressed.** The null-model table exists and reproduces Li 2021's burden ordering. The question "can it serve as a null model" is now *answerable* but not yet answered: no cBioPortal output has been corrected against this baseline yet. A concrete next analysis is to apply the per-tissue `snvs_per_mb` as a denominator correction to `gene_cancer_study_ratio_annotated.feather` frequencies and check whether any gene-cancer rankings shift.
-- **q008** (SBS1/SBS5 tissue-background subtraction magnitude) — **infrastructure available, analysis not yet run.** The spectra table carries the 96-context fractions needed for background subtraction. t109 (per-study cancer-type signature restriction) and t110 (SBS1/SBS5 ratio validation) are the natural consumers.
-- **q010** (tissue-of-origin classifier via cosine similarity) — **infrastructure available, analysis not yet run.** The spectra table is the reference library a cosine-similarity classifier would query against.
+- **`q007`** (cross-tissue somatic mutation rate variation as null model) — **partially addressed.** The null-model table exists and reproduces Li 2021's burden ordering. The question "can it serve as a null model" is now *answerable* but not yet answered: no cBioPortal output has been corrected against this baseline yet. A concrete next analysis is to apply the per-tissue `snvs_per_mb` as a denominator correction to `gene_cancer_study_ratio_annotated.feather` frequencies and check whether any gene-cancer rankings shift.
+- **`q008`** (SBS1/SBS5 tissue-background subtraction magnitude) — **infrastructure available, analysis not yet run.** The spectra table carries the 96-context fractions needed for background subtraction. t109 (per-study cancer-type signature restriction) and t110 (SBS1/SBS5 ratio validation) are the natural consumers.
+- **`q010`** (tissue-of-origin classifier via cosine similarity) — **infrastructure available, analysis not yet run.** The spectra table is the reference library a cosine-similarity classifier would query against.
 - **t109** (cancer-type signature restriction for SigProfilerAssignment) — now has a validated SigProfilerMatrixGenerator integration to copy from.
 - **t110** (SBS1/SBS5 ratio validation) — still blocked by t109.
 - **t112** (integrate Lee-Six 2018 or Xu 2025 as second source) — now has a working single-source adapter pattern to extend.
@@ -122,7 +122,7 @@ Pooled `snvs_per_mb` Liver 1.19 / Pancreas 0.20 = 6.0× range. Li 2021 Liver 69 
 
 - **`TODO(t111-followup)` in `validate_input_contract`**: the `assembly` parameter is accepted but not range-checked against per-chromosome lengths. Design spec §Input contract requires this; noqa + comment marks the deferral. A caller who declares `assembly="GRCh38"` for Li 2021 data would not be caught by the validator. Cost to fix: encode GRCh37/GRCh38 max-chromosome-lengths as a constants dict and add a spot-check against `df["pos"].max()` per chromosome. Probably half an hour plus one test.
 - **Cardia donor count (3, vs Liver's 5) distorts pooled ordering.** Cardia's 4,041 pooled SNVs exceed Stomach's 5,172 only in absolute terms; on a per-donor-average basis Cardia is comparable or lower. Downstream consumers that key on pooled counts should normalize by `n_donors` or `n_samples` before comparing tissues. The `snvs_per_mb` column in `normal_tissue_burden.tsv` already does this correctly.
-- **No discriminating prediction yet filed to distinguish q007 from a simpler "use Martincorena 2017's dN/dS" alternative.** The framework design assumed the Li 2021 empirical rates are strictly better than a dN/dS-based null; we haven't actually run a head-to-head comparison. If a downstream analysis finds the two approaches rank genes identically for cBioPortal outputs, q007's value-add collapses. Worth a pre-registration before the null-model correction is rolled out.
+- **No discriminating prediction yet filed to distinguish `q007` from a simpler "use Martincorena et al. [@Martincorena2017]'s dN/dS" alternative.** The framework design assumed the Li 2021 empirical rates are strictly better than a dN/dS-based null; we haven't actually run a head-to-head comparison. If a downstream analysis finds the two approaches rank genes identically for cBioPortal outputs, `q007`'s value-add collapses. Worth a pre-registration before the null-model correction is rolled out.
 - **`Cardia` UBERON ID correction.** Plan's suggested UBERON:0007650 turned out to be "esophagogastric junction" (a junction structure), not "cardia of stomach" (a gastric region). Fixed to UBERON:0001162 during Task 2 with an EBI OLS spot check. Other UBERON IDs in `data/tissue_uberon_mapping.tsv` were only spot-checked (4 of 9); the remaining 5 could be independently verified for defensive robustness, though the project's use case (tissue-label join) doesn't depend on the exact UBERON choice.
 - **Integration test is slow-marked by default.** If a future SigProfilerMatrixGenerator upgrade breaks the install-retry path, CI won't catch it unless `pytest -m slow` is invoked explicitly. Consider adding a nightly job or a release-prep checklist entry to run the slow tier.
 
@@ -135,17 +135,17 @@ Pooled `snvs_per_mb` Liver 1.19 / Pancreas 0.20 = 6.0× range. Li 2021 Liver 69 
 
 **New tasks to add:**
 - **Assembly range-check follow-up** (P3, dev): close the `TODO(t111-followup)` by implementing chromosome-length range verification in `validate_input_contract`. Low priority — current callers pass the correct assembly by construction via `_SOURCE_ASSEMBLY`. Filing for future-proofing when t112 adds GRCh38 sources.
-- **Pre-register q007 null-model correction impact** (P2, research): before rolling the per-tissue `snvs_per_mb` correction into the main frequency/ratio pipeline, pre-register the expected effect sizes (how many gene-cancer rankings shift, and by how many rank positions) and the comparison against a simpler Martincorena dN/dS baseline. Prevents "this looks like a good idea, let's ship it" bias.
+- **Pre-register `q007` null-model correction impact** (P2, research): before rolling the per-tissue `snvs_per_mb` correction into the main frequency/ratio pipeline, pre-register the expected effect sizes (how many gene-cancer rankings shift, and by how many rank positions) and the comparison against a simpler Martincorena dN/dS baseline. Prevents "this looks like a good idea, let's ship it" bias.
 
 **Existing tasks to promote / reconsider:**
 - **t109** (signature-restriction rule) — still P2, still active. No change.
 - **t110** (SBS1/SBS5 validation) — still P2, still blocked by t109. No change.
-- **t112** (Lee-Six 2018 / Xu 2025 second-source integration) — P2, proposed. Given that downstream questions (especially q008 — blood CH contamination) most urgently need blood tissue coverage, consider promoting to P1 once q008's first results come in and confirm the blood gap is real.
+- **t112** (Lee-Six 2018 / Xu 2025 second-source integration) — P2, proposed. Given that downstream questions (especially `q008` — blood CH contamination) most urgently need blood tissue coverage, consider promoting to P1 once `q008`'s first results come in and confirm the blood gap is real.
 
 **Graph updates (pending graph.trig materialization):**
-- No proposition-level evidence updates yet. t111's empirical outputs are *instrumental* (null-model inputs to downstream analyses) rather than evidence for or against specific propositions. Once q007 / q008 / q010 run their first concrete analyses against the spectra table, the resulting observations will shift proposition support.
+- No proposition-level evidence updates yet. t111's empirical outputs are *instrumental* (null-model inputs to downstream analyses) rather than evidence for or against specific propositions. Once `q007` / `q008` / `q010` run their first concrete analyses against the spectra table, the resulting observations will shift proposition support.
 - Science-tool health check shows `proposition_claim_layer_coverage: numerator=0, denominator=0` — the project has not yet materialized its proposition graph; interpretation quality in this document is accordingly constrained to narrative-level claims rather than structured evidence updates. This is consistent with the project being in an early proposition-migration state.
 
 **Documentation updates:**
 - Provenance doc at `doc/datasets/normal-tissue-spectra.md` is current as of this run.
-- `doc/papers/synthesis-2026-04-18-somatic-mutations-in-normal-tissue.md` already cross-references q007/q008/q010; no update needed.
+- `doc/papers/synthesis-2026-04-18-somatic-mutations-in-normal-tissue.md` already cross-references `q007`/`q008`/`q010`; no update needed.

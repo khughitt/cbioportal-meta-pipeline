@@ -92,37 +92,37 @@ paper:Faienza2025 reviews multiple landmark applications: SBS7a in circulating m
 
 ## Relevance to This Project
 
-### Implications for h08 and the cross-study signature-aetiology aggregation
+### Implications for `h08` and the cross-study signature-aetiology aggregation
 
-Hypothesis h08 proposes an agnostic covariate ↔ mutational-signature-exposure association whose first validation gate is recovery of known aetiologies (UV/SBS7, smoking/SBS4, APOBEC/SBS2-13, MMR/SBS6-26-44) as positive controls before claiming novel hits.
+Hypothesis `h08` proposes an agnostic covariate ↔ mutational-signature-exposure association whose first validation gate is recovery of known aetiologies (UV/SBS7, smoking/SBS4, APOBEC/SBS2-13, MMR/SBS6-26-44) as positive controls before claiming novel hits.
 
 This topic provides the following load-bearing inputs:
 
-1. **Tissue-specificity of positive-control aetiologies.** paper:Faienza2025 articulates the defining properties of a validated signature: tissue-specificity of exposure, dose-dependence, and non-reversibility. For h08, this means the smoking→SBS4 association should be recoverable preferentially in lung cancer studies; UV→SBS7 in melanoma and cutaneous squamous cell carcinoma; MMR deficiency signatures in MSI-H colorectal, endometrial, and gastric studies. The normal-tissue literature confirms these aetiologies are real and not cancer-specific artefacts.
+1. **Tissue-specificity of positive-control aetiologies.** paper:Faienza2025 articulates the defining properties of a validated signature: tissue-specificity of exposure, dose-dependence, and non-reversibility. For `h08`, this means the smoking→SBS4 association should be recoverable preferentially in lung cancer studies; UV→SBS7 in melanoma and cutaneous squamous cell carcinoma; MMR deficiency signatures in MSI-H colorectal, endometrial, and gastric studies. The normal-tissue literature confirms these aetiologies are real and not cancer-specific artefacts.
 
-2. **Clock-like signatures (SBS1, SBS5) as nuisance covariates.** paper:Shojaeisaadi2024 confirms SBS1 and SBS5 as the dominant drivers of germline de novo mutation accumulation, reinforcing that age must be included as a nuisance covariate in the h08 association model. Discovering an "association" between age and SBS1 would be a confound, not a novel finding. The method:h08-agnostic-association-model should pre-specify age as a covariate to be modelled out.
+2. **Clock-like signatures (SBS1, SBS5) as nuisance covariates.** paper:Shojaeisaadi2024 confirms SBS1 and SBS5 as the dominant drivers of germline de novo mutation accumulation, reinforcing that age must be included as a nuisance covariate in the `h08` association model. Discovering an "association" between age and SBS1 would be a confound, not a novel finding. The `method:h08-agnostic-association-model` should pre-specify age as a covariate to be modelled out.
 
-3. **SBS9 in lymphoid malignancies as a tissue-of-origin confounder.** For cross-study aggregation including lymphoma, CLL, and multiple myeloma studies, SBS9 will be the dominant excess signature reflecting post-germinal centre differentiation of the cell of origin. In the h08 agnostic scan, the covariate "lymphoid vs. non-lymphoid tissue of origin" will associate strongly with SBS9. This is a known biological positive control (germinal centre activity drives SBS9), not a novel hit — it should be documented as a positive control alongside UV/smoking/APOBEC/MMR. paper:Machado2022 provides the quantitative baseline to interpret SBS9 exposure levels across cBioPortal lymphoma studies.
+3. **SBS9 in lymphoid malignancies as a tissue-of-origin confounder.** For cross-study aggregation including lymphoma, CLL, and multiple myeloma studies, SBS9 will be the dominant excess signature reflecting post-germinal centre differentiation of the cell of origin. In the `h08` agnostic scan, the covariate "lymphoid vs. non-lymphoid tissue of origin" will associate strongly with SBS9. This is a known biological positive control (germinal centre activity drives SBS9), not a novel hit — it should be documented as a positive control alongside UV/smoking/APOBEC/MMR. paper:Machado2022 provides the quantitative baseline to interpret SBS9 exposure levels across cBioPortal lymphoma studies.
 
 4. **SBSblood as a lymphoid-lineage covariate candidate.** The SBSblood signature in HSPCs and naive lymphocytes, if distinguishable from SBS5 in COSMIC-based decompositions, could serve as a covariate for lineage purity in bulk tumour data. Tumour-infiltrating lymphocytes in non-lymphoid biopsies would contribute SBSblood to bulk signature profiles — a potential confound for pan-cancer analyses.
 
-5. **RAG/AID off-target mutagenesis as a structural variant confound.** If the h08 pipeline extends to structural variant signatures, ~15% of non-Ig/TCR deletions from normal lymphocytes bear RAG motifs (paper:Machado2022). Any SV-based covariate association in lymphoid tumours will need to account for this normal-cell baseline.
+5. **RAG/AID off-target mutagenesis as a structural variant confound.** If the `h08` pipeline extends to structural variant signatures, ~15% of non-Ig/TCR deletions from normal lymphocytes bear RAG motifs (paper:Machado2022). Any SV-based covariate association in lymphoid tumours will need to account for this normal-cell baseline.
 
-6. **Germline DDR variants as an extended h08 covariate class.** paper:Gillani2022 establishes the germline FANCC/Fanconi pathway → HRD-like somatic signature chain. If cBioPortal Ewing sarcoma studies contain germline proxy data (e.g., SBS3 or HRD CN-signature exposure as a downstream readout), the h08 scan could recover Fanconi pathway burden as a covariate — constituting an extended positive control beyond the current UV/smoking/APOBEC/MMR set. This is lower priority than the four canonical positive controls, but mechanistically well-grounded.
+6. **Germline DDR variants as an extended `h08` covariate class.** paper:Gillani2022 establishes the germline FANCC/Fanconi pathway → HRD-like somatic signature chain. If cBioPortal Ewing sarcoma studies contain germline proxy data (e.g., SBS3 or HRD CN-signature exposure as a downstream readout), the `h08` scan could recover Fanconi pathway burden as a covariate — constituting an extended positive control beyond the current UV/smoking/APOBEC/MMR set. This is lower priority than the four canonical positive controls, but mechanistically well-grounded.
 
-7. **SBS17b ambiguity limits its use as a treatment proxy.** Given paper:Machado2022's finding that SBS17b appears in treatment-naive normal memory cells, SBS17b cannot be used as an unambiguous 5-FU exposure marker in cBioPortal cohorts. This is directly relevant if SBS17b is considered as a covariate (prior chemotherapy) in h08 associations — the signal will be noisy. [See also the pipeline's existing treatment-signal concern noted in AGENTS.md.]
+7. **SBS17b ambiguity limits its use as a treatment proxy.** Given paper:Machado2022's finding that SBS17b appears in treatment-naive normal memory cells, SBS17b cannot be used as an unambiguous 5-FU exposure marker in cBioPortal cohorts. This is directly relevant if SBS17b is considered as a covariate (prior chemotherapy) in `h08` associations — the signal will be noisy. [See also the pipeline's existing treatment-signal concern noted in AGENTS.md.]
 
 8. **Power constraints for rare germline effects.** paper:Gillani2022's finding that FANCC enrichment in Ewing sarcoma involves only 3–6 individuals across two cohorts (0.8–1.5% case frequency) illustrates the power challenge. Cross-study aggregation in cBioPortal is the appropriate strategy, but per-variant germline effects may remain undetectable even after aggregation without pre-stratification by cancer type and ancestry.
 
 ### Connection to adjacent topics
 
 - topic:normal-tissue-mutation-atlas — quantitative mutation burden baselines across normal tissues that contextualise the lymphocyte findings here.
-- topic:signature-decomposition-unmatched-normal — methodological considerations for decomposing signatures without matched normals, directly relevant when applying h08 to unmatched cBioPortal studies.
+- topic:signature-decomposition-unmatched-normal — methodological considerations for decomposing signatures without matched normals, directly relevant when applying `h08` to unmatched cBioPortal studies.
 
 ## Key References
 
 - paper:Machado2022 — Canonical normal lymphocyte WGS study; defines SBSblood, SBS9 germinal centre basis, SBS7a skin-residency proof. The primary reference for lymphoid signature baseline.
 - paper:Machado2021 — Preprint companion to Machado2022; same cohort, overlapping findings; prefer Machado2022 (Nature peer-reviewed) for citation.
-- paper:Faienza2025 — Review covering the full breadth of somatic mutation applications in non-cancer biology; useful conceptual anchor for h08 positive-control design.
+- paper:Faienza2025 — Review covering the full breadth of somatic mutation applications in non-cancer biology; useful conceptual anchor for `h08` positive-control design.
 - paper:Shojaeisaadi2024 — Germline de novo mutation signatures; establishes SBS1+SBS5 as clock-like germline processes and MMR pathway (EXO1, PMS1, PMS2) as age-related DNM accumulation mechanism.
-- paper:Gillani2022 — Germline DDR predisposition in Ewing sarcoma; establishes FANCC/Fanconi pathway → HRD-like somatic signature causal chain as a candidate extended positive control for h08.
+- paper:Gillani2022 — Germline DDR predisposition in Ewing sarcoma; establishes FANCC/Fanconi pathway → HRD-like somatic signature causal chain as a candidate extended positive control for `h08`.

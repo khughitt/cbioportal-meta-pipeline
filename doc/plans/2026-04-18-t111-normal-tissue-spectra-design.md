@@ -1,9 +1,9 @@
 # t111 — Extract per-tissue normal-tissue spectra — design
 
 - **Task:** t111 (Extract per-tissue 96-trinucleotide reference spectra from Li2021 + Xu2025 supplementals)
-- **Priority:** P1 (gates q007, q008, q010)
+- **Priority:** P1 (gates `q007`, `q008`, `q010`)
 - **Related topic:** `topic:signature-decomposition-unmatched-normal`
-- **Related questions:** q007, q008, q010
+- **Related questions:** `q007`, `q008`, `q010`
 - **Status:** design approved 2026-04-18, **pending data-access gate** (see §Data-access gate)
 
 ## Goal
@@ -15,9 +15,9 @@ Produce two companion reference tables:
 
 Both are computed from the raw per-variant supplementary data released by Li et al. 2021 (*Nature*) and Xu et al. 2025 (bioRxiv). The two-table split exists because spectrum (shape) and burden (rate) serve different downstream consumers:
 
-- q007 (per-tissue null model for mutation *rate*) consumes `normal_tissue_burden.tsv`
-- q008 (background-spectrum subtraction during signature decomposition) consumes `normal_tissue_spectra.tsv`
-- q010 (cosine-similarity tissue-of-origin classifier) consumes `normal_tissue_spectra.tsv` plus comparability columns
+- `q007` (per-tissue null model for mutation *rate*) consumes `normal_tissue_burden.tsv`
+- `q008` (background-spectrum subtraction during signature decomposition) consumes `normal_tissue_spectra.tsv`
+- `q010` (cosine-similarity tissue-of-origin classifier) consumes `normal_tissue_spectra.tsv` plus comparability columns
 
 Both tables are observational and faithful: what the papers actually measured, not a signature-model reconstruction.
 
@@ -46,7 +46,7 @@ The data-access gate is the single biggest risk in this task; it is listed first
 - A provenance doc at `doc/datasets/normal-tissue-spectra.md` capturing per-tissue donor counts, source table/figure pointers, notable environmental exposures, and UBERON mapping rationale for non-obvious calls.
 
 **Out of scope (deferred)**
-- cBioPortal primary-site → UBERON mapping. Will be built in the first downstream task (q007 / q008 / q010) that actually consumes the join.
+- cBioPortal primary-site → UBERON mapping. Will be built in the first downstream task (`q007` / `q008` / `q010`) that actually consumes the join.
 - Additional normal-tissue sources (Lee-Six2018, Martincorena2018, Moore2020, Yoshida2025). Adapter-style refactor deferred until the third source needs to be added.
 - Trinucleotide-opportunity correction for exome vs panel vs WGS sequencing targets. Extraction is faithful to observed counts; opportunity correction is a consumer concern (the burden table's `sequencing_modality` and `callable_mb` columns provide the inputs a consumer needs to make the correction).
 - Indel / DBS / CN spectra. SBS96 only.
@@ -162,7 +162,7 @@ Long format, TSV, one row per `(source_id, tissue_uberon, aggregation, donor_id)
 | `snvs` | int | Total SBS96 SNVs (post-indel-filter, post-dedup) |
 | `snvs_per_mb` | float | `snvs / callable_mb / n_samples` — per-sample rate, directly comparable to TMB in cancer cohorts |
 
-This is the q007 null-model input.
+This is the `q007` null-model input.
 
 ### `doc/datasets/normal-tissue-spectra.md`
 

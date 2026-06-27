@@ -931,3 +931,30 @@ Lu2026 references a pan-cancer perineural-invasion transcriptomic classifier wit
 - created: 2026-06-07
 
 Acquire the reference resources backing the data-driven neural-gene score (t216): GTEx (have), Human Protein Atlas tissue-specificity, Allen Brain Cell Atlas cell-type markers, PanglaoDB markers, and BrainSpan (fetal-vs-adult for the H3 test). Land as per-gene tables joinable to the gene universe. Blocks t216/t220.
+
+## [t230] Resolve Science bibliography reference gaps
+- priority: P2
+- status: proposed
+- aspects: []
+- group: science-health-cleanup
+- created: 2026-06-27
+
+Clear the remaining Science references warnings by adding or otherwise resolving the missing bibliography records reported by refs check: @Jiang2025 in question 0018, DOI/PMID gaps in search records 0001-0006, and any duplicate DOI/PMID manifestations. Use paper records or papers/references.bib entries with verified identifiers; do not silence warnings by removing real provenance.
+
+## [t231] Normalize Science prose citation lint warnings
+- priority: P3
+- status: proposed
+- aspects: []
+- group: science-health-cleanup
+- created: 2026-06-27
+
+Reduce the remaining prose_lints warnings from science validate: bare-author-year, short-form-ids, and unsupported-citation-syntax. Work in small batches by file family; prefer canonical citation and entity reference syntax rather than broad search/replace, and rerun science validate after each batch.
+
+## [t232] Audit and resolve Science unverified markers
+- priority: P2
+- status: proposed
+- aspects: []
+- group: science-health-cleanup
+- created: 2026-06-27
+
+Review the 50 [UNVERIFIED] warnings from science validate/refs check. For each marker, either verify the claim against the cited source and remove or reword the marker, downgrade unsupported claims to explicit uncertainty, or create a targeted follow-up task when verification requires new source acquisition. Preserve uncertainty labels when they are epistemically meaningful.

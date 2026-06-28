@@ -8,6 +8,7 @@ id: paper:SanchezVega2018
 ontology_terms: []
 source_refs:
 - article:SanchezVega2018
+- cite:SanchezVega2018
 related:
 - paper:Bailey2018
 - paper:Ciriello2013
@@ -38,7 +39,7 @@ signaling pathways and project each sample's mutations, copy-number alterations,
 (where relevant) epigenetic events onto pathway membership. The resulting per-(sample, pathway)
 binary altered/not-altered matrix becomes the unit of downstream analysis, supporting cross-cancer
 comparison, co-occurrence/mutual-exclusivity testing, and a pan-cancer view of therapeutic
-actionability.
+actionability [@SanchezVega2018].
 
 ## Methods
 
@@ -83,7 +84,7 @@ downstream summarization.
 ### Pan-cancer pathway alteration frequencies
 
 - **89%** of tumors carry a driver alteration in at least one of the ten pathways; the remaining
-  ~11% have no detected alteration in this curated set.
+  ~11% have no detected alteration in this curated set [@SanchezVega2018].
 - **RTK-RAS** is the most frequently altered pathway pan-cancer (median ~46% of samples; up to
   ~95% in melanoma).
 - **PI3K** is the next most pervasive, reaching very high frequencies in selected subtypes
@@ -103,12 +104,12 @@ the full per-(cancer, pathway) rate table.
 Cumulatively, almost every tumor type has multiple recurrently altered pathways, and most
 individual tumors carry alterations in more than one of the ten pathways — supporting a
 "few-pathways-per-tumor" model rather than single-pathway dominance. The 89% with ≥1 altered
-pathway is the headline statistic; per-tumor multi-pathway burden varies by lineage.
+pathway is the headline statistic; per-tumor multi-pathway burden varies by lineage [@SanchezVega2018].
 
 ### Co-occurrence and mutual exclusivity
 
 A pathway-aware analysis identified **152 mutually exclusive** and **116 co-occurring** alteration
-pairs. Notable examples:
+pairs. Notable examples [@SanchezVega2018]:
 
 - **Co-occurring:** TP53 mutation + Rb/cell-cycle alterations; PI3K + Nrf2 (lung, esophageal,
   head & neck).

@@ -38,7 +38,7 @@ This paper introduces **RePrint**, a transformation of mutational signatures int
 
 The result is a vector of 32 × 3 = 96 independent conditional probabilities — one per context — decoupled from how frequently each context is damaged.
 
-**Gold-standard cluster construction.** Three signature sources were merged: COSMIC v3.4 (human genome GRCh37), the Kucab et al. 2019 compendium of signatures from controlled in vitro environmental-mutagen exposures (PAHs, nitro-PAHs, aristolochic acid, platinum, temozolomide, etc.), and Zou et al. 2021 CRISPR-Cas9 knockouts of MMR genes (MSH6, PMS1, PMS2) and HR-related genes (EXO1, RNF168). Two cluster tiers were defined: (i) **Homogeneous clusters** — signatures known to arise from the same or very similar DNA damage plus same repair pathway (e.g., PAHs → NER; MMRd cluster with SBS6/14/15/20/21/26/44 plus knockout signatures); (ii) **Broad clusters** — multiple homogeneous clusters sharing a repair pathway (e.g., MMRd_broad = MMRd + Temozolomide; PAHs_broad = PAHs + NitroPAHs).
+**Gold-standard cluster construction.** Three signature sources were merged: COSMIC v3.4 (human genome GRCh37), the Kucab et al. 2019 compendium of signatures from controlled in vitro environmental-mutagen exposures (PAHs, nitro-PAHs, aristolochic acid, platinum, temozolomide, etc.), and Zou et al. 2021 CRISPR-Cas9 knockouts of MMR genes (MSH6, PMS1, PMS2) and HR-related genes (EXO1, RNF168). Two cluster tiers were defined: (i) **Homogeneous clusters** — signatures known to arise from the same or very similar DNA damage plus same repair pathway (e.g., PAHs → NER; MMRd cluster with SBS6/14/15/20/21/26/44 plus knockout signatures); (ii) **Broad clusters** — multiple homogeneous clusters sharing a repair pathway (e.g., MMRd_broad = MMRd + Temozolomide; PAHs_broad = PAHs + NitroPAHs) [@Wojtowicz2026].
 
 **Evaluation metrics.** Hierarchical clustering (complete linkage, Euclidean distance on RMSD distance matrices) was evaluated with three complementary scores:
 1. Dasgupta's objective score — measures dendrogram quality independently of gold-standard labels (lower = better).
@@ -84,7 +84,7 @@ The result is a vector of 32 × 3 = 96 independent conditional probabilities —
 
 - The **guilt-by-association** analogy maps onto hypothesis:0007's logic: just as a signature of unknown aetiology inherits a repair pathway from its cluster neighbours, a signature of unknown upstream cause would inherit candidate covariates from cluster neighbours with known exposures. RePrint could serve as a pre-stratification step before running the hypothesis:0007 association scan.
 
-**Cross-study meta-analysis context:** The cbioportal pipeline aggregates across ~300 studies with heterogeneous exposure histories. RePrint-based grouping of signatures could reduce the effective number of independent outcome variables in the covariate scan (cluster-level aggregation), improving multiple-testing correction and interpretability.
+**Cross-study meta-analysis context:** The cbioportal pipeline aggregates across ~300 studies with heterogeneous exposure histories. RePrint-based grouping of signatures could reduce the effective number of independent outcome variables in the covariate scan (cluster-level aggregation), improving multiple-testing correction and interpretability [@Wojtowicz2026].
 
 ## Project Framework Mapping
 

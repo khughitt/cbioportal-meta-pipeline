@@ -58,7 +58,7 @@ of surveyed studies have `reference_genome` field) to `NCBI_Build`
 column in `data_mutations.txt` (present in 234/234 surveyed studies,
 populated in 232/234). `study_reference_build_override` config map
 handles the 2 empty-cell edge cases. **No silent default** — fails
-loudly per AGENTS.md.
+loudly per AGENTS.md (`task:t131`).
 
 **Two real bugs found during PoC run (committed in `021bc5b`):**
 1. dndscv outputs `qallsubs_cv` (subs-only test, what we feed it after
@@ -71,9 +71,11 @@ loudly per AGENTS.md.
 ## Empirical results from PoC end-to-end run
 
 PoC config: 4 studies (skcm, ucec, brca TCGA + msk_impact_2017),
-57 cancer types after combine, 21,998 genes pan-cancer.
+57 cancer types after combine, 21,998 genes pan-cancer
+(`results/poc-2026-04-17/summary/mut/table/three_way_ranking_comparison.feather`).
 
-**Three-way Spearman matrix** (n=18,135 genes with all three signals):
+**Three-way Spearman matrix** (n=18,135 genes with all three signals from
+`results/poc-2026-04-17/summary/mut/table/three_way_ranking_comparison.feather`):
 
 | | raw | length-adj | dNdScv |
 |---|---|---|---|
@@ -91,7 +93,8 @@ Three rankings essentially uncorrelated.
 | length_adj | 4 | 5 | 5 | 6 | 9 | 11 |
 | **dNdScv** | **10** | **24** | **45** | **74** | **127** | **145** |
 
-dNdScv recovers 74/199 Bailey drivers in top-100, 145/199 (73%) in top-500.
+dNdScv recovers 74/199 Bailey drivers in top-100, 145/199 (73%) in top-500
+(`task:t131`; `results/poc-2026-04-17/summary/mut/table/three_way_ranking_comparison.feather`).
 14× better than raw, 12× better than length-adjusted at the head.
 
 **`question:0011-gene-length-as-literature-attention-confounder` falsifier panel (Spearman vs PubTator log10 mentions):**
@@ -108,7 +111,7 @@ intermediate. **Direct empirical support for `question:0011-gene-length-as-liter
 gene length confounds the literature-attention axis through the
 mutation-count mediator.
 
-**Top-15 by dNdScv** (all Bailey/CGC drivers, length range 313–2843 aa):
+**Top-15 by dNdScv** (all Bailey/CGC drivers, length range 313–2843 aa from `task:t131`):
 FOXA1, GATA3, PTEN, RNF43, PIK3CA, SMAD3, AMER1, SETD2, TBX3, PIM1,
 SMARCA4, APC, TCF7L2, NCOR1, PIK3R1.
 

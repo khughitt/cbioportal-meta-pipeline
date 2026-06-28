@@ -1,12 +1,12 @@
-# t127 — q008 quantitative pilot: unmatched-normal SBS1/SBS5 contamination magnitude — Plan
+# t127 — question 0008 quantitative pilot: unmatched-normal SBS1/SBS5 contamination magnitude — Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: superpowers:subagent-driven-development. Steps use `- [ ]` checkbox syntax.
 
-**Goal:** Produce a first numeric **pilot estimate** of how the SBS1+SBS5 exposure-fraction differs between matched-normal and unmatched-normal cohorts of the same cancer type, under the existing t109/t110 SigProfilerAssignment surface, and test whether subtracting the Li2021 normal-tissue spectrum (t111 output) as a residual-matrix transform attenuates the gap. Closes the "built-but-unexploited" gap from `meta:0007-next-steps-and-gap-analysis-2026-04-24` for `question:0008`.
+**Goal:** Produce a first numeric **pilot estimate** of how the SBS1+SBS5 exposure-fraction differs between matched-normal and unmatched-normal cohorts of the same cancer type, under the existing t109/t110 SigProfilerAssignment surface, and test whether subtracting the Li2021 normal-tissue spectrum (t111 output) as a residual-matrix transform attenuates the gap. Closes the "built-but-unexploited" gap from `meta:0007-next-steps-and-gap-analysis-2026-04-24` for `question:0008-signature-decomposition-tissue-background-subtraction`.
 
 **Framing.** This is a **pilot consistency test**, not a causal attribution. The matched/unmatched contrast confounds normal-status with assay (WES vs panel), variant caller, primary-vs-clinical cohort, and likely age/stage mix. The verdict language reflects this: results read as "consistent / inconsistent with contamination" with named alternative explanations; causal attribution requires a follow-up study with a within-cohort matched-vs-unmatched comparator.
 
-**Pre-registered hypothesis (q008 quantitative).** In matched-cancer-type cohorts that pass all sensitivity gates, unmatched-normal samples carry a higher fraction of SBS1+SBS5 mutations than matched-normal samples; this gap is reduced when the per-tissue Li2021 spectrum is subtracted as a fixed shape offset prior to re-assignment.
+**Pre-registered hypothesis (`question:0008-signature-decomposition-tissue-background-subtraction` quantitative).** In matched-cancer-type cohorts that pass all sensitivity gates, unmatched-normal samples carry a higher fraction of SBS1+SBS5 mutations than matched-normal samples; this gap is reduced when the per-tissue Li2021 spectrum is subtracted as a fixed shape offset prior to re-assignment.
 
 **Pre-registered thresholds (committed before any decomposition is run; no post-hoc relaxation).**
 
@@ -16,7 +16,7 @@
 - **No-go rule:** if fewer than **3** cancer types survive the Task 1 feasibility gate, the run is downgraded to a *descriptive* pilot (per-cancer-type Δ reported, but the "≥ half of cancer types" verbiage and any aggregate verdict are dropped).
 - **No-go rule (subtraction arm):** if fewer than **3** cancer types are subtraction-eligible (Li2021 tissue mapping present + survives feasibility gate), the subtraction verdict is descriptive only.
 
-**Scope:** SBS only. Single matched-vs-unmatched study pair. No de-novo NMF, no MuSiCal cross-tool comparison, no purity covariate, no LRR/ERR test (deferred, per t126 / q009).
+**Scope:** SBS only. Single matched-vs-unmatched study pair. No de-novo NMF, no MuSiCal cross-tool comparison, no purity covariate, no LRR/ERR test (deferred, per t126 / `question:0009-sbs1-lrr-bias-as-normal-contamination-flag`).
 
 **Tech stack:** Python 3.13+, the existing `code/scripts/run_restricted_sigprofiler_assignment.py` and Snakefile rules (no parallel decomposition path), plus a new `subtract_normal_background.py` operating on the SBS96 matrix. Statistical comparison + interpretation in a marimo notebook.
 
@@ -142,7 +142,7 @@ Per review F6, the Li2021 reference is a WES-derived shape; subtracting it from 
   - **Subtraction verdict:** rescues / partial / fails-or-overcorrects, gated on `c_star` AND collateral-signature thresholds. If panel sparsity makes the residual matrix structurally noisy (per t126), report this as the dominant uncertainty.
   - **Confounder ledger:** one paragraph per named confounder (assay, caller, stage, age, exposure mix), what the sensitivity panel showed, what's unresolved.
   - **Population-denominator caveat:** "≥ half of cancer types" framing is used **only if** ≥ 6 raw-eligible cancer types pass; below that, individual cancer-type Δs are reported descriptively without aggregation.
-- [ ] **Step 3: Update topic + question state.** If verdict is substantive: file follow-ups for (a) within-cohort matched-vs-unmatched comparator (e.g., stratify a single study with both arms, if any exists), (b) tumor-purity covariate (Strategy 4), (c) per-study `unmatched_normal_risk` annotation analogous to `ch_priority_gene`. If null: update q008 with the negative descriptive result and deprioritize Strategies 2–5 in the topic note.
+- [ ] **Step 3: Update topic + question state.** If verdict is substantive: file follow-ups for (a) within-cohort matched-vs-unmatched comparator (e.g., stratify a single study with both arms, if any exists), (b) tumor-purity covariate (Strategy 4), (c) per-study `unmatched_normal_risk` annotation analogous to `ch_priority_gene`. If null: update `question:0008-signature-decomposition-tissue-background-subtraction` with the negative descriptive result and deprioritize Strategies 2–5 in the topic note.
 
 ---
 
@@ -160,10 +160,10 @@ Single dedicated session, with a feasibility-table checkpoint after Task 1 that 
 ## Out-of-scope (deferred)
 
 - Tumor-purity covariate (Strategy 4) — needs ABSOLUTE/PureCN ingestion.
-- WGS-based LRR/ERR topographic test for q009 — `defer` per `interpretation:0007-t126-sbs1-lrr-bias-per-study`; gated on a WGS cohort (Hartwig HMF).
+- WGS-based LRR/ERR topographic test for `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` — `defer` per `interpretation:0007-t126-sbs1-lrr-bias-per-study`; gated on a WGS cohort (Hartwig HMF).
 - MuSiCal / SigFormer cross-tool comparison.
 - Extending to all cBioPortal unmatched studies — gated on this pilot.
-- CUPLR-style q010 classifier — separate plan.
+- CUPLR-style `question:0010-cuplr-style-tof-classifier-for-suspect-normal-samples` classifier — separate plan.
 - Within-cohort matched-vs-unmatched comparator — strongest causal-attribution design, but no candidate cohort identified yet.
 
 ---

@@ -267,9 +267,9 @@ Create `doc/interpretations/YYYY-MM-DD-mhn-ordering-validation.md` with a table 
 
 Mark `task:t152` done only if the LUAD demo plus simulation calibration has an explicit promotion decision. Mark `task:t135` done only if at least one local per-histology ordering run reaches a documented export decision.
 
-- [ ] **Step 2: Update H04 synthesis**
+- [ ] **Step 2: Update `hypothesis:0004` synthesis**
 
-If calibration succeeds, promote H04 only to "method-qualified inferred ordering" and state evidence tier 3 or tier 4 depending on benchmark agreement. If calibration fails, keep H04 candidate and record the blocker.
+If calibration succeeds, promote `hypothesis:0004-mhn-pathway-ordering` only to "method-qualified inferred ordering" and state evidence tier 3 or tier 4 depending on benchmark agreement. If calibration fails, keep `hypothesis:0004-mhn-pathway-ordering` candidate and record the blocker.
 
 - [ ] **Step 3: Build local graph**
 

@@ -19,7 +19,7 @@ pending_decisions: 4
 
 ## Executive Summary
 
-- The main curation issue is no longer backlog drift alone; it is metadata drift around newly landed April 22 work, especially `q009`, `t077`, and dataset/provenance docs.
+- The main curation issue is no longer backlog drift alone; it is metadata drift around newly landed April 22 work, especially `question:0009-sbs1-lrr-bias-as-normal-contamination-flag`, `t077`, and dataset/provenance docs.
 - `science-tool dag audit` is clean. The highest-signal curation findings are semantic linking gaps and profile/tooling mismatches, not DAG freshness failures.
 - Two unresolved refs from `science-tool health` are high-confidence metadata problems, both caused by canonical docs lacking machine-resolvable IDs:
   - `doc:2026-04-22-t077-glmm-logit-plan`
@@ -106,7 +106,7 @@ Notable coverage gaps surfaced by inventory/health:
      - `doc/interpretations/2026-04-22-t123-rt-brca-sbs1-proxy-pilot.md`
      - `tasks/active.md#t124`
    - Proposed action:
-     - add `t122`, `t123`, and `t124` as explicit links in the q009 doc
+     - add `t122`, `t123`, and `t124` as explicit links in the `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` doc
      - update “Current implementation entry point” language so it reflects the actual current state, not the earlier `t121` entry point
    - Confidence: high
    - Applied: no
@@ -137,7 +137,7 @@ Notable coverage gaps surfaced by inventory/health:
 
 ## Drift
 
-### 1. `q009` narrative drift after `t122` and `t123`
+### 1. `question:0009` narrative drift after `t122` and `t123`
 
 - Source artifacts:
   - `doc/questions/q009-sbs1-lrr-bias-as-normal-contamination-flag.md`
@@ -145,10 +145,10 @@ Notable coverage gaps surfaced by inventory/health:
   - `doc/interpretations/2026-04-22-t123-rt-brca-sbs1-proxy-pilot.md`
   - `tasks/active.md#t124`
 - Drift:
-  - q009 still says the “current implementation entry point” is `task:t121`.
+  - `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` still says the “current implementation entry point” is `task:t121`.
   - It records the negative `t110` result, but not the newer `t122` mixed result, the negative `t123` screening result, or the explicit `t124` fork decision.
 - Impact:
-  - A reader entering through q009 will overestimate how early this branch still is and miss the newly established negative constraint: the simple panel/WES CpG proxy is too sparse.
+  - A reader entering through `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` will overestimate how early this branch still is and miss the newly established negative constraint: the simple panel/WES CpG proxy is too sparse.
 
 ### 2. Tool/profile drift is obscuring real health signals
 
@@ -177,7 +177,7 @@ Notable coverage gaps surfaced by inventory/health:
 - The more relevant fragmentation is provenance fragmentation:
   - key state transitions are spread across `doc/meta/next-steps-2026-04-22.md`, task notes, and interpretations
   - some of those artifacts are not machine-discoverable because their kinds or IDs are not registered cleanly
-- The `q009` branch is the clearest example:
+- The `question:0009` branch is the clearest example:
   - the true current state is distributed across `t121`, `t122`, `t123`, `t124`, the dataset doc, and two interpretations
   - the question file has not yet been brought back into alignment
 
@@ -197,7 +197,7 @@ Reason:
    - `doc/plans/2026-04-22-t077-glmm-logit-plan.md`
    - `doc/datasets/replication-timing-constitutive-regions.md`
 
-2. Normalize `q009` immediately, or wait until `t124` decides whether the panel/WES proxy route is retired?
+2. Normalize `question:0009` immediately, or wait until `t124` decides whether the panel/WES proxy route is retired?
    - My view: update now. The question doc is already behind known evidence.
 
 3. Should the project register or local-override the currently skipped entity kinds?
@@ -232,7 +232,7 @@ What made this sweep harder than it should have been:
 
 2. Inventory can detect missing links, but not whether a question doc is semantically behind its downstream task/interpretation chain.
    - Friction:
-     - `q009` drift was obvious to a human after reading `t122`/`t123`, but the deterministic scan could only hint at it indirectly.
+     - `question:0009` drift was obvious to a human after reading `t122`/`t123`, but the deterministic scan could only hint at it indirectly.
    - Smallest improvement:
      - add an inventory heuristic for “question updated before newer related interpretations/tasks” so likely narrative drift surfaces earlier.
 

@@ -24,7 +24,8 @@ applies to adhesion, ECM, synaptic, large-gene-family, or any annotation-defined
 
 ## Why a dedicated method
 
-Raw mutation-count rankings inherit a strong length bias (Lawrence 2014; project `h03`). Any
+Raw mutation-count rankings inherit a strong length bias [@Lawrence2014] and connect to
+`hypothesis:0003-gene-length-confounds-literature-attention`. Any
 gene set that correlates with gene length will *appear* enriched among top-mutated genes with no
 biological selection. Ad-hoc "is my set enriched?" checks repeatedly re-derive the same
 length/histology corrections. This method packages them once, with explicit negative controls,
@@ -51,8 +52,10 @@ and a dN/dS-based ranking where length is already in the background model.
 - Gene length: `data/uniprotkb_hsapiens_protein_lengths.tsv.gz` + Ensembl CDS length.
 - dN/dS background: the project's dndscv path (length already modeled).
 - Histology composition: `cancer_type` / `oncotree_code`; CNS and neuroendocrine flags
-  (see `question:0033`, `question:0034`).
-- The candidate gene set `S` (e.g. a data-driven neural-enrichment score thresholded — `q035`).
+  (see `question:0033-neural-enrichment-cns-exclusion`,
+  `question:0034-neuroendocrine-histology-confound`).
+- The candidate gene set `S` (e.g. a data-driven neural-enrichment score thresholded;
+  see `question:0035-label-free-neural-gene-definition`).
 
 ## Negative-control gene-set battery (required)
 
@@ -61,7 +64,7 @@ Every run reports `S` **alongside** control sets so the reader can calibrate:
 - **Known length artifacts (should score ~null after correction):** large-gene family TTN, MUC16,
   CSMD1/2/3, FAT1-4, RYR2, NEB, large mucins — high raw counts, length-driven.
 - **Olfactory receptors** (numerous, biologically inert for most cancers) — null expectation.
-- **Established drivers (positive control):** Bailey 2018 / CGC set — should stay enriched after
+- **Established drivers (positive control):** PanCanAtlas driver / CGC set [@Bailey2018] — should stay enriched after
   length correction.
 - **Random length-matched draws** — empirical null band.
 
@@ -78,6 +81,8 @@ the driver control, not the TTN/olfactory controls.
 
 - Never report raw-count enrichment without the length-adjusted and control-set columns beside it.
 - Histology adjustment is **not** a substitute for the explicit CNS/NET exclusion sensitivities
-  (q033/q034) — report both.
-- Enrichment of a *label-defined* set is reported only alongside the *data-driven* set (q035) to
+  (`question:0033-neural-enrichment-cns-exclusion` /
+  `question:0034-neuroendocrine-histology-confound`) — report both.
+- Enrichment of a *label-defined* set is reported only alongside the *data-driven* set
+  (`question:0035-label-free-neural-gene-definition`) to
   avoid annotation circularity.

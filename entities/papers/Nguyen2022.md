@@ -9,6 +9,7 @@ id: paper:Nguyen2022
 ontology_terms: []
 source_refs:
 - article:Nguyen2022
+- cite:Nguyen2022
 related:
 - paper:Zehir2017
 - topic:pan-cancer-mutation-landscape
@@ -34,7 +35,7 @@ Assembles MSK-MET, a pan-cancer cohort of 25,775 patients (50 tumor types) seque
 prospectively with MSK-IMPACT and uniformly annotated for metastatic events across 21
 anatomic sites. The paper systematically links somatic alterations to overall metastatic
 burden and to organ-specific tropism, establishing one of the largest clinically-annotated
-genomic resources for studying cancer dissemination.
+genomic resources for studying cancer dissemination [@Nguyen2022].
 
 ## Methods
 
@@ -52,7 +53,7 @@ adjusting for sample type (primary vs. metastatic biopsy), metastatic burden, fr
 genome altered (FGA), and tumor mutational burden (TMB), requiring p < 0.05. Analyses
 were stratified by tumor type to control for cohort heterogeneity. Data are released
 through cBioPortal and Zenodo with supplementary tables enumerating per-tumor-type and
-per-site results.
+per-site results [@Nguyen2022].
 
 ## Key Findings
 
@@ -70,7 +71,7 @@ lobular breast -> ovary enriched for RHOA mutations (3% vs. 36%); MSS colorectal
 lung enriched for KRAS (39% vs. 52%); cutaneous melanoma -> brain enriched for PTEN
 (7% vs. 14%); lung adenocarcinoma -> brain enriched for TP53, TERT amplification, and
 EGFR. The most heavily sampled metastatic sites were lymph node (2,305), liver
-(2,289), lung (982), and bone (726).
+(2,289), lung (982), and bone (726) [@Nguyen2022].
 
 ## Relevance
 

@@ -4,7 +4,7 @@ title: Does neural-gene enrichment persist after excluding CNS/glioma studies fr
   the aggregation?
 status: active
 created: '2026-06-06'
-updated: '2026-06-06'
+updated: '2026-06-28'
 id: question:0033-neural-enrichment-cns-exclusion
 ontology_terms:
 - glioma
@@ -53,6 +53,7 @@ distinct from the gene-length null.
 
 - Related hypotheses: `hypothesis:0012-neural-gene-enrichment-length-histology-artifact` (P2),
   `hypothesis:0001-non-tumor-signal-contamination`
+- Upstream question: `question:0032-neural-gene-length-null`.
 - Required data or analyses: re-run cross-study aggregation with CNS cancer types excluded
   (OncoTree/cancer_type filter); compare neural-label enrichment and per-gene ranks; stratify
   contribution by study.

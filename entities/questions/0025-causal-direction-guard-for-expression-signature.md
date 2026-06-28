@@ -5,7 +5,7 @@ title: What operationalisable causality guard (mediation, clonal timing, cross-s
   upstream claim?
 status: active
 created: '2026-05-31'
-updated: '2026-05-31'
+updated: '2026-06-28'
 id: question:0025-causal-direction-guard-for-expression-signature
 ontology_terms: []
 datasets: []
@@ -51,4 +51,4 @@ The agnostic association method DAG marks the expression->H edge as not identifi
 
 - Topic notes: `topic:aetiology-covariate-association`
 - Article notes: `paper:Robinson2019`, `paper:Sorensen2023`
-- Methods/Datasets: agnostic association model; `question:0023`
+- Methods/Datasets: `method:h08-agnostic-association-model`; `question:0023`

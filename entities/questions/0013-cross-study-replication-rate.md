@@ -4,7 +4,7 @@ title: What is the leave-one-study-out replication rate of top-N gene-cancer ass
   across cBioPortal?
 status: active
 created: '2026-04-27'
-updated: '2026-04-28'
+updated: '2026-06-28'
 id: question:0013-cross-study-replication-rate
 ontology_terms: []
 datasets:
@@ -71,9 +71,10 @@ rank-±5 stability for canonical drivers and long-tail candidates separately.
 
 - Related hypotheses: `hypothesis:0002-cross-study-ranking-divergence-is-structured` (this question
   provides the empirical replication-rate measurement that hypothesis depends on).
+- Interpretation context: `interpretation:0009-t131-full-pan-cancer-dndscv-run`.
 - Required data or analyses: existing pipeline (post-t141), LOO wrapper, Bailey driver
   list join.
-- Tracking task: `t149`.
+- Tracking task: `task:t149`.
 - Priority level: P2. Should run after t141 lands and before t146 external validation —
   a *project-internal* validation that is cheaper than the external comparison and
   informative for it.

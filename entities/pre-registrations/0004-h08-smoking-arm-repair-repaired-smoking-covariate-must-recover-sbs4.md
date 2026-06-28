@@ -4,7 +4,7 @@ title: "Smoking-arm repair \u2014 repaired smoking covariate must recover SBS4\
   \ without rereading the locked H08a verdict"
 status: committed
 created: '2026-06-01'
-updated: '2026-06-01'
+updated: '2026-06-28'
 id: pre-registration:0004-h08-smoking-arm-repair-repaired-smoking-covariate-must-recover-sbs4
 committed: '2026-06-01'
 spec: doc/methods/h08-agnostic-association-model.md
@@ -34,6 +34,9 @@ The 2026-05-31 H08a verdict remains `[?]` because the locked Arm-B covariate was
 This pre-registration is also **not cleanly pre-data**.
 The t200 diagnostic already observed a stronger `ever_smoker_derived`→SBS4 association on the same MC3/PanCanAtlas substrate.
 Therefore, a repaired production rerun can support the claim that the original Arm-B miss was an operationalization artifact and can justify a future repaired gate, but it cannot by itself promote H08a or unlock H08b as a confirmatory discovery program.
+The repaired run remains within `method:h08-agnostic-association-model` and uses
+`plan:0006-h08-within-tissue-diagnostics` as the immediate diagnostic predecessor, with
+`task:t202` carrying the production rerun.
 
 ## Hypotheses Under Test
 

@@ -3,7 +3,7 @@ type: topic
 title: Mutational signatures, gene expression, and the tumour microenvironment
 status: active
 created: '2026-05-31'
-updated: '2026-05-31'
+updated: '2026-06-28'
 id: topic:signatures-expression-microenvironment
 ontology_terms:
 - mutational signatures
@@ -199,7 +199,8 @@ finding that SBS40 and SBS5 have distinct interaction profiles and survival asso
 - **No systematic expression-covariate scan.** Both papers use TME cell-type abundances
   (deconvolved from RNA-seq) or driver pathway alteration status as the non-signature covariate.
   Neither paper uses unsupervised transcriptomic modules or continuous gene-expression covariates
-  as the association axis. The agnostic expression scan occupies this gap.
+  as the association axis. The agnostic expression scan in `method:h08-agnostic-association-model`
+  occupies this gap.
 
 - **No cross-study replication.** Both papers rely exclusively on TCGA (and PCAWG for
   paper:Hakobyan2024). The cbioportal pipeline's multi-study design is complementary: if an
@@ -210,6 +211,11 @@ finding that SBS40 and SBS5 have distinct interaction profiles and survival asso
   and survival impact but are the least causally understood. Whether their immune associations
   reflect true exposure-driven processes (reactive oxygen species? replication timing errors?
   viral insertions?) or are artefacts of age-as-confounder remains unresolved.
+
+- **Substrate and burden links.** `topic:signature-decomposition-unmatched-normal` carries the
+  practical signature-extraction substrate concerns, while `topic:tumor-mutational-burden`
+  captures the aggregate-burden comparator that this topic treats as too coarse for most
+  aetiology questions.
 
 - **Indel and DBS signatures.** Both papers restrict to SBS. Frameshift indels in microsatellite
   regions (dMMR) generate neoantigen loads that may partially account for immune activation;

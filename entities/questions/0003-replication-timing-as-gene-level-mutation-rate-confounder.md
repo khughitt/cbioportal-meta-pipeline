@@ -4,7 +4,7 @@ title: Does replication timing create systematic gene-level mutation rate inflat
   in cross-study aggregation?
 status: active
 created: '2026-04-18'
-updated: '2026-04-18'
+updated: '2026-06-28'
 id: question:0003-replication-timing-as-gene-level-mutation-rate-confounder
 ontology_terms: []
 datasets:
@@ -52,5 +52,6 @@ Late-replicating genomic regions (LRR) accumulate more somatic mutations than ea
 
 ## Related
 
+- Topic notes: `topic:mutation-rate-normalization`
 - Article notes: `paper:Yaacov2023`, `paper:Yoshida2026`
 - Methods/Datasets: constitutive RT regions from Yaacov et al. 2022 (ENCODE 26-tissue RT profiles); SigProfilerExtractor for signature-level attribution; cBioPortal studies via existing pipeline

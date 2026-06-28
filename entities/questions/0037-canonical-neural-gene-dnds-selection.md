@@ -5,7 +5,7 @@ title: "Do canonical cancer-neuroscience effector genes (NLGN3, ADRB2, NTRK1/2, 
   \ the only defensible mutational evidence for active neural hijacking?"
 status: active
 created: '2026-06-06'
-updated: '2026-06-06'
+updated: '2026-06-28'
 id: question:0037-canonical-neural-gene-dnds-selection
 ontology_terms:
 - dN/dS
@@ -57,6 +57,8 @@ which would be the only defensible mutational evidence for active neural hijacki
 ## Connections to Project
 
 - Related hypotheses: `hypothesis:0012-neural-gene-enrichment-length-histology-artifact` (P5)
+- Upstream expression-context question:
+  `question:0036-oncofetal-fetal-vs-adult-neural-expression`.
 - Required data or analyses: run the canonical-effector set through the project's dndscv path
   per cancer type; report q-values; flag NF1 as positive control; note fusion/CNA events as
   out-of-scope but record for follow-up.

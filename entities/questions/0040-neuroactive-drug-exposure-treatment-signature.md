@@ -4,7 +4,7 @@ title: Can neuro-active drug exposure (beta-blockers, anti-epileptics, SSRIs) be
   as a covariate or contaminant in treatment-signature analysis?
 status: active
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-28'
 id: question:0040-neuroactive-drug-exposure-treatment-signature
 ontology_terms:
 - drug exposure
@@ -60,6 +60,8 @@ neuro-active drug exposure can be represented in the project's treatment-signatu
 ## Connections to Project
 
 - Related hypotheses: `hypothesis:0009-treatment-induced-signature-frequency-contamination` (treatment-signature contamination), and `question:0039-stress-hpa-adrenergic-mutational-footprint` (stress proxy)
+- Therapy-signature exclusion companion:
+  `question:0027-does-excluding-treatment-signature-high-samples`.
 - Required data or analyses: enumerate neuro-active drug classes; check availability of exposure
   fields in MSK-CHORD / GENIE-BPC; add as covariate stratum in treatment-signature scans;
   beta-blocker use as inverse adrenergic-stress proxy.
@@ -67,6 +69,7 @@ neuro-active drug exposure can be represented in the project's treatment-signatu
 
 ## Related
 
-- Topic notes: topic:clinical-translational-signatures
+- Topic notes: `topic:clinical-translational-signatures`,
+  `theme:0002-cancer-neuroscience-in-a-mutation-only-pipeline-expression-not-mutation`
 - Article notes: paper:Magnon2023, paper:Fan2024, paper:Huang2025a
 - Methods/Datasets: `hypothesis:0009-treatment-induced-signature-frequency-contamination` treatment-signature pipeline; MSK-CHORD / GENIE-BPC exposure fields

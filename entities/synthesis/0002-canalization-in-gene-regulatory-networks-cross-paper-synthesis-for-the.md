@@ -4,7 +4,7 @@ title: "Canalization in gene regulatory networks \u2014 cross-paper synthesis fo
   \ the cBioPortal meta-analysis"
 status: active
 created: '2026-04-25'
-updated: '2026-04-25'
+updated: '2026-06-28'
 id: synthesis:0002-canalization-in-gene-regulatory-networks-cross-paper-synthesis-for-the
 report_kind: cluster-digest
 source_commit: 110aaf19ed97e16a6887298000a89a29e6f47f22
@@ -24,6 +24,7 @@ related:
 # Canalization in gene regulatory networks — cross-paper synthesis
 
 Eight papers reviewed together on 2026-04-25, all framing **canalization** — the buffering of phenotype against genetic and environmental perturbation — as a structural property of gene regulatory networks (GRNs). Six are theoretical / Boolean-network papers; two are empirical (Lu2023 in *Drosophila*, Nagpal2022 in UK Biobank). The collection is being read as a conceptual lens for the cbioportal cross-study meta-analysis: why some gene-cancer associations recur robustly across heterogeneous studies, why hypermutator tumors look the way they do, and what the recurrence statistics in the pipeline's `gene_cancer_study_ratio_annotated.feather` may *mean* mechanistically.
+It connects directly to `topic:pan-cancer-mutation-landscape`.
 
 ## Papers covered
 

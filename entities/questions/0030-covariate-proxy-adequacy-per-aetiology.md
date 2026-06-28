@@ -5,7 +5,7 @@ title: What is the minimal covariate-proxy adequacy bar per aetiology, and do ex
   scan?
 status: active
 created: '2026-06-02'
-updated: '2026-06-02'
+updated: '2026-06-28'
 id: question:0030-covariate-proxy-adequacy-per-aetiology
 ontology_terms: []
 datasets: []
@@ -45,8 +45,12 @@ related:
 ## Connections to Project
 
 - Related hypotheses:
-- Required data or analyses:
-- Priority level:
+  `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`.
+- Required data or analyses: compare aetiology-specific proxy classes against
+  `question:0022-apobec-a3a-a3b-joint-expression-and-mmr-omikli` and
+  `question:0025-causal-direction-guard-for-expression-signature` before treating expression
+  proxies as causal rather than diagnostic.
+- Priority level: P3.
 
 ## Related
 

@@ -4,7 +4,7 @@ title: Does the GLI1 exon 12 normal-tissue recurrent hotspot inflate GLI1 mutati
   frequencies in our cBioPortal cancer outputs?
 status: active
 created: '2026-04-18'
-updated: '2026-04-18'
+updated: '2026-06-28'
 id: question:0005-gli1-normal-tissue-hotspot-inflation
 ontology_terms: []
 datasets: []
@@ -49,6 +49,6 @@ Xu et al. 2025 identified a statistically significant recurrent somatic mutation
 
 ## Related
 
-- Topic notes: `topic:pan-cancer-mutation-landscape`
+- Topic notes: `topic:pan-cancer-mutation-landscape`, `topic:mutation-rate-normalization`
 - Article notes: `paper:Xu2025`, `paper:Yoshida2026`, `paper:Bailey2018`
 - Methods/Datasets: cBioPortal mutation data for skin, prostate, testicular cancer cohorts; COSMIC Cancer Gene Census GLI1 entry

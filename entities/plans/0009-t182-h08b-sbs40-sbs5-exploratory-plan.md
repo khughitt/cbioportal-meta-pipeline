@@ -3,7 +3,7 @@ type: plan
 title: t182 h08b exploratory SBS40-vs-SBS5 expression-module prototype
 status: ready-with-caveats
 created: '2026-06-01'
-updated: '2026-06-01'
+updated: '2026-06-28'
 id: plan:0009-t182-h08b-sbs40-sbs5-exploratory-plan
 related:
 - task:t182
@@ -31,6 +31,8 @@ Per `discussion:0005-h08b-gate-handling`, the positive-control prong remains `[?
 ## Related Hypotheses / Questions / Tasks
 
 This plan executes `task:t182`.
+It also depends on `task:t205` for the gate-handling/follow-up context and stays within
+`method:h08-agnostic-association-model`.
 It bears on `question:0023-sbs40-vs-sbs5-clocklike-expression-module` and must obey the causal-direction guard in `question:0025-causal-direction-guard-for-expression-signature`.
 
 The result should be read as feasibility evidence for the future discovery-prong design space, not as evidence that an expression module causes SBS40 or SBS5.

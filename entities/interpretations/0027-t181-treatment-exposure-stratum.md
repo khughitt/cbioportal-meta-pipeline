@@ -4,7 +4,7 @@ title: "t181 treatment-exposure stratum for covariate-association scan \u2014 MC
   \ treated confound; 55 patient-level neoadjuvant positives"
 status: active
 created: '2026-06-01'
-updated: '2026-06-01'
+updated: '2026-06-28'
 id: interpretation:0027-t181-treatment-exposure-stratum
 source_refs:
 - task:t181
@@ -17,6 +17,8 @@ related:
 # t181 — treatment-exposure stratum for covariate-association scan
 
 Date: 2026-06-01
+
+This interpretation records the `task:t181` treatment-exposure stratum.
 
 ## Question
 

@@ -5,7 +5,7 @@ title: Healthy somatic-mutation backgrounds vary >2 OoM across tissues; substitu
   ways
 status: proposed
 created: '2026-04-27'
-updated: '2026-04-28'
+updated: '2026-06-28'
 id: hypothesis:0005-healthy-somatic-background-atlas
 phase: candidate
 source_refs:
@@ -186,7 +186,7 @@ Promote to `phase: active` when **all three** are met:
 
 ## Related Work
 
-- **Sibling hypothesis:** `h01` (within-sample contamination — `h05` generalizes to
+- **Sibling hypothesis:** `hypothesis:0001-non-tumor-signal-contamination` (within-sample contamination — `h05` generalizes to
   cross-population background; `h01` is the "fix the sample" version, `h05` is the "fix the
   null" version).
 - **Questions:** `question:0007-cross-tissue-somatic-mutation-rate-variation-as-null-model` (Li 2021
@@ -195,9 +195,9 @@ Promote to `phase: active` when **all three** are met:
 - **Topics:** `topic:normal-tissue-mutation-atlas` (frames the broader research direction
   including the "cancer as continuum tail" big-version claim).
 - **Tasks (planned):**
-  - `t150`: enumerate available normal-tissue WGS cohorts; map to cBioPortal cancer types;
+  - `task:t150`: enumerate available normal-tissue WGS cohorts; map to cBioPortal cancer types;
     identify harmonization regime.
-  - `t151`: scoped normal-tissue meta-analysis pilot on esophagus or colon.
+  - `task:t151`: scoped normal-tissue meta-analysis pilot on esophagus or colon.
 - **External:** `Cagan 2022` (cross-species mutation rate scaling); `Park 2024` (somatic
   mutation as biological clocks); Tomasetti and Vogelstein [@TomasettiVogelstein2015] (stem-cell-turnover
   framework); HMF / Hartwig (potential additional normal-cohort reference).

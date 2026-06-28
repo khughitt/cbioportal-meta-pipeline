@@ -4,7 +4,7 @@ title: Can the Li 2021 body-map tissue-specific normal mutation rates serve as a
   model for per-tissue background in our pipeline outputs?
 status: active
 created: '2026-04-18'
-updated: '2026-04-18'
+updated: '2026-06-28'
 id: question:0007-cross-tissue-somatic-mutation-rate-variation-as-null-model
 ontology_terms: []
 datasets:
@@ -54,5 +54,6 @@ Li et al. [@Li2021] established that somatic mutation accumulation in morphologi
 
 - Topic notes: `topic:mutation-rate-normalization`, `topic:pan-cancer-mutation-landscape`
 - Article notes: `paper:Li2021`, `paper:Yoshida2026`, `paper:Martincorena2017`
-- Related question: `question:0001` (normal-tissue clone contamination in esophageal studies)
+- Related question: `question:0001-normal-epithelial-clone-contamination-in-esophageal-studies`
+  (normal-tissue clone contamination in esophageal studies)
 - Methods/Datasets: EGA:EGAD00001007859 (raw WGS+WES from Li et al. [@Li2021]); dN/dS framework from Martincorena et al. [@Martincorena2017]

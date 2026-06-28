@@ -4,7 +4,7 @@ title: "t198 expression-module substrate \u2014 per-arm NMF on PanCanAtlas RNA-s
   \ with leakage firewall"
 status: active
 created: '2026-05-31'
-updated: '2026-05-31'
+updated: '2026-06-28'
 id: interpretation:0023-t198-h08-expression-nmf-modules
 source_refs:
 - task:t198
@@ -27,6 +27,8 @@ Build the frozen NMF expression-module covariate set for the `hypothesis:0007-ag
 select the module count K by the Brunet cophenetic-correlation rule — entirely upstream of, and
 blind to, the covariate↔signature association (leakage firewall). This is check 3 of
 `plan:0005-h08-positive-control-scan-analysis-plan`.
+It supplies inputs for `question:0022-apobec-a3a-a3b-joint-expression-and-mmr-omikli` and
+`question:0023-sbs40-vs-sbs5-clocklike-expression-module`.
 
 ## Substrate and the TPM→RSEM amendment
 

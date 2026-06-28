@@ -3,7 +3,7 @@ type: topic
 title: Pan-cancer mutational-signature catalogs and reference sets
 status: active
 created: '2026-05-31'
-updated: '2026-05-31'
+updated: '2026-06-28'
 id: topic:pan-cancer-signature-catalogs
 ontology_terms:
 - mutational signatures
@@ -132,6 +132,7 @@ as cohort size grows, and their count is sample-size-dependent rather than biolo
 (paper:Degasperi2022). A substantial fraction of the catalog remains mechanistically unexplained —
 SBS5, SBS8, SBS12, SBS16, SBS17a/b, SBS39, SBS40, and many DBS/ID signatures — despite systematic
 association attempts.
+The project uses this catalog context through `method:h08-agnostic-association-model`.
 
 Crucially, paper:Everall2026 demonstrates that 66 of 42 current COSMIC SBS signatures can be
 produced as linear combinations of others (cosine similarity >0.8), creating a redundancy problem

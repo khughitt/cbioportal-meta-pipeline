@@ -5,7 +5,7 @@ title: Can a tissue-of-origin classifier (CUPLR or cosine-similarity heuristic) 
   normal-tissue background?
 status: active
 created: '2026-04-18'
-updated: '2026-04-18'
+updated: '2026-06-28'
 id: question:0010-cuplr-style-tof-classifier-for-suspect-normal-samples
 ontology_terms:
 - tissue-of-origin
@@ -67,5 +67,6 @@ Tissue-of-origin (TOO) classifiers trained to distinguish cancer types from each
 
 - Topic notes: `topic:signature-decomposition-unmatched-normal`
 - Article notes: `paper:Li2021`, `paper:Xu2025`
-- Related questions: `question:0008` (contamination magnitude), `question:0009` (SBS1 LRR flag)
+- Related questions: `question:0008-signature-decomposition-tissue-background-subtraction`
+  (contamination magnitude), `question:0009` (SBS1 LRR flag)
 - Methods/Datasets: CUPLR (GitHub: UMCUGenetics/cuplr); SigProfilerAssignment; Li 2021 EGA data; Xu 2025 dbGaP data

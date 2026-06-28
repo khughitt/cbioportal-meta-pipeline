@@ -4,7 +4,7 @@ title: Neuroendocrine neoplasms as a histology confound (distinct from neural re
   of cancer)
 status: active
 created: '2026-06-06'
-updated: '2026-06-06'
+updated: '2026-06-28'
 id: topic:neuroendocrine-neoplasm-lineage-confound
 ontology_terms:
 - neuroendocrine neoplasm
@@ -54,9 +54,15 @@ top-mutated ranking and could mimic a "neural gene" signal:
 
 ## Action
 
-`question:0034` / task t219: enumerate NET/NEC OncoTree codes in the pipeline studies, add an
+`question:0034-neuroendocrine-histology-confound` / task t219: enumerate NET/NEC OncoTree codes in the pipeline studies, add an
 `is_neuroendocrine_histology` flag, and recompute ranks with NEN excluded as a sensitivity
 stratum. This is independent of, and additive to, the CNS exclusion and the gene-length null.
+
+## Project Links
+
+This topic is one confounder arm for
+`hypothesis:0012-neural-gene-enrichment-length-histology-artifact` and is summarized in
+`synthesis:0015-cancer-neuroscience-literature-batch-21-papers-does-it-explain-a-neural`.
 
 ## Summary
 

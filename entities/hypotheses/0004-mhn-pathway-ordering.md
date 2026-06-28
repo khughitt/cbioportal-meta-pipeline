@@ -4,7 +4,7 @@ title: "MHN pathway-level ordering recovers intrinsic-mutator \u2192 lineage-dri
   \ \u2192 checkpoint-loss progression"
 status: proposed
 created: '2026-04-27'
-updated: '2026-04-28'
+updated: '2026-06-28'
 id: hypothesis:0004-mhn-pathway-ordering
 phase: candidate
 source_refs:
@@ -177,10 +177,12 @@ Promote to `phase: active` when **all three** are met:
   directed-ordering frame for that question).
 - **Discussions:** `discussion:0002-mutation-ordering-and-path-dependency`.
 - **Topics:** `topic:co-occurrence-and-mutual-exclusivity`.
+- **Themes:** `theme:0003-temporal-structure-of-carcinogenesis-order-count-and-timing-of-the`
+  is the broader temporal-structure frame.
 - **Tasks (existing):** `t078` (DISCOVER co-occurrence — provides callability mask + null
   model), `t132` (ordering methods literature search), `t133` (VAF audit), `t135` (MHN fit
   per histology — already filed, blocked on `t078`).
-- **Tasks:** `t135` (production MHN fit), `t152` (Vocht LUAD replication + simulation
+- **Tasks:** `task:t135` (production MHN fit), `task:t152` (Vocht LUAD replication + simulation
   calibration).
 - **Sibling hypotheses:** `h06` (pre-malignant n-1 driver carriage — observed-ordering
   complement to MHN-inferred ordering).

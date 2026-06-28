@@ -3,7 +3,7 @@ type: plan
 title: "Analysis plan \u2014 positive-control scan (H08a recovery gate)"
 status: not-ready
 created: '2026-05-31'
-updated: '2026-05-31'
+updated: '2026-06-28'
 id: plan:0005-h08-positive-control-scan-analysis-plan
 related:
 - hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and
@@ -55,7 +55,9 @@ skills_loaded:
 Does the agnostic within-tissue covariate↔signature-exposure scan, run on the MC3 WES
 substrate with no aetiology labels, **recover the textbook exposure→signature links unprompted**
 — UV→SBS7 (SKCM), smoking→SBS4 (LUAD+LUSC), APOBEC3A/B mRNA→SBS2/13 (pooled APOBEC-prevalent
-tissues) — at the pre-registered rank gate? (H08a positive control.)
+tissues) — at the pre-registered rank gate?
+This is the analysis plan for
+`hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` H08a.
 
 ## Related Hypotheses / Inquiries / Tasks
 

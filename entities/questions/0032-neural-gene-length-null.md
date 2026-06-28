@@ -4,7 +4,7 @@ title: Does the apparent neural-gene enrichment in top-mutated genes survive gen
   normalization, or is it a length artifact?
 status: active
 created: '2026-06-06'
-updated: '2026-06-06'
+updated: '2026-06-28'
 id: question:0032-neural-gene-length-null
 ontology_terms:
 - gene length
@@ -60,6 +60,7 @@ after normalizing to mutations-per-callable-kb and to a dN/dS-style background m
 - Required data or analyses: top-N raw-count list vs length-normalized list; neural-label
   enrichment statistic on both; reuse dndscv per-gene q-values; UniProt protein lengths +
   Ensembl CDS length.
+- Mechanism link: `question:0031-residual-gene-length-signal-mechanism`.
 - Priority level: P1 (do first)
 
 ## Related

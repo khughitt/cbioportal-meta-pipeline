@@ -4,7 +4,7 @@ title: Can unsupervised co-expression modules distinguish SBS40 from SBS5 clock-
   activity within-tissue after conditioning on age (the core h08b discovery target)?
 status: active
 created: '2026-05-31'
-updated: '2026-05-31'
+updated: '2026-06-28'
 id: question:0023-sbs40-vs-sbs5-clocklike-expression-module
 ontology_terms: []
 datasets: []
@@ -43,7 +43,8 @@ The t177 scan narrowed h08b's defensible novelty to unsupervised co-expression m
 
 ## Connections to Project
 
-- Related hypotheses: `hypothesis:h08-...` (h08b discovery prong).
+- Related hypotheses: `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`
+  (h08b discovery prong).
 - Required data or analyses: unsupervised NMF expression modules on co-measured RNA-seq (MC3); age-conditioned within-tissue module-vs-SBS40/SBS5 association.
 - Priority level: P2 (defines the h08b headline).
 

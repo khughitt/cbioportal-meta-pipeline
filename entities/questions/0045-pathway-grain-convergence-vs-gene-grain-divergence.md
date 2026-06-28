@@ -5,7 +5,7 @@ title: "Does the cancer-type specificity of drivers seen at the gene level colla
   \ when they diverge on which gene is hit?"
 status: active
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-28'
 id: question:0045-pathway-grain-convergence-vs-gene-grain-divergence
 ontology_terms:
 - convergence
@@ -124,6 +124,7 @@ been testing at the expression/cell-state level:
 - **Tension it resolves:** `question:0042-driver-normal-expression-tissue-cell-type-specificity` (gene-level divergence) vs `paper:Kauko2025` (downstream convergence).
 - **Shared substrate:** `topic:co-occurrence-and-mutual-exclusivity` / `task:t078`, `hypothesis:0004-mhn-pathway-ordering` (pathway ordering),
   `question:0043-driver-cancer-type-breadth-distribution` (the driver roster), `theme:0003-temporal-structure-of-carcinogenesis-order-count-and-timing-of-the`.
+- **Lineage context:** `topic:lineage-addiction-and-cell-of-origin-driver-specificity`.
 - **Cross-project:** mm30 `hypothesis:h4-attractor-convergence`; evolution-project convergence synthesis.
 - **Priority:** **P3** — needs only a small gene→pathway table on top of substrate already on disk;
   cheapest "new biology" question in the batch after `question:0043-driver-cancer-type-breadth-distribution`.

@@ -3,7 +3,7 @@ type: report
 title: t210 q027 therapy-signature substrate feasibility audit
 status: active
 created: '2026-06-01'
-updated: '2026-06-01'
+updated: '2026-06-28'
 id: report:0004-t210-q027-therapy-signature-substrate-feasibility
 source_refs:
 - code/scripts/audit_q027_therapy_signature_substrate.py
@@ -18,6 +18,7 @@ related:
 # t210 question 0027 therapy-signature substrate feasibility audit
 
 Verdict: **continue to WP2, scoped to `difg_glass_2019` / SBS11 only**.
+This report is the feasibility record for `task:t210`.
 
 At least one primary patient candidate passed the WP1 gate, but the audit did not exhaustively scan all 198 configured studies.
 The candidate universe was the five treatment-signature-plausible cohorts named in the t210 plan from the t206-t209 `hypothesis:0009-treatment-induced-signature-frequency-contamination` treatment-label work.

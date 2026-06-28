@@ -4,7 +4,7 @@ title: What minimum per-cancer-type sample size and variant-caller provenance do
   the cross-study cohort need for reliable signature extraction/fitting?
 status: active
 created: '2026-05-31'
-updated: '2026-05-31'
+updated: '2026-06-28'
 id: question:0020-minimum-sample-size-and-caller-provenance-for
 ontology_terms: []
 datasets: []
@@ -55,4 +55,6 @@ The cross-study aggregation mixes studies of widely varying size and variant-cal
 
 - Topic notes: `topic:signature-extraction-fitting-methods`
 - Article notes: `paper:Jiang2025a`, `paper:Islam2022`, `paper:Medo2024`, `paper:DiazGay2023`, `paper:Pancotti2023`
-- Methods/Datasets: agnostic association model; `question:0018`, `question:0019`
+- Methods/Datasets: `method:h08-agnostic-association-model`;
+  `question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross`;
+  `question:0019-does-de-novo-extraction-on-the-aggregated-cohort-surface-factors-not-in`

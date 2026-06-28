@@ -4,7 +4,7 @@ title: Does chronic adrenergic / glucocorticoid (stress-HPA) signaling leave a d
   mutational-signature or TMB footprint, via DNA-repair suppression?
 status: active
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-28'
 id: question:0039-stress-hpa-adrenergic-mutational-footprint
 ontology_terms:
 - stress signaling
@@ -68,6 +68,7 @@ any such footprint is detectable in the project's signature/TMB outputs.
 
 ## Related
 
-- Topic notes: topic:aetiology-covariate-association, topic:neuro-immune-crosstalk-cancer
+- Topic notes: `topic:aetiology-covariate-association`, `topic:neuro-immune-crosstalk-cancer`,
+  `theme:0002-cancer-neuroscience-in-a-mutation-only-pipeline-expression-not-mutation`
 - Article notes: paper:Magnon2023, paper:Mravec2008, paper:Pu2025
 - Methods/Datasets: agnostic covariate-signature association model; MSK-CHORD / GENIE-BPC

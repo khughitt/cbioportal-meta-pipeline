@@ -4,7 +4,7 @@ title: Do chr1q gains and chr16q losses in cBioPortal breast cancer studies part
   reflect contaminating normal aneuploid epithelial clones?
 status: active
 created: '2026-04-18'
-updated: '2026-04-18'
+updated: '2026-06-28'
 id: question:0002-normal-breast-cna-background-chr1q-chr16q
 ontology_terms: []
 datasets: []
@@ -53,5 +53,6 @@ Lin et al. [@Lin2024] showed that histologically normal breast epithelium from h
 
 - Topic notes: `topic:pan-cancer-mutation-landscape`, `topic:mutation-rate-normalization`
 - Article notes: `paper:Lin2024`, `paper:Yoshida2026`
-- Related question: `question:0001` (same conceptual issue for esophageal NOTCH1/TP53 inversion)
+- Related question: `question:0001-normal-epithelial-clone-contamination-in-esophageal-studies`
+  (same conceptual issue for esophageal NOTCH1/TP53 inversion)
 - Methods/Datasets: cBioPortal breast cancer study list; MSK-IMPACT breast subset (matched normal); TCGA BRCA (matched normal via MC3); ABSOLUTE/FACETS purity estimates where available

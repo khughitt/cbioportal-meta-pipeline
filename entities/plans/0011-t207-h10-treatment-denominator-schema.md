@@ -3,7 +3,7 @@ type: plan
 title: H10 treatment-denominator schema and impact pass
 status: active
 created: '2026-06-01'
-updated: '2026-06-01'
+updated: '2026-06-28'
 id: plan:0011-t207-h10-treatment-denominator-schema
 related:
 - hypothesis:0009-treatment-induced-signature-frequency-contamination
@@ -32,6 +32,9 @@ The two arms adjudicate each other: exposure-label effects without signature-hig
 This is a design plan for `task:t207`.
 It follows the t206 audit scaffold and manual-review note, and it should not reinterpret the t206 audit as an `H10` result.
 The upstream analysis-readiness artifact is `doc/plans/2026-06-01-t206-h10-treatment-exposure-audit-analysis-plan.md`.
+The plan directly operationalizes `hypothesis:0009-treatment-induced-signature-frequency-contamination`
+for `question:0024-treatment-exposed-cohort-chemotherapy-signature`, with `task:t181` retained as
+the older treatment-exposure context.
 
 ## Scope Decomposition
 

@@ -4,7 +4,7 @@ title: EHR-rich and clinically-annotated substrates for agnostic mutational-sign
   aetiology association
 status: active
 created: '2026-05-30'
-updated: '2026-05-30'
+updated: '2026-06-28'
 id: search:0007-ehr-rich-substrates-for-agnostic-signature-association
 related:
 - hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and
@@ -19,11 +19,14 @@ related:
 ## Scope
 
 A scan of public oncology substrates usable as the **covariate side** of an agnostic
-signature-aetiology association (`hypothesis:0007`). Selection criteria, in priority order:
+signature-aetiology association
+(`hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`).
+Selection criteria, in priority order:
 
 1. **Co-measured somatic mutations** (so signature exposures `H` can be derived).
 2. **Per-sample signature feasibility** — WES/WGS preferred; gene panels give too few mutations
-   per sample and can only enter as cohort-pooled / refit (the binding constraint, `q018`).
+   per sample and can only enter as cohort-pooled / refit (the binding constraint,
+   `question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross`).
 3. **Rich clinical / EHR-like metadata** — treatment, ICD-O/ICD-10, histology, outcomes,
    vital status; ideally beyond the structured fields the pipeline already ingests.
 
@@ -64,3 +67,5 @@ by the zenodo/GEO adapters — so ranking is LLM-knowledge-driven, cross-referen
 - Confirm MSK-CHORD NLP field availability + license terms.
 - Confirm BPC top-level Synapse accession + which cohorts have signature-usable variant calls.
 - Decide whether SV/CNV signatures (PCAWG) are in scope — currently out (CNV not ingested, `t055`).
+- Treat `topic:signature-decomposition-unmatched-normal` as the substrate-methods companion for
+  deciding whether a candidate cohort can support per-sample, pooled, or refit-only signatures.

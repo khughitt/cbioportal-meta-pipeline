@@ -5,7 +5,7 @@ title: "Does clock-like mutational-signature exposure predict age at diagnosis b
   \ for?"
 status: active
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-28'
 id: question:0046-clocklike-signature-vs-driver-count-age-at-diagnosis
 ontology_terms:
 - clock-like signature
@@ -105,11 +105,12 @@ project's two most recent threads (temporal/age-of-onset and signatures):
 
 ## Connections to Project
 
-- **Bridges:** `q041` (driver-count↔age) ↔ the signature stack (`q023` clock-like SBS40/SBS5,
+- **Bridges:** `question:0041-driver-complexity-vs-median-age-at-diagnosis` (driver-count↔age) ↔
+  the signature stack (`question:0023-sbs40-vs-sbs5-clocklike-expression-module` clock-like SBS40/SBS5,
   `h08` covariate scan, `paper:Alexandrov2015`).
 - **Theme:** `theme:0003-temporal-structure-of-carcinogenesis-order-count-and-timing-of-the` — this is the replicative-supply (clock)
   vs number-of-events (k) discriminator the theme names as its open problem
   (`topic:multistage-carcinogenesis-and-age-of-onset`).
-- **Substrate:** `q043` (driver-count roster).
+- **Substrate:** `question:0043-driver-cancer-type-breadth-distribution` (driver-count roster).
 - **Priority:** **P3** — substrate on disk; gated on `q041`'s age-normalization prerequisite (binned,
   age-at-seq) and reliable clock decomposition (count floor / panel limits).

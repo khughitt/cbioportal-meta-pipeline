@@ -3,7 +3,7 @@ type: report
 title: "Pipeline review \u2014 t131 dNdScv three-way ranking comparison (design v3)"
 status: active
 created: '2026-04-25'
-updated: '2026-04-25'
+updated: '2026-06-28'
 id: report:0001-t131-dndscv-three-way-comparison-design-review
 plan: doc/plans/2026-04-24-t131-dndscv-three-way-comparison-design.md
 related:
@@ -24,6 +24,9 @@ overall: WARN
 ## Summary
 
 The t131 plan is methodologically sound, has empirical validation from the PoC run (74/199 Bailey drivers @ top-100; clean `question:0011-gene-length-as-literature-attention-confounder` falsifier readout), and the implementation matches the design with the schema contract, status enum, and split-build flag all correctly wired. The main weaknesses are operational rather than methodological: (a) the conda env path has not been validated end-to-end (PoC used system R, violating `feedback:r-reproducibility`); (b) reproducibility seeding is incomplete — `random_seed` is declared in config but is not threaded through to `set.seed()` in `run_dndscv.R`; (c) the t131 schema landed on a *new* file `_dndscv.feather` rather than mutating the canonical `gene_cancer_study_ratio_annotated.feather`, which is a safer choice than the plan called for but means downstream consumers must opt in explicitly. Two methodological items deserve a second look before publishing: dNdScv's built-in `max_coding_muts_per_sample=3000` filter is *independent* of the project's existing `annotate_hypermutators` step and may produce a different sample-exclusion set than the user expects (POLE/UCEC/SKCM cohorts in particular); and the PubTator `entrez→symbol` join via `data/grch37.tsv` is likely incomplete, which will bias the `question:0011-gene-length-as-literature-attention-confounder` falsifier toward older/established gene symbols.
+This report reviews `task:t131`, is grounded in
+`discussion:0001-gene-length-bias-in-mutation-rankings-and-literature`, and leaves the
+GRCh38 canonicalization follow-up to `task:t136`.
 
 ## Rubric Results
 

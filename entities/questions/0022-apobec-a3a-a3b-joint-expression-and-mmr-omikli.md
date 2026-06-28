@@ -4,7 +4,7 @@ title: Does a joint APOBEC3A+APOBEC3B expression score (and intact-MMR expressio
   in MSS tumors) predict SBS2/SBS13 burden better than single covariates?
 status: active
 created: '2026-05-31'
-updated: '2026-05-31'
+updated: '2026-06-28'
 id: question:0022-apobec-a3a-a3b-joint-expression-and-mmr-omikli
 ontology_terms: []
 datasets: []
@@ -49,4 +49,4 @@ The `hypothesis:0007` Arm C test uses APOBEC mRNA -> SBS2/13. The batch evidence
 
 - Topic notes: `topic:apobec-mutagenesis`
 - Article notes: `paper:Carpenter2023`, `paper:MasPonte2020`
-- Methods/Datasets: agnostic association model
+- Methods/Datasets: `method:h08-agnostic-association-model`

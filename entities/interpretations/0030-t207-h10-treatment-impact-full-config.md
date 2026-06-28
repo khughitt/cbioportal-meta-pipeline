@@ -3,7 +3,7 @@ type: interpretation
 title: t207 H10 treatment impact full-config exposure-label pass
 status: active
 created: '2026-06-01'
-updated: '2026-06-01'
+updated: '2026-06-28'
 id: interpretation:0030-t207-h10-treatment-impact-full-config
 source_refs: &id001
 - code/config/config-full.yml
@@ -31,6 +31,8 @@ relations:
 ---
 
 # Interpretation: t207 `H10` treatment impact full-config exposure-label pass
+
+This is the `task:t207` full-config exposure-label pass.
 
 ## Verdict
 

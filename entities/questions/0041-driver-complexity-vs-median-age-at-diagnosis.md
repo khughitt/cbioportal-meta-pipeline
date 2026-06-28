@@ -4,7 +4,7 @@ title: Does per-cancer-type driver complexity track median age at diagnosis in t
   aggregated cohort, once the age->mutation-detection confound is controlled?
 status: active
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-28'
 id: question:0041-driver-complexity-vs-median-age-at-diagnosis
 ontology_terms:
 - multistage carcinogenesis
@@ -154,3 +154,9 @@ not an identification of k.
 - **Candidate follow-up (not yet filed):** a methodological question on **age as a covariate
   inflating mutation/driver burden** project-wide (touches TMB, the SBS1/SBS5 clock signatures of
   `question:0023-sbs40-vs-sbs5-clocklike-expression-module`) — flag if this confound recurs outside the age-of-onset thread.
+- **Paired questions:** `question:0043-driver-cancer-type-breadth-distribution` supplies the
+  driver-count roster, and
+  `question:0046-clocklike-signature-vs-driver-count-age-at-diagnosis` tests whether clock-like
+  signatures absorb the driver-count signal.
+- **Discussion:** `discussion:0006-age-of-onset-and-multistage-mutation-requirement` records the
+  originating multistage framing.

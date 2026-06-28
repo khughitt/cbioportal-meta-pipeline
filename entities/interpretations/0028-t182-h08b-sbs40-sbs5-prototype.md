@@ -4,7 +4,7 @@ title: "t182 exploratory h08b SBS40-vs-SBS5 expression-module prototype \u2014 s
   \ SKCM immune-module signal, not confirmatory"
 status: active
 created: '2026-06-01'
-updated: '2026-06-01'
+updated: '2026-06-28'
 id: interpretation:0028-t182-h08b-sbs40-sbs5-prototype
 source_refs:
 - task:t182
@@ -21,6 +21,8 @@ Date: 2026-06-01
 ## Question
 
 Can the existing `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` expression-module substrate produce a coherent exploratory separation between SBS40 and SBS5 within tissue after conditioning on age?
+This is the `task:t182` exploratory prototype for
+`question:0023-sbs40-vs-sbs5-clocklike-expression-module`.
 
 This is explicitly exploratory.
 The positive-control prong remains `[?]`, the repaired smoking-arm read remains `[?]`, and this result does not open the discovery prong as confirmatory work.

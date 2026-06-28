@@ -3,7 +3,7 @@ type: topic
 title: Hotspot-based driver detection (1D residue-level and 3D spatial)
 status: active
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: topic:hotspot-based-driver-detection
 ontology_terms: []
 source_refs: []
@@ -87,6 +87,6 @@ beyond raw counts).
 
 ## Key References
 
-Chang2016 (1D residue-level); Gao2017 (3D spatial — note: Genome Medicine, not Cancer Cell as
-some early notes said); Chakravarty2017 (OncoKB integration of both). See
+`paper:Chang2016` (1D residue-level); `paper:Gao2017` (3D spatial — note: Genome Medicine, not Cancer Cell as
+some early notes said); `paper:Chakravarty2017` (OncoKB integration of both). See
 `topic:cancer-driver-genes` for the broader methodology comparison.

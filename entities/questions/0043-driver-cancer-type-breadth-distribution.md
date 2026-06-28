@@ -4,7 +4,7 @@ title: What is the distribution of cancer-type breadth across drivers in our own
   cohort, and does it reproduce IntOGen's restricted-vs-pan-cancer split?
 status: active
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-28'
 id: question:0043-driver-cancer-type-breadth-distribution
 ontology_terms:
 - driver gene
@@ -161,5 +161,8 @@ driver-count axis — and it is computable **today**, with no external expressio
   `question:0016-panel-induced-ascertainment`, `question:0017-cross-study-saturation-curve`.
 - **Confounds:** `hypothesis:0003-gene-length-confounds-literature-attention` (length),
   `question:0047-hypermutation-confound-on-driver-tissue-specificity`.
+- **Topic/theme:** `topic:lineage-addiction-and-cell-of-origin-driver-specificity`,
+  `topic:cancer-driver-genes`, and
+  `theme:0003-temporal-structure-of-carcinogenesis-order-count-and-timing-of-the`.
 - **Priority:** **P2** — computable today, no external ingest, unblocks two P3 questions. The natural
   first build of this batch.

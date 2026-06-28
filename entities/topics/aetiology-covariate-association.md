@@ -4,7 +4,7 @@ title: Agnostic covariate to mutational-signature-exposure association (signatur
   aetiology inference)
 status: active
 created: '2026-05-31'
-updated: '2026-05-31'
+updated: '2026-06-28'
 id: topic:aetiology-covariate-association
 ontology_terms:
 - mutational signatures
@@ -61,7 +61,9 @@ APOBEC→SBS2/13, MMR-deficiency→SBS6/15/26/44 — has been recovered by every
 to well-powered data, establishing it as a methodological positive-control benchmark. What remains
 contested is the best statistical architecture for agnostic discovery of novel aetiologies, how to
 handle tissue-of-origin as a master confounder, and how to adjudicate causality once an association
-is found. These questions are the direct antecedents of hypothesis `h08`.
+is found. These questions are the direct antecedents of
+`hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` and
+`method:h08-agnostic-association-model`.
 
 ## Key Concepts
 

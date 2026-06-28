@@ -4,7 +4,7 @@ title: t197 full-MC3 per-sample SBS refit across the 7 h08 arm strata (COSMIC v3
   t178/t179-hardened)
 status: active
 created: '2026-05-31'
-updated: '2026-05-31'
+updated: '2026-06-28'
 id: interpretation:0022-t197-mc3-7strata-sbs-refit
 source_refs:
 - task:t197
@@ -15,6 +15,11 @@ related:
 - question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross
 ---
 # t197 — full-MC3 per-sample SBS refit across the 7 hypothesis:0007 arm strata
+
+This interpretation supports
+`hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`
+and resolves a substrate piece of
+`question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross`.
 
 Date: 2026-05-31
 

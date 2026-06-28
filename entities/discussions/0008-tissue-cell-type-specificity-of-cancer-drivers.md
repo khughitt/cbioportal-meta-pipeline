@@ -4,7 +4,7 @@ title: "Are cancer-type-specific drivers genes with tissue/cell-type-restricted 
   \ expression \u2014 more than chance?"
 status: active
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-28'
 id: discussion:0008-tissue-cell-type-specificity-of-cancer-drivers
 focus_type: approach
 mode: standard
@@ -111,6 +111,8 @@ specificity score must be computed on a **normal** reference, never tumor RNA.
 
 ## Relationship to existing entities
 
+- **`topic:lineage-addiction-and-cell-of-origin-driver-specificity`** — the direct topical
+  home for the lineage-addiction framing used here.
 - **`hypothesis:0012` is a special case** — "are neural genes top-mutated because they are
   tissue-restricted developmental genes?" `question:0035-label-free-neural-gene-definition` /
   `question:0036-oncofetal-fetal-vs-adult-neural-expression` define the *same approach*
@@ -120,7 +122,11 @@ specificity score must be computed on a **normal** reference, never tumor RNA.
   the neural-question prerequisite, not an existing capability.
 - **`topic:oncofetal-developmental-reprogramming`** — lineage/developmental genes overlap the
   oncofetal axis; restricted-oncogene lineage factors are often developmental TFs.
-- **`hypothesis:0003`** — the length null and annotation-attention bias apply directly.
+- **`hypothesis:0012-neural-gene-enrichment-length-histology-artifact`** — the neural-gene
+  enrichment concern is a concrete case where lineage specificity, histology mix, and length bias
+  have to be separated.
+- **`hypothesis:0003-gene-length-confounds-literature-attention`** — the length null and
+  annotation-attention bias apply directly.
 - **`topic:cancer-driver-genes` / `paper:MartinezJimenez2020`** — the driver-definition backbone.
 
 ## Evidence Needed

@@ -5,7 +5,7 @@ title: Can 'neural genes' be defined purely from data (tissue/developmental expr
   top-mutated genes beyond gene length?
 status: active
 created: '2026-06-06'
-updated: '2026-06-06'
+updated: '2026-06-28'
 id: question:0035-label-free-neural-gene-definition
 ontology_terms:
 - tissue specificity
@@ -62,7 +62,8 @@ among top-mutated genes *after* controlling for gene length and histology.
 ## Connections to Project
 
 - Related hypotheses: `hypothesis:0012-neural-gene-enrichment-length-histology-artifact`
-  (label-free commitment; P1/P4)
+  (label-free commitment; P1/P4), `question:0032-neural-gene-length-null`, and
+  `question:0036-oncofetal-fetal-vs-adult-neural-expression`.
 - Required data or analyses: build neural-enrichment score; logistic/Poisson enrichment of
   top-mutated membership ~ neural_score + log(length) + histology; ROC of score vs canonical
   effectors.

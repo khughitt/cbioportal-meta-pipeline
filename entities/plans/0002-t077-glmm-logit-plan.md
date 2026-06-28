@@ -3,7 +3,7 @@ type: plan
 title: t077 GLMM-logit pooled gene x cancer implementation plan
 status: active
 created: '2026-04-22'
-updated: '2026-04-22'
+updated: '2026-06-28'
 id: plan:0002-t077-glmm-logit-plan
 related:
 - task:t077
@@ -15,6 +15,7 @@ related:
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
 
 **Goal:** Implement the pre-registered GLMM-logit random-effects meta-analysis pipeline for per-(gene, cancer) mutation rates and emit a consumer-facing pooled output with heterogeneity diagnostics.
+This plan is the implementation surface for `task:t077`, with `task:t101` retained as the linked follow-up context.
 
 **Architecture:** Build a long-format pooled-input table directly from the per-study `gene_cancer_study.feather` artifacts so zero-count cells retain their true denominators. Fit the confirmatory model in an isolated R environment via `metafor::rma.glmm`, emit a pooled feather plus diagnostics, then join the pooled metrics back into the annotated cross-study output surface.
 

@@ -4,7 +4,7 @@ title: Do neuroendocrine-neoplasm histologies (OncoTree-flagged) inflate neuroen
   gene ranks, and does excluding them change the result?
 status: active
 created: '2026-06-06'
-updated: '2026-06-06'
+updated: '2026-06-28'
 id: question:0034-neuroendocrine-histology-confound
 ontology_terms:
 - neuroendocrine neoplasm
@@ -53,7 +53,8 @@ flagging and exclusion materially changes the top-mutated ranking.
 
 ## Connections to Project
 
-- Related hypotheses: `hypothesis:0012-neural-gene-enrichment-length-histology-artifact` (P3)
+- Related hypotheses: `hypothesis:0012-neural-gene-enrichment-length-histology-artifact` (P3);
+  follows the CNS-exclusion check in `question:0033-neural-enrichment-cns-exclusion`.
 - Required data or analyses: enumerate OncoTree codes for NET/NEC (PNET, GINET, SINET, NEC,
   PHEO, MCC, MTC, ACC, etc.) present in pipeline studies; add `is_neuroendocrine_histology`
   flag; recompute ranks with NEN excluded; check MEN1 as positive control.

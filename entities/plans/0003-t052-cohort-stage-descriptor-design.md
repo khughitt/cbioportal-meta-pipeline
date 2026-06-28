@@ -3,7 +3,7 @@ type: plan
 title: "Design: t052 \u2014 per-study cohort-stage descriptor (v2)"
 status: active
 created: '2026-04-24'
-updated: '2026-04-25'
+updated: '2026-06-28'
 id: plan:0003-t052-cohort-stage-descriptor-design
 related:
 - task:t052
@@ -33,6 +33,8 @@ clinical sample tables and roll it up to a per-study cohort-composition descript
 Validate the design by reproducing the published Zehir et al. [@Zehir2017] stage-driven bias signals
 (AR 18% MSK metastatic vs 1% TCGA primary; ESR1 11% vs 4%) on the existing PoC pipeline
 run, augmented with `prad_tcga_pan_can_atlas_2018` for the AR comparison.
+This is the design surface for `task:t052` and belongs under
+`topic:cohort-selection-bias-representativeness`.
 
 ## Scope
 

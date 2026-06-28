@@ -4,7 +4,7 @@ title: What is the magnitude of normal-tissue SBS1/SBS5 contamination in unmatch
   cBioPortal studies, and can per-tissue background subtraction reduce it?
 status: active
 created: '2026-04-18'
-updated: '2026-04-18'
+updated: '2026-06-28'
 id: question:0008-signature-decomposition-tissue-background-subtraction
 ontology_terms:
 - mutational signatures
@@ -64,5 +64,8 @@ When cBioPortal studies lack patient-matched germline sequencing, normal cells c
 
 - Topic notes: `topic:signature-decomposition-unmatched-normal`
 - Article notes: `paper:Li2021`, `paper:Xu2025`, `paper:Yaacov2023`
-- Related questions: `question:0001` (esophageal NOTCH1 contamination), `question:0007` (null model for normal-tissue background)
+- Related questions: `question:0001-normal-epithelial-clone-contamination-in-esophageal-studies`
+  (esophageal NOTCH1 contamination) and
+  `question:0007-cross-tissue-somatic-mutation-rate-variation-as-null-model` (null model for
+  normal-tissue background)
 - Methods/Datasets: SigProfilerAssignment (Alexandrov lab), MuSiCal (Park lab); Li 2021 EGA data; Xu 2025 dbGaP data

@@ -3,7 +3,7 @@ type: discussion
 title: 'Gene length as a confounder: mutation rankings and literature attention'
 status: active
 created: '2026-04-24'
-updated: '2026-04-24'
+updated: '2026-06-28'
 id: discussion:0001-gene-length-bias-in-mutation-rankings-and-literature
 source_refs:
 - paper:Lawrence2014
@@ -42,14 +42,17 @@ analogous bias contaminates the "is this gene well-studied" axis.
   `t086`).
 - Audit stance (`doc/meta/bias-audit-cross-study-aggregation-pipeline.md`): length
   normalization is judged "necessary but not sufficient" — it catches first-order bias but
-  misses regional mutation-rate covariates (replication timing, chromatin state, expression).
-  The audit rates protein-length-only as "pass-with-caveat."
+misses regional mutation-rate covariates (replication timing, chromatin state, expression).
+The audit rates protein-length-only as "pass-with-caveat."
 - MutSigCV / dNdScv / SLAPenrich all explicitly model gene length in their null
   [@Lawrence2014; @Martincorena2017; @Iorio2018SLAPenrich]. Bailey 2018's [@Bailey2018]
   299-driver consensus is what "the field" uses; the pipeline currently does NOT reproduce
   a discovery-grade null model.
 - Literature-bias question has not been examined in this project previously — it's a novel
   framing worth a first pass.
+- The two closest background-rate companion questions are
+  `question:0003-replication-timing-as-gene-level-mutation-rate-confounder` and
+  `question:0007-cross-tissue-somatic-mutation-rate-variation-as-null-model`.
 
 ---
 

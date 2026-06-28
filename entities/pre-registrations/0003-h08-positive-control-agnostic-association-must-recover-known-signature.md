@@ -4,7 +4,7 @@ title: "h08 positive control \u2014 agnostic association must recover known sign
   \ aetiologies unprompted"
 status: committed
 created: '2026-05-30'
-updated: '2026-05-31'
+updated: '2026-06-28'
 id: pre-registration:0003-h08-positive-control-agnostic-association-must-recover-known-signature
 committed: '2026-05-30'
 spec: doc/methods/h08-agnostic-association-model.md
@@ -50,7 +50,7 @@ amendments:
 
 **Execution timing (§0 sub-axis): runnable-now, engineering-gated — NOT data-gated.** The qualifying
 vehicle exists and is adequately powered (MC3 WES, ~9–10k samples / 32–33 cancer types, already
-ingested as `tcga_mc3`; co-measured mRNA from PanCanAtlas). The binding constraint is *building the
+ingested as `dataset:tcga-mc3`; co-measured mRNA from `dataset:tcga-pancanatlas`). The binding constraint is *building the
 association layer + the per-sample signature refit*, not data availability, so this pre-reg is
 authored in normal (runnable) mode, not data-gated mode. Activation is nonetheless conditioned on
 two open gates that do **not** change the registered criteria:
@@ -59,6 +59,9 @@ two open gates that do **not** change the registered criteria:
    not re-derive a published method and so the discovery prong's novelty bar is calibrated).
 2. `question:0018` — feasibility verdict on downstream per-sample signature extraction + panel
    adequacy (confirms the refit is sound on MC3 before the association runs).
+
+The conceptual background for known-versus-learned signature causes is
+`discussion:0004-common-mutational-signatures-known-vs-learned-immune-causes-and`.
 
 ## Hypotheses Under Test
 

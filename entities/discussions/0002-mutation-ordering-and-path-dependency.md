@@ -4,7 +4,7 @@ title: "Mutation ordering and path dependency \u2014 can we detect A\u2192B asym
   \ in cBioPortal data?"
 status: active
 created: '2026-04-24'
-updated: '2026-04-24'
+updated: '2026-06-28'
 id: discussion:0002-mutation-ordering-and-path-dependency
 source_refs: []
 related:
@@ -159,7 +159,7 @@ The framing as canalization is interesting but operationally reduces to **condit
 prevalence**: `P(B | A, cancer type, signature context) vs P(B | ¬A, ...)`. Once the
 conditioning is right, path dependency is indistinguishable from "strong context-specific
 positive selection" on the static data — i.e. it is exactly the signal that co-occurrence
-methods (DISCOVER / SELECT / WeSME in `t078`) already try to detect, plus a *direction*.
+methods (DISCOVER / SELECT / WeSME in `task:t078`) already try to detect, plus a *direction*.
 The direction is the new thing. MHN is the method that adds direction on top of what
 DISCOVER does: it is essentially "DISCOVER with an explicit CTMC generative model."
 
@@ -189,6 +189,13 @@ To answer each sub-question:
 - **Longer chains.** CBN / MHN fit arbitrary-length DAGs natively but power drops
   steeply beyond triples for realistic cohort sizes (~10³–10⁴ samples per histology).
   Expect to be able to talk about triples, not quintuples.
+
+## Project Links
+
+This discussion motivates the co-occurrence / mutual-exclusivity work in `task:t078` and
+should be read alongside `topic:co-occurrence-and-mutual-exclusivity`.
+The methods search queued as `search:0001-cooccurrence-mutual-exclusivity-methods` is the
+closest literature-discovery companion.
 
 ## Prioritized Follow-Ups
 

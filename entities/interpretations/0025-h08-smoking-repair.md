@@ -4,7 +4,7 @@ title: "t204 h08 smoking-arm repair production rerun \u2014 binary ever-smoker r
   \ significant SBS4 association but misses top-3 gate"
 status: active
 created: '2026-06-01'
-updated: '2026-06-01'
+updated: '2026-06-28'
 id: interpretation:0025-h08-smoking-repair
 source_refs:
 - task:t204
@@ -20,6 +20,8 @@ Date: 2026-06-01
 ## Question
 
 Under the committed smoking-arm repair pre-registration, does replacing the original Arm-B `pack_years` slot with the repaired production `ever_smoker` covariate recover smoking→SBS4 in pooled LUAD+LUSC?
+This is the `task:t204` production read and remains scoped to
+`hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`.
 
 This is a repaired positive-control read only.
 It does **not** re-read the locked t199 H08a verdict, which remains `[?]` (see `doc/interpretations/2026-05-31-t199-h08-association-verdict.md`).

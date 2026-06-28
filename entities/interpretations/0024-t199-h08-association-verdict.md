@@ -4,7 +4,7 @@ title: "t199 h08 positive-control association scan (H08a verdict) \u2014 inconcl
   \ 1/3 arms pass (APOBEC clean)"
 status: active
 created: '2026-05-31'
-updated: '2026-05-31'
+updated: '2026-06-28'
 id: interpretation:0024-t199-h08-association-verdict
 source_refs:
 - task:t199
@@ -27,6 +27,10 @@ registered known aetiology→signature pairs on the MC3 WES substrate, under the
 of `plan:0005-h08-positive-control-scan-analysis-plan`; checks 1–3 (t196 covariate assembly QA, t197 SBS
 refit, t198 NMF expression modules) are done. The verdict surface was **locked before ranks** and
 is not relitigated here.
+This verdict bears on
+`hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` and
+inherits the feasibility constraints from
+`question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross`.
 
 ## What was frozen, and when
 

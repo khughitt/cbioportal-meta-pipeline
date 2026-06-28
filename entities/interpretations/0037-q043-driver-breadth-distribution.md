@@ -4,7 +4,7 @@ title: 'q043 first pass: driver cancer-type-breadth distribution on the poc-2026
   cohort'
 status: active
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-28'
 id: interpretation:0037-q043-driver-breadth-distribution
 source_refs:
 - paper:MartinezJimenez2020
@@ -36,7 +36,7 @@ grade.
 - **Cohort:** `results/poc-2026-04-17/` — 13,006 samples, 58 cancer types, 4 studies (BRCA/SKCM/UCEC
   TCGA WES + MSK-IMPACT panel). Cross-cancer breadth is **panel-ascertainment-limited**: only
   MSK-IMPACT spans all types, so the analysis is restricted to its **410 panel-covered genes**
-  (`question:0016`). Non-panel genes can only appear in their one TCGA type and would look
+  (`question:0016-panel-induced-ascertainment`). Non-panel genes can only appear in their one TCGA type and would look
   artificially restricted — they are excluded, not silently counted.
 - **Breadth** = number of distinct cancer types (≥25 samples) in which a gene is recurrent
   (within-type frequency ≥ threshold AND ≥3 mutated samples), counted from the **raw, un-broadcast**
@@ -70,7 +70,8 @@ than oncogenes at every threshold (e.g. at ≥2%: TSG median breadth 7 vs oncoge
 broadest drivers are almost entirely TSGs / genome guardians (TP53, ARID1A, PTEN, RB1, NF1, ATM,
 APC, SETD2, EP300, FAT1…). Oncogenes concentrate in the restricted tail. This is exactly the
 predicted structure: **broad hubs = guardians; restricted tail = (lineage) oncogenes** — the
-substrate `question:0042-driver-normal-expression-tissue-cell-type-specificity` needs.
+substrate `question:0042-driver-normal-expression-tissue-cell-type-specificity` needs and the
+context tracked by `topic:lineage-addiction-and-cell-of-origin-driver-specificity`.
 
 **4. Bailey cross-check + the PANCAN-handling point.** Bailey et al. [@Bailey2018] per-cancer rosters with PANCAN
 **excluded**: 235 genes with ≥1 specific-cancer call, 78.7% restricted to 1–2 cancers (broadest

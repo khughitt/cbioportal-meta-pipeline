@@ -4,7 +4,7 @@ title: Gene length confounds biomedical-literature attention beyond mutation-cou
   mediation
 status: proposed
 created: '2026-04-27'
-updated: '2026-04-27'
+updated: '2026-06-28'
 id: hypothesis:0003-gene-length-confounds-literature-attention
 phase: active
 source_refs:
@@ -147,9 +147,16 @@ cause, and their agreement is partly mechanical.
 ## Related Work
 
 - **Questions:** `question:0011-gene-length-as-literature-attention-confounder` (this hypothesis is the
-  formal frame for that question).
+  formal frame for that question) and
+  `question:0042-driver-normal-expression-tissue-cell-type-specificity` (a downstream specificity
+  test where the gene-length null is a required control).
 - **Discussions:** `discussion:0001-gene-length-bias-in-mutation-rankings-and-literature`
   (full critical analysis + empirical result).
+- **Interpretations:** `interpretation:0009-t131-full-pan-cancer-dndscv-run` is the current
+  full-run selection backdrop for separating length-adjusted driver signal from raw mutation
+  count.
+- **Topics:** `topic:mutation-rate-normalization` is the topical home for the background-rate
+  normalization problem.
 - **Tasks (planned):** `t129` (regression pipeline step), `t130` (Stoeger 2018 summary).
 - **Sibling hypotheses:** `hypothesis:0002-cross-study-ranking-divergence-is-structured` (the
   methodological partner — gene-length on the mutation axis);

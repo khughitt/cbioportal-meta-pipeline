@@ -6,7 +6,7 @@ title: 'What explains the residual large-gene mutation signal (e.g. TTN at rank 
   sites?'
 status: active
 created: '2026-06-02'
-updated: '2026-06-02'
+updated: '2026-06-28'
 id: question:0031-residual-gene-length-signal-mechanism
 ontology_terms: []
 datasets: []
@@ -45,9 +45,12 @@ related:
 
 ## Connections to Project
 
-- Related hypotheses:
-- Required data or analyses:
-- Priority level:
+- Related hypotheses: `hypothesis:0002-cross-study-ranking-divergence-is-structured`.
+- Required data or analyses: separate replication-timing effects
+  (`question:0003-replication-timing-as-gene-level-mutation-rate-confounder`) from common-fragile-site
+  effects (`question:0014-cfs-as-distinct-confounder-class`) before assigning a residual TTN-like
+  signal to a new mechanism.
+- Priority level: P3.
 
 ## Related
 

@@ -4,7 +4,7 @@ title: Can mutational-signature decomposition be added downstream of the cross-s
   aggregation, and is panel data adequate for reliable signature inference?
 status: resolved
 created: '2026-05-30'
-updated: '2026-05-31'
+updated: '2026-06-28'
 id: question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross
 ontology_terms:
 - mutational signatures
@@ -62,6 +62,9 @@ This is the activation gate that `pre-registration:0003-h08-positive-control-agn
 ## Connections to Project
 
 - Related hypotheses: `hypothesis:0007` (per-sample `H` is its outcome variable); this verdict is one of the two activation gates (`task:t177` is the other) named by `pre-registration:0003-h08-positive-control-agnostic-association-must-recover-known-signature`.
+- Companion question: `question:0020-minimum-sample-size-and-caller-provenance-for` carries the
+  de novo extraction and caller-provenance tail; `discussion:0004-common-mutational-signatures-known-vs-learned-immune-causes-and`
+  records the known-versus-learned signature framing.
 - Required data or analyses: the full-MC3 per-sample refit across the seven positive-control arm strata (`task:t197`) executes under this rule.
 - Priority level: resolved; the open de novo / caller-census tail lives in `question:0020`.
 

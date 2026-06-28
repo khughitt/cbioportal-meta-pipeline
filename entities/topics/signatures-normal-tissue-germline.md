@@ -3,7 +3,7 @@ type: topic
 title: Mutational signatures in normal tissue and germline determinants
 status: active
 created: '2026-05-31'
-updated: '2026-05-31'
+updated: '2026-06-28'
 id: topic:signatures-normal-tissue-germline
 ontology_terms:
 - mutational signatures
@@ -94,7 +94,8 @@ paper:Faienza2025 reviews multiple landmark applications: SBS7a in circulating m
 
 ### Implications for `h08` and the cross-study signature-aetiology aggregation
 
-Hypothesis `h08` proposes an agnostic covariate ↔ mutational-signature-exposure association whose first validation gate is recovery of known aetiologies (UV/SBS7, smoking/SBS4, APOBEC/SBS2-13, MMR/SBS6-26-44) as positive controls before claiming novel hits.
+`hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`
+proposes an agnostic covariate ↔ mutational-signature-exposure association whose first validation gate is recovery of known aetiologies (UV/SBS7, smoking/SBS4, APOBEC/SBS2-13, MMR/SBS6-26-44) as positive controls before claiming novel hits.
 
 This topic provides the following load-bearing inputs:
 

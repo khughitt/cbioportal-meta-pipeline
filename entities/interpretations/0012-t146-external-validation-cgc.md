@@ -5,7 +5,7 @@ title: "t146 external validation (partial) \u2014 pan-cancer dNdScv ranking show
   \ Martincorena 2017 pass blocks on t171"
 status: active
 created: '2026-04-28'
-updated: '2026-04-28'
+updated: '2026-06-28'
 id: interpretation:0012-t146-external-validation-cgc
 source_refs:
 - task:t146
@@ -26,7 +26,8 @@ prior_interpretations:
 
 ## Question
 
-Task t146 asks whether the post-fix pan-cancer dNdScv ranking (interpretation:0010-t144-tiebreaker-fix-rerun) recovers external curated driver lists at a rate above chance, addressing the Bailey-circularity caveat (Bailey et al. [@Bailey2018] was used to build the project's primary driver overlay, so reporting Bailey recovery as the headline external-validation number is partially circular).
+`task:t146` asks whether the post-fix pan-cancer dNdScv ranking (interpretation:0010-t144-tiebreaker-fix-rerun) recovers external curated driver lists at a rate above chance, addressing the Bailey-circularity caveat (Bailey et al. [@Bailey2018] was used to build the project's primary driver overlay, so reporting Bailey recovery as the headline external-validation number is partially circular).
+The leave-one-study-out comparison in `interpretation:0013-t149-loso-replication` is the paired robustness read.
 
 ## Method
 

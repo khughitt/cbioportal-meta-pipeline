@@ -4,7 +4,7 @@ title: Should the hypothesis:0007 positive-control signature set be expanded to 
   and SBS54, and which MMR signatures are the canonical MSI discriminators?
 status: active
 created: '2026-05-31'
-updated: '2026-05-31'
+updated: '2026-06-28'
 id: question:0021-positive-control-signature-set-expansion-sbs9
 ontology_terms: []
 datasets: []
@@ -51,4 +51,4 @@ The agnostic association method note currently lists the positive-control map as
 
 - Topic notes: `topic:aetiology-covariate-association`, `topic:signatures-normal-tissue-germline`
 - Article notes: `paper:Ji2023`, `paper:Machado2022`, `paper:Owusu2025`
-- Methods/Datasets: agnostic association model
+- Methods/Datasets: `method:h08-agnostic-association-model`

@@ -942,18 +942,6 @@ Acquire the reference resources backing the data-driven neural-gene score (t216)
 
 Umbrella task for the 2026-06-28 strict validation backlog captured in /tmp/cbioportal-validation-issues.json. Baseline: 3127 warnings total: 955 prose_lints.frontmatter-inline-gap, 2171 prose_lints.numeric-anchor, and one unresolved_markers aggregate for 7 [SPECULATION] markers. Use this task as the parent for batch cleanup tasks; do not hand-edit likely parser false positives that should be fixed upstream.
 
-## [t235] Clear frontmatter-inline-gap in high-link entity families
-- priority: P2
-- status: active
-- aspects: [computational-analysis]
-- related: [task:t233]
-- group: science-strict-validation-cleanup
-- created: 2026-06-28
-
-Curation batch for prose_lints.frontmatter-inline-gap outside paper notes. Baseline from /tmp/cbioportal-validation-issues.json: topics 185, interpretations 159, questions 98, plans 40, discussions 30, hypotheses 21, synthesis 20, meta 14, pre-registrations 13, themes 13, methods 12, reports 8, searches 5. Work file-family batches; for each related ref, either mention it explicitly in body prose, remove it from frontmatter if stale, or create a narrower follow-up task when the link is real but needs substantive prose.
-
-Progress 2026-06-28: first eight non-paper clustered batches cleared 490 frontmatter-inline-gap warnings; remaining frontmatter-inline-gap count is 465 total, including 337 paper-note warnings tracked separately in task:t236 and 128 non-paper warnings remaining in this task.
-
 ## [t236] Clear frontmatter-inline-gap in paper notes
 - priority: P2
 - status: proposed

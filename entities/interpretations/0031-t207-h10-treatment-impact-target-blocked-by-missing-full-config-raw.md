@@ -3,7 +3,7 @@ type: interpretation
 title: t207 H10 treatment impact target blocked by missing full-config raw studies
 status: superseded
 created: '2026-06-01'
-updated: '2026-06-01'
+updated: '2026-06-28'
 id: interpretation:0031-t207-h10-treatment-impact-target-blocked-by-missing-full-config-raw
 source_refs: &id001
 - code/config/config-full.yml
@@ -34,6 +34,7 @@ Conclusion chains:
 
 Superseded by `interpretation:0030-t207-h10-treatment-impact-full-config`.
 The missing raw studies were restored, the full `all_h10_treatment_impact` target completed, and the current full-config interpretation is now recorded there.
+This superseded blocker was part of `task:t207`.
 
 ## Verdict
 

@@ -3,7 +3,7 @@ type: topic
 title: APOBEC mutagenesis and SBS2/SBS13
 status: active
 created: '2026-05-31'
-updated: '2026-05-31'
+updated: '2026-06-28'
 id: topic:apobec-mutagenesis
 ontology_terms:
 - APOBEC3A
@@ -43,6 +43,7 @@ hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiolog
 within-tissue covariate-to-signature-exposure association
 must recover APOBEC3A/B mRNA expression as the top predictor of SBS2/SBS13 burden to be
 considered validated.
+That validation is implemented through `method:h08-agnostic-association-model`.
 
 ---
 

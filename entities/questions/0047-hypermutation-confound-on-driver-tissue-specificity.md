@@ -5,7 +5,7 @@ title: "Are cell-type-restricted lineage drivers depleted, and broad/pan-cancer 
   \ tissue-specificity test?"
 status: active
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-28'
 id: question:0047-hypermutation-confound-on-driver-tissue-specificity
 ontology_terms:
 - hypermutation
@@ -111,9 +111,12 @@ breadth distribution (`q043`) computed without stratifying on `is_hypermutator` 
 
 ## Connections to Project
 
-- **De-biases:** `q042` (restricted-oncogene Tau null), `q043` (breadth distribution — supplies its
-  hypermutator-excluded view).
+- **De-biases:** `question:0042-driver-normal-expression-tissue-cell-type-specificity`
+  (restricted-oncogene Tau null) and `question:0043-driver-cancer-type-breadth-distribution`
+  (breadth distribution — supplies its hypermutator-excluded view).
 - **Infrastructure:** `topic:tumor-mutational-burden` (the t081 hypermutator pipeline — `is_hypermutator`,
-  reasons, the absolute/ultra/relative views), `hypothesis:0003-gene-length-confounds-literature-attention` (length null).
+  reasons, the absolute/ultra/relative views),
+  `topic:lineage-addiction-and-cell-of-origin-driver-specificity`, and
+  `hypothesis:0003-gene-length-confounds-literature-attention` (length null).
 - **Priority:** **P2** — fully computable today off `samples_annotated.feather`; the cheapest
   confound-quantification in the batch and a direct input to `q042`/`q043`. Natural to run alongside `q043`.

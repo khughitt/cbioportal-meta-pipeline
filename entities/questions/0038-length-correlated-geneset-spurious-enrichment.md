@@ -5,7 +5,7 @@ title: Do length-correlated functional gene categories generically produce spuri
   guard?
 status: active
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-28'
 id: question:0038-length-correlated-geneset-spurious-enrichment
 ontology_terms:
 - gene length
@@ -71,6 +71,7 @@ guard (`method:length-aware-geneset-enrichment`) rather than re-deriving the cor
 
 ## Related
 
-- Topic notes: theme:0002-cancer-neuroscience-in-a-mutation-only-pipeline-expression-not-mutation
+- Topic notes: `theme:0002-cancer-neuroscience-in-a-mutation-only-pipeline-expression-not-mutation`,
+  `question:0032-neural-gene-length-null`
 - Article notes: paper:Lu2026
 - Methods/Datasets: method:length-aware-geneset-enrichment; dndscv path; UniProt lengths

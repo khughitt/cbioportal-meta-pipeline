@@ -5,7 +5,7 @@ title: "If any neural-gene enrichment survives length+histology correction, is i
   \ rather than positively selected?"
 status: active
 created: '2026-06-06'
-updated: '2026-06-06'
+updated: '2026-06-28'
 id: question:0036-oncofetal-fetal-vs-adult-neural-expression
 ontology_terms:
 - oncofetal reprogramming
@@ -61,7 +61,9 @@ non-selected mutation.
 
 ## Connections to Project
 
-- Related hypotheses: `hypothesis:0012-neural-gene-enrichment-length-histology-artifact` (P4)
+- Related hypotheses: `hypothesis:0012-neural-gene-enrichment-length-histology-artifact` (P4),
+  `question:0035-label-free-neural-gene-definition`, and
+  `question:0037-canonical-neural-gene-dnds-selection`.
 - Required data or analyses: BrainSpan fetal-vs-adult expression ratio per gene; intersect
   with residual enriched set; correlate residual-gene mutation with stemness/oncofetal score
   (e.g. AFP/GPC3, Wnt/Hh activity) in studies with matched expression; recurrence/clustering

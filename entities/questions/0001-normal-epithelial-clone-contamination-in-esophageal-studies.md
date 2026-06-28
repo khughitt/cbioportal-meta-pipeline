@@ -4,7 +4,7 @@ title: Do elevated NOTCH1 rates in cBioPortal esophageal studies reflect normal-
   clone contamination rather than tumor biology?
 status: active
 created: '2026-04-18'
-updated: '2026-04-18'
+updated: '2026-06-28'
 id: question:0001-normal-epithelial-clone-contamination-in-esophageal-studies
 ontology_terms: []
 datasets: []
@@ -71,5 +71,7 @@ No pipeline-level analysis has been done in this project to detect or flag this 
 ## Related
 
 - Topic notes: `topic:clonal-hematopoiesis-contamination` (CH in blood, same conceptual family)
-- Article notes: `paper:Yoshida2026`, `paper:Bolton2020`, `paper:Martincorena2017`
+- Cohort bias frame: `topic:cohort-selection-bias-representativeness`
+- Article notes: `paper:Yoshida2026`, `paper:Bolton2020`, `paper:Martincorena2017`,
+  `paper:Poon2021`, `paper:Li2021`
 - Methods/Datasets: cBioPortal esophageal study list; MSK-IMPACT esophageal cohort (matched normal, should be clean)

@@ -3,7 +3,7 @@ type: plan
 title: t078 SELECT co-occurrence pipeline implementation plan
 status: draft
 created: '2026-04-25'
-updated: '2026-04-25'
+updated: '2026-06-28'
 id: plan:0004-t078-select-cooccurrence-implementation-plan
 related:
 - task:t078
@@ -23,6 +23,7 @@ mutual-exclusivity pipeline specified in
 `doc/plans/2026-04-25-t078-select-cooccurrence-design.md`. Deliverables: three headline
 feathers (`gene_pair_select`, `pathway_aggregated`, `pathway_rollup_gene_pairs`), one
 sibling annotation feather, all gated behind `config["select"]["enabled"]`.
+This plan implements `task:t078`.
 
 **Architecture:** Snakemake DAG: rule (0) preflight smoke test → rules (1a)/(1b)
 panel/universe artifacts → rule (2) per-cell GAM construction (Python, fan-out) → rule

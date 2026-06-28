@@ -4,7 +4,7 @@ title: "Prior agnostic / unsupervised mutational-signature aetiology association
   \ signature \xD7 expression, signature \xD7 covariate scans) \u2014 t177"
 status: active
 created: '2026-05-31'
-updated: '2026-05-31'
+updated: '2026-06-28'
 id: search:0008-prior-agnostic-signature-aetiology-association
 related:
 - hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and
@@ -18,7 +18,9 @@ related:
 
 ## Search Focus
 
-`task:t177` gates `hypothesis:0007`. The question: **has the "agnostic" idea — treat per-sample
+`task:t177` gates
+`hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`.
+The question: **has the "agnostic" idea — treat per-sample
 signature exposures `H` as outcomes and systematically associate them against co-measured covariates
 (clinical, molecular, expression, germline) to infer aetiology — already been done?** And critically
 for the pre-registered design (`pre-registration:0003-h08-positive-control-agnostic-association-must-recover-known-signature`): **did prior work demonstrate
@@ -27,6 +29,8 @@ novel hits?**
 
 This determines the discovery-prong **novelty bar**: hypothesis:0007's positive-control prong can proceed regardless,
 but the discovery prong only adds value over what the field already has.
+`topic:signature-decomposition-unmatched-normal` is the substrate-method companion for deciding
+which prior designs can transfer to this project.
 
 ## Headline Finding (the one that matters for hypothesis:0007)
 

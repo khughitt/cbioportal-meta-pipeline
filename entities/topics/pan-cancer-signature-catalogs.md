@@ -90,8 +90,9 @@ or unknown (SBS5, SBS8, SBS17a/b, SBS40, and many DBS/ID signatures).
 
 ### Established consensus signatures and aetiologies
 
-The four "positive-control" signature clusters relevant to hypothesis h08 have multi-study
-convergent support:
+The four "positive-control" signature clusters relevant to
+`hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` have
+multi-study convergent support:
 
 - **UV / SBS7a-d (+ DBS1, ID13):** Restricted to skin/melanoma; transcriptional strand bias
   indicating NER; clonal timing consistent with early exposure (paper:Alexandrov2020,
@@ -232,40 +233,41 @@ restriction or a detection gap in adult studies.
 
 ## Relevance to This Project
 
-### Implications for h08 and the cross-study signature-aetiology aggregation
+### Implications for the cross-study signature-aetiology aggregation
 
-**Hypothesis h08** proposes an agnostic within-tissue covariate–signature-exposure association that
-must recover known aetiologies (UV/SBS7, smoking/SBS4, APOBEC/SBS2–13, MMR/MSI) as a positive
-control tier before any novel discovery claim can be taken seriously. The pan-cancer catalog
-literature grounds every aspect of this design.
+**The agnostic association hypothesis** proposes a within-tissue covariate–signature-exposure
+association that must recover known aetiologies (UV/SBS7, smoking/SBS4, APOBEC/SBS2–13, MMR/MSI)
+as a positive-control tier before any novel discovery claim can be taken seriously. The pan-cancer
+catalog literature grounds every aspect of this design.
 
-**The positive-control set for H08a** (recovery arm) is precisely defined by the consensus across
+**The positive-control recovery set** is precisely defined by the consensus across
 paper:Alexandrov2020, paper:Degasperi2022, paper:Everall2026, and paper:Kucab2019: the four main
 exposure–signature links (UV→SBS7, smoking→SBS4, APOBEC3→SBS2/13, MMR-loss→SBS6/15/26/44) have
 multi-study, multi-method confirmation including experimental causal evidence (Kucab). The agnostic
-scan should recover these associations at FDR q<0.05 within appropriate tissue strata as a
-minimum pass criterion. The canonical "known map" is the systematic regression of signatures against
-histology, repair gene inactivation, and therapy from paper:Everall2026, which provides ground-truth
-expected directionality and effect sizes.
+scan should recover these associations at FDR q<0.05 within appropriate tissue strata as a minimum
+pass criterion. The canonical "known map" is the systematic regression of signatures against
+histology, repair gene inactivation, and therapy from paper:Everall2026, which provides
+ground-truth expected directionality and effect sizes.
 
-**APOBEC as a specific H08a test case:** The lagging-strand replication enrichment of SBS2/13
+**APOBEC as a specific positive-control test case:** The lagging-strand replication enrichment of SBS2/13
 (paper:Otlu2023), the tamoxifen→APOBEC3A mRNA elevation (paper:Pleasance2020), and the
 TP53→APOBEC3B suppression signal in pediatric tumors (paper:Thatikonda2023) together triangulate
 that APOBEC3A/B mRNA expression is a strong within-tissue positive-control covariate. InD9a from
 paper:Koh2025 provides an independent InDel-layer confirmatory signal.
 
-**The discovery prong (H08b)** should target the signatures with unknown or only partially
-explained aetiologies: SBS5, SBS8, SBS12, SBS16, SBS17a/b, SBS40, the 40 new signatures from
-paper:Degasperi2022 (SBS120–SBS137), MSBS1–6 from paper:Pleasance2020, and the 26 new
-signatures from paper:Everall2026. The CTCF-site enrichment of SBS17a/b (paper:Otlu2023) and the
+**The discovery prong** should target the signatures with unknown or only partially explained
+aetiologies: SBS5, SBS8, SBS12, SBS16, SBS17a/b, SBS40, the 40 new signatures from
+paper:Degasperi2022 (SBS120–SBS137), MSBS1–6 from paper:Pleasance2020, and the 26 new signatures
+from paper:Everall2026. The CTCF-site enrichment of SBS17a/b (paper:Otlu2023) and the
 chromothripsis-SBS8 association (paper:Thatikonda2023) represent structured prior constraints that
 can focus the covariate search.
 
 **Panel-sequencing constraint:** cBioPortal studies are predominantly panel- or exome-sequenced.
 Paper:Degasperi2022's finding that panel studies recover only 5–10 common signatures (rare
-signatures require WGS scale) directly bounds what h08 can achieve on cBioPortal data. The
+signatures require WGS scale) directly bounds what the agnostic association scan can achieve on
+cBioPortal data. The
 positive-control tier (UV/smoking/APOBEC/MMR) corresponds precisely to the common-signature tier
-and should be robustly recoverable. H08b discovery of unknown signatures requires either MC3/PCAWG
+and should be robustly recoverable. Discovery of unknown signatures requires either MC3/PCAWG
 substrates or a cross-study pooled cohort large enough to accumulate WGS-equivalent mutation counts
 per signature. This tension is the subject of question:0018 (feasibility of downstream signature
 decomposition) and question:0019 (de novo extraction on the aggregated cohort).
@@ -273,7 +275,8 @@ decomposition) and question:0019 (de novo extraction on the aggregated cohort).
 **Age as mandatory nuisance covariate:** SBS1, SBS5, and SBS40 all correlate with age across
 multiple cancer types (paper:Alexandrov2020, paper:Thatikonda2023). Any agnostic covariate scan
 must residualize or include age to avoid confounding clock-like signature variation with true
-exposure signals. This is a binding design constraint for the h08 pre-registration.
+exposure signals. This is a binding design constraint for the agnostic association
+pre-registration.
 
 **Hypermutator annotation calibration:** The pipeline annotates hypermutators via POLE/POLD1
 hotspots, MSI-H status, and GMM-based TMB thresholding. Paper:Pleasance2020 shows that
@@ -290,7 +293,7 @@ paper:Alexandrov2020). Paper:Everall2026 adds 26 new signatures (SBS96–98, DBS
 CN25, SV1–10) and paper:Degasperi2022 adds 40 SBS and 18 DBS. Depending on the COSMIC version used
 by `run_restricted_sigprofiler_assignment.py`, some newly documented signatures (especially
 SBS96–98) may be absent from the reference panel, potentially causing their exposures to be
-absorbed by nearest-neighbor signatures. This should be checked before finalizing the h08
+absorbed by nearest-neighbor signatures. This should be checked before finalizing the agnostic
 association results.
 
 **Cross-study confounders specific to the meta-analysis context:**
@@ -303,15 +306,16 @@ association results.
   cross-study variance for that arm.
 - Pediatric-specific signals (IDN, paper:Thatikonda2023) and population-specific signals
   (aristolochic acid, colibactin) will appear as cancer-type-specific outliers in the cross-study
-  mutation-frequency tables; these are not confounders but features for H08b discovery.
+  mutation-frequency tables; these are not confounders but features for discovery.
 
 ## Key References
 
-- paper:Alexandrov2020 — Primary COSMIC v3 catalog; positive-control signature definitions for h08.
+- paper:Alexandrov2020 — Primary COSMIC v3 catalog; positive-control signature definitions for the
+  agnostic association hypothesis.
 - paper:Degasperi2022 — Expanded catalog + FitMS; common-vs-rare framework; warning about DBS
   artefacts.
 - paper:Everall2026 — Joint five-class extraction; SV signatures; systematic association framework
-  directly parallel to h08's design.
+  directly parallel to the agnostic association design.
 - paper:Kucab2019 — Experimental causal reference compendium; defines which exposure→signature
   links have direct causal evidence.
 - paper:Otlu2023 — Topographic annotations of all COSMIC v3.3 signatures; mechanistic grounding for

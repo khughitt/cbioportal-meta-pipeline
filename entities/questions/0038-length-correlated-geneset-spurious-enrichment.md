@@ -27,7 +27,7 @@ related:
 
 ## Summary
 
-The neural-gene observation (`hypothesis:0012`) is likely an instance of a general failure mode:
+The neural-gene observation (`hypothesis:0012-neural-gene-enrichment-length-histology-artifact`) is likely an instance of a general failure mode:
 **any** functionally-defined gene set whose members are systematically long (neural/synaptic,
 cell-adhesion, ECM, ion channels, large gene families) will appear enriched among top-mutated
 genes purely from length-proportional passenger mutation. This asks whether that genericity is
@@ -36,7 +36,10 @@ guard (`method:length-aware-geneset-enrichment`) rather than re-deriving the cor
 
 ## Why It Matters
 
-- Turns a one-off neural-gene correction into reusable infrastructure for h02/h03/q031 and any
+- Turns a one-off neural-gene correction into reusable infrastructure for
+  `hypothesis:0002-cross-study-ranking-divergence-is-structured`,
+  `hypothesis:0003-gene-length-confounds-literature-attention`,
+  `question:0031-residual-gene-length-signal-mechanism`, and any
   future gene-set claim.
 - A negative-control battery (TTN/MUC/CSMD-class large genes, olfactory receptors) calibrates
   *every* enrichment statement, preventing the next "category X is highly mutated" artifact.
@@ -44,7 +47,7 @@ guard (`method:length-aware-geneset-enrichment`) rather than re-deriving the cor
 
 ## Current Evidence
 
-- `hypothesis:0003` establishes the length bias on mutation counts and literature attention.
+- `hypothesis:0003-gene-length-confounds-literature-attention` establishes the length bias on mutation counts and literature attention.
 - `paper:Lu2026` flags the neural/IgCAM overlap as length-expected without selection.
 - The project already corrects length for individual rankings (dndscv) but has no gene-**set**
   guard with built-in negative controls.
@@ -54,13 +57,16 @@ guard (`method:length-aware-geneset-enrichment`) rather than re-deriving the cor
 - Best current interpretation: the failure mode is generic; a guard with a control-set battery
   is the right abstraction.
 - Major uncertainty: best estimand (logistic partial-enrichment vs length-matched permutation vs
-  dN/dS-ranked) and how to fold histology in without double-counting q033/q034.
+  dN/dS-ranked) and how to fold histology in without double-counting
+  `question:0033-neural-enrichment-cns-exclusion` / `question:0034-neuroendocrine-histology-confound`.
 
 ## Connections to Project
 
-- Related hypotheses: h12, h03, h02
+- Related hypotheses: `hypothesis:0012-neural-gene-enrichment-length-histology-artifact`,
+  `hypothesis:0003-gene-length-confounds-literature-attention`,
+  `hypothesis:0002-cross-study-ranking-divergence-is-structured`
 - Required data or analyses: implement `method:length-aware-geneset-enrichment`; validate on the
-  neural set + control battery (first consumer = t217/t221).
+  neural set + control battery (first consumer = `task:t217` / `task:t221`).
 - Priority level: P2 (reusable; do alongside the neural program)
 
 ## Related

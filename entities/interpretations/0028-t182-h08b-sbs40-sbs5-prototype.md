@@ -20,10 +20,10 @@ Date: 2026-06-01
 
 ## Question
 
-Can the existing H08 expression-module substrate produce a coherent exploratory separation between SBS40 and SBS5 within tissue after conditioning on age?
+Can the existing `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` expression-module substrate produce a coherent exploratory separation between SBS40 and SBS5 within tissue after conditioning on age?
 
 This is explicitly exploratory.
-H08a remains `[?]`, the repaired smoking-arm read remains `[?]`, and this result does not open H08b as confirmatory work.
+The positive-control prong remains `[?]`, the repaired smoking-arm read remains `[?]`, and this result does not open the discovery prong as confirmatory work.
 
 ## Artifacts
 
@@ -48,7 +48,7 @@ The primary outcome was the within-tissue, age-conditioned compositional contras
 clr_SBS40_minus_SBS5 = clr(SBS40_collapsed) - clr(SBS5)
 ```
 
-SBS40 was collapsed only over active SBS40 components in each stratum's H08 manifest.
+SBS40 was collapsed only over active SBS40 components in each stratum's `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` manifest.
 Models used trusted count-floor-passing MC3 exposures and adjusted for age, ancestry, and treatment when estimable.
 
 Top primary contrast rows:
@@ -101,7 +101,7 @@ It did not show an exploratory association:
 ## Interpretation
 
 The prototype is candidate-bearing but not mechanism-bearing.
-It shows that the H08 substrate can detect age-conditioned expression-module differences in the SBS40/SBS5 contrast, but the strongest signal is not cleanly SBS40-specific.
+It shows that this hypothesis substrate can detect age-conditioned expression-module differences in the SBS40/SBS5 contrast, but the strongest signal is not cleanly SBS40-specific.
 
 The best current read is:
 
@@ -110,7 +110,7 @@ The best current read is:
 - LUAD `REV3L` does not support the planned POLZ/REV3L polymerase-zeta mini-check on this substrate;
 - `POLZ` cannot be evaluated from the LUAD RSEM matrix used here.
 
-This does not promote H08b.
+This does not promote the discovery prong.
 It does justify keeping SBS40-vs-SBS5 as an exploratory design target, but a future confirmatory version would need replication, module labeling, subtype controls, and the causal-direction guard from `question:0025`.
 
 ## Next Step
@@ -119,4 +119,4 @@ Do not broaden immediately into a full H08b scan.
 The next useful refinement is either:
 
 - label the SKCM and CESC modules more formally using top-gene enrichment before deciding whether they are biologically interpretable; or
-- switch to the treatment-exposed cohort flag (`task:t181` / H10), which is now more directly connected to cross-study signature confounding.
+- switch to the treatment-exposed cohort flag (`task:t181` / `hypothesis:0009-treatment-induced-signature-frequency-contamination`), which is now more directly connected to cross-study signature confounding.

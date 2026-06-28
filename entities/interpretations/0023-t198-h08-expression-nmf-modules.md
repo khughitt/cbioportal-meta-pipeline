@@ -1,6 +1,6 @@
 ---
 type: interpretation
-title: "t198 h08 expression-module substrate \u2014 per-arm NMF on PanCanAtlas RNA-seq\
+title: "t198 expression-module substrate \u2014 per-arm NMF on PanCanAtlas RNA-seq\
   \ with leakage firewall"
 status: active
 created: '2026-05-31'
@@ -15,13 +15,13 @@ related:
 - question:0022-apobec-a3a-a3b-joint-expression-and-mmr-omikli
 - question:0023-sbs40-vs-sbs5-clocklike-expression-module
 ---
-# t198 — h08 expression-module substrate (per-arm NMF on PanCanAtlas RNA-seq)
+# t198 — expression-module substrate (per-arm NMF on PanCanAtlas RNA-seq)
 
 Date: 2026-05-31
 
 ## Question
 
-Build the frozen NMF expression-module covariate set for the h08 positive-control scan
+Build the frozen NMF expression-module covariate set for the `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` positive-control scan
 (`pre-registration:0003-h08-positive-control-agnostic-association-must-recover-known-signature` § Total Comparison Count, as clarified by Amendment
 001): per arm, derive expression modules from the MC3-overlapping TCGA PanCanAtlas RNA-seq and
 select the module count K by the Brunet cophenetic-correlation rule — entirely upstream of, and
@@ -117,8 +117,9 @@ this note (`results/` is gitignored).
 
 ## Implications
 
-`task:t198` (analysis-plan check 3) is complete. Three of the four h08-run blocking checks are now
-closed (q018 / t197 / t198); the remaining build is `task:t199` — the within-tissue covariate↔`H`
+`task:t198` (analysis-plan check 3) is complete. Three of the four
+`hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` run blocking checks are now
+closed (`question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross` / t197 / t198); the remaining build is `task:t199` — the within-tissue covariate↔`H`
 association core, which joins these module loadings + clinical/molecular covariates onto the t197
 per-sample exposures, fills the §1b table, and reads the gate. Route t199 to
 `/science:plan-pipeline` before implementing.

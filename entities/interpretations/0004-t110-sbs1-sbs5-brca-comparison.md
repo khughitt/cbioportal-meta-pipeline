@@ -58,7 +58,7 @@ Interpretation:
 
 ## Why This Is Not Enough For A Proxy
 
-This task asked whether a simple SBS1 excess or SBS1/SBS5 ratio shift could serve as an operational contamination signal before investing in the more mechanistic q009 path.
+This task asked whether a simple SBS1 excess or SBS1/SBS5 ratio shift could serve as an operational contamination signal before investing in the more mechanistic `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` path.
 
 On this first required pair (`>=1` overlapping cancer type), the answer is no:
 
@@ -66,7 +66,7 @@ On this first required pair (`>=1` overlapping cancer type), the answer is no:
 - The ratio median is flat because both cohorts have `median SBS5 = 0`, so the pseudocount dominates the center of the distribution.
 - The comparison is confounded by assay regime as well as matched-normal status: `tcga_mc3` is WES-scale while `msk_impact_2017` is panel-restricted, producing a far sparser exposure surface in the panel cohort.
 
-So the SBS1/SBS5 ratio may still be descriptively interesting, but it is **not supported here as a thresholdable QC flag** for q009.
+So the SBS1/SBS5 ratio may still be descriptively interesting, but it is **not supported here as a thresholdable QC flag** for `question:0009-sbs1-lrr-bias-as-normal-contamination-flag`.
 
 ## Methodological Outcome
 
@@ -80,5 +80,5 @@ Without that normalization fix, both study outputs were silently empty and the c
 ## Updated Priority Signal
 
 - **t110:** complete as a negative-result validation task.
-- **q009:** still open, and now relatively more important. The Yaacov 2023 replication-timing signal remains the better-motivated path because this coarse SBS1/SBS5 proxy did not separate the first matched-vs-unmatched pair.
-- **q008:** any future background-subtraction work should treat the SBS1/SBS5 ratio as exploratory, not as a pre-validated contamination threshold.
+- **`question:0009-sbs1-lrr-bias-as-normal-contamination-flag`:** still open, and now relatively more important. The Yaacov replication-timing signal [@Yaacov2023] remains the better-motivated path because this coarse SBS1/SBS5 proxy did not separate the first matched-vs-unmatched pair.
+- **`question:0008-signature-decomposition-tissue-background-subtraction`:** any future background-subtraction work should treat the SBS1/SBS5 ratio as exploratory, not as a pre-validated contamination threshold.

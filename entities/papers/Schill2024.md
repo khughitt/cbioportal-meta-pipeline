@@ -37,7 +37,7 @@ This cancer-progression observation-bias note links paper:Vocht2026, topic:co-oc
 
 This paper identifies and corrects a pervasive **collider bias** that distorts cancer progression models fitted to cross-sectional diagnostic cohorts. When tumors are sampled at the time of clinical detection, the observed cohort is conditioned on the event of detection — and detection rates depend on the tumor's genomic state. Genetic alterations that increase detectability (e.g. TP53 in colorectal adenocarcinoma, EGFR in lung adenocarcinoma) therefore appear anti-correlated with other alterations in naive cross-sectional analyses, producing spurious suppressive effects while masking true promoting effects.
 
-The solution is an **observation-event model**: an explicit (n+1)th event representing tumor detection is added to the Mutual Hazard Network (MHN) framework (Schill 2020). Each driver gene mutation is allowed to modify the rate of this observation event. Conditioning on eventual observation (the selection into the diagnostic cohort) is then handled exactly within the model rather than ignored. This extends the original MHN (Schill et al. 2020, *Bioinformatics* 36:241–249) from n events to n+1 events, where the extra event has a special role: its occurrence corresponds to clinical ascertainment rather than a biological somatic alteration.
+The solution is an **observation-event model**: an explicit (n+1)th event representing tumor detection is added to the Mutual Hazard Network (MHN) framework (Schill 2020). Each driver gene mutation is allowed to modify the rate of this observation event. Conditioning on eventual observation (the selection into the diagnostic cohort) is then handled exactly within the model rather than ignored. This extends the original MHN (Schill et al. 2020, *Bioinformatics* 36:241–249) from n events to n+1 events, where the extra event has a special role: its occurrence corresponds to clinical ascertainment rather than a biological somatic alteration [@Schill2024].
 
 ## Methods
 
@@ -82,7 +82,7 @@ The cbioportal pipeline aggregates cross-sectional data from diagnostic cohorts 
 
 The project's roadmap includes MHN fitting for directed ordering inference (A→B temporal sequences). Schill 2024 establishes that the *standard* MHN (Schill 2020) produces biased ordering inferences on diagnostic cohorts. The corrected model should be used if mutation ordering analysis is pursued (task: prerequisite before any MHN fit on cBioPortal data).
 
-**3. Hypothesis:0004-mhn-pathway-ordering (if applicable)**
+**3. `hypothesis:0004-mhn-pathway-ordering` (if applicable)**
 
 If the project formalizes a hypothesis about gene-cancer epistasis or ordering, the observation-event correction defines the methodological lower bar that any such hypothesis test must clear. A finding from a cMHN without correction cannot be treated as evidence for or against biological ordering.
 

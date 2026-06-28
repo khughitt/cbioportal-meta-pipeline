@@ -9,6 +9,7 @@ id: paper:Suehnholz2024
 ontology_terms: []
 source_refs:
 - article:Suehnholz2024
+- cite:Suehnholz2024
 related:
 - paper:Chakravarty2017
 - paper:Zehir2017
@@ -45,7 +46,7 @@ version-induced shifts in precision-oncology summary statistics.
 ## Methods
 
 - **Cohort:** 47,271 solid-tumor samples from 42,154 patients, all profiled on MSK-IMPACT and
-  released in AACR Project GENIE v11.0; 66 cancer types.
+  released in AACR Project GENIE v11.0; 66 cancer types [@Suehnholz2024].
 - **Longitudinal OncoKB-version comparison framework:** same variants (SNVs, CNAs, SVs) from
   the fixed cohort annotated twice, once against OncoKB v2017v1.8 (March 2017) and once against
   v2022v3.17 (October 2022).
@@ -58,7 +59,7 @@ version-induced shifts in precision-oncology summary statistics.
 
 ## Key Findings
 
-- **Pan-cancer Level 1/2 actionability:** 8.9% (2017) → 31.6% (2022); Level 1 alone 7.7% → 30.2%.
+- **Pan-cancer Level 1/2 actionability:** 8.9% (2017) → 31.6% (2022); Level 1 alone 7.7% → 30.2% [@Suehnholz2024].
 - **Non-actionable-driver-only fraction:** 44.2% → 22.8% (roughly halved).
 - **Level 4 (compelling biological evidence):** 8.6% → 20.6%.
 - **Level 1 gene count:** 14 genes across 12 cancer types (2017) → 45 genes plus MSI-H and TMB-H,
@@ -78,7 +79,7 @@ version-induced shifts in precision-oncology summary statistics.
 The empirical anchor for OncoKB version-drift in our `cross-study-harmonization` topic.
 Re-annotated 47,271 MSK-IMPACT tumors against OncoKB snapshots 5 years apart and showed Level
 1/2 standard-care actionability rose from ~8.9% (2017) to ~31.6% (2022). Quantifies why catalog
-versions must be pinned in any longitudinal claim derived from cBioPortal-OncoKB-annotated data.
+versions must be pinned in any longitudinal claim derived from cBioPortal-OncoKB-annotated data [@Suehnholz2024].
 
 ## Limitations
 

@@ -60,7 +60,7 @@ tumors, 14 cancer types) were computed per cell using Signet and an alternative 
 decomposition (Colome et al.). Semipartial R² was used to quantify the unique variance in SBS5
 attributable to each damage-specific signature after controlling for age, SBS1 (a proxy for
 cell divisions), tumor ploidy, and purity. 27 well-powered comparisons were considered; 20
-(74%) were statistically significant after Bonferroni correction.
+(74%) were statistically significant after Bonferroni correction [@Spisak2025].
 
 **Empirical analyses — non-cancerous cells.** Datasets from single-cell-derived neurons, glia,
 bronchial epithelial cells (smokers vs non-smokers), skin microbiopsies (UV-exposed), colonic
@@ -77,7 +77,7 @@ contributions.
 **Clustered mutations.** Mutation clusters (pairs of point mutations separated by <100 bp) in
 lung and liver of smokers were identified and their composition (SBS4 vs SBS5+SBS40) was
 quantified. The positional asymmetry of SBS5 mutations relative to C:G→A:T anchor mutations
-was used to infer directionality consistent with TLS extension errors.
+was used to infer directionality consistent with TLS extension errors [@Spisak2025].
 
 ## Key Findings
 
@@ -117,7 +117,7 @@ was used to infer directionality consistent with TLS extension errors.
    decompose into linear sub-components (unlike SBS40), accumulates at varying age-rates without
    the tight co-synchronization that a superposition would require, and shows tissue-specific
    genomic distributions (neurons: enriched in open/transcribed; glia: reversed) consistent with
-   a single polymerase whose recruitment probability varies by chromatin context.
+   a single polymerase whose recruitment probability varies by chromatin context [@Spisak2025].
 
 6. **Candidate funneling polymerase.** The authors propose that polymerase zeta (Polζ), known
    to participate in TLS extension and in NER gap-filling, is the most plausible candidate, given

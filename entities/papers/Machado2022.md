@@ -26,19 +26,19 @@ related:
 
 This lymphocyte mutational-landscape note links paper:Machado2021.
 
-This paper provides the most comprehensive whole-genome characterisation to date of somatic mutation burden and mutational signatures in normal (non-malignant) human lymphocytes across five immune cell compartments (naive B, memory B, naive T, memory T, and HSPCs), sequencing 717 single-cell colony-expanded genomes from donors aged 0–81 years. It demonstrates that lymphocytes carry substantially more mutations than haematopoietic stem cells, that off-target effects of immunological diversification (SHM, RAG-mediated recombination) account for roughly half of the excess differentiation-associated mutations, and that the mutational signatures and burdens of normal memory B cells closely mirror those observed in many B-cell lymphomas — suggesting that malignant transformation of lymphocytes arises largely from the same mutational processes operating during normal ontogeny.
+This paper provides the most comprehensive whole-genome characterisation to date of somatic mutation burden and mutational signatures in normal (non-malignant) human lymphocytes across five immune cell compartments (naive B, memory B, naive T, memory T, and HSPCs), sequencing 717 single-cell colony-expanded genomes from donors aged 0–81 years. It demonstrates that lymphocytes carry substantially more mutations than haematopoietic stem cells, that off-target effects of immunological diversification (SHM, RAG-mediated recombination) account for roughly half of the excess differentiation-associated mutations, and that the mutational signatures and burdens of normal memory B cells closely mirror those observed in many B-cell lymphomas — suggesting that malignant transformation of lymphocytes arises largely from the same mutational processes operating during normal ontogeny [@Machado2022].
 
 ## Methods
 
 **Cohort:** Four donors (bone marrow, spleen, peripheral blood; ages 27–81) plus cord blood and tonsil samples from additional donors; all haematopoietically normal and healthy. Five cell subsets sorted by flow cytometry: naive B (CD3-CD19+CD20+CD27-CD38-IgD+), memory B (CD3-CD19+CD20+CD27+CD38-IgD-), naive T (CD3+CD4/CD8+CCR7+CD45RA-), memory T (CD3+CD4/CD8+CCR7-CD45RA-), and HSPCs.
 
-**Single-cell expansion:** Novel in-vitro protocols expanded single lymphocytes into colonies of 30–2,000 cells, then extracted DNA for sequencing. Culture efficiencies: ~2–5%.
+**Single-cell expansion:** Novel in-vitro protocols expanded single lymphocytes into colonies of 30–2,000 cells, then extracted DNA for sequencing. Culture efficiencies: ~2–5% [@Machado2022].
 
 **Sequencing:** Whole-genome sequencing (WGS) at ~20x mean depth on Illumina XTen platform; reads mapped to GRCh37d5 (BWA-MEM). Final dataset: 717 genomes (85 naive B, 74 memory B, 365 naive T, 100 memory T, plus overlapping HSPC genomes from a companion HSPC study).
 
 **Variant calling:** SNVs via CaVEMan, indels via Pindel, structural variants (SVs) via BRASS, CNVs via ASCAT. Germline variants removed using beta-binomial and Shearwater filters. Somatic SVs and CNVs manually curated.
 
-**Mutational signatures:** Per-colony signature decomposition using SigProfiler and hdp (de novo extraction). Seven signatures retained after cross-validation: SBSblood (novel blood-specific endogenous signature), SBS1, SBS7a (UV), SBS8, SBS9, SBS17b, SBS18. Signature timing inferred via regression of mutation distribution against 149 epigenomes representing 48 blood cell types/differentiation stages. Immunoglobulin receptor sequences analysed by IgCaller to quantify on-target SHM. RAG and CSR motif analysis performed at SV breakpoints using FIMO.
+**Mutational signatures:** Per-colony signature decomposition using SigProfiler and hdp (de novo extraction). Seven signatures retained after cross-validation: SBSblood (novel blood-specific endogenous signature), SBS1, SBS7a (UV), SBS8, SBS9, SBS17b, SBS18. Signature timing inferred via regression of mutation distribution against 149 epigenomes representing 48 blood cell types/differentiation stages. Immunoglobulin receptor sequences analysed by IgCaller to quantify on-target SHM. RAG and CSR motif analysis performed at SV breakpoints using FIMO [@Machado2022].
 
 **Selection analysis:** dNdScv used genome-wide (excluding immunoglobulin loci) to estimate dN/dS ratio.
 

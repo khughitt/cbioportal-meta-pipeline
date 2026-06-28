@@ -55,8 +55,9 @@ filling enzymes during replication. The core framework (paper:Volkova2020; paper
 paper:GonzalezPerez2019) is: exposure → DNA adduct → (failed or partial) repair → lesion
 reaches replication → TLS bypass → signature-specific substitution. This document synthesises
 the mechanistic ground truth behind signatures that are positive-control targets for
-hypothesis h08, surfaces active disputes and gaps in the field, and draws concrete implications
-for the cross-study signature-aetiology aggregation.
+`hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`,
+surfaces active disputes and gaps in the field, and draws concrete implications for the
+cross-study signature-aetiology aggregation.
 
 ---
 
@@ -86,7 +87,7 @@ transcriptional activity jointly shape per-trinucleotide mutation rates for UV (
 ### Mechanistically validated positive-control signature–aetiology links
 
 The signatures below have the strongest experimental evidence chains and serve as primary
-positive-control targets for h08:
+positive-control targets for the agnostic covariate-association hypothesis:
 
 | Signature | Exposure | Mechanistic link | Key evidence |
 |---|---|---|---|
@@ -247,7 +248,7 @@ operational concern.
   but not proven; paper:Hwang2025; paper:Spisak2025).
 - Whether the APOBEC–MMR coupling (EXO1-generated ssDNA → APOBEC substrate; paper:MasPonte2022)
   means APOBEC3 expression and MMR status are co-regulators of SBS2/13, complicating their
-  use as independent covariates in h08.
+  use as independent covariates in the agnostic association scan.
 
 ---
 
@@ -284,12 +285,12 @@ aggregation step.
 
 ---
 
-## Implications for h08 and the Cross-Study Signature-Aetiology Aggregation
+## Implications for the Cross-Study Signature-Aetiology Aggregation
 
-### Positive-control design (H08a)
+### Positive-control design
 
-The strongest positive controls for h08, ranked by mechanistic confidence and aetiology
-clarity, are:
+The strongest positive controls for the agnostic covariate-association hypothesis, ranked by
+mechanistic confidence and aetiology clarity, are:
 
 1. **UV (SBS7) — melanoma/skin**: Full exposure→adduct→NER-bypass→C>T chain validated;
    tissue-restricted; covariate is cumulative UV exposure (or skin-cancer subtype).
@@ -320,12 +321,13 @@ SBS5 is a *true negative* (correct model behavior), not a method failure. SBS5 w
 co-vary with damage-specific signatures (SBS4 in lung, SBS7 in skin), which should be
 interpretable as collateral effects rather than evidence of a distinct SBS5 exposure.
 [SPECULATION: If POLZ expression is available from RNA-seq, it may weakly associate with SBS5
-across cancer types; this is a testable H08b candidate.]
+across cancer types; this is a testable discovery-arm candidate.]
 
-### SBS8: an H08b discovery target with mechanistic prior
+### SBS8: a discovery target with mechanistic prior
 
 SBS8 is not a positive control (its aetiology is contested), but the mechanistic prior from
-paper:Singh2020 and paper:Wojtowicz2026 is strong enough to generate specific H08b predictions:
+paper:Singh2020 and paper:Wojtowicz2026 is strong enough to generate specific discovery-arm
+predictions:
 (a) ATR/CHEK1/CHEK2 expression modules should associate with SBS8 in late-replicating tumour
 contexts; (b) pathological stage should positively associate with SBS8 burden; (c) SBS40 should
 show the same associations. These are directly testable using TCGA MC3 data with RNA-seq and
@@ -335,7 +337,7 @@ stage annotations.
 
 Local replication timing, nucleosome occupancy, and transcriptional activity are not
 independent of signature exposures — they are mechanistic mediators of repair efficiency
-(paper:GonzalezPerez2019; paper:Singh2020). In the h08 within-tissue model, including
+(paper:GonzalezPerez2019; paper:Singh2020). In the within-tissue association model, including
 replication-timing-proxied covariates (e.g., CHEK1 expression, proliferation signatures) as
 nuisance variables risks partial mediation adjustment that attenuates genuine causal signals.
 They should be modelled explicitly rather than blindly conditioned out.
@@ -345,7 +347,8 @@ They should be modelled explicitly rather than blindly conditioned out.
 - **SBS57 artifact risk.** cBioPortal studies using single callers without RepeatMasker
   filters or ±6 bp deletion exclusion may carry SBS57-type artifacts (paper:Owusu2025).
   Matched-normal studies (the `matched_normal_studies` config key) are less susceptible.
-  The aggregated mutation table should be checked for SBS57 prevalence before h08 analysis.
+  The aggregated mutation table should be checked for SBS57 prevalence before signature-association
+  analysis.
 
 - **Treatment-induced confounders.** SBS11 (TMZ; GBM studies), SBS-CX-5461 (clinical trial
   samples; paper:Koh2024), and acquired MMRd post-TMZ treatment (paper:Crisafulli2022) can
@@ -354,7 +357,7 @@ They should be modelled explicitly rather than blindly conditioned out.
   hypermutator annotation pipeline (tasks t081/t092–t099) does not currently include a
   `treatment_alkylating` category; this is a gap.
 
-- **MMRd signature ensemble required.** The h08 positive-control MMR arm should target the
+- **MMRd signature ensemble required.** The positive-control MMR arm should target the
   ensemble of SBS6/14/15/20/21/26/44, not rely on any single signature, because relative weights
   shift with replication kinetics and biological context (paper:Owusu2025). Continuous MSI scores
   are preferable to binary MSI-H labels as the covariate (paper:MasPonte2022).
@@ -362,16 +365,16 @@ They should be modelled explicitly rather than blindly conditioned out.
 - **Panel-data limitations for SBS8.** Since SBS8 is enriched in heterochromatin and depleted
   in exons (paper:Singh2020), panel-based decompositions will systematically underestimate SBS8.
   Restricted SigProfiler assignment from panel data is unlikely to recover SBS8 with adequate
-  signal-to-noise for h08 association tests outside of WGS-based inputs (tcga_mc3).
+  signal-to-noise for association tests outside of WGS-based inputs (tcga_mc3).
 
 - **Reprint pre-stratification opportunity.** The RePrintPy tool (paper:Wojtowicz2026) could
-  reduce the effective number of independent signature outcomes in h08 by grouping by repair
-  mechanism before running covariate associations. This would also improve the biological
+  reduce the effective number of independent signature outcomes by grouping by repair mechanism
+  before running covariate associations. This would also improve the biological
   interpretability of association hits and sharpen multiple-testing correction. Running
   RePrintPy on the cross-study signature extraction output is a low-effort pre-analysis step.
 
 - **Etiology confidence tier for unknown signatures.** The 64 COSMIC signatures of unknown
-  aetiology (paper:Boysen2025) should be treated as low-priority H08b targets and flagged as
+  aetiology (paper:Boysen2025) should be treated as low-priority discovery targets and flagged as
   uninterpretable if they emerge as association hits — unless a RePrint cluster neighbour
   (paper:Wojtowicz2026) or a mechanistic prior provides interpretive context.
 

@@ -59,7 +59,7 @@ The motivating "neural genes top a mutation-frequency view" claim came from **un
 The gate reproduces it from the pipeline and asks: on which metric, in which config, from which
 studies, and is the candidate *set* enriched beyond chance? Three per-gene metrics were ranked over
 ~21,000 genes: raw total mutation count, mean sample-ratio (≥20-stratum filter to suppress
-tiny-cohort lincRNA artifacts), and raw count among **non-driver** genes (Bailey 2018 ∪ COSMIC CGC
+tiny-cohort lincRNA artifacts), and raw count among **non-driver** genes (Bailey et al. [@Bailey2018] ∪ COSMIC CGC
 removed). Set enrichment was scored by one-sided Mann–Whitney (candidate ranks vs all genes) and a
 top-100 hypergeometric test.
 
@@ -89,7 +89,7 @@ few % rather than the top 100). If anything the **mean-ratio enrichment is stron
 `pan-cancer`** (7/9 in the top 100; LSAMP #18, RBFOX1 #20, KCNIP4 #30). So the earlier
 "vanishes in pan-cancer" read was an artifact of the column bug; the corrected reading is that the
 *direction* is invariant and only the top-100 raw-count tail is pool-sensitive — still worth
-carrying forward (couples to `q016` panel ascertainment), but it is **not** a presence/absence flip.
+carrying forward (couples to `question:0016-panel-induced-ascertainment`), but it is **not** a presence/absence flip.
 
 **F4 — Protein length does NOT explain it; the candidates are short proteins.** All 9 candidates now
 resolve (FAM19A2 via its primary symbol TAFA2 = 131 aa): candidate lengths are 131–397 aa
@@ -111,15 +111,15 @@ TTN = muscle, SYNE1 = nuclear envelope, MACROD2/PARK2/FHIT-class = CFS). "Neural
 **F6 — Contributing cancer types are high-TMB / large-cohort, not CNS-dominant.** Per-candidate raw
 counts spread across Melanoma, Esophagogastric, Colorectal, NSCLC, Breast, with Glioma present but
 rarely leading (Melanoma usually first). This is a burden×cohort-size fingerprint, not a CNS-lineage
-one — though the CNS-exclusion test (`t218`/`q033`) is still warranted because Glioma is a
+one — though the CNS-exclusion test (`t218`/`question:0033-neural-enrichment-cns-exclusion`) is still warranted because Glioma is a
 consistent top-5 contributor.
 
-## Bearing on h12
+## Bearing on `hypothesis:0012-neural-gene-enrichment-length-histology-artifact`
 
-This is direct early support for **h12** ("apparent neural-gene enrichment is a length/histology
-artifact"), and it sharpens the mechanism: the artifact is **genomic-span / common-fragile-site +
+This is direct early support for `hypothesis:0012-neural-gene-enrichment-length-histology-artifact`
+("apparent neural-gene enrichment is a length/histology artifact"), and it sharpens the mechanism: the artifact is **genomic-span / common-fragile-site +
 multi-study pooling**, not protein length and not (primarily) CNS histology. It does **not** confirm
-h12 — that requires the normalized tests — but it confirms there is a genuine enrichment to dissolve
+the hypothesis — that requires the normalized tests — but it confirms there is a genuine enrichment to dissolve
 and predicts the dissolving covariate.
 
 ## Decision & redirect for the program
@@ -127,22 +127,22 @@ and predicts the dissolving covariate.
 **Proceed to the correction tests.** The gate passes the "is there something to explain?" bar (F2),
 so the 11-task program is **not** closed. But three plan adjustments follow from the gate:
 
-1. **`t217` (q032, P1) must normalize by genomic/CDS callable territory and add the CFS overlay,
+1. **`t217` (`question:0032-neural-gene-length-null`, P1) must normalize by genomic/CDS callable territory and add the CFS overlay,
    not protein-aa length.** F4 shows protein length is the wrong yardstick; an aa-length Wilcoxon
    would spuriously *fail to reject* (candidates look short). Use mutations-per-callable-kb on the
    transcribed/CDS footprint + the dndscv background, and fold in `t221`'s CFS overlap as a primary
    covariate rather than a side QA check.
-2. **`t216` (q035) label-free neural score must be benchmarked against a large-locus/CFS null**, not
+2. **`t216` (`question:0035-label-free-neural-gene-definition`) label-free neural score must be benchmarked against a large-locus/CFS null**, not
    only against housekeeping negatives — F5 shows the top non-driver genes are a neural∪non-neural
    large-locus mixture, so a neural score will look "enriched" unless it beats a size-matched CFS
    control set.
 3. **Carry the config contrast forward (as a tail-sensitivity, not a flip).** F3 (corrected) shows
    the enrichment direction is invariant across configs; only the extreme top-100 raw-count tail is
    pool-sensitive. Still report downstream statistics on `full` *and* `pan-cancer` (or per-study
-   leave-one-out) so the tail-sensitivity and `q016` panel-ascertainment coupling are visible — but
+   leave-one-out) so the tail-sensitivity and `question:0016-panel-induced-ascertainment` coupling are visible — but
    do not frame pan-cancer as "no signal."
 
-The expected end-state (per the plan's decision tree) remains **H5/length + CFS account for the
+The expected end-state (per the plan's decision tree) remains **the length + CFS account explains the
 bulk**, with at most a small residual — F4–F5 make the length/CFS branch the leading explanation
 before any neural biology is entertained.
 

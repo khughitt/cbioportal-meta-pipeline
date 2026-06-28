@@ -1,6 +1,6 @@
 ---
 type: plan
-title: "Analysis plan \u2014 h08 positive-control scan (H08a recovery gate)"
+title: "Analysis plan \u2014 positive-control scan (H08a recovery gate)"
 status: not-ready
 created: '2026-05-31'
 updated: '2026-05-31'
@@ -36,7 +36,7 @@ skills_loaded:
     \ variants"
 ---
 
-# Analysis Plan — h08 positive-control scan (H08a recovery gate)
+# Analysis Plan — Positive-control scan (H08a recovery gate)
 
 > **This plan operates in pre-registration-already-exists mode.** The verdict surface is
 > **locked** in `pre-registration:0003-h08-positive-control-agnostic-association-must-recover-known-signature` (committed 2026-05-30): three
@@ -78,7 +78,7 @@ tissues) — at the pre-registered rank gate? (H08a positive control.)
 | TCGA clinical: SKCM anatomic site; lung pack-years/smoking history; stage/sex/race/age | structured covariates + UV/smoking proxies | partial (per-study cBioPortal clinical) | public |
 | APOBEC3A / APOBEC3B mRNA | Arm C covariate | derived from the RNA-seq substrate above | public |
 
-**Access verdict: nothing here is gated.** The h08 positive-control scan is fully consistent
+**Access verdict: nothing here is gated.** The positive-control scan is fully consistent
 with the "no gated data access" constraint — the blocked WGS-tier cohorts (Hartwig t166, GTEx
 t169) are irrelevant to H08a. The expression matrix is *un-built*, not *inaccessible*.
 
@@ -111,7 +111,8 @@ Expression-matrix QA (`data-expression-bulk-rnaseq-qa`) before NMF:
 ## Preprocessing / Normalization Checks
 
 - **Opportunity normalization:** WES exome opportunity for SBS96; do not pool with any panel
-  spectra (h08 excludes panels from per-sample H — the binding q018 constraint).
+  spectra (the model excludes panels from per-sample H — the binding
+  `question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross` constraint).
 - **Compositional transform of H** (`statistics-compositional-data`): per-sample exposures are
   sum-constrained → closure-induced spurious anti-correlation. Pre-reg's suspicious-result plan
   mandates modeling **absolute per-signature burden or a CLR/ILR transform**, not closed
@@ -214,7 +215,7 @@ current affiliation constraint.
 
 ### Blocking Checks Before the Scan Can Run
 
-1. **q018 feasibility verdict (activation gate).** Write the `q018` answer: per-sample SBS refit
+1. **`question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross` feasibility verdict (activation gate).** Write the answer: per-sample SBS refit
    soundness on MC3 WES + panel-adequacy exclusion rule. Largely answerable from the t178/t179
    hardening + the existing brca-subset refit; needs the written verdict committed. *(new task)*
 2. **Full-MC3 per-sample SBS refit across the 7 arm strata** (SKCM, LUAD, LUSC, BLCA, BRCA, CESC,
@@ -231,7 +232,7 @@ current affiliation constraint.
    variants; fills the §1b activation table. Hand execution design to `/science:plan-pipeline`.
    *(new task)*
 
-Checks 1 (q018) and 2 (refit) are the near-term unblockers; 3 and 4 are the larger builds. `t180`
+Checks 1 (`question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross`) and 2 (refit) are the near-term unblockers; 3 and 4 are the larger builds. `t180`
 and `t181` are existing covariate-spec tasks that feed check 4 — not duplicated here.
 
 ## Feedback Reflection

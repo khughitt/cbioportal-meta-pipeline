@@ -1,6 +1,6 @@
 ---
 type: synthesis
-title: 'Synthesis: h11-joint-indel-sbs-improves-aetiology-discrimination'
+title: 'Synthesis: joint-indel-sbs-improves-aetiology-discrimination'
 status: active
 created: '2026-06-02'
 updated: '2026-06-02'
@@ -39,13 +39,14 @@ Arc reconstruction is limited because no interpretations have been filed under t
 and no `prior_interpretations` chains exist.
 
 The hypothesis was registered on 2026-05-31 (creation dates of `t188` and `t189`) as part of
-the `signature-modality-expansion` task group, which arose alongside the hardening of the h08
+the `signature-modality-expansion` task group, which arose alongside the hardening of the
+`hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`
 SBS decomposition layer. Two foundational tasks for that parent hypothesis — `t178` (COSMIC
 reference version-pin and caller-provenance audit, completed 2026-05-31) and `t179`
 (per-sample mutation-count floor and de-novo-vs-refit decision rule, completed 2026-05-31) —
 established the infrastructure on which any indel extension would depend. The completion of
 `t178` and `t179` closed critical data-quality prerequisites for SBS-based decomposition,
-creating the preconditions for h11 to become actionable. However, the hypothesis itself remains
+creating the preconditions for `hypothesis:0010-joint-indel-sbs-improves-aetiology-discrimination` to become actionable. However, the hypothesis itself remains
 entirely in the planning stage: `t188` (indel census) and `t189` (pilot joint SBS+ID on MC3
 MMRd vs MSS) are both P3/proposed, and no analysis has been initiated.
 
@@ -55,7 +56,7 @@ MMRd vs MSS) are both P3/proposed, and no analysis has been initiated.
 
 - `question:0028-indel-call-availability-across-cbioportal-studies` — What fraction of
   cBioPortal/MC3 studies carry indel calls at sufficient depth for joint SBS+ID decomposition?
-  This is the gating prerequisite for h11 and is currently unresolved.
+  This is the gating prerequisite for `hypothesis:0010-joint-indel-sbs-improves-aetiology-discrimination` and is currently unresolved.
 - `question:0020-minimum-sample-size-and-caller-provenance-for` — Minimum sample-size and
   caller-provenance requirements for signature decomposition; established for SBS but not yet
   extended to joint SBS+ID models.
@@ -66,10 +67,12 @@ MMRd vs MSS) are both P3/proposed, and no analysis has been initiated.
   deliverable is a per-study indel-feasibility flag. Directly executes
   `question:0028-indel-call-availability-across-cbioportal-studies`.
 - `t189` (P3, proposed) — Pilot joint SBS+ID decomposition on MC3 MMRd vs MSS using the
-  redefined indel taxonomy and multimodal catalogue; the cleanest prospective test of h11's
+  redefined indel taxonomy and multimodal catalogue; the cleanest prospective test of
+  `hypothesis:0010-joint-indel-sbs-improves-aetiology-discrimination`'s
   primary prediction.
 
-Both tasks are lower priority than ongoing h08 work and are not scheduled until the indel
+Both tasks are lower priority than ongoing
+`hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` work and are not scheduled until the indel
 census (`t188`) first establishes feasibility scope. The main risk is that the joint modality
 may be supportable only on MC3 and PCAWG substrates, limiting generalizability to the broader
 cBioPortal corpus.

@@ -33,7 +33,7 @@ carvedilol), anti-epileptics (valproate, lamotrigine), SSRIs/antidepressants, an
 antibodies — several in oncology trials (`paper:Magnon2023`, `paper:Fan2024`, `paper:Huang2025a`).
 Two of these are independently mutagenic-adjacent or repair-relevant. This asks whether
 neuro-active drug exposure can be represented in the project's treatment-signature framework
-(h10) — either as a covariate of interest or as a contaminant to control.
+(`hypothesis:0009-treatment-induced-signature-frequency-contamination`) — either as a covariate of interest or as a contaminant to control.
 
 ## Why It Matters
 
@@ -59,7 +59,7 @@ neuro-active drug exposure can be represented in the project's treatment-signatu
 
 ## Connections to Project
 
-- Related hypotheses: h10 (treatment-signature contamination), and q039 (stress proxy)
+- Related hypotheses: `hypothesis:0009-treatment-induced-signature-frequency-contamination` (treatment-signature contamination), and `question:0039-stress-hpa-adrenergic-mutational-footprint` (stress proxy)
 - Required data or analyses: enumerate neuro-active drug classes; check availability of exposure
   fields in MSK-CHORD / GENIE-BPC; add as covariate stratum in treatment-signature scans;
   beta-blocker use as inverse adrenergic-stress proxy.
@@ -69,4 +69,4 @@ neuro-active drug exposure can be represented in the project's treatment-signatu
 
 - Topic notes: topic:clinical-translational-signatures
 - Article notes: paper:Magnon2023, paper:Fan2024, paper:Huang2025a
-- Methods/Datasets: h10 treatment-signature pipeline; MSK-CHORD / GENIE-BPC exposure fields
+- Methods/Datasets: `hypothesis:0009-treatment-induced-signature-frequency-contamination` treatment-signature pipeline; MSK-CHORD / GENIE-BPC exposure fields

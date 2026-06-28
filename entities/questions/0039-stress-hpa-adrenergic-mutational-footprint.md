@@ -40,7 +40,8 @@ any such footprint is detectable in the project's signature/TMB outputs.
 
 - Unlike the candidate-gene question (likely artifact), this is a mechanism by which neural/
   endocrine signaling could leave a *real mutational* mark — testable with existing infrastructure.
-- Connects cancer-neuroscience to the project core (signatures, TMB, h08 agnostic association).
+- Connects cancer-neuroscience to the project core (signatures, TMB,
+  `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` agnostic association).
 - Risk if unanswered: missing a genuine neuro→genome link while (rightly) dismissing the spurious one.
 
 ## Current Evidence
@@ -59,9 +60,9 @@ any such footprint is detectable in the project's signature/TMB outputs.
 
 ## Connections to Project
 
-- Related hypotheses: h08 (agnostic covariate–signature association is the natural test bed)
+- Related hypotheses: `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` (agnostic covariate–signature association is the natural test bed)
 - Required data or analyses: treat adrenergic/glucocorticoid exposure proxies as covariates in
-  the h08 scan against SBS/ID exposures and TMB; check repair-associated signatures specifically;
+  the agnostic covariate-signature scan against SBS/ID exposures and TMB; check repair-associated signatures specifically;
   require an EHR-rich substrate (MSK-CHORD / GENIE-BPC) for any real test.
 - Priority level: P3 (lead; substrate-gated)
 
@@ -69,4 +70,4 @@ any such footprint is detectable in the project's signature/TMB outputs.
 
 - Topic notes: topic:aetiology-covariate-association, topic:neuro-immune-crosstalk-cancer
 - Article notes: paper:Magnon2023, paper:Mravec2008, paper:Pu2025
-- Methods/Datasets: method:h08-agnostic-association-model; MSK-CHORD / GENIE-BPC
+- Methods/Datasets: agnostic covariate-signature association model; MSK-CHORD / GENIE-BPC

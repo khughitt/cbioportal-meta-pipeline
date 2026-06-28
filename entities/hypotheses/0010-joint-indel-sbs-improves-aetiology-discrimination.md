@@ -31,7 +31,8 @@ related:
 
 ## Summary
 
-Most signature analysis (including the current h08 design) uses 96-channel SBS. This hypothesis
+Most signature analysis (including the current
+`hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` design) uses 96-channel SBS. This hypothesis
 proposes that **jointly decomposing indels (ID) with SBS — using the redefined indel taxonomy
 (`paper:Koh2025`) and multimodal SBS+ID catalogues (`paper:FerrerTorres2025`) — improves
 discrimination of aetiologies that are ambiguous in SBS space**, notably MMR-deficiency vs
@@ -46,7 +47,7 @@ realisable on WGS/WES consensus substrates (MC3, PCAWG) but not on most panel cB
   artefacts.
 - The project already ingests MC3 (consensus, indel-bearing) and could add PCAWG as a WGS
   gold-standard, so the high-depth substrate exists for the discriminating arm.
-- For h08, indels offer a second, partly-orthogonal outcome modality — a concordance check on any
+- For `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`, indels offer a second, partly-orthogonal outcome modality — a concordance check on any
   SBS-based aetiology hit.
 
 ## Predictions
@@ -74,7 +75,9 @@ realisable on WGS/WES consensus substrates (MC3, PCAWG) but not on most panel cB
 
 ## Status & Next Steps
 
-- **status: proposed.** Lower priority than h09/h10 (depends on indel-call availability across the
+- **status: proposed.** Lower priority than
+  `hypothesis:0008-cross-study-signature-exposure-reproducibility` /
+  `hypothesis:0009-treatment-induced-signature-frequency-contamination` (depends on indel-call availability across the
   corpus, which is `question:0020` territory). Belongs to the `signature-modality-expansion` task
   group.
 - Next: census indel-call availability across cBioPortal studies; pilot joint SBS+ID on MC3 MMRd
@@ -82,7 +85,7 @@ realisable on WGS/WES consensus substrates (MC3, PCAWG) but not on most panel cB
 
 ## Related
 
-- Hypotheses: `hypothesis:h08-...` (indels as an orthogonal concordance modality)
+- Hypotheses: `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` (indels as an orthogonal concordance modality)
 - Topics: `topic:signature-extraction-fitting-methods`, `topic:dna-damage-repair-signature-mechanisms`
-- Questions: `question:q020-...`
+- Questions: `question:0020-minimum-sample-size-and-caller-provenance-for`
 - Tasks: the `signature-modality-expansion` group (see `tasks/active.md`)

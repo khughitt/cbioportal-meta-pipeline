@@ -3,7 +3,7 @@ type: paper
 title: Universal Patterns of Selection in Cancer and Somatic Tissues
 status: read
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: paper:Martincorena2017
 ontology_terms: []
 source_refs:
@@ -24,6 +24,8 @@ related:
 - **BibTeX key:** Martincorena2017
 
 ## Key Contribution
+
+This dNdScv selection-method note links paper:Lawrence2014, paper:Bailey2018, and topic:cancer-driver-genes.
 
 Introduces `dNdScv`, a maximum-likelihood dN/dS framework that detects positive selection by
 comparing observed non-synonymous substitution counts against a neutral expectation derived from

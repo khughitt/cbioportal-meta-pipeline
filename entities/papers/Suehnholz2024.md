@@ -4,7 +4,7 @@ title: Quantifying the Expanding Landscape of Clinical Actionability for Patient
   with Cancer
 status: read
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: paper:Suehnholz2024
 ontology_terms: []
 source_refs:
@@ -33,6 +33,8 @@ dataset_usage:
 - **BibTeX key:** Suehnholz2024
 
 ## Key Contribution
+
+This OncoKB actionability note links paper:Chakravarty2017, paper:Zehir2017, topic:variant-interpretation-oncokb-vus, and topic:cross-study-harmonization.
 
 Quantifies how much the OncoKB-defined "clinically actionable" fraction of a fixed MSK-IMPACT
 cohort grows when the same tumors are re-annotated five years apart. By holding the cohort

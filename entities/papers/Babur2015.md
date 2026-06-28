@@ -4,7 +4,7 @@ title: Systematic identification of cancer driving signaling pathways based on m
   exclusivity of genomic alterations
 status: active
 created: '2026-04-21'
-updated: '2026-04-21'
+updated: '2026-06-28'
 id: paper:Babur2015
 ontology_terms: []
 source_refs:
@@ -26,6 +26,8 @@ related:
 - **Source:** `papers/references.bib`
 
 ## Key Contribution
+
+This pathway-mutual-exclusivity note links paper:Ciriello2012, paper:Leiserson2015, and topic:co-occurrence-and-mutual-exclusivity.
 
 Introduces Mutex, a pathway-aware mutual-exclusivity method that uses curated signaling priors to
 find alteration sets converging on common downstream targets.

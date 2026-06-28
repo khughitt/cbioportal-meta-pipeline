@@ -4,7 +4,7 @@ title: Identifying recurrent mutations in cancer reveals widespread lineage dive
   and mutational specificity
 status: read
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: paper:Chang2016
 ontology_terms: []
 source_refs:
@@ -34,6 +34,8 @@ mutational hotspots independently of gene-level recurrence, and applies it to an
 hotspots across 275 genes. The work reframes driver discovery away from gene counts
 toward allele-specific recurrence and documents pervasive lineage diversity among
 hotspot alleles.
+
+This hotspot-method note connects paper:Cerami2012, paper:Chakravarty2017, topic:hotspot-based-driver-detection, topic:cancer-driver-genes, and topic:mutation-rate-normalization.
 
 ## Methods
 

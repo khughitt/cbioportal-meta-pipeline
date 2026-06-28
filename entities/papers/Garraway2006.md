@@ -3,7 +3,7 @@ type: paper
 title: Lineage dependency and lineage-survival oncogenes in human cancer
 status: active
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-28'
 id: paper:Garraway2006
 ontology_terms:
 - lineage addiction
@@ -40,6 +40,8 @@ related:
 - **Source:** PDF (papers/pdfs/2006_Garraway_Lineage-dependency-and-lineage-survival-oncogenes-in-human-cancer.pdf)
 
 ## Key Contribution
+
+This lineage-survival-oncogene note links topic:lineage-addiction-and-cell-of-origin-driver-specificity, question:0042-driver-normal-expression-tissue-cell-type-specificity, and discussion:0008-tissue-cell-type-specificity-of-cancer-drivers.
 
 This review introduces and formalizes two related concepts: **lineage dependency** (equivalently, **lineage addiction**) and the narrower **lineage-survival oncogene**. The paper synthesizes evidence from melanoma, prostate, lung, and breast cancer to argue that this class of oncogenes occupies a distinctive mechanistic niche: they are neither classic "gatekeeper" or "caretaker" tumor suppressors nor broadly expressed proliferation drivers, but rather genes whose oncogenic role is inseparable from the tissue or cell type in which the cancer arises.
 

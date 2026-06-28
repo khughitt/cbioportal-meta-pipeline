@@ -3,7 +3,7 @@ type: paper
 title: The neural addiction of cancer
 status: active
 created: '2026-06-06'
-updated: '2026-06-06'
+updated: '2026-06-28'
 id: paper:Magnon2023
 ontology_terms:
 - cancer neuroscience
@@ -38,6 +38,8 @@ related:
 ## Key Contribution
 
 This Perspective synthesizes the emerging field of cancer neuroscience, arguing that peripheral and central nervous system circuitries are not incidental bystanders but active drivers of tumor initiation, growth, and metastasis. The paper introduces the concept of the "neural addiction of cancer" — the progressive co-option of neural signaling pathways by tumors — and organizes the bidirectional crosstalk between the nervous system and solid tumors into two major axes: (1) how specific brain areas and efferent neuroendocrine pathways (HPA axis, sympatho-adrenal system, circadian circuitry in the SCN) regulate peripheral tumor development, and (2) how peripheral tumors feed back to the brain via adipokines, neurotrophic factors, pro-inflammatory cytokines, and afferent sensory neurons. The paper also covers two tumor-autonomous mechanisms: axonogenesis (tumors building their own autonomic nerve networks from pre-existing fibers) and tumor neurogenesis (neural progenitors from the SVZ differentiating into adrenergic neo-nerves within the TME). It closes by cataloging ongoing clinical trials of repurposed neuropsychiatric drugs (beta-blockers, antidepressants, anti-cholinergics, antiepileptics) as a translational frontier. This is a conceptual review; it does not present new primary data.
+
+This perspective is interpreted together with paper:Mancusi2023, paper:Venkatesh2019, paper:Hwang2025, paper:Kulke2012, and paper:Xiong2023 when separating canonical cancer-neuroscience mechanisms from gene-length or cohort-composition artifacts.
 
 ## Methods
 

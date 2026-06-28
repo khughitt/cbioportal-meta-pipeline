@@ -3,7 +3,7 @@ type: paper
 title: 'OncoKB: A Precision Oncology Knowledge Base'
 status: read
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: paper:Chakravarty2017
 ontology_terms: []
 source_refs:
@@ -28,6 +28,8 @@ dataset_usage:
 - **BibTeX key:** Chakravarty2017
 
 ## Key Contribution
+
+This OncoKB knowledge-base note links paper:Cerami2012, topic:cancer-driver-genes, and topic:variant-interpretation-oncokb-vus.
 
 Introduces OncoKB, an expert-curated precision-oncology knowledge base developed at MSK that
 assigns an oncogenicity call and a therapeutic level-of-evidence to individual somatic

@@ -3,7 +3,7 @@ type: paper
 title: Mutational landscape and significance across 12 major cancer types
 status: read
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: paper:Kandoth2013
 ontology_terms: []
 source_refs:
@@ -28,6 +28,8 @@ dataset_usage:
 - **BibTeX key:** Kandoth2013
 
 ## Key Contribution
+
+This Pan-Cancer-12 mutation-landscape note links paper:Bailey2018, paper:Lawrence2014, and topic:pan-cancer-mutation-landscape.
 
 First-generation TCGA Pan-Cancer mutational landscape: somatic point-mutation and
 small-indel analysis across 3,281 tumours from 12 major cancer types, yielding 127

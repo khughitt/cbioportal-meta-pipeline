@@ -3,7 +3,7 @@ type: paper
 title: The repertoire of mutational signatures in human cancer
 status: read
 created: '2026-04-13'
-updated: '2026-04-12'
+updated: '2026-06-28'
 id: paper:Alexandrov2020
 ontology_terms: []
 source_refs:
@@ -28,6 +28,8 @@ dataset_usage:
 - **BibTeX key:** Alexandrov2020
 
 ## Key Contribution
+
+This mutational-signature reference note links paper:Tate2019, paper:PCAWG2020, and topic:mutational-signatures.
 
 Establishes the COSMIC v3 reference catalog of mutational signatures by re-analyzing
 ~24k tumors with the SigProfiler NMF pipeline, expanding beyond the SBS-only v2 catalog

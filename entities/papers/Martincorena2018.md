@@ -3,7 +3,7 @@ type: paper
 title: Somatic mutant clones colonize the human esophagus with age
 status: active
 created: '2026-04-18'
-updated: '2026-04-18'
+updated: '2026-06-28'
 id: paper:Martincorena2018
 ontology_terms: []
 source_refs:
@@ -31,6 +31,8 @@ related:
 ## Key Contribution
 
 Martincorena et al. (Wellcome Sanger Institute / MRC Laboratory, Cambridge) present the founding primary-data study on age-related somatic clone colonization of normal human esophageal epithelium. Using deep targeted sequencing of 74 cancer genes across 844 contiguous 2 mm² biopsy samples from nine organ donors aged 20–75 years, they show that normal esophageal epithelium accumulates hundreds to thousands of somatic mutations per cell with age, and that 14 cancer genes — led by NOTCH1 and TP53 — are under strong positive selection. By middle age, NOTCH1-mutant clones cover 30–80% of the esophageal epithelium; TP53-mutant clones cover 5–37%. Critically, NOTCH1 mutation prevalence in normal esophagus is several-fold *higher* than in esophageal squamous cell carcinoma (ESCC), while TP53 shows the opposite pattern — establishing the central "NOTCH1 paradox" that defines the normal-tissue-vs-cancer driver inversion framework.
+
+This normal-epithelium selection note is interpreted alongside paper:Yoshida2026, paper:Poon2021, paper:Li2021, paper:Gao2023, topic:clonal-hematopoiesis-contamination, topic:pan-cancer-mutation-landscape, and question:0001-normal-epithelial-clone-contamination-in-esophageal-studies.
 
 ## Methods
 

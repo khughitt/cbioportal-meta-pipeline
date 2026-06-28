@@ -3,7 +3,7 @@ type: paper
 title: Crosstalk between cancer cells and the nervous system
 status: active
 created: '2026-06-06'
-updated: '2026-06-06'
+updated: '2026-06-28'
 id: paper:Huang2023a
 ontology_terms:
 - cancer neuroscience
@@ -39,6 +39,8 @@ related:
 - **Source:** PDF
 
 ## Key Contribution
+
+This cancer-nervous-system crosstalk note links paper:Venkatesh2019, paper:Mancusi2023, and paper:Xiong2023.
 
 A comprehensive narrative review proposing that bidirectional crosstalk between cancer cells and
 the nervous system — via the CNS and PNS alike — constitutes an emerging hallmark of cancer.

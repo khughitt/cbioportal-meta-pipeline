@@ -3,7 +3,7 @@ type: paper
 title: Cancer hallmarks intersect with neuroscience in the tumor microenvironment
 status: active
 created: '2026-06-06'
-updated: '2026-06-06'
+updated: '2026-06-28'
 id: paper:Hanahan2023
 ontology_terms:
 - cancer neuroscience
@@ -46,6 +46,8 @@ related:
 ## Key Contribution
 
 This Cancer Cell perspective, co-authored by the originator of the hallmarks of cancer framework (Hanahan) and the leading cancer neuroscience lab (Monje), makes a formal case for integrating the nervous system into the hallmarks conceptualization. The central argument is twofold: (1) tumor innervation — neurons and their axonal projections — constitutes a functionally important, hallmark-inducing constituent of the TME across multiple cancer types; and (2) co-opted neuronal signaling circuits aberrantly active in cancer cells themselves constitute a distinctive new "enabling characteristic" of cancer (analogous to genome instability and tumor-promoting inflammation), one that is broad enough to span cancers of the brain, skin, head and neck, breast, lung, stomach, colon, pancreas, and prostate. By mapping neuroscience-cancer connections onto six of the ten canonical hallmark parameters, the paper provides the canonical reference framing for why "neural signaling" belongs in the cancer hallmarks schema, explicitly positioning it as a candidate emerging hallmark/enabling characteristic. This is the most important single citation for placing the cancer neuroscience phenomenon in the context of a universal cancer biology framework, making it directly relevant for narrative framing in any cross-cancer-type study.
+
+This hallmarks-level perspective is linked to paper:Mancusi2023, paper:Keough2022, paper:Magnon2023, paper:Venkatesh2019, paper:Hwang2025a, paper:Kizil2024, and paper:Mravec2008 as companion reviews and primary-context notes for cancer neuroscience.
 
 ## Methods
 

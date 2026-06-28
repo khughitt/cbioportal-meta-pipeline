@@ -4,7 +4,7 @@ title: Diverse oncogenes use common mechanisms to drive growth of major forms of
   cancer
 status: active
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-28'
 id: paper:Kauko2025
 ontology_terms:
 - oncogene convergence
@@ -39,6 +39,8 @@ related:
 - **Source:** PDF
 
 ## Key Contribution
+
+This oncogenic-competence note links topic:lineage-addiction-and-cell-of-origin-driver-specificity, question:0042-driver-normal-expression-tissue-cell-type-specificity, and discussion:0008-tissue-cell-type-specificity-of-cancer-drivers.
 
 Diverse lineage-specific oncogenes — spanning oncogenic transcription factors (ER, AR, ERG, TCF4/β-catenin, GLI1, PAX3, FLI1) and kinase-activating mutations (BRAF, RAS, EGFR, ERBB2, PIK3CA, BCR-ABL) across breast, prostate, colorectal, lung, rhabdomyosarcoma, Ewing's sarcoma, and CML — converge on a small common set of downstream growth-regulatory mechanisms: primarily **translation and ribosome biogenesis**, orchestrated through the **MYC oncogene** as a central master regulator, and through direct posttranslational phosphorylation of ribosome biogenesis factors. The gene regulatory network shared by diverse cancers has an **hourglass topology**: many upstream tissue-specific drivers funnel through a narrow waist of shared master regulators (MYC, CDK4/6 axis) and then diverge again into a large effector gene set. Critically, **NOLC1** (nucleolar and coiled-body phosphoprotein 1) is identified as a key convergent node regulated both transcriptionally by MYC and posttranslationally by kinase signaling, with both modes independently required for tumor cell proliferation.
 

@@ -3,7 +3,7 @@ type: paper
 title: Quantifying heterogeneity in a meta-analysis
 status: active
 created: '2026-04-21'
-updated: '2026-04-21'
+updated: '2026-06-28'
 id: paper:Higgins2002
 ontology_terms: []
 source_refs:
@@ -24,6 +24,8 @@ related:
 - **Source:** `papers/references.bib`
 
 ## Key Contribution
+
+This heterogeneity-statistic note links paper:IntHout2016, paper:Langan2018, and topic:cross-study-meta-analysis-cancer-genomics.
 
 Defines the I-squared heterogeneity statistic that has become standard for summarizing
 between-study inconsistency in random-effects meta-analysis.

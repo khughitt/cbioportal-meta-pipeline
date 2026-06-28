@@ -4,7 +4,7 @@ title: Cancer type-specific variation in patterns of driver alterations across 5
   tumors
 status: abstract-read
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: paper:Bandlamudi2026
 ontology_terms: []
 source_refs:
@@ -41,6 +41,8 @@ formalize a "canonical vs non-canonical context" distinction and show that ~1/3 
 detected drivers fall into non-canonical contexts with measurably different biology
 (later emergence, increased subclonality). They also publish 164 newly significant
 hotspots after rigorous control for gene/position/sample-specific mutation rates.
+
+This MSK-IMPACT scale-up is interpreted against paper:Zehir2017, paper:Bailey2018, paper:Chakravarty2017, topic:cancer-driver-genes, and topic:pan-cancer-mutation-landscape.
 
 ## Methods
 

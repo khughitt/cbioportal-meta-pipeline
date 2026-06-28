@@ -4,7 +4,7 @@ title: Cell-of-Origin Patterns Dominate the Molecular Classification of 10,000 T
   from 33 Types of Cancer
 status: read
 created: '2026-04-13'
-updated: '2026-04-12'
+updated: '2026-06-28'
 id: paper:Hoadley2018
 ontology_terms: []
 source_refs:
@@ -44,6 +44,12 @@ clusters (pan-squamous, pan-gastrointestinal, pan-gynecologic, pan-kidney) that 
 authors argue could change clinical management for ~1 in 10 patients. Extends a 2014
 interim Pan-Cancer-12 analysis of 3,527 tumors / 12 cancer types up to the full 33-type
 PanCanAtlas cohort.
+
+This note connects the TCGA PanCanAtlas lineage-classification frame to paper:Bailey2018,
+paper:Ellrott2018, paper:Ciriello2013, topic:pan-cancer-mutation-landscape,
+topic:lineage-addiction-and-cell-of-origin-driver-specificity,
+question:0042-driver-normal-expression-tissue-cell-type-specificity, and
+discussion:0008-tissue-cell-type-specificity-of-cancer-drivers.
 
 ## Methods
 

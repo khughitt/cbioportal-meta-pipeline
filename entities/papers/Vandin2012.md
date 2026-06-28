@@ -3,7 +3,7 @@ type: paper
 title: De novo discovery of mutated driver pathways in cancer
 status: active
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: paper:Vandin2012
 tags:
 - driver-pathway
@@ -37,6 +37,8 @@ dataset_usage:
 - **Method name:** **Dendrix** (De novo Driver Exclusivity)
 
 ## Key Contribution
+
+This driver-pathway discovery note links paper:Ciriello2012, paper:Leiserson2013, and paper:Leiserson2015.
 
 Introduces **Dendrix**, a combinatorial optimization framework for discovering driver
 pathways **without any prior pathway database** — gene groups are scored purely on the

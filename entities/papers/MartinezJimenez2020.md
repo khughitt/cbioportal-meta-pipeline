@@ -3,7 +3,7 @@ type: paper
 title: A compendium of mutational cancer driver genes
 status: active
 created: '2026-04-21'
-updated: '2026-06-07'
+updated: '2026-06-28'
 id: paper:MartinezJimenez2020
 ontology_terms: []
 source_refs:
@@ -37,6 +37,8 @@ tumors across 221 cohorts of 66 cancer types. The pipeline identifies 568 driver
 characterizes each gene's mode of action (activating/oncogene vs. loss-of-function/tumor
 suppressor) and cancer-type specificity, providing the most comprehensive per-tumor-type driver
 roster available from positive-selection evidence alone.
+
+This driver-compendium note connects paper:Bailey2018, topic:cross-study-meta-analysis-cancer-genomics, topic:cancer-driver-genes, topic:lineage-addiction-and-cell-of-origin-driver-specificity, question:0042-driver-normal-expression-tissue-cell-type-specificity, and discussion:0008-tissue-cell-type-specificity-of-cancer-drivers.
 
 ## Methods
 

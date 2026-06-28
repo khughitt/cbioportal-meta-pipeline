@@ -4,7 +4,7 @@ title: Mutational landscape of metastatic cancer revealed from prospective clini
   sequencing of 10,000 patients
 status: read
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: paper:Zehir2017
 ontology_terms: []
 source_refs:
@@ -28,6 +28,8 @@ dataset_usage:
 - **BibTeX key:** Zehir2017
 
 ## Key Contribution
+
+This MSK-IMPACT cohort note links topic:pan-cancer-mutation-landscape, topic:targeted-panel-sequencing-bias, and paper:Chakravarty2017.
 
 Reports the canonical MSK-IMPACT prospective clinical-sequencing release: 10,945 tumors from
 10,336 patients spanning 62 principal tumor types and >300 detailed subtypes, sequenced as part

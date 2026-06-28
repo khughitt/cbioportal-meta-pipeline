@@ -3,7 +3,7 @@ type: paper
 title: IRF4 addiction in multiple myeloma
 status: active
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-28'
 id: paper:Shaffer2008
 ontology_terms:
 - multiple myeloma
@@ -41,6 +41,8 @@ related:
 -->
 
 ## Key Contribution
+
+This lineage-addiction example note links topic:lineage-addiction-and-cell-of-origin-driver-specificity, discussion:0008-tissue-cell-type-specificity-of-cancer-drivers, and paper:Garraway2006.
 
 Using a doxycycline-inducible shRNA loss-of-function screen across multiple myeloma (MM) subtypes, Shaffer et al. show that myeloma cells are universally dependent on the transcription factor IRF4 for survival — despite IRF4 being unmutated and unamplified in ~90% of cases. The study frames this as "nononcogene addiction": MM cells co-opt a master plasma-cell-differentiation program that is an obligate part of normal B-cell biology, not a classically mutated driver. A key mechanistic discovery is an IRF4↔MYC autoregulatory positive-feedback circuit in which each factor directly binds and transactivates the other, creating a self-reinforcing transcriptional network that is aberrantly maintained in myeloma.
 

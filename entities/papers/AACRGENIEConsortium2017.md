@@ -3,7 +3,7 @@ type: paper
 title: 'AACR Project GENIE: Powering Precision Medicine through an International Consortium'
 status: read
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: paper:AACRGENIEConsortium2017
 ontology_terms: []
 source_refs:
@@ -39,6 +39,8 @@ public registry. The inaugural release (January 5, 2017) contained 18,804 sample
 Synapse (`synapse.org/genie`) and cBioPortal (`cbioportal.org/genie/`). The paper establishes
 the data-sharing framework (consents, Master Participation Agreement, Data Use Agreement)
 and the technical harmonization pipeline that later releases continue to follow.
+
+This launch paper connects topic:pan-cancer-mutation-landscape, topic:targeted-panel-sequencing-bias, paper:Pugh2022, paper:Zehir2017, and paper:ChakravartySolit2021.
 
 ## Methods
 

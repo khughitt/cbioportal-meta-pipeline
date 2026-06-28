@@ -3,7 +3,7 @@ type: paper
 title: Simultaneous Identification of Multiple Driver Pathways in Cancer
 status: active
 created: '2026-04-21'
-updated: '2026-04-21'
+updated: '2026-06-28'
 id: paper:Leiserson2013
 ontology_terms: []
 source_refs:
@@ -24,6 +24,8 @@ related:
 - **Source:** `papers/references.bib`
 
 ## Key Contribution
+
+This Multi-Dendrix pathway-discovery note links paper:Vandin2012, paper:Leiserson2015, and topic:co-occurrence-and-mutual-exclusivity.
 
 Introduces Multi-Dendrix, extending coverage-exclusivity pathway discovery from one pathway at a
 time to multiple pathways jointly.

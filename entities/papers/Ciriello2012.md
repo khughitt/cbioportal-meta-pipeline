@@ -3,7 +3,7 @@ type: paper
 title: Mutual exclusivity analysis identifies oncogenic network modules
 status: active
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: paper:Ciriello2012
 tags:
 - mutual-exclusivity
@@ -39,6 +39,8 @@ dataset_usage:
 - **Citations:** 743
 
 ## Key Contribution
+
+This mutual-exclusivity module note links paper:Ciriello2013, paper:Canisius2016, paper:Leiserson2015, and paper:Babur2015.
 
 The **seminal** method for systematic mutual-exclusivity-driven discovery of oncogenic
 network modules in cancer genomics. Combines a mutual-exclusivity test with a

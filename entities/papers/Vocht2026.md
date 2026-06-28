@@ -4,7 +4,7 @@ title: 'mhn: a Python package for analyzing cancer progression with Mutual Hazar
   Networks'
 status: active
 created: '2026-04-27'
-updated: '2026-04-27'
+updated: '2026-06-28'
 id: paper:Vocht2026
 ontology_terms: []
 source_refs:
@@ -31,6 +31,8 @@ dataset_usage:
 - **Source:** PDF (local copy at papers/pdfs/vbaf283.pdf); all content extracted directly from the full text
 
 ## Key Contribution
+
+This Mutual Hazard Network software note links paper:Schill2024, question:0012-mutation-ordering-cross-sectional-inference, topic:co-occurrence-and-mutual-exclusivity, and discussion:0002-mutation-ordering-and-path-dependency.
 
 `mhn` is a Python package implementing Mutual Hazard Networks (MHNs) for cancer progression modeling from cross-sectional tumor genotype data. The package addresses the primary computational bottleneck of earlier MHN implementations: because the state space of an n-event MHN grows as 2^n, training on more than ~25 events was previously infeasible. `mhn` introduces *state space restriction* — restricting each sample's computation to the submatrix of the transition rate matrix covering only states reachable from that sample's observed active events — combined with optional CUDA GPU acceleration. This reduces the per-sample runtime from O(n^2 * 2^n) (for the naive full-matrix approach) to O(n * m * 2^m) where m is the number of active events in a given sample, lifting the practical ceiling to **>100 events** provided no single sample has more than ~32 active events simultaneously.
 

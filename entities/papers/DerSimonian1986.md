@@ -3,7 +3,7 @@ type: paper
 title: Meta-analysis in clinical trials
 status: active
 created: '2026-04-21'
-updated: '2026-04-21'
+updated: '2026-06-28'
 id: paper:DerSimonian1986
 ontology_terms: []
 source_refs:
@@ -24,6 +24,8 @@ related:
 - **Source:** `papers/references.bib`
 
 ## Key Contribution
+
+This foundational random-effects meta-analysis note links paper:Viechtbauer2010, paper:Langan2018, and topic:cross-study-meta-analysis-cancer-genomics.
 
 Introduces the DerSimonian-Laird random-effects estimator, the canonical historical baseline for
 between-study heterogeneity in meta-analysis.

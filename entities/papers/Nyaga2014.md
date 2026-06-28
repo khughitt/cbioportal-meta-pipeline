@@ -3,7 +3,7 @@ type: paper
 title: 'Metaprop: a Stata command to perform meta-analysis of binomial data'
 status: active
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: paper:Nyaga2014
 ontology_terms: []
 source_refs:
@@ -26,6 +26,8 @@ related:
 - **Source:** OpenAlex (verified)
 
 ## Key Contribution
+
+This binomial-proportion meta-analysis note links paper:Stijnen2010, paper:LinXu2020, paper:Barendregt2013, and topic:cross-study-meta-analysis-cancer-genomics.
 
 Describes `metaprop`, the Stata command that operationalises **meta-analysis of single
 proportions** (no control arm per study) as a first-class procedure. Synthesises

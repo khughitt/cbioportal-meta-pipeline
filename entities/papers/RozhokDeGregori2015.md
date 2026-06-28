@@ -4,7 +4,7 @@ title: 'Toward an evolutionary model of cancer: Considering the mechanisms that 
   the fate of somatic mutations'
 status: active
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-28'
 id: paper:RozhokDeGregori2015
 ontology_terms:
 - somatic evolution
@@ -39,6 +39,8 @@ related:
 > **Title note:** The user's request cited the subtitle as "...rate of carcinogenesis"; the published title uses "...fate of somatic mutations." The PMC and Crossref records are consistent on the correct title. Content confirmed from full-text PMC fetch.
 
 ## Key Contribution
+
+This evolutionary-carcinogenesis note links topic:multistage-carcinogenesis-and-age-of-onset, paper:TomasettiVogelstein2015, and paper:ArmitageDoll1954.
 
 Rozhok and DeGregori argue that the classical multistage carcinogenesis model — which attributes age-dependent cancer incidence primarily to the accumulation of oncogenic mutations over time — cannot explain several fundamental empirical puzzles. In its place they develop a fitness-landscape framework in which the selective value of an oncogenic mutation is not fixed but is dynamically determined by the tissue microenvironment, and that environment itself changes with age. Young, healthy tissue imposes stabilizing selection that suppresses somatic evolution; aging tissue rewires the microenvironment in ways that convert previously neutral or deleterious mutations into selectively advantageous ones. The paper proposes that the late-life surge in cancer incidence is therefore primarily driven by age-dependent shifts in the selection landscape, not by the raw pace of mutation accumulation.
 

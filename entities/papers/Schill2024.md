@@ -3,7 +3,7 @@ type: paper
 title: Correcting for Observation Bias in Cancer Progression Modeling
 status: active
 created: '2026-04-27'
-updated: '2026-04-27'
+updated: '2026-06-28'
 id: paper:Schill2024
 ontology_terms: []
 source_refs:
@@ -32,6 +32,8 @@ dataset_usage:
 - **Source:** Paywalled (no OA copy per Unpaywall); summary based on PubMed abstract, Crossref metadata, and detailed description in the open-access Vocht et al. 2026 (PMC12776348) which was co-authored by Schill and explicitly describes the Schill 2024 model. All mechanistic claims are author-attributed to that companion paper. Quantitative results carry an inline `[UNVERIFIED: …]` caveat where not directly stated in available sources.
 
 ## Key Contribution
+
+This cancer-progression observation-bias note links paper:Vocht2026, topic:co-occurrence-and-mutual-exclusivity, and discussion:0002-mutation-ordering-and-path-dependency.
 
 This paper identifies and corrects a pervasive **collider bias** that distorts cancer progression models fitted to cross-sectional diagnostic cohorts. When tumors are sampled at the time of clinical detection, the observed cohort is conditioned on the event of detection — and detection rates depend on the tumor's genomic state. Genetic alterations that increase detectability (e.g. TP53 in colorectal adenocarcinoma, EGFR in lung adenocarcinoma) therefore appear anti-correlated with other alterations in naive cross-sectional analyses, producing spurious suppressive effects while masking true promoting effects.
 

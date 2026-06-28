@@ -3,7 +3,7 @@ type: paper
 title: Population dynamics of normal human blood inferred from somatic mutations
 status: active
 created: '2026-04-18'
-updated: '2026-04-18'
+updated: '2026-06-28'
 id: paper:LeeSix2018
 ontology_terms: []
 source_refs:
@@ -28,6 +28,8 @@ related:
 - **Source:** full-text XML (Europe PMC, PMC6163040); metadata confirmed via Crossref
 
 ## Key Contribution
+
+This normal-blood clonal-dynamics note links topic:clonal-hematopoiesis-contamination, paper:Poon2021, and paper:Yoshida2026.
 
 The first direct, genome-wide phylogenetic reconstruction of human haematopoietic stem cell (HSC) population dynamics in a single normal individual. By whole-genome sequencing 140 single-cell-derived HSC/progenitor colonies from a healthy 59-year-old man and performing deep "recapture" targeted sequencing of bulk blood lineages, the study establishes that: (1) blood production is supported by a large, continuously active pool of 50,000–200,000 HSCs; (2) HSC clonal dynamics in this subject are consistent with selectively neutral drift — no known driver mutations are present and dN/dS = 1.001; and (3) the phylogenetic tree traces back through early embryogenesis to a cell that predated gastrulation, demonstrating that the normal blood phylogeny spans the full human lifespan. This paper is the foundational measurement underpinning all modern quantitative models of CH clone dynamics and the "drift vs. selection" debate.
 

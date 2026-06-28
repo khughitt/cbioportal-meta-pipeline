@@ -3,7 +3,7 @@ type: paper
 title: Somatic mutations and clonal evolution in normal tissues and cancer development
 status: active
 created: '2026-04-18'
-updated: '2026-04-18'
+updated: '2026-06-28'
 id: paper:Yoshida2026
 ontology_terms: []
 source_refs:
@@ -30,6 +30,8 @@ related:
 - **Source:** full-text PDF (verified 2026-04-18) + PubMed metadata. Initial draft built from web search / LLM knowledge while paywalled, subsequently verified and corrected against the full text.
 
 ## Key Contribution
+
+This normal-tissue clonal-evolution review note links paper:Martincorena2017, topic:pan-cancer-mutation-landscape, and topic:mutation-rate-normalization.
 
 A solo-authored review by Yoshida (Division of Cancer Evolution, National Cancer Center Research Institute, Tokyo) synthesizing the current state of knowledge on somatic mutation accumulation, clonal selection, and clonal evolution in morphologically normal human tissues across multiple organ types. The central argument is that carcinogenesis is a multi-decade process: driver mutations are often acquired in early life, positively selected clones colonize normal tissue progressively with age, and malignant transformation represents a late exception rather than the rule for most driver-mutant clones. The review also highlights epimutations (non-genomic epigenetic alterations) as an under-explored contributor to clonal expansion without overt genomic driver mutations.
 

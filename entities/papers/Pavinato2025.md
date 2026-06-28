@@ -3,7 +3,7 @@ type: paper
 title: 'Oncogenic competence: balancing mutations, cellular state, and microenvironment'
 status: active
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-28'
 id: paper:Pavinato2025
 ontology_terms:
 - oncogenic competence
@@ -41,6 +41,8 @@ related:
 - **Source:** PDF (open access, CC BY-NC)
 
 ## Key Contribution
+
+This oncogenic-competence review note links topic:lineage-addiction-and-cell-of-origin-driver-specificity, discussion:0008-tissue-cell-type-specificity-of-cancer-drivers, and topic:oncofetal-developmental-reprogramming.
 
 This Opinion piece introduces and systematizes the concept of **oncogenic competence** — the
 idea that tumor-causing mutations only trigger malignant transformation within specific cellular

@@ -3,7 +3,7 @@ type: paper
 title: Plea for routinely presenting prediction intervals in meta-analysis
 status: active
 created: '2026-04-21'
-updated: '2026-04-21'
+updated: '2026-06-28'
 id: paper:IntHout2016
 ontology_terms: []
 source_refs:
@@ -25,6 +25,8 @@ related:
 - **Source:** `papers/references.bib`
 
 ## Key Contribution
+
+This meta-analysis prediction-interval note links paper:Higgins2002, paper:Langan2018, paper:Viechtbauer2010, and topic:cross-study-meta-analysis-cancer-genomics.
 
 Argues that random-effects meta-analyses should report prediction intervals, not just pooled
 confidence intervals, because true study effects are expected to vary across settings.

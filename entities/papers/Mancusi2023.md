@@ -3,7 +3,7 @@ type: paper
 title: The neuroscience of cancer
 status: active
 created: '2026-06-06'
-updated: '2026-06-06'
+updated: '2026-06-28'
 id: paper:Mancusi2023
 ontology_terms:
 - cancer neuroscience
@@ -40,6 +40,8 @@ related:
 ## Key Contribution
 
 This flagship Nature review synthesizes the emerging field of "cancer neuroscience" — the bidirectional interplay between the nervous system and tumors across initiation, progression, and metastasis. The central argument is that the nervous system is not merely a bystander in the tumor microenvironment but an active regulator of cancer biology at both local (paracrine and synaptic) and systemic (autonomic and neuroendocrine) levels. Tumors in turn remodel and hijack neural circuits and neural developmental programs. The review integrates evidence from CNS gliomas, peripheral cancers (prostate, gastric, pancreatic, breast, melanoma, basal cell carcinoma), and brain metastases, organizing the mechanisms into three conceptual tiers: (1) direct neuron-to-cancer-cell synaptic and paracrine signaling, (2) neural regulation of the tumor immune microenvironment, and (3) systemic nervous system effects. This constitutes the most comprehensive synthesis of the field available and defines its conceptual vocabulary.
+
+This note anchors the cancer-neuroscience cluster that also includes paper:Keough2022, paper:Magnon2023, paper:Hanahan2023, paper:Venkatesh2019, paper:Hwang2025a, paper:Kizil2024, and paper:Mravec2008.
 
 ## Methods
 

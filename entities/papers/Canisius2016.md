@@ -4,7 +4,7 @@ title: A novel independence test for somatic alterations in cancer shows that bi
   drives mutual exclusivity but chance explains most co-occurrence
 status: active
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: paper:Canisius2016
 tags:
 - mutual-exclusivity
@@ -53,6 +53,8 @@ tumor mutation burden. The pan-cancer analysis finds substantial genuine exclusi
 by cell-cycle, growth-factor-signaling, and Hedgehog-pathway genes, but concludes that
 **most previously reported co-occurrences are explained by chance** once TMB variation is
 controlled for.
+
+This co-occurrence-null-model note is read alongside paper:Ciriello2012, paper:Leiserson2015, paper:Kim2017, paper:Mina2020, and paper:VanDeHaar2019.
 
 ## Methods
 

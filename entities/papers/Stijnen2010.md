@@ -4,7 +4,7 @@ title: Random effects meta-analysis of event outcome in the framework of the gen
   linear mixed model with applications in sparse data
 status: active
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: paper:Stijnen2010
 ontology_terms: []
 source_refs:
@@ -27,6 +27,8 @@ related:
 - **Source:** OpenAlex (verified)
 
 ## Key Contribution
+
+This sparse-event GLMM meta-analysis note links paper:LinXu2020, paper:Nyaga2014, paper:Viechtbauer2010, and topic:cross-study-meta-analysis-cancer-genomics.
 
 Frames random-effects meta-analysis of binary-event data as a **generalized linear mixed
 model (GLMM)** with the exact binomial within-study likelihood plus a normal random effect

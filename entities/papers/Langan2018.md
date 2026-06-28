@@ -4,7 +4,7 @@ title: A comparison of heterogeneity variance estimators in simulated random-eff
   meta-analyses
 status: active
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: paper:Langan2018
 ontology_terms: []
 source_refs:
@@ -27,6 +27,8 @@ related:
 - **Source:** OpenAlex (verified), PubMed cross-check [UNVERIFIED PMID]
 
 ## Key Contribution
+
+This random-effects-meta-analysis note links paper:Viechtbauer2010, paper:DerSimonian1986, paper:IntHout2016, and topic:cross-study-meta-analysis-cancer-genomics.
 
 Large simulation study comparing seven between-study variance (τ²) estimators used in
 random-effects meta-analysis: DerSimonian-Laird (DL), REML, Paule-Mandel (PM), Sidik-Jonkman

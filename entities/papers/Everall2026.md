@@ -4,7 +4,7 @@ title: Comprehensive repertoire of the chromosomal alteration and mutational sig
   across 16 cancer types
 status: active
 created: '2026-05-31'
-updated: '2026-05-31'
+updated: '2026-06-28'
 id: paper:Everall2026
 ontology_terms:
 - mutational signatures
@@ -33,6 +33,8 @@ related:
 - **Source:** PDF
 
 ## Key Contribution
+
+This mutational-signature catalogue note links paper:Alexandrov2020, paper:Degasperi2022, paper:Islam2022, and paper:Steele2022.
 
 Using WGS from 10,983 patients across 16 tumor types in the 100,000 Genomes Project (100KGP), this study performs the most comprehensive joint extraction of all five somatic mutation classes — SBS, DBS, ID, CN, and SV — generating 134 signatures, of which 26 are new to COSMIC. Crucially, it introduces a COSMIC reference set for structural variation (SV) signatures, derived de novo for the first time at this scale. By systematically associating these signatures with clinical phenotypes, histological subtypes, DNA repair gene inactivation, therapy exposure, clonality timing, and patient survival, the paper moves the COSMIC catalog from a static spectral reference toward a functionally annotated resource that directly supports precision oncology.
 

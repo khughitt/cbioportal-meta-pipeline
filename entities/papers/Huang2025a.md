@@ -4,7 +4,7 @@ title: 'Cancer-nervous system crosstalk: from biological mechanism to therapeuti
   opportunities'
 status: active
 created: '2026-06-06'
-updated: '2026-06-06'
+updated: '2026-06-28'
 id: paper:Huang2025a
 ontology_terms:
 - cancer neurobiology
@@ -48,6 +48,8 @@ related:
 ## Key Contribution
 
 A comprehensive 29-page narrative review synthesizing the bidirectional crosstalk between the nervous system and cancer tumors, organized around three interaction tiers: (1) direct neural effects on tumor cells via neurotransmitters, neurotrophic factors, and neurogenic chemokines; (2) tumor effects on neural function (axonogenesis, neuropathic pain, neuroplasticity); and (3) neuro-immune-cancer triangulation in which the nervous system modulates immune cells in the TME, indirectly shaping tumor fate. The review explicitly extends the Hanahan "hallmarks of cancer" framework by arguing that neural regulation plays a role in at least five of the eight hallmarks and two enabling characteristics. It catalogs the principal signaling pathways, receptor families, and therapeutic candidates (pharmacological and non-pharmacological) in a series of summary tables (Tables 1–4), making it a useful reference map for the nascent cancer neurobiology field.
+
+This note belongs to the same cancer-neuroscience review family as paper:Mancusi2023, paper:Keough2022, paper:Magnon2023, paper:Hanahan2023, paper:Venkatesh2019, paper:Hwang2025a, paper:Huang2023a, paper:Mravec2008, and paper:Cortese2020.
 
 ## Methods
 

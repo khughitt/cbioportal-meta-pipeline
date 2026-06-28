@@ -3,7 +3,7 @@ type: paper
 title: 'Identifying Epistasis in Cancer Genomes: A Delicate Affair'
 status: active
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: paper:VanDeHaar2019
 tags:
 - perspective
@@ -35,6 +35,8 @@ related:
 - **Source:** OpenAlex + PubMed (verified 2026-04-13)
 
 ## Key Contribution
+
+This epistasis-caution note links paper:Canisius2016, paper:Mina2020, paper:Ciriello2012, and paper:Leiserson2015.
 
 A **Perspective / methodology-critique** paper enumerating the specific statistical pitfalls
 that plague mutual-exclusivity and co-occurrence testing in pan-cancer datasets. Argues

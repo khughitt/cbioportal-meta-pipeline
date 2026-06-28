@@ -3,7 +3,7 @@ type: paper
 title: Oncogenic Signaling Pathways in The Cancer Genome Atlas
 status: read
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: paper:SanchezVega2018
 ontology_terms: []
 source_refs:
@@ -29,6 +29,8 @@ dataset_usage:
 - **BibTeX key:** SanchezVega2018
 
 ## Key Contribution
+
+This TCGA pathway-landscape note links paper:Bailey2018, paper:Ciriello2013, paper:Hoadley2018, and topic:pan-cancer-mutation-landscape.
 
 A pan-cancer, pathway-centric reanalysis of the PanCanAtlas freeze (~9,125 samples, 33 cancer
 types). Rather than ranking individual driver genes, the authors curate ten canonical oncogenic

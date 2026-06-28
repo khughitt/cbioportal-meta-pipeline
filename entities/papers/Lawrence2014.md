@@ -3,7 +3,7 @@ type: paper
 title: Discovery and saturation analysis of cancer genes across 21 tumour types
 status: read
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: paper:Lawrence2014
 ontology_terms: []
 source_refs:
@@ -25,6 +25,8 @@ related:
 - **BibTeX key:** Lawrence2014
 
 ## Key Contribution
+
+This cancer-gene-discovery note links paper:Bailey2018, paper:Kandoth2013, topic:cancer-driver-genes, and topic:mutation-rate-normalization.
 
 Applies MutSigCV — a gene-specific background-mutation-rate model — to 4,742 tumour/normal exome pairs across 21 cancer types, producing the first unified pan-cancer significantly-mutated-gene (SMG) catalogue corrected for the ~5-orders-of-magnitude variation in background rate across genes and tumours. Introduces the companion *saturation analysis*: by down-sampling and extrapolating the rate at which new SMGs appear, the authors estimate the cohort size per tumour type required to reach near-complete driver-gene discovery. The central claim is quantitative — 600–5,000 samples per tumour type, scaling with background mutation frequency — rather than a list of new genes per se.
 

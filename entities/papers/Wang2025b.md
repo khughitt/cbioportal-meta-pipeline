@@ -4,7 +4,7 @@ title: 'Hijacking homeostasis: the brain-body neural circuitry in tumor pathogen
   and emerging therapeutic frontiers'
 status: active
 created: '2026-06-06'
-updated: '2026-06-06'
+updated: '2026-06-28'
 id: paper:Wang2025b
 ontology_terms:
 - brain-body crosstalk
@@ -37,6 +37,8 @@ related:
 -->
 
 ## Key Contribution
+
+This brain-body neural-circuitry review note links paper:Magnon2023, paper:Hanahan2023, paper:Venkatesh2019, and paper:Mravec2008.
 
 This 2025 review from Jin lab (Institute of Cancer Neuroscience, Lanzhou University) synthesizes the emerging field of "brain-body crosstalk" in cancer, arguing that tumors are not localized genetic lesions but systemic hijackers of whole-organism homeostasis. The central thesis is that malignancies co-opt the nervous system's bidirectional brain-body communication channels — specifically the HPA axis, the sympatho-adrenal medullary (SAM) axis, the hypothalamic-sympathetic-adrenal (HSA) axis, the hypothalamic-pituitary-gonadal (HPG) axis, the vagus-gut axis, and the neuro-immune and neuro-metabolic axes — to remodel the tumor microenvironment (TME), evade immune destruction, and promote proliferation, invasion, and metastasis. Reciprocally, the brain-body crosstalk system can mount anti-tumor homeostatic responses that the host organism deploys to resist tumor expansion. The review proposes that this bidirectional interplay constitutes a new conceptual framework for cancer treatment, positioning neuromodulation, circadian rhythm targeting, neural blockade, and comprehensive psycho-exercise interventions as rational therapeutic strategies.
 

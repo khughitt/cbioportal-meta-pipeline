@@ -3,7 +3,7 @@ type: paper
 title: Cancer cells co-opt an inter-organ neuroimmune circuit to escape immune surveillance
 status: active
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-28'
 id: paper:Zhang2025
 ontology_terms:
 - cancer neuroscience
@@ -40,6 +40,8 @@ related:
   abstract are marked `[INACCESSIBLE]`.
 
 ## Key Contribution
+
+This neuroimmune-circuit paper note links paper:Fan2024, paper:Lu2026, and hypothesis:0012-neural-gene-enrichment-length-histology-artifact.
 
 A primary study (HNSCC clinical data + three murine oral cancer models, with melanoma
 referenced) defining an **inter-organ neuroimmune circuit** that tumors co-opt for immune

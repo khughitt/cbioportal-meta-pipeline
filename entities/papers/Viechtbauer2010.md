@@ -3,7 +3,7 @@ type: paper
 title: Conducting Meta-Analyses in R with the metafor Package
 status: active
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: paper:Viechtbauer2010
 ontology_terms: []
 source_refs:
@@ -26,6 +26,8 @@ related:
 - **Source:** OpenAlex (verified)
 
 ## Key Contribution
+
+This metafor software note links paper:Langan2018, paper:DerSimonian1986, paper:Stijnen2010, and topic:cross-study-meta-analysis-cancer-genomics.
 
 Defines the canonical R interface for meta-analysis — the `metafor` package — which has
 become the de-facto tool-of-record for applied meta-analytic work. One API for fixed-effects,

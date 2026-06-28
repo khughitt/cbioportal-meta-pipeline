@@ -4,7 +4,7 @@ title: Mutational signatures association with replication timing in normal cells
   similarities and differences with matched cancer tissues
 status: active
 created: '2026-04-18'
-updated: '2026-04-18'
+updated: '2026-06-28'
 id: paper:Yaacov2023
 ontology_terms: []
 source_refs:
@@ -33,6 +33,8 @@ dataset_usage:
 - **Source:** Europe PMC full-text XML (retrieved via science-tool paper-fetch, status: ok)
 
 ## Key Contribution
+
+This replication-timing signature note links paper:Yoshida2026, topic:mutation-rate-normalization, and topic:pan-cancer-mutation-landscape.
 
 The first comprehensive analysis of the association between mutational signatures and DNA replication timing (RT) specifically in non-cancerous tissues. Using 2.9 million somatic mutations from 25 published datasets spanning multiple normal tissue types, the authors show that most mutational processes have the same RT bias (early vs. late replicating region enrichment) in normal cells as in matched cancer samples — establishing that the relationship between mutagenesis and replication timing is largely conserved through carcinogenic transformation. The key exception is SBS1 (clock-like CpG deamination): SBS1 is preferentially enriched in late-replicating regions (LRR) in normal tissues but loses this bias in cancer, likely due to increased mutation burden and CpG island methylation changes during transformation.
 

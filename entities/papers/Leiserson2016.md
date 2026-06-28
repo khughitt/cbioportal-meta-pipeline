@@ -3,7 +3,7 @@ type: paper
 title: A weighted exact test for mutually exclusive mutations in cancer
 status: active
 created: '2026-04-21'
-updated: '2026-04-21'
+updated: '2026-06-28'
 id: paper:Leiserson2016
 ontology_terms: []
 source_refs:
@@ -25,6 +25,8 @@ related:
 - **Source:** `papers/references.bib`
 
 ## Key Contribution
+
+This weighted-exact exclusivity-test note links paper:Leiserson2015, paper:Kim2017, and topic:co-occurrence-and-mutual-exclusivity.
 
 Introduces WExT, a weighted exact mutual-exclusivity test that combines exact-testing logic with
 sample-specific weighting.

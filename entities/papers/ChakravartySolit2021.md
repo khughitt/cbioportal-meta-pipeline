@@ -3,7 +3,7 @@ type: paper
 title: Clinical cancer genomic profiling
 status: abstract-read
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: paper:ChakravartySolit2021
 ontology_terms: []
 source_refs:
@@ -34,6 +34,8 @@ on integrating tumour with germline calling, interpreting allelic/zygosity conte
 and moving beyond simple variant lists to mutational-signature- and cfDNA-based
 readouts. <!-- UNVERIFIED: framing inferred from abstract; full-text confirmation
 of the "methodology class" framing not obtained -->
+
+This clinical-profiling synthesis is linked to paper:Zehir2017, paper:AACRGENIEConsortium2017, paper:Pugh2022, topic:targeted-panel-sequencing-bias, and topic:cohort-selection-bias-representativeness.
 
 ## Methods
 

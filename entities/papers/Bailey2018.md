@@ -3,7 +3,7 @@ type: paper
 title: Comprehensive Characterization of Cancer Driver Genes and Mutations
 status: read
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: paper:Bailey2018
 ontology_terms: []
 source_refs:
@@ -27,6 +27,8 @@ dataset_usage:
 - **BibTeX key:** Bailey2018
 
 ## Key Contribution
+
+This PanCanAtlas driver-gene note links paper:Ellrott2018, topic:cancer-driver-genes, and topic:pan-cancer-mutation-landscape.
 
 Produces a PanCanAtlas consensus driver-gene catalog by combining 26 computational
 driver-detection tools applied to the MC3 mutation call-set across 9,423 TCGA tumor exomes

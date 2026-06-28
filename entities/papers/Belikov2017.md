@@ -3,7 +3,7 @@ type: paper
 title: The number of key carcinogenic events can be predicted from cancer incidence
 status: active
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-28'
 id: paper:Belikov2017
 ontology_terms:
 - multistage carcinogenesis
@@ -35,6 +35,8 @@ related:
 - **Source:** Europe PMC full-text XML
 
 ## Key Contribution
+
+This carcinogenic-event-count note links topic:multistage-carcinogenesis-and-age-of-onset, paper:ArmitageDoll1954, and theme:0003-temporal-structure-of-carcinogenesis-order-count-and-timing-of-the.
 
 Belikov fits the Erlang probability distribution to age-incidence curves for the 20 most prevalent US cancer types (CDC WONDER data, ~20 million cases, 1999–2012) and extracts three interpretable parameters per cancer type: k (number of key carcinogenic events), b (average time in years between events), and A/1000 (maximal populational susceptibility as a percentage). The Erlang distribution — which describes the waiting time for k independent Poisson-process events — provides excellent fits across all 20 cancer types (R² = 0.9734–0.9999, mean 0.9953), and the framework extends the classical Armitage-Doll/Nordling multistage model by replacing the power-law approximation with an exact probability distribution, which additionally accounts for the empirically observed decline in cancer incidence at advanced age.
 

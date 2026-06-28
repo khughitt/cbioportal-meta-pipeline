@@ -4,7 +4,7 @@ title: 'Arcsine-based transformations for meta-analysis of proportions: Pros, co
   and alternatives'
 status: active
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: paper:LinXu2020
 ontology_terms: []
 source_refs:
@@ -27,6 +27,8 @@ related:
 - **Source:** OpenAlex (verified)
 
 ## Key Contribution
+
+This proportion-meta-analysis note links paper:Barendregt2013, paper:Stijnen2010, paper:Nyaga2014, and topic:cross-study-meta-analysis-cancer-genomics.
 
 Systematic critique of Freeman-Tukey double-arcsine (FTT) and related arcsine-based
 transformations for meta-analysis of proportions (Barendregt 2013 [@Barendregt2013]). Argues that the standard

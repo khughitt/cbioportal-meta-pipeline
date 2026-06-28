@@ -3,7 +3,7 @@ type: paper
 title: The neural regulation of cancer
 status: active
 created: '2026-06-06'
-updated: '2026-06-06'
+updated: '2026-06-28'
 id: paper:Venkatesh2019
 ontology_terms:
 - neuroscience-oncology
@@ -32,6 +32,8 @@ related:
 - **Source:** PDF (local copy)
 
 ## Key Contribution
+
+This neural-regulation-of-cancer note links paper:Mancusi2023, paper:Magnon2023, and paper:Xiong2023.
 
 A prize essay summarizing the author's doctoral and postdoctoral research (Monje laboratory, Stanford) establishing that neuronal activity is a functional driver of glioma progression — not merely a passive microenvironmental bystander. The essay synthesizes three linked lines of work: (1) optogenetic demonstration that neuronal activity promotes circuit-specific glioma growth; (2) identification of soluble neuroligin-3 (NLGN3) shed by the ADAM10 sheddase as the principal activity-dependent mitogen, with loss of NLGN3 abolishing glioma growth in mouse models; and (3) evidence that glioma cells form functional AMPA receptor-dependent synapses with neurons and propagate depolarization across the tumor mass via gap junctions. The essay also notes that neural regulation of tumor growth has since been extended beyond glioma to prostate, pancreatic, skin, and gastric cancers, framing neural-circuit hijacking as a broadly applicable cancer-progression mechanism.
 

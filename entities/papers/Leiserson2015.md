@@ -4,7 +4,7 @@ title: 'CoMEt: a statistical approach to identify combinations of mutually exclu
   alterations in cancer'
 status: active
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: paper:Leiserson2015
 tags:
 - mutual-exclusivity
@@ -39,6 +39,8 @@ dataset_usage:
 - **Method name:** **CoMEt** (Combinations of Mutually Exclusive alterations test)
 
 ## Key Contribution
+
+This CoMEt mutual-exclusivity note links paper:Vandin2012, paper:Leiserson2013, paper:Leiserson2016, and paper:Ciriello2012.
 
 Introduces **CoMEt**, an exact-tail-enumeration statistical test for **sets of mutually
 exclusive alterations** (arbitrary size *k*, not just pairs). Provides principled Bonferroni-

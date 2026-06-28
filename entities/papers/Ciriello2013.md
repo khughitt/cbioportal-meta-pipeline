@@ -3,7 +3,7 @@ type: paper
 title: Emerging landscape of oncogenic signatures across human cancers
 status: read
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: paper:Ciriello2013
 ontology_terms: []
 source_refs:
@@ -24,6 +24,8 @@ related:
 - **DOI:** 10.1038/ng.2762
 
 ## Key Contribution
+
+This oncogenic-signature landscape note links paper:SanchezVega2018, paper:Kandoth2013, and topic:pan-cancer-mutation-landscape.
 
 First pan-cancer attempt to classify tumors by *type of oncogenic alteration* rather than
 tissue of origin. Distills thousands of genomic features down to ~500 "selected functional

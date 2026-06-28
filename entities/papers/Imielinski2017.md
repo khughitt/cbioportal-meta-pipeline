@@ -3,7 +3,7 @@ type: paper
 title: Insertions and Deletions Target Lineage-Defining Genes in Human Cancers
 status: active
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: paper:Imielinski2017
 tags:
 - background-mutation-rate
@@ -40,6 +40,8 @@ dataset_usage:
 - **Software:** https://github.com/mskilab-org/fishHook
 
 ## Key Contribution
+
+This indel-driver note links paper:Lawrence2014, paper:Martincorena2017, paper:Bailey2018, and paper:Canisius2016.
 
 Introduces the **FishHook** statistical framework — a **Gamma-Poisson regression** on
 somatic mutation counts along the genome that **corrects for known covariates of neutral

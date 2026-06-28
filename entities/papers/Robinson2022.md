@@ -4,7 +4,7 @@ title: Inherited MUTYH mutations cause elevated somatic mutation rates and disti
   mutational signatures in normal human cells
 status: active
 created: '2026-05-31'
-updated: '2026-05-31'
+updated: '2026-06-28'
 id: paper:Robinson2022
 ontology_terms:
 - mutational signatures
@@ -33,6 +33,8 @@ related:
 - **Source:** PDF
 
 ## Key Contribution
+
+This MUTYH normal-cell mutational-signature note links paper:LeeSix2018 and paper:Martincorena2018.
 
 Whole-genome sequencing of individual normal intestinal crypts from 10 individuals with biallelic germline *MUTYH* mutations (MUTYH-Associated Polyposis; MAP) shows that inherited BER deficiency elevates the somatic base-substitution rate 2–4-fold (median; one outlier 31-fold) above wild-type, and does so through a characteristic combination of COSMIC signatures SBS18 (ROS damage) and SBS36 (defective MUTYH function), both dominated by C>A transversions. The elevated rate in histologically normal cells directly explains the increased colorectal cancer predisposition in MAP, and demonstrates that cells tolerate substantially elevated somatic mutation burdens without premature ageing.
 

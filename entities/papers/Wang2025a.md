@@ -3,7 +3,7 @@ type: paper
 title: Data-driven universal insights into tumorigenesis via hallmark networks
 status: active
 created: '2026-06-07'
-updated: '2026-06-27'
+updated: '2026-06-28'
 id: paper:Wang2025a
 ontology_terms:
 - hallmarks of cancer
@@ -48,6 +48,8 @@ related:
 - **Source:** PDF
 
 ## Key Contribution
+
+This hallmark-network tumorigenesis note links topic:co-occurrence-and-mutual-exclusivity.
 
 This paper proposes a whole-genome, data-driven systems biology framework for studying cancer evolution at the level of hallmarks rather than individual genes. The core idea is to coarse-grain the high-dimensional gene regulatory network (GRN) of a cell into a 10-node "hallmark network" — one node per canonical hallmark — and then simulate the dynamics of that network using stochastic differential equations (SDEs) incorporating Ornstein-Uhlenbeck noise. Applied across 15 cancer types from the GRAND database, the framework produces two main results: (1) hallmark-level probability distributions shift significantly between normal and cancerous states (all 10 hallmarks elevated in cancer, p < 0.001 for gastric adenocarcinoma as the representative example), with "Tissue Invasion and Metastasis" showing the largest normal-vs-cancer divergence (Jensen-Shannon divergence 0.692) and "Reprogramming Energy Metabolism" the smallest (JS divergence 0.385); and (2) network topology — specifically inter-hallmark regulatory connectivity as captured by the Dynamic Network Biomarker (DNB) score — undergoes significant reconfiguration **before** overt shifts in individual hallmark levels, providing an early-warning signal of the malignant transition. The topological early-warning lead time is statistically significant for all 10 hallmarks across all 15 cancer types (one-sample Wilcoxon signed-rank test, p < 0.001).
 

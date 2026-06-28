@@ -3,7 +3,7 @@ type: paper
 title: 'Mutation and Cancer: Statistical Study of Retinoblastoma'
 status: active
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-28'
 id: paper:Knudson1971
 ontology_terms:
 - retinoblastoma
@@ -37,6 +37,8 @@ related:
 - **Source:** Europe PMC abstract (confirmed via paper-fetch; PMC full text is scanned images, not machine-readable) + LLM knowledge for well-established content (4,206 citations, foundational classic)
 
 ## Key Contribution
+
+This two-hit retinoblastoma model note links topic:multistage-carcinogenesis-and-age-of-onset and theme:0003-temporal-structure-of-carcinogenesis-order-count-and-timing-of-the.
 
 Knudson proposed and statistically validated the "two-hit" model of tumorigenesis: a cancer requiring
 two rate-limiting mutational events will present earlier and more frequently in individuals who

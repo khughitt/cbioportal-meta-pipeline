@@ -3,7 +3,7 @@ type: paper
 title: Meta-analysis of prevalence
 status: active
 created: '2026-04-21'
-updated: '2026-04-21'
+updated: '2026-06-28'
 id: paper:Barendregt2013
 ontology_terms: []
 source_refs:
@@ -25,6 +25,8 @@ related:
 - **Source:** `papers/references.bib`
 
 ## Key Contribution
+
+This prevalence-meta-analysis note links paper:Nyaga2014 and topic:cross-study-meta-analysis-cancer-genomics.
 
 Popularizes the Freeman-Tukey double-arcsine workflow for meta-analysis of single proportions.
 

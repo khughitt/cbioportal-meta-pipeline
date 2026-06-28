@@ -4,7 +4,7 @@ title: Genomic characterization of metastatic patterns from prospective clinical
   of 25,000 patients
 status: read
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: paper:Nguyen2022
 ontology_terms: []
 source_refs:
@@ -27,6 +27,8 @@ dataset_usage:
 - **BibTeX key:** Nguyen2022
 
 ## Key Contribution
+
+This metastatic-pattern sequencing note links paper:Zehir2017 and topic:pan-cancer-mutation-landscape.
 
 Assembles MSK-MET, a pan-cancer cohort of 25,775 patients (50 tumor types) sequenced
 prospectively with MSK-IMPACT and uniformly annotated for metastatic events across 21

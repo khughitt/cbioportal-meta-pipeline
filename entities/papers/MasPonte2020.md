@@ -4,7 +4,7 @@ title: DNA mismatch repair promotes APOBEC3-mediated diffuse hypermutation in hu
   cancers
 status: active
 created: '2026-05-31'
-updated: '2026-05-31'
+updated: '2026-06-28'
 id: paper:MasPonte2020
 ontology_terms:
 - APOBEC3
@@ -33,6 +33,8 @@ related:
 - **Source:** PDF
 
 ## Key Contribution
+
+This APOBEC-hypermutation note links paper:MasPonte2022.
 
 This paper identifies a previously unrecognized mode of APOBEC3 (A3) mutagenesis in human
 tumors called *omikli* (Greek: fog) — diffuse, non-recurrent hypermutation clusters of 2–4

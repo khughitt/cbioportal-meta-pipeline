@@ -3,7 +3,7 @@ type: paper
 title: 'Tissue-specificity in cancer: The rule, not the exception'
 status: active
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-28'
 id: paper:Haigis2019
 ontology_terms:
 - tissue specificity
@@ -36,6 +36,8 @@ related:
 - **Source:** PDF (papers/pdfs/2019_Haigis_Tissue-specificity-in-cancer-the-rule-not-the-exception.pdf)
 
 ## Key Contribution
+
+This tissue-specificity review note links topic:lineage-addiction-and-cell-of-origin-driver-specificity and discussion:0008-tissue-cell-type-specificity-of-cancer-drivers.
 
 This two-page Science Perspective argues that tissue-specificity in cancer driver gene behavior
 is the *rule*, not the exception: the same somatic mutation in the same gene can be strongly

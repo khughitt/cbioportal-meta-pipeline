@@ -4,7 +4,7 @@ title: 'The cBio cancer genomics portal: an open platform for exploring multidim
   cancer genomics data'
 status: read
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: paper:Cerami2012
 ontology_terms: []
 source_refs:
@@ -26,6 +26,8 @@ dataset_usage:
 - **BibTeX key:** Cerami2012
 
 ## Key Contribution
+
+This cBioPortal platform note links paper:Gao2013.
 
 Introduces the cBio Cancer Genomics Portal as a web resource that lowers the barrier
 to reusing large-scale cancer genomics data (TCGA, ICGC, and published studies) by

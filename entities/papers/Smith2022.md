@@ -3,7 +3,7 @@ type: paper
 title: Mitochondrial DNA mutations in ageing and cancer
 status: active
 created: '2026-04-25'
-updated: '2026-04-25'
+updated: '2026-06-28'
 id: paper:Smith2022
 ontology_terms: []
 source_refs:
@@ -24,6 +24,8 @@ related:
 - **Source:** PDF (user-supplied); metadata confirmed via science-tool paper-fetch (Europe PMC, status: ok).
 
 ## Key Contribution
+
+This mitochondrial-DNA mutation note links topic:pan-cancer-mutation-landscape.
 
 A comprehensive narrative review consolidating current knowledge on somatic mitochondrial DNA (mtDNA) mutations in two related contexts: normal ageing tissues and cancer. The authors synthesise evidence that mtDNA mutations accumulate clonally in post-mitotic and mitotic human tissues with age, that similar mutations are found in tumours, and that the functional consequences — predominantly via disruption of oxidative phosphorylation (OXPHOS) — are highly dependent on tissue type and on the specific gene and respiratory-chain complex affected. A key argument is that the same ageing-related somatic mtDNA clones that pre-exist in normal tissue may be enriched during oncogenic transformation, potentially modulating tumour metabolism, apoptotic threshold, and metastatic potential, without being the primary oncogenic driver in most settings.
 

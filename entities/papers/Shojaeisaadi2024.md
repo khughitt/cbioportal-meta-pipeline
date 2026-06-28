@@ -4,7 +4,7 @@ title: Mutational signature analyses in multi-child families reveal sources of a
   increases in human germline mutations
 status: active
 created: '2026-05-31'
-updated: '2026-05-31'
+updated: '2026-06-28'
 id: paper:Shojaeisaadi2024
 ontology_terms:
 - mutational signatures
@@ -32,6 +32,8 @@ related:
 - **Source:** PDF
 
 ## Key Contribution
+
+This germline-mutational-signature family study note links paper:Seplyarskiy2021.
 
 This study characterises 2,479 validated germline de novo SNVs (DNMs) in 13 multi-child Mexican-American families using whole-genome sequencing, and applies three distinct mutational signature databases (COSMIC, human germline, CRISPR-Cas9 DNA-repair KO) to decompose the de novo SNV spectrum. The authors demonstrate a strong overall paternal age effect (PAE; ~1.29 additional DNMs per year of paternal age) with extensive inter-family variability in the slope, identify that C>T transitions at CpG sites increase specifically with older paternal age, and propose a model in which inaccurate DNA mismatch repair (MMR) — particularly inefficiency in the initiation and excision steps (EXO1, PMS1, PMS2) — is a major mechanistic contributor to the accumulation of germline DNMs with advancing paternal age.
 

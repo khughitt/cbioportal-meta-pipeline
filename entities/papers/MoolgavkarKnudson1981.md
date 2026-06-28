@@ -3,7 +3,7 @@ type: paper
 title: 'Mutation and cancer: a model for human carcinogenesis'
 status: active
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-28'
 id: paper:MoolgavkarKnudson1981
 ontology_terms:
 - multistage carcinogenesis
@@ -35,6 +35,8 @@ related:
 - **Source:** Full text read from PDF (`~/downloads/moolgavkar1981.pdf`, 16 pp., scanned + OCR, extracted cleanly via `pdftotext`). Affiliation confirmed as The Institute for Cancer Research, Fox Chase Cancer Center, Philadelphia.
 
 ## Key Contribution
+
+This multistage carcinogenesis model note links theme:0003-temporal-structure-of-carcinogenesis-order-count-and-timing-of-the.
 
 This paper introduces the two-stage clonal-expansion model of carcinogenesis — often called the MVK model (Moolgavkar–Venzon–Knudson) or TSCE model (two-stage clonal expansion). The paper's central claim, stated explicitly in the abstract and conclusion, is that *two* heritable events (not five to seven, as Armitage–Doll multistage fits suggested) are sufficient to account for the full spectrum of human cancer incidence curves — from embryonal/childhood-peak tumors through adult log-log carcinomas through the complex hormone-modulated shape of breast cancer — provided that the **intermediate cell (IC) compartment is allowed to grow and die**. The proliferative dynamics of ICs (parameterised by birth rate α₂ and death/differentiation rate β₂) bend the incidence curve in ways that no fixed-stage mutation-counting model can reproduce. The paper also embeds Knudson's two-hit retinoblastoma hypothesis formally within this stochastic framework and gives a precise mechanistic interpretation of tumor promotion: promoters raise α₂ − β₂ for ICs, not mutation rates.
 

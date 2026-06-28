@@ -3,7 +3,7 @@ type: paper
 title: Diverse mutational landscapes in human lymphocytes
 status: active
 created: '2026-05-31'
-updated: '2026-05-31'
+updated: '2026-06-28'
 id: paper:Machado2022
 ontology_terms: []
 datasets: []
@@ -23,6 +23,8 @@ related:
 - **Source:** PDF
 
 ## Key Contribution
+
+This lymphocyte mutational-landscape note links paper:Machado2021.
 
 This paper provides the most comprehensive whole-genome characterisation to date of somatic mutation burden and mutational signatures in normal (non-malignant) human lymphocytes across five immune cell compartments (naive B, memory B, naive T, memory T, and HSPCs), sequencing 717 single-cell colony-expanded genomes from donors aged 0–81 years. It demonstrates that lymphocytes carry substantially more mutations than haematopoietic stem cells, that off-target effects of immunological diversification (SHM, RAG-mediated recombination) account for roughly half of the excess differentiation-associated mutations, and that the mutational signatures and burdens of normal memory B cells closely mirror those observed in many B-cell lymphomas — suggesting that malignant transformation of lymphocytes arises largely from the same mutational processes operating during normal ontogeny.
 

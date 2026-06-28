@@ -4,7 +4,7 @@ title: Variation in cancer risk among tissues can be explained by the number of 
   cell divisions
 status: active
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-28'
 id: paper:TomasettiVogelstein2015
 ontology_terms:
 - cancer etiology
@@ -34,6 +34,8 @@ related:
 - **Source:** PMC full-text (PMC4446723) + LLM knowledge
 
 ## Key Contribution
+
+This stem-cell-division cancer-risk note links topic:multistage-carcinogenesis-and-age-of-onset.
 
 Tomasetti and Vogelstein demonstrate that lifetime cancer risk across 31 tissue types correlates strongly with the total number of lifetime stem cell divisions in that tissue (Spearman rho = 0.81, p < 3.5 × 10⁻⁸; Pearson r = 0.804, 95% CI 0.63–0.90), explaining approximately 65% (95% CI 39–81%) of the variance in cancer risk across tissue types. The paper introduces the "extra risk score" (ERS, also called lscd — lifetime stem cell divisions) as the baseline replicative mutation supply per tissue, and uses it to classify cancers as either replication-driven ("R-tumors," risk tracks ERS closely) or deterministic/environmentally-driven ("D-tumors," risk substantially exceeds the ERS baseline). The central argument — immediately contentious — is that most cancers arise predominantly from stochastic replication errors ("bad luck") rather than inherited or environmental factors, which are additive contributors rather than primary drivers of cross-tissue variation.
 

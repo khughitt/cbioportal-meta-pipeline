@@ -3,7 +3,7 @@ type: paper
 title: Geographic and age variations in mutational processes in colorectal cancer
 status: active
 created: '2026-05-31'
-updated: '2026-05-31'
+updated: '2026-06-28'
 id: paper:DiazGay2025
 ontology_terms:
 - mutational signatures
@@ -33,6 +33,8 @@ related:
 - **Source:** PDF (Europe PMC XML full text)
 
 ## Key Contribution
+
+This colorectal mutational-process geography note links paper:DiazGay2023 and paper:Alexandrov2020.
 
 This study applies whole-genome sequencing to 981 colorectal cancer genomes from 11 countries across 4 continents (the Mutographs cohort) to perform mutational epidemiology — linking geographic and age-related variation in colorectal cancer incidence to specific mutational signatures. The central finding is that colibactin-induced signatures SBS88 and ID18 (produced by pks-island-carrying bacteria such as E. coli) are enriched in early-onset colorectal cancer (3.3× more common in diagnoses before age 40 vs. over 70) and correlate with country-level colorectal cancer age-standardized incidence rates, implicating early-life microbial mutagenic exposure in the rising global incidence of early-onset colorectal cancer.
 

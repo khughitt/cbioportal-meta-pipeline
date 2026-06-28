@@ -3,7 +3,7 @@ type: paper
 title: Cancer therapy shapes the fitness landscape of clonal hematopoiesis
 status: read
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: paper:Bolton2020
 ontology_terms: []
 source_refs:
@@ -23,6 +23,8 @@ related:
 - **BibTeX key:** Bolton2020
 
 ## Key Contribution
+
+This therapy-associated clonal-hematopoiesis note links topic:clonal-hematopoiesis-contamination and topic:targeted-panel-sequencing-bias.
 
 Largest single-institution characterization of clonal hematopoiesis (CH) in solid-tumor
 patients (n = 24,146) using paired tumor / blood (buffy-coat) sequencing on the

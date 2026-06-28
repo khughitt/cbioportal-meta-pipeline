@@ -3,7 +3,7 @@ type: paper
 title: A benchmark of gene expression tissue-specificity metrics
 status: active
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-28'
 id: paper:KryuchkovaMostacci2017
 ontology_terms:
 - tissue specificity
@@ -34,6 +34,8 @@ related:
 - **Source:** Full text (Europe PMC XML, PMC5444245)
 
 ## Key Contribution
+
+This tissue-specificity-metric benchmark note links topic:lineage-addiction-and-cell-of-origin-driver-specificity and discussion:0008-tissue-cell-type-specificity-of-cancer-drivers.
 
 This paper is the primary benchmark for gene-expression tissue-specificity metrics. It compares nine
 metrics — Tau, Gini, TSI, Counts, Hg (Shannon entropy-based), z-score, SPM, EE, and PEM — across

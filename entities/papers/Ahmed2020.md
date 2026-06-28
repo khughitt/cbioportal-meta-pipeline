@@ -3,7 +3,7 @@ type: paper
 title: Gastrointestinal neuroendocrine tumors in 2020
 status: active
 created: '2026-06-06'
-updated: '2026-06-06'
+updated: '2026-06-28'
 id: paper:Ahmed2020
 ontology_terms:
 - neuroendocrine tumor
@@ -37,6 +37,8 @@ related:
 - **Source:** PDF
 
 ## Key Contribution
+
+This gastrointestinal neuroendocrine tumor review note links paper:Kulke2012 and paper:Tan2024.
 
 This invited clinical review synthesizes the epidemiology, WHO 2017 classification, biology, site-specific clinical features, and management of gastrointestinal neuroendocrine tumors (GI-NETs) as of 2020. It provides a single-author, accessible reference for the full spectrum of GI-NET entities — gastric, small intestinal (duodenal, jejuno-ileal), appendiceal, colonic, and rectal — and their distinguishing biological characteristics. A key conceptual point is that NETs arise from neuroendocrine cells (cells with both neural and endocrine properties), constitutively express a stereotyped set of lineage markers (CgA, SYP, NSE/ENO2), and are classified as a distinct histological entity separate from adenocarcinomas and from tumors in which neural pathways regulate epithelial growth.
 

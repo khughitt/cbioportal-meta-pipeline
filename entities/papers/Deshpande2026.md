@@ -4,7 +4,7 @@ title: Unsupervised Identification of Cancer Attractor States through the Lens o
   Embryonic Origin and Cancer Hallmarks
 status: active
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-28'
 id: paper:Deshpande2026
 ontology_terms:
 - hallmarks of cancer
@@ -38,6 +38,8 @@ dataset_usage:
 - **Source:** Full text PDF (local); all methods and results verified from primary text.
 
 ## Key Contribution
+
+This attractor-state analysis note links topic:co-occurrence-and-mutual-exclusivity.
 
 This paper introduces an **EO/HRM framework** that integrates **embryological origin (EO)** — a coarse five-group proxy (ectoderm, mesoderm, endoderm [foregut/midgut/hindgut/urogenital], neural crest, yolk sac) for the inherent cellular gene-regulatory network — with **hallmark-related mutations (HRM)** — binary per-hallmark involvement flags derived from COSMIC-annotated somatic variants — to perform unsupervised clustering across 25,775 pan-cancer tumor samples in the MSK-MET database. The clustering (Jaccard-distanced t-SNE + K-means; optimal K selected by the elbow method) identifies **11 stable pan-cancer "attractor states"** (EO/HRM model) that are interpreted as stable functional basins in the Waddington epigenetic landscape. The central claim is that adding embryological origin as a feature — even at this coarse organ-level grain — significantly enhances cluster stability (ARI: 0.74 vs. 0.70 for HRM-only) and prognostic performance (C-index: 0.59 vs. 0.56 for HRM-only) relative to using HRM profiles alone.
 

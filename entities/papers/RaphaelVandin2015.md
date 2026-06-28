@@ -4,7 +4,7 @@ title: Simultaneous Inference of Cancer Pathways and Tumor Progression from Cros
   Mutation Data
 status: active
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-28'
 id: paper:RaphaelVandin2015
 ontology_terms: []
 datasets:
@@ -37,6 +37,8 @@ dataset_usage:
 - **Source:** Full text via PMC open access (PMC4449706); all methods and results verified from primary text.
 
 ## Key Contribution
+
+This pathway-progression inference note links paper:Vocht2026 and paper:Schill2024.
 
 This paper introduces the **Pathway Linear Progression Model (PLPM)** — a unified probabilistic-combinatorial framework that **simultaneously infers** (a) which genes belong to the same "pathway" (i.e., mutually exclusive cancer driver modules) **and** (b) the ordered temporal sequence in which those modules are acquired during tumor progression, using only cross-sectional binary mutation matrices. No pathway labels are required as input; both the partition and the ordering emerge from the data.
 

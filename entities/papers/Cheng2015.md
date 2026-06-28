@@ -5,7 +5,7 @@ title: 'Memorial Sloan Kettering-Integrated Mutation Profiling of Actionable Can
   Assay for Solid Tumor Molecular Oncology'
 status: read
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: paper:Cheng2015
 ontology_terms: []
 source_refs:
@@ -29,6 +29,8 @@ dataset_usage:
 - **BibTeX key:** Cheng2015
 
 ## Key Contribution
+
+This MSK-IMPACT assay note links paper:Zehir2017 and topic:targeted-panel-sequencing-bias.
 
 Analytical validation of the first-generation MSK-IMPACT assay (IMPACT-341), a CLIA-certified
 hybridization-capture NGS panel covering 341 cancer-associated genes from FFPE tumor DNA against

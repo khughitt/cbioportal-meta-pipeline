@@ -4,7 +4,7 @@ title: Scalable Open Science Approach for Mutation Calling of Tumor Exomes Using
   Genomic Pipelines
 status: summarized
 created: '2026-04-13'
-updated: '2026-04-12'
+updated: '2026-06-28'
 id: paper:Ellrott2018
 ontology_terms: []
 source_refs:
@@ -27,6 +27,8 @@ dataset_usage:
 - **BibTeX key:** Ellrott2018
 
 ## Key Contribution
+
+This MC3 mutation-calling note links paper:Bailey2018 and topic:targeted-panel-sequencing-bias.
 
 MC3 (Multi-Center Mutation Calling in Multiple Cancers) — the canonical TCGA pan-cancer
 somatic MAF produced by combining seven variant callers across ~10,000 tumor/normal exome

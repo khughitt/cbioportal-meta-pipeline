@@ -3,7 +3,7 @@ type: paper
 title: Pan-cancer analysis of whole genomes
 status: unread
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: paper:PCAWG2020
 ontology_terms: []
 source_refs:
@@ -26,6 +26,8 @@ dataset_usage:
 - **BibTeX key:** PCAWG2020
 
 ## Key Contribution
+
+This whole-genome pan-cancer note links paper:Ellrott2018 and topic:pan-cancer-mutation-landscape.
 
 <!-- TODO: WGS pan-cancer flagship (~2,658 tumors) — non-coding drivers, structural variation, signatures. -->
 

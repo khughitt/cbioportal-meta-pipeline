@@ -15,12 +15,12 @@ Produce a per-(gene, cancer_type) dNdScv selection signal that is (a) ingested
 into the canonical pipeline output `gene_cancer_study_ratio_annotated.feather`
 as new columns and (b) consumed by a per-gene three-way ranking comparison
 notebook + feather artifact, with literature-attention (PubTator) correlation
-panels that close the loop with `q011`.
+panels that close the loop with `question:0011-gene-length-as-literature-attention-confounder`.
 
 | Ranking | Source | What it measures |
 |---|---|---|
 | Raw mutation frequency | `gene_cancer_study_ratio_annotated.feather`, `mean_inclusive` (pan-cancer mean across cancer types) | Recurrence — biased toward long genes |
-| Length-adjusted | `mean_adj` = `mean_inclusive / protein_length` | First-order length correction — biased toward tiny proteins (q011 notebook empirical result) |
+| Length-adjusted | `mean_adj` = `mean_inclusive / protein_length` | First-order length correction — biased toward tiny proteins (`question:0011-gene-length-as-literature-attention-confounder` notebook empirical result) |
 | Selection-based | dNdScv per-cancer-type `qglobal_cv`, rolled up per gene by min-q across cancer types | Excess of non-synonymous over synonymous mutations relative to trinucleotide-aware background — length-aware by construction |
 
 The empirical result from `code/notebooks/q011_length_adjustment_topn_comparison.py`
@@ -75,9 +75,9 @@ agent doesn't relitigate.
 
 2. **Per-cancer-type combined MAF granularity.** New rule
    `combine_mut_per_cancer_type` aggregates per-study inputs into per-cancer-
-   type combined MAFs. dNdScv is invoked once per cancer type rather than
-   once per study. Cohorts are now biologically meaningful (matches dNdScv's
-   intended use per Martincorena 2017); removes the awkward Stouffer-of-q-
+type combined MAFs. dNdScv is invoked once per cancer type rather than
+once per study. Cohorts are now biologically meaningful (matches dNdScv's
+intended use per Martincorena et al. [@Martincorena2017]); removes the awkward Stouffer-of-q-
    values step from v1. The existing per-study `rule run_dndscv` is replaced
    (not preserved as a fallback in v3 — the v2 idea of keeping both turned
    out unnecessary, and the per-study script is the one with the latent bug;
@@ -368,7 +368,8 @@ are preserved unchanged.
 ### Three-way comparison detail (`compare_three_way_rankings.py`)
 
 - Aggregate `gene_cancer_study_ratio_annotated.feather` per gene by averaging
-  `mean_inclusive` and `mean_adj` across cancer types (matches q011).
+  `mean_inclusive` and `mean_adj` across cancer types (matches
+  `question:0011-gene-length-as-literature-attention-confounder`).
 - Join `dndscv_pooled.feather` (per-gene rollup) on `symbol` (left join).
 - Join `protein_lengths.feather` for length context.
 - Join Bailey / CGC / CH flags.
@@ -398,7 +399,7 @@ extensions:
    (raw↔length-adjusted, raw↔dNdScv, length-adjusted↔dNdScv).
 5. Three scatter plots: length vs each score, colored by Bailey driver,
    labeled with canonical drivers.
-6. **Recovery panel**: of Bailey 2018 drivers in cohort, how many land in
+6. **Recovery panel**: of Bailey drivers [@Bailey2018] in cohort, how many land in
    top-N for each scheme? Stratify by protein length quartile.
 7. **Failure-mode panel**: top-100 of each scheme that are NOT Bailey
    drivers AND NOT CGC tier 1, by length quartile.
@@ -412,9 +413,10 @@ extensions:
    - Scatter: protein length vs PubTator mentions, colored by score
      bucket (top-100 in each ranking gets a category).
    - **Falsifier readout**: if dNdScv's PubTator-correlation is meaningfully
-     lower than raw's, that is direct support for q011's central conjecture
+     lower than raw's, that is direct support for
+     `question:0011-gene-length-as-literature-attention-confounder`'s central conjecture
      that gene length confounds the literature-attention axis through
-     mutation count. If they're equal, q011's conjecture survives but
+     mutation count. If they're equal, the conjecture survives but
      length is purely a mediator. Either result is informative.
 10. Synthesis cell.
 

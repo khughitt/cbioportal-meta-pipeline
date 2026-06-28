@@ -40,7 +40,7 @@ This study establishes a causal, polysynaptic neural circuit running from the ce
 - Orthotopic transplanted model: 4T1-luc luciferase-expressing breast cancer cells injected into the mammary gland of female BALB/c mice (primary readout model, n = 12–17 per group in most experiments).
 - Spontaneous model: MMTV-PyMT transgenic mice developing mammary tumors starting at approximately 10 weeks of age (used to validate key findings in a non-transplanted setting).
 
-**Anxiety behavioral readouts.** Light-dark transition test (LDT), open field test (OFT), and elevated plus maze (EPM) were used to quantify anxiety-like behaviors. Anxiety index was computed as a composite score. Two-sided linear regression confirmed that anxiety severity correlated with tumor volume, weight, and bioluminescence intensity (all P < 0.001, R² ≥ 0.65).
+**Anxiety behavioral readouts.** Light-dark transition test (LDT), open field test (OFT), and elevated plus maze (EPM) were used to quantify anxiety-like behaviors. Anxiety index was computed as a composite score. Two-sided linear regression confirmed that anxiety severity correlated with tumor volume, weight, and bioluminescence intensity (all P < 0.001, R² ≥ 0.65) [@Xiong2023].
 
 **Circuit mapping — retrograde transsynaptic tracing.** Pseudorabies virus expressing EGFP (PRV-CAG-EGFP) was injected into the 4T1 tumor stroma 6 days before perfusion. PRV traced retrogradely from tumor → spinal cord → brainstem → hypothalamus → forebrain, with prominent labeling of the CeM and the LPGi. Immunofluorescence confirmed that the majority of PRV-infected CeM neurons co-expressed CRH, and most PRV-infected LPGi neurons co-expressed tyrosine hydroxylase (TH), a catecholamine marker. A cell-type-specific retrograde transmonosynaptic tracing system (rAAV2/8-Dbh-Cre + Cre-dependent AAV-helper viruses into LPGi, followed by RV-EnvA-ΔG-EGFP at the same site) confirmed that CeM CRH neurons send monosynaptic projections to LPGi catecholaminergic (LPGi^CA) neurons.
 
@@ -58,7 +58,7 @@ This study establishes a causal, polysynaptic neural circuit running from the ce
 
 **Alprazolam pharmacological intervention.** 4T1-tumor-bearing BALB/c and MMTV-PyMT mice received twice-daily intraperitoneal alprazolam or vehicle for 4 weeks. Alprazolam significantly reduced c-Fos expression in CeM^CRH and LPGi^CA neurons, decreased anxiety behaviors, slowed tumor growth, and shifted the tumor immune microenvironment toward a more immunostimulatory profile.
 
-**Statistics.** Two-tailed unpaired Student's t-test, 1-way ANOVA with Tukey post-hoc, and 2-way repeated-measures ANOVA; linear regression for correlations. P < 0.05 considered significant.
+**Statistics.** Two-tailed unpaired Student's t-test, 1-way ANOVA with Tukey post-hoc, and 2-way repeated-measures ANOVA; linear regression for correlations. P < 0.05 considered significant [@Xiong2023].
 
 ## Key Findings
 

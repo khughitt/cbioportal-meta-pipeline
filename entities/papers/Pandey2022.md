@@ -40,7 +40,7 @@ and no single gold standard exists; researchers therefore need to survey all too
 before drawing biological conclusions. The paper also provides an empirical comparison of the
 four tools on 188 TCGA LAML whole-exome samples using both COSMIC Legacy SBS (V2) and COSMIC V3
 catalogs, showing that V3 reduces inter-tool disagreement and lowers reconstruction RMSE for two
-of the four methods.
+of the four methods [@Pandey2022].
 
 ## Methods
 
@@ -61,7 +61,7 @@ common format to each wrapped tool.
 **Signature catalogs supported:** COSMIC Legacy SBS (V2) and COSMIC V3 SBS, DBS, and ID
 signatures.
 
-**Evaluation.** Tools are compared on 188 TCGA LAML WES samples using:
+**Evaluation.** Tools are compared on 188 TCGA LAML WES samples using [@Pandey2022]:
 - RMSE between the reconstructed signature profile (refit from reference signatures) and the
   observed 96-channel mutation profile.
 - Pairwise cosine similarity of per-tool signature-contribution estimates for the same patient.

@@ -76,7 +76,7 @@ constant.
 normalizing P columns to sum to 1. Posterior means and 95% credible intervals (element-wise
 2.5th/97.5th percentiles) are reported. Optional post-hoc assignment to reference signatures
 (default: COSMIC SBS v3.3.1) via Hungarian algorithm with majority-vote ensemble across
-posterior samples.
+posterior samples [@Landy2026].
 
 **Simulation study.** True latent ranks N ∈ {2,4,8,16}, sample sizes G ∈ {16,32,64,128}.
 Signatures sampled from COSMIC SBS v3.3.1; exposures ~ Dirichlet; mutation counts ~

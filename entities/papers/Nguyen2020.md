@@ -37,7 +37,7 @@ additionally distinguishes BRCA1-type from BRCA2-type HRD. Applied to ~5,100 pri
 metastatic tumors spanning multiple cancer types, the study reveals the pan-cancer prevalence
 of HRD, identifies the genetic causes per cancer type, and argues that genome-wide
 mutational-scar testing is superior to germline BRCA1/2 testing alone for patient stratification
-towards PARP inhibitor therapy.
+towards PARP inhibitor therapy [@Nguyen2020].
 
 A key methodological finding is that **accurate HRD detection does not require an intermediate
 mutational signature decomposition step**: CHORD using raw mutation contexts matches the

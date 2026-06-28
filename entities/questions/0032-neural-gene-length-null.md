@@ -33,8 +33,9 @@ after normalizing to mutations-per-callable-kb and to a dN/dS-style background m
 
 ## Why It Matters
 
-- Decides whether there is *anything to explain*. If the enrichment is pure length, H1/H3
-  interpretation is moot and the observation is a known artifact (`hypothesis:0003`).
+- Decides whether there is *anything to explain*. If the enrichment is pure length,
+  positive-selection neural hijacking and oncofetal-byproduct interpretations are moot and the
+  observation is a known artifact (`hypothesis:0003-gene-length-confounds-literature-attention`).
 - Cheapest, most decisive test in the whole program; gates all downstream neural-biology work.
 - Risk if unanswered: building a neural-hijacking narrative on a length artifact.
 
@@ -53,7 +54,9 @@ after normalizing to mutations-per-callable-kb and to a dN/dS-style background m
 
 ## Connections to Project
 
-- Related hypotheses: h12 (P1), h03, h01
+- Related hypotheses: `hypothesis:0012-neural-gene-enrichment-length-histology-artifact` (P1),
+  `hypothesis:0003-gene-length-confounds-literature-attention`,
+  `hypothesis:0001-non-tumor-signal-contamination`
 - Required data or analyses: top-N raw-count list vs length-normalized list; neural-label
   enrichment statistic on both; reuse dndscv per-gene q-values; UniProt protein lengths +
   Ensembl CDS length.

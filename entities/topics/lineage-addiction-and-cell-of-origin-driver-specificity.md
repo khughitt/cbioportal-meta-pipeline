@@ -101,7 +101,8 @@ most robust, while flagging the key confound: **lowly/narrowly expressed genes s
 specific by construction** — so any driver-specificity test must match background on **expression
 level** as well as **gene length** (`hypothesis:0003`). Tau is computed on a chosen normal-expression
 reference (bulk GTEx for tissue grain; HPA / Tabula Sapiens single-cell for cell-type grain) —
-neither is vendored in the pipeline yet (the q042 prerequisite).
+neither is vendored in the pipeline yet (the `question:0042-driver-normal-expression-tissue-cell-type-specificity`
+prerequisite).
 
 ## Oncogenic competence, convergence, and loss-of-identity (2025 additions)
 
@@ -117,9 +118,11 @@ neither is vendored in the pipeline yet (the q042 prerequisite).
   converge.
 - **Loss of identity (`paper:dosSantos2023`).** Tumors **downregulate 20–51% of their
   tissue-of-origin-specific genes** and ectopically activate other-tissue genes (survival-associated,
-  age-independent). This is the **design constraint** for q042: a driver's normal-expression
-  specificity must be measured on a **normal** reference (GTEx/HPA/Tabula Sapiens), because tumor RNA
-  no longer reflects the cell-of-origin baseline. (THCA, PRAD are noted exceptions.)
+  age-independent). This is the **design constraint** for
+  `question:0042-driver-normal-expression-tissue-cell-type-specificity`: a driver's
+  normal-expression specificity must be measured on a **normal** reference (GTEx/HPA/Tabula Sapiens),
+  because tumor RNA no longer reflects the cell-of-origin baseline. (THCA, PRAD are noted
+  exceptions.)
 
 ## What this project has vs needs
 
@@ -130,14 +133,15 @@ neither is vendored in the pipeline yet (the q042 prerequisite).
 
 ## Connections
 
-- **Question:** `q042` (the enrichment test).
+- **Question:** `question:0042-driver-normal-expression-tissue-cell-type-specificity` (the enrichment
+  test).
 - **Related project work:** `topic:oncofetal-developmental-reprogramming` (lineage/developmental
   genes overlap the oncofetal axis); `hypothesis:0012` (neural-gene enrichment as a special case);
-  `hypothesis:0003` (length null); `q035`/`q036` (same specificity machinery on the neural set);
-  `topic:cancer-driver-genes` (driver-definition background).
-- **External / not-yet-in-library:** GTEx Consortium 2020; Uhlén 2015 (Human Protein Atlas);
-  Tabula Sapiens 2022 (cell-type atlases); MITF (Garraway 2005), NKX2-1 (Weir 2007), SOX2 (Bass
-  2009) lineage-oncogene primaries.
+  `hypothesis:0003` (length null); `question:0035-label-free-neural-gene-definition` /
+  `question:0036-oncofetal-fetal-vs-adult-neural-expression` (same specificity machinery on the
+  neural set); `topic:cancer-driver-genes` (driver-definition background).
+- **External / not-yet-in-library:** GTEx v8 expression atlas; Human Protein Atlas baseline paper;
+  Tabula Sapiens cell-type atlas; MITF, NKX2-1, and SOX2 lineage-oncogene primaries.
 
 ## Summary
 

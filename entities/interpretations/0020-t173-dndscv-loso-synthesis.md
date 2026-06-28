@@ -108,7 +108,7 @@ The attribution schema is specified in
 ## Decision
 
 Stop the blind broad-holdout fan-out. The expensive full LOSO distribution is no longer the
-highest-value next step for h02. Three real reruns are enough to establish the directional
+highest-value next step for `hypothesis:0002-cross-study-ranking-divergence-is-structured`. Three real reruns are enough to establish the directional
 contrast that matters for the current decision: GENIE is the unusual perturbation, and the
 mechanism is structured.
 

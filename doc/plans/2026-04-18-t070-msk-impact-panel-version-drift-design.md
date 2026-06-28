@@ -258,7 +258,7 @@ This is the scientific deliverable that justifies the work — quantifies the bi
 - **Rename `study_panel_map` → `study_panel_default_map`.** After t070, the config's primary panel source-of-truth is the per-sample matrix; `study_panel_map` becomes a fallback for non-matrix studies. The rename is reasonable polish but touches 4 shipped configs plus user configs — defer to a separate cleanup task. For now: add a comment in the config docstring noting the demoted role.
 - Generalization to non-MSK multi-panel cohorts (DFCI ONCOPANEL versions, Tempus xT releases, etc.). Mechanism generalizes trivially — add to `PANEL_ALIASES` and `SAMPLE_ID_SUFFIX_MAP` — but no current config consumes such studies. Defer until needed.
 - Per-(cancer, gene) sample weighting in cross-study aggregation beyond `n_panel_covered_samples_*`. The downstream GLMM (t077) will consume these counts directly; a sample-weighted mean ratio is its concern, not this task's.
-- Cross-validation against AACR GENIE per-sample panel assignments for samples appearing in both. Worth doing as a one-shot QA pass, but not blocking — covered by audit's Q3 follow-up.
+- Cross-validation against AACR GENIE per-sample panel assignments for samples appearing in both. Worth doing as a one-shot QA pass, but not blocking — covered by the audit's third follow-up.
 
 ## References
 

@@ -113,9 +113,9 @@ sub-questions:
 
 ## Confounds that decide interpretability
 
-- **Gene length (`h03`)** — long genes are over-called as drivers *and* skew the candidate set;
+- **Gene length (`hypothesis:0003-gene-length-confounds-literature-attention`)** — long genes are over-called as drivers *and* skew the candidate set;
   background **must be length-matched**, and the annotation set (COSMIC) carries the same
-  literature-attention bias h03 describes.
+  literature-attention bias `hypothesis:0003-gene-length-confounds-literature-attention` describes.
 - **Expression level / breadth** — Tau is mechanically inflated for **lowly/narrowly expressed**
   genes (`paper:KryuchkovaMostacci2017`); match background on mean expression, not just length.
 - **Essentiality** — broadly-essential guardians (TSGs) are housekeeping-like; this is *signal*

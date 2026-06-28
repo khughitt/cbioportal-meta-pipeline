@@ -1,4 +1,4 @@
-# Pipeline Review: h08 within-tissue covariate↔H association core (t199)
+# Pipeline Review: hypothesis:0007 within-tissue covariate↔H association core (t199)
 
 - **Plan:** `plan:0007-t199-h08-association-core`
 - **Task:** t199 (analysis-plan check 4; pre-reg-already-exists mode)

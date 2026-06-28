@@ -27,7 +27,7 @@ Xu et al. 2025 identified a statistically significant recurrent somatic mutation
 
 - If GLI1 exon 12 mutations are elevated in our pipeline's cancer gene frequency tables partly due to normal-tissue background signal, GLI1's apparent recurrence across cancer types would be artifactual.
 - The hotspot spans multiple tissues (skin, prostate, testis) — meaning it could bleed into melanoma, prostate cancer, and testicular cancer cohorts simultaneously, creating a spurious cross-cancer signal.
-- This is distinct from the NOTCH1 esophageal case (q001) because GLI1 is a recognized oncogene whose normal-tissue hotspot has not been widely reported; it could be systematically overlooked in driver-gene annotation.
+- This is distinct from the NOTCH1 esophageal case (`question:0001-normal-epithelial-clone-contamination-in-esophageal-studies`) because GLI1 is a recognized oncogene whose normal-tissue hotspot has not been widely reported; it could be systematically overlooked in driver-gene annotation.
 
 ## Current Evidence
 

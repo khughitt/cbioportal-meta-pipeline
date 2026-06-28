@@ -29,7 +29,7 @@ Gao2023 finds that 10% of normal esophagus mucosa samples carry detectable mCAs,
 - The pipeline currently focuses on SNV frequencies (gene×cancer mutation counts and ratios). CNA/LOH data are outside current scope per science.yaml.
 - However, if CNA data are ever incorporated, or if this project is extended to include LOH-based driver calls, normal-tissue chr9q CNLoH contamination would be a significant background source specific to esophageal samples.
 - Understanding the magnitude of normal-tissue mCA burden establishes what a plausible contamination effect size would be: 10% sample-level prevalence in esophagus mucosa is high enough that it could move population-level CNA frequency estimates by several percentage points in unmatched-normal studies.
-- Adjacent question (q001): NOTCH1 SNV contamination from normal esophageal clones — Gao2023 provides the CNA complement to that SNV-level concern.
+- Adjacent question (`question:0001-normal-epithelial-clone-contamination-in-esophageal-studies`): NOTCH1 SNV contamination from normal esophageal clones — Gao2023 provides the CNA complement to that SNV-level concern.
 
 ## Current Evidence
 

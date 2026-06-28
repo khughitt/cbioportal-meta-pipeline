@@ -59,7 +59,8 @@ the RT-only expectation.
   65–84% before, but still prominent).
 - Published CFS catalogues exist (Le Tallec 2013; Glover 2017 reviews); a per-gene CFS-
   overlap annotation is straightforward to build.
-- RT data exists in the pipeline (`t121` gene-level RT map from the q009 work); the
+- RT data exists in the pipeline (`t121` gene-level RT map from the
+  `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` work); the
   RT-vs-CFS comparison can be done on the existing artifacts.
 
 ## Thoughts

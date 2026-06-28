@@ -77,7 +77,8 @@ stage; no project-internal hypothesis test has been conducted.
   tissue-specific interpretation with effect size and scale-up recommendation.
 - `t166` (blocked, P3): Hartwig HMF acquisition; ~6,000 matched-normal metastatic WGS samples
   covering ~25 cancer-relevant tissues, which would directly support P1 and P3 and bypass
-  the panel-coverage gap that blocked the q009 SBS1 LRR-bias test.
+  the panel-coverage gap that blocked the
+  `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` SBS1 LRR-bias test.
 - `t168` (blocked, P3): Genomics England 100K feasibility memo; access requires UK-institution
   collaboration; exploratory only.
 - `t169` (blocked, P3): GTEx v10 + Yizhak 2019 / Rockweiler 2023 somatic call sets; blocked on

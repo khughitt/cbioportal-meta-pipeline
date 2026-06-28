@@ -102,7 +102,7 @@ largest piece of the signal by a wide margin comes from a patient-matched-normal
 contamination cannot be its source by construction. The carriers are all-region cohorts regardless of normal
 status; below them every exonic study (matched or unmatched) contributes only hundreds of rows.
 
-## Bearing on h12
+## Bearing on `hypothesis:0012`
 
 This upgrades t221b-F3 from a substrate-derived proxy to a direct study-level result and removes the last
 deferred control on the candidate-set mutational-count thread. The full tally of tested-and-rejected
@@ -112,8 +112,8 @@ ascertainment (t218 F2), not hypermutators at the sample level (t221a), not a ge
 (t221b-F4), candidates are quantitatively CFS genes (t221b-F2), the residual is entirely a call-set-region-
 scope artifact concentrated in 6 all-region cohorts (t221b-F1) — and now **not germline leak at the study
 level** (this F1–F3). As with the prior arms this is recorded as strong supporting evidence for the
-**candidate-set mutational-count thread** of `h12`; `hypothesis:0012` (proposed) and `question:0032` (active)
-are left in their prior states — one thread does not flip the hypothesis, and other h12 threads
+**candidate-set mutational-count thread** of `hypothesis:0012`; `hypothesis:0012` (proposed) and `question:0032` (active)
+are left in their prior states — one thread does not flip the hypothesis, and other `hypothesis:0012` threads
 (expression / histology beyond mutation counts) are out of scope here.
 
 ## Decision & redirect

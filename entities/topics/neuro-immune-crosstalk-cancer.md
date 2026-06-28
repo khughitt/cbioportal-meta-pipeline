@@ -57,7 +57,7 @@ system focus: `paper:Cortese2020`; historical nervous–endocrine–immune triad
 
 ## Relevance to this project
 
-Supports the user's H2 (neural signal acts via immune modulation) as **biology**, but again at
+Supports the user's immune-modulation branch of the neural-signal model as **biology**, but again at
 the **expression/receptor** level — the neuro-immune effector genes (ADRB2, CHRM1, CALCA, RAMP1,
 GAD1) are not the project's candidate list and are not predicted to be mutation-enriched. Useful
 contributions: (i) a positive-control neuro-immune gene set for the label-free definition

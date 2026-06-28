@@ -85,8 +85,8 @@ aggregated frequency tables. This is the signature-era refinement of `hypothesis
 
 ## Status & Next Steps
 
-- **status: proposed.** The H08 MC3 substrate now has explicit treatment-exposure covariates
-  (`question:0024`, `task:t181`), but the broader H10 impact test still needs a non-TCGA
+- **status: proposed.** The `hypothesis:0007` MC3 substrate now has explicit treatment-exposure covariates
+  (`question:0024`, `task:t181`), but the broader treatment-signature impact test still needs a non-TCGA
   cBioPortal cohort audit. The impact test reuses the existing `create_freq_tables.py` outputs
   (inclusive/exclusive columns already keyed on hypermutator status — a treatment-exposed parallel
   is the natural extension).
@@ -96,8 +96,9 @@ aggregated frequency tables. This is the signature-era refinement of `hypothesis
 ## Related
 
 - Hypotheses: `hypothesis:0001-non-tumor-signal-contamination` (contamination lineage),
-  `hypothesis:h08-...` (treatment is a named confounder there)
+  `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`
+  (treatment is a named confounder there)
 - Topics: `topic:clinical-translational-signatures`, `topic:signatures-hematologic-malignancies`
-- Questions: `question:q024-...`
+- Questions: `question:0024-treatment-exposed-cohort-chemotherapy-signature`
 - Tasks: `task:t181`
 - Code substrate: `code/scripts/create_freq_tables.py`, the hypermutator/TMB annotation layer

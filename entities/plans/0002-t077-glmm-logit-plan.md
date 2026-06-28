@@ -78,7 +78,7 @@ related:
 **Scope:**
 - Emit a diagnostics feather for convergence/fallback reasons
 - Add leave-one-out or hold-out-ready output tables required by the pre-registration
-- Ensure high-I2 / skipped-cell cases are explicit in schema, not implicit `NaN`s
+- Ensure high heterogeneity / skipped-cell cases are explicit in schema, not implicit `NaN`s
 
 ### Task 5: Wire the Snakemake rule and consumer-facing join
 

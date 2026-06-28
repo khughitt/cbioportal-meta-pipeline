@@ -125,5 +125,5 @@ The t077 pooled meta-analysis chain (`gene_cancer_pooled*.feather`, mtimes
 freq-table outputs, and the t145 bug was in the cross-study mean computation
 only. The older mtime is therefore correct, not stale.
 
-Conclusion: no rebuild required. The h02 raw-frequency / length-adjusted /
+Conclusion: no rebuild required. The `hypothesis:0002-cross-study-ranking-divergence-is-structured` raw-frequency / length-adjusted /
 dNdScv comparison panels can now be cited from the canonical pan-cancer outputs.

@@ -40,13 +40,13 @@ The impact test for `hypothesis:0009`. After flagging therapy-signature-high sam
 
 ## Connections to Project
 
-- Hypotheses: `hypothesis:h10-...`.
-- Analyses: treatment-exposed flag (q024/t181); paired freq-table diff.
+- Hypotheses: `hypothesis:0009-treatment-induced-signature-frequency-contamination`.
+- Analyses: treatment-exposed flag (`question:0024-treatment-exposed-cohort-chemotherapy-signature` / `task:t181`); paired freq-table diff.
 - Priority: P2.
 
 ## Related
 
 - Hypotheses: `hypothesis:0009-treatment-induced-signature-frequency-contamination`
 - Topics: `topic:clinical-translational-signatures`
-- Questions: `question:q024-...`
+- Questions: `question:0024-treatment-exposed-cohort-chemotherapy-signature`
 - Code: `code/scripts/create_freq_tables.py`

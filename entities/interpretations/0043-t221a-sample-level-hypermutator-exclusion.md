@@ -87,7 +87,7 @@ percentile. The candidates' rows come from the all-region `pog570` cohort (0 hyp
 diffusely from non-hypermutator samples elsewhere — passenger accumulation scaling with genomic span, not
 TMB sample composition.
 
-## Bearing on h12
+## Bearing on `hypothesis:0012`
 
 This removes the last alternative the candidate-set mutational-count thread had left open. The full-WES
 residual identified by t218 is **not** explained by hypermutator/TMB sample composition — at the sample
@@ -96,7 +96,7 @@ level, across the entire 91-study WES cohort, not merely the driver cohort. Comb
 size-matched CFS control), and t218 (not CNS, not panel ascertainment; one all-region cohort tiling the
 loci), every non-span explanation for the candidate enrichment has now been tested and rejected. As with
 t218, this is recorded as strong supporting evidence for the **candidate-set mutational-count thread** of
-`h12`; the project entities `hypothesis:0012` (proposed) and `question:0032` (active) are left in their
+`hypothesis:0012`; the project entities `hypothesis:0012` (proposed) and `question:0032` (active) are left in their
 prior states — one thread does not by itself flip the hypothesis.
 
 ## Decision & redirect

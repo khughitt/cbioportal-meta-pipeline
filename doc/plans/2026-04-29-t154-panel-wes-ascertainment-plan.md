@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Quantify whether panel-only, WES-only, and combined mutation rankings differ enough that downstream h03 literature-attention analyses must include assay stratum.
+**Goal:** Quantify whether panel-only, WES-only, and combined mutation rankings differ enough that downstream `hypothesis:0003-gene-length-confounds-literature-attention` analyses must include assay stratum.
 
 **Architecture:** Add one standalone, tested analysis script that consumes existing pan-cancer feathers rather than adding a Snakefile rule. The script builds stratum-specific rankings from `gene_cancer_pooled_input.feather`, compares top-K overlap and driver recovery, runs a lightweight PubTator/length/rate regression by stratum, and writes feather outputs plus a markdown interpretation.
 

@@ -147,9 +147,9 @@ without adding an external OncoTree table.
 ### Mutational-signature exposure hardening (t178 / t179)
 
 `code/scripts/run_restricted_sigprofiler_assignment.py` (rules
-`run_restricted_sigprofiler_assignment` + `..._per_sample`) feeds per-sample signature
-exposures into the h08 agnostic covariate-association scan
-(`method:h08-agnostic-association-model`). Two audit/guard passes harden those exposures:
+  `run_restricted_sigprofiler_assignment` + `..._per_sample`) feeds per-sample signature
+  exposures into the `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`
+  agnostic covariate-association scan. Two audit/guard passes harden those exposures:
 
 - **t178 — signature-reference + caller provenance.** The COSMIC SBS catalog version is
   pinned + logged at run time and asserted to exist (`signature_assignment_cosmic_version`,

@@ -38,7 +38,7 @@ related:
 
 This carcinogenic-event-count note links topic:multistage-carcinogenesis-and-age-of-onset, paper:ArmitageDoll1954, and theme:0003-temporal-structure-of-carcinogenesis-order-count-and-timing-of-the.
 
-Belikov fits the Erlang probability distribution to age-incidence curves for the 20 most prevalent US cancer types (CDC WONDER data, ~20 million cases, 1999–2012) and extracts three interpretable parameters per cancer type: k (number of key carcinogenic events), b (average time in years between events), and A/1000 (maximal populational susceptibility as a percentage). The Erlang distribution — which describes the waiting time for k independent Poisson-process events — provides excellent fits across all 20 cancer types (R² = 0.9734–0.9999, mean 0.9953), and the framework extends the classical Armitage-Doll/Nordling multistage model by replacing the power-law approximation with an exact probability distribution, which additionally accounts for the empirically observed decline in cancer incidence at advanced age.
+Belikov fits the Erlang probability distribution to age-incidence curves for the 20 most prevalent US cancer types (CDC WONDER data, ~20 million cases, 1999–2012) and extracts three interpretable parameters per cancer type: k (number of key carcinogenic events), b (average time in years between events), and A/1000 (maximal populational susceptibility as a percentage). The Erlang distribution — which describes the waiting time for k independent Poisson-process events — provides excellent fits across all 20 cancer types (R² = 0.9734–0.9999, mean 0.9953), and the framework extends the classical Armitage-Doll/Nordling multistage model by replacing the power-law approximation with an exact probability distribution, which additionally accounts for the empirically observed decline in cancer incidence at advanced age [@Belikov2017].
 
 ## Methods
 
@@ -79,7 +79,7 @@ Belikov fits the Erlang probability distribution to age-incidence curves for the
 
 **Range and heterogeneity.** k spans 4 (melanoma, brain) to 41 (prostate), b spans ~2 years (prostate) to ~81 years (melanoma). This reveals high heterogeneity in carcinogenesis requirements across types. Low-k cancers (melanoma, brain) have very long inter-event intervals suggesting rate-limiting steps occur rarely but require few of them; high-k cancers (prostate, lung) require many events each occurring more rapidly.
 
-**Robustness of k.** For prostate cancer fit year-by-year (1999–2012), k varied only 38–45 (±8%) despite a 47% drop in diagnosed incidence following 2008/2011 screening recommendation changes. Pre-2008, variation was ±3.8%. This stability is interpreted as reflecting a biologically fundamental parameter.
+**Robustness of k.** For prostate cancer fit year-by-year (1999–2012), k varied only 38–45 (±8%) despite a 47% drop in diagnosed incidence following 2008/2011 screening recommendation changes. Pre-2008, variation was ±3.8%. This stability is interpreted as reflecting a biologically fundamental parameter [@Belikov2017].
 
 **Mechanistic interpretation.** The author argues that k reflects total driver alterations (not just driver genes), including point mutations, indels, CNVs, inversions, translocations, gene fusions, and epimutations. He notes that the range 0–40 alterations per tumour reported by large omics studies (e.g., TCGA pan-cancer) corresponds to the Erlang k range, and that k should be interpreted as driver mutations (individual allele-level events) rather than driver genes.
 

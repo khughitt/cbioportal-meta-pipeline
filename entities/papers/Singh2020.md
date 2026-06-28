@@ -34,7 +34,7 @@ SBS8 — a common but mechanistically unresolved COSMIC mutational signature —
 
 ## Methods
 
-**Data:** Somatic point mutations from 18 ICGC WGS cancer cohorts (20–569 samples/cohort, median 145; samples with <500 mutations excluded). De novo germline mutations from 250 Dutch parent-offspring trios (11,020 mutations). Structural variation and RNA-seq expression data for a subset of cohorts.
+**Data:** Somatic point mutations from 18 ICGC WGS cancer cohorts (20–569 samples/cohort, median 145; samples with <500 mutations excluded). De novo germline mutations from 250 Dutch parent-offspring trios (11,020 mutations). Structural variation and RNA-seq expression data for a subset of cohorts [@Singh2020].
 
 **Epigenomic context framework:** Genome segmented into (i) genomic contexts (exons, whole genes, repeats, telomere), (ii) chromatin contexts (strong heterochromatin → strong euchromatin), and (iii) nuclear localization contexts (lamina-proximal / nuclear interior). Tissue-invariant chromatin and lamina data from Smith et al. 2017; tissue-specific ENCODE data for selected cancer types.
 
@@ -46,7 +46,7 @@ SBS8 — a common but mechanistically unresolved COSMIC mutational signature —
 
 **Checkpoint analysis:** Tumors stratified by purity-adjusted ATR, CHEK1, CHEK2 expression.
 
-**Cosine similarity:** BG signature from CHEK2−/− clonal cell lines compared to COSMIC SBS8 (cosine similarity = 0.663).
+**Cosine similarity:** BG signature from CHEK2−/− clonal cell lines compared to COSMIC SBS8 (cosine similarity = 0.663) [@Singh2020].
 
 **Statistics:** R v3.4.0; Wilcoxon rank-sum, Spearman correlation, Fisher's combined p-values; rank-biserial correlation for effect sizes; FDR correction where appropriate.
 

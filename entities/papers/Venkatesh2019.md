@@ -49,7 +49,7 @@ This is a prize essay (narrative synthesis of the author's own published experim
 - **Two-photon calcium imaging:** real-time imaging of depolarization propagation through gap-junction-connected tumor cell networks in response to neuronal stimulation.
 - **In vivo glioma depolarization:** optogenetic depolarization of xenografted glioma cells, with pharmacological and genetic block of electrochemical signaling as controls.
 
-Primary results cited are from Venkatesh et al. Cell 161:803 (2015), Nature 549:533 (2017), and Nature 573:539 (2019).
+Primary results cited are from Venkatesh et al. Cell 161:803 (2015), Nature 549:533 (2017), and Nature 573:539 (2019) [@Venkatesh2019].
 
 ## Key Findings
 

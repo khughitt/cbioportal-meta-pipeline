@@ -50,7 +50,7 @@ The hypothesis is **two-pronged and explicitly falsifiable on the positive-contr
   APOBEC3 expression↔SBS2/13, MMR-loss/MSI↔SBS6/15/26, POLE↔SBS10. If it cannot reproduce the
   known map, its novel hits are not trustworthy.
 - **H08b (discovery):** beyond the known map, the same scan surfaces covariates — especially
-  expression modules (immune/inflammation, a candidate blind spot per the discussion's Q2) —
+  expression modules (immune/inflammation, a candidate blind spot raised in the prior discussion) —
   associated with signatures whose aetiology is unknown or only labelled clock-like (SBS5,
   SBS40), generating ranked candidate upstream causes.
 
@@ -92,7 +92,8 @@ The hypothesis is **two-pronged and explicitly falsifiable on the positive-contr
 - **Design guards (pre-registration material for `science:pre-register`):**
   - within-tissue strata only; report the unconditioned version solely to quantify confounding.
   - per-sample de-novo signatures only on WES/WGS substrates (tcga_mc3); panels enter as
-    cohort-pooled / refit, never per-sample (the binding mutation-count constraint, q018).
+    cohort-pooled / refit, never per-sample (the binding mutation-count constraint,
+    `question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross`).
   - **reverse-causation guard:** an expression↔signature association is a hypothesis, not a
     cause — expression can be *downstream* of a driver mutation. Flag, do not assert causality;
     require mediation logic before any upstream claim.
@@ -110,8 +111,8 @@ hypothesis's own framing:
   signature's driver mutation *changed* expression (e.g. a driver remodels its own pathway),
   not because expression is upstream. Adjudicated by mediation + temporality where available.
 - **R3 — Selection / immunoediting on burden.** Association reflects which clones *survived*
-  (acting on `H`), not which process *generated* the mutations (`W`) — the discussion's Q2
-  point. Adjudicated by testing spectrum-attribution vs burden-attribution separately.
+  (acting on `H`), not which process *generated* the mutations (`W`) — the prior discussion's
+  burden-attribution concern. Adjudicated by testing spectrum-attribution vs burden-attribution separately.
 - **R4 — Batch / study / assay artifact.** The "agnostic" covariate is actually a study or
   panel-coverage proxy. Adjudicated by including study/assay as nuisance covariates and by the
   artifact-signature flag (SBS27/43/45–60).
@@ -135,7 +136,7 @@ hypothesis's own framing:
   smoking-arm read; the repair was positive and significant but still failed the top-3 rank gate.
   Per `discussion:0005-h08b-gate-handling`, H08b is not opened as confirmatory work.
   A narrow SBS40/SBS5 expression-module prototype may proceed only as exploratory analysis.
-- Next: if continuing H08, either run a clearly labeled exploratory `task:t182` prototype or design
+- Next: if continuing `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`, either run a clearly labeled exploratory `task:t182` prototype or design
   a new repaired positive-control gate that addresses both the UV proxy and lung burden-dominance
   issues before any H08b promotion decision.
 
@@ -156,14 +157,15 @@ the R1/R3/R4 confounders (tissue / selection-on-H / study-assay) as structural a
 - Method/model: `method:h08-agnostic-association-model`, `models/h08-agnostic-signature-association.dot`
 - Proposition DAG: `doc/figures/dags/h08-agnostic-covariate-association.edges.yaml`
 - Discussion: `discussion:0004-common-mutational-signatures-known-vs-learned-immune-causes-and`
-- Questions: `question:q018-...`, `question:q019-...`
+- Questions: `question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross`,
+  `question:0019-does-de-novo-extraction-on-the-aggregated-cohort-surface-factors-not-in`
 - Code substrate: `code/scripts/export_study_expression.py`, `code/scripts/convert_to_feather.py`,
   `code/scripts/run_restricted_sigprofiler_assignment.py`
 
 ## Literature-informed design refinements (2026-05-31 paper batch)
 
 A ~80-paper mutational-signature literature batch (summaries in `doc/papers/`, syntheses in the
-`topic:*` notes linked above) sharpened the h08 design. Key consequences:
+`topic:*` notes linked above) sharpened this hypothesis design. Key consequences:
 
 - **Positive-control set extended.** Beyond UV/SBS7, smoking/SBS4, APOBEC/SBS2-13, MMR/SBS6-15-26,
   POLE/SBS10: add **SBS9** (germinal-centre/AID) as a *tissue-restricted* positive control in

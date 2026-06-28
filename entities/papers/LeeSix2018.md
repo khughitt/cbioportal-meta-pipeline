@@ -8,6 +8,7 @@ id: paper:LeeSix2018
 ontology_terms: []
 source_refs:
 - paper:LeeSix2018
+- cite:LeeSix2018
 related:
 - topic:clonal-hematopoiesis-contamination
 - paper:Poon2021
@@ -31,41 +32,67 @@ related:
 
 This normal-blood clonal-dynamics note links topic:clonal-hematopoiesis-contamination, paper:Poon2021, and paper:Yoshida2026.
 
-The first direct, genome-wide phylogenetic reconstruction of human haematopoietic stem cell (HSC) population dynamics in a single normal individual. By whole-genome sequencing 140 single-cell-derived HSC/progenitor colonies from a healthy 59-year-old man and performing deep "recapture" targeted sequencing of bulk blood lineages, the study establishes that: (1) blood production is supported by a large, continuously active pool of 50,000–200,000 HSCs; (2) HSC clonal dynamics in this subject are consistent with selectively neutral drift — no known driver mutations are present and dN/dS = 1.001; and (3) the phylogenetic tree traces back through early embryogenesis to a cell that predated gastrulation, demonstrating that the normal blood phylogeny spans the full human lifespan. This paper is the foundational measurement underpinning all modern quantitative models of CH clone dynamics and the "drift vs. selection" debate.
+The first direct, genome-wide phylogenetic reconstruction of human haematopoietic stem cell (HSC) population dynamics in a single normal individual.
+By whole-genome sequencing 140 single-cell-derived HSC/progenitor colonies from a healthy 59-year-old man and performing deep "recapture" targeted sequencing of bulk blood lineages, the study establishes that: (1) blood production is supported by a large, continuously active pool of 50,000–200,000 HSCs; (2) HSC clonal dynamics in this subject are consistent with selectively neutral drift — no known driver mutations are present and dN/dS = 1.001; and (3) the phylogenetic tree traces back through early embryogenesis to a cell that predated gastrulation, demonstrating that the normal blood phylogeny spans the full human lifespan.
+This paper is the foundational measurement underpinning all modern quantitative models of CH clone dynamics and the "drift vs. selection" debate [@LeeSix2018].
 
 ## Methods
 
-**Experimental design ("capture–recapture").** Single HSCs and haematopoietic progenitor cells (HPCs) were FACS-sorted from a bone marrow aspirate and peripheral blood from a 59-year-old male with normal blood counts and no haematological history. Cells were expanded in single-cell liquid cultures or colony-forming cell (CFC) assays. 198 colonies were whole-genome sequenced (~15× per colony); 140 passed clonality QC (VAF distribution around 50%). The final set comprised 89 immunophenotypic HSCs, 38 megakaryocyte-erythrocyte progenitors (MEPs), 8 granulocyte-macrophage progenitors (GMPs), and 5 common myeloid progenitors (CMPs).
+**Experimental design ("capture–recapture").** Single HSCs and haematopoietic progenitor cells (HPCs) were FACS-sorted from a bone marrow aspirate and peripheral blood from a 59-year-old male with normal blood counts and no haematological history.
+Cells were expanded in single-cell liquid cultures or colony-forming cell (CFC) assays.
+198 colonies were whole-genome sequenced (~15× per colony); 140 passed clonality QC (VAF distribution around 50%).
+The final set comprised 89 immunophenotypic HSCs, 38 megakaryocyte-erythrocyte progenitors (MEPs), 8 granulocyte-macrophage progenitors (GMPs), and 5 common myeloid progenitors (CMPs) [@LeeSix2018].
 
-**Variant calling and phylogenetic tree.** 129,582 genome-wide somatic substitutions were identified. Substitutions shared between colonies identify lines-of-descent sharing a common ancestor. A maximum-parsimony / SCITE phylogeny was constructed from shared vs. private mutation patterns. Branch lengths are proportional to mutation counts (the molecular clock). Multiple tree-construction methods (substitutions, indels, tandem repeats; parsimony, neighbour joining) gave concordant results.
+**Variant calling and phylogenetic tree.** 129,582 genome-wide somatic substitutions were identified.
+Substitutions shared between colonies identify lines-of-descent sharing a common ancestor.
+A maximum-parsimony / SCITE phylogeny was constructed from shared vs. private mutation patterns.
+Branch lengths are proportional to mutation counts (the molecular clock).
+Multiple tree-construction methods (substitutions, indels, tandem repeats; parsimony, neighbour joining) gave concordant results [@LeeSix2018].
 
-**Population size estimation.** "Recapture" targeted sequencing of peripheral blood granulocytes (three timepoints: 4, 9, 14 months after bone marrow aspirate; mean coverage 268–4,669×) and lymphocytes (B and T cells) detected the fraction of each colony's mutations present in bulk blood. An approximate Bayesian computation (ABC) framework with 200,000 simulations of neutral haematopoiesis estimated the number of active HSCs and their symmetric division rate by matching summary statistics from simulated experiments to observed data.
+**Population size estimation.** "Recapture" targeted sequencing of peripheral blood granulocytes (three timepoints: 4, 9, 14 months after bone marrow aspirate; mean coverage 268–4,669×) and lymphocytes (B and T cells) detected the fraction of each colony's mutations present in bulk blood.
+An approximate Bayesian computation (ABC) framework with 200,000 simulations of neutral haematopoiesis estimated the number of active HSCs and their symmetric division rate by matching summary statistics from simulated experiments to observed data [@LeeSix2018].
 
 **Selection testing.** Positive or negative selection was assessed by (1) dN/dS ratio across all colonies using the Martincorena method [@Martincorena2017]; (2) inspection for known myeloid driver mutations in a targeted hotspot bait-set; (3) a buccal swab confirmed no germline confounds.
 
-**Mutation rate in embryogenesis.** Early embryonic divisions were inferred from the first few mutations partitioning all 140 colonies; the rate of ~1.2 mutations/division was estimated from the number of cell doublings implied by polytomy resolution.
+**Mutation rate in embryogenesis.** Early embryonic divisions were inferred from the first few mutations partitioning all 140 colonies; the rate of ~1.2 mutations/division was estimated from the number of cell doublings implied by polytomy resolution [@LeeSix2018].
 
 ## Key Findings
 
 ### 1. Cohort and overall scale
 
-A single healthy 59-year-old man. 140 single-cell-derived colonies successfully whole-genome sequenced. Total somatic mutations placed on the phylogenetic tree: **129,582 substitutions** (8,676 shared between ≥2 colonies). Mean mutation burden per colony: **1,023 substitutions** (range 815–1,210) and 20 indels (range 2–37). No somatic structural variants identified.
+A single healthy 59-year-old man.
+140 single-cell-derived colonies successfully whole-genome sequenced.
+Total somatic mutations placed on the phylogenetic tree: **129,582 substitutions** (8,676 shared between ≥2 colonies).
+Mean mutation burden per colony: **1,023 substitutions** (range 815–1,210) and 20 indels (range 2–37).
+No somatic structural variants identified [@LeeSix2018].
 
 ### 2. Mutation rate per cell per year (molecular clock)
 
-The paper does not state a coding-specific per-year mutation rate directly. The per-colony mean burden of ~1,023 substitutions in a 59-year-old individual implies approximately **17 genome-wide point mutations per year** per HSC (1,023 / 59 ≈ 17.3 SBS/year), consistent with later estimates. The trinucleotide spectrum is dominated by C>T and T>C transitions, matching published patterns from myeloid cancers and age-related CH. [NOTE: The paper does not explicitly report "18 coding mutations per year"; the ~17–18 figure commonly cited for HSCs comes from the whole-genome rate integrated over the adult lifespan in this and companion studies.]
+The paper does not state a coding-specific per-year mutation rate directly.
+The per-colony mean burden of ~1,023 substitutions in a 59-year-old individual implies approximately **17 genome-wide point mutations per year** per HSC (1,023 / 59 ≈ 17.3 SBS/year), consistent with later estimates.
+The trinucleotide spectrum is dominated by C>T and T>C transitions, matching published patterns from myeloid cancers and age-related CH.
+[NOTE: The paper does not explicitly report "18 coding mutations per year"; the ~17–18 figure commonly cited for HSCs comes from the whole-genome rate integrated over the adult lifespan in this and companion studies.] [@LeeSix2018]
 
 ### 3. Neutral drift — no driver mutations
 
-dN/dS across all colonies = **1.001** (95% CI: 0.889–1.127; dN/dS = 1.0 indicates neutrality). No known myeloid driver mutations were identified in any colony. Hotspot bait-set targeted sequencing of bulk blood confirmed no driver hotspots. This subject's haematopoietic compartment exhibits selectively neutral mutation accumulation — providing the key null-model baseline for interpreting CH selection signals in older/diseased individuals.
+dN/dS across all colonies = **1.001** (95% CI: 0.889–1.127; dN/dS = 1.0 indicates neutrality).
+No known myeloid driver mutations were identified in any colony.
+Hotspot bait-set targeted sequencing of bulk blood confirmed no driver hotspots.
+This subject's haematopoietic compartment exhibits selectively neutral mutation accumulation — providing the key null-model baseline for interpreting CH selection signals in older/diseased individuals [@LeeSix2018].
 
 ### 4. Effective HSC population size: 50,000–200,000
 
-The ABC framework estimated the **90% credibility interval for active HSC number contributing to granulocytes: 44,000–215,000** (stated as "50,000–200,000" in the abstract). The time between successive symmetric self-renewal divisions was estimated at **2–20 months**. The 140 sequenced colonies represent approximately 1/1,000 of the active stem cell pool, explaining the preponderance of private mutations (no shared branches) in the phylogeny. This large population size is key: neutral drift in 50,000–200,000 HSCs is slow, so clones reaching 1% VAF require a meaningful selective fitness advantage.
+The ABC framework estimated the **90% credibility interval for active HSC number contributing to granulocytes: 44,000–215,000** (stated as "50,000–200,000" in the abstract).
+The time between successive symmetric self-renewal divisions was estimated at **2–20 months**.
+The 140 sequenced colonies represent approximately 1/1,000 of the active stem cell pool, explaining the preponderance of private mutations (no shared branches) in the phylogeny.
+This large population size is key: neutral drift in 50,000–200,000 HSCs is slow, so clones reaching 1% VAF require a meaningful selective fitness advantage [@LeeSix2018].
 
 ### 5. Phylogenetic tree spans embryogenesis to adulthood
 
-Two root-level mutations completely partitioned all 140 colonies (52 vs. 88 colonies; no colony carried both). These same mutations were detected in the buccal swab in the same ~1:2 ratio, establishing that the most recent common ancestor of blood and buccal epithelium predated gastrulation — consistent with the fertilised egg, with one mutation arising at the first cell division. Subsequent embryonic cleavages generated ~33 lines-of-descent by 10 mutations of molecular time, implying ≥5 cell doublings and a mutation rate of ~1.2/division in embryogenesis. This demonstrates that the normal blood phylogeny is an accurate recorder of human development from the very first cell division.
+Two root-level mutations completely partitioned all 140 colonies (52 vs. 88 colonies; no colony carried both).
+These same mutations were detected in the buccal swab in the same ~1:2 ratio, establishing that the most recent common ancestor of blood and buccal epithelium predated gastrulation — consistent with the fertilised egg, with one mutation arising at the first cell division.
+Subsequent embryonic cleavages generated ~33 lines-of-descent by 10 mutations of molecular time, implying ≥5 cell doublings and a mutation rate of ~1.2/division in embryogenesis.
+This demonstrates that the normal blood phylogeny is an accurate recorder of human development from the very first cell division [@LeeSix2018].
 
 ### 6. Population size trajectory: rapid early expansion, stable adult plateau
 
@@ -73,19 +100,24 @@ Phylodynamic coalescence analysis reveals rapid HSC pool expansion during early 
 
 ### 7. Multilineage output from adult stem cells: granulocytes and B lymphocytes
 
-In the recapture phase, early-phylogeny mutations (top of tree) were detectable in granulocytes, B lymphocytes, and T lymphocytes — confirming multilineage output from ancient shared progenitors. Beyond 100 mutations (~early adolescence equivalent), some adult clone branches contributed detectably to both granulocytes and B lymphocytes but not T lymphocytes. The authors interpret this as continued contribution of the same HSC lines to myeloid and B-lymphoid output throughout life, with granulocyte and B-cell production more closely coupled than T-cell production (perhaps due to the large long-lived T-cell pool diluting ongoing HSC contribution).
+In the recapture phase, early-phylogeny mutations (top of tree) were detectable in granulocytes, B lymphocytes, and T lymphocytes — confirming multilineage output from ancient shared progenitors.
+Beyond 100 mutations (~early adolescence equivalent), some adult clone branches contributed detectably to both granulocytes and B lymphocytes but not T lymphocytes.
+The authors interpret this as continued contribution of the same HSC lines to myeloid and B-lymphoid output throughout life, with granulocyte and B-cell production more closely coupled than T-cell production (perhaps due to the large long-lived T-cell pool diluting ongoing HSC contribution) [@LeeSix2018].
 
 ### 8. Stem cells recirculate body-wide
 
-Bone marrow-derived HSCs (from right iliac crest) were not more clustered on the phylogeny than peripheral blood-derived HSCs (p = 0.14), implying sufficient recirculation that the iliac crest aspirate is a representative sample of the whole-body HSC pool.
+Bone marrow-derived HSCs (from right iliac crest) were not more clustered on the phylogeny than peripheral blood-derived HSCs (p = 0.14), implying sufficient recirculation that the iliac crest aspirate is a representative sample of the whole-body HSC pool [@LeeSix2018].
 
 ## Relevance
 
 **1. Quantitative null model for CH drift vs. selection.**
-The central finding — that 50,000–200,000 actively dividing HSCs underlie normal haematopoiesis, and that in this subject all clonal dynamics were consistent with neutral drift — provides the quantitative baseline for interpreting CH. With a pool this large, a clone reaching 1% VAF in bulk blood requires substantial fitness advantage (s >> 1/(2N_e) ≈ 1/100,000); neutral drift alone cannot explain most observed large CH clones. This directly sharpens the CH contamination concern for the cbioportal pipeline: clones that are detectable in standard sequencing panels (VAF >1–2%) are very likely to carry driver mutations, not just drift.
+The central finding — that 50,000–200,000 actively dividing HSCs underlie normal haematopoiesis, and that in this subject all clonal dynamics were consistent with neutral drift — provides the quantitative baseline for interpreting CH [@LeeSix2018].
+With a pool this large, a clone reaching 1% VAF in bulk blood requires substantial fitness advantage (s >> 1/(2N_e) ≈ 1/100,000); neutral drift alone cannot explain most observed large CH clones.
+This directly sharpens the CH contamination concern for the cbioportal pipeline: clones that are detectable in standard sequencing panels (VAF >1–2%) are very likely to carry driver mutations, not just drift.
 
 **2. Molecular clock (~17 SBS/year) anchors relative clone age estimates.**
-The per-HSC mutation rate implied by the colony data (~17 SBS/year genome-wide) is widely used to date CH driver acquisition events. For example, DNMT3A mutations detected at 1% VAF in a 60-year-old were likely acquired ~20–40 years earlier and have been expanding under selection since. This timing context is important when interpreting whether DNMT3A-driven CH in a 65-year-old solid-tumor patient is likely to be a contaminating clone present in the blood draw or a genuinely tumor-intrinsic mutation.
+The per-HSC mutation rate implied by the colony data (~17 SBS/year genome-wide) is widely used to date CH driver acquisition events [@LeeSix2018].
+This timing context is important when interpreting whether DNMT3A-driven CH in an older solid-tumor patient is likely to be a contaminating clone present in the blood draw or a genuinely tumor-intrinsic mutation.
 
 **3. Neutral drift as a context for "unexplained selection" (Poon et al. sharpened).**
 Poon et al. [@Poon2021] demonstrate that ~90% of positive selection in blood is unexplained by the 20 most common CH drivers and >85% unexplained even by the full 468-gene MSK-IMPACT panel. Lee-Six 2018 provides the population-genetic context: given N_eff ~ 100,000 HSCs, the expected neutral clone-size distribution makes it very unlikely for large clones to arise by chance. Therefore, the Poon et al. "unexplained selection" cannot be primarily cryptic neutral drift — it must reflect genuine positive selection from drivers currently outside known CH gene lists. This sharpens the `question:0006-ch-priority-gene-completeness` framing: the Bolton 7-gene list is not capturing most of the actual selective events. The selection is real; the genes driving it are unknown.
@@ -94,7 +126,10 @@ Poon et al. [@Poon2021] demonstrate that ~90% of positive selection in blood is 
 The demonstration that blood phylogeny traces to the fertilised egg, with embryonic clones still measurable 59 years later, confirms that CH mutations detected in cancer patients can in principle have originated in the embryo and be completely irrelevant to tumor biology. This is an extreme example of why matched-normal sequencing matters: the "normal" blood sample may itself carry embryo-age clones.
 
 **5. No DNMT3A or other CH drivers in this subject — the driver-free baseline.**
-This 59-year-old individual's HSCs showed no known myeloid drivers and dN/dS = 1. This is rare (most 59-year-olds have detectable CH clones). The paper explicitly notes this as fortuitous: it enables a clean null model. For DNMT3A: its absence here, combined with the large population size inferred, shows that the DNMT3A fitness advantage (~10–30%/year from other studies) would have allowed a DNMT3A clone arising at age 20 to reach >10% VAF by age 59 via selection. This quantitative framing is important for the `ch_priority_gene` logic: even at moderate selection coefficients, only a few decades are needed for DNMT3A clones to become detectable, so older study cohorts have higher expected CH contamination rates.
+This 59-year-old individual's HSCs showed no known myeloid drivers and dN/dS = 1 [@LeeSix2018].
+This is rare relative to the broader CH literature, but it enables a clean null model.
+For DNMT3A, its absence here should be read only as a driver-free baseline; quantitative DNMT3A fitness estimates require driver-positive follow-up cohorts.
+This framing is important for the `ch_priority_gene` logic: even at moderate selection coefficients, only a few decades are needed for DNMT3A clones to become detectable, so older study cohorts have higher expected CH contamination rates.
 
 ## Project Framework Mapping
 

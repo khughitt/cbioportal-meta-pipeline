@@ -41,20 +41,29 @@ dataset_usage:
 
 This attractor-state analysis note links topic:co-occurrence-and-mutual-exclusivity.
 
-This paper introduces an **EO/HRM framework** that integrates **embryological origin (EO)** — a coarse five-group proxy (ectoderm, mesoderm, endoderm [foregut/midgut/hindgut/urogenital], neural crest, yolk sac) for the inherent cellular gene-regulatory network — with **hallmark-related mutations (HRM)** — binary per-hallmark involvement flags derived from COSMIC-annotated somatic variants — to perform unsupervised clustering across 25,775 pan-cancer tumor samples in the MSK-MET database. The clustering (Jaccard-distanced t-SNE + K-means; optimal K selected by the elbow method) identifies **11 stable pan-cancer "attractor states"** (EO/HRM model) that are interpreted as stable functional basins in the Waddington epigenetic landscape. The central claim is that adding embryological origin as a feature — even at this coarse organ-level grain — significantly enhances cluster stability (ARI: 0.74 vs. 0.70 for HRM-only) and prognostic performance (C-index: 0.59 vs. 0.56 for HRM-only) relative to using HRM profiles alone.
+This paper introduces an **EO/HRM framework** that integrates **embryological origin (EO)** — a coarse five-group proxy (ectoderm, mesoderm, endoderm [foregut/midgut/hindgut/urogenital], neural crest, yolk sac) for the inherent cellular gene-regulatory network — with **hallmark-related mutations (HRM)** — binary per-hallmark involvement flags derived from COSMIC-annotated somatic variants — to perform unsupervised clustering across 25,775 pan-cancer tumor samples in the MSK-MET database.
+The clustering (Jaccard-distanced t-SNE + K-means; optimal K selected by the elbow method) identifies **11 stable pan-cancer "attractor states"** (EO/HRM model) that are interpreted as stable functional basins in the Waddington epigenetic landscape.
+The central claim is that adding embryological origin as a feature — even at this coarse organ-level grain — significantly enhances cluster stability (ARI: 0.74 vs. 0.70 for HRM-only) and prognostic performance (C-index: 0.59 vs. 0.56 for HRM-only) relative to using HRM profiles alone [@Deshpande2026].
 
 ## Methods
 
 ### Dataset
 
-The **MSK-MET database** (Nguyen et al. 2022, *Cell* 185:563) was downloaded from cBioPortal. It contains mutation profiles for 25,775 primary and metastatic tumors sequenced with the MSK-IMPACT targeted panel. SNVs, indels, and fusion-generating structural variants (both partner genes included) were retained. Non-fusion structural variants and copy number variations were excluded.
+The **MSK-MET database** (Nguyen et al. 2022, *Cell* 185:563) was downloaded from cBioPortal.
+It contains mutation profiles for 25,775 primary and metastatic tumors sequenced with the MSK-IMPACT targeted panel.
+SNVs, indels, and fusion-generating structural variants (both partner genes included) were retained.
+Non-fusion structural variants and copy number variations were excluded [@Deshpande2026].
 
 ### Hallmark annotation (HRM construction)
 
 Fifteen hallmarks from the 2022 *Cancer Discovery* hallmarks update were used:
 invasion/metastasis, evading growth suppressors (growth suppression), proliferative signaling, angiogenesis, dysdifferentiation, genomic regulation, energetics, genomic instability, escaping cell death, cell division control, inflammation, replicative immortality, senescence, escaping immune response, and pathogen response.
 
-Genes associated with each hallmark were extracted from the **COSMIC** database (Catalogue of Somatic Mutations in Cancer; last accessed July 2025). Because TP53 maps to 13/15 hallmarks in COSMIC, TP53 variants were separated into a standalone 16th binary feature (total feature space: 16 HRM indicators). A hallmark was flagged as "involved" if at least one variant fell in any hallmark-associated gene for that sample. This is a **binary per-sample, per-hallmark indicator** — no mutation-count or burden component. The full gene-to-hallmark mapping is in supplementary table S1.
+Genes associated with each hallmark were extracted from the **COSMIC** database (Catalogue of Somatic Mutations in Cancer; last accessed July 2025).
+Because TP53 maps to 13/15 hallmarks in COSMIC, TP53 variants were separated into a standalone 16th binary feature (total feature space: 16 HRM indicators).
+A hallmark was flagged as "involved" if at least one variant fell in any hallmark-associated gene for that sample.
+This is a **binary per-sample, per-hallmark indicator** — no mutation-count or burden component.
+The full gene-to-hallmark mapping is in supplementary table S1 [@Deshpande2026].
 
 ### Embryological origin (EO) encoding
 
@@ -81,13 +90,20 @@ Organ-specific metastasis rates modeled with logistic regression; cluster vs. hi
 
 ### HRM prevalence
 
-HRMs were detected in 24,615/25,775 (95.5%) of tumors. Most ubiquitous pan-cancer HRMs: invasion/metastasis (88.1%), escaping cell death (87.8%), dysdifferentiation (84.4%), and signaling (83%). Least common: pathogen response (14.6%) and immune response (47.4%). TP53 variants present in 48.1% of tumors.
+HRMs were detected in 24,615/25,775 (95.5%) of tumors.
+Most ubiquitous pan-cancer HRMs: invasion/metastasis (88.1%), escaping cell death (87.8%), dysdifferentiation (84.4%), and signaling (83%).
+Least common: pathogen response (14.6%) and immune response (47.4%).
+TP53 variants present in 48.1% of tumors [@Deshpande2026].
 
-HRM patterns varied strongly by histology — different tumors from the same organ can have divergent HRM landscapes (e.g., pancreatic adenocarcinoma vs. pancreatic neuroendocrine neoplasms have similar TMB [3.45 vs. 2.5 mut/Mb] but divergent HRM profiles). Tumors sharing etiology (HPV-related anal vs. cervical SCC) showed similar HRM profiles across 15/16 hallmarks.
+HRM patterns varied strongly by histology — different tumors from the same organ can have divergent HRM landscapes (e.g., pancreatic adenocarcinoma vs. pancreatic neuroendocrine neoplasms have similar TMB [3.45 vs. 2.5 mut/Mb] but divergent HRM profiles).
+Tumors sharing etiology (HPV-related anal vs. cervical SCC) showed similar HRM profiles across 15/16 hallmarks [@Deshpande2026].
 
 ### Prognostic significance of individual HRMs
 
-Univariate Cox regression: 14/16 HRMs showed significant associations with OS (not significant: cell division control and escaping immune response). Nearly all HRMs associated with inferior survival, except pathogen response (HR: 0.804, p<0.001 — improved survival, possibly reflecting MSI-H-like immune responsiveness). Patients with no HRM had significantly longer OS than those with HRM (median OS: 58.97 vs. 40.08 months; log-rank p<0.001; HR: 0.827, 95%CI: 0.764–0.895). Leave-one-out analysis confirmed that most hallmark groups retained prognostic value even after removing their dominant gene (e.g., KRAS in angiogenesis, energetics, inflammation).
+Univariate Cox regression: 14/16 HRMs showed significant associations with OS (not significant: cell division control and escaping immune response).
+Nearly all HRMs associated with inferior survival, except pathogen response (HR: 0.804, p<0.001 — improved survival, possibly reflecting MSI-H-like immune responsiveness).
+Patients with no HRM had significantly longer OS than those with HRM (median OS: 58.97 vs. 40.08 months; log-rank p<0.001; HR: 0.827, 95%CI: 0.764–0.895).
+Leave-one-out analysis confirmed that most hallmark groups retained prognostic value even after removing their dominant gene (e.g., KRAS in angiogenesis, energetics, inflammation) [@Deshpande2026].
 
 ### Model comparison: EO/HRM vs. HRM-only
 
@@ -115,9 +131,14 @@ Interpretation: HRM-only had tighter geometric clusters (higher Silhouette, high
 
 ### Metastatic patterns
 
-Among 15 major cancer types (≥400 patients each), cluster C1 had the highest global metastatic disease prevalence (90.9%); C3 the lowest (71.9%). Cluster assignments predicted metastatic status with AUC 0.68 vs. 0.67 for histology alone; multivariate models showed C10, C7, C5, C4 retained independent predictive capacity (OR: 2.1, 1.7, 0.78, 1.6; p<0.05). Specific organ-site models: C10 was independently associated with lung, liver, and bone metastases (OR: 1.7, 2.0, 1.8; p<0.05); C4 with brain metastases (OR: 1.3; p=0.002); C5 and C8 with reduced risk of lymph node, brain, and liver metastases.
+Among 15 major cancer types (≥400 patients each), cluster C1 had the highest global metastatic disease prevalence (90.9%); C3 the lowest (71.9%).
+Cluster assignments predicted metastatic status with AUC 0.68 vs. 0.67 for histology alone; multivariate models showed C10, C7, C5, C4 retained independent predictive capacity (OR: 2.1, 1.7, 0.78, 1.6; p<0.05).
+Specific organ-site models: C10 was independently associated with lung, liver, and bone metastases (OR: 1.7, 2.0, 1.8; p<0.05); C4 with brain metastases (OR: 1.3; p=0.002); C5 and C8 with reduced risk of lymph node, brain, and liver metastases [@Deshpande2026].
 
-**Prognostic inversions across histologies:** Cluster C0 was associated with favorable prognosis in LUAD, PAAD, and IHCA but poorest outcomes in prostate carcinoma (median OS: 29.6 months). Cluster C6 showed significantly superior outcomes in prostate carcinoma (median OS not reached vs. 29.6 months for C0). Cluster C7 conferred high metastasis risk in HGSOC and GIST but was protective in renal clear cell carcinoma (metastatic prevalence 73% vs. 89% in C3). These context-dependent inversions are interpreted as evidence that attractor state behavior is gated by the embryological landscape.
+**Prognostic inversions across histologies:** Cluster C0 was associated with favorable prognosis in LUAD, PAAD, and IHCA but poorest outcomes in prostate carcinoma (median OS: 29.6 months).
+Cluster C6 showed significantly superior outcomes in prostate carcinoma (median OS not reached vs. 29.6 months for C0).
+Cluster C7 conferred high metastasis risk in HGSOC and GIST but was protective in renal clear cell carcinoma (metastatic prevalence 73% vs. 89% in C3).
+These context-dependent inversions are interpreted as evidence that attractor state behavior is gated by the embryological landscape [@Deshpande2026].
 
 ## Relevance
 
@@ -133,7 +154,10 @@ That said, the paper does provide something genuinely useful for the project: a 
 
 The EO component is the paper's most original methodological contribution. Rather than using raw histological labels (which would trivially separate cancer types), the authors use **embryological germ-layer origin** as a proxy for the underlying GRN "topography." The five-group EO encoding is coarser than histology but captures a conserved developmental constraint shared across organ systems — the claim being that tumors sharing a germ-layer origin share latent GRN structure that modulates how somatic mutations are selected.
 
-For the project, this is directly relevant to the **mandatory per-histology framing** as a principled justification. The prognostic inversions (C0 favorable in lung/pancreas/liver but unfavorable in prostate; C6 favorable in prostate) demonstrate that the same genomic attractor state has opposite clinical consequences depending on the cell-of-origin context — exactly the Simpson's-paradox-type problem the project must address by conditioning all analyses on histology. The paper shows that even a coarse EO proxy (5 groups) is enough to qualitatively improve cluster stability and prognostic utility over HRM alone (EO/HRM ARI 0.74 vs. HRM-only 0.70; C-index 0.59 vs. 0.56 across 5-fold CV). **EO/HRM beats HRM-alone on stability and survival concordance** in all reported comparisons — the advantage is modest but consistent across bootstrap (100 iterations) and 5-fold CV.
+For the project, this is directly relevant to the **mandatory per-histology framing** as a principled justification.
+The prognostic inversions (C0 favorable in lung/pancreas/liver but unfavorable in prostate; C6 favorable in prostate) demonstrate that the same genomic attractor state has opposite clinical consequences depending on the cell-of-origin context — exactly the Simpson's-paradox-type problem the project must address by conditioning all analyses on histology.
+The paper shows that even a coarse EO proxy (5 groups) is enough to qualitatively improve cluster stability and prognostic utility over HRM alone (EO/HRM ARI 0.74 vs. HRM-only 0.70; C-index 0.59 vs. 0.56 across 5-fold CV).
+**EO/HRM beats HRM-alone on stability and survival concordance** in all reported comparisons — the advantage is modest but consistent across bootstrap (100 iterations) and 5-fold CV [@Deshpande2026].
 
 For the project's potential oncofetal/embryonic-origin extension, the specific EO subgroups used (foregut-dominated C5, neural-crest-dominated C10) are directly interpretable and suggest that germ-layer partitioning could be incorporated as a stratification covariate in the project's per-histology analyses.
 

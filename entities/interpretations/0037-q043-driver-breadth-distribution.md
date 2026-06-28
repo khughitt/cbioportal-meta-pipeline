@@ -19,7 +19,7 @@ related:
 - interpretation:0036-panel-tmb-denominator-stale-artifact-fix
 ---
 
-# Interpretation: q043 — driver cancer-type-breadth distribution (first pass)
+# Interpretation: driver cancer-type-breadth distribution (first pass)
 
 ## Verdict
 
@@ -65,23 +65,24 @@ by PIK3CA, ARID1A, PTEN, RB1, NF1, KRAS, CDKN2A. **8 of IntOGen's 12 cancer-wide
 panel-covered here, and all 8 sit at the top of the distribution (median breadth ≈22–24 at the 1–2%
 grade). The 4 missing (KMT2D, KMT2C, LRP1B, FAT4) are not on the MSK-IMPACT panel.
 
-**3. CGC role predicts breadth — confirming the q042/q043 prior.** Tumor suppressors are **broader**
+**3. CGC role predicts breadth — confirming the `question:0042-driver-normal-expression-tissue-cell-type-specificity` / `question:0043-driver-cancer-type-breadth-distribution` prior.** Tumor suppressors are **broader**
 than oncogenes at every threshold (e.g. at ≥2%: TSG median breadth 7 vs oncogene 4); the top-15
 broadest drivers are almost entirely TSGs / genome guardians (TP53, ARID1A, PTEN, RB1, NF1, ATM,
 APC, SETD2, EP300, FAT1…). Oncogenes concentrate in the restricted tail. This is exactly the
 predicted structure: **broad hubs = guardians; restricted tail = (lineage) oncogenes** — the
-substrate q042 needs.
+substrate `question:0042-driver-normal-expression-tissue-cell-type-specificity` needs.
 
-**4. Bailey cross-check + the PANCAN-handling point.** Bailey 2018 per-cancer rosters with PANCAN
+**4. Bailey cross-check + the PANCAN-handling point.** Bailey et al. [@Bailey2018] per-cancer rosters with PANCAN
 **excluded**: 235 genes with ≥1 specific-cancer call, 78.7% restricted to 1–2 cancers (broadest
 TP53=26, PIK3CA=18, KRAS=16). **64 genes appear *only* as PANCAN** — they would vanish from a
-restricted-vs-pan-cancer count if one kept only PANCAN-encoded rows, concretely validating q043's
-insistence on handling PANCAN explicitly rather than via the broadcast flag.
+restricted-vs-pan-cancer count if one kept only PANCAN-encoded rows, concretely validating the rule
+from `question:0043-driver-cancer-type-breadth-distribution` that PANCAN rows must be handled
+explicitly rather than via the broadcast flag.
 
-**5. Hypermutator breadth inflation (→ q047).** Excluding hypermutators raises the restricted
+**5. Hypermutator breadth inflation (→ `question:0047-hypermutation-confound-on-driver-tissue-specificity`).** Excluding hypermutators raises the restricted
 fraction (52% → **68%** at ≥5%, on the corrected post-TMB-fix flags) and **186 drivers lose ≥1
 cancer-type of breadth at that same ≥5% grade** (253 at ≥2%) — apparent breadth is partly
-hypermutator-driven passenger recurrence. q047 dissects this per-sample and confirms a driver-share
+hypermutator-driven passenger recurrence. `question:0047-hypermutation-confound-on-driver-tissue-specificity` dissects this per-sample and confirms a driver-share
 dilution across 8 cancer types.
 
 ## Limitations
@@ -94,11 +95,11 @@ dilution across 8 cancer types.
 
 ## Implications for the questions
 
-- **`q042`:** the restricted-vs-pan-cancer roster it listed as an unmet prerequisite now exists
+- **`question:0042-driver-normal-expression-tissue-cell-type-specificity`:** the restricted-vs-pan-cancer roster it listed as an unmet prerequisite now exists
   (`results/poc-2026-04-17/analysis/q043/breadth_inclusive_2pct.feather`), and the OG-broad-vs-TSG
   contrast direction (oncogenes restricted) supports its route-1-oncogene framing. Use the ≥5%
   recurrence grade and **stratify on `is_hypermutator`**.
-- **`q043`:** promote a note that the restricted fraction is threshold-defined; the IntOGen 63%
+- **`question:0043-driver-cancer-type-breadth-distribution`:** promote a note that the restricted fraction is threshold-defined; the IntOGen 63%
   corresponds to a stringent recurrence bar, not a universal constant.
-- **`h02`:** the off-panel truncation of breadth is a concrete instance of composition-driven
+- **`hypothesis:0002-cross-study-ranking-divergence-is-structured`:** the off-panel truncation of breadth is a concrete instance of composition-driven
   divergence from an external roster.

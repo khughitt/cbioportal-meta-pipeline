@@ -1,6 +1,6 @@
 ---
 type: interpretation
-title: "t206 H10 treatment-exposure audit manual review \u2014 167 non-TCGA studies;\
+title: "t206 treatment-exposure audit manual review \u2014 167 non-TCGA studies;\
   \ layered broad vs mutagenic-treatment label design"
 status: active
 created: '2026-06-01'
@@ -14,16 +14,16 @@ related:
 - hypothesis:0009-treatment-induced-signature-frequency-contamination
 - question:0024-treatment-exposed-cohort-chemotherapy-signature
 ---
-# t206 — H10 treatment-exposure audit manual review
+# t206 — treatment-exposure audit manual review
 
 Date: 2026-06-01
 
 ## Question
 
-Which non-TCGA cBioPortal studies in `config-full.yml` are ready to be treated as treatment-exposed strata for `hypothesis:0009`, and which need sample-level fraction review before they can affect the frequency-table denominator?
+Which non-TCGA cBioPortal studies in `config-full.yml` are ready to be treated as treatment-exposed strata for `hypothesis:0009-treatment-induced-signature-frequency-contamination`, and which need sample-level fraction review before they can affect the frequency-table denominator?
 
 This is a manual-review note for the metadata scaffold in `code/scripts/audit_treatment_exposed_studies.py`.
-It does not estimate H10 support and does not yet change the frequency tables.
+It does not estimate support for `hypothesis:0009-treatment-induced-signature-frequency-contamination` and does not yet change the frequency tables.
 Related project entities: `task:t206`, `hypothesis:0009-treatment-induced-signature-frequency-contamination`, `question:0024-treatment-exposed-cohort-chemotherapy-signature`, and `question:0027-does-excluding-treatment-signature-high-samples`.
 
 ## Input
@@ -62,14 +62,14 @@ Several are immunotherapy, endocrine, targeted, or castration-resistant cohorts 
 | `sclc_cancercell_gardner_2017` | sensitivity only | chemosensitive/chemoresistant SCLC PDX cohort | chemotherapy-resistance signal, but PDX denominator exclusion |
 | `skcm_mskcc_2014` | propose broad flag | pretreated ipilimumab/tremelimumab melanoma | treated cohort; ICB is not the therapy-signature endpoint |
 
-The next config artifact should not be a single flat treatment list for H10.
-A flat list would pool platinum/TMZ-like candidates with ICB/endocrine/targeted/castration-resistant cohorts, diluting the specific therapy-signature prediction in `hypothesis:0009`.
+The next config artifact should not be a single flat treatment list for `hypothesis:0009-treatment-induced-signature-frequency-contamination`.
+A flat list would pool platinum/TMZ-like candidates with ICB/endocrine/targeted/castration-resistant cohorts, diluting the specific therapy-signature prediction in `hypothesis:0009-treatment-induced-signature-frequency-contamination`.
 The proposed labels should instead be layered:
 This is a provisional `manual-review-v0` schema for the next config/schema plan, not a final committed config contract.
 
 ```yaml
 # Broad cohort-composition nuisance stratum.
-# This is not the primary mutagenic-signature H10 test.
+# This is not the primary mutagenic-signature test for hypothesis:0009-treatment-induced-signature-frequency-contamination.
 treatment_exposed_studies:
   - blca_dfarber_mskcc_2014
   - brca_dfci_2020
@@ -93,7 +93,7 @@ mutagenic_treatment_signal_sensitivity_only_studies:
 
 The broad flag answers "could cohort composition differ by treatment history?"
 The narrower field answers "should SBS11/SBS31/SBS35/SBS87 be expected a priori?"
-Only the narrower mutagenic layer should drive the primary H10 therapy-signature impact test.
+Only the narrower mutagenic layer should drive the primary therapy-signature impact test for `hypothesis:0009-treatment-induced-signature-frequency-contamination`.
 The broad layer is a cohort-composition sensitivity.
 
 ## Fraction-Review Candidates
@@ -117,7 +117,7 @@ High-priority fraction-review candidates:
 | `brain_cptac_2020` | `TREATMENT_STATUS`: 36 post-treatment / 182 treatment naive; chemotherapy agents include temozolomide and platinum-containing regimens | sample-level fraction candidate; pediatric brain mixed-substrate caveat |
 | `pptc_2019` | `TX_CISPLATIN` is nonblank for 47 / 261 PDX samples | exclude from primary patient denominator; sensitivity-only if PDX handling is explicitly modeled |
 
-The advanced/metastatic-only studies without direct treatment columns should remain out of the primary H10 label set.
+The advanced/metastatic-only studies without direct treatment columns should remain out of the primary `hypothesis:0009-treatment-induced-signature-frequency-contamination` label set.
 They may still be useful as a stage-enriched sensitivity, but treating metastatic status as treatment exposure would confound treatment history with disease stage.
 
 For the mutagenic-treatment layer, the highest-priority mixed-cohort fraction candidates are `blca_cornell_2016` and `difg_glass_2019`.
@@ -152,7 +152,7 @@ They are unknown for the audit.
 ## Interpretation
 
 The manual review supports adding a broad treatment-exposed study stratum, but it also shows that the strongest mutagenic-treatment candidates are not identical to the 11 study-level flags.
-For H10, the clean next design is a layered label:
+For `hypothesis:0009-treatment-induced-signature-frequency-contamination`, the clean next design is a layered label:
 
 - broad `treatment_exposed_studies` for cohort-composition sensitivity;
 - a narrower study-level and sample-fraction layer for DNA-damaging therapies expected to generate SBS11/SBS31/SBS35/SBS87;
@@ -164,11 +164,11 @@ It also prevents the frequency-table impact pass from overclaiming that an ICB-t
 The audit recall is unmeasured.
 The 109 `no_metadata_signal` studies were not individually reviewed beyond the scaffold output, and the scaffold is a keyword and clinical-column detector over local cBioPortal metadata.
 A treated cohort with neutral study prose and no treatment-named clinical column could remain in the apparent control baseline.
-Therefore the untreated comparator for the first H10 pass is a `no_detected_treatment_signal` baseline plus the three positively naive/pre-treatment studies, not a fully adjudicated treatment-naive baseline.
+Therefore the untreated comparator for the first `hypothesis:0009-treatment-induced-signature-frequency-contamination` pass is a `no_detected_treatment_signal` baseline plus the three positively naive/pre-treatment studies, not a fully adjudicated treatment-naive baseline.
 
 ## Next Step
 
-The next executable step is a small config/schema plan for H10 denominator handling:
+The next executable step is a small config/schema plan for `hypothesis:0009-treatment-induced-signature-frequency-contamination` denominator handling:
 
 - add broad confirmed study-level flags only after deciding where `config-full.yml` should carry them;
 - encode `mutagenic_treatment_signal_studies` separately from the broad `treatment_exposed_studies` list;

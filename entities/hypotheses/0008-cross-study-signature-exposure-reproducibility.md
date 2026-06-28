@@ -41,7 +41,8 @@ divergence): **do per-cancer-type signature exposure profiles replicate across i
 cBioPortal/MC3/GENIE studies of the same tissue, and — where they diverge — is the divergence
 explained by technical batch (variant-caller provenance, panel vs WES vs WGS, treatment exposure)
 rather than by real biological difference?** A clean answer is a prerequisite for trusting any
-cross-study pooled signature claim, including the h08 positive control.
+cross-study pooled signature claim, including the
+`hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` positive control.
 
 ## Rationale
 
@@ -54,7 +55,7 @@ cross-study pooled signature claim, including the h08 positive control.
   noise); signatures are a second readout where the same logic should hold and is independently
   testable.
 - If exposures replicate after batch adjustment, cross-study pooling (the project's core move) is
-  validated for signatures; if they do not, it bounds what h08 and any pooled-signature deliverable
+  validated for signatures; if they do not, it bounds what the agnostic covariate-association layer and any pooled-signature deliverable
   can claim.
 
 ## Predictions
@@ -92,7 +93,7 @@ cross-study pooled signature claim, including the h08 positive control.
 
 ## Status & Next Steps
 
-- **status: proposed.** Naturally downstream of the h08 signature-decomposition layer (shares
+- **status: proposed.** Naturally downstream of the agnostic signature-decomposition layer (shares
   `task:t178`/`t179` infrastructure: caller-provenance flag + per-sample fitting). Could run as its
   own analysis once per-sample/refit exposures exist for ≥2 independent studies per cancer type.
 - Next: enumerate cancer types with ≥2 independent cBioPortal/MC3 studies; reuse the
@@ -101,7 +102,9 @@ cross-study pooled signature claim, including the h08 positive control.
 ## Related
 
 - Hypotheses: `hypothesis:0002-cross-study-ranking-divergence-is-structured` (mutation-frequency
-  analog), `hypothesis:h08-...` (consumes reproducible exposures)
+  analog), `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`
+  (consumes reproducible exposures)
 - Topics: `topic:signature-extraction-fitting-methods`, `topic:aetiology-covariate-association`
-- Questions: `question:q020-...`, `question:q021-...` (heme COSMIC-version harmonisation)
+- Questions: `question:0020-minimum-sample-size-and-caller-provenance-for`,
+  `question:0021-positive-control-signature-set-expansion-sbs9` (heme COSMIC-version harmonisation)
 - Tasks: `task:t178`, `task:t179`, `task:t181`

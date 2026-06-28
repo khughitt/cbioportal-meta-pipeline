@@ -9,6 +9,11 @@ mode: dev
 source_refs:
 - task:t070
 - task:t100
+- code/notebooks/t070_poc_comparison.py
+- /data/packages/cbioportal/poc-pre-t070
+- results/poc-2026-04-17/metadata/samples_annotated.feather
+- results/poc-2026-04-17/metadata/panel_callable_mb.tsv
+- results/poc-2026-04-17/summary/mut/table/gene_cancer_study_ratio_annotated.feather
 related:
 - task:t070
 - task:t100
@@ -32,7 +37,7 @@ Project links: this interpretation follows `task:t070`, `task:t100`, and `task:t
 
 ## Verdict
 
-**Verdict:** [+] t070 fix delivers predicted ~30× TMB correction and flips 401 MSK samples to correct hypermutator status; magnitudes match to 3 sig figs.
+**Verdict:** [+] t070 fix delivers predicted ~30× TMB correction and flips 401 MSK samples to correct hypermutator status; magnitudes match to 3 sig figs in `results/poc-2026-04-17/metadata/samples_annotated.feather`.
 
 <!-- Backfilled 2026-04-19 per discussion:2026-04-19-verdict-polarity-display -->
 
@@ -88,7 +93,7 @@ Post-t070 uses each sample's actual panel callable-Mb value.
 
 The observed post/pre ratio matches `30 / panel_mb` exactly for both
 panels: 30 / 0.89 = 33.71, 30 / 1.01 = 29.70. This is expected — the
-numerator (mutation count) is unchanged; only the denominator shifts.
+numerator (mutation count) is unchanged; only the denominator shifts, as shown by `results/poc-2026-04-17/metadata/panel_callable_mb.tsv`.
 
 **Consequence**: pre-t070 TMB values for MSK samples were all artificially
 compressed by ~30×. A sample with 20 mutations on IMPACT-341 appeared as
@@ -120,7 +125,7 @@ MSK-IMPACT-341 0.19 → 6.48; MSK-IMPACT-410 0.24 → 7.07.
 | zscore_fallback_low | gmm_upper_mode_below_floor | 87 |
 | zscore_fallback_high | zscore_fallback_high | 39 |
 
-**Interpretation:** The 401 false-to-true flips are the scientifically
+**Interpretation:** The 401 false-to-true flips in `results/poc-2026-04-17/metadata/samples_annotated.feather` are the scientifically
 meaningful correction — these are MSK samples that were silently
 mis-classified as non-hypermutator pre-t070 because their TMB was
 compressed below the Campbell 10 mut/Mb threshold. Post-t070 they are
@@ -134,11 +139,11 @@ because all TMB values within MSK cancers shifted up by ~30×. The
 from being auto-flagged if their TMB is still below the Campbell
 10 mut/Mb composite floor — which is why the 401 flipped samples
 cleanly crossed, while the 1,766 in the `gmm_upper_mode_below_floor`
-bucket did not.
+bucket did not in `results/poc-2026-04-17/metadata/samples_annotated.feather`.
 
 ## Axis 3 — Per-(cancer, gene) rates (msk_impact_2017)
 
-**Distribution of rate ratios across 5,164 (cancer, gene) rows
+**Distribution of rate ratios across 5,164 (cancer, gene) rows in `results/poc-2026-04-17/summary/mut/table/gene_cancer_study_ratio_annotated.feather`
 with non-null rates in both runs:**
 
 | statistic | value |
@@ -155,7 +160,7 @@ with non-null rates in both runs:**
 the gene is on all MSK-IMPACT panels (covered by IMPACT-341), so the
 denominator is unchanged (all 10,945 samples). Only genes added in
 IMPACT-410+ see a denominator shift (10,945 → 8,136, ratio ≈ 1.345
-expected). The observed `mean = 1.035` is low because most (cancer, gene)
+expected) in `results/poc-2026-04-17/summary/mut/table/gene_cancer_study_ratio_annotated.feather`. The observed `mean = 1.035` is low because most (cancer, gene)
 rows are for genes on IMPACT-341 (74% of the 505-gene vocabulary is on the
 oldest panel).
 
@@ -168,7 +173,7 @@ oldest panel).
 | Penile Cancer | EPHA7, PLCG2, STAT3, TCF3 | 0.286 | 0.500 | **1.75** |
 | Ovarian Cancer | HLA-A, STAT5A, MST1R, ANKRD11, STAT3, GLI1 | 0.013–0.018 | 0.023–0.031 | **1.75** |
 
-The dominant ratios (2.11 and 1.75) correspond to small-cohort cancers
+The dominant ratios (2.11 and 1.75) in `results/poc-2026-04-17/summary/mut/table/gene_cancer_study_ratio_annotated.feather` correspond to small-cohort cancers
 where the IMPACT-341 subset is a large fraction of the samples. E.g.,
 Uterine Sarcoma has n=93 samples total in msk_impact_2017; if ~50 are
 IMPACT-341 (no coverage of GLI1, added in IMPACT-410), the denominator

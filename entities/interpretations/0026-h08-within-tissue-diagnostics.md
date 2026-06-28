@@ -8,6 +8,8 @@ updated: '2026-06-28'
 id: interpretation:0026-h08-within-tissue-diagnostics
 source_refs:
 - task:t200
+- code/scripts/diagnose_h08_within_tissue.py
+- results/signature-h08-arms-2026-05-31/association/diagnostics/
 date: '2026-06-01'
 related:
 - task:t200
@@ -44,7 +46,7 @@ Run bundle:
 - `h08_apobec_proliferation.feather`
 - `h08_within_tissue_diagnostics.meta.json`
 
-The baseline guard reproduced the frozen WP2 target coefficients and n exactly:
+The baseline guard reproduced the frozen WP2 target coefficients and n exactly from `results/signature-h08-arms-2026-05-31/association/diagnostics/h08_within_tissue_baseline.feather`:
 A −0.0462 (n = 370), B +0.1066 (n = 703), C +0.4584 (n = 1,883).
 
 ## Readout
@@ -57,18 +59,18 @@ A −0.0462 (n = 370), B +0.1066 (n = 703), C +0.4584 (n = 1,883).
 
 ## Test 1 — effective contrast
 
-UV-site contrast in SKCM is ordinal and compressed into three tiers: 40 low, 119 mid, 211 high
+UV-site contrast in SKCM is ordinal and compressed into three tiers in `results/signature-h08-arms-2026-05-31/association/diagnostics/h08_within_tissue_contrast.feather`: 40 low, 119 mid, 211 high
 among the 370 model-frame samples; entropy is 1.34 bits.
 That is enough ordinal spread to fit a coefficient, but it is still a coarse anatomic-site proxy, not
 a cumulative UV-dose measure.
 
 Pack-years did **not** look range-restricted by SD alone on the effective fit frame: LUAD ratio =
-0.94, LUSC ratio = 1.05 after tissue-mean centering.
+0.94, LUSC ratio = 1.05 after tissue-mean centering in `results/signature-h08-arms-2026-05-31/association/diagnostics/h08_within_tissue_contrast.feather`.
 This means the original smoking miss should not be attributed simply to low continuous variance.
 The later smoking-operationalization test gives the sharper explanation.
 
 APOBEC3A/B mRNA shows usable within-tissue spread across all six Arm-C tissues.
-The tissue-centered range-restriction ratios span 0.82–1.21, supporting the idea that the molecular
+The tissue-centered range-restriction ratios span 0.82–1.21 in `results/signature-h08-arms-2026-05-31/association/diagnostics/h08_within_tissue_contrast.feather`, supporting the idea that the molecular
 covariate has enough within-tissue contrast for the model to recover it.
 
 ## Test 2 — smoking operationalization
@@ -117,7 +119,7 @@ are included, not whether the original exposure is causally independent of burde
 | C | non-saturated subset | 1,312 | +0.386 | 2.2e-08 | APOBEC remains in non-hypermutators. |
 
 The Arm-A non-saturated result is mostly a sample-size warning: SBS7 dominates SKCM so strongly that
-the pre-specified non-saturated subset is n = 9–10 across the 0.80–0.95 sweep.
+the pre-specified non-saturated subset is n = 9–10 across the 0.80–0.95 sweep in `results/signature-h08-arms-2026-05-31/association/diagnostics/h08_burden_conditioning.feather`.
 That supports a saturation/no-residual-room interpretation, but it does not rescue the anatomic UV
 proxy.
 
@@ -139,7 +141,7 @@ Primary meta-PCNA control:
 | LUAD | 389 | +0.533 | +0.513 | <25% |
 | LUSC | 444 | +0.328 | +0.335 | <25% |
 
-The n-weighted absolute coefficient is essentially unchanged: 0.427 before control versus 0.434
+The n-weighted absolute coefficient is essentially unchanged in `results/signature-h08-arms-2026-05-31/association/diagnostics/h08_apobec_proliferation.feather`: 0.427 before control versus 0.434
 after meta-PCNA control.
 The canonical marker sensitivity gives the same qualitative result.
 

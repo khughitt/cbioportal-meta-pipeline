@@ -60,7 +60,7 @@ That outcome was knowable after WP1 selected only one primary patient study; the
 ## Substrate
 
 WP1 audited the five treatment-signature candidates named in the t210 plan from the `H10` exposure-label work.
-It did not exhaustively scan all 198 configured cBioPortal studies for SBS11/SBS31/SBS35/SBS87-evaluable patient cohorts.
+It did not exhaustively scan all 198 configured cBioPortal studies for SBS11/SBS31/SBS35/SBS87-evaluable patient cohorts; the audit implementation was `code/scripts/audit_q027_therapy_signature_substrate.py`.
 Therefore, "no second substrate" means no second substrate in this planned candidate set, not proof that no other configured study could support `q027` after a broader search.
 
 | Study | Target signatures | Primary patient denominator | Count-floor-passing samples | Retained comparator support | WP1 gate |
@@ -76,8 +76,8 @@ The COSMIC reference audit confirmed all requested therapy signatures were prese
 
 ## Signature Labels
 
-The per-sample assignment table covers 444 GLASS samples.
-The t179 WES count floor is 383 SBS, so 284 samples are unevaluable rather than negative.
+The per-sample assignment table covers 444 GLASS samples in `/data/packages/cbioportal/q027-therapy-signature-high-2026-06-01/metadata/samples_q027_signature_high.feather`.
+The t179 WES count floor is 383 SBS, so 284 samples are unevaluable rather than negative in `/data/packages/cbioportal/q027-therapy-signature-high-2026-06-01/metadata/samples_q027_signature_high.feather`.
 
 | Label | Samples |
 |---|---:|
@@ -90,12 +90,12 @@ The pre-specified sensitivity labels did not broaden the exclusion set in this r
 The >=20 SBS, fraction >=0.10, and any non-zero SBS11 sensitivity rules all selected the same 36 samples as the primary >=50 SBS rule.
 
 Among count-floor-passing samples, median SBS11 exposure was 0 because most evaluable samples had no assigned SBS11.
-Among the 36 SBS11-high samples, median SBS11 exposure was 7,197.5 SBS and median SBS11 fraction was 1.0.
+Among the 36 SBS11-high samples, median SBS11 exposure was 7,197.5 SBS and median SBS11 fraction was 1.0 in `/data/packages/cbioportal/q027-therapy-signature-high-2026-06-01/metadata/samples_q027_signature_high.feather`.
 This is a strong measured-signature stratum within GLASS, not just a weak non-zero refit tail.
 
 ## Impact Read
 
-The `q027` impact ratio table has 20,822 GLASS gene-cancer rows and 150 columns.
+The `q027` impact ratio table has 20,822 GLASS gene-cancer rows and 150 columns in `/data/packages/cbioportal/q027-therapy-signature-high-2026-06-01/summary/mut/table/gene_cancer_q027_signature_high_impact_ratio.feather`.
 All rows are `underpowered_non_arbitrating` for the primary, sensitivity, evaluable-only, and hypermutator-excluded marginal contrasts.
 
 | Contrast | Removed samples | Power status | Delta summary |
@@ -107,9 +107,9 @@ All rows are `underpowered_non_arbitrating` for the primary, sensitivity, evalua
 | `delta_signature_high_excluded_sensitivity_20` | 36 | 20,822 / 20,822 underpowered | identical to primary |
 | `delta_signature_high_excluded_sensitivity_fraction_10` | 36 | 20,822 / 20,822 underpowered | identical to primary |
 
-The full-denominator contrast compares 444 all samples against 408 non-high samples.
+The full-denominator contrast compares 444 all samples against 408 non-high samples in `/data/packages/cbioportal/q027-therapy-signature-high-2026-06-01/summary/mut/table/gene_cancer_q027_signature_high_impact_ratio.feather`.
 It answers the deliverable question but dilutes the measured-signature effect because 284 below-floor samples remain in both arms.
-The evaluable-only contrast compares 160 count-floor-passing samples against 124 evaluable non-high samples and is therefore the cleaner "what changes among samples where `q027` is measurable" read.
+The evaluable-only contrast compares 160 count-floor-passing samples against 124 evaluable non-high samples in `/data/packages/cbioportal/q027-therapy-signature-high-2026-06-01/summary/mut/table/gene_cancer_q027_signature_high_impact_ratio.feather` and is therefore the cleaner "what changes among samples where `q027` is measurable" read.
 
 The largest full-denominator descriptive deltas are concentrated in genes with many mutations inside the SBS11-high GLASS subset.
 
@@ -137,7 +137,7 @@ It does not say that treatment-signature-high samples are a reproducible cross-s
 
 ## Hypermutator Marginal Read
 
-The existing hypermutator flag does not remove the `q027` SBS11-high GLASS samples in this run.
+The existing hypermutator flag does not remove the `q027` SBS11-high GLASS samples in this run, as recorded in `/data/packages/cbioportal/q027-therapy-signature-high-2026-06-01/metadata/samples_q027_signature_high.feather`.
 All 444 GLASS samples have `is_hypermutator == False`, including all 36 SBS11-high samples.
 The SBS11-high samples carry `hypermutator_reason == gmm_upper_mode_below_floor`, but that reason does not set the final hypermutator flag.
 
@@ -168,7 +168,7 @@ SBS11-high GLASS samples are likely entangled with post-treatment recurrence/pro
 Measured SBS11 exposure reduces exposure-label misclassification, but it does not by itself identify a TMZ causal effect on driver-frequency ranks.
 
 The third limitation is count-floor missingness.
-The 284 below-floor samples are unevaluable, not SBS11-negative.
+The 284 below-floor samples are unevaluable, not SBS11-negative in `/data/packages/cbioportal/q027-therapy-signature-high-2026-06-01/metadata/samples_q027_signature_high.feather`.
 Any future expansion of `q027` should preserve this semantics; widening the analysis by silently treating below-floor samples as negative would recreate the silent-fallback problem that t209 fixed for clinical labels.
 The full-denominator contrast necessarily retains below-floor samples in the non-high arm, so it should be read alongside the evaluable-only contrast rather than as the sole effect-size estimate.
 
@@ -180,7 +180,7 @@ It reads source mutation/sample/hypermutator inputs from `/data/packages/cbiopor
 
 An early local run used the full output directory before this isolation was added.
 That was detected by checking the full `samples_annotated.feather` shape and restored by rerunning the full `all_h10_treatment_impact` target on `code/config/config-full.yml`.
-The restored full substrate has 383,477 samples across 198 studies, and the final full `H10` target reported no work remaining before the isolated `q027` run was accepted.
+The restored full substrate has 383,477 samples across 198 studies in `/data/packages/cbioportal/full/metadata/samples_annotated.feather`, and the final full `H10` target reported no work remaining before the isolated `q027` run was accepted.
 
 Operational source refs include `code/config/config-q027-therapy-signature-high.yml`,
 `code/scripts/audit_q027_therapy_signature_substrate.py`,

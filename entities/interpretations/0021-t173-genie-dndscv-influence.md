@@ -8,6 +8,8 @@ updated: '2026-06-28'
 id: interpretation:0021-t173-genie-dndscv-influence
 source_refs:
 - task:t173
+- code/scripts/analyze_genie_dndscv_influence.py
+- /data/packages/cbioportal/pan-cancer/summary/dndscv_loso/genie_influence/
 date: '2026-04-30'
 related:
 - task:t173
@@ -80,7 +82,7 @@ The `exclude_genie` contrast has the same top-100 instability reported in the LO
 | `exclude_msk_met_2021` | 8 | 8 | 92 |
 | `exclude_pog570_bcgsc_2020` | 4 | 4 | 96 |
 
-The largest lost-gene rank drops include `OBSCN` (+1035), `TTN` (+414), `SUZ12` (+226),
+The largest lost-gene rank drops in `/data/packages/cbioportal/pan-cancer/summary/dndscv_loso/genie_influence/genie_gene_rank_delta.feather` include `OBSCN` (+1035), `TTN` (+414), `SUZ12` (+226),
 `MUTYH` (+222), `TCF3` (+206), `PARK2` (+178), `PPM1D` (+171), and `ETV6` (+164). The largest
 gained-gene promotions include `PTPRS` (-264), `RPS6KA4` (-250), `PTPRT` (-234), `LATS1`
 (-209), `GNAS` (-192), `TGFBR2` (-188), `HGF` (-179), and `NOTCH4` (-175).

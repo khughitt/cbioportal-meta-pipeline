@@ -48,21 +48,25 @@ related:
 **Supported, qualitatively robust; restricted fraction is threshold-defined.** On the 4-study POC
 (13,006 samples, 410 panel-covered genes), breadth is heavy-tailed: TP53 broadest (33/57 types), the
 hub set TSG-dominated, oncogenes in the restricted tail (TSG median breadth > oncogene at every
-threshold) — the structure q042 predicts. **8 of IntOGen's 12 cancer-wide drivers** are panel-covered
-and all sit at the top. The fraction "restricted to 1–2 types" is **strongly threshold-dependent**
+threshold) — the structure `question:0042-driver-normal-expression-tissue-cell-type-specificity`
+predicts. **8 of IntOGen's 12 cancer-wide drivers** are panel-covered and all sit at the top.
+The fraction "restricted to 1–2 types" is **strongly threshold-dependent**
 (8%→19%→52% at 1/2/5%; **→68% with hypermutators excluded** on corrected post-TMB-fix flags), so it
 **brackets** IntOGen's 63% at the ≥5% grade (inclusive below, hypermutator-excluded above) — i.e.
 "restricted vs pan-cancer" is a recurrence-bar + hypermutator-handling choice, not a constant. The
-roster feather q042 needs now exists. See
+roster feather needed by `question:0042-driver-normal-expression-tissue-cell-type-specificity` now
+exists. See
 `interpretation:0037-q043-driver-breadth-distribution` and
 `interpretation:0036-panel-tmb-denominator-stale-artifact-fix`;
 `code/notebooks/q043_driver_breadth_distribution.py`.
 
 ## Summary
 
-We repeatedly invoke "**restricted vs pan-cancer**" drivers — q042 needs it to define its
-specificity contrast, q041 needs a driver-count per cancer type, the temporal theme needs to know
-which events are shared — but the project has **never measured the distribution itself**: across the
+We repeatedly invoke "**restricted vs pan-cancer**" drivers —
+`question:0042-driver-normal-expression-tissue-cell-type-specificity` needs it to define its
+specificity contrast, `question:0041-driver-complexity-vs-median-age-at-diagnosis` needs a
+driver-count per cancer type, and the temporal theme needs to know which events are shared — but
+the project has **never measured the distribution itself**: across the
 driver set, in *how many distinct cancer types* does each driver recur at above-background frequency
 **in our own aggregated cBioPortal/GENIE/MC3 cohort**? The descriptive object is a single
 distribution — driver → cancer-type-breadth count — and two derived questions:
@@ -74,18 +78,22 @@ distribution — driver → cancer-type-breadth count — and two derived questi
    (panel-heavy GENIE, TCGA via MC3, per-cancer-type study counts) shift it? Breadth measured on our
    composition is itself a cross-study replication test (`hypothesis:0002`, `question:0013`).
 
-This is the **roster-counting backbone** that q042 lists as an *unmet prerequisite* and q041 needs
-for its driver-count axis — and it is computable **today**, with no external expression ingest.
+This is the **roster-counting backbone** that
+`question:0042-driver-normal-expression-tissue-cell-type-specificity` lists as an *unmet
+prerequisite* and `question:0041-driver-complexity-vs-median-age-at-diagnosis` needs for its
+driver-count axis — and it is computable **today**, with no external expression ingest.
 
 ## Why It Matters
 
-- **It de-risks two open questions at once.** q042's restricted-vs-pan-cancer split and q041's
-  per-cancer driver count both depend on this exact roster. Building it once unblocks both, and
-  surfaces the breadth threshold choices (frequency cutoff, min studies) before they silently bias a
-  downstream Tau or age test.
+- **It de-risks two open questions at once.**
+  `question:0042-driver-normal-expression-tissue-cell-type-specificity`'s restricted-vs-pan-cancer
+  split and `question:0041-driver-complexity-vs-median-age-at-diagnosis`'s per-cancer driver count
+  both depend on this exact roster. Building it once unblocks both, and surfaces the breadth
+  threshold choices (frequency cutoff, min studies) before they silently bias a downstream Tau or
+  age test.
 - **It is a clean, cheap cross-study replication play** — exactly the project's wheelhouse — that
   tests whether our aggregate reproduces an external gold standard (IntOGen) or diverges in a
-  structured, composition-driven way (`h02`).
+  structured, composition-driven way (`hypothesis:0002-cross-study-ranking-divergence-is-structured`).
 - **The risk if left unmeasured:** every "restricted driver" claim downstream rides on an *assumed*
   breadth distribution we have never looked at, and on whichever roster source happens to be wired
   in — with no calibration against IntOGen.
@@ -127,24 +135,31 @@ for its driver-count axis — and it is computable **today**, with no external e
 - Breadth is heavy-tailed: a small cancer-wide hub set (≈ the IntOGen 12 — TP53, KRAS, PIK3CA, PTEN,
   KMT2D, KMT2C, LRP1B, ARID1A, RB1, FAT4, NF1, CDKN2A) and a long restricted tail (~60% at 1–2 types).
 - The hub set is **TSG/genome-guardian-enriched**; the restricted tail is **oncogene/lineage-factor-
-  enriched** — the q042 prior, now measurable directly.
+  enriched** — the `question:0042-driver-normal-expression-tissue-cell-type-specificity` prior, now
+  measurable directly.
 - Our composition shifts the tail (panel-restricted GENIE over-represents the genes its panels target),
-  a structured divergence from IntOGen consistent with `h02`.
+  a structured divergence from IntOGen consistent with
+  `hypothesis:0002-cross-study-ranking-divergence-is-structured`.
 
 ## Stop / null conditions
 
 - If our empirical breadth distribution is **uncorrelated** with IntOGen's after composition
-  adjustment, the cohort cannot define "restricted vs pan-cancer" reliably → q042/q041 must adopt the
-  **external** roster (IntOGen/Bailey) rather than our recurrence-defined one, and say so.
+  adjustment, the cohort cannot define "restricted vs pan-cancer" reliably →
+  `question:0042-driver-normal-expression-tissue-cell-type-specificity` and
+  `question:0041-driver-complexity-vs-median-age-at-diagnosis` must adopt the **external** roster
+  (IntOGen/Bailey) rather than our recurrence-defined one, and say so.
 - If breadth is dominated by threshold choice (no stable shape across cutoffs), report it as
   ascertainment-limited rather than a biological distribution.
 
 ## Connections to Project
 
-- **Directly feeds:** `q042` (restricted-vs-pan-cancer specificity contrast — this *is* its missing
-  roster step) and `q041` (per-cancer driver count).
-- **Replication frame:** `h02` (structured cross-study ranking divergence), `q013` (replication rate),
-  `q016` (panel ascertainment), `q017` (saturation).
-- **Confounds:** `h03` (length), `q047` (hypermutation inflation).
+- **Directly feeds:** `question:0042-driver-normal-expression-tissue-cell-type-specificity`
+  (restricted-vs-pan-cancer specificity contrast — this *is* its missing roster step) and
+  `question:0041-driver-complexity-vs-median-age-at-diagnosis` (per-cancer driver count).
+- **Replication frame:** `hypothesis:0002-cross-study-ranking-divergence-is-structured`
+  (structured cross-study ranking divergence), `question:0013-cross-study-replication-rate`,
+  `question:0016-panel-induced-ascertainment`, `question:0017-cross-study-saturation-curve`.
+- **Confounds:** `hypothesis:0003-gene-length-confounds-literature-attention` (length),
+  `question:0047-hypermutation-confound-on-driver-tissue-specificity`.
 - **Priority:** **P2** — computable today, no external ingest, unblocks two P3 questions. The natural
   first build of this batch.

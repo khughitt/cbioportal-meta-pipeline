@@ -40,8 +40,9 @@ the aetiological context that generates a given signature is frequently coupled 
 upstream causes, immune selection pressure, or downstream pathway consequences — to measurable
 features of the tumour's transcriptome and immune microenvironment. This topic synthesises the
 pan-cancer evidence for those couplings, identifies where mechanistic consensus is solid versus
-speculative, and draws out the implications for hypothesis h08's programme of recovering known
-signature aetiologies from agnostic covariate associations.
+speculative, and draws out the implications for
+`hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`, which
+aims to recover known signature aetiologies from agnostic covariate associations.
 
 ---
 
@@ -80,7 +81,8 @@ RTK-RAS, MYC, WNT, etc.), detected via Fisher's exact test or linear/logistic re
 
 ### Settled: known aetiologies produce recognisable immune phenotypes
 
-The three h08a positive-control aetiologies each have documented pan-cancer immune correlates:
+The three positive-control aetiologies for the agnostic covariate-association hypothesis each have
+documented pan-cancer immune correlates:
 
 - **UV / SBS7 (SKCM):** UV signature activity is associated with lymphocyte and T-cell
   infiltration in skin melanoma (paper:Luo2023a) and enriches for RTK-RAS driver mutations
@@ -121,7 +123,8 @@ Despite this breadth of empirical association, the upstream aetiologies of SBS5 
 remain poorly understood. The two signatures appear behaviourally distinct — SBS5 is more
 clonal and likely early-stage; SBS40 is enriched subclonally and associated with later
 progression — yet both are conflated in the "Clock-like" label used by most TME association
-studies. This split is directly relevant to h08b.
+studies. This split is directly relevant to the clock-like discovery arm of the agnostic
+covariate-association hypothesis.
 
 ### Settled: Signature-pathway links recover known causal chains
 
@@ -130,14 +133,15 @@ paper:Hakobyan2024 validates its framework by recovering two known exposure→dr
 codons targeted by RTK-RAS hotspot drivers); (2) SBS1/aging → TP53 mutations in pancreatic
 adenocarcinoma (CpG deamination as a source of recurrent C>T TP53 hotspots). These
 confirmations establish that agnostic association methods applied to TCGA/PCAWG data can
-successfully recover known mechanistic chains — the same claim that h08a must demonstrate.
+successfully recover known mechanistic chains — the same claim that the positive-control arm must
+demonstrate.
 
 ### Settled: TMB is a weak universal prognostic signal
 
 Both papers converge on TMB having limited independent prognostic value. In paper:Hakobyan2024,
 TMB had no survival effect in 17 of 23 evaluated tissues. The more informative unit is the
 specific signature composition rather than aggregate mutation burden — a finding consistent with
-the h08 design, which stratifies by signature identity rather than total count.
+the agnostic association design, which stratifies by signature identity rather than total count.
 
 ---
 
@@ -151,7 +155,7 @@ HNSC and BLAC (paper:Luo2023a). The mechanism underlying this sign reversal is u
 dominance across tissues, (b) distinct HLA evolutionary contexts that alter neoantigen
 immunogenicity, or (c) confounding by co-occurring driver events (e.g., EGFR/ALK in LUAD may
 suppress immune recruitment independently). Resolving this requires a within-cancer-type
-expression covariate design — exactly what h08 proposes.
+expression covariate design — exactly what the agnostic association design proposes.
 
 ### Immune phenotype as cause or consequence of mutational process
 
@@ -162,8 +166,10 @@ causation); (b) the immune environment selecting which tumour clones survive and
 exposure — that determines both (common cause). Neither paper can resolve this from
 observational cross-sectional data. The SKCM×UV paradox (T-cell infiltration only prognostic
 when UV activity is low) illustrates point (b): UV-high tumours may already have been shaped
-by immune selection pressure before measurement. This tension maps directly to h08's R3
-alternative interpretation (selection/immunoediting rather than causal exposure).
+by immune selection pressure before measurement. This tension maps directly to the R3 alternative
+interpretation in
+`hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`
+(selection/immunoediting rather than causal exposure).
 
 ### CoDa vs Spearman for compositional signature data
 
@@ -173,7 +179,7 @@ between signature activities are confounded by the compositional structure of at
 addresses this via symmetric pivot coordinates. However, CoDa can only be computed for samples
 where both signatures are co-active, reducing effective sample size for rarer signatures and
 potentially introducing selection bias. Neither paper tests whether CoDa and Spearman yield
-substantively different biological conclusions in practice; in the h08 association layer this
+substantively different biological conclusions in practice; in the agnostic association layer this
 remains an open methodological question.
 
 ### Aggregated etiology groups vs individual SBS signatures
@@ -193,7 +199,7 @@ finding that SBS40 and SBS5 have distinct interaction profiles and survival asso
 - **No systematic expression-covariate scan.** Both papers use TME cell-type abundances
   (deconvolved from RNA-seq) or driver pathway alteration status as the non-signature covariate.
   Neither paper uses unsupervised transcriptomic modules or continuous gene-expression covariates
-  as the association axis. The h08 agnostic expression scan occupies this gap.
+  as the association axis. The agnostic expression scan occupies this gap.
 
 - **No cross-study replication.** Both papers rely exclusively on TCGA (and PCAWG for
   paper:Hakobyan2024). The cbioportal pipeline's multi-study design is complementary: if an
@@ -217,49 +223,51 @@ finding that SBS40 and SBS5 have distinct interaction profiles and survival asso
 
 ---
 
-## Implications for h08 and the cross-study signature-aetiology aggregation
+## Implications for the cross-study signature-aetiology aggregation
 
 **Positive-control grounding.** The pan-cancer evidence in paper:Luo2023a and the
-signature-pathway recovery in paper:Hakobyan2024 jointly confirm that the h08a positive-control
-arms — UV→SBS7 in SKCM, tobacco→SBS4 in LUAD, APOBEC expression→SBS2/13 — are grounded in
-reproducible empirical associations detectable from TCGA/PCAWG data. If the h08 agnostic scan
-using cBioPortal expression modules fails to recover these, the failure is more likely a method
-or data problem than a false biological prior.
+signature-pathway recovery in paper:Hakobyan2024 jointly confirm that the positive-control arms of
+`hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` —
+UV→SBS7 in SKCM, tobacco→SBS4 in LUAD, APOBEC expression→SBS2/13 — are grounded in reproducible
+empirical associations detectable from TCGA/PCAWG data. If the agnostic scan using cBioPortal
+expression modules fails to recover these, the failure is more likely a method or data problem than
+a false biological prior.
 
 **Within-tissue conditioning is non-negotiable.** Both papers condition on tissue type as a
 primary covariate. paper:Hakobyan2024's within-tissue bootstrapped null and paper:Luo2023a's
 cancer-type linear model adjustment both demonstrate that pan-cancer pooling without tissue
 stratification would generate spurious cross-tissue associations driven by tissue composition.
-H08's Prediction 4 — that associations attenuate when not conditioned on tissue — is directly
-supported.
+Prediction 4 in
+`hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` — that
+associations attenuate when not conditioned on tissue — is directly supported.
 
-**CoDa should be evaluated for the h08 expression-covariate layer.** The compositional
+**CoDa should be evaluated for the expression-covariate layer.** The compositional
 structure of signature attributions is a genuine statistical problem when regressing one
 signature's activity against another. When the covariate is an independent gene-expression
 module (not derived from the same mutation catalogue), CoDa is not required; but when using
 signature-pair relationships as part of the association model, CoDa correction would be
 appropriate. The mutsigapp R package from paper:Hakobyan2024 provides a starting implementation.
 
-**SBS40 vs SBS5 distinction is a priority target for h08b.** The survival and interaction
+**SBS40 vs SBS5 distinction is a priority target for the clock-like discovery arm.** The survival and interaction
 evidence in both papers singles out SBS40 as behaviourally distinct from SBS5 despite their
-co-labelling as "Clock-like". If h08b's expression-module covariate scan can separate SBS40 from
-SBS5 activity — whether through aging-related inflammation modules, replication-timing-proximal
-expression changes, or oxidative-damage pathways — it would resolve the most consequential
-gap in the current pan-cancer signature literature.
+co-labelling as "Clock-like". If the expression-module covariate scan can separate SBS40 from SBS5
+activity — whether through aging-related inflammation modules, replication-timing-proximal
+expression changes, or oxidative-damage pathways — it would resolve the most consequential gap in
+the current pan-cancer signature literature.
 
 **The immunoediting / common-cause ambiguity must be pre-registered.** Both papers acknowledge
-but cannot resolve whether signature-TME associations are causal or selected. The h08
-pre-registration should explicitly commit to a falsifiable criterion for the selection
-alternative (R3): for example, if an APOBEC3-expression→SBS2/13 association holds in the
-tumour compartment after controlling for immune infiltration estimates from the same RNA-seq,
-this would partially rule out a scenario in which immune cells — rather than cancer cells —
-are driving the expression signal.
+but cannot resolve whether signature-TME associations are causal or selected. The pre-registration
+for `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`
+should explicitly commit to a falsifiable criterion for the selection alternative (R3): for example,
+if an APOBEC3-expression→SBS2/13 association holds in the tumour compartment after controlling for
+immune infiltration estimates from the same RNA-seq, this would partially rule out a scenario in
+which immune cells — rather than cancer cells — are driving the expression signal.
 
 **APOBEC direction-reversal is a secondary test case.** The tissue-specific sign flip
 (antagonistic in LUAD, synergistic in HNSC/BLAC) identified by paper:Luo2023a is testable in
-h08 if cBioPortal studies include both LUAD and HNSC tumours with paired expression data. If
-APOBEC3A/B mRNA levels explain the direction difference, this would constitute a mechanistically
-informative secondary finding beyond the primary positive-control test.
+the agnostic association scan if cBioPortal studies include both LUAD and HNSC tumours with paired
+expression data. If APOBEC3A/B mRNA levels explain the direction difference, this would constitute a
+mechanistically informative secondary finding beyond the primary positive-control test.
 
 ---
 

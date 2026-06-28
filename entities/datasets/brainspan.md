@@ -20,7 +20,7 @@ related:
 
 Transcriptomic atlas spanning human prenatal-to-adult brain development (~8 pcw through
 adulthood, multiple regions). Provides the **fetal-vs-adult brain expression ratio** needed to
-operationalize the oncofetal (H3) test: whether a residual neural-gene enrichment is fetal/
+operationalize the oncofetal/developmental test: whether a residual neural-gene enrichment is fetal/
 developmental rather than adult-neural. Also a developmental-stage axis for the label-free
 neural-gene score (`question:0035`).
 
@@ -29,7 +29,7 @@ neural-gene score (`question:0035`).
 - Source URL: https://www.brainspan.org/
 - Organism/population: Homo sapiens (developing brain)
 - Modality: bulk RNA-seq + exon microarray across developmental stages and regions
-- Role: developmental-stage expression reference (H3 discrimination)
+- Role: developmental-stage expression reference (oncofetal/developmental discrimination)
 
 ## Connections to Project
 

@@ -41,7 +41,7 @@ consumed_by:
 
 ## Summary
 
-Ellrott 2018 Multi-Center Mutation Calling in Multiple Cancers (MC3) — a single 7-caller consensus somatic MAF across the TCGA cohort (~3.6M variants / ~10,000 samples), ingested by this pipeline as the pseudo-study `tcga_mc3`.
+The Multi-Center Mutation Calling in Multiple Cancers (MC3) dataset [@Ellrott2018] is a single 7-caller consensus somatic MAF across the TCGA cohort (~3.6M variants / ~10,000 samples), ingested by this pipeline as the pseudo-study `tcga_mc3`.
 
 ## Access and Scope
 
@@ -54,7 +54,7 @@ Ellrott 2018 Multi-Center Mutation Calling in Multiple Cancers (MC3) — a singl
 ## Access verification log
 
 - 2026-06-01 (codex, t201): verified the local prerequisite at
-  `data/mc3.v0.2.8.PUBLIC.maf.gz` is present (719 MB) and that the h08 run consumed the derived
+  `data/mc3.v0.2.8.PUBLIC.maf.gz` is present (719 MB) and that the hypothesis:0007 run consumed the derived
   `tcga_mc3` pseudo-study in `results/signature-h08-arms-2026-05-31/`.
 
 ## Connections to Project

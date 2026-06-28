@@ -53,7 +53,8 @@ makes it the ideal substrate for the treatment-induced-signature-contamination h
 
 - **Primary substrate for `hypothesis:0009`.** Treatment annotation + WGS depth lets us directly
   observe therapy signatures (SBS11/31/35/87) and quantify their burden inflation against
-  treatment-naive cohorts — the contamination mechanism h10 proposes for the gene × cancer frequency
+  treatment-naive cohorts — the contamination mechanism
+  `hypothesis:0009-treatment-induced-signature-frequency-contamination` proposes for the gene × cancer frequency
   tables.
 - **WGS contrast to panel cBioPortal.** Complements `dataset:pcawg` (treatment-naive-leaning primary
   WGS) with the metastatic/treated end of the spectrum — useful for `hypothesis:0008` cross-study
@@ -69,7 +70,8 @@ makes it the ideal substrate for the treatment-induced-signature-contamination h
 
 ## Evaluation Notes
 
-- **Tier: evaluate-next.** High value for h10, but controlled access + DUA is a real cost; evaluate
+- **Tier: evaluate-next.** High value for
+  `hypothesis:0009-treatment-induced-signature-frequency-contamination`, but controlled access + DUA is a real cost; evaluate
   whether the treatment-contamination question can first be scoped on already-held treated cohorts
   (MSK-MET, relapsed cBioPortal studies) before committing to the DUA process.
 - Data sensitivity: never commit HMF files to git (same posture as GENIE).

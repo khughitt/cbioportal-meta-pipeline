@@ -50,7 +50,7 @@ The PanCanAtlas pan-cancer clinical table `clinical_PANCAN_patient_with_followup
 TCGA patient (10,956 patients × 746 fields), keyed on the 12-char `bcr_patient_barcode`, with cancer
 type in the `acronym` column. It is the **only** TCGA source of `tobacco_smoking_history` and
 `number_pack_years_smoked`; the per-study cBioPortal PanCanAtlas clinical (`data_clinical_patient.txt`)
-does **not** carry a smoking field. It is therefore the substrate for the h08 **Arm B** smoking
+does **not** carry a smoking field. It is therefore the substrate for the hypothesis:0007 **Arm B** smoking
 covariate (`pre-registration:0003-h08-positive-control-agnostic-association-must-recover-known-signature`).
 
 ## Access and Scope
@@ -79,7 +79,7 @@ covariate (`pre-registration:0003-h08-positive-control-agnostic-association-must
 
 ## Granularity at this access level
 
-Patient-level (12-char barcode). The h08 join is patient-level for Arm B (smoking) and for ancestry;
+Patient-level (12-char barcode). The hypothesis:0007 join is patient-level for Arm B (smoking) and for ancestry;
 sample-level covariates come from the per-study cBioPortal clinical and the MC3 substrate. The
 realized Arm-B join n is the MC3∩(this table)∩(smoking non-missing) intersection, computed at WP1.
 

@@ -33,7 +33,8 @@ observational), so used as a comparator/marker source rather than a primary expr
 
 ## Connections to Project
 
-- Required by: `question:0035`; gene-set source for `method:length-aware-geneset-enrichment`.
+- Required by: `question:0035-label-free-neural-gene-definition`; gene-set source for `method:length-aware-geneset-enrichment`.
 - Note: marker membership is label-adjacent — use as a comparator to the expression-derived
-  score, not as the sole definition (avoids annotation circularity per q035).
+  score, not as the sole definition (avoids annotation circularity per
+  `question:0035-label-free-neural-gene-definition`).
 - Acquisition: tracked as a search/acquire task in `tasks/active.md`.

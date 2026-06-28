@@ -1,6 +1,6 @@
 ---
 type: synthesis
-title: 'Synthesis: h01-non-tumor-signal-contamination'
+title: 'Synthesis: non-tumor-signal-contamination'
 status: active
 created: '2026-06-02'
 updated: '2026-06-02'
@@ -27,7 +27,7 @@ evidence has been materialized; the project has not yet run any end-to-end corre
 against the hypothesis's core predictions.
 
 The key outstanding questions span three contamination channels. CH leakage is addressed
-operationally by the 7-gene Bolton 2020 priority panel, though
+operationally by the 7-gene Bolton et al. [@Bolton2020] priority panel, though
 question:0006-ch-priority-gene-completeness asks whether that panel is sufficient to capture
 residual leakage. Normal-tissue clonal contamination — covering
 question:0001-normal-epithelial-clone-contamination-in-esophageal-studies,
@@ -37,7 +37,7 @@ question:0005-gli1-normal-tissue-hotspot-inflation — remains entirely unaddres
 analysis. The null-model questions (question:0007-cross-tissue-somatic-mutation-rate-variation-as-null-model,
 question:0008-signature-decomposition-tissue-background-subtraction,
 question:0010-cuplr-style-tof-classifier-for-suspect-normal-samples) have infrastructure
-available but no results. Question:q014-cfs-as-distinct-confounder-class asks whether CFS loci
+available but no results. `question:0014-cfs-as-distinct-confounder-class` asks whether CFS loci
 constitute a separable confounder class from replication-timing effects more broadly.
 
 One negative result constrains the SBS1 channel: interpretation:0004-t110-sbs1-sbs5-brca-comparison
@@ -77,7 +77,7 @@ entirely untested.
 
 ## Research Fronts
 
-**Open tasks with direct bearing on h01:**
+**Open tasks with direct bearing on `hypothesis:0001-non-tumor-signal-contamination`:**
 
 - task:t127 (blocked, P3) is the designated first quantitative pass for
   question:0008-signature-decomposition-tissue-background-subtraction — per-gene rate
@@ -92,9 +92,11 @@ entirely untested.
   on one tractable tissue.
 - task:t153 (proposed, P2) would annotate CFS locus overlap and run RT-vs-CFS residual
   regression to test question:0014-cfs-as-distinct-confounder-class.
-- task:t161 (proposed, P2) would absorb orphan questions q014, q016, and q017 into the
+- task:t161 (proposed, P2) would absorb orphan questions `question:0014-cfs-as-distinct-confounder-class`,
+  `question:0016-panel-induced-ascertainment`, and `question:0017-cross-study-saturation-curve` into the
   hypothesis spine.
-- task:t164 (proposed, P2) would draft candidate hypothesis h07 absorbing the
+- task:t164 (proposed, P2) would draft candidate hypothesis
+  `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` absorbing the
   signature/topography QC path (question:0010-cuplr-style-tof-classifier-for-suspect-normal-samples).
 - Blocked external-data tasks task:t166, task:t167, task:t169, task:t172 gate on Hartwig HMF,
   PCAWG/ICGC-25K, GTEx v10, and MC3 controlled-access acquisition respectively; none are on

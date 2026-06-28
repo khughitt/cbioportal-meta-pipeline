@@ -25,11 +25,12 @@ related:
 
 ## Summary
 
-The cross-study aggregation mixes studies of widely varying size and variant-calling provenance. Before per-sample signature exposures `H` can drive the h08 covariate scan, we need a defensible per-cancer-type sample-size floor for de novo extraction and a rule for handling single-caller (non-consensus) studies that are known to inject artefactual signatures.
+The cross-study aggregation mixes studies of widely varying size and variant-calling provenance. Before per-sample signature exposures `H` can drive the
+`hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` covariate scan, we need a defensible per-cancer-type sample-size floor for de novo extraction and a rule for handling single-caller (non-consensus) studies that are known to inject artefactual signatures.
 
 ## Why It Matters
 
-- Decision affected: which studies/strata are admissible into the h08 signature-decomposition rule, and whether de novo extraction is attempted at all vs. refit-only.
+- Decision affected: which studies/strata are admissible into the agnostic signature-decomposition rule, and whether de novo extraction is attempted at all vs. refit-only.
 - Risk if unanswered: spurious de novo signatures from single-caller studies (`paper:Jiang2025a`) and unstable exposures from undersized strata would propagate into the covariate scan as false positives, defeating the positive-control logic.
 
 ## Current Evidence
@@ -46,7 +47,7 @@ The cross-study aggregation mixes studies of widely varying size and variant-cal
 
 ## Connections to Project
 
-- Related hypotheses: `hypothesis:h08-...` (signature exposures are its outcome variable).
+- Related hypotheses: `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` (signature exposures are its outcome variable).
 - Required data or analyses: per-study caller provenance audit; per-cancer-type sample-size census; extraction-vs-refit decision rule.
 - Priority level: P2 (gates the feasibility confirmation in `question:0018`).
 
@@ -54,4 +55,4 @@ The cross-study aggregation mixes studies of widely varying size and variant-cal
 
 - Topic notes: `topic:signature-extraction-fitting-methods`
 - Article notes: `paper:Jiang2025a`, `paper:Islam2022`, `paper:Medo2024`, `paper:DiazGay2023`, `paper:Pancotti2023`
-- Methods/Datasets: `method:h08-agnostic-association-model`; `question:0018`, `question:0019`
+- Methods/Datasets: agnostic association model; `question:0018`, `question:0019`

@@ -1,6 +1,6 @@
 ---
 type: question
-title: Should the h08 positive-control signature set be expanded to include SBS9 (germinal-centre)
+title: Should the hypothesis:0007 positive-control signature set be expanded to include SBS9 (germinal-centre)
   and SBS54, and which MMR signatures are the canonical MSI discriminators?
 status: active
 created: '2026-05-31'
@@ -19,11 +19,11 @@ related:
 - topic:signatures-normal-tissue-germline
 ---
 
-# Should the h08 positive-control signature set be expanded to include SBS9 (germinal-centre) and SBS54, and which MMR signatures are the canonical MSI discriminators?
+# Should the hypothesis:0007 positive-control signature set be expanded to include SBS9 (germinal-centre) and SBS54, and which MMR signatures are the canonical MSI discriminators?
 
 ## Summary
 
-The h08 method note currently lists the positive-control map as UV/SBS7, smoking/SBS4, APOBEC/SBS2-13, MMR/SBS6-15-26, POLE/SBS10. The batch literature suggests two additions: SBS9 (AID/germinal-centre, a tissue-of-origin positive control in lymphoid studies) and SBS54, reported to discriminate MSI from MSS better than established dMMR signatures.
+The agnostic association method note currently lists the positive-control map as UV/SBS7, smoking/SBS4, APOBEC/SBS2-13, MMR/SBS6-15-26, POLE/SBS10. The batch literature suggests two additions: SBS9 (AID/germinal-centre, a tissue-of-origin positive control in lymphoid studies) and SBS54, reported to discriminate MSI from MSS better than established dMMR signatures.
 
 ## Why It Matters
 
@@ -43,7 +43,7 @@ The h08 method note currently lists the positive-control map as UV/SBS7, smoking
 
 ## Connections to Project
 
-- Related hypotheses: `hypothesis:h08-...` (defines the positive-control gate).
+- Related hypotheses: `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` (defines the positive-control gate).
 - Required data or analyses: confirm SBS9/SBS54 presence in the restricted reference; lymphoid-stratum check; SBS54 germline-artefact adjudication.
 - Priority level: P2 (freezes before H08a runs).
 
@@ -51,4 +51,4 @@ The h08 method note currently lists the positive-control map as UV/SBS7, smoking
 
 - Topic notes: `topic:aetiology-covariate-association`, `topic:signatures-normal-tissue-germline`
 - Article notes: `paper:Ji2023`, `paper:Machado2022`, `paper:Owusu2025`
-- Methods/Datasets: `method:h08-agnostic-association-model`
+- Methods/Datasets: agnostic association model

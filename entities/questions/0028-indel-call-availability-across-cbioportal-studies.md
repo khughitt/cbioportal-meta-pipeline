@@ -25,7 +25,8 @@ related:
 
 ## Why It Matters
 
-- Decision: realistic scope of any joint SBS+ID analysis and whether h11 can be tested beyond MC3/PCAWG.
+- Decision: realistic scope of any joint SBS+ID analysis and whether
+  `hypothesis:0010-joint-indel-sbs-improves-aetiology-discrimination` can be tested beyond MC3/PCAWG.
 - Risk: effort on a modality only a few studies support.
 
 ## Current Evidence
@@ -40,12 +41,13 @@ related:
 
 ## Connections to Project
 
-- Hypotheses: `hypothesis:h11-...`.
-- Analyses: per-study indel-count/depth census; ties q020.
+- Hypotheses: `hypothesis:0010-joint-indel-sbs-improves-aetiology-discrimination`.
+- Analyses: per-study indel-count/depth census; ties
+  `question:0020-minimum-sample-size-and-caller-provenance-for`.
 - Priority: P3.
 
 ## Related
 
 - Hypotheses: `hypothesis:0010-joint-indel-sbs-improves-aetiology-discrimination`
 - Topics: `topic:signature-extraction-fitting-methods`
-- Questions: `question:q020-...`
+- Questions: `question:0020-minimum-sample-size-and-caller-provenance-for`

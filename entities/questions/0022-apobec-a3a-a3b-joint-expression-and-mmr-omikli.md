@@ -21,11 +21,11 @@ related:
 
 ## Summary
 
-h08 Arm C tests APOBEC mRNA -> SBS2/13. The batch evidence refines this: both A3A and A3B contribute via distinct sub-signatures (YTCA vs RTCA), so a joint score may outperform either paralog; and counterintuitively, intact MMR may *promote* the dominant diffuse (omikli) APOBEC mode, predicting a positive MMR-expression -> SBS2/13 association within MSS tumors.
+The `hypothesis:0007` Arm C test uses APOBEC mRNA -> SBS2/13. The batch evidence refines this: both A3A and A3B contribute via distinct sub-signatures (YTCA vs RTCA), so a joint score may outperform either paralog; and counterintuitively, intact MMR may *promote* the dominant diffuse (omikli) APOBEC mode, predicting a positive MMR-expression -> SBS2/13 association within MSS tumors.
 
 ## Why It Matters
 
-- Decision affected: the exact APOBEC covariate specification in the h08 model (single gene vs joint score) and whether MMR expression is a confounder or a co-cause for Arm C.
+- Decision affected: the exact APOBEC covariate specification in the agnostic association model (single gene vs joint score) and whether MMR expression is a confounder or a co-cause for Arm C.
 - Risk if unanswered: using A3B alone (the historical default) may under-detect A3A-driven cases; ignoring the MMR-omikli coupling could misattribute an MMR-expression effect.
 
 ## Current Evidence
@@ -41,7 +41,7 @@ h08 Arm C tests APOBEC mRNA -> SBS2/13. The batch evidence refines this: both A3
 
 ## Connections to Project
 
-- Related hypotheses: `hypothesis:h08-...` (Arm C).
+- Related hypotheses: `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` (Arm C).
 - Required data or analyses: paralog-resolved APOBEC3 expression extraction; MSS-restricted MMR-expression vs SBS2/13 test; assay-type stratification.
 - Priority level: P2.
 
@@ -49,4 +49,4 @@ h08 Arm C tests APOBEC mRNA -> SBS2/13. The batch evidence refines this: both A3
 
 - Topic notes: `topic:apobec-mutagenesis`
 - Article notes: `paper:Carpenter2023`, `paper:MasPonte2020`
-- Methods/Datasets: `method:h08-agnostic-association-model`
+- Methods/Datasets: agnostic association model

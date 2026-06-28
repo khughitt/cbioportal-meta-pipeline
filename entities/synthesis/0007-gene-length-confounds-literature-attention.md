@@ -1,6 +1,6 @@
 ---
 type: synthesis
-title: 'Synthesis: h03-gene-length-confounds-literature-attention'
+title: 'Synthesis: gene-length-confounds-literature-attention'
 status: active
 created: '2026-06-02'
 updated: '2026-06-02'
@@ -30,7 +30,8 @@ are flagged as unstable pending resolution of pooled-mean inflation
 
 interpretation:0015-q016-panel-induced-ascertainment (F5) adds a concrete assay-stratum
 finding: WES-stratum beta_length = −0.078 vs. panel-only beta_length = −0.571 (n = 465 genes),
-establishing that assay regime is a required covariate for the h03 regression (task:t129). No
+establishing that assay regime is a required covariate for the
+`hypothesis:0003-gene-length-confounds-literature-attention` regression (task:t129). No
 `.edges.yaml` file exists for this hypothesis.
 
 ## Arc
@@ -38,13 +39,14 @@ establishing that assay regime is a required covariate for the h03 regression (t
 Arc reconstruction is limited because no completed interpretations carry `prior_interpretations`
 chains connected to this hypothesis before the two interpretations in this bundle.
 
-The investigation opened with the h03 framing, positing mediated and direct gene-length paths to
+The investigation opened with the `hypothesis:0003-gene-length-confounds-literature-attention`
+framing, positing mediated and direct gene-length paths to
 literature attention. Task task:t131 provided a cheap Phase-1 PubTator readout.
 interpretation:0009-t131-full-pan-cancer-dndscv-run documented the first full-scale results:
 pipeline ran to completion (146 cancer types, 474,524 rows), but two data-quality bugs — BH-FDR
 floor pile-up for 829 genes producing alphabetical tiebreaking (F2), and fragile-site/pseudogene
 inflation in pooled `mean_inclusive` (F4) — degrade confidence in the current correlation
-magnitudes. Applying the `n_cancers_significant_q05` tiebreaker (v2) recovered 62/100 Bailey 2018
+magnitudes. Applying the `n_cancers_significant_q05` tiebreaker (v2) recovered 62/100 Bailey et al. [@Bailey2018]
 drivers but left TTN at rank 5, suggesting residual large-protein signal after trinucleotide
 correction (F3). interpretation:0015-q016-panel-induced-ascertainment then confirmed, via
 task:t154, that panel-vs-WES ascertainment is a material covariate, with panel-only rankings
@@ -61,7 +63,9 @@ stable mutation counts and assay-stratified design.
   degree, domain count, antibody proxies).
 - task:t131 (P2) — three-way ranking comparison; pipeline-complete but substantive interpretation
   gated on F2/F4 fixes per interpretation:0009-t131-full-pan-cancer-dndscv-run.
-- task:t161 (P2) — absorb orphan questions q014/q016/q017 into hypothesis spine.
+- task:t161 (P2) — absorb orphan questions `question:0014-cfs-as-distinct-confounder-class`,
+  `question:0016-panel-induced-ascertainment`, and `question:0017-cross-study-saturation-curve`
+  into hypothesis spine.
 - task:t170 (P1) — integrate PubTator Central, iCite, and OpenAlex for higher-quality mention
   counts.
 

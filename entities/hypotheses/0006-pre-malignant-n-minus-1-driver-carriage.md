@@ -37,10 +37,10 @@ cell-cycle).
 
 This is a directly **observed-ordering** hypothesis (paired pre-malignant and invasive
 cohorts give direct sequencing evidence of which drivers are present at which stage), so it
-is operationally simpler than the `h04` MHN-inferred-ordering route. Where data is
+is operationally simpler than the `hypothesis:0004-mhn-pathway-ordering` MHN-inferred-ordering route. Where data is
 available, this provides a *cleaner* test of the ordering biology than cross-sectional
-inference. The two hypotheses are complementary: `h04` covers histologies where pre-malignant
-samples are absent or scarce; `h06` covers the histologies where they exist.
+inference. The two hypotheses are complementary: `hypothesis:0004-mhn-pathway-ordering` covers histologies where pre-malignant
+samples are absent or scarce; this hypothesis covers the histologies where they exist.
 
 This is a `phase: candidate` hypothesis. Promotion to active is gated on auditing
 cBioPortal study metadata for pre-malignant sample availability.
@@ -129,7 +129,7 @@ Promote to `phase: active` when:
 
 1. **Pre-malignant cohort audit completes** (new task) — enumerates cBioPortal studies that
    include pre-malignant samples, with sample size, panel/WES regime, and matched-normal
-   status documented. Tracked as `t156`.
+   status documented. Tracked as `task:t156`.
 2. **At least 3 paired pre-malignant + invasive cohorts** are identified at sample size
    sufficient (n ≥ 30 pre-malignant per pair) for the top-25 overlap test.
 3. **A scoped first analysis** is identified for at least 1 paired set (Barrett's → EAC and
@@ -137,13 +137,13 @@ Promote to `phase: active` when:
 
 ## Supporting Evidence
 
-- **Martincorena 2018 (paper):** establishes that normal tissue carries driver-positive
+- **Martincorena et al. [@Martincorena2018]:** establish that normal tissue carries driver-positive
   clones at high prevalence; pre-malignant samples are the obvious next step on this
   continuum and should carry even more drivers.
 - **Lee-Six 2018 (paper):** colon-crypt phylogenies show driver acquisition is gradual and
   cumulative; the n-1 framing is a direct consequence of slow stepwise acquisition over
   decades.
-- **Sottoriva 2015, Turajlic 2019 (literature, not yet in project library):** post-treatment
+- **Sottoriva/Turajlic resistance literature (not yet in project library):** post-treatment
   resistance from pre-existing sub-clones — the clinical version of the "n-1 poised
   population" claim.
 - **HTAN (NCI Human Tumor Atlas Network):** active research program specifically focused on
@@ -180,15 +180,15 @@ Promote to `phase: active` when:
 
 ## Related Work
 
-- **Sibling hypothesis:** `h04` (MHN-inferred ordering on cross-sectional invasive data —
+- **Sibling hypothesis:** `hypothesis:0004-mhn-pathway-ordering` (MHN-inferred ordering on cross-sectional invasive data —
   this hypothesis tests the same biological claim via observed paired data where
   available; the two hypotheses validate each other where they overlap).
 - **Topics:** `topic:pre-cancer-prevalence-and-impact` (frames the broader research
   direction including the population-prevalence / clinical-impact / "n-1 poised population"
   big-version claims).
 - **Tasks (planned):**
-  - `t156`: cBioPortal pre-malignant cohort audit.
-  - `t157`: first paired driver-overlap analysis on the most tractable cancer type.
-- **External:** Sottoriva 2015 *Nature Genetics* (subclonal-resistance framework);
-  Turajlic 2019 TRACERx (post-treatment resistance from pre-existing subclones); HTAN
+  - `task:t156`: cBioPortal pre-malignant cohort audit.
+  - `task:t157`: first paired driver-overlap analysis on the most tractable cancer type.
+- **External:** Sottoriva *Nature Genetics* subclonal-resistance framework;
+  TRACERx post-treatment resistance from pre-existing subclones; HTAN
   (NCI program); Maley/Greaves "cancer as evolution" framework.

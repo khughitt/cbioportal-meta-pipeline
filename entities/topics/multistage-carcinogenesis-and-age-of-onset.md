@@ -20,6 +20,7 @@ source_refs:
 - paper:TomasettiVogelstein2015
 - paper:Belikov2017
 - paper:RozhokDeGregori2015
+- paper:Martincorena2017
 related:
 - theme:0003-temporal-structure-of-carcinogenesis-order-count-and-timing-of-the
 - question:0041-driver-complexity-vs-median-age-at-diagnosis
@@ -60,9 +61,10 @@ node in `theme:0003-temporal-structure-of-carcinogenesis-order-count-and-timing-
   carcinogenic events** by fitting models to SEER age-incidence curves. This is the most direct
   external quantity to (loosely) compare against mutation-derived driver counts in `q041`.
 - Convergent modern estimates of *how many drivers* per tumor: Tomasetti-Vogelstein-Nowak 2015
-  (PNAS) "~3 drivers" for lung/colorectal; Martincorena 2017 dN/dS "~4 drivers/tumor" average,
-  ranging 1-10 by type. *(These two are cited as context; not yet summarized in the library —
-  candidate follow-up papers.)*
+  (PNAS) "~3 drivers" for lung/colorectal; Martincorena et al. [@Martincorena2017] dN/dS
+  estimates "~4 drivers/tumor" average, ranging 1-10 by type.
+  *(The Tomasetti-Vogelstein-Nowak 2015 driver-count paper is cited as context but not yet
+  summarized in the library — candidate follow-up paper.)*
 
 ## Replicative supply (factors 2 and 3: division rate x target-cell number)
 
@@ -115,9 +117,9 @@ node in `theme:0003-temporal-structure-of-carcinogenesis-order-count-and-timing-
 - **Hypotheses:** `h06` (count axis — drivers carried per stage), `h04` (order axis).
 - **Questions:** `q041` (the test here), `q012` (ordering, shares confounds).
 - **Discussion:** `discussion:0006-age-of-onset-and-multistage-mutation-requirement`.
-- **External / not-yet-in-library:** Nordling 1953; Tomasetti-Vogelstein-Nowak 2015 PNAS
-  (3-drivers); Martincorena 2017 (dN/dS driver counts); Wu et al. 2016 *Nature* (extrinsic
-  rebuttal); Gröbner 2018 / Ma 2018 (pan-pediatric).
+- **Additional context / follow-up sources:** Nordling 1953; Tomasetti-Vogelstein-Nowak 2015 PNAS
+  (3-drivers); Martincorena et al. [@Martincorena2017] (dN/dS driver counts); Wu et al. 2016
+  *Nature* (extrinsic rebuttal); Gröbner 2018 / Ma 2018 (pan-pediatric).
 
 ## Summary
 

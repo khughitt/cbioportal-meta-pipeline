@@ -21,20 +21,18 @@ source_refs:
 related: []
 ---
 
-<!-- Kulke MH et al. Neuroendocrine Tumors. J Natl Compr Canc Netw. 2012;10(6):724-764. DOI: 10.6004/jnccn.2012.0075 -->
-
 # Neuroendocrine Tumors (NCCN Clinical Practice Guidelines in Oncology)
 
 - **Authors:** Matthew H. Kulke, Al B. Benson III, Emily Bergsland, et al. (NCCN Neuroendocrine Tumors Panel, ~30 members)
 - **Year:** 2012
-- **Journal:** Journal of the National Comprehensive Cancer Network, Vol. 10, No. 6, pp. 724-764
+- **Journal:** Journal of the National Comprehensive Cancer Network, Vol. 10, No. 6, pp. 724-764 [@Kulke2012]
 - **DOI:** 10.6004/jnccn.2012.0075
 - **BibTeX key:** Kulke2012
 - **Source:** PDF
 
 ## Key Contribution
 
-This NCCN Version 1.2012 guideline provides the authoritative clinical framework for diagnosing and managing neuroendocrine tumors (NETs), covering sporadic and hereditary forms across all primary sites. Its primary value for this project is definitional: it establishes that NETs are tumors arising from cells of the diffuse endocrine system — a distinct biological class separate from the "neural regulation of cancer" research axis — while also specifying the marker genes and grading criteria that characterize NET lineage in sequencing databases.
+This NCCN Version 1.2012 guideline provides the authoritative clinical framework for diagnosing and managing neuroendocrine tumors (NETs), covering sporadic and hereditary forms across all primary sites. Its primary value for this project is definitional: it establishes that NETs are tumors arising from cells of the diffuse endocrine system — a distinct biological class separate from the "neural regulation of cancer" research axis — while also specifying the marker genes and grading criteria that characterize NET lineage in sequencing databases [@Kulke2012].
 
 ## Methods
 
@@ -59,7 +57,7 @@ This is a consensus clinical practice guideline, not an empirical study. Recomme
 
 Poorly differentiated G3 tumors are synonymous with high-grade neuroendocrine carcinoma or small cell carcinoma, characterized by aggressive clinical course.
 
-**Immunohistochemical (IHC) markers for NET lineage (p. 743-744):**
+**Immunohistochemical (IHC) markers for NET lineage (p. 743-744) [@Kulke2012]:**
 
 - *Chromogranin A (CHGA)*: primary general neuroendocrine marker; measured in serum (category 3).
 - *Synaptophysin (SYP)*: general neuroendocrine marker.

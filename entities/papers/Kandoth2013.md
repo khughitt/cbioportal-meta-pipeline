@@ -8,6 +8,7 @@ id: paper:Kandoth2013
 ontology_terms: []
 source_refs:
 - article:Kandoth2013
+- cite:Kandoth2013
 related:
 - paper:Bailey2018
 - paper:Lawrence2014
@@ -36,7 +37,7 @@ small-indel analysis across 3,281 tumours from 12 major cancer types, yielding 1
 significantly mutated genes (SMGs) spanning ~20 cellular processes. Established the
 template for subsequent pan-cancer driver-gene analyses by harmonizing exome mutation
 calls from three TCGA genome-sequencing centres and running unified downstream
-significance, clustering, and clinical-correlation analyses on the pooled cohort.
+significance, clustering, and clinical-correlation analyses on the pooled cohort [@Kandoth2013].
 
 ## Methods
 
@@ -45,7 +46,7 @@ KIRC, OV, and LAML (AML). Input variant calls were ingested as curated MAF files
 from TCGA's data coordinating centre — individual centres used differing callers
 and no unified re-calling pipeline was applied; Kandoth et al. re-lifted coordinates
 to GRCh37 and re-annotated transcripts against Gencode/Ensembl. Standardized
-mutation data were deposited on Synapse (syn1729383.2) for reproducibility.
+mutation data were deposited on Synapse (syn1729383.2) for reproducibility [@Kandoth2013].
 Significantly mutated genes were called using the SMG test in the MuSiC
 package (Mutational Significance In Cancer; hypergeometric + likelihood tests across
 seven mutation categories), both per cancer type and on the pooled pan-cancer cohort
@@ -90,7 +91,7 @@ consensus, although Kandoth et al. already layer a covariate-aware significance 
 simpler architecture — harmonize MAFs, count, test, cluster — makes it useful as a
 "what's possible with first-pass aggregation" reference. Pre-dates the consensus
 driver-gene methodology that became standard in PanCanAtlas (Bailey2018, Ellrott2018
-MC3).
+MC3) [@Kandoth2013].
 
 ## Limitations
 

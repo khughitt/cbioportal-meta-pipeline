@@ -8,6 +8,7 @@ id: paper:Ciriello2013
 ontology_terms: []
 source_refs:
 - article:Ciriello2013
+- cite:Ciriello2013
 related:
 - paper:SanchezVega2018
 - paper:Kandoth2013
@@ -32,7 +33,7 @@ tissue of origin. Distills thousands of genomic features down to ~500 "selected 
 events" (SFEs) and shows that 3,299 TCGA tumors across 12 cancer types fall along an
 inverse mutation-vs-aneuploidy axis ("cancer genome hyperbola"), splitting into a
 mutation-driven **M class** and a copy-number–driven **C class**, each further resolved into
-tissue-spanning oncogenic-signature subclasses.
+tissue-spanning oncogenic-signature subclasses [@Ciriello2013].
 
 ## Methods
 
@@ -40,9 +41,9 @@ tissue-spanning oncogenic-signature subclasses.
 COADREAD (491), GBM (218), HNSC (302), KIRC (420), LAML (184), LUAD (229), LUSC (182),
 OV (446), UCEC (242) — plus a stratified subtype layer for BRCA (basal/HER2/luminal),
 COADREAD (MSI/non-MSI), and UCEC (endometrioid/serous). A held-out validation cohort
-added 907 samples from 6 additional cancer types.
+added 907 samples from 6 additional cancer types [@Ciriello2013].
 
-**Selected Functional Events (SFEs).** Final feature set = 479 events:
+**Selected Functional Events (SFEs).** Final feature set = 479 events [@Ciriello2013]:
 - **116 amplifications + 151 deletions** — GISTIC peaks on Affymetrix SNP 6.0; overlapping
   peaks merged at >=80% concordance; *only* high-level events scored (GISTIC +2 / -2).
 - **199 recurrently mutated genes** — all mutations counted equally except in
@@ -53,7 +54,7 @@ added 907 samples from 6 additional cancer types.
 
 **Classification.** Recursive network-modularity clustering on the binary
 sample-by-SFE matrix yielded an unsupervised hierarchical partition. Robustness was
-checked by random subsampling at 5%, 20%, and 50% removal.
+checked by random subsampling at 5%, 20%, and 50% removal [@Ciriello2013].
 
 **M vs C scoring.** The M/C partition is *emergent* from the modularity decomposition,
 not a prior-defined cutoff: clusters dominated by point mutations land in the M branch;

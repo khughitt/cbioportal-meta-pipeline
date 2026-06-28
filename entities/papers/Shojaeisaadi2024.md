@@ -35,13 +35,13 @@ related:
 
 This germline-mutational-signature family study note links paper:Seplyarskiy2021.
 
-This study characterises 2,479 validated germline de novo SNVs (DNMs) in 13 multi-child Mexican-American families using whole-genome sequencing, and applies three distinct mutational signature databases (COSMIC, human germline, CRISPR-Cas9 DNA-repair KO) to decompose the de novo SNV spectrum. The authors demonstrate a strong overall paternal age effect (PAE; ~1.29 additional DNMs per year of paternal age) with extensive inter-family variability in the slope, identify that C>T transitions at CpG sites increase specifically with older paternal age, and propose a model in which inaccurate DNA mismatch repair (MMR) — particularly inefficiency in the initiation and excision steps (EXO1, PMS1, PMS2) — is a major mechanistic contributor to the accumulation of germline DNMs with advancing paternal age.
+This study characterises 2,479 validated germline de novo SNVs (DNMs) in 13 multi-child Mexican-American families using whole-genome sequencing, and applies three distinct mutational signature databases (COSMIC, human germline, CRISPR-Cas9 DNA-repair KO) to decompose the de novo SNV spectrum. The authors demonstrate a strong overall paternal age effect (PAE; ~1.29 additional DNMs per year of paternal age) with extensive inter-family variability in the slope, identify that C>T transitions at CpG sites increase specifically with older paternal age, and propose a model in which inaccurate DNA mismatch repair (MMR) — particularly inefficiency in the initiation and excision steps (EXO1, PMS1, PMS2) — is a major mechanistic contributor to the accumulation of germline DNMs with advancing paternal age [@Shojaeisaadi2024].
 
 ## Methods
 
-**Cohort:** The IRASFS (Insulin Resistance Atherosclerosis Family Study) Mexican-American population-based cohort. Thirteen multi-child families (2–6 children per family) were selected; 26 parents and 48 offspring were sequenced. Mean paternal age at birth: 27.5 ± 6.4 years (range: 16.4–41.2 years). WGS at ~30x median depth (Illumina HiSeq X Ten; 150 bp paired-end; GRCh38 alignment via BWA-MEM v0.7.17; GATK v4.0.11.0 best-practices pipeline).
+**Cohort:** The IRASFS (Insulin Resistance Atherosclerosis Family Study) Mexican-American population-based cohort. Thirteen multi-child families (2–6 children per family) were selected; 26 parents and 48 offspring were sequenced. Mean paternal age at birth: 27.5 ± 6.4 years (range: 16.4–41.2 years). WGS at ~30x median depth (Illumina HiSeq X Ten; 150 bp paired-end; GRCh38 alignment via BWA-MEM v0.7.17; GATK v4.0.11.0 best-practices pipeline) [@Shojaeisaadi2024].
 
-**Variant calling:** Two complementary tools — DeNovoGear (identified 123–387 candidates per child) and GATK (24–111 per child); >90% of GATK calls were confirmed by DeNovoGear. A merged set of 11,590 candidate SNVs was generated after quality filtering (read depth ≥12, GQ ≥20, AAF <10% in parents, forward+reverse read support). Targeted resequencing (SureSelect custom baits, Illumina HiSeq 4000, ~300x) of 6,118 candidates validated 2,479 SNVs.
+**Variant calling:** Two complementary tools — DeNovoGear (identified 123–387 candidates per child) and GATK (24–111 per child); >90% of GATK calls were confirmed by DeNovoGear. A merged set of 11,590 candidate SNVs was generated after quality filtering (read depth ≥12, GQ ≥20, AAF <10% in parents, forward+reverse read support). Targeted resequencing (SureSelect custom baits, Illumina HiSeq 4000, ~300x) of 6,118 candidates validated 2,479 SNVs [@Shojaeisaadi2024].
 
 **Parent-of-origin phasing:** Unfazed (read-based phasing) complemented by WhatsHap; all phased SNVs visually validated in IGV.
 
@@ -52,7 +52,7 @@ This study characterises 2,479 validated germline de novo SNVs (DNMs) in 13 mult
 
 Cosine similarity used to evaluate goodness-of-fit for reconstructed signatures.
 
-**Statistical analyses:** Poisson regression (Lme4 v1.1-35.1) for PAE slope and confidence intervals; R v4.0.2.
+**Statistical analyses:** Poisson regression (Lme4 v1.1-35.1) for PAE slope and confidence intervals; R v4.0.2 [@Shojaeisaadi2024].
 
 ## Key Findings
 

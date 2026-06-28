@@ -3,7 +3,7 @@ type: paper
 title: The origin of human mutation in light of genomic data
 status: active
 created: '2026-05-31'
-updated: '2026-05-31'
+updated: '2026-06-28'
 id: paper:Seplyarskiy2021
 ontology_terms: []
 datasets: []
@@ -99,7 +99,7 @@ The analytical framework links four main statistical signals to biochemical mech
 
 ## Model / Tool Availability
 
-No model or software tool is released with this review. Population-level SNV data referenced from gnomAD v2 (https://gnomad.broadinstitute.org/downloads). De novo mutation data from published trio studies (Jónsson et al. 2017, Goldmann et al. 2016/2018).
+No model or software tool is released with this review. Population-level SNV data referenced from gnomAD v2 (https://gnomad.broadinstitute.org/downloads). De novo mutation data come from published trio studies, including Jónsson et al. 2017 and Goldmann et al. 2016 and 2018 [@Seplyarskiy2021].
 
 ## Follow-up
 

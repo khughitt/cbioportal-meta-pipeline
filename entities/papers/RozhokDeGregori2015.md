@@ -60,7 +60,7 @@ This is a perspective/theoretical review paper, not a primary data study. The ar
 
 ## Key Findings
 
-**The mutation-accumulation paradox.** Approximately 40–50% of somatic mutations accumulate before body maturation stops, yet most cancers manifest decades later. Hematopoietic stem cell (HSC) division rates slow dramatically before body maturation, yet cancer incidence continues to rise exponentially afterward. These temporal dissociations are inconsistent with a model in which cumulative mutation count is the dominant driver of incidence timing.
+**The mutation-accumulation paradox.** Approximately 40–50% of somatic mutations accumulate before body maturation stops, yet most cancers manifest decades later. Hematopoietic stem cell (HSC) division rates slow dramatically before body maturation, yet cancer incidence continues to rise exponentially afterward. These temporal dissociations are inconsistent with a model in which cumulative mutation count is the dominant driver of incidence timing [@RozhokDeGregori2015].
 
 **Universal incidence curve despite tissue heterogeneity.** Cancers arising from stem/progenitor pools that differ drastically in size, compartmentalization, and cell-division profile all exhibit a similar age-dependent exponential rise in incidence. Cancers requiring different numbers of oncogenic mutations show this common pattern. A pure mutation-accumulation model would predict incidence curves that diverge systematically across these tissue types; they do not.
 

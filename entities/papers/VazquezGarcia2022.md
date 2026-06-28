@@ -3,7 +3,7 @@ type: paper
 title: Ovarian cancer mutational processes drive site-specific immune evasion
 status: active
 created: '2026-05-31'
-updated: '2026-05-31'
+updated: '2026-06-28'
 id: paper:VazquezGarcia2022
 ontology_terms:
 - mutational signatures
@@ -37,13 +37,13 @@ subtypes show elevated JAK–STAT and NF-κB inflammatory signalling with HLA cl
 highly dysfunctional CD8+ T cells (active immunoediting), whereas FBI tumours exhibit
 TGFβ-driven immune exclusion and predominantly naive/stem-like T cells (immunological inertness).
 TME composition and cellular topology further vary by anatomical site, revealing that mutational
-processes and peritoneal spread together co-determine immune resistance in HGSOC.
+processes and peritoneal spread together co-determine immune resistance in HGSOC [@VazquezGarcia2022].
 
 ## Methods
 
 - **Cohort:** 42 treatment-naive HGSOC patients; 160 multi-site biopsies spanning adnexa,
   omentum, peritoneum, bowel, ascites, and other intraperitoneal sites; collected prospectively
-  at MSK over 24 months.
+  at MSK over 24 months [@VazquezGarcia2022].
 - **Sequencing:** Whole-genome tumour–normal sequencing (WGS); MSK-IMPACT (468-gene targeted
   panel); single-cell RNA-seq (scRNA-seq) on CD45+ and CD45− sorted fractions.
 - **Imaging:** H&E histopathology and multiplexed immunofluorescence (mpIF) with markers for

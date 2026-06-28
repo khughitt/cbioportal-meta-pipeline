@@ -4,7 +4,7 @@ title: 'Neurobiology of cancer: Interactions between nervous, endocrine and immu
   systems as a base for monitoring and modulating the tumorigenesis by the brain'
 status: active
 created: '2026-06-06'
-updated: '2026-06-06'
+updated: '2026-06-28'
 id: paper:Mravec2008
 ontology_terms:
 - neuro-endocrine-immune interactions
@@ -41,7 +41,7 @@ This 2008 review synthesizes clinical and experimental evidence that the brain a
 
 ## Methods
 
-This is a narrative review drawing on approximately 189 cited experimental and clinical studies published through 2007. Evidence is organized around three broad questions: (1) does the brain receive information about tumorigenesis, (2) how do brain functions change in the presence of cancer, and (3) by what mechanisms might the brain modulate tumor growth. No original data are generated; the authors also report their own unpublished observations that brainstem and hypothalamic neuron activity is elevated in advanced-stage tumor-bearing animals.
+This is a narrative review drawing on approximately 189 cited experimental and clinical studies published through 2007. Evidence is organized around three broad questions: (1) does the brain receive information about tumorigenesis, (2) how do brain functions change in the presence of cancer, and (3) by what mechanisms might the brain modulate tumor growth. No original data are generated; the authors also report their own unpublished observations that brainstem and hypothalamic neuron activity is elevated in advanced-stage tumor-bearing animals [@Mravec2008].
 
 Sources of evidence include:
 - Retrospective vagotomy cohort studies (cancer incidence/mortality following peptic ulcer surgery)

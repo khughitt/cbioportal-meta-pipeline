@@ -8,6 +8,7 @@ id: paper:PCAWG2020
 ontology_terms: []
 source_refs:
 - article:PCAWG2020
+- cite:PCAWG2020
 related:
 - paper:Ellrott2018
 - topic:pan-cancer-mutation-landscape
@@ -29,7 +30,7 @@ dataset_usage:
 
 This whole-genome pan-cancer note links paper:Ellrott2018 and topic:pan-cancer-mutation-landscape.
 
-<!-- TODO: WGS pan-cancer flagship (~2,658 tumors) — non-coding drivers, structural variation, signatures. -->
+PCAWG is the flagship whole-genome pan-cancer cohort, analyzing approximately 2,658 tumors and covering non-coding drivers, structural variation, and mutational signatures [@PCAWG2020].
 
 ## Methods
 

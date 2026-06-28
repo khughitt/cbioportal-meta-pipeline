@@ -4,7 +4,7 @@ title: Comprehensive analysis of mutational signatures reveals distinct patterns
   molecular processes across 27 pediatric cancers
 status: active
 created: '2026-05-31'
-updated: '2026-05-31'
+updated: '2026-06-28'
 id: paper:Thatikonda2023
 ontology_terms:
 - mutational signatures
@@ -32,7 +32,7 @@ related: []
 
 ## Key Contribution
 
-This study provides the largest systematic COSMIC v.3 mutational-signature analysis of pediatric cancers to date, examining SBS and indel (ID) signatures across 785 whole-genome sequenced tumor-normal pairs from 27 molecularly defined childhood cancer subtypes. Pediatric tumors harbor far fewer active mutational processes than adult cancers, with clock-like signatures (SBS1, SBS5, ID1, ID2) dominating a large fraction of mutations across cancer types. A novel indel signature termed "IDN" was discovered exclusively in pediatric leukemias (B-ALL, AML, T-ALL), characterized by long insertions (>1 bp) outside repeat regions that preferentially affect intronic and intergenic regions but also exons of known cancer genes such as NOTCH1.
+This study provides the largest systematic COSMIC v.3 mutational-signature analysis of pediatric cancers to date, examining SBS and indel (ID) signatures across 785 whole-genome sequenced tumor-normal pairs from 27 molecularly defined childhood cancer subtypes. Pediatric tumors harbor far fewer active mutational processes than adult cancers, with clock-like signatures (SBS1, SBS5, ID1, ID2) dominating a large fraction of mutations across cancer types. A novel indel signature termed "IDN" was discovered exclusively in pediatric leukemias (B-ALL, AML, T-ALL), characterized by long insertions (>1 bp) outside repeat regions that preferentially affect intronic and intergenic regions but also exons of known cancer genes such as NOTCH1 [@Thatikonda2023].
 
 ## Methods
 

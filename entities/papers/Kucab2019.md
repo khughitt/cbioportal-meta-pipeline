@@ -3,7 +3,7 @@ type: paper
 title: A Compendium of Mutational Signatures of Environmental Agents
 status: active
 created: '2026-05-31'
-updated: '2026-05-31'
+updated: '2026-06-28'
 id: paper:Kucab2019
 ontology_terms:
 - mutational signatures
@@ -29,7 +29,7 @@ related: []
 
 ## Key Contribution
 
-This paper establishes a first comprehensive experimental reference compendium of mutational signatures induced by 79 known or suspected environmental carcinogens, assayed by whole-genome sequencing (WGS) of 324 human induced pluripotent stem cell (iPSC) subclones. Forty-one agents produced characteristic single-base substitution (SBS) signatures, 6 produced double-substitution (DBS) signatures, and 8 produced indel signatures. Several experimentally derived signatures closely matched signatures previously extracted from human tumors, providing direct causal evidence linking specific environmental exposures to cancer-associated mutation patterns. The study also revealed mechanistic insights through strand-asymmetry analyses, demonstrating that transcription-coupled nucleotide excision repair (TC-NER) and mismatch repair (MMR) are fully functional in iPSCs.
+This paper establishes a first comprehensive experimental reference compendium of mutational signatures induced by 79 known or suspected environmental carcinogens, assayed by whole-genome sequencing (WGS) of 324 human induced pluripotent stem cell (iPSC) subclones. Forty-one agents produced characteristic single-base substitution (SBS) signatures, 6 produced double-substitution (DBS) signatures, and 8 produced indel signatures. Several experimentally derived signatures closely matched signatures previously extracted from human tumors, providing direct causal evidence linking specific environmental exposures to cancer-associated mutation patterns. The study also revealed mechanistic insights through strand-asymmetry analyses, demonstrating that transcription-coupled nucleotide excision repair (TC-NER) and mismatch repair (MMR) are fully functional in iPSCs [@Kucab2019].
 
 ## Methods
 

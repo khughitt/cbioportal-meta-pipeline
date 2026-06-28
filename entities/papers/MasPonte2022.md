@@ -4,7 +4,7 @@ title: Spectrum of DNA mismatch repair failures viewed through the lens of cance
   genomics and implications for therapy
 status: active
 created: '2026-05-31'
-updated: '2026-05-31'
+updated: '2026-06-28'
 id: paper:MasPonte2022
 ontology_terms:
 - mismatch repair
@@ -204,7 +204,7 @@ association):
 
 Review only; no new model or tool released. Referenced bioinformatics tools for MSI detection:
 MSISensor (doi:10.1093/bioinformatics/btt755), mSINGs, Mantis (doi:10.18632/oncotarget.13918),
-MSIseq, MMRDetect (ref 60/63 in paper).
+MSIseq, and MMRDetect (paper refs 60 and 63) [@MasPonte2022].
 
 ## Follow-up
 

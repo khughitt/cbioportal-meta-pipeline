@@ -7,7 +7,7 @@ updated: '2026-06-28'
 id: paper:Viechtbauer2010
 ontology_terms: []
 source_refs:
-- paper:Viechtbauer2010
+- cite:Viechtbauer2010
 related:
 - paper:Langan2018
 - paper:DerSimonian1986
@@ -33,7 +33,7 @@ Defines the canonical R interface for meta-analysis â€” the `metafor` package â€
 become the de-facto tool-of-record for applied meta-analytic work. One API for fixed-effects,
 random-effects, GLMM, and Mantel-Haenszel meta-analyses; a side-by-side implementation of
 seven between-study-variance estimators; and built-in meta-regression, forest / funnel
-plotting, and moderator analysis. 17,712+ citations.
+plotting, and moderator analysis. 17,712+ citations [@Viechtbauer2010].
 
 ## Methods
 

@@ -9,6 +9,7 @@ id: paper:Zehir2017
 ontology_terms: []
 source_refs:
 - article:Zehir2017
+- cite:Zehir2017
 related:
 - topic:pan-cancer-mutation-landscape
 - topic:targeted-panel-sequencing-bias
@@ -36,7 +37,7 @@ Reports the canonical MSK-IMPACT prospective clinical-sequencing release: 10,945
 of routine clinical care for advanced/metastatic disease. Establishes that 36.7% of patients
 harbor at least one OncoKB-actionable somatic alteration and demonstrates that paired
 tumor-normal targeted sequencing at scale can both define the metastatic mutational landscape
-and route patients onto genotype-matched trials (11% enrolled within the early subset).
+and route patients onto genotype-matched trials (11% enrolled within the early subset) [@Zehir2017].
 
 ## Methods
 
@@ -53,7 +54,7 @@ allowing somatic calls to be made directly against the patient's own germline an
 reducing both rare-germline and clonal-hematopoiesis contamination. The pipeline uses BWA-MEM,
 ABRA realignment, GATK BQSR, MuTect (SNVs), Pindel and SomaticIndelDetector (indels), DELLY
 (structural variants), and an in-house CNV caller, followed by manual review. All variants are
-classified against OncoKB therapeutic levels (1, 2A/2B, 3A/3B, 4) for clinical reporting.
+classified against OncoKB therapeutic levels (1, 2A/2B, 3A/3B, 4) for clinical reporting [@Zehir2017].
 
 ## Key Findings
 
@@ -90,7 +91,7 @@ design means MSK-IMPACT mutation calls are unusually clean of germline and CH ar
 to unmatched panel datasets - relevant when comparing per-gene cancer frequencies across studies.
 The cohort is also explicitly biased toward advanced/metastatic, often heavily pretreated disease,
 which inflates the apparent frequency of resistance-associated alterations (AR, ESR1, TP53)
-relative to primary-tumor cohorts like TCGA.
+relative to primary-tumor cohorts like TCGA [@Zehir2017].
 
 ## Limitations
 

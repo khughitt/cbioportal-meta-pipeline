@@ -9,6 +9,7 @@ id: paper:Yaacov2023
 ontology_terms: []
 source_refs:
 - paper:Yaacov2023
+- cite:Yaacov2023
 related:
 - paper:Yoshida2026
 - topic:mutation-rate-normalization
@@ -36,15 +37,15 @@ dataset_usage:
 
 This replication-timing signature note links paper:Yoshida2026, topic:mutation-rate-normalization, and topic:pan-cancer-mutation-landscape.
 
-The first comprehensive analysis of the association between mutational signatures and DNA replication timing (RT) specifically in non-cancerous tissues. Using 2.9 million somatic mutations from 25 published datasets spanning multiple normal tissue types, the authors show that most mutational processes have the same RT bias (early vs. late replicating region enrichment) in normal cells as in matched cancer samples — establishing that the relationship between mutagenesis and replication timing is largely conserved through carcinogenic transformation. The key exception is SBS1 (clock-like CpG deamination): SBS1 is preferentially enriched in late-replicating regions (LRR) in normal tissues but loses this bias in cancer, likely due to increased mutation burden and CpG island methylation changes during transformation.
+The first comprehensive analysis of the association between mutational signatures and DNA replication timing (RT) specifically in non-cancerous tissues. Using 2.9 million somatic mutations from 25 published datasets spanning multiple normal tissue types, the authors show that most mutational processes have the same RT bias (early vs. late replicating region enrichment) in normal cells as in matched cancer samples — establishing that the relationship between mutagenesis and replication timing is largely conserved through carcinogenic transformation. The key exception is SBS1 (clock-like CpG deamination): SBS1 is preferentially enriched in late-replicating regions (LRR) in normal tissues but loses this bias in cancer, likely due to increased mutation burden and CpG island methylation changes during transformation [@Yaacov2023].
 
 ## Methods
 
-**Data:** Somatic mutations in non-cancerous cells drawn from two independent sources: (1) SomaMutDB (2.42 million SNVs from 24 published papers spanning 19 tissue types / 2838 single cells/clones/biopsies) and (2) Moore et al. (2022) pan-tissue WGS dataset from 389 patches of 29 histological structures. Cancer mutations from PCAWG (Pan-Cancer Analysis of Whole Genomes). Final cohort: 1,192 samples (Mixed cohort) + 176 samples (Moore et al.) passing QC.
+**Data:** Somatic mutations in non-cancerous cells drawn from two independent sources: (1) SomaMutDB (2.42 million SNVs from 24 published papers spanning 19 tissue types / 2838 single cells/clones/biopsies) and (2) Moore et al. (2022) pan-tissue WGS dataset from 389 patches of 29 histological structures. Cancer mutations from PCAWG (Pan-Cancer Analysis of Whole Genomes). Final cohort: 1,192 samples (Mixed cohort) + 176 samples (Moore et al.) passing QC [@Yaacov2023].
 
-**Replication timing regions:** Used constitutive RT regions — genomic regions (~40% of the genome; ~706 Mb early-replicating + 583 Mb late-replicating) showing consistent RT across 26 cell types. This minimizes confounding from cell-type variation in RT.
+**Replication timing regions:** Used constitutive RT regions — genomic regions (~40% of the genome; ~706 Mb early-replicating + 583 Mb late-replicating) showing consistent RT across 26 cell types. This minimizes confounding from cell-type variation in RT [@Yaacov2023].
 
-**Signatures:** Trinucleotide profiles extracted using SigProfilerMatrixGenerator; signatures extracted by NMF via SigProfilerExtractor (v1.14) and decomposed against COSMIC v3.2 SBS signatures. Minimum: 50 SBS events in each of ERR and LRR; cosine similarity ≥ 80% to reconstructed profile. Results cross-validated using deconstructSigs.
+**Signatures:** Trinucleotide profiles extracted using SigProfilerMatrixGenerator; signatures extracted by NMF via SigProfilerExtractor (v1.14) and decomposed against COSMIC v3.2 SBS signatures. Minimum: 50 SBS events in each of ERR and LRR; cosine similarity ≥ 80% to reconstructed profile. Results cross-validated using deconstructSigs [@Yaacov2023].
 
 **RT bias metric:** Delta = relative signature contribution in early replicating regions (ERR) minus LRR. Positive = ERR-biased; negative = LRR-biased. Normalized absolute delta used for germline analysis. Two-sided Wilcoxon rank-sum test with FDR correction.
 
@@ -69,13 +70,13 @@ The first comprehensive analysis of the association between mutational signature
 
 Additional tissue-specific findings: APOBEC-related SBS2 and SBS13 are ERR-biased in lung and urothelium; SBS9 and SBS84 are LRR-biased in blood cells and bone marrow respectively.
 
-Concordance between the two independent cohorts (Mixed vs. Moore et al.) was high: R = 0.967 (P < 3×10⁻⁷). Cross-validation with deconstructSigs gave R = 0.974.
+Concordance between the two independent cohorts (Mixed vs. Moore et al.) was high: R = 0.967 (P < 3×10⁻⁷). Cross-validation with deconstructSigs gave R = 0.974 [@Yaacov2023].
 
 ### Normal vs. cancer: mostly conserved, SBS1 as exception
 
 For 4 matched tissue-cancer pairs, the RT bias direction was consistent between normal and cancer for SBS5, SBS40, SBS7a/b, SBS2/13, SBS4, SBS8, SBS16, and SBS18.
 
-The single major exception: **SBS1 is LRR-biased in normal tissues but loses this bias in cancer** (both pan-tissue and in each of the 4 tissue-specific comparisons). The change is statistically significant in absolute terms (P < 2.2×10⁻¹⁶, Wilcoxon rank-sum), while SBS5's ERR bias is preserved (P = 0.23 for normal-vs-cancer delta difference).
+The single major exception: **SBS1 is LRR-biased in normal tissues but loses this bias in cancer** (both pan-tissue and in each of the 4 tissue-specific comparisons). The change is statistically significant in absolute terms (P < 2.2×10⁻¹⁶, Wilcoxon rank-sum), while SBS5's ERR bias is preserved (P = 0.23 for normal-vs-cancer delta difference) [@Yaacov2023].
 
 Proposed mechanisms for the SBS1 RT bias loss in cancer:
 1. Increased SBS1 mutations at CpG islands (which are ERR-enriched) in cancer cells — observed for liver and lung.
@@ -86,7 +87,7 @@ A milder secondary finding: SBS7b is slightly more ERR-biased in normal vs. canc
 
 ### Germline cell comparison
 
-Testis (germline-cell-enriched) samples from Moore et al. — only SBS1 and SBS5 found. Both show the same RT bias as somatic tissues (SBS1 → LRR; SBS5 → ERR), indicating the RT mutagenesis mechanisms predate and are independent of somatic evolutionary selection. Absolute-delta analysis confirms SBS1 is LRR-dominant (P = 0.0009 SBS1 vs. SBS5 comparison).
+Testis (germline-cell-enriched) samples from Moore et al. — only SBS1 and SBS5 found. Both show the same RT bias as somatic tissues (SBS1 → LRR; SBS5 → ERR), indicating the RT mutagenesis mechanisms predate and are independent of somatic evolutionary selection. Absolute-delta analysis confirms SBS1 is LRR-dominant (P = 0.0009 SBS1 vs. SBS5 comparison) [@Yaacov2023].
 
 ## Relevance
 

@@ -31,7 +31,7 @@ related: []
 
 ## Key Contribution
 
-This paper conducts the first comprehensive large-scale survey of mutational signature 3 (SBS3 — the homologous-recombination-deficiency signature) across 10,250 cancer genomes spanning 36 cancer types. The principal finding is that signature 3, previously established in breast, ovarian, and pancreatic cancers via BRCA1/2 mutations, is also present in 7–12% of gastric cancers. This implies a clinically actionable subset of gastric cancers that may respond to platinum-based chemotherapy or PARP inhibitors without necessarily carrying BRCA1/2 mutations.
+This paper conducts the first comprehensive large-scale survey of mutational signature 3 (SBS3 — the homologous-recombination-deficiency signature) across 10,250 cancer genomes spanning 36 cancer types. The principal finding is that signature 3, previously established in breast, ovarian, and pancreatic cancers via BRCA1/2 mutations, is also present in 7–12% of gastric cancers. This implies a clinically actionable subset of gastric cancers that may respond to platinum-based chemotherapy or PARP inhibitors without necessarily carrying BRCA1/2 mutations [@Alexandrov2015].
 
 ## Methods
 
@@ -64,7 +64,7 @@ This paper conducts the first comprehensive large-scale survey of mutational sig
 - The histological co-variables (Lauren type, growth pattern) in Table 1 are exactly the kind of structured clinical covariates hypothesis:0007 proposes to associate agnostically against signature exposures. This paper provides a ground-truth association (intestinal-type gastric cancer → SBS3) that could serve as a validation point for a hypothesis:0007 implementation covering gastric studies in cBioPortal.
 - **Positive-control scope:** UV↔SBS7, smoking↔SBS4, and APOBEC↔SBS2/13 are the three confirmatory arms in the pre-registered design. SBS3 is not among them, but the framework here — systematic cross-cancer-type prevalence survey — parallels what hypothesis:0007 would do per-signature for all structured covariates.
 
-**Cross-study aggregation context:** The paper's 10,250-sample, 36-cancer-type sweep is methodologically analogous to what the cbioportal pipeline does. The gastric cohort draws from TCGA and three published studies — cBioPortal hosts most of these, making the gastric cancer signature-3 finding directly replicable within the pipeline's existing study universe.
+**Cross-study aggregation context:** The paper's 10,250-sample, 36-cancer-type sweep is methodologically analogous to what the cbioportal pipeline does. The gastric cohort draws from TCGA and three published studies — cBioPortal hosts most of these, making the gastric cancer signature-3 finding directly replicable within the pipeline's existing study universe [@Alexandrov2015].
 
 ## Project Framework Mapping
 

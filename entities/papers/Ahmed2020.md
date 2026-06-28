@@ -22,11 +22,6 @@ related:
 - paper:Tan2024
 ---
 
-<!-- Author: Monjur Ahmed | 2020 | World J Gastrointest Oncol 12(8):791-807 -->
-<!-- DOI recorded in BibTeX entry -->
-<!-- BibTeX: Ahmed2020 -->
-<!-- Source: PDF -->
-
 # Gastrointestinal neuroendocrine tumors in 2020
 
 - **Authors:** Monjur Ahmed
@@ -44,7 +39,7 @@ This invited clinical review synthesizes the epidemiology, WHO 2017 classificati
 
 ## Methods
 
-Single-author narrative clinical review; no original cohort data, genomic analysis, or statistical methods. Evidence synthesized from published literature, SEER epidemiology data, WHO classification, and clinical society guidelines (ENETS, NANETS, NCCN). 123 references cited.
+Single-author narrative clinical review; no original cohort data, genomic analysis, or statistical methods. Evidence synthesized from published literature, SEER epidemiology data, WHO classification, and clinical society guidelines (ENETS, NANETS, NCCN). 123 references cited [@Ahmed2020].
 
 ## Key Findings
 

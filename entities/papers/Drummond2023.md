@@ -32,7 +32,7 @@ related:
 
 ## Key Contribution
 
-signeR 2.0 extends the original Bayesian NMF framework for mutational-signature discovery (signeR 1.x) with a downstream covariate-analysis toolkit: after sampling the posterior distribution of signature exposure matrices, it applies the same statistical test to every posterior draw and summarises results across draws, giving uncertainty-aware associations between signature exposures and clinical/molecular features (categorical, continuous, or survival). A companion R-Shiny app, signeRFlow, makes the entire pipeline accessible without programming expertise by embedding TCGA clinical data and COSMIC SBS v3.2 signatures directly, enabling point-and-click de novo extraction or fitting followed by covariate analysis.
+signeR 2.0 extends the original Bayesian NMF framework for mutational-signature discovery (signeR 1.x) with a downstream covariate-analysis toolkit: after sampling the posterior distribution of signature exposure matrices, it applies the same statistical test to every posterior draw and summarises results across draws, giving uncertainty-aware associations between signature exposures and clinical/molecular features (categorical, continuous, or survival). A companion R-Shiny app, signeRFlow, makes the entire pipeline accessible without programming expertise by embedding TCGA clinical data and COSMIC SBS v3.2 signatures directly, enabling point-and-click de novo extraction or fitting followed by covariate analysis [@Drummond2023].
 
 ## Methods
 
@@ -47,9 +47,9 @@ signeR 2.0 extends the original Bayesian NMF framework for mutational-signature 
 
 **Computational improvements over v1:** parallel computation support; pre-computed hyperparameter initialisation (avoiding expensive estimation), cutting runtime substantially (benchmarks in Supplementary file 1).
 
-**Data.** Demonstration uses TCGA-STAD (stomach adenocarcinoma, 439 samples), fitting 19 COSMIC SBS signatures selected by literature review. Results compared to known molecular subtypes (EBV+, MSI, GS, CIN) from the TCGA STAD comprehensive characterisation study.
+**Data.** Demonstration uses TCGA-STAD (stomach adenocarcinoma, 439 samples), fitting 19 COSMIC SBS signatures selected by literature review. Results compared to known molecular subtypes (EBV+, MSI, GS, CIN) from the TCGA STAD comprehensive characterisation study [@Drummond2023].
 
-**Software.** Bioconductor R package (≥ R 4.3); GPL v3 licence. signeRFlow built with R Shiny. Available at https://doi.org/10.18129/B9.bioc.signeR.
+**Software.** Bioconductor R package (≥ R 4.3); GPL v3 licence. signeRFlow built with R Shiny. Available at https://doi.org/10.18129/B9.bioc.signeR [@Drummond2023].
 
 ## Key Findings
 

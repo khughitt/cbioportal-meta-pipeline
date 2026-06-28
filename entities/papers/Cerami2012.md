@@ -9,6 +9,7 @@ id: paper:Cerami2012
 ontology_terms: []
 source_refs:
 - article:Cerami2012
+- cite:Cerami2012
 related:
 - paper:Gao2013
 dataset_usage:
@@ -70,7 +71,7 @@ unaltered cases (RB-pathway-altered GBM, p = 0.0513); **protein/phospho-protein
 t-tests** (PTEN loss vs. AKT phosphorylation in ovarian); and an interactive
 **network view** built on Pathway Commons that overlays alteration frequencies. A
 worked example uses BRCA1/BRCA2 as seeds to nominate EMSY and Fanconi Anemia genes
-as alternative routes to HR deficiency in ovarian cancer.
+as alternative routes to HR deficiency in ovarian cancer [@Cerami2012].
 
 ## Relevance
 
@@ -85,7 +86,7 @@ of full datasets was not yet supported, miRNA expression support was incomplete,
 and per-study summary reports (e.g., recurrently mutated genes) were not yet
 available. Local installation required system-administrator effort. The authors
 frame cBio as complementary to — not a replacement for — the TCGA/ICGC data
-portals, IGV, the UCSC Cancer Genomics Browser, and IntOGen.
+portals, IGV, the UCSC Cancer Genomics Browser, and IntOGen [@Cerami2012].
 
 ## Follow-up
 

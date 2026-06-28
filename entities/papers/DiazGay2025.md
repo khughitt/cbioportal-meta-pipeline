@@ -36,13 +36,13 @@ related:
 
 This colorectal mutational-process geography note links paper:DiazGay2023 and paper:Alexandrov2020.
 
-This study applies whole-genome sequencing to 981 colorectal cancer genomes from 11 countries across 4 continents (the Mutographs cohort) to perform mutational epidemiology — linking geographic and age-related variation in colorectal cancer incidence to specific mutational signatures. The central finding is that colibactin-induced signatures SBS88 and ID18 (produced by pks-island-carrying bacteria such as E. coli) are enriched in early-onset colorectal cancer (3.3× more common in diagnoses before age 40 vs. over 70) and correlate with country-level colorectal cancer age-standardized incidence rates, implicating early-life microbial mutagenic exposure in the rising global incidence of early-onset colorectal cancer.
+This study applies whole-genome sequencing to 981 colorectal cancer genomes from 11 countries across 4 continents (the Mutographs cohort) to perform mutational epidemiology — linking geographic and age-related variation in colorectal cancer incidence to specific mutational signatures. The central finding is that colibactin-induced signatures SBS88 and ID18 (produced by pks-island-carrying bacteria such as E. coli) are enriched in early-onset colorectal cancer (3.3× more common in diagnoses before age 40 vs. over 70) and correlate with country-level colorectal cancer age-standardized incidence rates, implicating early-life microbial mutagenic exposure in the rising global incidence of early-onset colorectal cancer [@DiazGay2025].
 
 ## Methods
 
 - **Cohort:** 981 colorectal cancers (45.7% female; ages 18–95) from 11 countries: Argentina, Brazil, Canada, Colombia, Czech Republic, Iran, Japan, Poland, Russia, Serbia, Thailand. Countries classified as intermediate-incidence (ASR 13–20/100k) or high-incidence (ASR >24/100k).
 - **Sequencing:** Whole-genome sequencing at median 53× (tumour) and 27× (normal) coverage, all matched tumour-normal pairs.
-- **Molecular subtyping:** MSI/MSS status confirmed by ddPCR for 5 microsatellite markers. MSI cases (n=153, 15.6%), POLE/POLD1 ultra-hypermutated (n=13), HRD (n=7), and base excision repair-deficient (n=4) were identified but main analyses focused on 802 treatment-naive MSS cases.
+- **Molecular subtyping:** MSI/MSS status confirmed by ddPCR for 5 microsatellite markers. MSI cases (n=153, 15.6%), POLE/POLD1 ultra-hypermutated (n=13), HRD (n=7), and base excision repair-deficient (n=4) were identified but main analyses focused on 802 treatment-naive MSS cases [@DiazGay2025].
 - **Signature extraction:** De novo extraction using SigProfilerExtractor (500 NMF replicates, nndsvd_min initialization) for SBS, ID, DBS, CN, and SV variant types. An extended context (SBS-288, ID-83, CN-68, SV-38) leveraged WGS data. De novo signatures decomposed into COSMICv3.4 reference signatures using SigProfilerAssignment. Novel signatures SBS_O, ID_J, CN_F, SV_B, SV_D detected. Hierarchical Dirichlet process (mSigHdp) used as a complementary extraction method.
 - **Association analyses:** Multivariable logistic/linear regression models adjusted for age, sex, country, tumour subsite, and tumour purity. Enrichments reported as odds ratios (OR) with Benjamini-Hochberg-adjusted q-values. Firth's bias-reduced logistic regression for complete/quasi-complete separation.
 - **Timing analysis:** Mutations classified as early clonal, late clonal, or subclonal based on cancer cell fractions; signature contributions per timing category assessed.
@@ -52,7 +52,7 @@ This study applies whole-genome sequencing to 981 colorectal cancer genomes from
 
 ## Key Findings
 
-**Molecular landscape (MSS CRC, n=802):**
+**Molecular landscape (MSS CRC, n=802) [@DiazGay2025]:**
 - 16 SBS, 10 ID, 4 DBS, 6 CN, and 6 SV de novo signatures identified; the majority correspond to previously catalogued COSMIC v3.4 signatures.
 - Known signatures include: SBS1/SBS5 (clock-like), SBS2/SBS13 (APOBEC), SBS3 (HRD), SBS18 (ROS), SBS88 (colibactin), and multiple unknown-aetiology signatures (SBS8, SBS17a, SBS17b, SBS34, SBS40a, SBS89, SBS93, SBS94).
 - Novel SBS_O detected, representing a refined version of the previously reported SBS41.

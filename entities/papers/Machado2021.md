@@ -24,19 +24,19 @@ related: []
 
 ## Key Contribution
 
-This study provides the first comprehensive whole-genome mutational landscape of normal human lymphocytes, sequencing 717 single-cell-expanded naive and memory B and T lymphocytes alongside hematopoietic stem/progenitor cells (HSPCs) from six donors. It demonstrates that lymphocytes accumulate substantially more somatic mutations than stem cells, with distinct signatures reflecting both programmed immune diversification (RAG, AID, somatic hypermutation) and exogenous exposures (UV radiation, unknown mutagenic microenvironments). Memory B cells acquire on average 18 off-target genome-wide mutations for every one on-target IGV mutation during the germinal center reaction, and ~15% of off-target structural variants genome-wide bear RAG recombination signal sequence (RSS) motifs, implicating RAG off-target activity as a major source of lymphocyte structural variation.
+This study provides the first comprehensive whole-genome mutational landscape of normal human lymphocytes, sequencing 717 single-cell-expanded naive and memory B and T lymphocytes alongside hematopoietic stem/progenitor cells (HSPCs) from six donors. It demonstrates that lymphocytes accumulate substantially more somatic mutations than stem cells, with distinct signatures reflecting both programmed immune diversification (RAG, AID, somatic hypermutation) and exogenous exposures (UV radiation, unknown mutagenic microenvironments). Memory B cells acquire on average 18 off-target genome-wide mutations for every one on-target IGV mutation during the germinal center reaction, and ~15% of off-target structural variants genome-wide bear RAG recombination signal sequence (RSS) motifs, implicating RAG off-target activity as a major source of lymphocyte structural variation [@Machado2021].
 
 ## Methods
 
-**Experimental design.** Single naive and memory B and T lymphocytes (plus HSPCs) were flow-sorted from peripheral blood, spleen, bone marrow, tonsil, and cord blood of six donors aged 0–81 years. Cells were expanded in vitro to colonies of 30–2,000+ cells, then subjected to whole-genome sequencing at ~20x depth. The final dataset comprised 717 whole genomes representing eight cell subsets (naive B, memory B, CD4+ naive T, CD4+ memory T, CD8+ naive T, CD8+ memory T, T-regulatory cells, HSPC).
+**Experimental design.** Single naive and memory B and T lymphocytes (plus HSPCs) were flow-sorted from peripheral blood, spleen, bone marrow, tonsil, and cord blood of six donors aged 0–81 years. Cells were expanded in vitro to colonies of 30–2,000+ cells, then subjected to whole-genome sequencing at ~20x depth. The final dataset comprised 717 whole genomes representing eight cell subsets (naive B, memory B, CD4+ naive T, CD4+ memory T, CD8+ naive T, CD8+ memory T, T-regulatory cells, HSPC) [@Machado2021].
 
 **Mutation calling.** Somatic SNVs, indels, and structural variants (SVs) were identified using standard benchmarked bioinformatics pipelines. Average telomere lengths were estimated from sequencing data.
 
-**Signature extraction.** Mutational signatures were extracted and attributed per genome using `hdp` (hierarchical Dirichlet process) and `sigprofiler`, with per-genome attribution refined by `sigfit`. Signatures with a 90% CI lower bound <1% were excluded from per-genome plots.
+**Signature extraction.** Mutational signatures were extracted and attributed per genome using `hdp` (hierarchical Dirichlet process) and `sigprofiler`, with per-genome attribution refined by `sigfit`. Signatures with a 90% CI lower bound <1% were excluded from per-genome plots [@Machado2021].
 
-**Genomic distribution modeling.** General additive models (GAMs) regressed SBS9 burden against 36 genomic features (gene density, chromatin marks, replication timing) across 10 kb bins. Random Forest regression modeled the match of each genome's mutation distribution to 149 epigenomes representing 48 blood cell types and differentiation stages.
+**Genomic distribution modeling.** General additive models (GAMs) regressed SBS9 burden against 36 genomic features (gene density, chromatin marks, replication timing) across 10 kb bins. Random Forest regression modeled the match of each genome's mutation distribution to 149 epigenomes representing 48 blood cell types and differentiation stages [@Machado2021].
 
-**Structural variant analysis.** SVs were called across 635 lymphocytes; RAG recombination signal sequence (RSS) motifs were looked for within 50 bp of breakpoints using genomic background correction.
+**Structural variant analysis.** SVs were called across 635 lymphocytes; RAG recombination signal sequence (RSS) motifs were looked for within 50 bp of breakpoints using genomic background correction [@Machado2021].
 
 **Malignancy comparison.** Normal lymphocyte mutation burdens and signature proportions were compared against published WGS data from seven blood cancers: Burkitt lymphoma, follicular lymphoma, DLBC lymphoma, multiple myeloma, mutated and unmutated CLL, and myeloid-AML.
 
@@ -50,11 +50,11 @@ This study provides the first comprehensive whole-genome mutational landscape of
 **Mutational signatures in lymphocytes.**
 - Naive B and T cells (and HSPCs) are dominated by two endogenous signatures: SBS1 (spontaneous deamination of methylated cytosines, clock-like) and SBSblood (a novel blood-specific endogenous signature; clock-like, correlates with age).
 - Memory B cells additionally carry SBS9 (42% of mutations on average, mean 780 mut/cell), SBS8, and sporadic SBS7a/SBS17b.
-- Memory T cells carry SBS7a (UV, >10% in 9/100 cells; mean 757 mut/cell in those cells) and SBS17b.
+- Memory T cells carry SBS7a (UV, >10% in 9/100 cells; mean 757 mut/cell in those cells) and SBS17b [@Machado2021].
 
-**SBS7 as a record of skin residency.** SBS7a matches the canonical UV signature; 9/100 circulating memory T cells showed SBS7 contributions >10%, with shorter telomeres than SBS7-low cells (p=0.01, indicative of greater proliferative history). UVB penetrates only 10–50 µm into skin, so these cells must have been skin-resident at some stage. This implies skin-resident T cells represent a large, dynamically recirculating population.
+**SBS7 as a record of skin residency.** SBS7a matches the canonical UV signature; 9/100 circulating memory T cells showed SBS7 contributions >10%, with shorter telomeres than SBS7-low cells (p=0.01, indicative of greater proliferative history). UVB penetrates only 10–50 µm into skin, so these cells must have been skin-resident at some stage. This implies skin-resident T cells represent a large, dynamically recirculating population [@Machado2021].
 
-**SBS17b as evidence of gastrointestinal microenvironmental exposure.** SBS17 (characterized by T>G in TpT context) appeared in 3/74 memory B cells and 1/100 memory T cells (>4 SD above mean), independent of any treatment history. Its known occurrence in gastric and esophageal cancers suggests tissue residency in gastric/esophageal mucosa as an additional source.
+**SBS17b as evidence of gastrointestinal microenvironmental exposure.** SBS17 (characterized by T>G in TpT context) appeared in 3/74 memory B cells and 1/100 memory T cells (>4 SD above mean), independent of any treatment history. Its known occurrence in gastric and esophageal cancers suggests tissue residency in gastric/esophageal mucosa as an additional source [@Machado2021].
 
 **SBS9 and the germinal center reaction.**
 - SBS9 (A:T base-pair mutations, especially T>G in TpW context) accounts for 42% of memory B cell mutations (mean 780 mut/cell), sometimes tripling the baseline mutation burden.

@@ -30,7 +30,7 @@ related: []
 
 ## Key Contribution
 
-BASCULE is a Bayesian framework that unifies de novo mutational signature discovery with known-catalogue deconvolution: it simultaneously extracts catalogue-constrained exposures and statistically distinct de novo signatures via Bayesian NMF (bNMF), then clusters patients across multiple signature types (SBS, DBS, ID, CN) using a nonparametric Dirichlet Process Mixture model. The key advance is that it can expand existing signature catalogues in a principled way — ensuring new signatures differ probabilistically from known ones — while also stratifying patients into molecular subtypes whose exposures span all signature modalities jointly. Applied to ~7000 WGS cancer samples across three tumour types, BASCULE recovers established subtypes (TNBC, HER2+, MSS/MSI colorectal) and reveals DBS-informed sub-clusters that SBS alone could not resolve.
+BASCULE is a Bayesian framework that unifies de novo mutational signature discovery with known-catalogue deconvolution: it simultaneously extracts catalogue-constrained exposures and statistically distinct de novo signatures via Bayesian NMF (bNMF), then clusters patients across multiple signature types (SBS, DBS, ID, CN) using a nonparametric Dirichlet Process Mixture model. The key advance is that it can expand existing signature catalogues in a principled way — ensuring new signatures differ probabilistically from known ones — while also stratifying patients into molecular subtypes whose exposures span all signature modalities jointly. Applied to ~7000 WGS cancer samples across three tumour types, BASCULE recovers established subtypes (TNBC, HER2+, MSS/MSI colorectal) and reveals DBS-informed sub-clusters that SBS alone could not resolve [@Buscaroli2026].
 
 ## Methods
 
@@ -40,12 +40,12 @@ BASCULE is a Bayesian framework that unifies de novo mutational signature discov
 
 2. **Bayesian Dirichlet Process Mixture (tensor clustering).** After running bNMF independently per signature type, the V exposure matrices (one per modality: SBS, DBS…) are stacked into a V×N×K' tensor A (zero-padded to the widest modality). A Dirichlet Process DP(η, H) defines a mixture over G≥1 latent patient groups; each group has a centroid θ_{v,g} drawn from Dirichlet. Inference again uses SVI in Pyro; the stick-breaking construction automatically determines G. After inference, clusters with similar centroids are merged via cosine similarity.
 
-**Two-step inference to reduce catalogue noise:** first run bNMF with K^d = 0 to identify which catalogue signatures are active (exposure > 0.2 threshold); then re-run including only those "reduced catalogue" signatures plus the de novo search.
+**Two-step inference to reduce catalogue noise:** first run bNMF with K^d = 0 to identify which catalogue signatures are active (exposure > 0.2 threshold); then re-run including only those "reduced catalogue" signatures plus the de novo search [@Buscaroli2026].
 
 **Benchmarking:** Compared against SigProfiler (historical COSMIC method), SparseSignatures (LASSO), and FitMS (bootstrap NMF). Evaluated on synthetic data from BASCULE's own generative model and from the independent SigFitTest tool (draws from real data). Clustering compared to K-means, KL-KMeans, and JS-Spectral methods (evaluated by NMI against ground truth).
 
 **Cancer datasets:**
-- Breast (n=2682), lung (n=1396), colorectal (n=2845) WGS samples from Degasperi et al. (Genomics England / ICGC / Hartwig) using a minimal curated starting catalogue.
+- Breast (n=2682), lung (n=1396), colorectal (n=2845) WGS samples from Degasperi et al. (Genomics England / ICGC / Hartwig) using a minimal curated starting catalogue [@Buscaroli2026].
 - ICGC subsets with matched clinical data: skin (n=259), pancreatic (n=343), esophageal (n=315) for survival analysis (Kaplan–Meier + multivariate Cox proportional hazards).
 
 ## Key Findings
@@ -56,11 +56,11 @@ BASCULE is a Bayesian framework that unifies de novo mutational signature discov
 - Clustering NMI: BASCULE Dirichlet Process NMI=0.96 vs JS-Spectral 0.83, KMeans 0.73, KL-KMeans 0.62.
 - Runtime on GPU (1000 samples): 6 min BASCULE vs 30 min SigProfiler, 194 min FitMS_E, 559 min SparseSignatures.
 
-**Breast cancer (n=2682):** 5 clusters identified by joint SBS+DBS exposure. Cluster G1 (n=2058): HRD (SBS3/SBS13) + DBS13 — triple-negative breast cancer. Cluster G0 (n=272): APOBEC activity (SBS2/13) + DBS2/11/13 — HER2+ breast cancer. Clusters G10/G11/G13 share similar SBS patterns but differ in DBS profiles (DBS2/11, DBS14, DBS13/DBS20), allowing sub-classification that SBS alone could not resolve.
+**Breast cancer (n=2682):** 5 clusters identified by joint SBS+DBS exposure. Cluster G1 (n=2058): HRD (SBS3/SBS13) + DBS13 — triple-negative breast cancer. Cluster G0 (n=272): APOBEC activity (SBS2/13) + DBS2/11/13 — HER2+ breast cancer. Clusters G10/G11/G13 share similar SBS patterns but differ in DBS profiles (DBS2/11, DBS14, DBS13/DBS20), allowing sub-classification that SBS alone could not resolve [@Buscaroli2026].
 
-**Lung cancer (n=1396):** 7 clusters, 21 signatures (9 de novo). Cluster G1 (n=1204): heavy smokers (SBS4 + DBS2). Cluster G3 (n=31): chemotherapy (SBS31 + DBS5). Cluster G0/G12/G8 differ by DBS signatures related to HRD, HRD-related, and unknown aetiology.
+**Lung cancer (n=1396):** 7 clusters, 21 signatures (9 de novo). Cluster G1 (n=1204): heavy smokers (SBS4 + DBS2). Cluster G3 (n=31): chemotherapy (SBS31 + DBS5). Cluster G0/G12/G8 differ by DBS signatures related to HRD, HRD-related, and unknown aetiology [@Buscaroli2026].
 
-**Colorectal cancer (n=2845):** 8 clusters, 32 signatures. Recovered canonical MSS/MSI split. Cluster G10 (n=412): MSI (SBS44/SBS57 via BASCULE de novo signatures SBSD12/SBSD7 + hyper-DBS14). Cluster G9 (n=28): POLE ultra-hypermutator (SBS10a + DBS3).
+**Colorectal cancer (n=2845):** 8 clusters, 32 signatures. Recovered canonical MSS/MSI split. Cluster G10 (n=412): MSI (SBS44/SBS57 via BASCULE de novo signatures SBSD12/SBSD7 + hyper-DBS14). Cluster G9 (n=28): POLE ultra-hypermutator (SBS10a + DBS3) [@Buscaroli2026].
 
 **Survival analysis:**
 - Skin (n=259, 2 SBS clusters): Kaplan–Meier log-rank p=0.033; UV-enriched cluster G11 shows better survival; Cox HR for cluster G11 vs G1: 0.63 (95% CI: 0.39–1.02, p=0.059, borderline).

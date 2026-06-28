@@ -34,13 +34,13 @@ interact non-additively. Crucially, the direction is trait-specific: BMI shows p
 decanalization (unhealthy environments amplify genetic risk at the extremes), whereas
 waist-to-hip ratio shows predominantly canalization (genetic effects are buffered across much of
 the risk spectrum), implying that different evolutionary pressures have shaped the regulatory
-architecture of these two closely related anthropometric traits.
+architecture of these two closely related anthropometric traits [@Nagpal2022].
 
 ## Methods
 
 **Cohort:** 408,925 self-reported White British UK Biobank participants. Genotype imputation v3
 (~96 M markers); bi-allelic variants with imputation score > 0.9, MAF > 1%, HWE P > 10⁻¹⁰,
-< 5% missingness retained; 8,063,507 SNPs used for GWAS and PGS construction.
+< 5% missingness retained; 8,063,507 SNPs used for GWAS and PGS construction [@Nagpal2022].
 
 **Traits:** Seven binary disease phenotypes (obesity by BMI, WHR-obesity, CAD, T2D, depression,
 college attainment, IBD + UC/CD subtypes) and three continuous traits (BMI, WHR, educational
@@ -48,17 +48,17 @@ attainment in years). ICD-10 codes plus self-report questionnaire data.
 
 **PGS construction:** LD-pruned summary statistics ("–indep-pairwise" in PLINK, r² > 0.2 within
 1 kb) at two thresholds (P < 5×10⁻⁸ genome-wide; P < 0.001). Scores computed via PLINK
-`–score`. BMI additionally evaluated with PRS-CS Bayesian continuous shrinkage.
+`–score`. BMI additionally evaluated with PRS-CS Bayesian continuous shrinkage [@Nagpal2022].
 
 **Environmental exposures:** 151 UKB data fields dichotomized into high/low groups spanning diet,
-lifestyle, socioeconomic, psychosocial, early-life, familial, and general health categories.
+lifestyle, socioeconomic, psychosocial, early-life, familial, and general health categories [@Nagpal2022].
 
 **Detection framework:** For each trait × exposure pair, prevalence-risk curves (observed
 prevalence vs. PGS percentile bin) were generated for the high and low exposure groups. The
 High-minus-Low (H-L) curve was required to be (1) monotonically increasing or decreasing
 (derivative consistently signed) and (2) have a linear deviation greater than that seen in 100
 random permutations of exposure labels. Conservative threshold: ≥ 2 SD above mean permutation
-deviation; suggestive threshold: ≥ 1.3 SD.
+deviation; suggestive threshold: ≥ 1.3 SD [@Nagpal2022].
 
 **Continuous-trait modeling:** Four complementary approaches including (i) prevalence-threshold
 equalization, (ii) regression of trait on PGS × Env interaction term, (iii) per-percentile-bin

@@ -30,7 +30,7 @@ related: []
 
 ## Key Contribution
 
-SigProfilerAssignment is a signature-refitting tool (desktop + web) that assigns COSMIC reference SBS, DBS, ID, and CN signatures to individual cancer samples and — uniquely among available tools — probabilistically assigns each known signature to every individual somatic mutation based on mutational context. Its computational core combines a custom forward stagewise algorithm for sparse selection with nonnegative least squares (NNLS, Lawson-Hanson method) for activity estimation. Benchmarking on 2700 synthetic cancer genomes (0%, 5%, and 10% noise) shows it outperforms deconstructSigs, MutationalPatterns (standard and strict), sigLASSO, and SignatureToolsLib on F1 score, with F1 > 0.90 at 10% noise — the only tool to do so.
+SigProfilerAssignment is a signature-refitting tool (desktop + web) that assigns COSMIC reference SBS, DBS, ID, and CN signatures to individual cancer samples and — uniquely among available tools — probabilistically assigns each known signature to every individual somatic mutation based on mutational context. Its computational core combines a custom forward stagewise algorithm for sparse selection with nonnegative least squares (NNLS, Lawson-Hanson method) for activity estimation. Benchmarking on 2700 synthetic cancer genomes (0%, 5%, and 10% noise) shows it outperforms deconstructSigs, MutationalPatterns (standard and strict), sigLASSO, and SignatureToolsLib on F1 score, with F1 > 0.90 at 10% noise — the only tool to do so [@DiazGay2023].
 
 ## Methods
 
@@ -42,9 +42,9 @@ SigProfilerAssignment is a signature-refitting tool (desktop + web) that assigns
 
 **Input formats.** VCF, MAF, or plain-text mutation matrices.
 
-**Benchmarking dataset.** 2700 simulated genomes (Islam et al. 2022, *Cell Genomics*): 300 tumours × 9 cancer types, generated from 21 COSMIC reference SBS signatures. The full COSMICv3.3 SBS panel (79 signatures) was used as the refitting input to emulate realistic over-complete inputs. Sensitivity, specificity, and F1 were computed at three noise levels.
+**Benchmarking dataset.** 2700 simulated genomes (Islam et al. 2022, *Cell Genomics*): 300 tumours × 9 cancer types, generated from 21 COSMIC reference SBS signatures. The full COSMICv3.3 SBS panel (79 signatures) was used as the refitting input to emulate realistic over-complete inputs. Sensitivity, specificity, and F1 were computed at three noise levels [@DiazGay2023].
 
-**Runtime.** 2700 samples processed in 9.6 min (0.21 s/sample). Memory usage was low and comparable to competing tools.
+**Runtime.** 2700 samples processed in 9.6 min (0.21 s/sample). Memory usage was low and comparable to competing tools [@DiazGay2023].
 
 ## Key Findings
 

@@ -24,7 +24,8 @@ related:
 
 ## Why It Matters
 
-- Decision: which cancer types are admissible into the h09 replication analysis, and the batch covariates available per type.
+- Decision: which cancer types are admissible into the
+  `hypothesis:0008-cross-study-signature-exposure-reproducibility` replication analysis, and the batch covariates available per type.
 - Risk: replication attempted on underpowered or technically-confounded type×study combos, conflating batch with biology.
 
 ## Current Evidence
@@ -35,16 +36,17 @@ related:
 ## Thoughts
 
 - Likely a handful of common types (breast, lung, CRC, melanoma) have many independent studies; rarer types may have only one and fall out of scope.
-- Uncertainty: reconstructing caller provenance from study metadata (links q020).
+- Uncertainty: reconstructing caller provenance from study metadata (links
+  `question:0020-minimum-sample-size-and-caller-provenance-for`).
 
 ## Connections to Project
 
-- Hypotheses: `hypothesis:h09-...`.
+- Hypotheses: `hypothesis:0008-cross-study-signature-exposure-reproducibility`.
 - Analyses: study-metadata census (assay/caller/treatment/n) per cancer type.
-- Priority: P2 (gates h09).
+- Priority: P2 (gates `hypothesis:0008-cross-study-signature-exposure-reproducibility`).
 
 ## Related
 
 - Hypotheses: `hypothesis:0008-cross-study-signature-exposure-reproducibility`
 - Topics: `topic:signature-extraction-fitting-methods`
-- Questions: `question:q020-...`
+- Questions: `question:0020-minimum-sample-size-and-caller-provenance-for`

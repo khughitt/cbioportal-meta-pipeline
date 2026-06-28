@@ -8,6 +8,7 @@ id: paper:Martincorena2017
 ontology_terms: []
 source_refs:
 - article:Martincorena2017
+- cite:Martincorena2017
 related:
 - paper:Lawrence2014
 - paper:Bailey2018
@@ -44,11 +45,11 @@ and length-aware neutral baseline. Four selection coefficients are estimated per
 negative binomial regression). Gene-wise regional rate variation is captured by a negative-binomial
 model whose prior is informed by 20 principal components of 169 epigenomic marks from RoadMap
 Epigenomics; this constrains per-gene rates via a Gamma prior and borrows strength between global
-covariates and local synonymous counts. Significance is a likelihood-ratio test of w=1.
+covariates and local synonymous counts. Significance is a likelihood-ratio test of w=1 [@Martincorena2017].
 Cohort: 7,664 TCGA tumors across 29 cancer types, re-called in-house for 24 types to control
 germline-leakage artifacts (samples with <50% concordance to public calls dropped). Hypermutators
 (>3,000 coding mutations) are excluded from cohort fits; POLE/MMR tumors are handled with extended
-pentanucleotide contexts and per-signature normalization to avoid inflated backgrounds.
+pentanucleotide contexts and per-signature normalization to avoid inflated backgrounds [@Martincorena2017].
 
 ## Key Findings
 
@@ -66,7 +67,7 @@ essentially all of the genome in both tumors and normal somatic tissues** (blood
 liver, small intestine, from cited companion studies), with <1 coding substitution per tumor
 removed by negative selection. Purifying selection is detectable only in essential genes in
 haploid regions (dN/dS = 0.66). Positive selection thus dominates somatic evolution, malignant or
-not.
+not [@Martincorena2017].
 
 ## Relevance
 

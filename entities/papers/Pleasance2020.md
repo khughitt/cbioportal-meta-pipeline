@@ -31,23 +31,23 @@ related: []
 
 ## Key Contribution
 
-This paper describes the POG570 cohort — 570 advanced and metastatic tumors profiled by whole-genome sequencing (WGS), transcriptome sequencing, and comprehensive clinical/treatment annotation through the BC Cancer Personalized OncoGenomics program. The central contribution is a systematic pan-cancer analysis demonstrating that prior therapy leaves distinct mutational footprints on tumor genomes: platinum-based chemotherapy elevates signatures SBS31 and DBS5, combined platinum + DNA-synthesis inhibitor therapy elevates SBS17b, and DNA-damage-inducing genotoxic therapy broadly increases TMB — with error-prone polymerases POLQ and Polζ mediating part of this effect. The study additionally links mutation signatures and immune expression clusters to overall survival and immunotherapy response, providing a resource specifically designed for the clinically important but data-sparse post-treatment metastatic setting.
+This paper describes the POG570 cohort — 570 advanced and metastatic tumors profiled by whole-genome sequencing (WGS), transcriptome sequencing, and comprehensive clinical/treatment annotation through the BC Cancer Personalized OncoGenomics program. The central contribution is a systematic pan-cancer analysis demonstrating that prior therapy leaves distinct mutational footprints on tumor genomes: platinum-based chemotherapy elevates signatures SBS31 and DBS5, combined platinum + DNA-synthesis inhibitor therapy elevates SBS17b, and DNA-damage-inducing genotoxic therapy broadly increases TMB — with error-prone polymerases POLQ and Polζ mediating part of this effect. The study additionally links mutation signatures and immune expression clusters to overall survival and immunotherapy response, providing a resource specifically designed for the clinically important but data-sparse post-treatment metastatic setting [@Pleasance2020].
 
 ## Methods
 
-**Cohort.** 570 patients with advanced/metastatic cancer across 25 histologies biopsied from 18 organ groups, enrolled at BC Cancer (July 2012–August 2017, NCT02155621). 82% received systemic therapy before biopsy; 110 different drugs were administered, with median treatment durations ranging from days to >4 years.
+**Cohort.** 570 patients with advanced/metastatic cancer across 25 histologies biopsied from 18 organ groups, enrolled at BC Cancer (July 2012–August 2017, NCT02155621). 82% received systemic therapy before biopsy; 110 different drugs were administered, with median treatment durations ranging from days to >4 years [@Pleasance2020].
 
-**Sequencing.** WGS to ~80× tumor / ~40× germline; RNA-seq targeting 150–200 million 75-base paired-end reads. Libraries prepared from biopsied/resected specimens; peripheral blood used as normal. Data deposited at EGA (EGAS00001001159).
+**Sequencing.** WGS to ~80× tumor / ~40× germline; RNA-seq targeting 150–200 million 75-base paired-end reads. Libraries prepared from biopsied/resected specimens; peripheral blood used as normal. Data deposited at EGA (EGAS00001001159) [@Pleasance2020].
 
 **Somatic alteration discovery.** SNVs, IDs, CNVs, LOH, SVs called from paired tumor–normal WGS (BurrowsWheeler Aligner, multiple callers). MSI via MSIsensor; HRD scores via HRDtools. Microbial detection via BioBloomTools.
 
-**Mutation signatures.** De novo NMF-based decomposition from 6,181,180 somatic SBSs, 974,629 IDs, 54,042 DBSs using a published framework. Signatures matched to COSMIC v3 (May 2019) by cosine similarity (≥0.6 for match). Temporal ordering of SBS signatures via SignIT on clonal subpopulations. Final analysis retained 482 patients in 12 completed SBS cohorts.
+**Mutation signatures.** De novo NMF-based decomposition from 6,181,180 somatic SBSs, 974,629 IDs, 54,042 DBSs using a published framework. Signatures matched to COSMIC v3 (May 2019) by cosine similarity (≥0.6 for match). Temporal ordering of SBS signatures via SignIT on clonal subpopulations. Final analysis retained 482 patients in 12 completed SBS cohorts [@Pleasance2020].
 
 **Drug–signature associations.** Wilcoxon signed-rank tests comparing signature exposures across three groups: unexposed, short treatment (<median days), long treatment (≥median days). Twenty most common chemotherapy drugs examined for seven DNA-damaging drug classes. Multiple testing correction via Bonferroni.
 
 **Gene expression.** RNA-seq aligned with STAR; quantified using RSEM; batch effects minimized by ComBat. Clustering and CIBERSORT deconvolution of immune cell types.
 
-**Immune microenvironment.** CIBERSORT deconvolution of all 22 leukocyte cell types; ConsensusClusterPlus identified 8 immune clusters. TCR repertoire analysis via MiXCR on 372 non-lymphoid samples (dominance and Shannon diversity). ICI cohort: 76 patients receiving ICIs post-biopsy.
+**Immune microenvironment.** CIBERSORT deconvolution of all 22 leukocyte cell types; ConsensusClusterPlus identified 8 immune clusters. TCR repertoire analysis via MiXCR on 372 non-lymphoid samples (dominance and Shannon diversity). ICI cohort: 76 patients receiving ICIs post-biopsy [@Pleasance2020].
 
 **Subclonal / heterogeneity analysis.** EXPANDS to identify subpopulations; Shannon diversity index for ITH.
 

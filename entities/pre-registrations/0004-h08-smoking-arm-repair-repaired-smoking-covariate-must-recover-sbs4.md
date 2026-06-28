@@ -1,6 +1,6 @@
 ---
 type: pre-registration
-title: "h08 smoking-arm repair \u2014 repaired smoking covariate must recover SBS4\
+title: "Smoking-arm repair \u2014 repaired smoking covariate must recover SBS4\
   \ without rereading the locked H08a verdict"
 status: committed
 created: '2026-06-01'
@@ -21,12 +21,12 @@ commits_to:
 - hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and
 ---
 
-# Pre-registration: h08 smoking-arm repair
+# Pre-registration: smoking-arm repair
 
 **Target class: mixed, with limited epistemic weight.**
 
 The operational target is a repaired Arm-B production rerun that uses the fixed smoking covariates from `task:t201` before inspecting any new production-rerun output.
-The epistemic target is narrower than the original H08a gate: does the repaired smoking covariate recover the known smoking→SBS4 association under the h08 within-tissue model?
+The epistemic target is narrower than the original H08a gate: does the repaired smoking covariate recover the known smoking→SBS4 association under the `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` within-tissue model?
 
 This is **not** an amendment that rereads the frozen `pre-registration:0003-h08-positive-control-agnostic-association-must-recover-known-signature` result.
 The 2026-05-31 H08a verdict remains `[?]` because the locked Arm-B covariate was `pack_years`, and the registered 2-of-3 gate was already read in `doc/interpretations/2026-05-31-t199-h08-association-verdict.md`.
@@ -40,7 +40,7 @@ Therefore, a repaired production rerun can support the claim that the original A
 This repair bears on the positive-control prong of
 `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`.
 The tested proposition is local:
-the h08 within-tissue association model can recover smoking→SBS4 in lung when the smoking exposure is encoded as a valid binary ever-smoker covariate rather than as missing-prone continuous pack-years.
+the `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` within-tissue association model can recover smoking→SBS4 in lung when the smoking exposure is encoded as a valid binary ever-smoker covariate rather than as missing-prone continuous pack-years.
 
 ## Feasibility
 
@@ -120,7 +120,7 @@ LUSC may remain weak or null because nearly all LUSC cases are smoking-associate
 ## Decision Criteria
 
 The repaired Arm-B primary analysis replaces the original smoking covariate slot with **`ever_smoker`**.
-The analysis must use the same SBS4 outcome, LUAD+LUSC pooled stratum, CLR machinery, adjustment set, active-signature rule, and denominator-freezing discipline as the original h08 association scan unless an explicit amendment is recorded before the rerun.
+The analysis must use the same SBS4 outcome, LUAD+LUSC pooled stratum, CLR machinery, adjustment set, active-signature rule, and denominator-freezing discipline as the original association scan unless an explicit amendment is recorded before the rerun.
 
 A repaired Arm-B **primary pass** requires all of the following:
 
@@ -152,7 +152,7 @@ Verdict mapping for this repair only:
 ## Null Result Plan
 
 A null repaired result does not dispute the smoking→SBS4 biology.
-It would instead mean that the t200 diagnostic result did not survive formal production insertion into the h08 rank denominator, or that the same-substrate repair is too fragile to support a gate repair.
+It would instead mean that the t200 diagnostic result did not survive formal production insertion into the `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` rank denominator, or that the same-substrate repair is too fragile to support a gate repair.
 
 If the primary repaired result is `[?]` or `[-]`, do not open H08b on the basis of the smoking repair.
 The next move would be either to seek an independent lung substrate with valid smoking covariates or to leave H08a at `[?]` and label any H08b work exploratory.

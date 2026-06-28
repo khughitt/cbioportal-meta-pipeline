@@ -28,17 +28,17 @@ The ARETHUSA proof-of-concept clinical trial demonstrates that temozolomide (TMZ
 
 ## Methods
 
-**Trial design (ARETHUSA; NCT03519412):** Two-step phase II clinical trial in MGMT-deficient (IHC-negative and MGMT-promoter-methylated by methyl-BEAMing), RAS-mutant, MMRp/MSS mCRC patients. Step 1 (priming phase): oral TMZ 150 mg/m² days 1–5 every 28 days until progressive disease (PD). Step 2 (immunotherapy phase): pembrolizumab 200 mg every 3 weeks in patients achieving post-TMZ TMB ≥20 mut/Mb.
+**Trial design (ARETHUSA; NCT03519412):** Two-step phase II clinical trial in MGMT-deficient (IHC-negative and MGMT-promoter-methylated by methyl-BEAMing), RAS-mutant, MMRp/MSS mCRC patients. Step 1 (priming phase): oral TMZ 150 mg/m² days 1–5 every 28 days until progressive disease (PD). Step 2 (immunotherapy phase): pembrolizumab 200 mg every 3 weeks in patients achieving post-TMZ TMB ≥20 mut/Mb [@Crisafulli2022].
 
-**Cohort:** 473 patients screened for MGMT status; 33 of 69 MGMT-methylated patients enrolled; 21 biopsied at PD for the translational analyses presented here. Tissue biopsies obtained pre- and post-TMZ (mandatory post-TMZ, optional pre-TMZ). Longitudinal liquid biopsies (pre/post-TMZ, pre/post-pembrolizumab) collected for most patients.
+**Cohort:** 473 patients screened for MGMT status; 33 of 69 MGMT-methylated patients enrolled; 21 biopsied at PD for the translational analyses presented here. Tissue biopsies obtained pre- and post-TMZ (mandatory post-TMZ, optional pre-TMZ). Longitudinal liquid biopsies (pre/post-TMZ, pre/post-pembrolizumab) collected for most patients [@Crisafulli2022].
 
-**Sequencing:** Whole exome sequencing (WES) at high depth (median 376×, PhredScore ≥30, coverage ≥96.82% at 100×) using Nextera DNA Flex Library Prep + IDT xGen Exome Enrichment. PBMC used as germline-matched normal. For liquid biopsy: GuardantOMNI research-use-only NGS assay across 2.145 Mb panel; bTMB reported as mut/Mb.
+**Sequencing:** Whole exome sequencing (WES) at high depth (median 376×, PhredScore ≥30, coverage ≥96.82% at 100×) using Nextera DNA Flex Library Prep + IDT xGen Exome Enrichment. PBMC used as germline-matched normal. For liquid biopsy: GuardantOMNI research-use-only NGS assay across 2.145 Mb panel; bTMB reported as mut/Mb [@Crisafulli2022].
 
-**Mutational signature analysis:** MuSiCa and Mutational Patterns R packages; fitting against COSMIC signature databases (v2.0, v3.0, v3.2). Clonal analysis: VAF ≥10%; subclonal analysis: VAF ≥1%. Cosine similarity threshold ≥0.9 for quality control. Patient stratification into subtypes A (no TMZ molecular evidence), B1 (subclonal TMZ signature), B2 (clonal TMZ signature) based on SBS11 score and mutation abundance.
+**Mutational signature analysis:** MuSiCa and Mutational Patterns R packages; fitting against COSMIC signature databases (v2.0, v3.0, v3.2). Clonal analysis: VAF ≥10%; subclonal analysis: VAF ≥1%. Cosine similarity threshold ≥0.9 for quality control. Patient stratification into subtypes A (no TMZ molecular evidence), B1 (subclonal TMZ signature), B2 (clonal TMZ signature) based on SBS11 score and mutation abundance [@Crisafulli2022].
 
-**TMB calculation:** WES-derived TMB from somatic SNVs/indels at 5% Fisher-test significance, minimum 4 supporting reads, VAF ≥10% (clonal) or ≥1% (subclonal), filtered against dbSNP (v147). Copy-number normalization applied. Intratumor heterogeneity (ITH) studied by multi-region biopsies from same lesion (three corings of one liver metastasis in patient AR02005).
+**TMB calculation:** WES-derived TMB from somatic SNVs/indels at 5% Fisher-test significance, minimum 4 supporting reads, VAF ≥10% (clonal) or ≥1% (subclonal), filtered against dbSNP (v147). Copy-number normalization applied. Intratumor heterogeneity (ITH) studied by multi-region biopsies from same lesion (three corings of one liver metastasis in patient AR02005) [@Crisafulli2022].
 
-**Clinical efficacy metric:** Growth modulation index (GMI) = PFS on current therapy / PFS on immediately prior therapy; GMI >1.33 considered clinically meaningful.
+**Clinical efficacy metric:** Growth modulation index (GMI) = PFS on current therapy / PFS on immediately prior therapy; GMI >1.33 considered clinically meaningful [@Crisafulli2022].
 
 ## Key Findings
 

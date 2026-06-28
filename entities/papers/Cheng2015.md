@@ -9,6 +9,7 @@ updated: '2026-06-28'
 id: paper:Cheng2015
 ontology_terms: []
 source_refs:
+- cite:Cheng2015
 - article:Cheng2015
 related:
 - paper:Zehir2017
@@ -37,7 +38,7 @@ hybridization-capture NGS panel covering 341 cancer-associated genes from FFPE t
 patient-matched normal. The paper establishes the assay's performance envelope - limits of
 detection near 2% VAF for hotspot variants and 5% for novel variants, >99.9% specificity, and
 uniform deep coverage - and operationalizes a matched-normal somatic-calling workflow that
-became the template for all downstream MSK-IMPACT cohort studies (Zehir2017 and later).
+became the template for all downstream MSK-IMPACT cohort studies (Zehir2017 and later) [@Cheng2015].
 
 ## Methods
 
@@ -46,7 +47,7 @@ pathways deemed actionable by targeted therapies; COSMIC v64 was used to priorit
 but not as the sole selection criterion. The capture footprint comprises 4,976 canonical coding
 exons plus 104 noncanonical-transcript exons, with additional probes tiling 33 introns of 14
 recurrently rearranged genes (e.g., *ALK*, *ROS1*) for structural-variant detection. The
-complete gene list is provided in a supplementary table referenced from the Methods.
+complete gene list is provided in a supplementary table referenced from the Methods [@Cheng2015].
 
 **Bait design.** Custom biotinylated DNA probes synthesized with the Roche NimbleGen SeqCap EZ
 custom oligo system. Probes were empirically re-tiled over multiple iterations to flatten
@@ -54,7 +55,7 @@ coverage uniformity, particularly in high-GC and repetitive regions.
 
 **Sequencing.** Illumina HiSeq 2500 in rapid-run mode, 2x100 bp paired-end. Minimum acceptable
 mean unique coverage 200x; typical operating range 500-1000x. In the validation cohort median
-sample coverage was 753x, and 97% of canonical exons reached >=350x (half the mean).
+sample coverage was 753x, and 97% of canonical exons reached >=350x (half the mean) [@Cheng2015].
 
 **Matched-normal design.** Every tumor was sequenced alongside a patient-matched normal control
 (FFPE or blood-derived) on the same capture pool. The paper quantifies the value of matching:
@@ -68,12 +69,12 @@ a custom coverage-based caller using square-root-transformed, GC-Loess-normalize
 with circular binary segmentation for CNVs. Filters: 1000 Genomes MAF >1% removed; a two-tier
 VAF policy accepts hotspot calls at coverage >=20x, >=8 mutant reads, VAF >=2% and novel calls
 at coverage >=20x, >=10 mutant reads, VAF >=5%; variants recurrent in >20% of a standard-normal
-panel are flagged as artifacts.
+panel are flagged as artifacts [@Cheng2015].
 
 **Validation cohort.** 284 tumor samples previously genotyped by orthogonal clinical methods
 across 47 exons of 19 cancer genes (Table 1; including *BRAF*, *EGFR*, *ERBB2*, *KIT*, *KRAS*,
 *NRAS*, *PDGFRA*, *PIK3CA*, *TP53*), plus 75 matched normals, 19 *ERBB2*-amplified samples,
-and 4 *EML4-ALK* fusion-positive lung adenocarcinomas.
+and 4 *EML4-ALK* fusion-positive lung adenocarcinomas [@Cheng2015].
 
 ## Key Findings
 

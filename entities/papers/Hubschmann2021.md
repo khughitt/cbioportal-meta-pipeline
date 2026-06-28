@@ -37,7 +37,7 @@ analysis (SMC — Stratification of the Mutational Catalog) that characterizes e
 depletion of signatures in genomic strata defined by external criteria (e.g., mutation density,
 replication timing). The package natively supports COSMIC V2 SNV, PCAWG V3 SNV, and PCAWG Indel
 signature collections and can correct for WES triplet-content bias across nine common target-capture
-kits.
+kits [@Hubschmann2021].
 
 ## Methods
 
@@ -57,7 +57,7 @@ signatures (AC1/AC5, SBS1/SBS5) receive zero cutoffs since they are true positiv
 **Confidence intervals.** CIs are computed via profile likelihood on ordinary differential
 equations (Raue et al. 2009), implemented as `variateExp()` for SNV and
 `confidence_indel_only_calculation()` for Indel signatures. A likelihood ratio test (Gauss-Newton
-via `pracma::newtonsys()`) is used to approximate 95% CIs.
+via `pracma::newtonsys()`) is used to approximate 95% CIs [@Hubschmann2021].
 
 **Stratified analysis (SMC).** The mutational catalog is split into s exclusive strata (e.g., high /
 intermediate / background mutation density) and the constrained optimization:
@@ -84,25 +84,25 @@ APOBEC signatures (AC2/SBS2 and AC13/SBS13) were detected across the cohort. HRR
 signatures (AC3/SBS3 and SBS3, ID6 and ID8) were identified consistently across all three
 signature collections with high confidence (SBS3: 70/70 samples high confidence, ID6: 64/70 high
 confidence). MMR-deficiency (AC6/SBS1, ID1/ID2) and reactive oxygen species (SBS18) signatures
-were also recovered.
+were also recovered [@Hubschmann2021].
 
 **Per-sample vs. cohort-wide analysis.** Per-sample analysis recovered all cohort-wide signatures
 plus additional low-frequency ones: exclusive per-sample contributions accounted for 3.35% (PCAWG
 SNV), 17.17% (COSMIC V2 SNV), and 4.41% (PCAWG Indel) of total exposures — capturing biological
-heterogeneity and technical noise beyond what cohort-wide decomposition resolves.
+heterogeneity and technical noise beyond what cohort-wide decomposition resolves [@Hubschmann2021].
 
 **Stratified analysis (mutation density strata).** APOBEC signatures (AC2 and SBS2) were
 significantly enriched in high-mutation-density regions (Kruskal-Wallis: AC2 p_KW = 4.11×10^−9,
 SBS2 p_KW = 6.16×10^−8). Aging signatures (AC1, AC5, SBS1, SBS5) were significantly depleted in
 high-density regions. HRR signatures (AC3, SBS3) showed enrichment at high density. APOBEC
 enrichment at dense-mutation regions is consistent with APOBEC activity concentrated at replication
-stress loci.
+stress loci [@Hubschmann2021].
 
 **Precision oncology cases.** Case 1 (uterine leiomyosarcoma, germline BRCA2 frameshift deletion):
 YAPSA detected AC3/SBS3 (37.8% of SNVs) and ID6 (42.4% of Indels) with high confidence, matching
 the HRR-deficient phenotype and genomic instability (LOH-HRD score 23, LSTs 20). Case 2
 (neuroendocrine tumor, no germline HRR mutation): AC3/SBS3, ID6, ID8 absent; LOH-HRD and LST
-scores = 0, consistent with no HRR deficiency.
+scores = 0, consistent with no HRR deficiency [@Hubschmann2021].
 
 **Consistency.** YAPSA-identified signatures showed high overlap with signatures from the original
 NMF extraction of the same datasets (Alexandrov et al. 2020), confirming that the supervised

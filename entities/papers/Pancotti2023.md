@@ -31,7 +31,7 @@ related:
 
 ## Key Contribution
 
-This paper provides a systematic evaluation of the instability of NMF-based de novo mutational signature extraction applied to COSMIC SBS v3.3 (79 signatures; 60 non-artefactual). Through simulation studies it shows that high inter-signature cosine similarity and "flatness" (featureless profiles) severely degrade SigProfilerExtractor's ability to recover the correct number and identity of latent signatures, even at sample sizes in the thousands. As a novel complement, the authors apply Archetypal Analysis (AA) to the COSMIC catalogue itself and find that 29 archetypes suffice to reconstruct all 60 profiles with cosine similarity > 0.8 while revealing which signatures are redundant mathematical blends of others.
+This paper provides a systematic evaluation of the instability of NMF-based de novo mutational signature extraction applied to COSMIC SBS v3.3 (79 signatures; 60 non-artefactual). Through simulation studies it shows that high inter-signature cosine similarity and "flatness" (featureless profiles) severely degrade SigProfilerExtractor's ability to recover the correct number and identity of latent signatures, even at sample sizes in the thousands. As a novel complement, the authors apply Archetypal Analysis (AA) to the COSMIC catalogue itself and find that 29 archetypes suffice to reconstruct all 60 profiles with cosine similarity > 0.8 while revealing which signatures are redundant mathematical blends of others [@Pancotti2023].
 
 ## Methods
 
@@ -39,11 +39,11 @@ This paper provides a systematic evaluation of the instability of NMF-based de n
 
 **Similarity analysis:** Pairwise cosine similarity matrix over all 60 profiles, then hierarchical clustering (average linkage) to identify highly correlated groups.
 
-**Flatness metric:** Defined quantitatively as the cosine similarity of a signature profile with the uniform distribution over 96 trinucleotide contexts (Eq. 2). Ranges 0–1; SBS3, SBS5, SBS40, SBS8 identified as high-flatness signatures.
+**Flatness metric:** Defined quantitatively as the cosine similarity of a signature profile with the uniform distribution over 96 trinucleotide contexts (Eq. 2). Ranges 0–1; SBS3, SBS5, SBS40, SBS8 identified as high-flatness signatures [@Pancotti2023].
 
-**Simulation (de novo extraction benchmarks):** Five scenarios differing in number of latent signatures (6–20), median pairwise cosine similarity (0.22–0.83), median flatness (0.34–0.76), and sample size (200–10,000). Synthetic catalogues generated via SigsPack (10 replicate catalogues per scenario); SigProfilerExtractor used as gold-standard NMF extractor (30 NMF repetitions per run). Metrics: frequency F of runs correctly identifying all signatures, MSE, average cluster stability C_mean, minimum stability C_min.
+**Simulation (de novo extraction benchmarks):** Five scenarios differing in number of latent signatures (6–20), median pairwise cosine similarity (0.22–0.83), median flatness (0.34–0.76), and sample size (200–10,000). Synthetic catalogues generated via SigsPack (10 replicate catalogues per scenario); SigProfilerExtractor used as gold-standard NMF extractor (30 NMF repetitions per run). Metrics: frequency F of runs correctly identifying all signatures, MSE, average cluster stability C_mean, minimum stability C_min [@Pancotti2023].
 
-**Archetypal Analysis (AA):** Applied directly to the 60×96 COSMIC signature matrix M. AA finds convex combinations of extremal data points (archetypes z_k) such that all observations can be expressed as convex mixtures of archetypes. Number of archetypes set to explain 95% of variance (yielding 29); implemented via Python *Archetypal Analysis Package* (Motevalli Soumehsaraei and Barnard, 2019). Code at https://github.com/compbiomed-unito/archetypal-analysis-cosmic.
+**Archetypal Analysis (AA):** Applied directly to the 60×96 COSMIC signature matrix M. AA finds convex combinations of extremal data points (archetypes z_k) such that all observations can be expressed as convex mixtures of archetypes. Number of archetypes set to explain 95% of variance (yielding 29); implemented via Python *Archetypal Analysis Package* (Motevalli Soumehsaraei and Barnard, 2019). Code at https://github.com/compbiomed-unito/archetypal-analysis-cosmic [@Pancotti2023].
 
 ## Key Findings
 

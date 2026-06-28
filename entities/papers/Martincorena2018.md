@@ -7,6 +7,7 @@ updated: '2026-06-28'
 id: paper:Martincorena2018
 ontology_terms: []
 source_refs:
+- cite:Martincorena2018
 - paper:Martincorena2018
 related:
 - paper:Yoshida2026
@@ -30,7 +31,7 @@ related:
 
 ## Key Contribution
 
-Martincorena et al. (Wellcome Sanger Institute / MRC Laboratory, Cambridge) present the founding primary-data study on age-related somatic clone colonization of normal human esophageal epithelium. Using deep targeted sequencing of 74 cancer genes across 844 contiguous 2 mm² biopsy samples from nine organ donors aged 20–75 years, they show that normal esophageal epithelium accumulates hundreds to thousands of somatic mutations per cell with age, and that 14 cancer genes — led by NOTCH1 and TP53 — are under strong positive selection. By middle age, NOTCH1-mutant clones cover 30–80% of the esophageal epithelium; TP53-mutant clones cover 5–37%. Critically, NOTCH1 mutation prevalence in normal esophagus is several-fold *higher* than in esophageal squamous cell carcinoma (ESCC), while TP53 shows the opposite pattern — establishing the central "NOTCH1 paradox" that defines the normal-tissue-vs-cancer driver inversion framework.
+Martincorena et al. (Wellcome Sanger Institute / MRC Laboratory, Cambridge) present the founding primary-data study on age-related somatic clone colonization of normal human esophageal epithelium. Using deep targeted sequencing of 74 cancer genes across 844 contiguous 2 mm² biopsy samples from nine organ donors aged 20–75 years, they show that normal esophageal epithelium accumulates hundreds to thousands of somatic mutations per cell with age, and that 14 cancer genes — led by NOTCH1 and TP53 — are under strong positive selection. By middle age, NOTCH1-mutant clones cover 30–80% of the esophageal epithelium; TP53-mutant clones cover 5–37%. Critically, NOTCH1 mutation prevalence in normal esophagus is several-fold *higher* than in esophageal squamous cell carcinoma (ESCC), while TP53 shows the opposite pattern — establishing the central "NOTCH1 paradox" that defines the normal-tissue-vs-cancer driver inversion framework [@Martincorena2018].
 
 This normal-epithelium selection note is interpreted alongside paper:Yoshida2026, paper:Poon2021, paper:Li2021, paper:Gao2023, topic:clonal-hematopoiesis-contamination, topic:pan-cancer-mutation-landscape, and question:0001-normal-epithelial-clone-contamination-in-esophageal-studies.
 
@@ -53,7 +54,7 @@ This normal-epithelium selection note is interpreted alongside paper:Yoshida2026
 
 ### Clone-size estimation
 
-Clone boundaries were inferred from contiguous samples sharing the same variant at similar allele frequencies. The spatial extent of a clone was defined as the contiguous patch of samples in which a given mutation was detectable. Detectable clone sizes ranged from 0.01 mm² (smallest detectable, limited by sample grid resolution) to >8.5 mm². For phylogenetic analysis of large clones, WGS data were used to reconstruct subclonal structure and branching histories. NOTCH1 copy-neutral loss of heterozygosity (CN-LOH) was detected by statistical phasing of heterozygous SNPs.
+Clone boundaries were inferred from contiguous samples sharing the same variant at similar allele frequencies. The spatial extent of a clone was defined as the contiguous patch of samples in which a given mutation was detectable. Detectable clone sizes ranged from 0.01 mm² (smallest detectable, limited by sample grid resolution) to >8.5 mm². For phylogenetic analysis of large clones, WGS data were used to reconstruct subclonal structure and branching histories. NOTCH1 copy-neutral loss of heterozygosity (CN-LOH) was detected by statistical phasing of heterozygous SNPs [@Martincorena2018].
 
 ### Selection quantification
 
@@ -158,7 +159,7 @@ The quantitative finding that NOTCH1-mutant clones cover 30–80% of the normal 
 
 **2. Empirical backbone for the NOTCH1 inversion used in Yoshida2026, Poon2021, Li2021**
 
-Yoshida2026 cites this study for the NOTCH1 normal-vs-cancer inversion. Poon2021 uses the 9-donor dataset from this paper as their esophageal data source (~600 synonymous variants from these 844 samples). Li2021's qualitative claim that esophagus/cardia harbor macroscopic driver clones is mechanistically grounded in this study. All three downstream summaries in the project can now be cross-referenced to primary numbers here.
+Yoshida2026 cites this study for the NOTCH1 normal-vs-cancer inversion. Poon2021 uses the 9-donor dataset from this paper as their esophageal data source (~600 synonymous variants from these 844 samples). Li2021's qualitative claim that esophagus/cardia harbor macroscopic driver clones is mechanistically grounded in this study. All three downstream summaries in the project can now be cross-referenced to primary numbers here [@Martincorena2018; @Poon2021].
 
 **3. dNdScv as the selection quantification method**
 
@@ -166,7 +167,7 @@ The dNdScv algorithm used here is the Martincorena method [@Martincorena2017], w
 
 **4. Mutation burden calibration for the aging background model**
 
-The finding that normal esophageal cells accumulate several hundred to 2,000 mutations per cell with age (linear with age, R² = 0.67) establishes an empirical aging clock for the esophageal normal-tissue background. This supports the hypothesis (from Li2021 and Yoshida2026) that older esophageal cancer cohorts will carry higher apparent mutation burdens partly from the normal-tissue background — relevant to the TMB annotation work (t081/t092–t099).
+The finding that normal esophageal cells accumulate several hundred to 2,000 mutations per cell with age (linear with age, R² = 0.67) establishes an empirical aging clock for the esophageal normal-tissue background. This supports the hypothesis (from Li2021 and Yoshida2026) that older esophageal cancer cohorts will carry higher apparent mutation burdens partly from the normal-tissue background — relevant to the TMB annotation work (t081/t092–t099) [@Martincorena2018].
 
 ## Project Framework Mapping
 
@@ -205,4 +206,4 @@ The finding that normal esophageal cells accumulate several hundred to 2,000 mut
 - **Update `question:0001-normal-epithelial-clone-contamination-in-esophageal-studies`** — the specific numbers from this paper (30–80% NOTCH1 coverage in normal, ~10% in ESCC; TP53 5–37% normal vs >90% ESCC) sharpen the contamination concern substantially. The question should now include these quantitative bounds.
 - **Check dNdScv pipeline output** for esophageal studies in cBioPortal: if any run has been done, compare NOTCH1 dN/dS there against the >50 benchmark for normal tissue. A cancer-tissue dN/dS much lower than 50 would confirm that the selection signal in tumors comes primarily from a different (smaller) selected clone subpopulation.
 - **Synthesis update:** Add Martincorena2018 to `synthesis-2026-04-18-somatic-mutations-in-normal-tissue.md` as the primary data reference behind claims currently attributed to secondary sources.
-- **Consider:** does the ~17 cm² sampling of 9 donors constitute a sufficient power base for the selection coefficients? The Poon2021 re-analysis of these data using the synonymous-passenger framework independently confirms NOTCH1 and TP53 selection, which provides orthogonal validation.
+- **Consider:** does the ~17 cm² sampling of 9 donors constitute a sufficient power base for the selection coefficients? The Poon2021 re-analysis of these data using the synonymous-passenger framework independently confirms NOTCH1 and TP53 selection, which provides orthogonal validation [@Martincorena2018; @Poon2021].

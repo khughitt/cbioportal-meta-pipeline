@@ -68,7 +68,7 @@ For small μ₂, the age-specific incidence rate I(t) (per individual) is given 
 
 > **I(t) ≈ μ₁μ₂ ∫₀ᵗ X(s) · exp[(α₂ − β₂)(t − s)] ds**
 
-with the age-specific incidence per 100,000 being I(t) × 10⁵.
+with the age-specific incidence per 100,000 being I(t) × 10⁵ [@MoolgavkarKnudson1981].
 
 The appendix gives the exact hazard function derivation via generating functions. Let ψ(z,w,t) be the generating function for the number of ICs and MCs at time t from all NC lineages, and φ(z,w,t) the corresponding function for descendants of a single IC. Then:
 
@@ -132,7 +132,7 @@ The data on ex-smokers (extra risk stays approximately constant after cessation,
 
 ### 4. Hereditary cancers: germline first hit → all target cells are ICs at birth
 
-For dominant hereditary cancers (retinoblastoma, familial polyposis, hereditary breast cancer), the model proposes the first event is germline, so every target cell is born as an IC. Risk is then governed by μ₂ alone (not μ₁μ₂). This explains: earlier onset, higher penetrance, bilateral/multifocal presentation. The paper states the gene proposed for familial breast cancer (cited as chromosome #10, linked to glutamate pyruvate transaminase — a 1980 finding that was later revised) would make women "born with all the cells of the breast epithelium in the intermediate stage," and predicts 80% lifetime penetrance consistent with that report.
+For dominant hereditary cancers (retinoblastoma, familial polyposis, hereditary breast cancer), the model proposes the first event is germline, so every target cell is born as an IC. Risk is then governed by μ₂ alone (not μ₁μ₂). This explains: earlier onset, higher penetrance, bilateral/multifocal presentation. The paper states the gene proposed for familial breast cancer (cited as chromosome #10, linked to glutamate pyruvate transaminase — a 1980 finding that was later revised) would make women "born with all the cells of the breast epithelium in the intermediate stage," and predicts 80% lifetime penetrance consistent with that report [@MoolgavkarKnudson1981].
 
 ### 5. Intermediate lesions are clonal in sporadic cases, multicellular in hereditary cases
 
@@ -140,7 +140,7 @@ Table 1 lists putative intermediate lesions and predicts their clonal origin. Fo
 
 ### 6. Radiation risk predictions confirmed
 
-The model predicts that a single high-dose radiation exposure will generate ICs (first hits) and directly promote some ICs to MCs. It then predicts that RR will decline with age at irradiation (fewer remaining IC-doubling years), while excess risk per year will increase. The paper works through a numerical example: for a hypothetical tumor with age-specific incidence 1,500/million at age 60 and 94/million at age 30, 100 rads gives RR 3.02 at age 30 vs. 1.62 at age 60, but excess risk 366 vs. 1,310 per million per year. This pattern was confirmed in atomic bomb survivor data (Beebe et al. 1978, cited as ref 20) and radiation-induced breast cancer studies.
+The model predicts that a single high-dose radiation exposure will generate ICs (first hits) and directly promote some ICs to MCs. It then predicts that RR will decline with age at irradiation (fewer remaining IC-doubling years), while excess risk per year will increase. The paper works through a numerical example: for a hypothetical tumor with age-specific incidence 1,500/million at age 60 and 94/million at age 30, 100 rads gives RR 3.02 at age 30 vs. 1.62 at age 60, but excess risk 366 vs. 1,310 per million per year. This pattern was confirmed in atomic bomb survivor data (Beebe et al. 1978, cited as ref 20) and radiation-induced breast cancer studies [@MoolgavkarKnudson1981].
 
 ### 7. No support for linear dose-extrapolation as a universal rule
 

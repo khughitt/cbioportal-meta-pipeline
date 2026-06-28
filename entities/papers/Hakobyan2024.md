@@ -45,7 +45,7 @@ independent effects on patient survival.
 after quality filtering) and PCAWG (1,471 samples, 14 tissues). Signatures were grouped by
 COSMIC v3.2 etiology annotation. Ten oncogenic signaling pathways (cell cycle, HIPPO, MYC,
 NOTCH, NRF2, PI3K/AKT/RAS, RTK-RAS, TGFb, TP53, b-catenin/WNT) were mapped using previously
-published driver mutation data harmonized to TCGA and PCAWG.
+published driver mutation data harmonized to TCGA and PCAWG [@Hakobyan2024].
 
 **Signature-signature interaction metrics:** Four complementary metrics computed per tissue
 independently, with bootstrapped significance thresholds at 5th/95th percentile of a
@@ -73,7 +73,7 @@ for non-nested models and likelihood ratio (LR) test for nested models. Analysis
 samples per tissue. A mutsigapp R package and web application were released.
 
 **Tissues excluded:** Those with fewer than 25 samples (PCAWG) or 25 samples (TCGA); samples
-with reconstruction accuracy < 0.85 or < 90 total mutations were removed.
+with reconstruction accuracy < 0.85 or < 90 total mutations were removed [@Hakobyan2024].
 
 ## Key Findings
 

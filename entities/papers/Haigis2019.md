@@ -49,7 +49,7 @@ proteomic state of a cell permits it to respond to that particular oncogenic sig
 Perspective synthesizes named examples across oncogenes and tumor suppressors, cites a genetic
 screen showing 80–90% of proliferation-promoting genes differ across cell types, and closes by
 prescribing a comparative approach (permissive vs. nonpermissive tissues) for mechanistic driver
-discovery.
+discovery [@Haigis2019].
 
 ## Methods
 
@@ -103,7 +103,7 @@ Genetic screens examining cell proliferation across different cell types (Sack e
 inhibitors) universally affected proliferation, **80–90% of proliferation-promoting genes
 differed between cell types**. Tissue-specific oncogenes and tumor suppressors identified
 through cancer genomics appropriately affected proliferation only in their cognate tissue types
-in this analysis.
+in this analysis [@Haigis2019].
 
 ### The unifying hypothesis: the preexisting epigenetic landscape
 

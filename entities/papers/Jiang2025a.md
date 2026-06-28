@@ -29,7 +29,7 @@ related: []
 
 ## Key Contribution
 
-Somatic variant calling strategy is a previously underappreciated upstream determinant of de novo single-base substitution (SBS) mutational signature extraction. Using matched TCGA WES (>8,900 tumors, MC3 vs. GDC harmonized releases) and PCAWG WGS (>1,800 tumors, five independent variant callers) cohorts, the authors demonstrate that consensus calling (requiring agreement between at least two callers) yields stable, biologically interpretable signatures robust to genome build and pipeline version changes, whereas single-caller outputs introduce reproducible, algorithm-specific artifactual signatures. A minimal two-caller consensus is sufficient to eliminate these artifacts while preserving true biological signal, and this holds across multiple SBS context resolutions (SBS-96 through SBS-4608) and across three independent signature extraction frameworks.
+Somatic variant calling strategy is a previously underappreciated upstream determinant of de novo single-base substitution (SBS) mutational signature extraction. Using matched TCGA WES (>8,900 tumors, MC3 vs. GDC harmonized releases) and PCAWG WGS (>1,800 tumors, five independent variant callers) cohorts, the authors demonstrate that consensus calling (requiring agreement between at least two callers) yields stable, biologically interpretable signatures robust to genome build and pipeline version changes, whereas single-caller outputs introduce reproducible, algorithm-specific artifactual signatures. A minimal two-caller consensus is sufficient to eliminate these artifacts while preserving true biological signal, and this holds across multiple SBS context resolutions (SBS-96 through SBS-4608) and across three independent signature extraction frameworks [@Jiang2025a].
 
 ## Methods
 
@@ -44,7 +44,7 @@ Somatic variant calling strategy is a previously underappreciated upstream deter
 
 **Decomposition to COSMIC reference:** `decompose_fit` in SigProfilerAssignment v0.1.9 against COSMICv3.4 reference set (biologically irrelevant signatures excluded prior to decomposition for breast tissue analyses).
 
-**Profile stability assay:** 1,000 Poisson resamplings of per-sample SBS-96 profiles to quantify mutation-burden-dependent profile reliability.
+**Profile stability assay:** 1,000 Poisson resamplings of per-sample SBS-96 profiles to quantify mutation-burden-dependent profile reliability [@Jiang2025a].
 
 **Manual validation:** BAM inspection in IGV for mutations exclusive to individual callers, focusing on characteristic trinucleotide contexts of artifactual signatures.
 

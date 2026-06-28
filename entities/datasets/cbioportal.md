@@ -17,7 +17,7 @@ related: []
 
 ## Summary
 
-cBioPortal — an open platform aggregating and visualizing multidimensional cancer genomics studies (Cerami 2012, Gao 2013). The primary upstream source of the per-study somatic-mutation downloads driving this meta-analysis pipeline.
+cBioPortal — an open platform aggregating and visualizing multidimensional cancer genomics studies [@Cerami2012; @Gao2013]. The primary upstream source of the per-study somatic-mutation downloads driving this meta-analysis pipeline.
 
 ## Access and Scope
 

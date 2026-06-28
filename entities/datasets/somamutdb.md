@@ -16,7 +16,7 @@ related: []
 
 ## Summary
 
-SomaMutDB (Yaacov 2023) — a curated database of somatic mutations identified in normal human tissues aggregated across published studies; used as a normal-tissue somatic-mutation reference.
+SomaMutDB [@Yaacov2023] — a curated database of somatic mutations identified in normal human tissues aggregated across published studies; used as a normal-tissue somatic-mutation reference.
 
 ## Access and Scope
 

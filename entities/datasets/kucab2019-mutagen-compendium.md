@@ -41,7 +41,7 @@ related:
 - dataset:normal-tissue-spectra
 ---
 
-# Kucab 2019 environmental-mutagen reference signature compendium (iPSC)
+# Environmental-mutagen reference signature compendium (iPSC)
 
 ## Summary
 

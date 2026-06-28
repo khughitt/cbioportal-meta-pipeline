@@ -62,7 +62,7 @@ All six studies converge on the same headline: "normal" tissue is already carryi
 
 ### 2. "Driver genes" are selected for in healthy tissue too
 
-`Li2021`, `Yoshida2026`, and `Poon2021` all report that canonical cancer drivers (NOTCH1, TP53, DNMT3A, PPM1D, CHEK2, among others) are under active positive selection in the *normal* counterparts of the tissues where they also drive cancer. `Lin2024` finds the luminal-A/B hallmark der(1;16) CNA pre-existing in normal breast. The project's `ch_priority_gene` flag (Bolton 2020 7-gene list) covers only the blood lineage — `Poon2021` argues the blood list is a lower bound on the unexplained selection signal, and the other five papers extend the same concern to solid-tissue lineages.
+`Li2021`, `Yoshida2026`, and `Poon2021` all report that canonical cancer drivers (NOTCH1, TP53, DNMT3A, PPM1D, CHEK2, among others) are under active positive selection in the *normal* counterparts of the tissues where they also drive cancer. `Lin2024` finds the luminal-A/B hallmark der(1;16) CNA pre-existing in normal breast. The project's `ch_priority_gene` flag (the 7-gene list from [@Bolton2020]) covers only the blood lineage — `Poon2021` argues the blood list is a lower bound on the unexplained selection signal, and the other five papers extend the same concern to solid-tissue lineages.
 
 **Consequence for cbioportal:** A gene that recurs cross-study at moderate frequency may be recurring partly because its normal-tissue pre-malignant clones were admixed into cBioPortal tumor specimens before sequencing. This biases exactly the "recurring gene-cancer associations" signal the project is built to detect.
 
@@ -103,6 +103,6 @@ Ranked by severity against the current pipeline:
 
 - **Martincorena et al. 2018 (Science)** — now summarized as `paper:Martincorena2018`; provides primary numbers behind multiple claims in this synthesis and in `question:0001`.
 - **Yokoyama et al. 2019 (Science)** — independent normal esophagus clone study; mechanistically addresses the NOTCH1 paradox (mouse model suggesting NOTCH1-mutant cells suppress adjacent cancer proliferation). Complements Martincorena2018.
-- **Lee-Six et al. 2018 (Nature)** — normal-blood clone phylogeny and DNMT3A dynamics, complementing `Poon2021` and the CH-gene list question. [DONE — see `paper:LeeSix2018`; key addition: N_eff ~100k HSCs confirms Poon 2021's unexplained selection is genuine, not drift.]
+- **Lee-Six et al. 2018 (Nature)** — normal-blood clone phylogeny and DNMT3A dynamics, complementing [@Poon2021] and the CH-gene list question. [DONE — see `paper:LeeSix2018`; key addition: N_eff ~100k HSCs confirms the unexplained selection described by [@Poon2021] is genuine, not drift.]
 - **Yaacov et al. 2022** (cancer-tissue companion to `Yaacov2023`) — completes the signature-RT map for cancer contexts.
 - **Cancer-specific vs tissue-specific signature decomposition** in an unmatched-normal study context: open question worth a dedicated literature pass.

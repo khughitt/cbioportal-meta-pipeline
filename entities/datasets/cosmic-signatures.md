@@ -16,7 +16,7 @@ related: []
 
 ## Summary
 
-COSMIC Mutational Signatures (Alexandrov 2020) — the reference catalogue of SBS, DBS, and ID single/double/indel mutational signatures derived from PCAWG and other large cohorts; the standard basis for signature-decomposition analyses.
+COSMIC Mutational Signatures [@Alexandrov2020] — the reference catalogue of SBS, DBS, and ID single/double/indel mutational signatures derived from PCAWG and other large cohorts; the standard basis for signature-decomposition analyses.
 
 ## Access and Scope
 

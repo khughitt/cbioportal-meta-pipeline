@@ -56,7 +56,7 @@ Possible regimes:
 - The pipeline runs over a fixed study set; no k-study ablation has been performed.
 - t072 (saturation-aware per-cancer interpretation context column) tracks per-cancer
   cohort N saturation — but does not address the *number of studies* axis.
-- Bailey 2018's 26-tool consensus required combining many tools across the same TCGA
+- The 26-tool consensus from [@Bailey2018] required combining many tools across the same TCGA
   cohorts; the analogue here would be many studies with the same tool (dNdScv).
 
 ## Thoughts

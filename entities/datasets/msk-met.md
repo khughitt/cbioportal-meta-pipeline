@@ -16,7 +16,7 @@ related: []
 
 ## Summary
 
-MSK MetTropism (Nguyen 2022) — ~25,000 patients with MSK-IMPACT tumor sequencing and curated metastatic-site annotations, used to study organotropism and metastatic burden across cancer types.
+MSK MetTropism [@Nguyen2022] — ~25,000 patients with MSK-IMPACT tumor sequencing and curated metastatic-site annotations, used to study organotropism and metastatic burden across cancer types.
 
 ## Access and Scope
 

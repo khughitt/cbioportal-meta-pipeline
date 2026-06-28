@@ -67,7 +67,7 @@ This pilot changes the branch priority:
 - The simple SBS1/SBS5 proxy failed outright in `t110`.
 - The gene-level RT proxy shows **some** directional separation, but only in the relative ratio, not in the raw counts.
 
-That means the next useful step is not "add more coarse burden summaries." It is to make the RT comparison more SBS1-specific, so the statistic tracks the Yaacov 2023 mechanism rather than generic WES-vs-panel sparsity.
+That means the next useful step is not "add more coarse burden summaries." It is to make the RT comparison more SBS1-specific, so the statistic tracks the mechanism from [@Yaacov2023] rather than generic WES-vs-panel sparsity.
 
 ## Decision
 

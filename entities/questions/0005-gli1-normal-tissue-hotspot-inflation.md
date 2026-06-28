@@ -32,7 +32,7 @@ Xu et al. 2025 identified a statistically significant recurrent somatic mutation
 ## Current Evidence
 
 - Xu et al. 2025: 4 missense mutations at GLI1 exon 12 in 4 unrelated donors from sun-exposed skin, non-sun-exposed skin, prostate, and testis (statistically significant cluster, p < 10^-8 per their caller).
-- GLI1 is in the Bailey 2018 cancer driver gene compendium and COSMIC Cancer Gene Census.
+- GLI1 is in the cancer driver gene compendium from [@Bailey2018] and COSMIC Cancer Gene Census.
 - No cBioPortal-level analysis of GLI1 exon 12 mutation hotspot vs. background rate has been done in this pipeline.
 
 ## Thoughts

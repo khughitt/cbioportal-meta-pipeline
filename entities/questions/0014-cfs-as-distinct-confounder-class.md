@@ -88,7 +88,7 @@ the RT-only expectation.
 ## Related
 
 - Topic notes: `topic:mutation-rate-normalization` (CFS as covariate).
-- Article notes: Le Tallec 2013 (CFS catalogue); Glover 2017 (CFS reviews); Lawrence 2014
-  (gene-length confounder, partially overlapping); Yaacov 2023 (RT bias on SBS1).
+- Article notes: Le Tallec 2013 (CFS catalogue); Glover 2017 (CFS reviews); [@Lawrence2014]
+  (gene-length confounder, partially overlapping); [@Yaacov2023] (RT bias on SBS1).
 - Methods/Datasets: per-gene CFS overlap (manual curation from published lists); existing
   `t121` RT map; pipeline gene-frequency tables.

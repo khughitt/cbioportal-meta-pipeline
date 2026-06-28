@@ -66,7 +66,7 @@ Candidate aggregators include:
   existing per-cancer dNdScv feather (`gene_cancer_pooled.feather`) — no re-run of the
   upstream R chain is needed.
 - Pre-register the comparison protocol: rank-rank Spearman among aggregators, leave-one-
-  cancer-out stability, recovery of Bailey 2018 drivers, agreement with IntOGen pan-cancer.
+  cancer-out stability, recovery of drivers from [@Bailey2018], agreement with IntOGen pan-cancer.
 - The right answer may be different at different N — for top-25 (canonical-driver regime),
   the aggregators may agree; for top-100+ (candidate regime), they may diverge.
 
@@ -83,6 +83,6 @@ Candidate aggregators include:
 ## Related
 
 - Topic notes: `topic:mutation-rate-normalization`.
-- Article notes: Martincorena 2017 (dNdScv methodology — note the original is per-tissue,
+- Article notes: [@Martincorena2017] (dNdScv methodology — note the original is per-tissue,
   not pan-cancer); meta-analysis textbooks (Borenstein 2009 *Introduction to Meta-Analysis*).
 - Methods/Datasets: `gene_cancer_pooled.feather`; per-cancer Bailey overlap as validation.

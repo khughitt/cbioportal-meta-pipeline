@@ -17,7 +17,7 @@ related: []
 
 ## Summary
 
-Genotype-Tissue Expression project — multi-tissue normal reference. Covers the v8 RNA-seq resource (~948 donors, ~17k samples, 54 tissues; Gao 2023) and the multi-tissue normal exome / somatic-mosaicism cohort (Xu 2025, dbGaP phs000424). Used here as a normal-tissue mutation-rate background.
+Genotype-Tissue Expression project — multi-tissue normal reference. Covers the v8 RNA-seq resource (~948 donors, ~17k samples, 54 tissues) [@Gao2023] and the multi-tissue normal exome / somatic-mosaicism cohort [@Xu2025]. Used here as a normal-tissue mutation-rate background.
 
 ## Access and Scope
 

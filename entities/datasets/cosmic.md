@@ -16,7 +16,7 @@ related: []
 
 ## Summary
 
-Catalogue Of Somatic Mutations In Cancer (Tate 2019) — the curated reference catalogue of somatic mutations and cancer genes (Cancer Gene Census) aggregated from the literature and large sequencing screens.
+Catalogue Of Somatic Mutations In Cancer [@Tate2019] — the curated reference catalogue of somatic mutations and cancer genes (Cancer Gene Census) aggregated from the literature and large sequencing screens.
 
 ## Access and Scope
 

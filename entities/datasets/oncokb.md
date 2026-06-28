@@ -17,7 +17,7 @@ related: []
 
 ## Summary
 
-OncoKB (Chakravarty 2017; Suehnholz 2024) — an MSK-curated precision-oncology knowledge base annotating the oncogenic effect and clinical actionability of specific variants. Used as a driver/actionability annotation reference.
+OncoKB [@Chakravarty2017; @Suehnholz2024] — an MSK-curated precision-oncology knowledge base annotating the oncogenic effect and clinical actionability of specific variants. Used as a driver/actionability annotation reference.
 
 ## Access and Scope
 

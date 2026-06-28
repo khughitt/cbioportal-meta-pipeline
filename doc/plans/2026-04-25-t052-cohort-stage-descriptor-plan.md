@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Ingest per-sample primary/metastatic + treatment-status flags from cBioPortal clinical sample tables, roll up to a per-study composition descriptor, and validate against the Zehir 2017 AR/ESR1 published bias signals.
+**Goal:** Ingest per-sample primary/metastatic + treatment-status flags from cBioPortal clinical sample tables, roll up to a per-study composition descriptor, and validate against the AR/ESR1 published bias signals from [@Zehir2017].
 
 **Architecture:** Per-study annotation rule (mirrors `annotate_drivers` / `annotate_ch` / `annotate_hypermutators`) consumes `samples.feather` + a hand-curated registry, emits `samples_stage_annotated.feather`. A summary-level rollup builds `study_cohort_composition.feather`. A standalone diagnostic script (mirrors `compute_sbs1_lrr_bias_per_study.py` from t126) loads a comparison-manifest TSV, reuses the annotation functions in-memory, applies a panel-coverage check, and produces per-comparison verdicts plus an aggregate closure-state.
 

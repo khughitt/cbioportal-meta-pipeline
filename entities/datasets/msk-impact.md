@@ -21,7 +21,7 @@ related: []
 
 ## Summary
 
-Memorial Sloan Kettering Integrated Mutation Profiling of Actionable Cancer Targets (MSK-IMPACT) — large targeted-panel (341/410/468-gene) clinical tumor-sequencing cohort with matched normals. Includes successive releases (Zehir 2017 ~10k; Bandlamudi 2026 ~50k) and the MSK-IMPACT samples distributed via AACR GENIE.
+Memorial Sloan Kettering Integrated Mutation Profiling of Actionable Cancer Targets (MSK-IMPACT) — large targeted-panel (341/410/468-gene) clinical tumor-sequencing cohort with matched normals. Includes successive releases [@Zehir2017; @Bandlamudi2026] and the MSK-IMPACT samples distributed via AACR GENIE.
 
 ## Access and Scope
 

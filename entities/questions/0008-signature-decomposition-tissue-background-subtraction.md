@@ -42,7 +42,7 @@ When cBioPortal studies lack patient-matched germline sequencing, normal cells c
 
 - Li 2021: normal-tissue somatic burden varies from ~10 (pancreas) to ~69 (liver) mutations/exome across 9 organs; SBS1/SBS5 dominant in all.
 - Xu 2025: GTEx pan-tissue coding mutation rates 0.21–2.49 mut/Mb; SBS18 universal; spectra available.
-- Yaacov 2023: SBS1 is LRR-biased in normal tissue but loses this bias in cancer — provides a potential diagnostic, but only applicable with WGS.
+- Yaacov et al. report that SBS1 is LRR-biased in normal tissue but loses this bias in cancer, providing a potential diagnostic that is only applicable with WGS [@Yaacov2023].
 - No published quantification of the per-study contamination effect size in unmatched-normal cBioPortal cohorts exists (as of April 2026).
 
 ## Thoughts

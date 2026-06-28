@@ -931,12 +931,3 @@ Lu2026 references a pan-cancer perineural-invasion transcriptomic classifier wit
 - created: 2026-06-07
 
 Acquire the reference resources backing the data-driven neural-gene score (t216): GTEx (have), Human Protein Atlas tissue-specificity, Allen Brain Cell Atlas cell-type markers, PanglaoDB markers, and BrainSpan (fetal-vs-adult for the H3 test). Land as per-gene tables joinable to the gene universe. Blocks t216/t220.
-
-## [t231] Normalize Science prose citation lint warnings
-- priority: P3
-- status: active
-- aspects: []
-- group: science-health-cleanup
-- created: 2026-06-27
-
-Reduce the remaining prose_lints warnings from science validate: bare-author-year, short-form-ids, and unsupported-citation-syntax. Work in small batches by file family; prefer canonical citation and entity reference syntax rather than broad search/replace, and rerun science validate after each batch.

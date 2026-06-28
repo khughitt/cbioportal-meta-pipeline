@@ -1049,8 +1049,8 @@ EOF
 ## Task 5: Implement rule (1b) `build_select_gene_universe.py`
 
 **Why:** The gene universe is the column space for every per-cell GAM. Per design
-Section 4.3 it is the union of Bailey 2018 ∪ COSMIC CGC ∪ Sanchez-Vega ∪ optional
-custom genes, with provenance columns (source flags + version + sha256) so that
+Section 4.3 it combines the driver list from [@Bailey2018] with COSMIC CGC,
+Sanchez-Vega, and optional custom genes, with provenance columns (source flags + version + sha256) so that
 downstream changes to any source are visible in the headline output.
 
 **Files:**

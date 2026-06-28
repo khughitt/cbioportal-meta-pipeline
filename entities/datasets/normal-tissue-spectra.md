@@ -55,7 +55,7 @@ Post-contract SBS SNV counts processed through SigProfilerMatrixGenerator (sum a
 | Rectum | 4 | 7,285 |
 | Stomach | 4 | 5,172 |
 
-Pooled `snvs_per_mb` range: 0.20 (Pancreas, low-turnover parenchyma) to 1.19 (Liver, consistent with age + exogenous SBS22/SBS4 exposures in PN2/PN9). Values are per-sample rates at WES callable-target scale (SureSelectXT V6 60 Mb for Esophagus; V7 48.2 Mb for the other tissues). Matches expected normal-tissue TMB magnitudes from Martincorena 2018 and Li 2021 Fig 1b.
+Pooled `snvs_per_mb` range: 0.20 (Pancreas, low-turnover parenchyma) to 1.19 (Liver, consistent with age + exogenous SBS22/SBS4 exposures in PN2/PN9). Values are per-sample rates at WES callable-target scale (SureSelectXT V6 60 Mb for Esophagus; V7 48.2 Mb for the other tissues). Matches expected normal-tissue TMB magnitudes from [@Martincorena2018] and Li 2021 Fig 1b.
 
 ## Per-tissue provenance
 

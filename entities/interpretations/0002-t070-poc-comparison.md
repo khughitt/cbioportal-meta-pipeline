@@ -50,7 +50,7 @@ Both predicted magnitudes match empirics to 3 significant figures:
 - **3.8% of MSK samples** (419/10,945) shift their `is_hypermutator` flag —
   almost entirely in the False → True direction (401 newly flagged), as
   the TMB correction lifts previously artificially-low values above the
-  Campbell 2017 10 mut/Mb threshold.
+  10 mut/Mb threshold from [@Campbell2017Hypermutation].
 
 ## Methodology
 
@@ -90,7 +90,7 @@ numerator (mutation count) is unchanged; only the denominator shifts.
 **Consequence**: pre-t070 TMB values for MSK samples were all artificially
 compressed by ~30×. A sample with 20 mutations on IMPACT-341 appeared as
 0.67 mut/Mb (non-hypermutator) pre-t070 and as 22.5 mut/Mb (well above
-Campbell 2017's 10 mut/Mb hypermutator floor) post-t070. Mean TMB mean/panel:
+the 10 mut/Mb hypermutator floor from [@Campbell2017Hypermutation]) post-t070. Mean TMB mean/panel:
 MSK-IMPACT-341 0.19 → 6.48; MSK-IMPACT-410 0.24 → 7.07.
 
 ## Axis 2 — Hypermutator flag transitions

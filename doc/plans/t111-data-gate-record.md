@@ -93,7 +93,7 @@ https://www.biorxiv.org/content/biorxiv/early/2025/01/09/2025.01.07.631808/DC1/e
   a. Apply for dbGaP access to phs000424.v7 (GTEx v7 exome BAMs), re-run mSOMA, extract per-variant calls — significant DUA/compute overhead
   b. Request the per-variant call table directly from the authors (Akey Lab, Princeton) — faster but not guaranteed
   c. Reduce t111 scope to Li2021 only for now; add Xu2025 as a follow-up task once access is resolved
-  d. Identify an alternative open-access normal-tissue somatic mutation dataset covering ≥10 tissues (e.g., Brunner 2019, Lee-Six 2019, Moore 2020)
+  d. Identify an alternative open-access normal-tissue somatic mutation dataset covering ≥10 tissues
 
 **Per the design §Data-access gate: halting. User decision required before proceeding to Task 1.**
 

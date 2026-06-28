@@ -18,7 +18,7 @@ related:
 
 ## Summary
 
-MSK Clinico-Genomic Harmonized Oncologic Real-world Dataset (Jee 2024) — ~25,000 patients pairing MSK-IMPACT tumor sequencing with NLP-harmonized clinical outcomes (treatment, progression, survival).
+MSK Clinico-Genomic Harmonized Oncologic Real-world Dataset [@Jee2024] — ~25,000 patients pairing MSK-IMPACT tumor sequencing with NLP-harmonized clinical outcomes (treatment, progression, survival).
 
 ## Access and Scope
 

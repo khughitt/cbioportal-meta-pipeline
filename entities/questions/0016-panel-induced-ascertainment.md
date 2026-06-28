@@ -68,7 +68,7 @@ correlate with the literature-attention residual identified in `h03`?
   vs the top-50 from WES-only studies (where both exist). Report Jaccard, rank-rank
   Spearman, and the gene-set difference; characterize what's in panel-only-top vs WES-only-
   top.
-- Expectation: panel-only-top is enriched for the canonical Bailey 2018 set and Moseley/
+- Expectation: panel-only-top is enriched for the canonical set from [@Bailey2018] and Moseley/
   IMPACT panel-design genes; WES-only-top includes long-gene passengers + CFS loci that
   panels exclude. The asymmetry will quantify the panel-induced ascertainment effect.
 - Connection to `h03`: compare `β_length` separately in panel-only, WES-only, and
@@ -90,6 +90,6 @@ correlate with the literature-attention residual identified in `h03`?
 ## Related
 
 - Topic notes: `topic:mutation-rate-normalization`.
-- Article notes: Bailey 2018 (consensus drivers — heavily panel-influenced via MSK-IMPACT
+- Article notes: [@Bailey2018] (consensus drivers — heavily panel-influenced via MSK-IMPACT
   participation); GENIE consortium documentation.
 - Methods/Datasets: GENIE panel BED files; existing pipeline build_panel_callable_sizes.

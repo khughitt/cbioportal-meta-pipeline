@@ -123,7 +123,7 @@ label, while genes falling entirely in developmental / unclassified space remain
     gene-level constitutive ERR/LRR map.
 - **ENCODE per-biosample Repli-seq tracks**
   - richer, but require an extra choice of biosample and a reduction step to constitutive bins;
-  - Dileep 2015 already publishes that reduction as a ready-to-use public supplement.
+  - [@Dileep2015] already publishes that reduction as a ready-to-use public supplement.
 
 ## Related
 

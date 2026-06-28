@@ -74,7 +74,7 @@ This is the first empirical validation of t094 (POLE/POLD1 detector). It matches
 | BRCA TCGA | 2.6% | 0.4% | 45.5% | 92.2% |
 | msk_impact_2017 | 0.1% | 0.0% | 20.7% | 12.1% |
 
-UCEC ultra (9.3%) is very close to canonical POLE-UCEC prevalence (~7%). SKCM absolute (63%) matches "most cutaneous melanomas exceed 10 mut/Mb" (Alexandrov 2013).
+UCEC ultra (9.3%) is very close to canonical POLE-UCEC prevalence (~7%). SKCM absolute (63%) matches the expectation that most cutaneous melanomas exceed 10 mut/Mb [@Alexandrov2013Nature].
 
 ### Finding 4 — the **composite GMM-derived `is_hypermutator` flag is biased high for cohorts with uniformly-high TMB or no real bimodality.**
 
@@ -86,7 +86,7 @@ Similarly, `is_hypermutator_relative` (Samstein top-20%) shows 45% for BRCA and 
 
 ### Finding 5 — MSK-IMPACT TMB is deflated ~30× because `study_panel_map` is empty.
 
-msk_impact_2017 median TMB = 0.13 mut/Mb (reported in the output) vs expected ~4 mut/Mb for MSK-IMPACT 2017 (Zehir 2017). Ratio ≈ 30×, which equals `wes_default_callable_mb (30) / IMPACT-410 (1.01)`. With `study_panel_map` left empty for this PoC, every MSK sample fell back to the 30-Mb WES default in the denominator, deflating every per-sample TMB.
+msk_impact_2017 median TMB = 0.13 mut/Mb (reported in the output) vs expected ~4 mut/Mb for MSK-IMPACT [@Zehir2017]. Ratio ≈ 30×, which equals `wes_default_callable_mb (30) / IMPACT-410 (1.01)`. With `study_panel_map` left empty for this PoC, every MSK sample fell back to the 30-Mb WES default in the denominator, deflating every per-sample TMB.
 
 This is exactly what t070 exists to solve (per-sample panel-version assignment from the per-sample panel column MSK studies carry). **t070 is now confirmed load-bearing for any analysis that mixes panel + WES studies.** Single-study panel or single-study WES analyses are unaffected.
 

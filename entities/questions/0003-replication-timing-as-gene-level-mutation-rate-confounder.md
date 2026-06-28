@@ -36,7 +36,7 @@ Late-replicating genomic regions (LRR) accumulate more somatic mutations than ea
 - Yaacov et al. 2023 (Scientific Reports): comprehensive mapping of RT bias for 10+ signatures in normal cells; SBS4 exclusively LRR, SBS16/SBS88 exclusively ERR, SBS1 LRR only in normal cells.
 - Lawrence et al. 2013 (Nature): mutation rate varies ~10-fold across the genome, strongly correlated with replication timing and transcription — foundational evidence for RT as a background rate driver.
 - Iorio et al. 2018 SLAPenrich: accounts for exonic gene length and regional mutation rates in pathway enrichment but not per-signature RT stratification.
-- The pipeline currently uses Bailey 2018 driver flags and CH annotation but no per-gene RT annotation.
+- The pipeline currently uses driver flags from [@Bailey2018] and CH annotation but no per-gene RT annotation.
 
 ## Thoughts
 

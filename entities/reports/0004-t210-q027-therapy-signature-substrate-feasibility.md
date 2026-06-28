@@ -15,13 +15,13 @@ related:
 - task:t210
 ---
 
-# t210 q027 therapy-signature substrate feasibility audit
+# t210 question 0027 therapy-signature substrate feasibility audit
 
 Verdict: **continue to WP2, scoped to `difg_glass_2019` / SBS11 only**.
 
 At least one primary patient candidate passed the WP1 gate, but the audit did not exhaustively scan all 198 configured studies.
-The candidate universe was the five treatment-signature-plausible cohorts named in the t210 plan from the t206-t209 H10 treatment-label work.
-Therefore, "no second substrate" means no second substrate in this planned candidate set, not proof that no other cBioPortal study could support q027 after a broader search.
+The candidate universe was the five treatment-signature-plausible cohorts named in the t210 plan from the t206-t209 `hypothesis:0009-treatment-induced-signature-frequency-contamination` treatment-label work.
+Therefore, "no second substrate" means no second substrate in this planned candidate set, not proof that no other cBioPortal study could support `question:0027-does-excluding-treatment-signature-high-samples` after a broader search.
 
 | Study | Cancer type | Lookup | Primary patient denominator | Target signatures | Target signatures present | Samples | Count-floor-passing samples | Retained floor-passing comparator | WP1 gate | Rationale |
 |---|---|---|---:|---|---:|---:|---:|---:|---:|---|
@@ -37,5 +37,5 @@ Therefore, "no second substrate" means no second substrate in this planned candi
 | `pptc_2019` | Peripheral Nervous System | unsupported | no | `SBS11`, `SBS31`, `SBS35`, `SBS87` | yes | 35 | 0 | 0 | no | pediatric PDX sensitivity-only cohort |
 | `pptc_2019` | Wilms Tumor | unsupported | no | `SBS11`, `SBS31`, `SBS35`, `SBS87` | yes | 13 | 0 | 0 | no | pediatric PDX sensitivity-only cohort |
 
-The two-study q027 arbitration rule was therefore already unreachable after WP1 selected only GLASS.
-The downstream impact tables remain useful as reusable scaffolding and as a single-study deliverable-sensitivity check, but the first q027 pass was known to be non-arbitrating before impact aggregation.
+The two-study `question:0027-does-excluding-treatment-signature-high-samples` arbitration rule was therefore already unreachable after WP1 selected only GLASS.
+The downstream impact tables remain useful as reusable scaffolding and as a single-study deliverable-sensitivity check, but the first `question:0027-does-excluding-treatment-signature-high-samples` pass was known to be non-arbitrating before impact aggregation.

@@ -23,7 +23,7 @@ related: []
 
 ## Key Contribution
 
-This critical review argues that understanding the causal origins of most mutational signatures requires integrating three currently separate evidence streams — the exposome (all exposures over a lifetime), the DNA adductome (all DNA modifications in the genome), and observed mutational signatures — into a single analytical framework. Of the ~200 established COSMIC mutational signatures, 64 have entirely unknown etiologies, and even signatures with proposed causes often lack mechanistic validation. The authors propose that holistic DNA adductomics, combined with long-read nanopore sequencing and advanced AI-based computational analysis, offers a path toward resolving causal relationships between specific DNA lesions and the mutational patterns they produce.
+This critical review argues that understanding the causal origins of most mutational signatures requires integrating three currently separate evidence streams — the exposome (all exposures over a lifetime), the DNA adductome (all DNA modifications in the genome), and observed mutational signatures — into a single analytical framework. Of the ~200 established COSMIC mutational signatures, 64 have entirely unknown etiologies, and even signatures with proposed causes often lack mechanistic validation. The authors propose that holistic DNA adductomics, combined with long-read nanopore sequencing and advanced AI-based computational analysis, offers a path toward resolving causal relationships between specific DNA lesions and the mutational patterns they produce [@Boysen2025].
 
 ## Methods
 
@@ -39,11 +39,11 @@ No new computational or experimental results are presented.
 
 ## Key Findings
 
-**Signature etiology landscape.** Of ~200 established COSMIC signatures (99 SBSs, 20 DBSs, 23 IDs, 25 CNs, 10 SVs), 64 have unknown etiologies; COSMIC labels many others only as "possible artifacts." Achieving even a cosine similarity ≥ 0.90 between reconstructed and observed profiles is the community acceptance bar for signature attribution.
+**Signature etiology landscape.** Of ~200 established COSMIC signatures (99 SBSs, 20 DBSs, 23 IDs, 25 CNs, 10 SVs), 64 have unknown etiologies; COSMIC labels many others only as "possible artifacts." Achieving even a cosine similarity ≥ 0.90 between reconstructed and observed profiles is the community acceptance bar for signature attribution [@Boysen2025].
 
 **Three-tier mechanistic gap.** The core problem is that (1) exposures are known epidemiologically, (2) mutational signatures are catalogued genomically, but (3) the intervening DNA adduct landscape (the adductome) is almost entirely unmeasured in tumor tissue, preventing causal validation.
 
-**DNA adductome complexity.** A single cell may harbor 50,000–100,000 DNA modifications from endogenous cellular processes alone. Epigenetic marks (5-Me-Cyt, 6-Me-Ade) occur at 1 per ~20 normal nucleotides; endogenous adducts at ~1 per 10³–10⁶ nucleotides; exogenous adducts at ~1 per 10⁸–10¹¹ nucleotides (Figure 4).
+**DNA adductome complexity.** A single cell may harbor 50,000–100,000 DNA modifications from endogenous cellular processes alone. Epigenetic marks (5-Me-Cyt, 6-Me-Ade) occur at 1 per ~20 normal nucleotides; endogenous adducts at ~1 per 10³–10⁶ nucleotides; exogenous adducts at ~1 per 10⁸–10¹¹ nucleotides (Figure 4) [@Boysen2025].
 
 **Mutational signatures and their mechanistic links (well-established examples).**
 - SBS4: tobacco smoking; C>A mutations from PAH-induced N²-BPDE-dG adducts; dose-response validated across multiple lung-cancer cohorts.
@@ -53,7 +53,7 @@ No new computational or experimental results are presented.
 - SBS5/SBS17/SBS40: prevalent in normal and cancer tissue; etiologies still unknown.
 - SBS22/SBS24: aristolochic acid and aflatoxin respectively; clear chemical-exposure links confirmed across multiple studies.
 
-**Translesion synthesis (TLS) as the mutation generator.** TLS polymerases bypass blocking DNA adducts with error rates from 0.001 to 100%; the error rate depends on adduct chemistry, flanking sequence context, and which TLS polymerase(s) are recruited. The mutational signature of an adduct is therefore determined by TLS polymerase identity rather than by adduct identity alone — meaning the same adduct can produce different signatures depending on cellular context.
+**Translesion synthesis (TLS) as the mutation generator.** TLS polymerases bypass blocking DNA adducts with error rates from 0.001 to 100%; the error rate depends on adduct chemistry, flanking sequence context, and which TLS polymerase(s) are recruited. The mutational signature of an adduct is therefore determined by TLS polymerase identity rather than by adduct identity alone — meaning the same adduct can produce different signatures depending on cellular context [@Boysen2025].
 
 **Adductomics approaches and limitations.**
 - Targeted adductomics: measures a pre-selected list of known adducts by LC-MS/MS; misses novel or unexpected modifications.

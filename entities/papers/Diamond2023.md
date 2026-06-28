@@ -33,19 +33,19 @@ Using whole-genome sequencing (WGS) of 39 therapy-related myeloid neoplasm (tMN)
 
 ## Methods
 
-**Cohort:** 40 tMN WGS samples from 39 patients (16 platinum-exposed, 17 melphalan/ASCT-exposed [14 MM, 2 B-ALL], plus others); 21 de novo AML WGS (TCGA); 298 de novo AML WES (Beat AML); 22 tMN WES (Beat AML). Latency to tMN ranged from 2.4–7.2 years (median 5.5 years).
+**Cohort:** 40 tMN WGS samples from 39 patients (16 platinum-exposed, 17 melphalan/ASCT-exposed [14 MM, 2 B-ALL], plus others); 21 de novo AML WGS (TCGA); 298 de novo AML WES (Beat AML); 22 tMN WES (Beat AML). Latency to tMN ranged from 2.4–7.2 years (median 5.5 years) [@Diamond2023].
 
 **Mutational signature analysis:** Signatures quantified using a published workflow (Degasperi et al.) applied to all WGS samples. Five SBS processes identified in tMN: SBS1 (aging), SBS-HSC (hematopoietic clock), SBS31 and SBS35 (platinum intercalation), SBS-MM1 (melphalan alkylation). Double-base substitution (DBS) and indel (ID) signatures also extracted. Wilcoxon tests compared mutational burden across groups.
 
 **Targeted prechemotherapy sequencing:** 11 of the newly sequenced hematologic malignancy patients underwent targeted sequencing of blood mononuclear cells, granulocytes, and CD34+ apheresis products before melphalan, to detect antecedent CH clones at sub-WGS VAF resolution.
 
-**Copy number / SV analysis:** GISTIC applied to de novo AML (n=316 exomes/WGS) and 39 tMN WGS; SV landscape compared between groups. Complex events (chromothripsis, chromoplexy, templated insertions) catalogued. tMN split by chemotherapy-signature positivity for differential CNA/SV analysis (Fisher test; FDR < 0.1).
+**Copy number / SV analysis:** GISTIC applied to de novo AML (n=316 exomes/WGS) and 39 tMN WGS; SV landscape compared between groups. Complex events (chromothripsis, chromoplexy, templated insertions) catalogued. tMN split by chemotherapy-signature positivity for differential CNA/SV analysis (Fisher test; FDR < 0.1) [@Diamond2023].
 
 **Chemotherapy signatures as temporal barcodes:** SNVs present within chromosomal gains (duplicated mutations) are used to time when CNAs occurred relative to chemotherapy — if a chemotherapy signature is in duplicated SNVs, the gain postdates chemotherapy exposure; if absent from duplicated SNVs, the gain predated it. Applied to 8 tMN with large CNAs and 2 post-chemotherapy MM cases.
 
 **Molecular timing of chromosomal gains:** SBS5-based molecular time for MM chromosomal gains cross-validated against the SBS5-barcoding approach in 2 patients with secondary solid tumors and prior MM.
 
-**Functional validation:** SMARCA4 overexpression in Ba/F3 cells tested for IL-3 cytokine independence (growth assay, P < 0.0001).
+**Functional validation:** SMARCA4 overexpression in Ba/F3 cells tested for IL-3 cytokine independence (growth assay, P < 0.0001) [@Diamond2023].
 
 **Data availability:** New WGS + targeted sequencing uploaded to European Genome Archive EGAS00001006903.
 

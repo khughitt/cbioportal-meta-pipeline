@@ -53,7 +53,7 @@ Hence incidence ~ t^(r-1), and log(incidence) ~ (r-1) · log(t).
 
 ## Key Findings
 
-**The power-law result.** For cancers of the oesophagus (M), stomach (M, F), colon (M, F), rectum (M, F), and pancreas (M, F) — collectively 9 site-sex combinations — log-log slopes cluster around 6, consistent with r = 7 ordered stages. Observed regression coefficients from Table I range from 4.97 (rectum, F) to 6.48 (pancreas, F), with a central tendency near 5.5-6.
+**The power-law result.** For cancers of the oesophagus (M), stomach (M, F), colon (M, F), rectum (M, F), and pancreas (M, F) — collectively 9 site-sex combinations — log-log slopes cluster around 6, consistent with r = 7 ordered stages. Observed regression coefficients from Table I range from 4.97 (rectum, F) to 6.48 (pancreas, F), with a central tendency near 5.5-6 [@ArmitageDoll1954].
 
 **Two-group classification of cancer sites.** The paper explicitly divides the 17 sites into two groups:
 
@@ -63,7 +63,7 @@ Hence incidence ~ t^(r-1), and log(incidence) ~ (r-1) · log(t).
 
 **Weighted-mean formula for time-varying probabilities.** When one stage probability p_s varies with time to, its contribution to incidence at age t is weighted proportionally to w(to) = to^(s-1) · (t - to)^(r-s-1). Early stages exert maximum influence early in life; late stages exert maximum influence close to the time of observation. This provides a mechanistic explanation for why childhood carcinogen exposures can produce latent tumours decades later, and why cessation of a late-stage carcinogenic exposure (e.g., endocrine changes at menopause) can cause incidence to plateau.
 
-**Penile cancer / circumcision example.** Using r = 7, s = 1, and the circumcision-age data of Shrek and Lenowitz (1947), the model predicts relative cancer risks of approximately 0.30, 0.77, 0.98, and 1.00 for circumcision at ages 3, 11.5, 26.5, and 44.5 years (and ~0.01 if circumcised in the first days of life). The observed ratios in the clinical dataset are 0.00, 0.50, 0.71, and 0.74. The qualitative agreement supports the model's claim that the prepuce is required for the first (irreversible) cellular change.
+**Penile cancer / circumcision example.** Using r = 7, s = 1, and the circumcision-age data of Shrek and Lenowitz (1947), the model predicts relative cancer risks of approximately 0.30, 0.77, 0.98, and 1.00 for circumcision at ages 3, 11.5, 26.5, and 44.5 years (and ~0.01 if circumcised in the first days of life). The observed ratios in the clinical dataset are 0.00, 0.50, 0.71, and 0.74. The qualitative agreement supports the model's claim that the prepuce is required for the first (irreversible) cellular change [@ArmitageDoll1954].
 
 **Carcinogen concentration prediction.** Under the multi-stage model with independent stage-specific probabilities each proportional to carcinogen concentration, the final incidence is proportional linearly to concentration — consistent with experimental dose-response data. This correctly distinguishes the multi-stage model from the Fisher-Hollomon colony-size model, which would predict a 5th-6th-power dependence on concentration.
 
@@ -111,7 +111,7 @@ The `theme:0003-temporal-structure-of-carcinogenesis-order-count-and-timing-of-t
 
 2. **Ordered stages only.** The model assumes changes must occur in a single fixed order. This conflicts with modern evidence that the same driver genes can be acquired in different orders across patients (relevant to `question:0012-mutation-ordering-cross-sectional-inference`) and that clonal selection can make equivalent evolutionary paths converge.
 
-3. **No clonal expansion between stages.** The simplest Armitage-Doll formulation treats each cell independently and does not model the growth advantage that partially-transformed cells might have. This was the central extension added by the **Moolgavkar-Venzon-Knudson (MVK) two-stage clonal-expansion model** [@MoolgavkarKnudson1981], which allows the intermediate-stage cell population to expand clonally, changing the age-incidence predictions substantially — especially for two-hit tumour suppressor cancers (retinoblastoma being the canonical example where Knudson's "two-hit hypothesis" was validated [@Knudson1971]). The MVK model is the principal successor framework.
+3. **No clonal expansion between stages.** The simplest Armitage-Doll formulation treats each cell independently and does not model the growth advantage that partially-transformed cells might have. This was the central extension added by the **Moolgavkar-Venzon-Knudson (MVK) two-stage clonal-expansion model** [@MoolgavkarKnudson1981], which allows the intermediate-stage cell population to expand clonally, changing the age-incidence predictions substantially — especially for two-hit tumour suppressor cancers (retinoblastoma being the canonical example where Knudson's "two-hit hypothesis" was validated [@Knudson1971]). The MVK model is the principal successor framework [@ArmitageDoll1954].
 
 4. **Constant target-cell number N.** Organ growth and the turnover rate of tissue stem cells both change with age, violating this assumption.
 
@@ -125,7 +125,7 @@ The `theme:0003-temporal-structure-of-carcinogenesis-order-count-and-timing-of-t
 
 ## Model / Tool Availability
 
-This is a theoretical/statistical paper from 1954; no software, dataset, or computational tool was released. The mathematical derivation in the appendix is the sole formal artifact. The full text is freely available via PMC (CC BY 4.0 license) at https://pmc.ncbi.nlm.nih.gov/articles/PMC2007940/.
+This is a theoretical/statistical paper from 1954; no software, dataset, or computational tool was released. The mathematical derivation in the appendix is the sole formal artifact. The full text is freely available via PMC (CC BY 4.0 license) at https://pmc.ncbi.nlm.nih.gov/articles/PMC2007940/ [@ArmitageDoll1954].
 
 ## Follow-up
 

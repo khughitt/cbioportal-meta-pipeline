@@ -19,20 +19,22 @@ related:
 
 # Interpretation: t216 — label-free neural-enrichment gene score (GTEx)
 
-> **Verdict: a reproducible, label-free neural score is delivered (q035), and it confirms the 9
+> **Verdict: a reproducible, label-free neural score is delivered
+> (`question:0035-label-free-neural-gene-definition`), and it confirms the 9
 > candidates are genuinely — in fact *more* — CNS-specific than the canonical effectors. But the
 > score's decisive hard test FAILS: it cannot tell bona-fide neural cancer effectors apart from large
 > common-fragile-site loci (AUC effectors-vs-CFS = 0.47 ≈ chance), because the brain expresses the big
 > fragile-site genes. So a high neural score does NOT rescue the candidates from t217's genomic-span
 > verdict — "neural" is a real but causally-inert expression label on a size-driven mutation pattern.**
 
-- **Task:** `t216` (q035 label-free neural definition; plan step 2).
+- **Task:** `t216` (`question:0035-label-free-neural-gene-definition` label-free neural definition;
+  plan step 2).
 - **Script:** `code/notebooks/t216_label_free_neural_score.py`
 - **Artifacts:** `results/neural-gene-label-free-2026-06-08/` (datapackage.json + 3 resources;
   `gene_neural_enrichment.feather` is the reusable per-gene covariate).
 - **Substrate:** GTEx median TPM over 53 tissues (`/data/raw/expression-atlas/gtex/`, 49,575 genes);
-  genomic span from `data/gene_replication_timing.feather` for the size-matched benchmark. No GO labels
-  (q035 covenant). `random_seed = 0`.
+  genomic span from `data/gene_replication_timing.feather` for the size-matched benchmark. No GO
+  labels (`question:0035-label-free-neural-gene-definition` covenant). `random_seed = 0`.
 
 ## What was built
 
@@ -73,15 +75,17 @@ high neural score is fully consistent with them being incidental large brain loc
 **large CNS-structural genes → large late-replicating loci (CFS) → high passenger mutation counts**, with
 neural expression a *correlate* of locus size, not a cause of the mutation burden.
 
-## Bearing on h12 / q035
+## Bearing on the neural-gene artifact hypothesis and label-free question
 
-- **q035 answered:** a label-free neural definition is feasible and reproducible (delivered as
+- **`question:0035-label-free-neural-gene-definition` answered:** a label-free neural definition is
+  feasible and reproducible (delivered as
   `gene_neural_enrichment.feather`), removing the dependence on the hand-labelled 9-gene list. But the
   definition is **only usable as a size-controlled covariate** — used raw it re-imports the genomic-span
   confound, since neural-expression specificity tracks locus size in the relevant gene class.
-- **h12 strengthened:** the "neural" label is real at the expression level yet causally inert for
-  mutation burden. This is the cleanest possible statement of h12 — the enrichment is a
-  length/CFS/histology artifact onto which a true-but-non-causal neural label has been mapped.
+- **`hypothesis:0012-neural-gene-enrichment-length-histology-artifact` strengthened:** the "neural"
+  label is real at the expression level yet causally inert for mutation burden. This is the cleanest
+  possible statement of the hypothesis — the enrichment is a length/CFS/histology artifact onto
+  which a true-but-non-causal neural label has been mapped.
 
 ## Decision & redirect
 
@@ -91,9 +95,10 @@ neural expression a *correlate* of locus size, not a cause of the mutation burde
 2. **Report sub-scores, not just the composite.** The CNS sub-score carries the signal; PNS and
    neuroendecrine sub-scores are weak (and the neuroendocrine proxy is poor — see caveats). For the
    CNS-exclusion test (`t218`) the CNS sub-score is the relevant stratifier.
-3. **The program's expected end-state is reaffirmed:** H5/length + CFS account for the bulk (t217), and
-   the label-free route (t216) cannot manufacture a neural signal that beats a size-matched control. The
-   residual to chase is the small panel-ascertainment effect (t217 F5 / q016), not neural biology.
+3. **The program's expected end-state is reaffirmed:** genomic length/CFS account for the bulk
+   (t217), and the label-free route (t216) cannot manufacture a neural signal that beats a
+   size-matched control. The residual to chase is the small panel-ascertainment effect (t217 F5 /
+   `question:0016-panel-induced-ascertainment`), not neural biology.
 
 ## Caveats
 
@@ -106,7 +111,7 @@ neural expression a *correlate* of locus size, not a cause of the mutation burde
   closest, so the neuroendocrine sub-score is not a substitute for the `t219` OncoTree-based NEN flag.
 - **HPA deferred.** The plan's secondary atlas (Human Protein Atlas tissue-specificity) is not available
   locally; it is flagged in the script as a deferred sensitivity layer rather than silently skipped. A
-  GTEx-only score is sufficient for the q035 conclusion (the CFS-confounding is intrinsic, not an
-  atlas-choice artifact).
+  GTEx-only score is sufficient for the `question:0035-label-free-neural-gene-definition` conclusion
+  (the CFS-confounding is intrinsic, not an atlas-choice artifact).
 - **The score is expression specificity, not causation.** It is a covariate for set definition and
   weighting; the causal verdict on mutation burden comes from t217 (span/selection), not from t216.

@@ -23,6 +23,7 @@ source_refs:
 - paper:Maura2019
 - paper:Maura2023
 - paper:Rustad2021
+- paper:Bolton2020
 related:
 - paper:Diamond2023
 - paper:Goel2026
@@ -91,8 +92,10 @@ distinct from SBS1/SBS5.
 **Inter-sample bleeding.** When biologically distinct subgroups are pooled for de novo NMF
 extraction, signatures active in one subgroup "bleed" into samples from the other. The canonical
 example is the platinum signature appearing in primary AML when therapy-related AML cases are
-included in the same NMF run (paper:Maura2019). The corollary for h08 is that study composition
-(fraction of post-treatment patients) is a potential confounding covariate that must be modeled.
+included in the same NMF run (paper:Maura2019). The corollary for
+`hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` is that
+study composition (fraction of post-treatment patients) is a potential confounding covariate that
+must be modeled.
 
 **HRD/SBS3 false positive in MM.** SBS3 — traditionally a marker of BRCA1/2-mediated homologous
 recombination deficiency — is extracted in naive MM decompositions but is a fitting artefact driven
@@ -142,7 +145,8 @@ in heme malignancies: MM WES panels produce ~245 mutations (vs. ~5,437 by WGS) a
 produce ~108 mutations (paper:Rustad2021). At <500 mutations, only signatures with highly distinctive
 profiles (SBS2, SBS9) remain identifiable; flat clock-like signatures (SBS5) become unreliable. This
 is a hard constraint for the cBioPortal cross-study pipeline: the majority of cBioPortal heme studies
-are panel-sequenced and cannot contribute per-sample signature exposures to an h08 association scan.
+are panel-sequenced and cannot contribute per-sample signature exposures to an agnostic association
+scan.
 
 ---
 
@@ -162,11 +166,12 @@ effect-size attenuation proportional to the ASCT rate in the study.
 
 ### SBS9 and IGHV status as a positive-control axis in CLL
 
-SBS9 is biologically constrained to GC-exposed cells and is an ideal h08 positive control in CLL:
-IGHV-mutated status (a clinical covariate) upstream of SBS9. However, paper:Rustad2021 reports at
-least one IGHV-unmutated patient with evidence of SBS9, suggesting IGHV-mutated status is not a
-perfectly clean upstream predictor. Whether this reflects measurement error in IGHV quantification or
-genuine GC-bypass is unresolved.
+SBS9 is biologically constrained to GC-exposed cells and is an ideal
+`hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` positive
+control in CLL: IGHV-mutated status (a clinical covariate) upstream of SBS9. However,
+paper:Rustad2021 reports at least one IGHV-unmutated patient with evidence of SBS9, suggesting
+IGHV-mutated status is not a perfectly clean upstream predictor. Whether this reflects measurement
+error in IGHV quantification or genuine GC-bypass is unresolved.
 
 ### COSMIC reference version sensitivity
 
@@ -205,9 +210,9 @@ reference catalogues for heme malignancies do not yet exist.
 
 ## Relevance to This Project
 
-### Implications for h08 and the cross-study signature-aetiology aggregation
+### Implications for the agnostic signature-aetiology aggregation
 
-**Positive controls available in hematologic studies (H08a).** The heme malignancy literature
+**Positive controls available in hematologic studies.** The heme malignancy literature
 provides a rich but structurally different positive-control set from solid tumors:
 
 | Expected association | Confidence | Caveat for cross-study recovery |
@@ -218,33 +223,38 @@ provides a rich but structurally different positive-control set from solid tumor
 | High APOBEC activity → adverse MM outcome | High (replicated) | Outcome covariate, not upstream aetiological variable |
 | Absence of SBS4/SBS7 in all heme types | High (negative control) | Any recovery of these signals flags a batch or contamination artefact |
 
-The cBioPortal cross-study pipeline is predominantly panel-sequenced. The h08 positive-control
-test for heme malignancies is therefore primarily a study-level rather than sample-level exercise:
+The cBioPortal cross-study pipeline is predominantly panel-sequenced. The
+`hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`
+positive-control test for heme malignancies is therefore primarily a study-level rather than
+sample-level exercise:
 platinum/melphalan signatures will be detectable only in WGS-based heme studies (e.g., CoMMpass,
 Beat AML, TCGA LAML from the MC3 unified MAF), not in targeted-panel cBioPortal submissions.
 
 **Inter-sample bleeding as a nuisance covariate.** The platinum/melphalan bleeding artefact
 (paper:Maura2019) motivates adding study composition — specifically, the fraction of post-treatment
-or therapy-related cases per study — as an explicit nuisance covariate in the h08 association scan.
-If a cBioPortal AML study is enriched for tMN patients without that annotation, naive signature
-decomposition will produce inflated SBS31/SBS35 estimates in de novo AML samples via bleeding.
+or therapy-related cases per study — as an explicit nuisance covariate in the agnostic association
+scan. If a cBioPortal AML study is enriched for tMN patients without that annotation, naive
+signature decomposition will produce inflated SBS31/SBS35 estimates in de novo AML samples via
+bleeding.
 
 **Toolchain and reference-version alignment.** The mmsig + COSMIC v3.1 combination is the current
 community standard for heme signature fitting (paper:Rustad2021; paper:Maura2023). If the pipeline
-moves toward per-sample signature exposures (q018), it should use COSMIC v3.1+ and a restricted
-reference panel appropriate to each cancer type — not a pan-cancer unconstrained fit. Any pooling
-of externally computed signature exposures from cBioPortal study metadata must audit which COSMIC
-version was used before aggregation.
+moves toward per-sample signature exposures
+(`question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross`), it should
+use COSMIC v3.1+ and a restricted reference panel appropriate to each cancer type — not a pan-cancer
+unconstrained fit. Any pooling of externally computed signature exposures from cBioPortal study
+metadata must audit which COSMIC version was used before aggregation.
 
-**Clock-like signatures as h08b discovery targets.** SBS5 and SBS40 dominate AML (paper:Goel2026)
-and contribute substantially to MM and CLL. These are the primary targets for h08 prediction 3 (novel
-upstream covariate → clock-like signature exposure). Novel covariates could include: age at diagnosis,
-clonal hematopoiesis clone size, time from CH detection to AML transformation, or exposure-related
-variables not yet annotated in clinical tables.
+**Clock-like signatures as discovery targets.** SBS5 and SBS40 dominate AML (paper:Goel2026) and
+contribute substantially to MM and CLL. These are the primary targets for the agnostic association
+prediction that novel upstream covariates can explain clock-like signature exposure. Novel covariates
+could include: age at diagnosis, clonal hematopoiesis clone size, time from CH detection to AML
+transformation, or exposure-related variables not yet annotated in clinical tables.
 
 **TP53 and CH contamination interaction.** In therapy-related tMN, TP53-mutant CH clones survive
 myeloablation and give rise to high-TMB, chromothriptic AML (paper:Diamond2023). TP53 is one of
-the seven Bolton 2020 CH-priority genes already flagged by the pipeline's `annotate_ch.py` step.
+the seven Bolton et al. [@Bolton2020] CH-priority genes already flagged by the pipeline's
+`annotate_ch.py` step.
 The tMN biology reinforces that TP53 in blood-derived samples may represent pre-leukemic CH — a
 source of signal that the `ch_priority_gene` flag is designed to surface but that the pipeline
 currently does not link back to the iatrogenic signature context.

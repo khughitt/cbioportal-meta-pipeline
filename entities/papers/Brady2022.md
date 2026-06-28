@@ -49,7 +49,7 @@ calling, (2) signature extraction via NMF-based tools (SigProfiler, SignatureAna
 MutationalPatterns), and (3) signature activity assignment in individual samples. The review
 synthesizes findings across WGS-based cohorts, cell-line pharmacogenomics datasets (Genomics of
 Drug Sensitivity in Cancer; 930 lines, 518 drugs, 29 cancer types), and several disease-specific
-studies (breast, esophageal, multiple myeloma, ALL, glioma, neuroblastoma, pediatric tMNs).
+studies (breast, esophageal, multiple myeloma, ALL, glioma, neuroblastoma, pediatric tMNs) [@Brady2022].
 
 ## Key Findings
 

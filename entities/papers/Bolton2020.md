@@ -8,6 +8,7 @@ id: paper:Bolton2020
 ontology_terms: []
 source_refs:
 - article:Bolton2020
+- cite:Bolton2020
 related:
 - topic:clonal-hematopoiesis-contamination
 - topic:targeted-panel-sequencing-bias
@@ -32,7 +33,7 @@ MSK-IMPACT panel. Establishes that prior cytotoxic therapy and ionizing radiatio
 preferentially expand CH clones bearing DNA-damage-response (DDR) mutations
 (`PPM1D`, `TP53`, `CHEK2`), whereas age and smoking drive expansion of `DNMT3A` /
 `TET2` / `ASXL1`. This means the per-gene CH spectrum observed in a tumor cohort is
-non-randomly skewed by treatment history.
+non-randomly skewed by treatment history [@Bolton2020].
 
 ## Methods
 
@@ -137,4 +138,4 @@ heavily-pretreated tumor types). A first-pass CH-aware filter should: (i) flag t
 genes; (ii) downweight low-VAF (<10%) calls in older patients; (iii) treat splice-site
 DDR variants in pretreated cohorts with extra suspicion. Cohort-level: expect
 unmatched-normal cancer types to show inflated DDR-gene mutation rates relative to
-MSK-IMPACT for the same cancer.
+MSK-IMPACT for the same cancer [@Bolton2020].

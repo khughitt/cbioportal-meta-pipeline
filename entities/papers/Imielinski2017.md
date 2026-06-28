@@ -15,6 +15,7 @@ ontology_terms:
 - MeSH:D009154
 source_refs:
 - paper:Imielinski2017
+- cite:Imielinski2017
 related:
 - paper:Lawrence2014
 - paper:Martincorena2017
@@ -49,7 +50,7 @@ mutation** (chromatin state, replication timing, local nucleotide composition, g
 GC content). Applied to indel density in 702 tumor WGS/WES samples, the authors identify
 lineage-defining transcription factors as a previously under-appreciated class of
 indel-targeted drivers. The FishHook framework itself is now a widely-reused tool for
-background-rate-corrected recurrence testing in both coding and non-coding regions.
+background-rate-corrected recurrence testing in both coding and non-coding regions [@Imielinski2017].
 
 ## Methods
 

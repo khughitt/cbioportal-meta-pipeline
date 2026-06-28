@@ -34,6 +34,7 @@ related: []
 ## Key Contribution
 
 This Leading Edge Review synthesizes how sub-megabase chromatin features — nucleosome occupancy, transcription factor binding sites (TFBS), transcriptional state, and secondary DNA structures — locally modulate somatic mutation rates by differentially influencing both DNA damage generation and the efficiency of DNA repair machineries (NER, BER, MMR). It provides a mechanistic framework for why canonical mutational signatures (UV→SBS7, tobacco→SBS4, APOBEC→SBS2/13, oxidative damage→SBS17, MMR-loss→SBS6/15/26) show characteristic spatial patterns across the nucleosome-linker landscape, and argues that this local variation has implications for driver-gene identification, tumour evolution, and chemotherapy-resistance research.
+This Leading Edge Review synthesizes how sub-megabase chromatin features — nucleosome occupancy, transcription factor binding sites (TFBS), transcriptional state, and secondary DNA structures — locally modulate somatic mutation rates by differentially influencing both DNA damage generation and the efficiency of DNA repair machineries (NER, BER, MMR). It provides a mechanistic framework for why canonical mutational signatures (UV→SBS7, tobacco→SBS4, APOBEC→SBS2/13, oxidative damage→SBS17, MMR-loss→SBS6/15/26) show characteristic spatial patterns across the nucleosome-linker landscape, and argues that this local variation has implications for driver-gene identification, tumour evolution, and chemotherapy-resistance research [@GonzalezPerez2019].
 
 ## Methods
 
@@ -125,7 +126,7 @@ This review is directly relevant to **hypothesis:0007-agnostic-covariate-associa
 
 ## Model / Tool Availability
 
-This is a review article and does not release a new tool or dataset. The review references COSMIC signatures (https://cancer.sanger.ac.uk/cosmic/signatures) and various publicly available genomic datasets (ENCODE, TCGA, 1000 Genomes).
+This is a review article and does not release a new tool or dataset. The review references COSMIC signatures (https://cancer.sanger.ac.uk/cosmic/signatures) and various publicly available genomic datasets (ENCODE, TCGA, `1000 Genomes`).
 
 ## Follow-up
 

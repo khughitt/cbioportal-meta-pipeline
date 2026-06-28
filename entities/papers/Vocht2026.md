@@ -34,11 +34,11 @@ dataset_usage:
 
 This Mutual Hazard Network software note links paper:Schill2024, question:0012-mutation-ordering-cross-sectional-inference, topic:co-occurrence-and-mutual-exclusivity, and discussion:0002-mutation-ordering-and-path-dependency.
 
-`mhn` is a Python package implementing Mutual Hazard Networks (MHNs) for cancer progression modeling from cross-sectional tumor genotype data. The package addresses the primary computational bottleneck of earlier MHN implementations: because the state space of an n-event MHN grows as 2^n, training on more than ~25 events was previously infeasible. `mhn` introduces *state space restriction* — restricting each sample's computation to the submatrix of the transition rate matrix covering only states reachable from that sample's observed active events — combined with optional CUDA GPU acceleration. This reduces the per-sample runtime from O(n^2 * 2^n) (for the naive full-matrix approach) to O(n * m * 2^m) where m is the number of active events in a given sample, lifting the practical ceiling to **>100 events** provided no single sample has more than ~32 active events simultaneously.
+`mhn` is a Python package implementing Mutual Hazard Networks (MHNs) for cancer progression modeling from cross-sectional tumor genotype data. The package addresses the primary computational bottleneck of earlier MHN implementations: because the state space of an n-event MHN grows as 2^n, training on more than ~25 events was previously infeasible. `mhn` introduces *state space restriction* — restricting each sample's computation to the submatrix of the transition rate matrix covering only states reachable from that sample's observed active events — combined with optional CUDA GPU acceleration. This reduces the per-sample runtime from O(n^2 * 2^n) (for the naive full-matrix approach) to O(n * m * 2^m) where m is the number of active events in a given sample, lifting the practical ceiling to **>100 events** provided no single sample has more than ~32 active events simultaneously [@Vocht2026].
 
 Critically, the package implements the updated MHN formulation introduced in Schill et al. 2024, which resolves a pervasive **collider bias** inherent in prior cross-sectional progression models. The earlier approach (Schill et al. 2020) treated observation time as a nuisance variable marginalized uniformly; in the updated formulation, *tumor detection itself is modeled as an additional event* whose rate depends on the tumor's current genotype. This means that high-visibility genotypes (those causing earlier clinical detection) are no longer conflated with genotypes that have simply had more time to accumulate events. Without this correction, cross-sectional data — where all samples are observed at a single snapshot — produces collider-biased estimates: mutations that increase tumor observability appear falsely correlated with other late events. Schill et al. 2024 is the mathematical foundation; `mhn` is its production implementation.
 
-The demo analysis, which directly aligns with this project, applies the package to **3,662 primary lung adenocarcinomas (LUADs) from AACR GENIE** (targeted clinical sequencing, Memorial Sloan Kettering cohort), modeling 12 driver gene SNVs.
+The demo analysis, which directly aligns with this project, applies the package to **3,662 primary lung adenocarcinomas (LUADs) from AACR GENIE** (targeted clinical sequencing, Memorial Sloan Kettering cohort), modeling 12 driver gene SNVs [@Vocht2026].
 
 ## Methods
 
@@ -69,14 +69,14 @@ The trained MHN parameter matrix (Fig. 2A in the paper) reveals several biologic
 
 ### Scalability benchmark (Fig. 1)
 
-Training benchmarked on the same 3,661-sample LUAD dataset, repeated 10 times per configuration, on a Linux server with 512 GB RAM, 30 AMD EPYC 7453 cores, and an NVIDIA A100 80 GB GPU:
+Training benchmarked on the same 3,661-sample LUAD dataset, repeated 10 times per configuration, on a Linux server with 512 GB RAM, 30 AMD EPYC 7453 cores, and an NVIDIA A100 80 GB GPU [@Vocht2026]:
 
 - For 5–15 events: `mhn` CPU and the prior R implementation have similar run times.
 - For 20–25 events: `mhn` CPU is substantially faster than R; `mhn` GPU is faster still.
 - For 25 events: only `mhn`'s GPU implementation is feasible (R times out or becomes impractical).
 - For 50 events: only `mhn` GPU is shown as feasible.
 
-The paper states that in practice, analysis of datasets with **>100 events** is achievable as long as no individual sample has more than ~25 active events simultaneously (hard technical limit: 32 active events per observation).
+The paper states that in practice, analysis of datasets with **>100 events** is achievable as long as no individual sample has more than ~25 active events simultaneously (hard technical limit: 32 active events per observation) [@Vocht2026].
 
 ## Relevance
 
@@ -86,13 +86,13 @@ This paper is directly relevant to the cbioportal project across three dimension
 
 The pipeline currently characterizes gene-cancer associations via mutation frequency tables and per-study correlation matrices (gene × gene co-occurrence / mutual exclusivity within studies). MHN offers a principled causal-progression alternative: instead of pairwise co-occurrence statistics, it fits a continuous-time model of event ordering and rate modification. The MHN parameter matrix explicitly separates "event A promotes event B" from "events A and B co-occur at diagnosis because they are both late-stage." This distinction is relevant to the project's interest in distinguishing clonal hematopoiesis contamination signals (early, background events) from tumor-specific driver co-occurrence patterns.
 
-**2. Demo dataset is 3,662 AACR GENIE LUADs — our data**
+**2. Demo dataset is 3,662 AACR GENIE LUADs — our data** [@Vocht2026]
 
-The demo analysis uses the exact same data source the pipeline ingests (AACR GENIE targeted clinical sequencing). LUAD is a cancer type well-represented in cBioPortal studies and a primary target of the pipeline's cross-study aggregation. The 12-gene LUAD MHN provides a reference progression model for the gene-cancer outputs: expected interaction signs (EGFR↔KRAS mutual exclusivity, EGFR↔TP53 synergy) can be cross-validated against the pipeline's co-occurrence correlation matrices.
+The demo analysis uses the exact same data source the pipeline ingests (AACR GENIE targeted clinical sequencing). LUAD is a cancer type well-represented in cBioPortal studies and a primary target of the pipeline's cross-study aggregation. The 12-gene LUAD MHN provides a reference progression model for the gene-cancer outputs: expected interaction signs (EGFR↔KRAS mutual exclusivity, EGFR↔TP53 synergy) can be cross-validated against the pipeline's co-occurrence correlation matrices [@Vocht2026].
 
 **3. Scalability ceiling now exceeds our panel gene count**
 
-The pipeline's gene lists run up to ~10,000 genes (config-10k-genes.yml), but in practice meaningful MHN modeling requires pre-selecting driver events — the demo uses 12. The state space restriction means that for a focused driver set of 50–100 genes (a reasonable cancer-type-specific panel), `mhn` with GPU access is now feasible. This opens a potential downstream analysis: fitting per-cancer-type MHNs on the pipeline's most frequently mutated driver genes to extract progression ordering structure that frequency tables cannot capture.
+The pipeline's gene lists run up to ~10,000 genes (config-10k-genes.yml), but in practice meaningful MHN modeling requires pre-selecting driver events — the demo uses 12. The state space restriction means that for a focused driver set of 50–100 genes (a reasonable cancer-type-specific panel), `mhn` with GPU access is now feasible. This opens a potential downstream analysis: fitting per-cancer-type MHNs on the pipeline's most frequently mutated driver genes to extract progression ordering structure that frequency tables cannot capture [@Vocht2026].
 
 **4. Collider-bias correction is essential for cross-sectional cBioPortal data**
 

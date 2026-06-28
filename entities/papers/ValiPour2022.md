@@ -23,19 +23,19 @@ related: []
 
 ## Key Contribution
 
-Vali-Pour et al. perform the largest gene-based rare-variant association study (RVAS) to date linking inherited rare putative loss-of-function (pLoF) germline variants to somatic mutational processes in human tumors. Testing 891 candidate genes across ~11,000 individuals (TCGA discovery; PCAWG + Hartwig validation), they identify 207 replicated associations spanning 42 genes and 15 somatic mutational phenotypes at a 1% FDR. The study demonstrates that rare germline variation in a diverse, networked set of DNA repair and chromatin-modifying genes — many beyond well-known cancer predisposition genes — substantially shapes the somatic mutation landscape.
+Vali-Pour et al. perform the largest gene-based rare-variant association study (RVAS) to date linking inherited rare putative loss-of-function (pLoF) germline variants to somatic mutational processes in human tumors. Testing 891 candidate genes across ~11,000 individuals (TCGA discovery; PCAWG + Hartwig validation), they identify 207 replicated associations spanning 42 genes and 15 somatic mutational phenotypes at a 1% FDR. The study demonstrates that rare germline variation in a diverse, networked set of DNA repair and chromatin-modifying genes — many beyond well-known cancer predisposition genes — substantially shapes the somatic mutation landscape [@ValiPour2022].
 
 ## Methods
 
-**Data.** Somatic mutations were extracted from ~9,300 WES (TCGA; discovery) and ~5,500 WGS (PCAWG + Hartwig; validation) European-ancestry cancer genomes. 56 somatic mutational features were quantified per tumor, covering SBS signatures (organ-specific, via SigProfilerMatrixGenerator), DBS signatures, insertion/deletion signatures, copy-number signatures, transcription strand bias, replication strand bias, chromatin features (H3K36me3, DNase I, CTCF-binding sites), replication timing, expression levels, X-chromosomal hypermutation, and mitochondrial genome mutations.
+**Data.** Somatic mutations were extracted from ~9,300 WES (TCGA; discovery) and ~5,500 WGS (PCAWG + Hartwig; validation) European-ancestry cancer genomes. 56 somatic mutational features were quantified per tumor, covering SBS signatures (organ-specific, via SigProfilerMatrixGenerator), DBS signatures, insertion/deletion signatures, copy-number signatures, transcription strand bias, replication strand bias, chromatin features (H3K36me3, DNase I, CTCF-binding sites), replication timing, expression levels, X-chromosomal hypermutation, and mitochondrial genome mutations [@ValiPour2022].
 
 **Dimensionality reduction.** Two complementary methods were applied to derive 29 orthogonal mutational components: independent component analysis (ICA; 15 components) and a variational autoencoder (VAE; 14 components). These components reduce feature correlation and serve as the association phenotypes; components were named by their strongest input feature correlate.
 
-**Germline variant prioritisation.** Rare (MAF < 0.1%) pLoF variants were defined under five schemes: (i) PTVs only, (ii) PTVs + missense CADD ≥ 25, (iii) PTVs + missense CADD ≥ 15, (iv) missense with MTR ≤ 25th percentile, (v) missense in constrained coding regions (CCR ≥ 90th percentile). Testing used three inheritance models (dominant, additive, recessive), yielding 15 models tested per gene.
+**Germline variant prioritisation.** Rare (MAF < 0.1%) pLoF variants were defined under five schemes: (i) PTVs only, (ii) PTVs + missense CADD ≥ 25, (iii) PTVs + missense CADD ≥ 15, (iv) missense with MTR ≤ 25th percentile, (v) missense in constrained coding regions (CCR ≥ 90th percentile). Testing used three inheritance models (dominant, additive, recessive), yielding 15 models tested per gene [@ValiPour2022].
 
-**Statistical testing.** Gene-based testing used SKAT-O, a combined burden + variance-component (SKAT) test on 891 candidate genes (DNA repair, replication, chromatin modifiers). Empirical FDR was estimated by randomisation. Discovery hits in TCGA were re-tested in the matched cancer type from the validation cohort (PCAWG + Hartwig). 594,462 total tests were run in the discovery phase.
+**Statistical testing.** Gene-based testing used SKAT-O, a combined burden + variance-component (SKAT) test on 891 candidate genes (DNA repair, replication, chromatin modifiers). Empirical FDR was estimated by randomisation. Discovery hits in TCGA were re-tested in the matched cancer type from the validation cohort (PCAWG + Hartwig). 594,462 total tests were run in the discovery phase [@ValiPour2022].
 
-**Network analysis.** Physical protein–protein interactions from STRING (combined score ≥ 80%) and HumanNet were used to validate the functional clustering of identified genes.
+**Network analysis.** Physical protein–protein interactions from STRING (combined score ≥ 80%) and HumanNet were used to validate the functional clustering of identified genes [@ValiPour2022].
 
 ## Key Findings
 

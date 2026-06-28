@@ -36,7 +36,8 @@ Project links: this interpretation addresses
 must stratify on `is_hypermutator`. (2) Hypermutators **dilute the driver share of mutational load**
 across the 8 testable cancer types (drop of 0.10–0.22). The one residual caveat is the per-gene
 prevalence-ratio metric, which stays baseline-confounded and is not the right tool — but the
-driver-share test (`T2`) cleanly shows the dilution.
+driver-share test (`T2`) cleanly shows the dilution (`question:0047-hypermutation-confound-on-driver-tissue-specificity`;
+`results/poc-2026-04-17/`).
 
 ## Cohort + method
 
@@ -59,7 +60,8 @@ smoking / UV hypermutator-bearing types, now that panel TMB is correct.
 **2. Breadth inflation confirmed (the `q043`↔`q047` link).** Excluding hypermutators raises the
 restricted-driver fraction **52%→68% at ≥5%** (IntOGen's 63% is now bracketed), and **186 drivers
 lose ≥1 cancer-type of breadth at ≥5%** (253 at ≥2%). Any restricted-vs-pan-cancer count (`q042`/`q043`)
-must be computed with hypermutators excluded or stratified.
+must be computed with hypermutators excluded or stratified (`question:0043-driver-cancer-type-breadth-distribution`;
+`results/poc-2026-04-17/`).
 
 **3. Per-sample driver-share dilution is now clearly detectable.** Within cancer type, the driver
 share of (panel) mutational load drops markedly in hypermutators — a consistent passenger-dilution
@@ -86,7 +88,8 @@ Median log2(prev_hyper / prev_non) by class: background 3.38, restricted_oncogen
 other than broad now cluster tightly (3.2–3.5), so this raw ratio still does not isolate
 selection-vs-passenger (it is a ceiling/baseline artifact — already-common broad oncogenes have
 compressed ratios). The robust read: **broad oncogenes (the `q043` hubs) are the most stable under
-hypermutation**; for the dilution question, prefer the `T2` driver-share metric over this ratio.
+hypermutation**; for the dilution question, prefer the `T2` driver-share metric over this ratio
+(`question:0047-hypermutation-confound-on-driver-tissue-specificity`; `code/notebooks/q047_hypermutation_specificity_confound.py`).
 
 ## Limitations → refinements to `q047`'s design
 

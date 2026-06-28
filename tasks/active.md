@@ -971,13 +971,3 @@ Curation batch for local-result numeric-anchor warnings. Current baseline after 
 - created: 2026-06-28
 
 Cleanup batch for smaller numeric-anchor families after t234 upstream parser work. Current baseline after the upstream DOI/identifier fix and the first t235 exact-reference passes: doc/plans 34, doc/meta 9, doc/guides/modalities 2, entities/datasets 7, entities/pre-registrations 15, entities/questions 14, entities/synthesis 11, entities/hypotheses 4, entities/modality-guide 5, entities/discussions 1, and entities/topics 32. For real numeric claims, add nearby anchors or reduce unsupported precision.
-
-## [t240] Resolve strict-mode SPECULATION marker warnings
-- priority: P3
-- status: proposed
-- aspects: [computational-analysis]
-- related: [task:t233]
-- group: science-strict-validation-cleanup
-- created: 2026-06-28
-
-Review the 7 [SPECULATION] markers surfaced by strict validation. Current locations from rg: entities/papers/Cao2023.md, entities/papers/Keough2022.md, entities/papers/Kizil2024.md, entities/topics/signatures-expression-microenvironment.md, and entities/topics/signatures-hematologic-malignancies.md. For each marker, either keep the speculative content but rewrite it as clearly hedged prose without the marker, remove unsupported speculation, or create a follow-up task if the speculation is worth testing.

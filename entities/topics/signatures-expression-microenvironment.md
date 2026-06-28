@@ -150,9 +150,9 @@ the agnostic association design, which stratifies by signature identity rather t
 ### Direction-reversal of APOBEC immune effects across tissues
 
 APOBEC shows antagonistic effects on immune survival benefit in LUAD but synergistic effects in
-HNSC and BLAC (paper:Luo2023a). The mechanism underlying this sign reversal is unknown
-[SPECULATION]: candidate explanations include (a) different APOBEC3A vs APOBEC3B isoform
-dominance across tissues, (b) distinct HLA evolutionary contexts that alter neoantigen
+HNSC and BLAC (paper:Luo2023a). The mechanism underlying this sign reversal is unknown.
+Candidate explanations include (a) different APOBEC3A vs APOBEC3B isoform dominance across
+tissues, (b) distinct HLA evolutionary contexts that alter neoantigen
 immunogenicity, or (c) confounding by co-occurring driver events (e.g., EGFR/ALK in LUAD may
 suppress immune recruitment independently). Resolving this requires a within-cancer-type
 expression covariate design — exactly what the agnostic association design proposes.

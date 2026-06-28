@@ -3,7 +3,7 @@ type: paper
 title: Neural control of tumor immunity
 status: active
 created: '2026-06-06'
-updated: '2026-06-06'
+updated: '2026-06-28'
 id: paper:Kizil2024
 ontology_terms:
 - cancer neuroimmunology
@@ -103,7 +103,7 @@ This is a narrative viewpoint/review article. No primary data are generated. The
 - Most mechanistic data derive from mouse tumor models (syngeneic transplant: B16F10, 4T1, MC38, 6606PDA); generalizability to human tumor biology is assumed but not directly demonstrated for many claims.
 - The direction of effect of sympathetic and parasympathetic innervation is highly context-dependent (cancer type, tumor stage, cell type) and often contradictory across studies. The review acknowledges this but does not provide a unifying quantitative framework.
 - The "neuro-immune interface genes" implicated (ADRB2, CHRM1, CALCA, TAC1) are not systematically linked to somatic mutation data; whether these genes are preferentially mutated in cancer, and whether such mutations alter immune cell function, is not addressed.
-- The user's top-mutated neural genes (NKAIN2, KCNIP4, TAFA2/FAM19A2, RIT2, CALN1, RBFOX1, LSAMP, SGCZ, OPCML) are not mentioned in this paper. These appear to be predominantly CNS-structural/developmental genes, not the peripheral autonomic/sensory receptor genes this review focuses on. The mechanistic link between this review and the user's specific gene list therefore remains [SPECULATION] without further analysis.
+- The user's top-mutated neural genes (NKAIN2, KCNIP4, TAFA2/FAM19A2, RIT2, CALN1, RBFOX1, LSAMP, SGCZ, OPCML) are not mentioned in this paper. These appear to be predominantly CNS-structural/developmental genes, not the peripheral autonomic/sensory receptor genes this review focuses on. The mechanistic link between this review and the user's specific gene list therefore remains an untested extrapolation without further analysis.
 - Gene-length confounding is not discussed; large genes in the user's top-mutated list could appear simply due to mutation target size, not immune-mediated selection.
 - Clinical evidence for beta-blockers is largely observational/retrospective; the one cited RCT (Hiller 2020, phase II) used biomarker endpoints, not survival.
 

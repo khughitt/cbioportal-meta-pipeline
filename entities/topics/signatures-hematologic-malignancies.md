@@ -162,8 +162,8 @@ The 41% penetrance of SBS-MM1 in melphalan-exposed tMN is not a measurement fail
 biological escape route (apheresis-collected CH clones avoid drug exposure) that is expected to be
 study-design-dependent (paper:Diamond2023, paper:Lee2023). However, the exact fraction of ASCT
 patients whose eventual tMN arises from a reinfused versus a surviving exposed clone is unknown
-prospectively. [SPECULATION] The penetrance could be substantially higher in non-ASCT melphalan
-contexts (e.g., oral melphalan in non-transplant-eligible patients) where the apheresis escape route
+prospectively. The penetrance may be substantially higher in non-ASCT melphalan contexts
+(e.g., oral melphalan in non-transplant-eligible patients) where the apheresis escape route
 is unavailable, but this has not been systematically quantified. For any cross-study aggregation
 using clinical covariates, "prior melphalan" will be a noisy predictor of SBS-MM1 with
 effect-size attenuation proportional to the ASCT rate in the study.
@@ -190,8 +190,8 @@ audit reference-version provenance before combining estimates.
 
 SBS8 appears as a secondary signature in AML (paper:Goel2026) and in MM (paper:Maura2023), where it
 has been attributed to oxidative DNA damage. However, SBS8 has an overlapping flat profile with SBS5
-and SBS9, making disambiguation challenging. [SPECULATION] The proportion of SBS8 in AML may partly
-reflect oxidative stress from aberrant metabolic activity in myeloid blasts (consistent with the KEGG
+and SBS9, making disambiguation challenging. The proportion of SBS8 in AML may partly reflect
+oxidative stress from aberrant metabolic activity in myeloid blasts (consistent with the KEGG
 central-carbon-metabolism enrichment in paper:Goel2026), but no mechanistic experiment confirms this
 in heme malignancies.
 

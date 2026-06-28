@@ -3,7 +3,7 @@ type: paper
 title: Neural Signaling in Cancer
 status: active
 created: '2026-06-06'
-updated: '2026-06-06'
+updated: '2026-06-28'
 id: paper:Keough2022
 ontology_terms:
 - cancer neuroscience
@@ -193,7 +193,7 @@ The paper does not offer a data-driven definition of "neural genes." It relies o
 | SLC7A11 (xCT glutamate transporter) secreting glutamate | Functional gene linking mutation burden to microenvironment; testable against TMB annotation pipeline |
 | PIK3CA variants → glypican-3 → hyperexcitability | PIK3CA is a canonical oncogene; its neural effects are a secondary phenotype linkable to mutation frequency |
 | ADAM10 — clinical trial target | Potential drug-target overlap with mutation-annotated genes |
-| Tumor-driven neurogenesis (SVZ neuroblasts → prostate TME) | [SPECULATION] Could create a selection pressure for neural gene expression in prostate cancer specifically |
+| Tumor-driven neurogenesis (SVZ neuroblasts → prostate TME) | Could create a selection pressure for neural gene expression in prostate cancer specifically; this remains an untested project hypothesis |
 | Meclofenamate (connexin-43 blocker) reduces GBM + brain mets | Connexin-43 (GJA1) mutation frequency could be tested in our cross-study matrix |
 | `H3K27M` (HIST1H3B/`H3-3A`) glioma subtype | Covered in `cancer_type` stratification; diffuse midline glioma is a distinct cancer type |
 

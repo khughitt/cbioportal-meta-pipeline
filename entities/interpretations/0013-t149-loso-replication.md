@@ -50,9 +50,9 @@ Outputs (`/data/packages/cbioportal/pan-cancer/summary/loso/`):
 
 For K=100 inclusive view, **all-cohort median recovery = 0.185** (IQR 0.023–0.495). Min recovery = 0.0; max = 0.86. Spread is 86 percentage points across 10 LOSO iterations.
 
-Restricting to Bailey 2018 drivers does not rescue the instability: **bailey_only K=100 inclusive median recovery = 0.21** (IQR 0.028–0.58, min 0.0, max 0.90). The Bailey restriction modestly improves the upper tail (Q3 0.58 vs 0.49) but median and min are essentially unchanged.
+Restricting to Bailey et al. [@Bailey2018] drivers does not rescue the instability: **bailey_only K=100 inclusive median recovery = 0.21** (IQR 0.028–0.58, min 0.0, max 0.90). The Bailey restriction modestly improves the upper tail (third quartile 0.58 vs 0.49) but median and min are essentially unchanged.
 
-This is a **negative result for h02 P1 as currently framed**. The pooled_rate top-N ranking is not stable under LOSO even when restricted to the canonical-driver consensus.
+This is a **negative result for `hypothesis:0002-cross-study-ranking-divergence-is-structured` P1 as currently framed**. The pooled_rate top-N ranking is not stable under LOSO even when restricted to the canonical-driver consensus.
 
 ### F2 — instability concentrates in small / specialty / pediatric studies
 
@@ -71,7 +71,7 @@ Per-study breakdown at K=100 inclusive (all cohort):
 | pog570_bcgsc_2020 | 0.74 | 0.587 | 100 |
 | metastatic_solid_tumors_mich_2017 | 0.86 | 0.754 | 100 |
 
-The pattern partially supports h02 P2 — pediatric (`pediatric_dkfz_2017`, `pptc_2019`) and rare-cancer (`acc_2019` adrenocortical) studies cause large disruption, while general-purpose metastatic studies cause smaller disruption. But two findings break the simple story:
+The pattern partially supports `hypothesis:0002-cross-study-ranking-divergence-is-structured` P2 — pediatric (`pediatric_dkfz_2017`, `pptc_2019`) and rare-cancer (`acc_2019` adrenocortical) studies cause large disruption, while general-purpose metastatic studies cause smaller disruption. But two findings break the simple story:
 
 - **`msk_met_2021` is structurally load-bearing**: dropping it produces zero `holdout_status == "ok"` rows in the inclusive top-100. The meta-analysis convergence threshold requires k_studies coverage that msk_met_2021 alone provides for the pairs that occupy the top-100.
 - **GENIE produces only 48% recovery** despite contributing the largest sample count; this is not "low disruption from large general study" as P2 predicts.
@@ -88,7 +88,7 @@ GIST / KIT                        0.743  k=4
 Pancreatic / KRAS                 0.710  k=5
 ```
 
-`pooled_rate` is the meta-analyzed proportion only; it has no significance weighting and no large-cohort prior. When a study is dropped, the convergence boundary at k_studies ≥ 3 shifts unpredictably and the membership of the convergence-eligible pool churns. This is a **methodological finding, not a refutation of h02**: h02's structured-divergence claim refers to ranking schemes (raw, length-adjusted, dNdScv) at scale, but the LOSO test was inadvertently run against a fourth ranking scheme (pooled_rate) which the project has not endorsed as a primary ranking metric.
+`pooled_rate` is the meta-analyzed proportion only; it has no significance weighting and no large-cohort prior. When a study is dropped, the convergence boundary at k_studies ≥ 3 shifts unpredictably and the membership of the convergence-eligible pool churns. This is a **methodological finding, not a refutation of `hypothesis:0002-cross-study-ranking-divergence-is-structured`**: the structured-divergence claim refers to ranking schemes (raw, length-adjusted, dNdScv) at scale, but the LOSO test was inadvertently run against a fourth ranking scheme (pooled_rate) which the project has not endorsed as a primary ranking metric.
 
 ### F4 — the right next test uses dNdScv-rank-based stability
 
@@ -96,7 +96,7 @@ Pancreatic / KRAS                 0.710  k=5
 
 ## Verdict
 
-**Partial.** The LOSO test as run produces a sample-size-naive instability number (median recovery 0.18–0.21 at K=100) that does not directly support or refute h02 P1. The per-study breakdown is consistent with h02 P2 for specialty studies but inconsistent for the largest general-purpose study (GENIE). The decisive test of P1 / P2 requires a dNdScv-ranking LOSO, which is more expensive but eliminates the rate-based-ranking confound surfaced here.
+**Partial.** The LOSO test as run produces a sample-size-naive instability number (median recovery 0.18–0.21 at K=100) that does not directly support or refute `hypothesis:0002-cross-study-ranking-divergence-is-structured` P1. The per-study breakdown is consistent with `hypothesis:0002-cross-study-ranking-divergence-is-structured` P2 for specialty studies but inconsistent for the largest general-purpose study (GENIE). The decisive test of P1 / P2 requires a dNdScv-ranking LOSO, which is more expensive but eliminates the rate-based-ranking confound surfaced here.
 
 The `pooled_rate` top-K is not the project's primary ranking metric, but the fact that it is this unstable is itself relevant to `question:0015-pan-cancer-aggregator-choice`: any aggregator that effectively reduces to "rank by point estimate" inherits this instability.
 
@@ -104,7 +104,7 @@ The `pooled_rate` top-K is not the project's primary ranking metric, but the fac
 
 - File `task:t173` (LOSO against dNdScv ranking, P1 / P2 decisive test).
 - The msk_met_2021 zero-convergence finding suggests t077's `k_studies ≥ 3` floor is too tight when the study contributing the largest k drops out. Consider a `k_min ≥ 2` sensitivity panel.
-- The GENIE 48% recovery is interesting independent of h02 — GENIE is the largest cohort by sample count but its disproportionate panel composition (vs WES studies) means it contributes asymmetric `n_total` to the meta. Worth a closer look.
+- The GENIE 48% recovery is interesting independent of `hypothesis:0002-cross-study-ranking-divergence-is-structured` — GENIE is the largest cohort by sample count but its disproportionate panel composition (vs WES studies) means it contributes asymmetric `n_total` to the meta. Worth a closer look.
 - Cross-reference to `task:t155` (aggregator comparison): any aggregator that uses point-estimate ranking should be expected to inherit this instability; only an aggregator that combines effect-size with significance / sample-size weighting will produce a more stable top-N.
 
 ## Outputs

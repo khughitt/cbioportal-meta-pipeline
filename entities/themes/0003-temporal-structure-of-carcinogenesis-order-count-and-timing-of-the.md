@@ -34,11 +34,12 @@ A cross-cutting frame for the project's work on **when, in what order, and how m
 events occur during carcinogenesis — as distinct from the project's other axes (signature
 aetiology, contamination/QC, gene-length confounding). Three coupled sub-questions live here:
 
-- **Order** — in what *sequence* are drivers/pathways acquired? (`question:0012`, `hypothesis:0004`
-  MHN ordering; `hypothesis:0006` pre-malignant n-1 carriage as the paired-data route; the
+- **Order** — in what *sequence* are drivers/pathways acquired? (`question:0012-mutation-ordering-cross-sectional-inference`, `hypothesis:0004-mhn-pathway-ordering`
+  MHN ordering; `hypothesis:0006-pre-malignant-n-minus-1-driver-carriage` pre-malignant n-1 carriage as the paired-data route; the
   hallmark-grain echo in `discussion:0007-hallmark-ordering-and-data-driven-modules`).
 - **Count** — *how many* rate-limiting events does a cancer type require, and how does that set its
-  age of onset? (`topic:multistage-carcinogenesis-and-age-of-onset`, `question:0041`).
+  age of onset? (`topic:multistage-carcinogenesis-and-age-of-onset`,
+  `question:0041-driver-complexity-vs-median-age-at-diagnosis`).
 - **Timing / rate** — what governs *how fast* the process runs (replicative supply vs
   selection-landscape shifts)? (the Tomasetti-Vogelstein vs Rozhok-DeGregori axis in the topic).
 
@@ -57,19 +58,23 @@ aetiology, contamination/QC, gene-length confounding). Three coupled sub-questio
 
 ## Boundaries
 
-- **Inside:** mutation/pathway ordering (q012/h04); paired-stage driver carriage (h06);
-  multistage number-of-hits and age-of-onset (topic + q041); hallmark-acquisition ordering
+- **Inside:** mutation/pathway ordering (`question:0012-mutation-ordering-cross-sectional-inference` /
+  `hypothesis:0004-mhn-pathway-ordering`); paired-stage driver carriage
+  (`hypothesis:0006-pre-malignant-n-minus-1-driver-carriage`);
+  multistage number-of-hits and age-of-onset (topic + `question:0041-driver-complexity-vs-median-age-at-diagnosis`); hallmark-acquisition ordering
   (hallmark discussion); the replicative-supply-vs-selection mechanism debate.
 - **Outside (own concepts/work):** the co-occurrence / mutual-exclusivity *association substrate*
   itself (`topic:co-occurrence-and-mutual-exclusivity`, `t078`) is machinery this theme *consumes*
   to infer order/modules — it is association, not time; signature aetiology and contamination/QC
-  themes (technical, not temporal); gene-length confounding (`theme` via h03) except where it
+  themes (technical, not temporal); gene-length confounding (`theme` via `hypothesis:0003-gene-length-confounds-literature-attention`) except where it
   enters as a confound on a temporal statistic.
 
 ## Current Project Links
 
-- Questions: `q012` (ordering inferability), `q041` (driver-count vs age of onset).
-- Hypotheses: `h04` (MHN-inferred order), `h06` (observed paired-stage carriage / n-1).
+- Questions: `question:0012-mutation-ordering-cross-sectional-inference` (ordering inferability),
+  `question:0041-driver-complexity-vs-median-age-at-diagnosis` (driver-count vs age of onset).
+- Hypotheses: `hypothesis:0004-mhn-pathway-ordering` (MHN-inferred order),
+  `hypothesis:0006-pre-malignant-n-minus-1-driver-carriage` (observed paired-stage carriage / n-1).
 - Topic: `topic:multistage-carcinogenesis-and-age-of-onset`.
 - Discussions: `2026-04-24-mutation-ordering-and-path-dependency`,
   `2026-06-07-hallmark-ordering-and-data-driven-modules`,
@@ -86,7 +91,7 @@ aetiology, contamination/QC, gene-length confounding). Three coupled sub-questio
   **age->mutation-detection circularity** as first-order, not footnotes.
 - Keep **association** (co-occurrence/exclusivity) separate from **order** (MHN) separate from
   **modules** (a distinct inference step) — do not let one stand in for another.
-- Calibrate against external truth where it exists: PCAWG chronology (order), Belikov 2017 / SEER
+- Calibrate against external truth where it exists: PCAWG chronology (order), Belikov [@Belikov2017] / SEER
   (count), before claiming any novel temporal result.
 
 ## Open Questions

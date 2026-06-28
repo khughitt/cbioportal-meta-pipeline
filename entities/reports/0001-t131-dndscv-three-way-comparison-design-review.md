@@ -23,7 +23,7 @@ overall: WARN
 
 ## Summary
 
-The t131 plan is methodologically sound, has empirical validation from the PoC run (74/199 Bailey drivers @ top-100; clean q011 falsifier readout), and the implementation matches the design with the schema contract, status enum, and split-build flag all correctly wired. The main weaknesses are operational rather than methodological: (a) the conda env path has not been validated end-to-end (PoC used system R, violating `feedback:r-reproducibility`); (b) reproducibility seeding is incomplete — `random_seed` is declared in config but is not threaded through to `set.seed()` in `run_dndscv.R`; (c) the t131 schema landed on a *new* file `_dndscv.feather` rather than mutating the canonical `gene_cancer_study_ratio_annotated.feather`, which is a safer choice than the plan called for but means downstream consumers must opt in explicitly. Two methodological items deserve a second look before publishing: dNdScv's built-in `max_coding_muts_per_sample=3000` filter is *independent* of the project's existing `annotate_hypermutators` step and may produce a different sample-exclusion set than the user expects (POLE/UCEC/SKCM cohorts in particular); and the PubTator `entrez→symbol` join via `data/grch37.tsv` is likely incomplete, which will bias the q011 falsifier toward older/established gene symbols.
+The t131 plan is methodologically sound, has empirical validation from the PoC run (74/199 Bailey drivers @ top-100; clean `question:0011-gene-length-as-literature-attention-confounder` falsifier readout), and the implementation matches the design with the schema contract, status enum, and split-build flag all correctly wired. The main weaknesses are operational rather than methodological: (a) the conda env path has not been validated end-to-end (PoC used system R, violating `feedback:r-reproducibility`); (b) reproducibility seeding is incomplete — `random_seed` is declared in config but is not threaded through to `set.seed()` in `run_dndscv.R`; (c) the t131 schema landed on a *new* file `_dndscv.feather` rather than mutating the canonical `gene_cancer_study_ratio_annotated.feather`, which is a safer choice than the plan called for but means downstream consumers must opt in explicitly. Two methodological items deserve a second look before publishing: dNdScv's built-in `max_coding_muts_per_sample=3000` filter is *independent* of the project's existing `annotate_hypermutators` step and may produce a different sample-exclusion set than the user expects (POLE/UCEC/SKCM cohorts in particular); and the PubTator `entrez→symbol` join via `data/grch37.tsv` is likely incomplete, which will bias the `question:0011-gene-length-as-literature-attention-confounder` falsifier toward older/established gene symbols.
 
 ## Rubric Results
 
@@ -35,7 +35,7 @@ The t131 plan is methodologically sound, has empirical validation from the PoC r
 | 4. Identifiability | PASS | Snakemake DAG fully connected; PubTator conditional input is null-safe. |
 | 5. Reproducibility | WARN | Conda env + dndscv git SHA pinned; `random_seed` config knob exists but is *not* threaded into `run_dndscv.R` (`set.seed` never called). Conda path itself never run end-to-end. |
 | 6. Validation criteria | WARN | Smoke tests enumerated in plan; no automated test fixtures shipped; PubTator-correlation panel has no falsification criterion beyond "either result is informative." |
-| 7. Scope check | PASS | Within `specs/research-question.md`. Literature-attention sub-axis is methodological cross-check, justified via `q011`. |
+| 7. Scope check | PASS | Within `specs/research-question.md`. Literature-attention sub-axis is methodological cross-check, justified via `question:0011-gene-length-as-literature-attention-confounder`. |
 | 8. Integration boundaries | PASS-with-caveat | Schema-contract types pinned; new file `gene_cancer_study_ratio_annotated_dndscv.feather` is *additive*. Downstream consumers reading the un-suffixed file see no new columns and do not break — but also gain no signal unless updated. Plan said "join into the canonical feather"; implementation chose the safer additive-file route. Update `doc/guides/canonical-outputs.md` to reflect this. |
 | 9. Manifest completeness | N/A | Project does not generate `datapackage.json` for any pipeline output; not specific to t131. |
 
@@ -59,12 +59,12 @@ For UCEC (POLE), SKCM (UV), and MSI-H cohorts this matters in two ways:
 
 ### F3 — PubTator `entrez→symbol` join via `data/grch37.tsv` is incomplete (Dim 2)
 
-`compare_three_way_rankings.py:112-128` joins PubTator concept_ids to symbols via `data/grch37.tsv` (Ensembl GRCh37 entrez↔symbol map). The plan flags this as a known limitation that HGNC alias normalization (`task:t082`) would fix. Two specific risks for the q011 falsifier:
+`compare_three_way_rankings.py:112-128` joins PubTator concept_ids to symbols via `data/grch37.tsv` (Ensembl GRCh37 entrez↔symbol map). The plan flags this as a known limitation that HGNC alias normalization (`task:t082`) would fix. Two specific risks for the `question:0011-gene-length-as-literature-attention-confounder` falsifier:
 
 1. **Symbol drift** — Common-word symbols (CAT, SET, ACE, PAX) and symbols renamed since GRCh37 (KMT2A↔MLL, etc.) will be either lost or mis-merged. The mis-merge case actively biases the literature-attention slope.
 2. **Multi-entrez genes** — A symbol with multiple entrez IDs (recurrent for genes with paralogs / readthrough transcripts) gets PubTator counts summed across all entrez. The script does this via `groupby(symbol)["n"].sum()`. That is the right convention but inflates the count for a small number of genes (e.g., gene families with many pseudogene paralogs).
 
-**Recommendation:** Before publishing the q011 falsifier readout from the full run, either (a) check the join-rate against PubTator's own gene-info dump and report it in the notebook, or (b) gate the q011 panel on `task:t082` landing first. Cheap remediation: in the notebook, add a "PubTator join coverage" cell reporting `n_pub / n_with_dndscv_signal` to make the gap visible.
+**Recommendation:** Before publishing the `question:0011-gene-length-as-literature-attention-confounder` falsifier readout from the full run, either (a) check the join-rate against PubTator's own gene-info dump and report it in the notebook, or (b) gate the `question:0011-gene-length-as-literature-attention-confounder` panel on `task:t082` landing first. Cheap remediation: in the notebook, add a "PubTator join coverage" cell reporting `n_pub / n_with_dndscv_signal` to make the gap visible.
 
 ### F4 — Out_dir choice has order-of-magnitude cost implications (operational)
 
@@ -79,15 +79,15 @@ For UCEC (POLE), SKCM (UV), and MSI-H cohorts this matters in two ways:
 
 `reconcile_dndscv_per_cancer.py:128-146` takes min(qglobal_cv) across builds for any cancer type that spans both hg19 and hg38 sub-cohorts, and sets `dndscv_split_build = True`. This is the documented choice — a single warning flag for consumers to filter on. But a small hg38 sub-cohort that achieves q=1e-6 for a gene will outrank a large hg19 sub-cohort that achieves q=1e-5, even though the latter has more evidence.
 
-The plan acknowledges this as a known approximation and the long-term fix is t136 (canonicalize to GRCh38). For the q011 falsifier readout this is unlikely to matter (top-100 driver recovery is dominated by mono-build cancer types). For per-cancer claims about specific tissues it could matter.
+The plan acknowledges this as a known approximation and the long-term fix is t136 (canonicalize to GRCh38). For the `question:0011-gene-length-as-literature-attention-confounder` falsifier readout this is unlikely to matter (top-100 driver recovery is dominated by mono-build cancer types). For per-cancer claims about specific tissues it could matter.
 
 **Recommendation:** Document explicitly in the notebook's split-build cell: "for cancer types with `dndscv_split_build = True`, the q-value reported is min across sub-cohorts, not a unified-cohort q. Treat per-cancer significance for these as a lower-bound on the unified q." No code change required.
 
 ### F6 — Threshold parameters lack citation (Dim 1)
 
-`dndscv_min_samples = 50` and `dndscv_min_variants = 500` (config defaults) are heuristic. Martincorena 2017 and the dndscv tutorial recommend "at least a few hundred samples" for reliable signal but do not give a hard threshold. The 3000-coding-muts hypermutator cap is the dndscv default.
+`dndscv_min_samples = 50` and `dndscv_min_variants = 500` (config defaults) are heuristic. Martincorena et al. [@Martincorena2017] and the dndscv tutorial recommend "at least a few hundred samples" for reliable signal but do not give a hard threshold. The 3000-coding-muts hypermutator cap is the dndscv default.
 
-**Recommendation:** Add a brief comment in the config header explaining the 50/500 choice ("conservative — below ~50 samples the trinucleotide background is unreliable per dndscv tutorial; 500 variants is roughly 10/sample × 50 samples"). Add citation for Martincorena 2017 inline. Cost: a few lines of documentation; no code change.
+**Recommendation:** Add a brief comment in the config header explaining the 50/500 choice ("conservative — below ~50 samples the trinucleotide background is unreliable per dndscv tutorial; 500 variants is roughly 10/sample × 50 samples"). Add citation for Martincorena et al. [@Martincorena2017] inline. Cost: a few lines of documentation; no code change.
 
 ### F7 — `panel_bearing_studies` config is not consulted by `prepare_dndscv_input.py` (Dim 8)
 
@@ -127,7 +127,7 @@ Per handoff: PoC ran against system R; conda env was successfully built once via
 2. **F4** — Decide `out_dir` strategy (clean rebuild vs shared upstream from `pan-cancer/`); confirm with user before kickoff.
 3. **F1** — Add `set.seed(snakemake@config[["random_seed"]])` in `run_dndscv.R` (2 lines).
 4. **F8** — Update `doc/guides/canonical-outputs.md` to document the new `_annotated_dndscv.feather`.
-5. **F3** — Add a PubTator join-coverage cell to the notebook before relying on the q011 falsifier readout for any external claim.
+5. **F3** — Add a PubTator join-coverage cell to the notebook before relying on the `question:0011-gene-length-as-literature-attention-confounder` falsifier readout for any external claim.
 6. **F2** — Phase-2 follow-up task: coordinate `prepare_dndscv_input.py` filtering with `annotate_hypermutators` output.
 7. **F7** — Spot-check `panel_id` populated-ness in `msk_met_2021/metadata/samples.feather`; if mixed-null, fix the modality inference.
 8. **F5, F6, F9** — Documentation / test-fixture work; not blocking.
@@ -137,7 +137,7 @@ Per handoff: PoC ran against system R; conda env was successfully built once via
 - The plan **identifies and closes two latent bugs** in the original `run_dndscv.R` (column-name mismatch + `mut_filtered.feather` input source). That is the kind of finding a review pass is supposed to surface, and it was caught at planning time rather than at run time.
 - **The schema contract is comprehensive and the status enum is well-designed.** The `not_run / below_threshold / failed_qc / tested_not_significant / tested_significant` taxonomy avoids the common pitfall of conflating "absent" with "tested-and-null."
 - **Min-q rollup choice is correctly justified** with a tissue-specific-driver argument (BRAF/melanoma, KRAS/pancreatic) — this is exactly the kind of decision-with-rationale a future reviewer should not have to relitigate.
-- **PoC empirical results validate the design**: dNdScv recovers 74/199 Bailey drivers @ top-100 vs. raw=5 / length-adj=6, and the q011 falsifier panel shows the predicted gradient (raw ρ=+0.127 → length_adj ρ=−0.009 → dNdScv ρ=+0.055). The plan's headline claim survived first contact with data.
+- **PoC empirical results validate the design**: dNdScv recovers 74/199 Bailey drivers @ top-100 vs. raw=5 / length-adj=6, and the `question:0011-gene-length-as-literature-attention-confounder` falsifier panel shows the predicted gradient (raw ρ=+0.127 → length_adj ρ=−0.009 → dNdScv ρ=+0.055). The plan's headline claim survived first contact with data.
 - **Fail-loud build-metadata behavior** correctly implements `AGENTS.md`'s "explicit > defensive, fail early" rule. The `study_reference_build_override` map is the right escape hatch.
 - **Side-config + side-target** keeps the default `rule all` R-free for users without conda. Good operational hygiene.
 - **Latent-bug fix attribution** in the eventual commit message — good provenance discipline.

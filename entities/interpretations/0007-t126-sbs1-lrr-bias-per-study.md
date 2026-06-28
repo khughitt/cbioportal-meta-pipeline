@@ -73,7 +73,7 @@ For reference, the matched WES cohort sees a much more even split (CE:CL ≈ 1.8
 
 ## Anomaly: the matched cohort's f_LRR sits below the Yaacov cancer baseline
 
-`tcga_mc3` returns `f_lrr_corrected = 0.155` with a tight CI [0.135, 0.179]. Yaacov 2023's published cancer baseline is approximately 0.40 (LRR-unbiased). The 25-percentage-point gap is large and warrants explanation.
+`tcga_mc3` returns `f_lrr_corrected = 0.155` with a tight CI [0.135, 0.179]. The published cancer baseline in Yaacov et al. [@Yaacov2023] is approximately 0.40 (LRR-unbiased). The 25-percentage-point gap is large and warrants explanation.
 
 Most likely cause: the gene-CDS approximation used as the WES denominator (sum of `rt_ce_bp` and `rt_cl_bp` across all genes in the t121 map) is not directly comparable to Yaacov's WGS-based whole-genome denominator. Yaacov's denominator is total constitutive-bin extent in the genome (~620 Mb, with CE:CL roughly 1:1.3 by 50kb-bin count). The gene-CDS approximation captures only the gene-body fraction of constitutive bins, and gene density is itself enriched in early-replicating territory. So the WES denominator over-weights CE relative to genome-wide.
 
@@ -81,13 +81,13 @@ Most likely cause: the gene-CDS approximation used as the WES denominator (sum o
 
 A future WGS-based version of this test would use whole-bin-bp as the denominator and would not have this offset.
 
-## Implications for q009
+## Implications for `question:0009-sbs1-lrr-bias-as-normal-contamination-flag`
 
-q009 (SBS1 LRR-bias as a contamination flag) cannot be evaluated on cBioPortal panel data using the t121 RT-bin design and current attribution methods. The fundamental obstacle is structural: panel territory does not adequately sample late-replicating regions, so the published SBS1 LRR-bias signal (which lives precisely in those regions) is not measurable on the unmatched-normal cohort that q009 was designed to flag.
+`question:0009-sbs1-lrr-bias-as-normal-contamination-flag` cannot be evaluated on cBioPortal panel data using the t121 RT-bin design and current attribution methods. The fundamental obstacle is structural: panel territory does not adequately sample late-replicating regions, so the published SBS1 LRR-bias signal (which lives precisely in those regions) is not measurable on the unmatched-normal cohort that `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` was designed to flag.
 
 This is a stronger and more defensible finding than t110/t122/t123 produced. Where those pilots showed *empirical* sparsity (zero-inflation, coverage confounding), this run identifies the *structural* reason: the panel's CE:CL-bp ratio (23:1) and the constitutive-bin coverage ceiling that no method choice can work around.
 
-q009 is therefore moved to `deferred` rather than `retired` because the limitation lies in the data surface, not the mechanism. If WGS cohorts are added to the pipeline (Hartwig HMF, PCAWG follow-ons, or direct ingestion of WGS-converted TCGA where possible), the test becomes immediately trivial to run with adequate power — `panel_cl_bp` rises by ~5 orders of magnitude, and a reanalysis of the same matched/unmatched contrast becomes powered.
+`question:0009-sbs1-lrr-bias-as-normal-contamination-flag` is therefore moved to `deferred` rather than `retired` because the limitation lies in the data surface, not the mechanism. If WGS cohorts are added to the pipeline (Hartwig HMF, PCAWG follow-ons, or direct ingestion of WGS-converted TCGA where possible), the test becomes immediately trivial to run with adequate power — `panel_cl_bp` rises by ~5 orders of magnitude, and a reanalysis of the same matched/unmatched contrast becomes powered.
 
 ## What landed in the codebase
 
@@ -109,8 +109,8 @@ When WGS inputs are added to the pipeline, the same script will run against the 
 
 1. Mark `t124` done; reference this interpretation as the closure note.
 2. Mark `t126` done; reference this interpretation as the closure note.
-3. Update `q009` status to `deferred` with revisit-condition `WGS inputs ingested`. Cite this interpretation as the deferral rationale.
-4. Leave the t111 normal-tissue spectra branch untouched — q007 and q008 are independent of q009's outcome and the `t111` infrastructure remains valuable for those questions.
+3. Update `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` status to `deferred` with revisit-condition `WGS inputs ingested`. Cite this interpretation as the deferral rationale.
+4. Leave the t111 normal-tissue spectra branch untouched — `question:0007-cross-tissue-somatic-mutation-rate-variation-as-null-model` and `question:0008-signature-decomposition-tissue-background-subtraction` are independent of `question:0009-sbs1-lrr-bias-as-normal-contamination-flag`'s outcome and the `t111` infrastructure remains valuable for those questions.
 5. Pre-register update for any future re-run: when the WGS revisit happens, the pre-run power projection must use `n × constitutive_bin_fraction × cohort_overlap_fraction`, not the raw SBS1 exposure sum. This is the lesson the t126 verdict carries forward.
 
 ## Deviations from pre-registration

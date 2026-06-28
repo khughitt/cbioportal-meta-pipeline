@@ -34,21 +34,24 @@ This study identifies a distinct germline predisposition pattern in Ewing sarcom
 
 ## Methods
 
-**Design:** Three-stage study — (1) European-ancestry pan-sarcoma case-control discovery (141 established cancer predisposition genes), (2) independent European-ancestry Ewing sarcoma validation with ancestry-matched controls, and (3) parent-proband trio inheritance analysis.
+**Design:** Three-stage study — (1) European-ancestry pan-sarcoma case-control discovery (141 established cancer predisposition genes), (2) independent European-ancestry Ewing sarcoma validation with ancestry-matched controls, and (3) parent-proband trio inheritance analysis [@Gillani2022].
 
-**Discovery cohort:** 1,147 individuals with pediatric sarcoma (226 Ewing, 438 osteosarcoma, 180 rhabdomyosarcoma, 303 other) from four data sources aggregated via St. Jude Cloud. Case-control analysis restricted to 879 European-ancestry cases vs. 10,548 matched cancer-free controls (from Autism Sequencing Consortium, Framingham Heart Study, Multi-Ethnic Study of Atherosclerosis, Lung Cohort, and NHLBI GO-ESP).
+**Discovery cohort:** 1,147 individuals with pediatric sarcoma (226 Ewing, 438 osteosarcoma, 180 rhabdomyosarcoma, 303 other) from four data sources aggregated via St. Jude Cloud.
+Case-control analysis restricted to 879 European-ancestry cases vs. 10,548 matched cancer-free controls (from Autism Sequencing Consortium, Framingham Heart Study, Multi-Ethnic Study of Atherosclerosis, Lung Cohort, and NHLBI GO-ESP) [@Gillani2022].
 
-**Validation cohort:** 433 additional Ewing sarcoma individuals (Gabriella Miller Kids First program / Project GENESIS); 356 European-ancestry cases vs. 10,680 matched controls. Trio subset: 301 Ewing sarcoma probands with WGS from both parents (602 parents).
+**Validation cohort:** 433 additional Ewing sarcoma individuals (Gabriella Miller Kids First program / Project GENESIS); 356 European-ancestry cases vs. 10,680 matched controls.
+Trio subset: 301 Ewing sarcoma probands with WGS from both parents (602 parents) [@Gillani2022].
 
 **Sequencing:** Combination of WGS and WES; WGS converted to WES equivalents by restriction to coding target intervals. Mean target coverage 53.9x (discovery) and 27.3x (validation).
 
 **Variant calling:** DeepVariant (v0.8.0) for germline variant calling; pathogenicity classified per ACMG guidelines using ClinVar + VEP consequence annotations. Only putative loss-of-function (frameshift, splice site, stop-gain) and pathogenic/likely pathogenic missense variants retained.
 
-**Gene sets:** 141 established cancer predisposition genes (primary screen); 43 genes with established DDR roles (OMIM + Reactome) for targeted validation analysis.
+**Gene sets:** 141 established cancer predisposition genes (primary screen); 43 genes with established DDR roles (OMIM + Reactome) for targeted validation analysis [@Gillani2022].
 
-**Population stratification:** PCA with 1000 Genomes super-population reference; random forest ancestry classifier; matching on first 10 principal components.
+**Population stratification:** PCA with 1000 Genomes super-population reference; random forest ancestry classifier; matching on first 10 principal components [@Gillani2022].
 
-**Statistics:** Two-sided Fisher's exact test; exact2x2 package for OR and 95% CI; Benjamini-Hochberg FDR. FDR < 0.05 threshold for discovery; single-hypothesis p < 0.05 for pre-specified validation tests.
+**Statistics:** Two-sided Fisher's exact test; exact2x2 package for OR and 95% CI; Benjamini-Hochberg FDR.
+FDR < 0.05 threshold for discovery; single-hypothesis p < 0.05 for pre-specified validation tests [@Gillani2022].
 
 ## Key Findings
 
@@ -69,9 +72,9 @@ This study identifies a distinct germline predisposition pattern in Ewing sarcom
 - *ERCC4* and *NBN*: marginal signals (OR ~4, p ~0.09).
 - Five DDR genes (*FANCC*, *FANCA*, *CHEK2*, *ERCC4*, *NBN*) collectively contributed pathogenic variants in 18/356 Ewing sarcoma cases (5.1%) vs. 137/10,680 controls (1.3%).
 
-**TP53 distinction:** Rate of pathogenic germline *TP53* variants in Ewing sarcoma (0%) was significantly lower than in all sarcomas combined (1.6%, p = 0.006) and osteosarcoma in particular (2.7%, p = 0.0005), consistent with the clinical observation that Ewing sarcoma is not seen frequently in Li-Fraumeni families.
+**TP53 distinction:** Rate of pathogenic germline *TP53* variants in Ewing sarcoma (0%) was significantly lower than in all sarcomas combined (1.6%, p = 0.006) and osteosarcoma in particular (2.7%, p = 0.0005), consistent with the clinical observation that Ewing sarcoma is not seen frequently in Li-Fraumeni families [@Gillani2022].
 
-**Inheritance analysis (trio cohort, n = 301):**
+**Inheritance analysis (trio cohort, n = 301) [@Gillani2022]:**
 - 32/301 probands (10.6%) harbored pathogenic germline DDR variants.
 - 32/32 (100%) of probands with pathogenic DDR variants had the identical variant identified in a carrier parent — confirming autosomal inheritance, not de novo origin.
 - Only 19/269 probands without a DDR variant had at least one parent with a germline DDR variant (7.1%), consistent with population carrier frequency.

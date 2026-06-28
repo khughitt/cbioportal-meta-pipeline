@@ -8,6 +8,7 @@ updated: '2026-06-28'
 id: paper:Hoadley2018
 ontology_terms: []
 source_refs:
+- cite:Hoadley2018
 - article:Hoadley2018
 related:
 - paper:Bailey2018
@@ -43,7 +44,7 @@ molecular classification, but a meaningful fraction of tumors regroup into cross
 clusters (pan-squamous, pan-gastrointestinal, pan-gynecologic, pan-kidney) that the
 authors argue could change clinical management for ~1 in 10 patients. Extends a 2014
 interim Pan-Cancer-12 analysis of 3,527 tumors / 12 cancer types up to the full 33-type
-PanCanAtlas cohort.
+PanCanAtlas cohort [@Hoadley2018].
 
 This note connects the TCGA PanCanAtlas lineage-classification frame to paper:Bailey2018,
 paper:Ellrott2018, paper:Ciriello2013, topic:pan-cancer-mutation-landscape,
@@ -58,7 +59,7 @@ discussion:0008-tissue-cell-type-specificity-of-cancer-drivers.
 CNS, soft tissue, neural-crest/melanoma). Platform-specific sample counts:
 mRNA n=10,165; miRNA n=10,170; RPPA n=7,858 (216 proteins); methylation reduced
 to 1,035 informative CpG sites; CNA at chromosome-arm level. 9,759 tumors had
-complete data on the four platforms used for joint clustering.
+complete data on the four platforms used for joint clustering [@Hoadley2018].
 
 **Integrative clustering (iCluster).** Joint multivariate latent-variable model
 integrating four platforms simultaneously: CNA, DNA methylation, mRNA, and miRNA.
@@ -112,7 +113,7 @@ PanCanAtlas flagship arguing that tissue-of-origin / cell-of-origin dominates mo
 classification across 10,000 TCGA tumors. Direct competing frame to mutation-driven clustering:
 when our pipeline clusters cancers by gene-mutation patterns, we should be aware that the
 dominant axis of variation across cancers is *not* somatic mutations but tissue lineage.
-Critical interpretation lens for `summary/mut/clusters/cancer.feather`.
+Critical interpretation lens for `summary/mut/clusters/cancer.feather` [@Hoadley2018].
 
 **Important nuance from the paper itself:** Hoadley et al. *did not include somatic
 mutations as a clustering input* (sparsity argument) and *did not* run a mutations-only

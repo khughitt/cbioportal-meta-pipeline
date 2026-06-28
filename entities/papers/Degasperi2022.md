@@ -39,13 +39,13 @@ expanding the COSMIC catalog with 40 new high-confidence SBS signatures and 18 n
 signatures. It introduces a principled common-vs-rare signature framework — each tumor type
 has a small, stable set of "common" signatures and a long tail of rare ones — and proposes a
 practical two-step fitting algorithm (FitMS) that exploits this structure to reduce false
-positives in per-sample signature assignment.
+positives in per-sample signature assignment [@Degasperi2022].
 
 ## Methods
 
 **Cohorts.** Primary analysis: 12,222 tumor-normal matched WGS pairs from the GEL 100,000
 Genomes Project (v8 data release), covering 19 tumor types. Validation: 3,001 ICGC primary
-and 3,417 Hartwig metastatic WGS cancers (18,640 total across all three cohorts).
+and 3,417 Hartwig metastatic WGS cancers (18,640 total across all three cohorts) [@Degasperi2022].
 
 **Extraction pipeline.**
 1. Per-tumor-type mutational catalogs (96-channel SBS, 78-channel DBS) were constructed.
@@ -74,7 +74,7 @@ signatures (constrained non-negative least squares); Step 2 attempts to detect o
 rare signature per sample via an errorReduction strategy (KLD improvement ≥ 15%) or
 constrainedFit (residual cosine ≥ 0.8 to a known rare signature). Simulations (100 genomes,
 5 common + 1 rare) demonstrated errorReduction outperformed single-step "fit all" and
-constrainedFit strategies.
+constrainedFit strategies [@Degasperi2022].
 
 **Germline-somatic driver association.** For signatures with suspected causal mechanisms (BER,
 MMR, POLE/POLD1, DSBR, deamination), germline and somatic mutations in relevant genes were

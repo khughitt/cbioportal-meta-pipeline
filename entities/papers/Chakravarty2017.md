@@ -7,6 +7,7 @@ updated: '2026-06-28'
 id: paper:Chakravarty2017
 ontology_terms: []
 source_refs:
+- cite:Chakravarty2017
 - article:Chakravarty2017
 related:
 - paper:Cerami2012
@@ -69,7 +70,7 @@ that indication). Actionability rate was highly tumor-type-dependent: very high 
 thyroid, GIST, and lung adenocarcinoma (driven by BRAF, RET, KIT/PDGFRA, EGFR/ALK/ROS1),
 and much lower in pancreatic, colorectal, and many rare cancers. The gap between the 41%
 "any-level" and 7.5% "Level 1" figures motivates the explicit tiering: most actionable
-findings at the time were off-label or investigational, not standard-care.
+findings at the time were off-label or investigational, not standard-care [@Chakravarty2017].
 
 ## Relevance
 
@@ -99,4 +100,4 @@ snapshots 5 years apart and showed the Level 1/2 standard-care actionability rat
 ~8.9% (2017) to ~31.6% (2022), while tumors with only non-actionable drivers nearly halved -
 quantifying the evidence-decay concern above and illustrating why OncoKB-derived statistics
 must be versioned. OncoKB is now updated on roughly a monthly cadence, with an expedited
-(< 2-week) path for new FDA approvals via the Clinical Genomics Annotation Committee.
+(< 2-week) path for new FDA approvals via the Clinical Genomics Annotation Committee [@Suehnholz2024].

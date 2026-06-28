@@ -31,7 +31,7 @@ related: []
 
 ## Key Contribution
 
-This study characterizes the protein-coding impact of single-base substitution (SBS) mutational signatures across 12,341 cancer genomes from 18 cancer types. The central finding is that stop-gain mutations (SGMs; nonsense mutations) are strongly and consistently enriched in the SBS signatures of tobacco smoking (SBS4/SBS29), APOBEC cytidine deaminases (SBS13), and reactive oxygen species (SBS18), while other SBS classes (missense, silent) are not. This enrichment is mechanistically explained by the trinucleotide preferences of these mutational processes: their preferred substitution contexts happen to convert specific serine and glutamic acid codons into stop codons at high frequency. The study thereby provides direct evidence that specific exogenous and endogenous mutational processes cause protein loss-of-function at scale, connecting mutational process aetiology to functional genomic consequences.
+This study characterizes the protein-coding impact of single-base substitution (SBS) mutational signatures across 12,341 cancer genomes from 18 cancer types. The central finding is that stop-gain mutations (SGMs; nonsense mutations) are strongly and consistently enriched in the SBS signatures of tobacco smoking (SBS4/SBS29), APOBEC cytidine deaminases (SBS13), and reactive oxygen species (SBS18), while other SBS classes (missense, silent) are not. This enrichment is mechanistically explained by the trinucleotide preferences of these mutational processes: their preferred substitution contexts happen to convert specific serine and glutamic acid codons into stop codons at high frequency. The study thereby provides direct evidence that specific exogenous and endogenous mutational processes cause protein loss-of-function at scale, connecting mutational process aetiology to functional genomic consequences [@Adler2023].
 
 ## Methods
 
@@ -40,11 +40,11 @@ This study characterizes the protein-coding impact of single-base substitution (
 - HMF (n = 3,472 WGS, metastatic cancers from Hartwig Medical Foundation)
 - TCGA PanCanAtlas (n = 6,509 WES, primary cancers)
 
-Hypermutated samples were excluded (>90,000 SNVs in WGS; >1,800 SNVs/Mbp in WES). After QC, a total of 1.75 million exonic SNVs were annotated by protein-coding consequence (missense 67.4 %, silent 27.7 %, SGM 4.6 %, stop-loss 0.1 %, start-loss 0.1 %) using ANNOVAR.
+Hypermutated samples were excluded (>90,000 SNVs in WGS; >1,800 SNVs/Mbp in WES). After QC, a total of 1.75 million exonic SNVs were annotated by protein-coding consequence (missense 67.4 %, silent 27.7 %, SGM 4.6 %, stop-loss 0.1 %, start-loss 0.1 %) using ANNOVAR [@Adler2023].
 
 **Signature assignment.** SBS signatures from the COSMIC v3 catalog were used. For PCAWG, consensus signature exposures from the PCAWG working group were used. For TCGA and HMF, per-sample signature assignment was performed with SigProfilerSingleSample (v0.0.0.27). Each SNV was assigned to the most probable SBS signature per sample.
 
-**Enrichment analysis.** A Fisher's exact test framework tested whether each SNV functional class was enriched in specific SBS signatures compared to the exome-wide distribution, across cancer types and cohorts separately. FDR correction was applied (Benjamini-Hochberg). Probabilistic reassignment over 100 iterations was used to account for annotation uncertainty.
+**Enrichment analysis.** A Fisher's exact test framework tested whether each SNV functional class was enriched in specific SBS signatures compared to the exome-wide distribution, across cancer types and cohorts separately. FDR correction was applied (Benjamini-Hochberg). Probabilistic reassignment over 100 iterations was used to account for annotation uncertainty [@Adler2023].
 
 **Gene-level analysis.** Genes with significantly enriched SGMs from the three major signatures (SBS4, SBS13, SBS18) were identified via one-tailed Fisher's exact tests comparing SGM distributions per gene against all SGMs in all genes. Brown's method merged p-values across datasets.
 

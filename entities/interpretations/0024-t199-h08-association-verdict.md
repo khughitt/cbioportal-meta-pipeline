@@ -8,6 +8,15 @@ updated: '2026-06-28'
 id: interpretation:0024-t199-h08-association-verdict
 source_refs:
 - task:t199
+- results/signature-h08-arms-2026-05-31/association/covariate_denominator.json
+- results/signature-h08-arms-2026-05-31/association/h08_association_grid.feather
+- results/signature-h08-arms-2026-05-31/association/h08_association_grid.meta.json
+- results/signature-h08-arms-2026-05-31/association/h08_sensitivity.feather
+- results/signature-h08-arms-2026-05-31/association/h08_permutation_null.feather
+- results/signature-h08-arms-2026-05-31/association/h08_lung_pooling.feather
+- code/scripts/build_h08_covariates.py
+- code/scripts/run_h08_association_scan.py
+- code/scripts/run_h08_sensitivity.py
 date: '2026-05-31'
 related:
 - task:t199
@@ -37,7 +46,7 @@ inherits the feasibility constraints from
 The primary read is the **centered-log-ratio (CLR) coordinate** of the target signature, regressed
 on the (z-scored) registered covariate with the pre-registered within-tissue adjustment set, ranked
 by |signed standardized coefficient| within each (stratum, signature) cell. The ranking statistic,
-adjustment set, CLR transform (pseudocount 0.5; structural zeros below the 5%-active rule excluded),
+adjustment set, CLR transform in `results/signature-h08-arms-2026-05-31/association/covariate_denominator.json` (pseudocount 0.5; structural zeros below the 5%-active rule excluded),
 BH-FDR family, and the per-arm covariate-count **denominator** were all frozen in WP1/WP2 and
 written to `covariate_denominator.json` **before** any rank was computed.
 
@@ -62,7 +71,7 @@ restricted to the t179 count-floor-passing exposures (the trusted-exposure prima
 | B | LUAD + LUSC | 1,089 | 993 | 859 | `pack_years` 703/859 = **81.8%** | mean 48.2, median 42 pack-years; 99.9% > 0 |
 | C | BLCA·BRCA·CESC·HNSC·LUAD·LUSC | 3,434 | 2,991 | 1,934 | `apobec3ab_joint` 1,883/1,934 = **97.4%** | mean 9.04, median 9.19 (log2 APOBEC3A/B mRNA) |
 
-The fit n per arm equals the completeness numerator (370 / 703 / 1,883) — the model drops samples
+In `results/signature-h08-arms-2026-05-31/association/h08_association_grid.feather`, the fit n per arm equals the completeness numerator (370 / 703 / 1,883) — the model drops samples
 with the target covariate missing. All three arms are comfortably powered for a textbook effect;
 none of the misses below is a power artefact (Arm B is the smallest completeness fraction at 82%, and
 its registered proxy still has n = 703).
@@ -88,7 +97,7 @@ before ranks, so a covariate that fails CLR cannot be promoted to a primary PASS
 basis. Basis-dependent recovery (absolute passes, CLR fails) is reported as such and pushes the read
 toward `[?]`, never to `[+]`.
 
-**Permutation null** (covariate shuffled *within tissue*, frozen seed 0, n = 1,000; unbiased
+**Permutation null** (`results/signature-h08-arms-2026-05-31/association/h08_permutation_null.feather`; covariate shuffled *within tissue*, frozen seed 0, n = 1,000; unbiased
 `(exceedances+1)/(n+1)` p-value):
 
 | Arm | obs coef | exceedances / n | p_perm | Exceeds null? |
@@ -97,11 +106,11 @@ toward `[?]`, never to `[+]`.
 | A | −0.046 | 400 / 1,000 | 0.401 | no (consistent with null) |
 | B | +0.107 | 190 / 1,000 | 0.191 | no (consistent with null) |
 
-Arm C's effect is not reachable by any of 1,000 within-tissue permutations (p floors at the null's
+In `results/signature-h08-arms-2026-05-31/association/h08_permutation_null.feather`, Arm C's effect is not reachable by any of 1,000 within-tissue permutations (p floors at the null's
 resolution, 0.001), so the only primary pass is stable — the 1/3 read does **not** weaken on
 pre-acceptance.
 
-**APOBEC3-locus leakage guard** (Arm C): excluding the 120 / 1,934 Arm-C samples carrying an
+**APOBEC3-locus leakage guard** (`results/signature-h08-arms-2026-05-31/association/h08_sensitivity.feather`, Arm C): excluding the 120 / 1,934 Arm-C samples carrying an
 APOBEC3A/B-locus mutation, `apobec3ab_joint` remains rank 1, positive — the mRNA→signature
 association is not an artefact of cis mutations at the APOBEC3 locus.
 
@@ -118,11 +127,11 @@ There is **no basis-dependent recovery of A or B** — the absolute-burden basis
 either failing arm, so the 1/3 read is a genuine MC3-as-implemented result, not a CLR compression
 artefact.
 
-**Lung per-histology variant** (Arm B sensitivity): pooled 6/8 (q 0.37), LUAD-only 10/13 (q 0.34),
+**Lung per-histology variant** (`results/signature-h08-arms-2026-05-31/association/h08_lung_pooling.feather`, Arm B sensitivity): pooled 6/8 (q 0.37), LUAD-only 10/13 (q 0.34),
 LUSC-only 13/13 (q 0.65) — splitting the lung pool does not recover the smoking proxy in either
 histology.
 
-**K ± 5 modules**: analytically moot and not re-run — the two pooled arms (B, C) exclude NMF modules
+**K ± 5 modules**: analytically moot and not re-run — per `results/signature-h08-arms-2026-05-31/association/covariate_denominator.json`, the two pooled arms (B, C) exclude NMF modules
 from their denominators, and Arm A's UV proxy sits at rank 10/14 with coef ≈ 0, far from top-3
 regardless of ±5 module covariates.
 
@@ -164,7 +173,7 @@ behaves as designed (it surfaces the strongest covariate per cell and FDR-contro
 
 ## Secondary controls — not evaluable on this arm panel
 
-The pre-reg lists MMR/MSI → SBS6/15/26 and POLE → SBS10 as secondary corroboration controls. They
+The pre-reg lists MMR/MSI → SBS6/15/26 and POLE → SBS10 as secondary corroboration controls. In `results/signature-h08-arms-2026-05-31/association/h08_association_grid.meta.json`, they
 are **not evaluable here**: none of SBS6/15/26/10 is active (above the 5% rule) in any of the seven
 arm strata, so they are absent from the restricted refit's active-signature set
 (`{SBS1, SBS2_13, SBS3, SBS4, SBS5, SBS7, SBS29, SBS40a, SBS40c}`). MSI/POLE hypermutation is rare in
@@ -172,7 +181,7 @@ this panel (chosen for UV/smoking/APOBEC, none of them MMR-driven tumour types),
 not a missing computation. A corroboration of the MMR/POLE controls would require adding MMR-rich
 strata (COAD/READ/STAD/UCEC) — out of scope for the positive-control panel and deferred.
 
-A within-Arm-C observation worth recording: against SBS2_13, `msi_sensor_score` (rank 2, −),
+A within-Arm-C observation worth recording from `results/signature-h08-arms-2026-05-31/association/h08_association_grid.feather`: against SBS2_13, `msi_sensor_score` (rank 2, −),
 `is_msi_h` (rank 3, −) and `pole_hotspot` (rank 4, −) all rank just below `apobec3ab_joint` with
 *negative* sign — APOBEC composition anti-correlates with MMR/POLE hypermutation in the pooled set,
 consistent with these being distinct, competing mutational processes.

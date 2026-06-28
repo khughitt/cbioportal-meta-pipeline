@@ -8,6 +8,13 @@ status: active
 created: '2026-06-08'
 updated: '2026-06-28'
 id: interpretation:0045-t221d-matched-normal-split
+source_refs:
+- code/notebooks/t221d_matched_normal_split.py
+- results/neural-gene-matched-normal-split-2026-06-08/matched_unmatched_primary.tsv
+- results/neural-gene-matched-normal-split-2026-06-08/matched_unmatched_by_region.tsv
+- results/neural-gene-matched-normal-split-2026-06-08/candidate_carrier_studies.tsv
+- results/neural-gene-matched-normal-split-2026-06-08/datapackage.json
+- data/gene_replication_timing.feather
 related:
 - hypothesis:0012-neural-gene-enrichment-length-histology-artifact
 - question:0032-neural-gene-length-null
@@ -21,7 +28,7 @@ related:
 
 # Interpretation: t221(d) — true matched- vs unmatched-normal germline-leak split
 
-> **Verdict: germline leak is not the candidate driver — now confirmed at the study level, the way
+> **Verdict: in `results/neural-gene-matched-normal-split-2026-06-08/matched_unmatched_by_region.tsv`, germline leak is not the candidate driver — now confirmed at the study level, the way
 > matched-normal sequencing actually serves it, not via the dbSNP proxy.** With `matched_normal_studies`
 > populated in config-full (t221c, evidence-derived from per-variant normal barcodes), the 91 WES studies
 > split cleanly into 45 patient-matched-normal and 46 unmatched (tumor-only / pooled). Naively the
@@ -74,7 +81,7 @@ fails at first contact).**
 | matched-normal | 45 | 52,683 | 0.198 | 6 | **0.0008** | **0.0000** |
 | unmatched | 46 | 16,735 | 0.505 | 4 | **0.0366** | 0.0072 |
 
-**75.9 %** of candidate variant rows sit in matched-normal studies. Matched-normal sequencing — whose
+In `results/neural-gene-matched-normal-split-2026-06-08/matched_unmatched_primary.tsv`, **75.9 %** of candidate variant rows sit in matched-normal studies. Matched-normal sequencing — whose
 purpose is to remove germline — does not weaken the residual; the residual is *concentrated* where germline
 has been subtracted. This already refutes the germline-leak hypothesis, but the direction is inflated by the
 region confound (next).
@@ -88,14 +95,14 @@ region confound (next).
 | exonic | matched | 42 | 2,864 | 28.093 | 0.9968 | 0.9938 |
 | exonic | unmatched | 42 | 2,074 | 12.476 | 0.9136 | 0.9278 |
 
-Holding region scope fixed, the matched and unmatched candidate medians are **statistically
+In `results/neural-gene-matched-normal-split-2026-06-08/matched_unmatched_by_region.tsv`, holding region scope fixed, the matched and unmatched candidate medians are **statistically
 indistinguishable** (all-region 0.161 vs 0.170; exonic both deep-null). Matched-normal sequencing removes
 *nothing* of the residual relative to unmatched within the same call-set scope. The residual tracks **region
 scope**, not normal status — exactly the t221b-F1 result, now with the germline axis explicitly crossed in
 and shown to be flat. (Power in the all-region row is thin — 2 vs 4 studies — but the matched cell is the
 *more* significant of the two, which is the safe direction for this conclusion.)
 
-**F3 — The biggest single residual-carrier is matched-normal.** Per the candidate-carrier census, pog570
+**F3 — The biggest single residual-carrier is matched-normal.** Per `results/neural-gene-matched-normal-split-2026-06-08/candidate_carrier_studies.tsv`, pog570
 (matched, all-region) contributes **44,641** of the 69,418 candidate variant rows (64 %), followed by
 difg_glass (unmatched, 8,248), stad_oncosg (unmatched, 5,635), and prostate_dkfz (matched, 5,161). The
 largest piece of the signal by a wide margin comes from a patient-matched-normal cohort, so germline

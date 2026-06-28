@@ -10,6 +10,10 @@ source_refs:
 - report:0001-t131-dndscv-three-way-comparison-design-review
 - discussion:0001-gene-length-bias-in-mutation-rankings-and-literature
 - question:0011-gene-length-as-literature-attention-confounder
+- /data/packages/cbioportal/pan-cancer/summary/mut/table/three_way_ranking_comparison.feather
+- /data/packages/cbioportal/pan-cancer/summary/mut/table/dndscv_pooled.feather
+- /data/packages/cbioportal/pan-cancer/summary/mut/table/gene_cancer_pooled.feather
+- /data/packages/cbioportal/pan-cancer/summary/mut/table/gene_cancer_study_ratio_annotated_dndscv.feather
 related:
 - task:t131
 - task:t139
@@ -26,13 +30,13 @@ Project links: this interpretation records `task:t131` and informs `task:t139`, 
 
 ## Verdict
 
-**[~] Mixed.** The dNdScv chain ran end-to-end at full pan-cancer scale and produced
+**[~] Mixed.** The dNdScv chain ran end-to-end at full pan-cancer scale and produced `/data/packages/cbioportal/pan-cancer/summary/mut/table/three_way_ranking_comparison.feather`
 canonical outputs (146 cancer types, 474,524 annotated rows, 20,591 q < 0.05).
 However, the run surfaced **two independent data-quality issues** that materially
 distort the headline three-way comparison: (a) a tiebreaker artifact in the
 per-gene min-q rollup (`min_qglobal == 0` for 829 genes, fall-through is
 alphabetical), and (b) inflated `mean_inclusive` in the t077 pooled meta-analysis
-output (raw-frequency top-15 dominated by snoU13 / Y_RNA / fragile-site genes at
+output in `/data/packages/cbioportal/pan-cancer/summary/mut/table/gene_cancer_pooled.feather` (raw-frequency top-15 dominated by snoU13 / Y_RNA / fragile-site genes at
 implausible 65–83% rates). Both are fixable; the `q011` falsifier directional
 signal is preserved but should be re-read after the fixes land.
 
@@ -50,7 +54,7 @@ canonical outputs exist:
 | `gene_cancer_study_ratio_annotated_dndscv.feather` | 36M | 474,524 (annotated final) |
 | `three_way_ranking_comparison.feather` | 1.4M | 19,008 genes (consumer-facing) |
 
-PubTator join coverage: 18,028 / 19,008 (95%) — comparable to the PoC's 96%.
+PubTator join coverage in `/data/packages/cbioportal/pan-cancer/summary/mut/table/three_way_ranking_comparison.feather`: 18,028 / 19,008 (95%) — comparable to the PoC's 96%.
 The 12+ hour `run_gene_cancer_meta_analysis.R` step is the dominant bottleneck
 (filed as t141).
 
@@ -60,7 +64,7 @@ Evidence type: `benchmark_evidence` (pipeline integration test passed).
 
 `empirical_data_evidence` (data-quality finding):
 
-- **829 genes** in the pan-cancer table have `min_qglobal == 0.0` exactly (BH FDR
+- **829 genes** in `/data/packages/cbioportal/pan-cancer/summary/mut/table/dndscv_pooled.feather` have `min_qglobal == 0.0` exactly (BH FDR
   numerical underflow). All canonical pan-cancer drivers (TP53, KRAS, NRAS,
   PIK3CA, BRAF, APC, PTEN, RB1, KMT2D, FBXW7, …) sit at `min_q == 0`.
 - The current `compare_three_way_rankings.py` ranks dNdScv by `min_qglobal` only.
@@ -115,7 +119,7 @@ The raw top-15 by `mean_inclusive` is dominated by:
 - known common-fragile-site genes: FHIT, MACROD2, GPC5, IMMP2L, GRID2,
   CNTNAP2, LSAMP, NKAIN3, KCNIP4, SGCZ, LRRTM4
 
-…all reporting `mean_inclusive` between 0.65 and 0.84 (i.e. these "genes" appear
+In `/data/packages/cbioportal/pan-cancer/summary/mut/table/gene_cancer_pooled.feather`, these rows report `mean_inclusive` between 0.65 and 0.84 (i.e. these "genes" appear
 mutated in 65–84% of samples in their best cancer type), which is
 implausible for point mutations and is the signature of either (a) inflated
 pooled-meta-analysis estimates or (b) a count-vs-callability normalization
@@ -138,7 +142,7 @@ those gene loci are most sensitive to coverage-vs-callability mismatches.
 
 ### F5 — `q011` falsifier signal preserved in direction; magnitudes shifted vs PoC (`suggestive`, `empirical_data_evidence`)
 
-Spearman correlation of each ranking against `log10(PubTator mention count)`
+Spearman correlation of each ranking in `/data/packages/cbioportal/pan-cancer/summary/mut/table/three_way_ranking_comparison.feather` against `log10(PubTator mention count)`
 (positive = better-ranked genes get more literature attention; n = 18,028):
 
 | Ranking | full-run ρ | PoC ρ | Δ |
@@ -157,7 +161,7 @@ correlation is bulk-driven; the tiebreaker artifact is concentrated at the head)
 
 ### F6 — Three-way Spearman: dNdScv decorrelated from raw, anti-correlated with length-adj (`descriptive`, `empirical_data_evidence`)
 
-n = 18,645 genes with all three signals, using corrected dNdScv v2 ranking:
+In `/data/packages/cbioportal/pan-cancer/summary/mut/table/three_way_ranking_comparison.feather`, n = 18,645 genes with all three signals, using corrected dNdScv v2 ranking:
 
 | | raw | length_adj | dndscv_v2 |
 |---|---|---|---|
@@ -165,7 +169,7 @@ n = 18,645 genes with all three signals, using corrected dNdScv v2 ranking:
 | length_adj | | 1.000 | **−0.468** |
 | dndscv_v2 | | | 1.000 |
 
-Three notable shifts vs PoC (n=18,135):
+Three notable shifts vs `interpretation:0001-poc-run` (n=18,135):
 
 - `raw ~ length_adj`: +0.476 (PoC: +0.124) — much higher, plausibly reflecting
   the pooled-meta-analysis inflation propagating into both axes
@@ -199,7 +203,7 @@ dNdScv-based ranking. Document explicitly: dNdScv was one of seven inputs
 Bailey et al. [@Bailey2018] used. The "62/100" figure should be read as "agreement with the
 Bailey et al. [@Bailey2018] consensus that included dNdScv", not as independent corroboration.
 
-**Sample sizes:** n_genes_with_pubtator = 18,028; n_genes_with_full_signals =
+**Sample sizes:** In `/data/packages/cbioportal/pan-cancer/summary/mut/table/three_way_ranking_comparison.feather`, n_genes_with_pubtator = 18,028; n_genes_with_full_signals =
 18,645. Spearman p-values are tiny but effect sizes (ρ ≈ ±0.1 to ±0.5) are
 modest — reportable as directional signal, not as strong association.
 
@@ -261,7 +265,7 @@ catches up):
 **`q011` — Does gene length confound literature attention independently of
 mutation count?**
 
-Status: **partially addressed**. The PubTator correlation pattern at full scale
+Status: **partially addressed**. The PubTator correlation pattern in `/data/packages/cbioportal/pan-cancer/summary/mut/table/three_way_ranking_comparison.feather` at full scale
 (raw +0.002, length_adj −0.109, dndscv +0.184) is qualitatively consistent with
 the `q011` conjecture's pre-registered direction (length-mediated attention),
 but the magnitudes diverge from the PoC (raw was +0.127, dndscv +0.055 in the

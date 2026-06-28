@@ -4,7 +4,7 @@ title: 't124: should question:0009 pursue true SBS1 context/topography or retire
   proxy route?'
 status: active
 created: '2026-04-24'
-updated: '2026-04-24'
+updated: '2026-06-28'
 id: discussion:0003-t124-q009-fork-decision
 source_refs:
 - paper:Yaacov2023
@@ -29,12 +29,16 @@ mode: standard
 
 ## Focus
 
-`t124` is the explicit go/no-go gate for `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` (SBS1 LRR bias as a contamination quality flag). After three pilots — `t110` (SBS1/SBS5 ratio, negative), `t122` (all-mutation gene-level CE/CL burden, suggestive but coverage-confounded), and `t123` (CpG-proxy CE/CL burden, collapsed under panel zero-inflation) — the project must choose between:
+`task:t124` is the explicit go/no-go gate for `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` (SBS1 LRR bias as a contamination quality flag). After three pilots — `task:t110` (SBS1/SBS5 ratio, negative), `task:t122` (all-mutation gene-level CE/CL burden, suggestive but coverage-confounded), and `task:t123` (CpG-proxy CE/CL burden, collapsed under panel zero-inflation) — the project must choose between:
 
 - (A) staging a true mutation-context / SBS1-attribution topography implementation, or
 - (B) writing an explicit retirement/defer decision for the panel/WES proxy route.
 
 The decision matters because `question:0009-sbs1-lrr-bias-as-normal-contamination-flag`'s stated purpose is a **per-study quality flag** computable on cBioPortal data, not a research-grade SBS1 mechanism replication. The three pilots have each tested a different formulation; what has *not* yet been tested is the version of the test that most closely matches Yaacov 2023's [@Yaacov2023] actual statistic.
+The broader methodological home for this fork is `topic:signature-decomposition-unmatched-normal`.
+The pilot result notes are `interpretation:0004-t110-sbs1-sbs5-brca-comparison`,
+`interpretation:0005-t122-rt-brca-pilot`, and
+`interpretation:0006-t123-rt-brca-sbs1-proxy-pilot`.
 
 ## Current Position
 

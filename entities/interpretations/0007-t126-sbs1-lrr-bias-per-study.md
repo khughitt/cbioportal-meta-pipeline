@@ -3,7 +3,7 @@ type: interpretation
 title: 't126: per-study aggregate SBS1 LRR-bias test (BRCA matched vs unmatched)'
 status: active
 created: '2026-04-24'
-updated: '2026-04-24'
+updated: '2026-06-28'
 id: interpretation:0007-t126-sbs1-lrr-bias-per-study
 source_refs:
 - paper:Yaacov2023
@@ -26,6 +26,13 @@ workflow_run: t126-sbs1-lrr-bias-2026-04-24
 **defer** — close `t124`; move `q009` to `deferred` status with revisit-condition `WGS inputs ingested`.
 
 The test reached a pre-registered terminating verdict on its first contact with the data. Both panel-cohort safety gates triggered: `n_sbs1_pooled` below the 500-floor, and bootstrap CI half-width above the 0.10 ceiling. The pre-registration explicitly anticipated this outcome and routed it to `defer` rather than `retire` to preserve the option to revisit when WGS data lands.
+
+Project links: this interpretation closes `task:t126` in the context of `task:t124`, `task:t110`,
+and `task:t121`.
+It updates `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` and follows
+`discussion:0003-t124-q009-fork-decision` plus
+`pre-registration:0002-pre-registration-t126-per-study-aggregate-sbs1-lrr-bias-test`.
+The source papers are `paper:Yaacov2023` and `paper:Alexandrov2020`.
 
 ## Run surface
 

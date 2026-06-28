@@ -3,7 +3,7 @@ type: interpretation
 title: t211 q027 broad therapy-signature substrate discovery
 status: active
 created: '2026-06-01'
-updated: '2026-06-01'
+updated: '2026-06-28'
 id: interpretation:0035-t211-q027-substrate-discovery
 source_refs:
 - code/scripts/audit_q027_therapy_signature_substrate.py
@@ -21,6 +21,12 @@ related:
 ---
 
 # Interpretation: t211 `q027` broad therapy-signature substrate discovery
+
+Project links: this interpretation supports
+`hypothesis:0009-treatment-induced-signature-frequency-contamination`,
+`question:0027-does-excluding-treatment-signature-high-samples`, and
+`question:0024-treatment-exposed-cohort-chemotherapy-signature`.
+It extends the `task:t210` measured-signature arm through `task:t211`.
 
 ## Verdict
 

@@ -4,7 +4,7 @@ title: 'q047: hypermutation inflates breadth AND dilutes driver-share across 8 c
   types (post-TMB-fix)'
 status: active
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-28'
 id: interpretation:0038-q047-hypermutation-specificity-confound
 source_refs:
 - paper:MartinezJimenez2020
@@ -17,6 +17,12 @@ related:
 ---
 
 # Interpretation: `q047` — hypermutation as a driver-specificity confound
+
+Project links: this interpretation addresses
+`question:0047-hypermutation-confound-on-driver-tissue-specificity` in relation to
+`question:0043-driver-cancer-type-breadth-distribution`,
+`question:0042-driver-normal-expression-tissue-cell-type-specificity`, and
+`topic:lineage-addiction-and-cell-of-origin-driver-specificity`.
 
 > **Revised 2026-06-07 after the panel-TMB-denominator fix**
 > (`interpretation:0036-panel-tmb-denominator-stale-artifact-fix`). The first pass ran on a

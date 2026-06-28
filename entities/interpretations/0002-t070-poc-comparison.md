@@ -3,7 +3,7 @@ type: interpretation
 title: 't070: PoC pre/post comparison for MSK-IMPACT panel-version drift handling'
 status: active
 created: '2026-04-18'
-updated: '2026-04-22'
+updated: '2026-06-28'
 id: interpretation:0002-t070-poc-comparison
 mode: dev
 source_refs:
@@ -21,6 +21,9 @@ prior_interpretations:
 ---
 
 # t070 PoC pre/post comparison
+
+Project links: this interpretation follows `task:t070`, `task:t100`, and `task:t105`, with
+`interpretation:0001-poc-run` as the preceding PoC run context.
 
 **Date:** 2026-04-18
 **Task:** t070 — MSK-IMPACT panel-version drift handling per sample

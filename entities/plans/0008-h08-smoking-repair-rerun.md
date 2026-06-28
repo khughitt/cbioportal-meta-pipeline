@@ -3,7 +3,7 @@ type: plan
 title: smoking-arm repair production rerun
 status: active
 created: '2026-06-01'
-updated: '2026-06-01'
+updated: '2026-06-28'
 id: plan:0008-h08-smoking-repair-rerun
 related:
 - hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and
@@ -24,13 +24,15 @@ related:
 
 Run the pre-registered repaired Arm-B smoking analysis as a separate production artifact:
 replace the original Arm-B smoking slot with `ever_smoker`, read the repaired SBS4 result under the fixed criteria in `pre-registration:0004-h08-smoking-arm-repair-repaired-smoking-covariate-must-recover-sbs4`, and leave the locked 2026-05-31 H08a verdict unchanged.
+This plan operationalizes `method:h08-agnostic-association-model` as a repair-only branch,
+derived from `plan:0007-t199-h08-association-core` and `plan:0006-h08-within-tissue-diagnostics`.
 
 ## Background
 
-The original t199 H08a scan used `pack_years` as the registered Arm-B covariate and read 1/3 arms passing, so H08a remains `[?]`.
-The t200 diagnostic then showed that the smoking miss was likely an operationalization artifact: the frozen `ever_smoker` column was all-missing in lung, while a derived binary ever-smoker variable recovered SBS4 in LUAD+LUSC.
-Task t201 fixed production covariate assembly by mapping PanCanAtlas smoking labels explicitly and emitting `pack_years_zero_never`.
-Task t202 committed a forward-looking repair pre-registration that locks `ever_smoker` as primary and `pack_years_zero_never` as sensitivity.
+The original `task:t199` H08a scan used `pack_years` as the registered Arm-B covariate and read 1/3 arms passing, so H08a remains `[?]`.
+The `task:t200` diagnostic then showed that the smoking miss was likely an operationalization artifact: the frozen `ever_smoker` column was all-missing in lung, while a derived binary ever-smoker variable recovered SBS4 in LUAD+LUSC.
+`task:t201` fixed production covariate assembly by mapping PanCanAtlas smoking labels explicitly and emitting `pack_years_zero_never`.
+`task:t202` committed a forward-looking repair pre-registration that locks `ever_smoker` as primary and `pack_years_zero_never` as sensitivity; `task:t203` is the production rerun this plan specifies.
 
 This plan implements only that repaired Arm-B read.
 It is not a reread of the original H08a gate and does not authorize H08b as confirmatory work.

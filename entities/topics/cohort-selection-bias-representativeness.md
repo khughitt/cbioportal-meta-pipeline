@@ -3,7 +3,7 @@ type: topic
 title: Cohort selection bias and population representativeness
 status: active
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: topic:cohort-selection-bias-representativeness
 ontology_terms: []
 source_refs: []
@@ -81,7 +81,13 @@ ratio.
 
 ## Key References
 
-Zehir et al. [@Zehir2017] (cleanest quantification of advanced-disease bias); AACR GENIE 2017
-(referral bias in EGFR T790M); Pugh et al. [@Pugh2022] (demographic gaps); Nguyen et al.
-[@Nguyen2022] (metastatic-site sampling bias); Bandlamudi et al. [@Bandlamudi2026]
-(advanced-disease selection in 50k cohort).
+`paper:Zehir2017` is the cleanest quantification of advanced-disease bias.
+`paper:AACRGENIEConsortium2017` documents referral bias signals such as EGFR T790M.
+`paper:Pugh2022` reports demographic gaps, `paper:Nguyen2022` documents metastatic-site sampling
+bias, and `paper:Bandlamudi2026` represents advanced-disease selection in a 50k clinical cohort.
+
+## Project Links
+
+This bias class sits alongside `topic:targeted-panel-sequencing-bias` and
+`topic:cross-study-harmonization`; all three affect whether pooled cross-study ratios can be read as
+population-level cancer biology.

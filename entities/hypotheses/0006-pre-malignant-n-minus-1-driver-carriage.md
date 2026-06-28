@@ -4,7 +4,7 @@ title: Pre-malignant cBioPortal cohorts already carry n-1 of the canonical invas
   drivers; residual late-stage drivers are checkpoint-enriched
 status: proposed
 created: '2026-04-27'
-updated: '2026-04-28'
+updated: '2026-06-28'
 id: hypothesis:0006-pre-malignant-n-minus-1-driver-carriage
 phase: candidate
 source_refs:
@@ -22,6 +22,12 @@ related:
 ---
 
 # Hypothesis: Pre-malignant cBioPortal cohorts carry n-1 of canonical drivers
+
+Project links: this hypothesis is framed by
+`question:0012-mutation-ordering-cross-sectional-inference`,
+`question:0041-driver-complexity-vs-median-age-at-diagnosis`,
+`topic:multistage-carcinogenesis-and-age-of-onset`, and
+`theme:0003-temporal-structure-of-carcinogenesis-order-count-and-timing-of-the`.
 
 ## Organizing Conjecture
 

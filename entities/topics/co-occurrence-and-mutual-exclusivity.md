@@ -3,7 +3,7 @@ type: topic
 title: Co-occurrence and mutual exclusivity of cancer alterations
 status: active
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: topic:co-occurrence-and-mutual-exclusivity
 ontology_terms: []
 source_refs: []
@@ -88,9 +88,11 @@ Task t042 (focused discovery search) is queued to pull the methods literature sy
 
 ## Key References
 
-Cerami et al. [@Cerami2012] / Gao et al. [@Gao2013] (original cBioPortal pairwise
-mutual-exclusivity testing); TCGA pathway analysis [@SanchezVega2018] (pathway-level
-co-occurrence / exclusivity tabulation); Bailey et al. [@Bailey2018] / Ciriello et al.
-[@Ciriello2013] (gene-level patterns at scale). Method-paper seeds — DISCOVER (Canisius et al.
-[@Canisius2016]), SELECT (Mina et al. [@Mina2020]), WeSME —
-documented but not yet read; see task t042.
+`paper:Cerami2012` and `paper:Gao2013` are the original cBioPortal pairwise mutual-exclusivity
+references.
+`paper:SanchezVega2018` covers pathway-level co-occurrence / exclusivity tabulation.
+`paper:Bailey2018` and `paper:Ciriello2013` provide gene-level patterns at scale.
+Method-paper seeds include DISCOVER (Canisius et al. [@Canisius2016]), SELECT (Mina et al.
+[@Mina2020]), and WeSME; these are documented but not yet read.
+See `topic:cancer-driver-genes` for driver-definition context and task `t042` for the methods
+literature search.

@@ -4,7 +4,7 @@ title: 'Normal-tissue somatic-mutation atlas: cross-tissue, cross-age background
   positive knowledge'
 status: active
 created: '2026-04-27'
-updated: '2026-04-28'
+updated: '2026-06-28'
 id: topic:normal-tissue-mutation-atlas
 ontology_terms:
 - somatic mutation
@@ -152,3 +152,9 @@ Studies/resources discussed in this topic (not yet first-class `dataset:` entiti
 - "`Cagan 2022` (cross-species mutation rate scaling)"
 - "`Park 2024` (somatic mutation as biological clocks)"
 - "HMF / Hartwig (potential normal-cohort component)"
+## Project Links
+
+This topic supports `hypothesis:0005-healthy-somatic-background-atlas` and the follow-up work in
+`task:t150` and `task:t151`.
+It is adjacent to `topic:clonal-hematopoiesis-contamination` and
+`topic:signature-decomposition-unmatched-normal`.

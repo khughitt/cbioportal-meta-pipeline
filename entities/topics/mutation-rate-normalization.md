@@ -3,7 +3,7 @@ type: topic
 title: Mutation-rate normalization (gene length, context, covariates)
 status: active
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: topic:mutation-rate-normalization
 ontology_terms: []
 source_refs: []
@@ -91,3 +91,9 @@ than either alone.
 Lawrence2014 (MutSigCV background-rate model + saturation); Martincorena2017 (dNdScv
 selection-based); Chang2016 (per-codon trinucleotide background); Bailey2018 (consensus
 methodology validates the multi-method approach).
+## Project Links
+
+Key project references include `paper:Lawrence2014`, `paper:Martincorena2017`,
+`paper:Chang2016`, and `paper:Bailey2018`.
+The topic is operationally paired with `topic:targeted-panel-sequencing-bias` because callable
+territory and background mutation-rate normalization interact in panel cohorts.

@@ -7,7 +7,7 @@ title: "t221(b): four standing controls lock down the candidate-set verdict \u20
   \ reproduces the enrichment"
 status: active
 created: '2026-06-08'
-updated: '2026-06-08'
+updated: '2026-06-28'
 id: interpretation:0044-t221b-standing-controls-panel
 related:
 - hypothesis:0012-neural-gene-enrichment-length-histology-artifact
@@ -21,6 +21,14 @@ related:
 ---
 
 # Interpretation: t221(b) — standing-controls panel
+
+Project links: this interpretation continues `task:t221` after
+`interpretation:0040-t216-label-free-neural-score`,
+`interpretation:0041-t217-genomic-span-cfs-null`,
+`interpretation:0042-t218-cns-exclusion-wes-panel`, and
+`interpretation:0043-t221a-sample-level-hypermutator-exclusion`.
+It bears on `hypothesis:0012-neural-gene-enrichment-length-histology-artifact`,
+`question:0032-neural-gene-length-null`, and `question:0016-panel-induced-ascertainment`.
 
 > **Verdict: four independent controls all point the same way, closing the candidate-set mutational-count
 > thread of `hypothesis:0012-neural-gene-enrichment-length-histology-artifact` with no surviving alternative.** (1) **Intronic-fraction stratification** — the t218/t221a

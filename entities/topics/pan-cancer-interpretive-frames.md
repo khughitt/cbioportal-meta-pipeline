@@ -4,7 +4,7 @@ title: "Pan-cancer interpretive frames (cell-of-origin vs alterations vs pathway
   \ \u2014 synthesis"
 status: active
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: topic:pan-cancer-interpretive-frames
 ontology_terms: []
 source_refs: []
@@ -157,3 +157,7 @@ Concrete additions surfaced from this synthesis:
   theme.
 - Bailey2018 — per-cancer-type driver-gene rosters (an alternative tissue-aware view).
 - See also: `topic:cancer-driver-genes`, `topic:pan-cancer-mutation-landscape`.
+## Project Links
+
+Key paper references are `paper:Hoadley2018`, `paper:SanchezVega2018`, `paper:Ciriello2013`,
+`paper:Bandlamudi2026`, and `paper:Bailey2018`.

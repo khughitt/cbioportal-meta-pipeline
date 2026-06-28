@@ -3,7 +3,7 @@ type: interpretation
 title: 't110: BRCA SBS1/SBS5 matched-vs-unmatched comparison'
 status: active
 created: '2026-04-22'
-updated: '2026-04-22'
+updated: '2026-06-28'
 id: interpretation:0004-t110-sbs1-sbs5-brca-comparison
 mode: research
 source_refs:
@@ -22,6 +22,9 @@ prior_interpretations:
 ---
 
 # Interpretation: t110 BRCA SBS1/SBS5 comparison
+
+Project links: this interpretation records `task:t110` after `task:t109`, with
+`topic:signature-decomposition-unmatched-normal` as the motivating signature-background topic.
 
 ## Verdict
 

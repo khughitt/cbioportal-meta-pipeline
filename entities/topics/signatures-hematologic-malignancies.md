@@ -3,7 +3,7 @@ type: topic
 title: Mutational signatures in hematologic malignancies
 status: active
 created: '2026-05-31'
-updated: '2026-05-31'
+updated: '2026-06-28'
 id: topic:signatures-hematologic-malignancies
 ontology_terms:
 - mutational signatures
@@ -41,6 +41,10 @@ related:
 ---
 
 # Mutational signatures in hematologic malignancies
+
+Project links: this topic supports `method:h08-agnostic-association-model`,
+`topic:clonal-hematopoiesis-contamination`, `topic:tumor-mutational-burden`, and
+`question:0019-does-de-novo-extraction-on-the-aggregated-cohort-surface-factors-not-in`.
 
 ## Summary
 

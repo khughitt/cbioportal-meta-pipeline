@@ -3,7 +3,7 @@ type: method
 title: Length- and histology-aware gene-set enrichment guard for mutation-count rankings
 status: proposed
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-28'
 id: method:length-aware-geneset-enrichment
 related:
 - hypothesis:0012-neural-gene-enrichment-length-histology-artifact
@@ -74,7 +74,8 @@ the driver control, not the TTN/olfactory controls.
 ## Outputs
 
 - Per-set enrichment coefficient + CI + permutation p, raw vs length-adjusted vs histology-adjusted.
-- Waterfall of how `S`'s enrichment moves across corrections (the `h12` decision tree, generalized).
+- Waterfall of how `S`'s enrichment moves across corrections
+  (`hypothesis:0012-neural-gene-enrichment-length-histology-artifact`, generalized).
 - Reusable across hypotheses; first consumer is the neural-gene program (t215–t221).
 
 ## Guardrails
@@ -86,3 +87,13 @@ the driver control, not the TTN/olfactory controls.
 - Enrichment of a *label-defined* set is reported only alongside the *data-driven* set
   (`question:0035-label-free-neural-gene-definition`) to
   avoid annotation circularity.
+
+## Project Links
+
+This method supports `hypothesis:0012-neural-gene-enrichment-length-histology-artifact`,
+`hypothesis:0003-gene-length-confounds-literature-attention`, and
+`hypothesis:0002-cross-study-ranking-divergence-is-structured`.
+It is motivated by `question:0038-length-correlated-geneset-spurious-enrichment`,
+`question:0031-residual-gene-length-signal-mechanism`, and
+`question:0032-neural-gene-length-null`, with the expression-vs-mutation framing captured by
+`theme:0002-cancer-neuroscience-in-a-mutation-only-pipeline-expression-not-mutation`.

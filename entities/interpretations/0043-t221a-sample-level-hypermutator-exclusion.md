@@ -6,7 +6,7 @@ title: "t221(a): the full-WES neural-gene residual is NOT a hypermutator artifac
   \ was (span-matched p 0.002 -> 0.002)"
 status: active
 created: '2026-06-08'
-updated: '2026-06-08'
+updated: '2026-06-28'
 id: interpretation:0043-t221a-sample-level-hypermutator-exclusion
 related:
 - hypothesis:0012-neural-gene-enrichment-length-histology-artifact
@@ -17,6 +17,12 @@ related:
 ---
 
 # Interpretation: t221(a) — full-config sample-level hypermutator exclusion
+
+Project links: this interpretation contributes to
+`hypothesis:0012-neural-gene-enrichment-length-histology-artifact` and
+`question:0032-neural-gene-length-null`.
+It follows `interpretation:0041-t217-genomic-span-cfs-null` and
+`interpretation:0042-t218-cns-exclusion-wes-panel`, and it is part of `task:t221`.
 
 > **Verdict: the significant full-WES candidate residual is NOT a hypermutator / TMB sample-composition
 > artifact.** Re-aggregating candidate variant counts across all 91 WES/WGS-class `full` studies straight

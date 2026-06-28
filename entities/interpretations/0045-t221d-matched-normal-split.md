@@ -6,7 +6,7 @@ title: "t221(d): a true study-level matched- vs unmatched-normal split confirms 
   \ both exonic arms null), and the biggest single residual-carrier (pog570) is matched-normal"
 status: active
 created: '2026-06-08'
-updated: '2026-06-08'
+updated: '2026-06-28'
 id: interpretation:0045-t221d-matched-normal-split
 related:
 - hypothesis:0012-neural-gene-enrichment-length-histology-artifact
@@ -115,6 +115,13 @@ level** (this F1–F3). As with the prior arms this is recorded as strong suppor
 **candidate-set mutational-count thread** of `hypothesis:0012`; `hypothesis:0012` (proposed) and `question:0032` (active)
 are left in their prior states — one thread does not flip the hypothesis, and other `hypothesis:0012` threads
 (expression / histology beyond mutation counts) are out of scope here.
+
+Project links: this result updates `hypothesis:0012-neural-gene-enrichment-length-histology-artifact`,
+`question:0032-neural-gene-length-null`, and `question:0016-panel-induced-ascertainment`.
+It follows the control sequence recorded in `interpretation:0041-t217-genomic-span-cfs-null`,
+`interpretation:0042-t218-cns-exclusion-wes-panel`,
+`interpretation:0043-t221a-sample-level-hypermutator-exclusion`, and
+`interpretation:0044-t221b-standing-controls-panel`; the operational parent is `task:t221`.
 
 ## Decision & redirect
 

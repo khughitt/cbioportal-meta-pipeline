@@ -3,7 +3,7 @@ type: topic
 title: Pan-cancer mutation landscape
 status: active
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: topic:pan-cancer-mutation-landscape
 ontology_terms: []
 source_refs: []
@@ -28,6 +28,7 @@ Cross-cancer somatic mutation patterns: per-gene frequency distributions, tissue
 signals, mutation-burden ranges, co-occurrence / mutual exclusivity, and the long-tail of
 low-frequency drivers. This topic frames the interpretation of `summary/mut/matrix/gene_cancer.feather`
 and the gene/cancer clustering outputs of this pipeline.
+It is the landscape-level companion to `topic:cancer-driver-genes`.
 
 ## Key Concepts
 
@@ -84,6 +85,7 @@ ranges? (iii) does our gene-frequency long tail per cancer type stay within the 
 
 ## Key References
 
-Kandoth2013 / Lawrence2014 / Bailey2018 (driver catalog evolution); Ellrott2018 (MC3 reference
-WES MAF); Zehir2017 / Bandlamudi2026 (panel-cohort landscapes); Hoadley2018 (cell-of-origin
-clustering frame); PCAWG2020 (WGS complement).
+`paper:Kandoth2013` / `paper:Lawrence2014` / `paper:Bailey2018` (driver catalog evolution);
+`paper:Ellrott2018` (MC3 reference WES MAF); `paper:Zehir2017` / `paper:Bandlamudi2026`
+(panel-cohort landscapes); `paper:Hoadley2018` (cell-of-origin clustering frame);
+`paper:PCAWG2020` (WGS complement).

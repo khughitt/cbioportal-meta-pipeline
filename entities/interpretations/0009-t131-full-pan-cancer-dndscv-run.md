@@ -4,7 +4,7 @@ title: "t131 full pan-cancer-dndscv run \u2014 chain works end-to-end; min-q rol
   \ tiebreaker and pooled-mean inflation surface as data-quality bugs"
 status: active
 created: '2026-04-26'
-updated: '2026-04-26'
+updated: '2026-06-28'
 id: interpretation:0009-t131-full-pan-cancer-dndscv-run
 source_refs:
 - report:0001-t131-dndscv-three-way-comparison-design-review
@@ -20,6 +20,9 @@ prior_interpretations: []
 ---
 
 # Interpretation: t131 full pan-cancer-dndscv run
+
+Project links: this interpretation records `task:t131` and informs `task:t139`, with
+`interpretation:0001-poc-run` as the prior end-to-end run context.
 
 ## Verdict
 

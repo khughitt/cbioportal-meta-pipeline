@@ -4,7 +4,7 @@ title: "t173 GENIE dNdScv influence attribution \u2014 GENIE LOSO effect traces 
   \ broad sample-mix shifts across shared hg19 labels"
 status: active
 created: '2026-04-30'
-updated: '2026-04-30'
+updated: '2026-06-28'
 id: interpretation:0021-t173-genie-dndscv-influence
 source_refs:
 - task:t173
@@ -15,6 +15,10 @@ related:
 - question:0013-cross-study-replication-rate
 ---
 # t173 GENIE dNdScv influence attribution
+
+Project links: this interpretation is part of `task:t173`, testing
+`hypothesis:0002-cross-study-ranking-divergence-is-structured` through
+`question:0013-cross-study-replication-rate`.
 
 Date: 2026-04-30
 

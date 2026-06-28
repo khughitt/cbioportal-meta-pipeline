@@ -7,7 +7,7 @@ title: "t218: the candidate mutation enrichment is not CNS-driven and the t217\
   \ the neural-gene artifact hypothesis"
 status: active
 created: '2026-06-08'
-updated: '2026-06-08'
+updated: '2026-06-28'
 id: interpretation:0042-t218-cns-exclusion-wes-panel
 related:
 - hypothesis:0012-neural-gene-enrichment-length-histology-artifact
@@ -20,6 +20,10 @@ related:
 ---
 
 # Interpretation: t218 — CNS exclusion + WES restriction + panel-membership stratification
+
+Project links: this interpretation follows
+`interpretation:0040-t216-label-free-neural-score` and
+`interpretation:0041-t217-genomic-span-cfs-null`, with follow-up in `task:t218` and `task:t221`.
 
 > **Verdict (scoped to the candidate-set mutational-count thread of
 > `hypothesis:0012-neural-gene-enrichment-length-histology-artifact`): the enrichment is NOT

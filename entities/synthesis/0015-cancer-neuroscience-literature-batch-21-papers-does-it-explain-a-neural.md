@@ -4,7 +4,7 @@ title: 'Cancer neuroscience literature batch (21 papers): does it explain a neur
   mutation signal?'
 status: active
 created: '2026-06-06'
-updated: '2026-06-06'
+updated: '2026-06-28'
 id: synthesis:0015-cancer-neuroscience-literature-batch-21-papers-does-it-explain-a-neural
 report_kind: cluster-digest
 source_commit: 110aaf19ed97e16a6887298000a89a29e6f47f22
@@ -147,6 +147,19 @@ No paper releases a computational neural-gene set, but the recommendations conve
 - **Hypothesis:** `hypothesis:0012-neural-gene-enrichment-length-histology-artifact` (null-first).
 - **Questions:** `question:0032`–`question:0037` (length null, CNS exclusion, NET exclusion,
   label-free definition, fetal-vs-adult `H3` test, canonical-gene dN/dS `H1` test).
-- **Topics:** five topic notes (see `related`).
+- **Topics:** `topic:cancer-neuroscience-neural-regulation`, `topic:neuro-immune-crosstalk-cancer`,
+  `topic:perineural-invasion-axon-guidance-genes`,
+  `topic:neuroendocrine-neoplasm-lineage-confound`, and
+  `topic:oncofetal-developmental-reprogramming`.
 - **Plan:** `doc/plans/2026-06-06-neural-gene-enrichment-meta-analysis-plan.md`.
 - **Tasks:** group `neural-gene-meta-analysis` (t215–t221) in `tasks/active.md`.
+
+## Key References
+
+The batch source set is `paper:Mancusi2023`, `paper:Keough2022`, `paper:Magnon2023`,
+`paper:Hanahan2023`, `paper:Venkatesh2019`, `paper:Hwang2025a`, `paper:Huang2023a`,
+`paper:Huang2025a`, `paper:Wang2025b`, `paper:Wu2025a`, `paper:Kizil2024`, `paper:Pu2025`,
+`paper:Cortese2020`, `paper:Mravec2008`, `paper:Lu2026`, `paper:Fan2024`, `paper:Xiong2023`,
+`paper:Cao2023`, `paper:Kulke2012`, `paper:Ahmed2020`, `paper:Tan2024`, and
+`paper:Zhang2025`.
+The null framing also links to `hypothesis:0003-gene-length-confounds-literature-attention`.

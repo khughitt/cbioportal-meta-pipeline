@@ -4,7 +4,7 @@ title: Are common-fragile-site (CFS) loci a distinct gene-level confounder class
   separable from broad replication-timing effects?
 status: active
 created: '2026-04-27'
-updated: '2026-04-28'
+updated: '2026-06-28'
 id: question:0014-cfs-as-distinct-confounder-class
 ontology_terms:
 - common fragile sites
@@ -92,3 +92,10 @@ the RT-only expectation.
   (gene-length confounder, partially overlapping); [@Yaacov2023] (RT bias on SBS1).
 - Methods/Datasets: per-gene CFS overlap (manual curation from published lists); existing
   `t121` RT map; pipeline gene-frequency tables.
+## Project Links
+
+This question is adjacent to
+`question:0003-replication-timing-as-gene-level-mutation-rate-confounder`,
+`hypothesis:0001-non-tumor-signal-contamination`, and
+`hypothesis:0002-cross-study-ranking-divergence-is-structured`.
+It follows `interpretation:0009-t131-full-pan-cancer-dndscv-run` and motivates `task:t153`.

@@ -4,7 +4,7 @@ title: "How does top-N gene-cancer ranking stability scale with the number of co
   \ studies \u2014 is there a saturation point?"
 status: active
 created: '2026-04-27'
-updated: '2026-04-28'
+updated: '2026-06-28'
 id: question:0017-cross-study-saturation-curve
 ontology_terms:
 - learning curve
@@ -22,6 +22,11 @@ related:
 ---
 
 # Cross-study saturation curve: how many studies are enough?
+
+Project links: this question is a measurement companion to
+`hypothesis:0002-cross-study-ranking-divergence-is-structured` and
+`question:0013-cross-study-replication-rate`, with implementation routes in `task:t072` and
+`task:t158`.
 
 ## Summary
 

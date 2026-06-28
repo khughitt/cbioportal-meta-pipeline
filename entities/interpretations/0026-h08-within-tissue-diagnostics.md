@@ -4,7 +4,7 @@ title: "t200 h08 within-tissue failure diagnostics \u2014 APOBEC arm robust; UV/
   \ failures are proxy-quality, not method"
 status: active
 created: '2026-06-01'
-updated: '2026-06-01'
+updated: '2026-06-28'
 id: interpretation:0026-h08-within-tissue-diagnostics
 source_refs:
 - task:t200
@@ -15,6 +15,10 @@ related:
 - question:0022-apobec-a3a-a3b-joint-expression-and-mmr-omikli
 ---
 # t200 — hypothesis:0007 within-tissue failure diagnostics
+
+Project links: this interpretation records `task:t200` for
+`hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` and
+`question:0022-apobec-a3a-a3b-joint-expression-and-mmr-omikli`.
 
 Date: 2026-06-01
 

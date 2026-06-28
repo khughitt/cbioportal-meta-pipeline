@@ -3,7 +3,7 @@ type: plan
 title: t210 q027 therapy-signature-high exclusion impact arm
 status: proposed
 created: '2026-06-01'
-updated: '2026-06-01'
+updated: '2026-06-28'
 id: plan:0012-t210-q027-therapy-signature-high-exclusion
 related:
 - hypothesis:0009-treatment-induced-signature-frequency-contamination
@@ -16,6 +16,11 @@ related:
 ---
 
 # t210 `q027` therapy-signature-high exclusion impact arm
+
+Project links: this plan implements `task:t210` after `task:t207`, `task:t208`, and `task:t209`.
+It tests `question:0027-does-excluding-treatment-signature-high-samples` as a measured-signature
+arm related to `question:0024-treatment-exposed-cohort-chemotherapy-signature` and
+`hypothesis:0009-treatment-induced-signature-frequency-contamination`.
 
 ## Goal
 

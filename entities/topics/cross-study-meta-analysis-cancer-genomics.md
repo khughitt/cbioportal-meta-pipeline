@@ -3,7 +3,7 @@ type: topic
 title: Cross-study meta-analysis methods (cancer genomics)
 status: active
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: topic:cross-study-meta-analysis-cancer-genomics
 ontology_terms: []
 source_refs:
@@ -42,6 +42,8 @@ fixed- vs random-effects, effect-size combination (SumZ, Stouffer), study-level 
 adjustment for panel composition / cohort stage / annotation version. Distinct from
 `topic:cross-study-harmonization` (which is about *what biases need correcting*); this topic
 is about *which statistical machinery should do the combining once the biases are known*.
+The main bias routes it needs to absorb are `topic:targeted-panel-sequencing-bias` and
+`topic:cohort-selection-bias-representativeness`.
 
 ## Key Concepts
 
@@ -101,15 +103,15 @@ Populated by the 2026-04-13 focused search
 
 **General meta-analysis methodology (Core now):**
 
-- **DerSimonian and Laird [@DerSimonian1986]** — seminal random-effects estimator.
-- **Viechtbauer [@Viechtbauer2010]** — `metafor` R package, tool-of-record.
-- **Langan et al. 2018** (`cite:Langan2018`) — simulation comparison of τ² estimators;
+- **DerSimonian and Laird [@DerSimonian1986]** (`paper:DerSimonian1986`) — seminal random-effects estimator.
+- **Viechtbauer [@Viechtbauer2010]** (`paper:Viechtbauer2010`) — `metafor` R package, tool-of-record.
+- **Langan et al. 2018** (`cite:Langan2018`; `paper:Langan2018`) — simulation comparison of τ² estimators;
   recommends REML + HKSJ as modern default.
-- **Stijnen, Hamza & Özdemir 2010** (`cite:Stijnen2010`) — GLMM framework for sparse-data
+- **Stijnen, Hamza & Özdemir 2010** (`cite:Stijnen2010`; `paper:Stijnen2010`) — GLMM framework for sparse-data
   meta-analysis; methodological foundation for pooling (events, n) counts directly.
-- **Nyaga, Arbyn, and Aerts [@Nyaga2014]** — single-proportion meta-analysis
+- **Nyaga, Arbyn, and Aerts [@Nyaga2014]** (`paper:Nyaga2014`) — single-proportion meta-analysis
   (Stata `metaprop`); matches our per-study single-proportion framing.
-- **Lin & Xu 2020** (`cite:LinXu2020`) — modern critique of Freeman-Tukey arcsine for
+- **Lin & Xu 2020** (`cite:LinXu2020`; `paper:LinXu2020`) — modern critique of Freeman-Tukey arcsine for
   proportions; recommends GLMM / Bayesian hierarchical alternatives.
 - **Barendregt et al. 2013** (`cite:Barendregt2013`) — canonical Freeman-Tukey double-arcsine
   paper; context read for Lin & Xu 2020 critique.
@@ -119,11 +121,14 @@ Populated by the 2026-04-13 focused search
 
 **Cancer-genomics-native aggregation (Core now):**
 
-- **Martínez-Jiménez et al. 2020** (`cite:MartinezJimenez2020`) — IntOGen compendium; cancer-
+- **Martínez-Jiménez et al. 2020** (`cite:MartinezJimenez2020`; `paper:MartinezJimenez2020`) — IntOGen compendium; cancer-
   genomics-native consensus-voting pipeline. Sits between naive pooling and random-effects
   meta-analysis (consensus voting rather than effect-size combination). Primary cross-reference
   when contrasting what cancer-genomics pipelines currently do vs. what random-effects pooling
   would add.
+- `paper:Bailey2018` and `paper:Pugh2022` are the project-facing cancer-genomics examples
+  where aggregation or harmonization exists but does not yet provide the per-gene random-effects
+  machinery this topic is tracking.
 
 **Rare-event and sparse-data methods (Relevant next):**
 

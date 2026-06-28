@@ -4,7 +4,7 @@ title: Lineage addiction, cell-of-origin, and the tissue/cell-type specificity o
   cancer drivers
 status: active
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-28'
 id: topic:lineage-addiction-and-cell-of-origin-driver-specificity
 ontology_terms:
 - lineage addiction
@@ -136,10 +136,14 @@ prerequisite).
 - **Question:** `question:0042-driver-normal-expression-tissue-cell-type-specificity` (the enrichment
   test).
 - **Related project work:** `topic:oncofetal-developmental-reprogramming` (lineage/developmental
-  genes overlap the oncofetal axis); `hypothesis:0012` (neural-gene enrichment as a special case);
-  `hypothesis:0003` (length null); `question:0035-label-free-neural-gene-definition` /
-  `question:0036-oncofetal-fetal-vs-adult-neural-expression` (same specificity machinery on the
-  neural set); `topic:cancer-driver-genes` (driver-definition background).
+  genes overlap the oncofetal axis);
+  `hypothesis:0012-neural-gene-enrichment-length-histology-artifact` (neural-gene enrichment as a
+  special case); `hypothesis:0003-gene-length-confounds-literature-attention` (length null);
+  `question:0043-driver-cancer-type-breadth-distribution`,
+  `question:0045-pathway-grain-convergence-vs-gene-grain-divergence`, and
+  `question:0047-hypermutation-confound-on-driver-tissue-specificity` (adjacent driver-breadth
+  checks); `discussion:0008-tissue-cell-type-specificity-of-cancer-drivers`; and
+  `topic:cancer-driver-genes` (driver-definition background).
 - **External / not-yet-in-library:** GTEx v8 expression atlas; Human Protein Atlas baseline paper;
   Tabula Sapiens cell-type atlas; MITF, NKX2-1, and SOX2 lineage-oncogene primaries.
 
@@ -161,4 +165,7 @@ This topic is relevant through the linked questions, hypotheses, datasets, and s
 
 ## Key References
 
-Key references are listed in `source_refs` and cited in the note above.
+Key references include `paper:Garraway2006`, `paper:Shaffer2008`, `paper:Haigis2019`,
+`paper:Hoadley2018`, `paper:Sack2018`, `paper:MartinezJimenez2020`,
+`paper:KryuchkovaMostacci2017`, `paper:Pavinato2025`, `paper:Kauko2025`, and
+`paper:dosSantos2023`.

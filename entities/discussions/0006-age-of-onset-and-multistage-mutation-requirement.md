@@ -4,7 +4,7 @@ title: Why does median age of cancer onset differ across types? Number-of-hits v
   division rate vs target-cell number
 status: active
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-28'
 id: discussion:0006-age-of-onset-and-multistage-mutation-requirement
 focus_type: approach
 mode: standard
@@ -26,6 +26,12 @@ related:
 ---
 
 # Why does median age of cancer onset differ across types?
+
+Project links: this discussion connects
+`question:0041-driver-complexity-vs-median-age-at-diagnosis` and
+`question:0012-mutation-ordering-cross-sectional-inference` to
+`hypothesis:0006-pre-malignant-n-minus-1-driver-carriage` and
+`hypothesis:0004-mhn-pathway-ordering`.
 
 ## Focus
 

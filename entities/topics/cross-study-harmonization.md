@@ -3,7 +3,7 @@ type: topic
 title: Cross-study harmonization in panel-based cancer genomics (synthesis)
 status: active
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: topic:cross-study-harmonization
 ontology_terms: []
 source_refs: []
@@ -146,12 +146,12 @@ Three additional fixes that need design work:
 
 ## Key References
 
-- Pugh2022 — GENIE 91-panel current state; 52% tumor-only; per-assay BEDs in Synapse.
-- Bandlamudi2026 — non-canonical-context driver finding; published Zenodo dataset.
-- Bolton2020 — CH-priority gene list and therapy-selectivity quantification.
-- Ellrott2018 — MC3 unified TCGA MAF; the one published harmonization recipe.
-- Chakravarty2017 + Suehnholz2024 — OncoKB version-drift quantification (8.9% → 31.6%).
+- `paper:Pugh2022` — GENIE 91-panel current state; 52% tumor-only; per-assay BEDs in Synapse.
+- `paper:Bandlamudi2026` — non-canonical-context driver finding; published Zenodo dataset.
+- `paper:Bolton2020` — CH-priority gene list and therapy-selectivity quantification.
+- `paper:Ellrott2018` — MC3 unified TCGA MAF; the one published harmonization recipe.
+- `paper:Chakravarty2017` and `paper:Suehnholz2024` — OncoKB version-drift context.
 - See also: `topic:targeted-panel-sequencing-bias`,
   `topic:clonal-hematopoiesis-contamination`,
   `topic:cohort-selection-bias-representativeness`,
-  `topic:variant-interpretation-oncokb-vus`.
+  `topic:variant-interpretation-oncokb-vus`, and `topic:mutation-rate-normalization`.

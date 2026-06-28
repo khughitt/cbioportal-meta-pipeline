@@ -5,7 +5,7 @@ title: A well-powered WGS-based SBS1 late-replicating-region topographic diagnos
   of tumor-purity proxies
 status: proposed
 created: '2026-06-02'
-updated: '2026-06-27'
+updated: '2026-06-28'
 id: hypothesis:0011-sbs1-lrr-contamination-qc
 phase: candidate
 source_refs:
@@ -17,6 +17,12 @@ related:
 - task:t164
 ---
 # Hypothesis: A well-powered WGS-based SBS1 late-replicating-region topographic diagnostic flags cBioPortal studies with excess normal-tissue contamination, independently of tumor-purity proxies
+
+Project links: this hypothesis extends
+`question:0009-sbs1-lrr-bias-as-normal-contamination-flag` as a QC route under
+`hypothesis:0001-non-tumor-signal-contamination`, with assay-regime context from
+`theme:0001-assay-regime-panel-wes-wgs-as-a-master-technical-confounder-spanning` and follow-up
+implementation in `task:t164`.
 
 ## Organizing Conjecture
 

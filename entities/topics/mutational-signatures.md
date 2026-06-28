@@ -3,7 +3,7 @@ type: topic
 title: Mutational signatures (COSMIC SBS/DBS/ID)
 status: active
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: topic:mutational-signatures
 ontology_terms: []
 source_refs: []
@@ -15,6 +15,9 @@ related:
 ---
 
 # Mutational signatures (COSMIC SBS/DBS/ID)
+
+Project links: key references for this topic are `paper:Alexandrov2020`, `paper:Tate2019`,
+`paper:PCAWG2020`, and `paper:Zehir2017`.
 
 ## Summary
 

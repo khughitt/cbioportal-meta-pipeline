@@ -3,7 +3,7 @@ type: method
 title: "Agnostic covariate\u2013signature-exposure association model"
 status: active
 created: '2026-05-30'
-updated: '2026-05-31'
+updated: '2026-06-28'
 id: method:h08-agnostic-association-model
 related:
 - hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and
@@ -24,6 +24,14 @@ A causal-DAG sketch for the agnostic association proposed in
 `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`. DAG source:
 `models/h08-agnostic-signature-association.dot` (render with
 `dot -Tsvg models/h08-agnostic-signature-association.dot`).
+
+Project links: the model is connected to `topic:signature-decomposition-unmatched-normal`,
+`topic:aetiology-covariate-association`, `topic:signature-extraction-fitting-methods`,
+`topic:dna-damage-repair-signature-mechanisms`, `topic:apobec-mutagenesis`, and
+`topic:signatures-expression-microenvironment`.
+It also depends on `search:0007-ehr-rich-substrates-for-agnostic-signature-association`,
+`search:0008-prior-agnostic-signature-aetiology-association`, and
+`discussion:0004-common-mutational-signatures-known-vs-learned-immune-causes-and`.
 
 ## The estimand
 

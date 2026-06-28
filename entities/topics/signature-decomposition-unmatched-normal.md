@@ -4,7 +4,7 @@ title: Cancer-specific vs tissue-specific mutational-signature decomposition in 
   study contexts
 status: active
 created: '2026-04-18'
-updated: '2026-04-18'
+updated: '2026-06-28'
 id: topic:signature-decomposition-unmatched-normal
 ontology_terms:
 - mutational signatures
@@ -43,6 +43,9 @@ related:
 When a cBioPortal somatic-mutation study lacks patient-matched germline sequencing, every sample in that study carries an unknown admixture of (a) true tumor somatic mutations, (b) germline variants that escaped panel-of-normals filtering, and (c) mutations that originated in normal tissue cells contaminating the biopsy. Standard COSMIC-signature decomposition applied to such data conflates all three layers, because the global COSMIC reference catalogue was largely derived from matched-normal-subtracted tumor whole-genome sequences. The practical consequence for this pipeline is that aggregated gene-level mutation frequencies in unmatched-normal studies may be inflated by background tissue-of-origin signatures (SBS1, SBS5, SBS18, SBS40), and standard decomposition tools will over-assign these clock-like signatures without flagging that the excess may come from normal-tissue admixture rather than from the tumor cells themselves.
 
 This topic synthesizes: the state-of-the-art decomposition methods available, COSMIC signature provenance (which signatures are present in normal tissue and therefore liable to bleed into unmatched-normal tumor decompositions), known and suspected false-positive signals attributable to this confound, empirical correction strategies, replication-timing constraints, tissue-of-origin classifiers, and concrete proposed interventions for the cbioportal pipeline.
+
+Project links: this topic sits at the intersection of `topic:clonal-hematopoiesis-contamination`, `topic:mutation-rate-normalization`, `topic:pan-cancer-mutation-landscape`, and `topic:tumor-mutational-burden`.
+Its direct question routes are `question:0008-signature-decomposition-tissue-background-subtraction`, `question:0009-sbs1-lrr-bias-as-normal-contamination-flag`, and `question:0010-cuplr-style-tof-classifier-for-suspect-normal-samples`.
 
 ## Scope
 
@@ -86,7 +89,7 @@ No currently published tool performs decomposition with an explicit tissue-of-or
 
 1. **SIGNAL tissue-stratified matrices** (in MutationalPatterns): restrict the allowed signature set to those observed in that tissue type, effectively setting a floor on how much variance can be absorbed by cancer-only signatures.
 
-2. **Per-tissue reference cohort subtraction**: fit the normal-tissue spectrum first (using published data from Li 2021, Xu 2025, or `Moore 2022`), then decompose the residual tumor spectrum. This is a proposed but not yet standardized workflow.
+2. **Per-tissue reference cohort subtraction**: fit the normal-tissue spectrum first (using published data from `paper:Li2021`, `paper:Xu2025`, or `Moore 2022`), then decompose the residual tumor spectrum. This is a proposed but not yet standardized workflow.
 
 3. **CUPLR / tissue-of-origin classifier signal consistency check**: flag samples whose global signature profile is more consistent with normal-tissue priors (SBS1+SBS5 dominant, no cancer-specific signatures) than with known cancer-type profiles. Samples flagging as "ambiguous" or "normal-like" should be investigated for tumor purity.
 
@@ -328,9 +331,9 @@ The pipeline aggregates mutation calls from ~300 studies, many using tumor-only 
 - `question:0007`: Can normal-tissue mutation rates serve as a null model? — intersects with Intervention 3 (per-tissue cosine similarity screen) and the need for reference spectra.
 
 New questions filed:
-- `question:0008`: See `doc/questions/q008-signature-decomposition-tissue-background-subtraction.md`
-- `question:0009`: See `doc/questions/q009-sbs1-lrr-bias-as-normal-contamination-flag.md`
-- `question:0010`: See `doc/questions/q010-cuplr-style-tof-classifier-for-suspect-normal-samples.md`
+- `question:0008-signature-decomposition-tissue-background-subtraction`
+- `question:0009-sbs1-lrr-bias-as-normal-contamination-flag`
+- `question:0010-cuplr-style-tof-classifier-for-suspect-normal-samples`
 
 ---
 
@@ -341,9 +344,10 @@ Full BibTeX entries are in `papers/references.bib`. Key entries for this topic:
 - **Alexandrov2020** — PCAWG COSMIC v3 signature catalogue; per-cancer-type expected signatures (Extended Data Figure 5).
 - **Jin2024** — MuSiCal; minimum-volume NMF + NNLS refitting; resolves flat-signature ambiguities.
 - **Degasperi2022** — Signal/SIGNAL tissue-stratified signature framework (MutationalPatterns integration).
-- **Yaacov2023** — SBS1 LRR bias lost in cancer; topographic normal-tissue fingerprint.
-- **Li2021** — Body map; 7 normal-tissue signatures; per-tissue burdens as reference spectra.
-- **Xu2025** — GTEx pan-tissue exome; SBS18 universal; per-tissue coding-mutation spectra.
+- **`paper:Yaacov2023`** — SBS1 LRR bias lost in cancer; topographic normal-tissue fingerprint.
+- **`paper:Li2021`** — Body map; 7 normal-tissue signatures; per-tissue burdens as reference spectra.
+- **`paper:Xu2025`** — GTEx pan-tissue exome; SBS18 universal; per-tissue coding-mutation spectra.
+- **`paper:Yoshida2026`** — normal-tissue mutation frame used for the solid-tissue contamination argument.
 - **Nguyen2022CUPLR** — CUPLR tissue-of-origin classifier; RMD + SBS features; 35 cancer subtypes.
 - **DíazGay2023** — SigProfilerAssignment; per-mutation probabilistic assignment; CN signatures.
 

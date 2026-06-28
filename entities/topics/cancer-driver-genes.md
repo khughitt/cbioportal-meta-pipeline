@@ -3,7 +3,7 @@ type: topic
 title: 'Cancer driver genes: methods, reference catalogs, and recommendations'
 status: active
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: topic:cancer-driver-genes
 ontology_terms: []
 source_refs: []
@@ -133,6 +133,11 @@ standard:
 - **Tissue-conditional driver-ness is invisible** in our current aggregation. We treat
   TP53-in-HGSOC and TP53-in-(other-cancer) as equivalent counts.
 
+This tissue-conditional problem links the driver-catalog discussion to
+`topic:lineage-addiction-and-cell-of-origin-driver-specificity`,
+`question:0042-driver-normal-expression-tissue-cell-type-specificity`, and
+`discussion:0008-tissue-cell-type-specificity-of-cancer-drivers`.
+
 ## Pipeline Implications
 
 Three concrete additions, two of which are already wired:
@@ -157,10 +162,11 @@ Plus the operational addition surfaced from Bandlamudi et al. [@Bandlamudi2026]:
 
 ## Key References
 
-- Kandoth2013, Lawrence2014, Martincorena2017, Bailey2018 — methodological evolution.
-- Tate2019, Bailey2018 (Table S1) — primary reference catalogs.
-- Chang2016 — residue-level hotspot complement.
-- Chakravarty2017 — OncoKB variant-level curation.
-- Bandlamudi2026 — non-canonical context finding; data on Zenodo.
+- `paper:Kandoth2013`, `paper:Lawrence2014`, `paper:Martincorena2017`, and
+  `paper:Bailey2018` — methodological evolution.
+- `paper:Tate2019` and `paper:Bailey2018` (Table S1) — primary reference catalogs.
+- `paper:Chang2016` — residue-level hotspot complement.
+- `paper:Chakravarty2017` — OncoKB variant-level curation.
+- `paper:Bandlamudi2026` — non-canonical context finding; data on Zenodo.
 - See also: `topic:hotspot-based-driver-detection`,
   `topic:variant-interpretation-oncokb-vus`, `topic:mutation-rate-normalization`.

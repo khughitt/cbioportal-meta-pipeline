@@ -4,7 +4,7 @@ title: Multistage carcinogenesis and the determinants of differential age of can
   onset
 status: active
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-28'
 id: topic:multistage-carcinogenesis-and-age-of-onset
 ontology_terms:
 - multistage carcinogenesis
@@ -140,3 +140,10 @@ This topic is relevant through the linked questions, hypotheses, datasets, and s
 ## Key References
 
 Key references are listed in `source_refs` and cited in the note above.
+## Project Links
+
+This topic links `question:0041-driver-complexity-vs-median-age-at-diagnosis`,
+`question:0012-mutation-ordering-cross-sectional-inference`, and
+`question:0046-clocklike-signature-vs-driver-count-age-at-diagnosis` to
+`hypothesis:0006-pre-malignant-n-minus-1-driver-carriage` and
+`hypothesis:0004-mhn-pathway-ordering`.

@@ -3,7 +3,7 @@ type: interpretation
 title: 't123: BRCA SBS1-proxy replication-timing pilot'
 status: active
 created: '2026-04-22'
-updated: '2026-04-22'
+updated: '2026-06-28'
 id: interpretation:0006-t123-rt-brca-sbs1-proxy-pilot
 mode: research
 source_refs:
@@ -20,6 +20,9 @@ prior_interpretations:
 ---
 
 # Interpretation: BRCA SBS1-proxy replication-timing pilot
+
+Project links: this interpretation follows `task:t122` and `task:t123`, building directly on
+`interpretation:0005-t122-rt-brca-pilot`.
 
 ## Verdict
 

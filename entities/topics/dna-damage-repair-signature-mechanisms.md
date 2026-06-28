@@ -3,7 +3,7 @@ type: topic
 title: DNA damage/repair mechanisms underlying mutational signatures
 status: active
 created: '2026-05-31'
-updated: '2026-05-31'
+updated: '2026-06-28'
 id: topic:dna-damage-repair-signature-mechanisms
 ontology_terms:
 - mutational signatures
@@ -45,6 +45,11 @@ related:
 ---
 
 # DNA damage/repair mechanisms underlying mutational signatures
+
+Project links: this topic supports `method:h08-agnostic-association-model`,
+`topic:signature-decomposition-unmatched-normal`,
+`question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross`, and
+`question:0019-does-de-novo-extraction-on-the-aggregated-cohort-surface-factors-not-in`.
 
 ## Summary
 

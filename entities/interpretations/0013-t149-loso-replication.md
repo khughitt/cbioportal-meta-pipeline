@@ -5,7 +5,7 @@ title: "t149 leave-one-study-out replication-rate analysis \u2014 pooled_rate to
   \ rescued by Bailey restriction"
 status: active
 created: '2026-04-28'
-updated: '2026-04-28'
+updated: '2026-06-28'
 id: interpretation:0013-t149-loso-replication
 source_refs:
 - task:t149
@@ -24,6 +24,12 @@ prior_interpretations:
 ---
 
 # t149 LOSO replication-rate analysis
+
+Project links: this interpretation records `task:t149` for
+`question:0013-cross-study-replication-rate`, building on
+`interpretation:0009-t131-full-pan-cancer-dndscv-run`,
+`interpretation:0010-t144-tiebreaker-fix-rerun`, and
+`interpretation:0011-t145-mean-inclusive-inflation-diagnostic`.
 
 ## Question
 

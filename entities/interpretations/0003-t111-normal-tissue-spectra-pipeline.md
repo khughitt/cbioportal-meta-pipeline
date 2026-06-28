@@ -4,7 +4,7 @@ title: "t111: normal-tissue spectra extraction pipeline \u2014 infrastructure + 
   \ run"
 status: active
 created: '2026-04-19'
-updated: '2026-04-19'
+updated: '2026-06-28'
 id: interpretation:0003-t111-normal-tissue-spectra-pipeline
 mode: dev
 source_refs:
@@ -33,6 +33,14 @@ prior_interpretations: []
 ## Mode
 
 `dev` — t111 built the null-model-spectra extraction pipeline from scratch. The real-data execution did produce ~56 spectra rows and ~47 burden rows as empirical output, but those rows are **inputs to downstream analyses** (`q007`, `q008`, `q010`), not tests of a hypothesis. This document summarizes the infrastructure outcomes, the methodological lessons, and the narrow empirical observations that serve as sanity checks on the pipeline.
+
+## Project Links
+
+The normal-tissue spectra work connects `paper:Li2021` and `paper:Yoshida2026` to
+`topic:signature-decomposition-unmatched-normal` and `topic:mutation-rate-normalization`.
+Its downstream consumers are `question:0007-cross-tissue-somatic-mutation-rate-variation-as-null-model`,
+`question:0008-signature-decomposition-tissue-background-subtraction`, and
+`question:0010-cuplr-style-tof-classifier-for-suspect-normal-samples`.
 
 ## Infrastructure Outcomes
 

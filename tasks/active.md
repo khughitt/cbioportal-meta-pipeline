@@ -931,3 +931,75 @@ Lu2026 references a pan-cancer perineural-invasion transcriptomic classifier wit
 - created: 2026-06-07
 
 Acquire the reference resources backing the data-driven neural-gene score (t216): GTEx (have), Human Protein Atlas tissue-specificity, Allen Brain Cell Atlas cell-type markers, PanglaoDB markers, and BrainSpan (fetal-vs-adult for the H3 test). Land as per-gene tables joinable to the gene universe. Blocks t216/t220.
+
+## [t233] Coordinate strict Science validation cleanup backlog
+- priority: P2
+- status: proposed
+- aspects: [computational-analysis, software-development]
+- related: [meta:fb-2026-06-28-005]
+- group: science-strict-validation-cleanup
+- created: 2026-06-28
+
+Umbrella task for the 2026-06-28 strict validation backlog captured in /tmp/cbioportal-validation-issues.json. Baseline: 3127 warnings total: 955 prose_lints.frontmatter-inline-gap, 2171 prose_lints.numeric-anchor, and one unresolved_markers aggregate for 7 [SPECULATION] markers. Use this task as the parent for batch cleanup tasks; do not hand-edit likely parser false positives that should be fixed upstream.
+
+## [t235] Clear frontmatter-inline-gap in high-link entity families
+- priority: P2
+- status: active
+- aspects: [computational-analysis]
+- related: [task:t233]
+- group: science-strict-validation-cleanup
+- created: 2026-06-28
+
+Curation batch for prose_lints.frontmatter-inline-gap outside paper notes. Baseline from /tmp/cbioportal-validation-issues.json: topics 185, interpretations 159, questions 98, plans 40, discussions 30, hypotheses 21, synthesis 20, meta 14, pre-registrations 13, themes 13, methods 12, reports 8, searches 5. Work file-family batches; for each related ref, either mention it explicitly in body prose, remove it from frontmatter if stale, or create a narrower follow-up task when the link is real but needs substantive prose.
+
+Progress 2026-06-28: first eight non-paper clustered batches cleared 490 frontmatter-inline-gap warnings; remaining frontmatter-inline-gap count is 465 total, including 337 paper-note warnings tracked separately in task:t236 and 128 non-paper warnings remaining in this task.
+
+## [t236] Clear frontmatter-inline-gap in paper notes
+- priority: P2
+- status: proposed
+- aspects: [computational-analysis]
+- related: [task:t233]
+- group: science-strict-validation-cleanup
+- created: 2026-06-28
+
+Curation batch for the 337 paper-note prose_lints.frontmatter-inline-gap warnings. Work in small paper-note batches, starting with clustered files from /tmp/cbioportal-validation-issues.json such as Pu2025, Huang2025a, Fan2024, Hanahan2023, Hoadley2018, Mancusi2023, Martincorena2018, and Xu2025. For each frontmatter related/source ref, verify the relationship, add a body mention when it is part of the note's interpretation, remove stale links, or create a narrower task when the paper needs a real content update.
+
+## [t237] Anchor numeric claims in paper notes after upstream numeric-anchor cleanup
+- priority: P2
+- status: proposed
+- aspects: [computational-analysis]
+- related: [task:t233, task:t234]
+- group: science-strict-validation-cleanup
+- created: 2026-06-28
+
+Curation batch for paper-note prose_lints.numeric-anchor warnings after t234 removes parser noise. Current baseline after the upstream DOI/identifier fix and the first t235 exact-reference passes: 1225 numeric-anchor warnings under entities/papers. Start with clustered files from /tmp/cbioportal-validation-issues.json: Deshpande2026 and LeeSix2018 at 50+ each; then Iorio2018SLAPenrich, Pugh2022, Li2021, AACRGENIEConsortium2017, Koh2025, Tan2024, Wan2022, Nguyen2022, Levatic2022, Sorensen2023, Gillani2022, and Kesimoglu2026. For each numeric claim, add a local citation/source anchor, soften or remove unsupported precision, or open a source-specific follow-up.
+
+## [t238] Anchor numeric claims in interpretations and result notes
+- priority: P2
+- status: proposed
+- aspects: [computational-analysis]
+- related: [task:t233]
+- group: science-strict-validation-cleanup
+- created: 2026-06-28
+
+Curation batch for local-result numeric-anchor warnings. Current baseline after the upstream DOI/identifier fix and the first t235 exact-reference passes: 418 warnings in entities/interpretations plus 32 in entities/meta and 23 in entities/plans. Start with clustered interpretation files from /tmp/cbioportal-validation-issues.json: 0030-t207-h10-treatment-impact-full-config, 0032-t208-h10-sample-level-mutagenic-rules, 0043-t221a-sample-level-hypermutator-exclusion, 0002-t070-poc-comparison, 0044-t221b-standing-controls-panel, 0012-t146-external-validation-cgc, 0009-t131-full-pan-cancer-dndscv-run, 0042-t218-cns-exclusion-wes-panel, 0045-t221d-matched-normal-split, and 0021-t173-genie-dndscv-influence. Prefer anchors to workflow-run refs, result paths, scripts, or cited interpretation artifacts; avoid adding literature citations to local-computation outputs unless the number comes from a paper.
+
+## [t239] Anchor numeric claims in docs, guides, datasets, and small entity families
+- priority: P3
+- status: proposed
+- aspects: [computational-analysis]
+- related: [task:t233, task:t234]
+- group: science-strict-validation-cleanup
+- created: 2026-06-28
+
+Cleanup batch for smaller numeric-anchor families after t234 upstream parser work. Current baseline after the upstream DOI/identifier fix and the first t235 exact-reference passes: doc/plans 34, doc/meta 9, doc/guides/modalities 2, entities/datasets 7, entities/pre-registrations 15, entities/questions 14, entities/synthesis 11, entities/hypotheses 4, entities/modality-guide 5, entities/discussions 1, and entities/topics 32. For real numeric claims, add nearby anchors or reduce unsupported precision.
+
+## [t240] Resolve strict-mode SPECULATION marker warnings
+- priority: P3
+- status: proposed
+- aspects: [computational-analysis]
+- related: [task:t233]
+- group: science-strict-validation-cleanup
+- created: 2026-06-28
+
+Review the 7 [SPECULATION] markers surfaced by strict validation. Current locations from rg: entities/papers/Cao2023.md, entities/papers/Keough2022.md, entities/papers/Kizil2024.md, entities/topics/signatures-expression-microenvironment.md, and entities/topics/signatures-hematologic-malignancies.md. For each marker, either keep the speculative content but rewrite it as clearly hedged prose without the marker, remove unsupported speculation, or create a follow-up task if the speculation is worth testing.

@@ -3,7 +3,7 @@ type: plan
 title: "within-tissue positive-control failure diagnostics (tests 1\u20134)"
 status: active
 created: '2026-05-31'
-updated: '2026-06-01'
+updated: '2026-06-28'
 id: plan:0006-h08-within-tissue-diagnostics
 related:
 - hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and
@@ -14,6 +14,9 @@ related:
 ---
 
 # Within-tissue positive-control failure diagnostics (tests 1–4)
+
+Project links: this plan extends `method:h08-agnostic-association-model` and
+`plan:0007-t199-h08-association-core`, with implementation work in `task:t199` and `task:t200`.
 
 ## Goal
 

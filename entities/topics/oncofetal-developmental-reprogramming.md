@@ -4,7 +4,7 @@ title: Oncofetal / developmental reprogramming as a label-free route to apparent
   signal
 status: active
 created: '2026-06-06'
-updated: '2026-06-06'
+updated: '2026-06-28'
 id: topic:oncofetal-developmental-reprogramming
 ontology_terms:
 - oncofetal reprogramming
@@ -59,11 +59,13 @@ The two surviving biological readings make **opposite predictions** in our mutat
 
 ## Action (label-free, data-driven)
 
-`question:0036` / task t220: for any neural-enrichment residual surviving length + CNS + NET
-correction, compute **BrainSpan fetal-vs-adult** expression ratio and correlate residual-gene
-mutation with stemness/oncofetal activity (AFP/GPC3, Wnt/Hh) in matched-expression studies.
+`question:0036-oncofetal-fetal-vs-adult-neural-expression` / task t220: for any neural-enrichment
+residual surviving length + CNS + NET correction, compute **BrainSpan fetal-vs-adult** expression
+ratio and correlate residual-gene mutation with stemness/oncofetal activity (AFP/GPC3, Wnt/Hh) in
+matched-expression studies.
 Fetal-enriched + non-recurrent ⇒ oncofetal byproduct. This also supplies a **developmental-stage** axis to the
-label-free neural-gene definition (`question:0035`), complementing adult tissue-specificity.
+label-free neural-gene definition (`question:0035-label-free-neural-gene-definition`), complementing
+adult tissue-specificity.
 
 ## Datasets
 
@@ -83,8 +85,12 @@ The current project-facing state of knowledge is summarized in the existing pros
 
 ## Relevance to This Project
 
-This topic is relevant through the linked questions, hypotheses, datasets, and source references in the frontmatter and in the note above.
+This topic is relevant through `hypothesis:0012-neural-gene-enrichment-length-histology-artifact`,
+`synthesis:0015-cancer-neuroscience-literature-batch-21-papers-does-it-explain-a-neural`,
+`topic:cancer-neuroscience-neural-regulation`,
+`topic:lineage-addiction-and-cell-of-origin-driver-specificity`, and
+`question:0042-driver-normal-expression-tissue-cell-type-specificity`.
 
 ## Key References
 
-Key references are listed in `source_refs` and cited in the note above.
+Key references include `paper:Cao2023`, `paper:Huang2023a`, and `paper:Hanahan2023`.

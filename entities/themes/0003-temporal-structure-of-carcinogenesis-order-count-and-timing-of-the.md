@@ -4,7 +4,7 @@ title: "Temporal structure of carcinogenesis \u2014 order, count, and timing of 
   \ events of cancer"
 status: active
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-28'
 id: theme:0003-temporal-structure-of-carcinogenesis-order-count-and-timing-of-the
 theme_kind: conceptual
 theme_scope: project
@@ -106,3 +106,10 @@ aetiology, contamination/QC, gene-length confounding). Three coupled sub-questio
 - Any MHN/ordering result from `h04`/`q012` (changes what "order" claims the theme can host).
 - VAF/CCF availability audit landing (opens the longitudinal/clonal route).
 - New external benchmark adopted (PCAWG, SEER/Belikov, Gerstung chronology).
+## Project Links
+
+This theme coordinates `question:0043-driver-cancer-type-breadth-distribution`,
+`question:0045-pathway-grain-convergence-vs-gene-grain-divergence`,
+`question:0046-clocklike-signature-vs-driver-count-age-at-diagnosis`,
+`discussion:0002-mutation-ordering-and-path-dependency`, and
+`discussion:0006-age-of-onset-and-multistage-mutation-requirement`.

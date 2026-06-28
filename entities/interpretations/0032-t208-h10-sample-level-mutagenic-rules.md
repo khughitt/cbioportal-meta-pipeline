@@ -3,7 +3,7 @@ type: interpretation
 title: t208 H10 sample-level mutagenic-treatment rule impact
 status: active
 created: '2026-06-01'
-updated: '2026-06-01'
+updated: '2026-06-28'
 id: interpretation:0032-t208-h10-sample-level-mutagenic-rules
 source_refs: &id001
 - code/config/config-full.yml
@@ -29,6 +29,10 @@ prior_interpretations:
 ---
 
 # Interpretation: t208 `H10` sample-level mutagenic-treatment rule impact
+
+Project links: this interpretation contributes to
+`hypothesis:0009-treatment-induced-signature-frequency-contamination` and follows `task:t206`,
+`task:t207`, and `task:t208`.
 
 ## Verdict
 

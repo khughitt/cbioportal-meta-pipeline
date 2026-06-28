@@ -3,7 +3,7 @@ type: topic
 title: Clonal hematopoiesis contamination in panel-based tumor mutation calls
 status: active
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: topic:clonal-hematopoiesis-contamination
 ontology_terms: []
 source_refs: []
@@ -129,13 +129,21 @@ cBioPortal studies expose.
 
 ## Key References
 
-- Bolton2020 — 24,146-patient MSK-IMPACT-paired-buffy-coat CH characterization;
+- `paper:Bolton2020` — 24,146-patient MSK-IMPACT-paired-buffy-coat CH characterization;
   therapy-selectivity quantification; the origin of the 7-gene priority list.
-- Zehir2017 — establishes the matched-buffy-coat MSK-IMPACT design that makes Bolton's
+- `paper:Zehir2017` — establishes the matched-buffy-coat MSK-IMPACT design that makes Bolton's
   paper possible; demonstrates clean CH-gene calls in a matched cohort.
-- Pugh2022 — quantifies that 52% of current GENIE is tumor-only; centralized CH/artifact
+- `paper:Pugh2022` — quantifies that 52% of current GENIE is tumor-only; centralized CH/artifact
   filtering is applied but is not equivalent to per-patient matched normal.
-- Martincorena2017 — dN/dS ≈ 1 in normal somatic tissues including blood; reframes CH as
+- `paper:Martincorena2017` — dN/dS ≈ 1 in normal somatic tissues including blood; reframes CH as
   predictable selection, not artifact.
+- `paper:Yoshida2026` — normal-tissue mutation context relevant to background subtraction and
+  contamination interpretation.
 - Future: Bolton's CH-Risk-Score (CHRS, follow-up work) as a more nuanced filter than
   per-gene flagging.
+
+## Project Links
+
+This topic is tightly coupled to `topic:targeted-panel-sequencing-bias` and
+`topic:cross-study-harmonization`, because tumor-only panel aggregation, denominator differences,
+and matched-normal provenance must be handled together.

@@ -4,7 +4,7 @@ title: "Is there a preferred ordering among the hallmarks of cancer \u2014 and c
   \ the hallmarks themselves be inferred from data rather than human labels?"
 status: active
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-28'
 id: discussion:0007-hallmark-ordering-and-data-driven-modules
 source_refs:
 - paper:Gourmet2024
@@ -27,6 +27,12 @@ mode: standard
 ---
 
 # Discussion: Hallmark ordering and data-driven modules
+
+Project links: this discussion follows `discussion:0002-mutation-ordering-and-path-dependency` and
+`discussion:0006-age-of-onset-and-multistage-mutation-requirement`, and it sits under
+`theme:0003-temporal-structure-of-carcinogenesis-order-count-and-timing-of-the`.
+It also connects the ordering problem to `topic:co-occurrence-and-mutual-exclusivity` and
+`task:t078`.
 
 ## Focus
 

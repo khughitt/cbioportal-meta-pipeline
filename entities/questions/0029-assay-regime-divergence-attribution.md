@@ -5,7 +5,7 @@ title: How much of cross-study divergence in gene rankings and signature exposur
   from biology?
 status: active
 created: '2026-06-02'
-updated: '2026-06-02'
+updated: '2026-06-28'
 id: question:0029-assay-regime-divergence-attribution
 ontology_terms: []
 datasets: []
@@ -17,6 +17,12 @@ related:
 - question:0016-panel-induced-ascertainment
 ---
 # How much of cross-study divergence in gene rankings and signature exposures is attributable to assay regime (panel vs WES vs WGS), and is that component separable from biology?
+
+Project links: this question sits under
+`theme:0001-assay-regime-panel-wes-wgs-as-a-master-technical-confounder-spanning` and compares
+`hypothesis:0002-cross-study-ranking-divergence-is-structured` with
+`hypothesis:0008-cross-study-signature-exposure-reproducibility`, using
+`question:0016-panel-induced-ascertainment` as a related diagnostic.
 
 ## Summary
 

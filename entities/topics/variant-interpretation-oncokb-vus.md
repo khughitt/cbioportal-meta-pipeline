@@ -3,7 +3,7 @@ type: topic
 title: Variant interpretation, OncoKB, and VUS handling
 status: active
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: topic:variant-interpretation-oncokb-vus
 ontology_terms: []
 source_refs: []
@@ -92,6 +92,9 @@ Concrete pipeline additions:
 
 ## Key References
 
-Chakravarty2017 (OncoKB original); Suehnholz2024 (longitudinal version-drift quantification);
-Chang2016 / Gao2017 (Cancer Hotspots variant-level catalogs); Tate2019 (CGC). See
-`topic:cancer-driver-genes` for broader methodology context.
+`paper:Chakravarty2017` is the OncoKB original.
+`paper:Suehnholz2024` quantifies longitudinal version drift.
+`paper:Chang2016` and `paper:Gao2017` cover Cancer Hotspots variant-level catalogs.
+`paper:Tate2019` is the CGC gene-level reference.
+See `topic:cancer-driver-genes` and `topic:cross-study-harmonization` for broader methodology
+context.

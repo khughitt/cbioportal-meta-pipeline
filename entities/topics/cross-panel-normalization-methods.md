@@ -3,7 +3,7 @@ type: topic
 title: Cross-panel normalization methods for targeted cancer sequencing
 status: active
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: topic:cross-panel-normalization-methods
 ontology_terms: []
 source_refs: []
@@ -36,6 +36,8 @@ panel-aware statistical tooling. The central organizing idea: every per-gene
 rate or per-sample burden computed on panel data has a denominator that is
 panel-specific, and any cross-panel comparison must either (a) restrict to a
 common denominator or (b) model the denominator explicitly.
+This methods note is the denominator-focused companion to
+`topic:cross-study-harmonization` and `topic:cross-study-meta-analysis-cancer-genomics`.
 
 ## Key Concepts
 
@@ -122,6 +124,9 @@ exist:
   callable_bp)) condition on the gene — this is what the AACR GENIE
   AACR Project GENIE Consortium [@AACRGENIEConsortium2017] APC ~10× example implicitly argues for, and what
   `process_genie_panel_coverage.py` in this repo computes.
+  The project paper notes behind this point include `paper:AACRGENIEConsortium2017`,
+  `paper:Pugh2022`, `paper:Zehir2017`, `paper:Ellrott2018`, `paper:Chakravarty2017`,
+  and `paper:ChakravartySolit2021`.
 
 ### Panel-version drift within a single vendor
 
@@ -253,7 +258,7 @@ the repo has to make:
    NA vs 0 disambiguated, `.mean(skipna=True)` replaced by a callable-weighted
    pooled rate. Task: `t076`.
 2. **Inputs the modality-guide `panel-mutation-data.md` expansion** (task
-   `t060`): the guide's checklist items `panel.03` (callable-denominator)
+   `task:t060`): the guide's checklist items `panel.03` (callable-denominator)
    and `panel.04` (panel-version drift) are directly operationalized by the
    methods catalogued here.
 3. **Provides the framework for `t081` (TMB-aware sample exclusion /
@@ -264,6 +269,9 @@ the repo has to make:
    sample-level denominator, the study-level random intercept absorbs panel
    effects only noisily; a cleaner formulation puts `callable_bp` on the
    exposure side of the GLMM offset.
+
+Earlier coverage and panel-ingest scaffolding is tracked under `task:t026`; the current
+callability and guide work mostly flows through `task:t060`.
 
 ## Tooling & Implementation
 

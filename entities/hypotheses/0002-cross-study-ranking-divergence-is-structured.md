@@ -5,7 +5,7 @@ title: "Cross-study gene rankings replicate strongly for canonical drivers and w
   \ structured, not random"
 status: proposed
 created: '2026-04-27'
-updated: '2026-04-28'
+updated: '2026-06-28'
 id: hypothesis:0002-cross-study-ranking-divergence-is-structured
 phase: active
 source_refs:
@@ -23,6 +23,11 @@ related:
 ---
 
 # Hypothesis: Cross-study ranking divergence is structured, and canonical drivers replicate
+
+Project links: this hypothesis is informed by
+`discussion:0001-gene-length-bias-in-mutation-rankings-and-literature`,
+`interpretation:0009-t131-full-pan-cancer-dndscv-run`, `topic:mutation-rate-normalization`, and
+`task:t149`.
 
 ## Organizing Conjecture
 

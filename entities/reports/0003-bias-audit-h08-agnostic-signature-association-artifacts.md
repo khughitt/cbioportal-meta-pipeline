@@ -3,7 +3,7 @@ type: report
 title: 'Bias Audit: H08 agnostic signature-association artifacts'
 status: proposed
 created: '2026-05-31'
-updated: '2026-05-31'
+updated: '2026-06-28'
 id: report:0003-bias-audit-h08-agnostic-signature-association-artifacts
 source_refs:
 - paper:Alexandrov2020
@@ -18,6 +18,11 @@ related:
 ---
 
 # Bias Audit: `H08` agnostic signature-association artifacts
+
+Project links: this audit reviews
+`hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`,
+`method:h08-agnostic-association-model`,
+`search:0007-ehr-rich-substrates-for-agnostic-signature-association`, and `dataset:aacr-genie-bpc`.
 
 ## Scope
 

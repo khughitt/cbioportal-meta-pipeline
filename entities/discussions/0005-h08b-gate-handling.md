@@ -3,7 +3,7 @@ type: discussion
 title: h08b gate handling after inconclusive H08a and smoking repair
 status: active
 created: '2026-06-01'
-updated: '2026-06-01'
+updated: '2026-06-28'
 id: discussion:0005-h08b-gate-handling
 source_refs:
 - task:t199
@@ -23,6 +23,11 @@ mode: standard
 ---
 
 # Discussion: H08b gate handling after H08a
+
+Project links: this discussion connects `task:t204` and `task:t205` to
+`method:h08-agnostic-association-model`,
+`pre-registration:0003-h08-positive-control-agnostic-association-must-recover-known-signature`,
+and `pre-registration:0004-h08-smoking-arm-repair-repaired-smoking-covariate-must-recover-sbs4`.
 
 ## Focus
 

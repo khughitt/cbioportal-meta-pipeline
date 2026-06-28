@@ -6,7 +6,7 @@ title: "t216: a reproducible label-free neural score confirms the candidates are
   \ from the genomic-span confound"
 status: active
 created: '2026-06-08'
-updated: '2026-06-08'
+updated: '2026-06-28'
 id: interpretation:0040-t216-label-free-neural-score
 related:
 - hypothesis:0012-neural-gene-enrichment-length-histology-artifact
@@ -18,6 +18,11 @@ related:
 ---
 
 # Interpretation: t216 — label-free neural-enrichment gene score (GTEx)
+
+Project links: this interpretation follows
+`interpretation:0039-t215-neural-gene-reproduction-gate` and feeds
+`interpretation:0041-t217-genomic-span-cfs-null`, with follow-up work in `task:t216` and
+`task:t218`.
 
 > **Verdict: a reproducible, label-free neural score is delivered
 > (`question:0035-label-free-neural-gene-definition`), and it confirms the 9

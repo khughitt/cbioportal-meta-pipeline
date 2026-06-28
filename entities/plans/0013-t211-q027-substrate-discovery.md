@@ -3,7 +3,7 @@ type: plan
 title: t211 q027 broad therapy-signature substrate discovery
 status: proposed
 created: '2026-06-01'
-updated: '2026-06-01'
+updated: '2026-06-28'
 id: plan:0013-t211-q027-substrate-discovery
 related:
 - hypothesis:0009-treatment-induced-signature-frequency-contamination
@@ -14,6 +14,11 @@ related:
 ---
 
 # t211 `q027` broad therapy-signature substrate discovery
+
+Project links: this plan extends `task:t210` for
+`question:0027-does-excluding-treatment-signature-high-samples` and
+`question:0024-treatment-exposed-cohort-chemotherapy-signature` under
+`hypothesis:0009-treatment-induced-signature-frequency-contamination`.
 
 ## Goal
 

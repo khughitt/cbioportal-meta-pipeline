@@ -4,7 +4,7 @@ title: "t173 dNdScv LOSO synthesis \u2014 dNdScv ranking is LOSO-stable; GENIE r
   \ is a structured, not generic, perturbation"
 status: active
 created: '2026-04-30'
-updated: '2026-04-30'
+updated: '2026-06-28'
 id: interpretation:0020-t173-dndscv-loso-synthesis
 source_refs:
 - task:t173
@@ -16,6 +16,9 @@ related:
 - question:0015-pan-cancer-aggregator-choice
 ---
 # t173 dNdScv LOSO synthesis
+
+Project links: this synthesis interpretation is part of `task:t173` and connects
+`question:0013-cross-study-replication-rate` to `question:0015-pan-cancer-aggregator-choice`.
 
 Date: 2026-04-30
 

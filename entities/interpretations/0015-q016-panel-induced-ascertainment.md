@@ -4,7 +4,7 @@ title: "Panel-induced ascertainment \u2014 combined pan-cancer rankings are WES-
   \ while panel-only rankings carry a smaller, assay-shaped driver surface"
 status: active
 created: '2026-04-29'
-updated: '2026-04-29'
+updated: '2026-06-28'
 id: interpretation:0015-q016-panel-induced-ascertainment
 date: '2026-04-29'
 related:
@@ -18,6 +18,9 @@ prior_interpretations:
 ---
 
 # Panel-Induced Ascertainment
+
+Project links: this interpretation follows `task:t154` and `task:t129`, with
+`interpretation:0013-t149-loso-replication` as the replication-analysis context.
 
 ## Question
 

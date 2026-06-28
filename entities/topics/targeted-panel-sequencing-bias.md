@@ -3,7 +3,7 @@ type: topic
 title: Targeted-panel sequencing bias in cross-study cancer genomics
 status: active
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: topic:targeted-panel-sequencing-bias
 ontology_terms: []
 source_refs: []
@@ -122,12 +122,18 @@ Three concrete actions emerged from cross-batch reading:
 
 ## Key References
 
-- AACRGENIEConsortium2017 — 44-gene core, 12-panel launch structure, APC ~10× example.
-- Pugh2022 — 91-assay v9.1 release; per-assay BEDs in Synapse syn24179663.
-- Zehir2017 — MSK-IMPACT panel-version progression + matched-buffy-coat design.
-- Bandlamudi2026 — 50k cohort spanning multiple IMPACT panel versions; "non-canonical
+- `paper:AACRGENIEConsortium2017` — 44-gene core, 12-panel launch structure, APC ~10× example.
+- `paper:Pugh2022` — 91-assay v9.1 release; per-assay BEDs in Synapse syn24179663.
+- `paper:Zehir2017` — MSK-IMPACT panel-version progression + matched-buffy-coat design.
+- `paper:Bandlamudi2026` — 50k cohort spanning multiple IMPACT panel versions; "non-canonical
   context" finding implicitly requires panel-aware analysis.
-- Ellrott2018 — MC3 unified TCGA WES MAF; eliminates panel heterogeneity for TCGA portion.
-- ChakravartySolit2021 — clinical-profiling review of panel platforms (`status: abstract-read`,
+- `paper:Ellrott2018` — MC3 unified TCGA WES MAF; eliminates panel heterogeneity for TCGA portion.
+- `paper:ChakravartySolit2021` — clinical-profiling review of panel platforms (`status: abstract-read`,
   full-text not yet accessed).
-- Bolton2020 — matched-vs-unmatched normal calling differential, esp. for CH-driver genes.
+- `paper:Bolton2020` — matched-vs-unmatched normal calling differential, esp. for CH-driver genes.
+
+## Project Links
+
+This caveat is paired with `topic:clonal-hematopoiesis-contamination` and
+`topic:cross-study-harmonization` because panel coverage, normal-matching, and harmonized
+denominators are coupled in the cross-study aggregation.

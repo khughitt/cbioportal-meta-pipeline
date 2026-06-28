@@ -3,7 +3,7 @@ type: interpretation
 title: t209 H10 sample-level unknown and confirmed-naive rule impact
 status: active
 created: '2026-06-01'
-updated: '2026-06-01'
+updated: '2026-06-28'
 id: interpretation:0033-t209-h10-sample-level-unknown-naive-rules
 source_refs: &id001
 - code/config/config-full.yml
@@ -32,6 +32,10 @@ prior_interpretations:
 ---
 
 # Interpretation: t209 `H10` sample-level unknown and confirmed-naive rule impact
+
+Project links: this interpretation belongs to
+`hypothesis:0009-treatment-induced-signature-frequency-contamination` and follows `task:t206`,
+`task:t207`, `task:t208`, and `task:t209`.
 
 ## Verdict
 

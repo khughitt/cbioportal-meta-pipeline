@@ -4,7 +4,7 @@ title: "Somatic mutations in morphologically normal human tissues \u2014 cross-p
   \ synthesis"
 status: active
 created: '2026-04-18'
-updated: '2026-04-18'
+updated: '2026-06-28'
 id: synthesis:0001-somatic-mutations-in-morphologically-normal-human-tissues-cross-paper
 report_kind: cluster-digest
 source_commit: 110aaf19ed97e16a6887298000a89a29e6f47f22
@@ -38,6 +38,9 @@ related:
 # Somatic mutations in morphologically normal human tissues — cross-paper synthesis
 
 Six papers reviewed together on 2026-04-18, all characterizing somatic mutations (SNVs, CNAs, and mCAs) in phenotypically normal human tissues. Each bears on the same project concern: how much of the gene x cancer signal emerging from the cBioPortal cross-study aggregation pipeline reflects tumor biology versus background mutagenesis in surrounding or contaminating normal cells. The companion review `paper:Yoshida2026` provides the integrative frame.
+
+Project links: this synthesis connects normal-tissue mutation evidence to `topic:clonal-hematopoiesis-contamination`, `topic:pan-cancer-mutation-landscape`, `topic:mutation-rate-normalization`, and `topic:signature-decomposition-unmatched-normal`.
+The question-level routes are `question:0001-normal-epithelial-clone-contamination-in-esophageal-studies`, `question:0002-normal-breast-cna-background-chr1q-chr16q`, `question:0003-replication-timing-as-gene-level-mutation-rate-confounder`, `question:0004-mca-burden-in-esophageal-vs-other-study-tissues`, `question:0005-gli1-normal-tissue-hotspot-inflation`, `question:0006-ch-priority-gene-completeness`, `question:0007-cross-tissue-somatic-mutation-rate-variation-as-null-model`, `question:0008-signature-decomposition-tissue-background-subtraction`, `question:0009-sbs1-lrr-bias-as-normal-contamination-flag`, and `question:0010-cuplr-style-tof-classifier-for-suspect-normal-samples`.
 
 ## Papers covered
 

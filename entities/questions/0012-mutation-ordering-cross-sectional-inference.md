@@ -4,7 +4,7 @@ title: "Can mutation ordering (A\u2192B) be robustly inferred from cross-section
   \ cBioPortal data?"
 status: active
 created: '2026-04-24'
-updated: '2026-04-28'
+updated: '2026-06-28'
 id: question:0012-mutation-ordering-cross-sectional-inference
 ontology_terms: []
 datasets:
@@ -42,6 +42,11 @@ directed A→B ordering signals — asymmetries such as "A-alone tumors are comm
 B-alone tumors are rare" — from this snapshot data, in a way that is statistically
 robust and biologically interpretable.
 
+This question belongs to `theme:0003-temporal-structure-of-carcinogenesis-order-count-and-timing-of-the`
+and is paired with `question:0041-driver-complexity-vs-median-age-at-diagnosis`.
+Its discussion and search anchors are `discussion:0002-mutation-ordering-and-path-dependency`
+and `search:0001-cooccurrence-mutual-exclusivity-methods`.
+
 Established methods exist for exactly this: **Mutual Hazard Networks** (MHN, Schill 2020),
 **Conjunctive Bayesian Networks** (CBN, Beerenwinkel 2007), **CAPRI / TRONCO**
 (Caravagna et al. [@Caravagna2016]), **REVOLVER** (Caravagna et al. [@Caravagna2018]). PCAWG
@@ -57,7 +62,7 @@ is genotype-dependent.
 - Answers a biological question — is there an evolutionary bias toward acquiring
   DNA-repair / checkpoint mutations before growth / immune-evasion mutations, as
   predicted by the mutator-phenotype hypothesis (Loeb 1974, Loeb 2001)?
-- Complements `t078` (co-occurrence / mutual exclusivity): co-occurrence gives
+- Complements `task:t078` (co-occurrence / mutual exclusivity): co-occurrence gives
   symmetric association; ordering gives direction. The same cohort, callability mask,
   and null model support both.
 - Tests whether the project's data + corrections (CH, normal-tissue contamination,
@@ -96,7 +101,7 @@ is genotype-dependent.
 - Cancer-type pooling creates Simpson's-paradox artifacts; ordering must be
   per-histology.
 - Signature-coupled TMB: MMR-d / POLE tumors acquire mutations faster regardless
-  of causal order. `t081` hypermutator annotation and `t111` signature exposures
+  of causal order. `task:t081` hypermutator annotation and `task:t111` signature exposures
   are required stratifiers.
 - TP53 is often *late* in solid tumors (PCAWG chronology from Gerstung et al. [@Gerstung2020] places it among the
   late pan-cancer events), contradicting a naive "all repair genes first" reading
@@ -107,7 +112,7 @@ is genotype-dependent.
 
 The most plausible path forward is:
 
-1. Keep this tied to `t078` (co-occurrence / mutual exclusivity). Reuse the same
+1. Keep this tied to `task:t078` (co-occurrence / mutual exclusivity). Reuse the same
    sample-specific-background-rate null model (DISCOVER-style Poisson binomial) and
    the same per-sample callability mask. Add observation-event MHN on top as the
    "directed companion"; do not report cMHN-only edges as biological ordering evidence.
@@ -130,13 +135,14 @@ pursue this.
 - **Related hypotheses:** `hypothesis:0004-mhn-pathway-ordering` and
   `hypothesis:0006-pre-malignant-n-minus-1-driver-carriage`.
 - **Required data or analyses:**
-  - VAF availability audit across studies (new task).
+  - VAF availability audit across studies (`task:t135`).
   - Pipeline change: retain `t_alt_count` / `t_ref_count` / `tumor_f` in variant
-    feathers (contingent on audit result).
+    feathers (contingent on audit result; `task:t152`).
   - Literature search: MHN / CBN / CAPRI / REVOLVER / PCAWG chronology methods
-    and benchmarks (new task).
-  - Per-histology MHN fit as a follow-on to `t078`.
-  - Stratification by `t081` hypermutator class and `t111` signature exposures.
+    and benchmarks (`search:0001-cooccurrence-mutual-exclusivity-methods`).
+  - Per-histology MHN fit as a follow-on to `task:t078`.
+  - Stratification by `task:t081` hypermutator class, `task:t087` CH grading, and
+    `task:t111` signature exposures.
 - **Priority level:** P2 — not ahead of `t078`, but logical direct successor.
 
 ## Related

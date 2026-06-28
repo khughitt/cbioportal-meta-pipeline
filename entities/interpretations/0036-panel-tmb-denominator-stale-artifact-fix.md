@@ -4,7 +4,7 @@ title: Panel TMB denominator was WES-default for all panel samples in poc-2026-0
   (stale pre-t070 artifact); fixed + guarded
 status: active
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-28'
 id: interpretation:0036-panel-tmb-denominator-stale-artifact-fix
 source_refs: []
 related:
@@ -16,6 +16,10 @@ related:
 ---
 
 # Interpretation: panel TMB denominator was WES-default in poc-2026-04-17 — stale artifact, fixed + guarded
+
+Project links: this interpretation updates `topic:tumor-mutational-burden` and supports the
+downstream reads in `interpretation:0037-q043-driver-breadth-distribution` and
+`interpretation:0038-q047-hypermutation-specificity-confound`.
 
 ## What was wrong
 

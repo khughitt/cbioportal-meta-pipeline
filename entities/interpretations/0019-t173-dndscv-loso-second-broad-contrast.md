@@ -4,7 +4,7 @@ title: "t173 dNdScv LOSO second broad contrast \u2014 additional broad holdout c
   \ structured perturbation"
 status: active
 created: '2026-04-30'
-updated: '2026-04-30'
+updated: '2026-06-28'
 id: interpretation:0019-t173-dndscv-loso-second-broad-contrast
 source_refs:
 - task:t173
@@ -15,6 +15,10 @@ related:
 - question:0013-cross-study-replication-rate
 ---
 # t173 dNdScv LOSO second broad contrast
+
+Project links: this interpretation is part of `task:t173`, testing
+`hypothesis:0002-cross-study-ranking-divergence-is-structured` through
+`question:0013-cross-study-replication-rate`.
 
 Date: 2026-04-30
 

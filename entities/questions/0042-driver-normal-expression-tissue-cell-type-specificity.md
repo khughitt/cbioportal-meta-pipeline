@@ -5,7 +5,7 @@ title: "Are cancer-type-restricted drivers enriched for cell-type-restricted nor
   \ differ from tumor suppressors?"
 status: active
 created: '2026-06-07'
-updated: '2026-06-07'
+updated: '2026-06-28'
 id: question:0042-driver-normal-expression-tissue-cell-type-specificity
 ontology_terms:
 - lineage addiction
@@ -162,9 +162,17 @@ sub-questions:
 ## Connections to Project
 
 - **Topic / discussion:** `topic:lineage-addiction-and-cell-of-origin-driver-specificity`,
+  `topic:cancer-driver-genes`, `topic:oncofetal-developmental-reprogramming`, and
   `discussion:0008-tissue-cell-type-specificity-of-cancer-drivers`.
-- **Sibling questions:** `q035`/`q036` (same specificity machinery on the neural-gene set); `h12`
-  as the special case; `h03` as the length null.
+- **Sibling questions:** `question:0035-label-free-neural-gene-definition` and
+  `question:0036-oncofetal-fetal-vs-adult-neural-expression` use the same specificity machinery
+  on the neural-gene set; `question:0043-driver-cancer-type-breadth-distribution`,
+  `question:0045-pathway-grain-convergence-vs-gene-grain-divergence`, and
+  `question:0047-hypermutation-confound-on-driver-tissue-specificity` cover adjacent driver-breadth
+  and confounding checks.
+- **Hypotheses:** `hypothesis:0012-neural-gene-enrichment-length-histology-artifact` is the neural
+  special case, while `hypothesis:0003-gene-length-confounds-literature-attention` is the length
+  null.
 - **Priority:** P3 — substrate (driver roster + role labels) is on disk; gated on vendoring a
   normal-expression reference and a Tau computation. A hypothesis (formal "OG > TSG > background"
   enrichment claim) can be promoted from this question once the specificity reference exists.

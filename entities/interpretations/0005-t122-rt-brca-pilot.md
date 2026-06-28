@@ -3,7 +3,7 @@ type: interpretation
 title: 't122: BRCA gene-level replication-timing pilot'
 status: active
 created: '2026-04-22'
-updated: '2026-04-22'
+updated: '2026-06-28'
 id: interpretation:0005-t122-rt-brca-pilot
 mode: research
 source_refs:
@@ -20,6 +20,11 @@ prior_interpretations:
 ---
 
 # Interpretation: BRCA gene-level replication-timing pilot
+
+Project links: this pilot uses `task:t121` replication-timing substrate to probe
+`question:0003-replication-timing-as-gene-level-mutation-rate-confounder` and
+`question:0009-sbs1-lrr-bias-as-normal-contamination-flag`, following
+`interpretation:0004-t110-sbs1-sbs5-brca-comparison`.
 
 ## Verdict
 

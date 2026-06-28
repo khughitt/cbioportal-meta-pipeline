@@ -4,7 +4,7 @@ title: How should multi-cancer dNdScv signals be aggregated into a per-gene pan-
   ranking when BH-FDR floors out for hundreds of genes?
 status: active
 created: '2026-04-27'
-updated: '2026-04-28'
+updated: '2026-06-28'
 id: question:0015-pan-cancer-aggregator-choice
 ontology_terms:
 - meta-analysis
@@ -23,6 +23,10 @@ related:
 ---
 
 # How should multi-cancer dNdScv signals be aggregated when BH-FDR floors out?
+
+Project links: this question is tied to
+`hypothesis:0002-cross-study-ranking-divergence-is-structured`,
+`interpretation:0009-t131-full-pan-cancer-dndscv-run`, `task:t144`, and `task:t155`.
 
 ## Summary
 

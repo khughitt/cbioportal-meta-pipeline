@@ -3,7 +3,7 @@ type: interpretation
 title: First end-to-end PoC run of the annotated pipeline
 status: active
 created: '2026-04-17'
-updated: '2026-04-22'
+updated: '2026-06-28'
 id: interpretation:0001-poc-run
 mode: dev
 source_refs:
@@ -21,6 +21,10 @@ prior_interpretations: []
 ---
 
 # Interpretation — 2026-04-17 PoC run (t100)
+
+Project links: this PoC interpretation is anchored to `task:t100`, `task:t081`, `task:t070`, and
+`task:t105`, with the hypermutator implementation context in
+`plan:0001-t081-hypermutator-annotation-pipeline-plan`.
 
 ## Verdict
 

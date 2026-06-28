@@ -3,7 +3,7 @@ type: interpretation
 title: t210 q027 therapy-signature-high exclusion impact arm
 status: active
 created: '2026-06-01'
-updated: '2026-06-01'
+updated: '2026-06-28'
 id: interpretation:0034-t210-q027-therapy-signature-high-exclusion
 source_refs: &id001
 - code/config/config-q027-therapy-signature-high.yml
@@ -34,6 +34,15 @@ prior_interpretations:
 ---
 
 # Interpretation: t210 `q027` therapy-signature-high exclusion impact arm
+
+Project links: this interpretation closes the `task:t210` measured-signature arm that follows
+`task:t207`, `task:t208`, and `task:t209`.
+It informs `question:0027-does-excluding-treatment-signature-high-samples`,
+`question:0024-treatment-exposed-cohort-chemotherapy-signature`, and
+`hypothesis:0009-treatment-induced-signature-frequency-contamination`.
+It should be read after `interpretation:0030-t207-h10-treatment-impact-full-config`,
+`interpretation:0032-t208-h10-sample-level-mutagenic-rules`, and
+`interpretation:0033-t209-h10-sample-level-unknown-naive-rules`.
 
 ## Verdict
 
@@ -172,6 +181,19 @@ It reads source mutation/sample/hypermutator inputs from `/data/packages/cbiopor
 An early local run used the full output directory before this isolation was added.
 That was detected by checking the full `samples_annotated.feather` shape and restored by rerunning the full `all_h10_treatment_impact` target on `code/config/config-full.yml`.
 The restored full substrate has 383,477 samples across 198 studies, and the final full `H10` target reported no work remaining before the isolated `q027` run was accepted.
+
+Operational source refs include `code/config/config-q027-therapy-signature-high.yml`,
+`code/scripts/audit_q027_therapy_signature_substrate.py`,
+`code/scripts/run_restricted_sigprofiler_assignment.py`,
+`code/scripts/annotate_q027_signature_high.py`,
+`code/scripts/create_q027_signature_high_freq_tables.py`,
+`code/scripts/create_q027_signature_high_impact_table.py`, `code/workflows/Snakefile`,
+`doc/plans/2026-06-01-t210-q027-therapy-signature-high-exclusion.md`,
+`doc/reports/2026-06-01-t210-q027-therapy-signature-substrate-feasibility.md`,
+`/data/packages/cbioportal/q027-therapy-signature-high-2026-06-01/metadata/samples_q027_signature_high.feather`,
+`/data/packages/cbioportal/q027-therapy-signature-high-2026-06-01/summary/mut/table/gene_cancer_q027_signature_high_impact.datapackage.json`,
+and
+`/data/packages/cbioportal/q027-therapy-signature-high-2026-06-01/summary/mut/table/gene_cancer_q027_signature_high_impact_ratio.feather`.
 
 ## Implications
 

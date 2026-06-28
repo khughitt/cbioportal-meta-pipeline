@@ -3,7 +3,7 @@ type: topic
 title: "Tumor mutational burden (TMB) \u2014 definition, measurement, harmonization"
 status: active
 created: '2026-04-13'
-updated: '2026-04-14'
+updated: '2026-06-28'
 id: topic:tumor-mutational-burden
 ontology_terms: []
 source_refs: []
@@ -102,3 +102,9 @@ Zehir et al. [@Zehir2017] (panel-TMB ~ WES-TMB R² calibration); Pugh et al. [@P
 [@Bandlamudi2026] (current MSK-IMPACT TMB usage); Suehnholz et al. [@Suehnholz2024] (TMB-H as
 Level 1 pan-cancer biomarker contribution to actionability landscape). Follow-up search t025 for
 Friends-of-Cancer-Research / Buchhalter TMB harmonization paper still queued.
+## Project Links
+
+Relevant paper references include `paper:Zehir2017`, `paper:Pugh2022`, `paper:Bandlamudi2026`,
+and `paper:Suehnholz2024`.
+The interpretation is coupled to `topic:targeted-panel-sequencing-bias` because TMB estimates depend
+on panel footprint and callable-region calibration.

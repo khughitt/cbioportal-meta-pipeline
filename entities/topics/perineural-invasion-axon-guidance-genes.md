@@ -4,7 +4,7 @@ title: "Perineural invasion, peripheral nerve\u2013tumor interaction, and large 
   \ genes"
 status: active
 created: '2026-06-06'
-updated: '2026-06-06'
+updated: '2026-06-28'
 id: topic:perineural-invasion-axon-guidance-genes
 ontology_terms:
 - perineural invasion
@@ -92,3 +92,11 @@ This topic is relevant through the linked questions, hypotheses, datasets, and s
 ## Key References
 
 Key references are listed in `source_refs` and cited in the note above.
+## Project Links
+
+This topic is part of
+`synthesis:0015-cancer-neuroscience-literature-batch-21-papers-does-it-explain-a-neural` and is
+interpreted against `hypothesis:0012-neural-gene-enrichment-length-histology-artifact` and
+`hypothesis:0003-gene-length-confounds-literature-attention`.
+The immediate empirical checks are `question:0032-neural-gene-length-null` and
+`question:0033-neural-enrichment-cns-exclusion`.

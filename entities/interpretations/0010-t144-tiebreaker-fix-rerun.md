@@ -4,7 +4,7 @@ title: "t144 tiebreaker fix \u2014 Bailey driver recovery hits spec exactly; can
   \ drivers lift to top of rank_dndscv"
 status: active
 created: '2026-04-27'
-updated: '2026-04-27'
+updated: '2026-06-28'
 id: interpretation:0010-t144-tiebreaker-fix-rerun
 source_refs:
 - interpretation:0009-t131-full-pan-cancer-dndscv-run
@@ -20,6 +20,9 @@ workflow_run: "config-pan-cancer-dndscv 2026-04-27T07:55 (cheap rules only \u201
 ---
 
 # Interpretation: t144 tiebreaker fix re-run
+
+Project links: this rerun closes the immediate `task:t144` check and informs follow-up work in
+`task:t131`, `task:t145`, `task:t147`, and `task:t148`.
 
 ## Verdict
 

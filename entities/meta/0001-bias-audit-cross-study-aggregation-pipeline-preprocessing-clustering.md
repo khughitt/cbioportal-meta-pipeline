@@ -3,7 +3,7 @@ type: meta
 title: "Bias Audit: cross-study aggregation pipeline (preprocessing \u2192 clustering)"
 status: proposed
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: meta:0001-bias-audit-cross-study-aggregation-pipeline-preprocessing-clustering
 source_refs:
 - spec:research-question
@@ -34,6 +34,12 @@ Scope chosen by the user (not by recency heuristics): "have we carefully assesse
 analysis we have done, and ensured that we are properly preprocessing, normalizing, etc.?"
 Upstream data provenance (cBioPortal's own curation, variant calling, sequencing) is
 out of scope — this audit covers only transformations we control.
+
+Project links: this audit is anchored to `topic:cross-study-harmonization`,
+`topic:clonal-hematopoiesis-contamination`, `topic:targeted-panel-sequencing-bias`, and
+`topic:cohort-selection-bias-representativeness`.
+The immediate mitigation tasks it originally organized were `task:t052`, `task:t070`,
+`task:t076`, `task:t077`, and `task:t079`.
 
 Pipeline surfaces audited (in topological order): `convert_to_feather.py` →
 `check_gene_coverage.py` → `filter_genes.py` → `create_freq_tables.py` →

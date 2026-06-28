@@ -6,7 +6,7 @@ title: "t217: neural-gene mutation enrichment is a genomic-span / common-fragile
   \ ascertainment, not biology)"
 status: active
 created: '2026-06-08'
-updated: '2026-06-08'
+updated: '2026-06-28'
 id: interpretation:0041-t217-genomic-span-cfs-null
 related:
 - hypothesis:0012-neural-gene-enrichment-length-histology-artifact
@@ -20,6 +20,8 @@ related:
 ---
 
 # Interpretation: t217 — genomic-span / common-fragile-site null test
+
+Project links: this interpretation records `task:t217` and feeds `task:t218` and `task:t221`.
 
 > **Verdict: the candidate "neural-gene" mutation enrichment is overwhelmingly a genomic-span /
 > common-fragile-site (CFS) artifact, NOT a coding-length one.** Normalizing to coding target size

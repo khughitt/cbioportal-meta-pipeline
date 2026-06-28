@@ -3,7 +3,7 @@ type: plan
 title: "Within-tissue covariate\u2194H association core (H08a scan)"
 status: active
 created: '2026-05-31'
-updated: '2026-05-31'
+updated: '2026-06-28'
 id: plan:0007-t199-h08-association-core
 related:
 - hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and
@@ -19,6 +19,14 @@ related:
 ---
 
 # Within-tissue covariate↔H association core (H08a scan)
+
+Project links: this plan implements `task:t199` and depends on `task:t180`, `task:t181`, and
+`task:t195`.
+It operationalizes `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`
+through `method:h08-agnostic-association-model`,
+`pre-registration:0003-h08-positive-control-agnostic-association-must-recover-known-signature`,
+and `question:0025-causal-direction-guard-for-expression-signature`, using `dataset:tcga-mc3` and
+`dataset:tcga-pancanatlas`.
 
 > **Pre-registration-already-exists mode.** Every verdict-bearing criterion — the three
 > confirmatory arms, top-3 rank / positive sign / q<0.05, the 2-of-3 gate, the frozen Arm-C

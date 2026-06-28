@@ -3,7 +3,7 @@ type: topic
 title: 'Cancer neuroscience: nervous-system regulation of tumors (foundations)'
 status: active
 created: '2026-06-06'
-updated: '2026-06-06'
+updated: '2026-06-28'
 id: topic:cancer-neuroscience-neural-regulation
 ontology_terms:
 - cancer neuroscience
@@ -64,14 +64,16 @@ co-option is non-mutational). The circuitry largely lives in the **host** nervou
 (`paper:Wang2025b`, `paper:Xiong2023`), so a mutation-frequency table is not the expected readout.
 None of the project's candidate genes (NKAIN2, KCNIP4, LSAMP, OPCML, RBFOX1, …) appear in this
 literature; the canonical effectors above are a disjoint, shorter set. This motivates the
-null-first `hypothesis:0012` and the canonical-effector dN/dS test (`question:0037`).
+null-first `hypothesis:0012-neural-gene-enrichment-length-histology-artifact` and the
+canonical-effector dN/dS test (`question:0037-canonical-neural-gene-dnds-selection`).
 
 ## Open leads
 
 - Label-free neural-gene definition from glioma OPC/NPC state signatures (Neftel2019/Filbin2018)
-  and brain atlases (`question:0035`).
-- Whether enrichment survives CNS-study removal (`question:0033`) — peripheral-cancer biology is
-  real (see `topic:perineural-invasion-axon-guidance-genes`) but still non-mutational.
+  and brain atlases (`question:0035-label-free-neural-gene-definition`).
+- Whether enrichment survives CNS-study removal
+  (`question:0033-neural-enrichment-cns-exclusion`) — peripheral-cancer biology is real (see
+  `topic:perineural-invasion-axon-guidance-genes`) but still non-mutational.
 
 ## Summary
 
@@ -87,8 +89,13 @@ The current project-facing state of knowledge is summarized in the existing pros
 
 ## Relevance to This Project
 
-This topic is relevant through the linked questions, hypotheses, datasets, and source references in the frontmatter and in the note above.
+This topic is relevant through `synthesis:0015-cancer-neuroscience-literature-batch-21-papers-does-it-explain-a-neural`,
+`topic:neuro-immune-crosstalk-cancer`, and
+`topic:oncofetal-developmental-reprogramming`, in addition to the questions and hypothesis linked
+above.
 
 ## Key References
 
-Key references are listed in `source_refs` and cited in the note above.
+Key references include `paper:Mancusi2023`, `paper:Keough2022`, `paper:Magnon2023`,
+`paper:Hanahan2023`, `paper:Venkatesh2019`, `paper:Hwang2025a`, `paper:Huang2023a`,
+`paper:Huang2025a`, `paper:Wang2025b`, `paper:Wu2025a`, and `paper:Xiong2023`.

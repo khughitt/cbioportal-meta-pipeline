@@ -4,7 +4,7 @@ title: Can the SBS1 late-replicating-region bias (present in normal tissue, abse
   in cancer) serve as a practical contamination quality flag for cBioPortal studies?
 status: deferred
 created: '2026-04-18'
-updated: '2026-04-24'
+updated: '2026-06-28'
 id: question:0009-sbs1-lrr-bias-as-normal-contamination-flag
 revisit_condition: WGS inputs ingested
 ontology_terms:
@@ -89,3 +89,8 @@ Yaacov et al. [@Yaacov2023] demonstrated that SBS1 mutations accumulate preferen
 - Related questions: `question:0003` (RT as gene-level mutation-rate confounder), `question:0008` (SBS1/SBS5 contamination magnitude)
 - Recent project evidence: `interpretation:0005-t122-rt-brca-pilot`, `interpretation:0006-t123-rt-brca-sbs1-proxy-pilot`
 - Methods/Datasets: SigProfilerTopography; ENCODE replication timing data (constitutive ERR/LRR regions); Yaacov et al. [@Yaacov2023] code (see Yaacov et al. 2022, the companion cancer-RT paper for RT region construction)
+## Project Links
+
+This question is coupled to `question:0003-replication-timing-as-gene-level-mutation-rate-confounder`
+and `question:0008-signature-decomposition-tissue-background-subtraction`.
+The immediate execution lineage ran through `task:t122`, `task:t123`, and `task:t124`.

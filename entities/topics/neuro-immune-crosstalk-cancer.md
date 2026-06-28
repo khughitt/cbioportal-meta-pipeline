@@ -3,7 +3,7 @@ type: topic
 title: Neuro-immune crosstalk in cancer (neural control of tumor immunity)
 status: active
 created: '2026-06-06'
-updated: '2026-06-06'
+updated: '2026-06-28'
 id: topic:neuro-immune-crosstalk-cancer
 ontology_terms:
 - neuro-immune crosstalk
@@ -85,3 +85,11 @@ This topic is relevant through the linked questions, hypotheses, datasets, and s
 ## Key References
 
 Key references are listed in `source_refs` and cited in the note above.
+## Project Links
+
+This topic is part of
+`synthesis:0015-cancer-neuroscience-literature-batch-21-papers-does-it-explain-a-neural` and
+`topic:cancer-neuroscience-neural-regulation`.
+It helps distinguish `hypothesis:0012-neural-gene-enrichment-length-histology-artifact` from
+`hypothesis:0001-non-tumor-signal-contamination`, while also informing
+`question:0035-label-free-neural-gene-definition`.

@@ -3,7 +3,7 @@ type: pre-registration
 title: "Pre-registration: t126 \u2014 per-study aggregate SBS1 LRR-bias test"
 status: committed
 created: '2026-04-24'
-updated: '2026-04-24'
+updated: '2026-06-28'
 id: pre-registration:0002-pre-registration-t126-per-study-aggregate-sbs1-lrr-bias-test
 committed: '2026-04-24'
 spec: ''
@@ -30,6 +30,11 @@ commits_to:
 ## Purpose
 
 Resolve `task:t124` (the `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` fork) by running the per-study aggregate version of the Yaacov et al. [@Yaacov2023] LRR-bias statistic — the only formulation that simultaneously matches (a) the published mechanism and (b) `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` framing as a single-study contamination flag. Three prior pilots (`task:t110`, `task:t122`, `task:t123`) tested per-sample approximations and each failed for a different sparsity reason; this test pools across samples within a study before evaluating LRR enrichment.
+The registration is downstream of `task:t126`, `task:t109`, and `task:t121`, and it should be read
+with `discussion:0003-t124-q009-fork-decision`,
+`interpretation:0004-t110-sbs1-sbs5-brca-comparison`,
+`interpretation:0005-t122-rt-brca-pilot`, and
+`interpretation:0006-t123-rt-brca-sbs1-proxy-pilot`.
 
 This document is written **before** any implementation begins, so that the test outcomes (pass / retire / defer) are determined by pre-registered thresholds rather than post-hoc rationalization.
 

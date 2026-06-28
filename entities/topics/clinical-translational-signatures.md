@@ -3,7 +3,7 @@ type: topic
 title: Clinical and translational applications of mutational signatures (incl. TMB)
 status: active
 created: '2026-05-31'
-updated: '2026-05-31'
+updated: '2026-06-28'
 id: topic:clinical-translational-signatures
 ontology_terms:
 - mutational signatures
@@ -130,3 +130,11 @@ The 10 mut/Mb FDA cut-off receives mixed clinical validation. Panel size, tumour
 ## Relevance to This Project
 
 This topic is relevant through the linked questions, hypotheses, datasets, and source references in the frontmatter and in the note above.
+## Project Links
+
+This topic supports
+`hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` through
+`method:h08-agnostic-association-model` and `topic:signature-decomposition-unmatched-normal`.
+It is also connected to
+`question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross` and
+`question:0019-does-de-novo-extraction-on-the-aggregated-cohort-surface-factors-not-in`.

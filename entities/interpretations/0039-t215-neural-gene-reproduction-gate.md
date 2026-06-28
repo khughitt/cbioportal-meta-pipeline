@@ -5,7 +5,7 @@ title: "t215: neural-gene mutation-enrichment partially reproduces \u2014 real t
   \ or protein-length one"
 status: active
 created: '2026-06-08'
-updated: '2026-06-08'
+updated: '2026-06-28'
 id: interpretation:0039-t215-neural-gene-reproduction-gate
 source_refs:
 - paper:Lu2026
@@ -21,6 +21,9 @@ related:
 ---
 
 # Interpretation: t215 — neural-gene mutation-enrichment reproduction gate
+
+Project links: this interpretation starts the neural-gene meta-analysis sequence with `task:t215`,
+`task:t216`, `task:t217`, and `task:t221`.
 
 > **Gate verdict: PARTIAL REPRODUCTION → PROCEED (do not close the program).**
 > The 9 candidate neural genes are real and strongly enriched in the high tail of the mutation

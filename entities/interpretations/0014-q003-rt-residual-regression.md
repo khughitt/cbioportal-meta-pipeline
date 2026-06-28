@@ -4,7 +4,7 @@ title: "q003 RT residual regression \u2014 late-replication signal does not expl
   \ TTN; length adjustment moves TTN but the RT coefficient is null"
 status: active
 created: '2026-04-29'
-updated: '2026-04-29'
+updated: '2026-06-28'
 id: interpretation:0014-q003-rt-residual-regression
 date: '2026-04-29'
 related:
@@ -25,8 +25,13 @@ prior_interpretations:
 
 ## Question
 
-Task `t163` asks whether gene-level replication timing explains residual full-scale pan-cancer
+`task:t163` asks whether gene-level replication timing explains residual full-scale pan-cancer
 dNdScv signal, especially TTN's persistence near the top of the post-t144 dNdScv ranking.
+This interpretation also links back to
+`question:0003-replication-timing-as-gene-level-mutation-rate-confounder`,
+`hypothesis:0002-cross-study-ranking-divergence-is-structured`, `task:t131`, `task:t147`,
+`task:t153`, `interpretation:0009-t131-full-pan-cancer-dndscv-run`, and
+`interpretation:0012-t146-external-validation-cgc`.
 
 ## Method
 

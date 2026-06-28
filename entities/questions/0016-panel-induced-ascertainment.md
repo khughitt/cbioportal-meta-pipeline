@@ -4,7 +4,7 @@ title: Does panel-induced ascertainment confound both mutation-frequency ranking
   and literature-attention measures, creating a rich-get-richer loop?
 status: active
 created: '2026-04-27'
-updated: '2026-04-28'
+updated: '2026-06-28'
 id: question:0016-panel-induced-ascertainment
 ontology_terms:
 - panel sequencing
@@ -25,6 +25,11 @@ related:
 ---
 
 # Does panel-induced ascertainment confound both mutation-frequency rankings and literature attention?
+
+Project links: this question tests a panel/callability branch of
+`hypothesis:0003-gene-length-confounds-literature-attention`, drawing on
+`discussion:0001-gene-length-bias-in-mutation-rankings-and-literature` and motivating `task:t086`
+and `task:t154`.
 
 ## Summary
 

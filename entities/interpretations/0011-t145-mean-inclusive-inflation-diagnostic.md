@@ -4,7 +4,7 @@ title: "t145 mean-inclusive inflation diagnostic \u2014 stale pooled means befor
   \ WES zero-fill caused raw ranking inflation"
 status: active
 created: '2026-04-27'
-updated: '2026-04-27'
+updated: '2026-06-28'
 id: interpretation:0011-t145-mean-inclusive-inflation-diagnostic
 source_refs:
 - task:t145
@@ -16,6 +16,9 @@ related:
 ---
 
 # t145 Mean-Inclusive Inflation Diagnostic
+
+Project links: this diagnostic records `task:t145`, motivates `task:t160`, and informs
+`question:0015-pan-cancer-aggregator-choice`.
 
 Date: 2026-04-27
 

@@ -4,7 +4,7 @@ title: Assay regime (panel / WES / WGS) as a master technical confounder spannin
   mutation-frequency rankings and signature exposures
 status: active
 created: '2026-06-02'
-updated: '2026-06-02'
+updated: '2026-06-28'
 id: theme:0001-assay-regime-panel-wes-wgs-as-a-master-technical-confounder-spanning
 theme_kind: methodological
 theme_scope: project
@@ -25,6 +25,8 @@ evidence_refs: []
 ## Definition
 
 <!-- Define the cross-cutting organizing frame in 2-4 sentences. -->
+Assay regime is the project-level frame for differences between targeted panels, WES, and WGS that can masquerade as biology.
+It covers panel callability, region scope, sample-level mutation-count floors, caller provenance, and modality-specific availability of indels, signatures, and driver calls.
 
 ## Why It Matters
 
@@ -37,6 +39,14 @@ evidence_refs: []
 ## Current Project Links
 
 <!-- Link the questions, hypotheses, reports, child projects, concepts, methods, and tasks currently organized by this theme. -->
+This theme organizes `hypothesis:0002-cross-study-ranking-divergence-is-structured`,
+`hypothesis:0003-gene-length-confounds-literature-attention`,
+`hypothesis:0008-cross-study-signature-exposure-reproducibility`, and
+`hypothesis:0001-non-tumor-signal-contamination`.
+Its active question routes are `question:0016-panel-induced-ascertainment`,
+`question:0020-minimum-sample-size-and-caller-provenance-for`,
+`question:0014-cfs-as-distinct-confounder-class`, and
+`question:0028-indel-call-availability-across-cbioportal-studies`.
 
 ## Guardrails
 

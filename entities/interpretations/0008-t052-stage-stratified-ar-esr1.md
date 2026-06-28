@@ -3,7 +3,7 @@ type: interpretation
 title: 't052: stage-stratified AR + ESR1 rates (Zehir 2017 validation)'
 status: active
 created: '2026-04-25'
-updated: '2026-04-25'
+updated: '2026-06-28'
 id: interpretation:0008-t052-stage-stratified-ar-esr1
 source_refs:
 - paper:Zehir2017
@@ -15,6 +15,10 @@ workflow_run: t052-stage-stratified-2026-04-25
 ---
 
 # Interpretation: t052 — stage-stratified AR + ESR1 rates
+
+Project links: this interpretation implements `task:t052`, using
+`plan:0003-t052-cohort-stage-descriptor-design` to probe
+`topic:cohort-selection-bias-representativeness`.
 
 ## Closure state
 

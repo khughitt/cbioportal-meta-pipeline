@@ -3,7 +3,7 @@ type: topic
 title: Multi-omics cancer analysis
 status: active
 created: '2026-04-13'
-updated: '2026-04-13'
+updated: '2026-06-28'
 id: topic:multi-omics-cancer-analysis
 ontology_terms: []
 source_refs: []
@@ -16,6 +16,9 @@ related:
 ---
 
 # Multi-omics cancer analysis
+
+Project links: key references for this topic are `paper:Hoadley2018`, `paper:Jee2024`,
+`paper:PCAWG2020`, and `paper:SanchezVega2018`.
 
 ## Summary
 

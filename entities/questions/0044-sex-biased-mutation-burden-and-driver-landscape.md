@@ -59,9 +59,9 @@ specific tests:
 ## What we can compute (substrate on disk)
 
 - **Burden:** `samples_annotated.feather` TMB + `is_hypermutator`, stratified by `sex` **within
-  cancer type**; exposure adjustment via the h08 signature covariates (smoking/UV/APOBEC).
+  cancer type**; exposure adjustment via agnostic signature covariates (smoking/UV/APOBEC).
 - **Per-gene OR:** male/female mutation odds ratios from `gene_cancer_study.feather`, within cancer
-  type, length-matched background (`h03`).
+  type, length-matched background (`hypothesis:0003-gene-length-confounds-literature-attention`).
 - **EXITS test:** restrict to the X-linked escape-TSG set (location + role from `data/cosmic_cgc.tsv`),
   test male-biased LoF-class mutations vs a matched autosomal-TSG and matched-length background.
 - **Cannot / weak:** **loss of Y (LOY)** — ChrY copy-state is poorly callable from the targeted panels
@@ -72,11 +72,12 @@ specific tests:
 - **Cancer-type composition (first-order).** Always stratify within cancer type; a pooled sex-TMB gap
   is mostly composition (sex-skewed cancer types). Simpson risk is the headline confound.
 - **Carcinogen exposure.** Smoking (lung/head-neck) and UV (melanoma) are sex-skewed and inflate male
-  TMB; adjust via h08 exposure-signature covariates before claiming an intrinsic sex effect.
-- **Panel callability / ChrY coverage (`q016`).** Panel composition differs; ChrX/ChrY coverage is
+  TMB; adjust via agnostic exposure-signature covariates before claiming an intrinsic sex effect.
+- **Panel callability / ChrY coverage (`question:0016-panel-induced-ascertainment`).** Panel composition differs; ChrX/ChrY coverage is
   uneven. Sex-bias in a gene can be a coverage artifact.
-- **Gene length (`h03`).** Any per-gene enrichment needs a length-matched null.
-- **Age×sex.** Incidence age structure differs by sex; couple to `q041`/age handling (age is ordinal
+- **Gene length (`hypothesis:0003-gene-length-confounds-literature-attention`).** Any per-gene enrichment needs a length-matched null.
+- **Age×sex.** Incidence age structure differs by sex; couple to
+  `question:0041-driver-complexity-vs-median-age-at-diagnosis` / age handling (age is ordinal
   in our ingest).
 
 ## Predictions
@@ -99,9 +100,12 @@ specific tests:
 
 - **Topic:** `topic:sex-biased-somatic-mutation-landscape` (background + external lit).
 - **Shared machinery:** `topic:tumor-mutational-burden` (TMB denominator, hypermutator flags),
-  `h08` (sex as a covariate in the signature-association scan), `q043` (breadth roster for per-gene
+  `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`
+  (sex as a covariate in the signature-association scan),
+  `question:0043-driver-cancer-type-breadth-distribution` (breadth roster for per-gene
   tests).
-- **Confounds:** `q016` (panel/ChrY), `h03` (length).
+- **Confounds:** `question:0016-panel-induced-ascertainment` (panel/ChrY),
+  `hypothesis:0003-gene-length-confounds-literature-attention` (length).
 - **Priority:** **P3** — substrate on disk; gated on a one-pass `sex`-completeness audit (coverage
   varies by study/source) and the EXITS gene-set definition. A hypothesis ("EXITS genes are
   male-biased for LoF beyond matched background") can be promoted once a pilot shows direction.

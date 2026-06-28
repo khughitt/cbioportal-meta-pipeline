@@ -77,10 +77,10 @@ not an identification of k.
   study/sample/cancer_type/TMB/hypermutator fields, *not* age
   (`validate_mutation_pipeline_artifacts.py::validate_samples_annotated`), and the only existing
   AGE extraction is TCGA/PanCanAtlas-specific — keyed on the 12-char TCGA barcode in
-  `build_h08_covariates.py`. q041 is therefore **gated on a precursor task** that audits the
+  `build_h08_covariates.py`. This question is therefore **gated on a precursor task** that audits the
   per-study clinical age fields (heterogeneous keys: `AGE`, `AGE_AT_DIAGNOSIS`, GENIE
   `AGE_AT_SEQ_REPORT`, …), normalizes units and redaction conventions (e.g. the ">89" cap), and
-  emits a canonical per-sample/per-study **q041 age table**. Without that artifact the question is
+  emits a canonical per-sample/per-study **age table for this question**. Without that artifact the question is
   not executable.
   **GENIE caveat:** `AGE_AT_SEQ_REPORT` is age at *sequencing*, often well after onset; GENIE
   studies must be handled separately or excluded from the onset proxy.
@@ -143,14 +143,14 @@ not an identification of k.
 
 ## Connections to Project
 
-- **Hypotheses:** `h06` (how many of the n drivers are carried at a stage — the count axis),
-  `h04` (the order axis).
-- **Sibling question:** `q012` (can order be inferred at all from cross-sectional data — shares
+- **Hypotheses:** `hypothesis:0006-pre-malignant-n-minus-1-driver-carriage` (how many of the n drivers are carried at a stage — the count axis),
+  `hypothesis:0004-mhn-pathway-ordering` (the order axis).
+- **Sibling question:** `question:0012-mutation-ordering-cross-sectional-inference` (can order be inferred at all from cross-sectional data — shares
   every confound here).
 - **Topic / theme:** `topic:multistage-carcinogenesis-and-age-of-onset` (background),
   `theme:0003-temporal-structure-of-carcinogenesis-order-count-and-timing-of-the` (organizing frame).
 - **Priority:** P3 — a scoped, low-cost descriptive analysis once driver annotations + a clean
-  per-histology age table exist; not ahead of `t078`/`q012` infrastructure.
+  per-histology age table exist; not ahead of `t078` / `question:0012-mutation-ordering-cross-sectional-inference` infrastructure.
 - **Candidate follow-up (not yet filed):** a methodological question on **age as a covariate
   inflating mutation/driver burden** project-wide (touches TMB, the SBS1/SBS5 clock signatures of
-  `q023`) — flag if this confound recurs outside the age-of-onset thread.
+  `question:0023-sbs40-vs-sbs5-clocklike-expression-module`) — flag if this confound recurs outside the age-of-onset thread.

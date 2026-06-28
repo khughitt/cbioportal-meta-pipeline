@@ -52,21 +52,25 @@ The established (external, not-yet-in-library) findings this topic organizes:
 - **Have:** `sex` (patient metadata), per-sample TMB (`compute_per_sample_tmb`, the t081 pipeline),
   `is_hypermutator`, gene×cancer mutation counts, COSMIC CGC role/location labels. So: sex-stratified
   TMB *within cancer type*; per-gene male/female mutation odds ratios; the EXITS-gene male-bias test;
-  signature-exposure-by-sex (h08 substrate).
+  signature-exposure-by-sex
+  (`hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` substrate).
 - **Cannot (or only weakly):** **LOY** — ChrY copy-state is poorly callable from the targeted panels
   that dominate GENIE; treat as a flagged-not-computed sub-question. Germline/ancestry interactions —
   out of scope for a mutation-only pipeline.
 - **First-order confounds:** cancer-type composition (always stratify within type; Simpson risk),
-  panel callability and ChrY coverage (`q016`), carcinogen-exposure signatures (smoking/UV — adjust
-  via h08 covariates), and the age×sex interaction in incidence.
+  panel callability and ChrY coverage (`question:0016-panel-induced-ascertainment`), carcinogen-exposure signatures (smoking/UV — adjust
+  via agnostic covariate-association outputs), and the age×sex interaction in incidence.
 
 ## Connections
 
-- **Question:** `q044` (the falsifiable sex-bias tests).
+- **Question:** `question:0044-sex-biased-mutation-burden-and-driver-landscape` (the falsifiable sex-bias tests).
 - **Shared machinery:** `topic:tumor-mutational-burden` (the TMB denominator + hypermutator flags),
-  `hypothesis:h08-...` (signature-by-covariate scan — sex is a covariate it can carry),
-  `topic:cancer-driver-genes` (the driver roster), `q043` (breadth, for per-gene tests).
-- **Confounds:** `q016` (panel/ChrY ascertainment), `h03` (length null on any per-gene enrichment).
+  `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`
+  (signature-by-covariate scan — sex is a covariate it can carry),
+  `topic:cancer-driver-genes` (the driver roster),
+  `question:0043-driver-cancer-type-breadth-distribution` (breadth, for per-gene tests).
+- **Confounds:** `question:0016-panel-induced-ascertainment` (panel/ChrY ascertainment),
+  `hypothesis:0003-gene-length-confounds-literature-attention` (length null on any per-gene enrichment).
 - **External / not-yet-in-library:** the EXITS-gene paper (male-biased X-linked TSG LoF), pan-cancer
   sex-TMB analyses, and the LOY/mLOY clonal-mosaicism literature — candidates for a future
   `/science:research-papers` pass *if* a pilot shows the axis is worth formalizing here.

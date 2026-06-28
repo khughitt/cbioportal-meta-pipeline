@@ -44,15 +44,15 @@ related:
 
 This lineage-addiction example note links topic:lineage-addiction-and-cell-of-origin-driver-specificity, discussion:0008-tissue-cell-type-specificity-of-cancer-drivers, and paper:Garraway2006.
 
-Using a doxycycline-inducible shRNA loss-of-function screen across multiple myeloma (MM) subtypes, Shaffer et al. show that myeloma cells are universally dependent on the transcription factor IRF4 for survival — despite IRF4 being unmutated and unamplified in ~90% of cases. The study frames this as "nononcogene addiction": MM cells co-opt a master plasma-cell-differentiation program that is an obligate part of normal B-cell biology, not a classically mutated driver. A key mechanistic discovery is an IRF4↔MYC autoregulatory positive-feedback circuit in which each factor directly binds and transactivates the other, creating a self-reinforcing transcriptional network that is aberrantly maintained in myeloma.
+Using a doxycycline-inducible shRNA loss-of-function screen across multiple myeloma (MM) subtypes, Shaffer et al. show that myeloma cells are universally dependent on the transcription factor IRF4 for survival — despite IRF4 being unmutated and unamplified in ~90% of cases. The study frames this as "nononcogene addiction": MM cells co-opt a master plasma-cell-differentiation program that is an obligate part of normal B-cell biology, not a classically mutated driver. A key mechanistic discovery is an IRF4↔MYC autoregulatory positive-feedback circuit in which each factor directly binds and transactivates the other, creating a self-reinforcing transcriptional network that is aberrantly maintained in myeloma [@Shaffer2008].
 
 ## Methods
 
 **Loss-of-function RNAi screen.** Doxycycline-inducible retrovirally delivered shRNAs targeting IRF4 were introduced into three myeloma cell lines representing distinct oncogenic subtypes: KMS12 (CCND1 translocation), a line with FGFR3/MMSET translocation, and SKMM1 (MAFB/IRF4 translocations). Competitive growth assays were used to measure depletion of shRNA-expressing cells relative to uninfected controls. Five lymphoma cell lines served as non-myeloma controls.
 
-**Gene expression profiling.** Agilent microarrays and Lymphochip arrays were used to identify IRF4-dependent transcriptional programs following shRNA knockdown, and to compare IRF4 targets against a reference panel of primary myeloma samples (n=451) vs. normal B cell stages (activated B cells, plasma cells).
+**Gene expression profiling.** Agilent microarrays and Lymphochip arrays were used to identify IRF4-dependent transcriptional programs following shRNA knockdown, and to compare IRF4 targets against a reference panel of primary myeloma samples (n=451) vs. normal B cell stages (activated B cells, plasma cells) [@Shaffer2008].
 
-**Genome-wide ChIP-chip.** Chromatin immunoprecipitation followed by hybridization to Agilent Human Promoter Set microarrays (~17,574 genes) in KMS12 (myeloma) and OCI-Ly19 (lymphoma) cells mapped direct IRF4 binding across the genome. Quantitative PCR ChIP validated 22 selected loci.
+**Genome-wide ChIP-chip.** Chromatin immunoprecipitation followed by hybridization to Agilent Human Promoter Set microarrays (~17,574 genes) in KMS12 (myeloma) and OCI-Ly19 (lymphoma) cells mapped direct IRF4 binding across the genome. Quantitative PCR ChIP validated 22 selected loci [@Shaffer2008].
 
 **IRF4 mutation/amplification survey.** Resequencing of IRF4 coding exons and copy-number analysis was performed across 10 myeloma cell lines.
 
@@ -62,15 +62,15 @@ Using a doxycycline-inducible shRNA loss-of-function screen across multiple myel
 
 **IRF4 is not genetically altered in most myelomas.** Sequencing of 10 myeloma lines found wild-type IRF4 in 9/10; one line showed a heterozygous missense mutation of unknown significance. No IRF4 locus amplifications were detected beyond the known SKMM1 translocation. The dependency is therefore an expression/network phenomenon, not a classical mutational driver.
 
-**IRF4 controls 308 target genes that define the myeloma expression program.** Gene expression profiling after IRF4 knockdown identified 308 downregulated genes. These targets were significantly enriched for genes highly expressed in primary myeloma versus normal mature B cells (p=0.002). Notably, IRF4 targets fused two normally distinct regulatory programs: ~27% were upregulated in activated B cells (not plasma cells), and ~17% were characteristic of plasma cells (not activated B cells) — an aberrant hybrid state not present in any normal B-lineage stage.
+**IRF4 controls 308 target genes that define the myeloma expression program.** Gene expression profiling after IRF4 knockdown identified 308 downregulated genes. These targets were significantly enriched for genes highly expressed in primary myeloma versus normal mature B cells (p=0.002). Notably, IRF4 targets fused two normally distinct regulatory programs: ~27% were upregulated in activated B cells (not plasma cells), and ~17% were characteristic of plasma cells (not activated B cells) — an aberrant hybrid state not present in any normal B-lineage stage [@Shaffer2008].
 
-**IRF4→MYC direct regulation.** Genome-wide ChIP-chip identified 558 direct IRF4-bound loci in myeloma cells but not lymphoma cells; 35 overlapped with downregulated genes after IRF4 knockdown (p=1.0×10⁻¹⁶). MYC was a direct target: IRF4 bound the MYC promoter ~1.6 kb upstream of the transcriptional start site, IRF4 knockdown reduced MYC mRNA >2-fold in myeloma lines, and ectopic IRF4 in lymphoma cells increased MYC mRNA. The same IRF4→MYC binding was observed in mitogen-activated primary B cells after 3-20 hours of stimulation.
+**IRF4→MYC direct regulation.** Genome-wide ChIP-chip identified 558 direct IRF4-bound loci in myeloma cells but not lymphoma cells; 35 overlapped with downregulated genes after IRF4 knockdown (p=1.0×10⁻¹⁶). MYC was a direct target: IRF4 bound the MYC promoter ~1.6 kb upstream of the transcriptional start site, IRF4 knockdown reduced MYC mRNA >2-fold in myeloma lines, and ectopic IRF4 in lymphoma cells increased MYC mRNA. The same IRF4→MYC binding was observed in mitogen-activated primary B cells after 3-20 hours of stimulation [@Shaffer2008].
 
-**MYC→IRF4 reciprocal feedback (the autoregulatory circuit).** MYC knockdown decreased IRF4 expression in myeloma cells. ChIP demonstrated direct MYC binding within the IRF4 first intron in MYC-expressing myeloma lines but not in the low-MYC line U266 (which instead expresses MYCL1). In primary myeloma samples, MYC and IRF4 mRNA showed significant positive correlation across 451 samples (r=0.24, p=2.5×10⁻⁷). This creates a self-sustaining positive feedback loop: any genetic event that elevates MYC (translocation, copy gain) will drive IRF4 expression, which in turn sustains MYC — locking cells into the hybrid activation/differentiation program.
+**MYC→IRF4 reciprocal feedback (the autoregulatory circuit).** MYC knockdown decreased IRF4 expression in myeloma cells. ChIP demonstrated direct MYC binding within the IRF4 first intron in MYC-expressing myeloma lines but not in the low-MYC line U266 (which instead expresses MYCL1). In primary myeloma samples, MYC and IRF4 mRNA showed significant positive correlation across 451 samples (r=0.24, p=2.5×10⁻⁷). This creates a self-sustaining positive feedback loop: any genetic event that elevates MYC (translocation, copy gain) will drive IRF4 expression, which in turn sustains MYC — locking cells into the hybrid activation/differentiation program [@Shaffer2008].
 
 **Cell death mechanism is multi-factorial.** IRF4 knockdown caused cell death (elevated sub-G1 fraction) within 3 days with no major cell-cycle arrest, and loss of many essential gene products simultaneously (CDK6, STAG2, metabolic enzymes LDHA/HK2/PDK1, mitochondrial components, telomere maintenance factors BMI1/TERT, differentiation regulator PRDM1/Blimp-1). The authors term this "death by a thousand cuts."
 
-**Therapeutic window.** Mice lacking one IRF4 allele are phenotypically normal; ~50% knockdown was sufficient to kill myeloma cells in vitro, suggesting selective targeting may be achievable.
+**Therapeutic window.** Mice lacking one IRF4 allele are phenotypically normal; ~50% knockdown was sufficient to kill myeloma cells in vitro, suggesting selective targeting may be achievable [@Shaffer2008].
 
 ## Relevance
 
@@ -99,19 +99,19 @@ This paper is the canonical primary example for a key theme emerging in our proj
 
 ## Limitations
 
-**No primary patient tumor functional validation.** The loss-of-function screen was conducted in cell lines (3 MM lines, 5 lymphoma lines); the claim of universal dependency relies on this limited panel plus expression correlations in primary tumors (n=451 for the MYC-IRF4 correlation).
+**No primary patient tumor functional validation.** The loss-of-function screen was conducted in cell lines (3 MM lines, 5 lymphoma lines); the claim of universal dependency relies on this limited panel plus expression correlations in primary tumors (n=451 for the MYC-IRF4 correlation) [@Shaffer2008].
 
 **Cell-line biology may not fully recapitulate tumor biology.** The myeloma microenvironment (bone marrow niche, cytokine signals) is absent; IRF4 dependency in vivo may be modulated by stromal factors.
 
-**IRF4 target gene network of 308 genes is knockdown-defined, not necessarily direct.** Only 35 of these were confirmed as direct IRF4 binding targets by ChIP-chip; the majority may reflect indirect regulatory cascades that are downstream of primary IRF4 targets (e.g., via MYC).
+**IRF4 target gene network of 308 genes is knockdown-defined, not necessarily direct.** Only 35 of these were confirmed as direct IRF4 binding targets by ChIP-chip; the majority may reflect indirect regulatory cascades that are downstream of primary IRF4 targets (e.g., via MYC) [@Shaffer2008].
 
 **The "nononcogene addiction" framing is conceptual.** The paper does not rule out that rare IRF4 mutations or epigenetic alterations could cooperate; the resequencing of 10 lines is not a population-scale mutation survey.
 
-**Therapeutic translation.** IRF4 is a transcription factor with no ligand-binding domain; direct pharmacological inhibition remains highly challenging. The ~50% knockdown therapeutic window estimated from IRF4-haploinsufficient mice is a rodent model extrapolation.
+**Therapeutic translation.** IRF4 is a transcription factor with no ligand-binding domain; direct pharmacological inhibition remains highly challenging. The ~50% knockdown therapeutic window estimated from IRF4-haploinsufficient mice is a rodent model extrapolation [@Shaffer2008].
 
 ## Model / Tool Availability
 
-This paper does not release a computational tool or model. Gene expression data from the primary myeloma cohort (n=451 samples) was presumably deposited in GEO (accession numbers referenced in the PMC article but not captured here). ChIP-chip data may also be available via GEO. No software artifact is described.
+This paper does not release a computational tool or model. Gene expression data from the primary myeloma cohort (n=451 samples) was presumably deposited in GEO (accession numbers referenced in the PMC article but not captured here). ChIP-chip data may also be available via GEO. No software artifact is described [@Shaffer2008].
 
 ## Follow-up
 

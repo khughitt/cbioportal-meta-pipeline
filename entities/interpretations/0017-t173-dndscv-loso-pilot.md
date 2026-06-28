@@ -45,11 +45,12 @@ uv run --frozen snakemake \
 ```
 
 Snakemake completed successfully. The run combined 8,157,844 mutation rows from 12 non-empty
-studies, wrote 98 cancer/build groups, aggregated 96 per-cancer dNdScv outputs, and produced:
+studies, wrote 98 cancer/build groups, aggregated 96 per-cancer dNdScv outputs, and produced the
+pooled holdout artifact at
+`/data/packages/cbioportal/pan-cancer-dndscv-loso/exclude_genie/summary/mut/table/dndscv_pooled.feather`.
 
-`/data/packages/cbioportal/pan-cancer-dndscv-loso/exclude_genie/summary/mut/table/dndscv_pooled.feather`
-
-The pooled holdout table contains 20,091 genes with non-null `min_qglobal`.
+The pooled holdout table contains 20,091 genes with non-null `min_qglobal`
+(`/data/packages/cbioportal/pan-cancer-dndscv-loso/exclude_genie/summary/mut/table/dndscv_pooled.feather`).
 
 ## Stability result
 
@@ -73,12 +74,14 @@ Top-K overlap for the `genie` holdout:
 | 100 | 60 | 0.429 | 0.60 | 0.60 |
 
 The planned P1 fan-out gate was Jaccard@100 >= 0.5. The `exclude_genie` pilot produced
-Jaccard@100 = 0.429, so the gate is not met.
+Jaccard@100 = 0.429, so the gate is not met
+(`/data/packages/cbioportal/pan-cancer/summary/dndscv_loso/dndscv_loso_summary.feather`).
 
 This is not simply a loss of recognizable driver signal. Bailey recovery at K=100 increased in
 the holdout top 100 (0.68) relative to the base top 100 (0.61), while CGC tier-1-or-2 recovery
 decreased modestly from 0.90 to 0.86. GENIE removal therefore appears to change which
-driver-supported genes rank highly, rather than just replacing drivers with non-drivers.
+driver-supported genes rank highly, rather than just replacing drivers with non-drivers
+(`/data/packages/cbioportal/pan-cancer/summary/dndscv_loso/dndscv_loso_topk_overlap.feather`).
 
 Postscript: t174 has now resolved the CDKN2A isoform-symbol overlay issue. This historical pilot
 note keeps the original pilot table for traceability; use
@@ -96,11 +99,13 @@ Exclude-GENIE top 20:
 
 `TP53, PIK3CA, KRAS, PTEN, ARID1A, ATM, CREBBP, KMT2D, RB1, ARID2, NRAS, FBXW7, BRAF, CDKN2A.p16INK4a, EP300, MGA, NOTCH1, SETD2, APC, ASXL1`
 
-Genes lost from the base top 100 after excluding GENIE:
+Genes lost from the base top 100 after excluding GENIE
+(`/data/packages/cbioportal/pan-cancer/summary/dndscv_loso/dndscv_loso_topk_overlap.feather`):
 
 `AXL, B2M, BLM, BRCA2, CBL, CHEK2, CIC, CSF3R, ESR1, ETV6, EZH2, FANCA, FGFR4, FLT3, HRAS, IL7R, JAK2, MLH1, MPL, MSH2, MSH6, MUTYH, NOTCH2, NTRK1, OBSCN, PARK2, PDGFRB, PPM1D, PRDM1, PTCH1, RECQL4, RUNX1, SH2B3, SLX4, SMARCB1, SUZ12, TCF3, TTN, U2AF1, WT1`
 
-Genes gained in the exclude-GENIE top 100:
+Genes gained in the exclude-GENIE top 100
+(`/data/packages/cbioportal/pan-cancer/summary/dndscv_loso/dndscv_loso_topk_overlap.feather`):
 
 `ARID1B, ASXL2, ATR, AXIN1, AXIN2, BAP1, CDK12, CDKN2A.p14arf, DOT1L, EGFR, GLI1, GNAS, HGF, IKZF1, JAK1, KDM5C, KDR, KMT2A, KMT2B, LATS1, MDC1, MTOR, NFE2L2, NOTCH4, PIK3CG, POLE, PREX2, PTPRD, PTPRS, PTPRT, RAD50, RASA1, RET, RNF43, RPS6KA4, SMAD4, SMARCA4, STK11, TET1, TGFBR2`
 
@@ -114,7 +119,7 @@ not only under pooled-rate ranking. It does not yet distinguish a GENIE-specific
 generic single-study sensitivity, because `n_iterations = 1`.
 
 Before any second holdout run, pre-register the next contrast as `msk_met_2021`, a broad
-non-GENIE cohort. Interpret its Jaccard@100 as follows:
+non-GENIE cohort. Interpret its Jaccard@100 as follows (`task:t173`):
 
 - `>= 0.60`: supports a GENIE-specific disruption reading.
 - `0.50` to `< 0.60`: ambiguous; continue with at least one additional contrastive holdout.

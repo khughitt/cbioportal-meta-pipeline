@@ -56,14 +56,15 @@ a **genomic-span-matched large-locus / CFS** set (hard negative).
 candidates score in the top ~1.2 % of the genome on `neural_score` (median percentile **1.22**), driven
 by the CNS sub-score (cns_score 1.6–4.3, tau 0.81–0.96 — highly tissue-restricted). AUC(candidates vs
 housekeeping) = **0.994**. The hand-picked list was not arbitrary: these are among the most
-brain-specific genes in the genome.
+brain-specific genes in the genome (`results/neural-gene-label-free-2026-06-08/gene_neural_enrichment.feather`).
 
 **F2 — The candidates are *more* neural-specific than the canonical effectors.** Candidate median
 neural percentile (1.22) is *better* than the effectors' (8.11). The effector positive control is
 **heterogeneous**: CNS-synaptic effectors score high (NLGN3, GRIN2A/B, NTRK2 in the top ~2 %), but
 receptor / growth-factor effectors are broadly or peripherally expressed and score low-to-negative
 (ADRB2 97th pct, NGF 92nd, NTRK1 74th, CHRM3 64th). So the score is, precisely, a **CNS-structural**
-score — and the candidates are textbook CNS-structural genes.
+score — and the candidates are textbook CNS-structural genes
+(`results/neural-gene-label-free-2026-06-08/gene_neural_enrichment.feather`).
 
 **F3 — Moderate AUC vs housekeeping, but ~chance vs CFS — the score is confounded with genomic size.**
 AUC(effectors vs housekeeping) = **0.711** (the easy separation works, weakened by the heterogeneous
@@ -71,7 +72,8 @@ effectors). But AUC(effectors vs CFS) = **0.468 ≈ 0.5**, and AUC(effectors vs 
 random control) = **0.631** with a 90 % interval of **0.494–0.741** that straddles chance. The neural
 score **cannot distinguish bona-fide neural effectors from large fragile-site loci**, because canonical
 CFS genes (CSMD1, CNTNAP2, DLG2, NRXN1/3, CADM2 …) are themselves brain-expressed. Neural expression and
-large-genomic-locus / CFS status are entangled.
+large-genomic-locus / CFS status are entangled
+(`results/neural-gene-label-free-2026-06-08/gene_neural_enrichment.feather`).
 
 **F4 — Therefore a neural score does not rescue the candidate enrichment.** This is the redirect's exact
 prediction realised: because a same-size CFS locus scores as "neural" as a real effector, the candidates'

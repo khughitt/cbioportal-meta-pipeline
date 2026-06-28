@@ -47,7 +47,8 @@ The full `all_h10_treatment_impact` target reruns on `code/config/config-full.ym
 The important change is semantic rather than broad power improvement.
 The 161 DIFG/GLASS samples with blank `TMZ_TREATMENT` now leave `no_detected_treatment_signal` and enter `treatment_metadata_unknown`.
 The 21 BLCA Cornell `pre-chemotherapy` samples now enter `positive_naive_or_pretreatment` while remaining in the retained no-detected comparator.
-This closes the silent-negative behavior identified after t208.
+This closes the silent-negative behavior identified after t208
+(`/data/packages/cbioportal/full/metadata/samples_treatment_exposure_counts.tsv`).
 
 The result still does not adjudicate `H10`.
 The exposure-label denominator pass is now cleaner, but `q027` requires a separate measured SBS11/SBS31/SBS35/SBS87 signature-high exclusion arm.
@@ -68,7 +69,8 @@ The existing sample-level positive-treatment rules remain unchanged.
 | `difg_glass_2019_tmz` | `difg_glass_2019` | `TMZ_TREATMENT` | `Yes` | `mutagenic_treatment_signal` | 179 |
 | `blca_cornell_2016_post_chemo` | `blca_cornell_2016` | `SPECIMEN_COLLECTION_PRE_OR_POST_CHEMO` | `post-chemotherapy` | `mutagenic_treatment_signal` | 51 |
 
-The regenerated sidecar covers 383,477 samples.
+The regenerated sidecar covers 383,477 samples
+(`/data/packages/cbioportal/full/metadata/samples_treatment_exposure_counts.tsv`).
 
 | Label | Count |
 |---|---:|
@@ -97,7 +99,8 @@ The fix is therefore a manual per-cohort remedy reusing the t209 schema, not a s
 
 ## Impact Read
 
-The refreshed ratio impact table still has 776,686 rows and 51 columns.
+The refreshed ratio impact table still has 776,686 rows and 51 columns
+(`/data/packages/cbioportal/full/summary/mut/table/gene_cancer_h10_treatment_impact_ratio.feather`).
 Power status is essentially unchanged for the primary mutagenic label contrast and improves semantically for the retained comparator.
 
 | Contrast | Interpretable rows | No-contrast rows | Underpowered rows | Read |
@@ -109,11 +112,13 @@ Power status is essentially unchanged for the primary mutagenic label contrast a
 
 The `delta_no_detected_contrast` power-status counts (106,185 / 646,046 / 24,455) are identical to t208, but the underlying glioma frequencies did shift.
 The glioma `no_detected` denominator dropped from 265 to 104 samples once the 161 blank-TMZ samples moved to `treatment_metadata_unknown`, so glioma no-detected ratios changed; no gene-cancer row's power classification flipped.
-Read this as "row counts unchanged, glioma no-detected values shifted," not "nothing changed."
+Read this as "row counts unchanged, glioma no-detected values shifted," not "nothing changed"
+(`/data/packages/cbioportal/full/summary/mut/table/gene_cancer_h10_treatment_impact_ratio.feather`).
 
 The primary mutagenic interpretable rows remain 17,894 glioma rows and 11,483 bladder-cancer rows.
 Among interpretable bladder rows, mean `delta_mutagenic_primary` is -0.008166, with a minimum of -0.166894 and a maximum of 0.063492.
-Among interpretable glioma rows, mean `delta_mutagenic_primary` is 0.000484, with a minimum of -0.010522 and a maximum of 0.015834.
+Among interpretable glioma rows, mean `delta_mutagenic_primary` is 0.000484, with a minimum of -0.010522 and a maximum of 0.015834
+(`/data/packages/cbioportal/full/summary/mut/table/gene_cancer_h10_treatment_impact_ratio.feather`).
 
 The confirmed-naive arm is no longer empty because the schema cannot express sample-level pretreatment labels; it is empty because confirmed-naive support remains too thin by the two-study rule.
 The underpowered confirmed-naive rows are concentrated in bladder cancer, non-small cell lung cancer, and embryonal tumor.

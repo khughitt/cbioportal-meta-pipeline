@@ -36,7 +36,7 @@ related:
 
 This mutational-signature catalogue note links paper:Alexandrov2020, paper:Degasperi2022, paper:Islam2022, and paper:Steele2022.
 
-Using WGS from 10,983 patients across 16 tumor types in the 100,000 Genomes Project (100KGP), this study performs the most comprehensive joint extraction of all five somatic mutation classes — SBS, DBS, ID, CN, and SV — generating 134 signatures, of which 26 are new to COSMIC. Crucially, it introduces a COSMIC reference set for structural variation (SV) signatures, derived de novo for the first time at this scale. By systematically associating these signatures with clinical phenotypes, histological subtypes, DNA repair gene inactivation, therapy exposure, clonality timing, and patient survival, the paper moves the COSMIC catalog from a static spectral reference toward a functionally annotated resource that directly supports precision oncology.
+Using WGS from 10,983 patients across 16 tumor types in the 100,000 Genomes Project (100KGP), this study performs the most comprehensive joint extraction of all five somatic mutation classes — SBS, DBS, ID, CN, and SV — generating 134 signatures, of which 26 are new to COSMIC. Crucially, it introduces a COSMIC reference set for structural variation (SV) signatures, derived de novo for the first time at this scale. By systematically associating these signatures with clinical phenotypes, histological subtypes, DNA repair gene inactivation, therapy exposure, clonality timing, and patient survival, the paper moves the COSMIC catalog from a static spectral reference toward a functionally annotated resource that directly supports precision oncology [@Everall2026].
 
 ## Methods
 
@@ -59,7 +59,7 @@ Using WGS from 10,983 patients across 16 tumor types in the 100,000 Genomes Proj
 - Hierarchical clustering (Ward/Euclidean on log-activity) reveals distinct clusters: UV (SBS7), smoking (SBS4, SBS92), HRD (SBS3, ID6, CN17), POLE, MMR/dMMR, and APOBEC (SBS2, SBS13) — Fig. 3.
 - SV4, SV6, SV9, CN6, CN7 associated with chromothripsis across multiple tumor groups (e.g. SV4 with breast ductal carcinoma and colorectal adenocarcinoma, P = 3.5×10⁻⁶³).
 - CN6 and CN7 enriched in WGD tumors (e.g. Breast-DuctalCA, P = 2.6×10⁻²²). CN9 was a non-WGD specific feature.
-- APOBEC (SBS2, SBS13) active in 88% bladder, 89% head and neck, 69% breast, 37% lung tumors, and 38% sarcomas out of 10,983 total.
+- APOBEC (SBS2, SBS13) active in 88% bladder, 89% head and neck, 69% breast, 37% lung tumors, and 38% sarcomas out of 10,983 total [@Everall2026].
 
 ### Aetiology associations
 - **dMMR:** SBS15/26/44 (and SBS93, DBS4, ID14) linked to MSH6 inactivation in CRC; SBS26/SBS44 linked to MLHI inactivation and 5-FU treatment; CN25 associated with somatic MSH6.
@@ -91,7 +91,7 @@ This paper is directly relevant to **hypothesis:0007-agnostic-covariate-associat
 - MMR loss ↔ SBS15/26/44/SBS93/ID14 (CRC; MSH6, MLH1 inactivation)
 - POLE ↔ SBS10a/10b (uterine, CRC)
 
-**Discovery candidate:** CN25 / MSH6 somatic, SBS17a/b / POLG inactivation, and the APOBEC–immunotherapy link are examples of associations whose mechanistic basis is not fully understood, suitable targets for an agnostic discovery scan. The expression module angle (APOBEC3A/B co-expression↔SBS2/13) identified in the hypothesis is supported by Everall et al. observing that APOBEC is the single most prevalent exogenous signature class across the cohort (88% bladder, 69% breast) — strong signal in any co-expression module association.
+**Discovery candidate:** CN25 / MSH6 somatic, SBS17a/b / POLG inactivation, and the APOBEC–immunotherapy link are examples of associations whose mechanistic basis is not fully understood, suitable targets for an agnostic discovery scan. The expression module angle (APOBEC3A/B co-expression↔SBS2/13) identified in the hypothesis is supported by Everall et al. observing that APOBEC is the single most prevalent exogenous signature class across the cohort (88% bladder, 69% breast) — strong signal in any co-expression module association [@Everall2026].
 
 **Cross-study meta-analysis context:** The 100KGP cohort (10,983 WGS) is larger and uses matched normals — it is the kind of high-quality WGS reference that validates cBioPortal-based panel-sequencing signature inferences. The CH-contamination problem (hypothesis:0001-non-tumor-signal-contamination) is addressed here by the 100KGP matched-normal design; the subclonal fraction analysis (Fig. 7) is a resource for understanding which signatures in cBioPortal studies are most likely CH-confounded (CH signatures like DNMT3A are predominantly clonal; dMMR signatures are subclonal).
 

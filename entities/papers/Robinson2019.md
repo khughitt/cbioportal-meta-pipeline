@@ -30,7 +30,7 @@ related: []
 
 ## Key Contribution
 
-TCSM (Tumor Covariate Signature Model) is the first probabilistic method to directly model the effect of observed tumor-level clinical/demographic or molecular covariates on mutation signature exposures. Built on Bayesian topic modeling (specifically the Structural Topic Model with a logistic-normal prior), it modifies the prior over per-tumor signature exposure distributions conditioned on the tumor's covariates, and provides a permutation-based significance test for covariate-exposure associations. On both simulated and real data it outperforms NMF and covariate-free topic modeling, especially when disentangling exposures for spectrally similar signatures such as COSMIC SBS3 (HR deficiency) and SBS5 (aging/clock-like, cosine similarity 0.83).
+TCSM (Tumor Covariate Signature Model) is the first probabilistic method to directly model the effect of observed tumor-level clinical/demographic or molecular covariates on mutation signature exposures. Built on Bayesian topic modeling (specifically the Structural Topic Model with a logistic-normal prior), it modifies the prior over per-tumor signature exposure distributions conditioned on the tumor's covariates, and provides a permutation-based significance test for covariate-exposure associations. On both simulated and real data it outperforms NMF and covariate-free topic modeling, especially when disentangling exposures for spectrally similar signatures such as COSMIC SBS3 (HR deficiency) and SBS5 (aging/clock-like, cosine similarity 0.83) [@Robinson2019].
 
 ## Methods
 
@@ -42,11 +42,11 @@ TCSM (Tumor Covariate Signature Model) is the first probabilistic method to dire
 
 **Covariate imputation.** For held-out or missing binary covariates, a log-likelihood ratio (LLR) comparing the model under x_id = 1 vs x_id = 0 is computed from the tumor's mutation spectrum; positive LLR → predict covariate positive.
 
-**Significance testing.** Permutation test (10,000 samples) generating an empirical null of covariate-exposure mean differences; BH-corrected P-values reported.
+**Significance testing.** Permutation test (10,000 samples) generating an empirical null of covariate-exposure mean differences; BH-corrected P-values reported [@Robinson2019].
 
 **Benchmarks.** Compared against: NMF (SomaticSignatures R package) and TCSM without covariates. Metrics: cosine similarity of inferred signatures to ground truth, mean-squared error of exposures, held-out log-likelihood, AUPRC of HR-deficiency prediction via a linear SVC trained on exposures.
 
-**Data.** Three real datasets: (1) 760 TCGA BRCA exomes with biallelic HR gene inactivation calls and large-scale state transition (LST) counts as covariates; (2) 418 TCGA SKCM and 485 TCGA LUSC exomes with cancer type, smoking history, and CC→TT dinucleotide counts (UV proxy) as covariates.
+**Data.** Three real datasets: (1) 760 TCGA BRCA exomes with biallelic HR gene inactivation calls and large-scale state transition (LST) counts as covariates; (2) 418 TCGA SKCM and 485 TCGA LUSC exomes with cancer type, smoking history, and CC→TT dinucleotide counts (UV proxy) as covariates [@Robinson2019].
 
 **Implementation.** Python 3; Snakemake workflow; code at https://github.com/lrgr/tcsm.
 

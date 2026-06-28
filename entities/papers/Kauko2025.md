@@ -84,7 +84,7 @@ NOLC1 (and its paralog TCOF1) emerged as the most prominent common target regula
 - Mutation of NOLC1 phosphorylation sites threonine 607/610 reduced cell proliferation (p = 0.0025)
 - Mutation of the MYC binding E-box in the NOLC1 promoter reduced proliferation (p = 8.5×10⁻⁴)
 - Both modes of regulation are independently required
-- The phosphorylation site at threonine 607 is conserved from humans to Drosophila
+- The phosphorylation site at threonine 607 is conserved from humans to Drosophila [@Kauko2025].
 
 **4. Feed-forward logic explains oncogene cooperation.**
 The finding that both MYC (transcriptional) and RAS/MAPK (posttranslational) inputs are independently required for full NOLC1 activation provides a quantitative mechanistic explanation for classical MYC–RAS oncogene cooperation: neither alone can optimally activate the growth program; both are needed. This implies that in a given tissue, whichever is rate-limiting (MYC or kinase activity) will be the selective target for mutation.
@@ -99,10 +99,10 @@ Of the 10 Hanahan–Weinberg hallmarks, only the three proliferation-related one
 In human HNSCC biopsies, TCOF1 (and to a lesser extent NOLC1) expression co-localizes with the proliferative invasive front, not the central tumor or adjacent normal muscle, supporting clinical relevance. Ribosomal proteins, by contrast, are highest in adjacent normal muscle cells (high constitutive protein synthesis capacity), distinguishing the tumor-specific signature from general translational activity.
 
 **8. Metabolic convergence.**
-Concurrently with ribosome biogenesis changes, drug treatment reduced nucleotide monophosphates (UMP, AMP, GMP) and altered glycolytic flux in sensitive but not resistant lines, implicating oncogenic kinase signaling in metabolic reprogramming converging on anabolic support for ribosome production. HK2 phosphorylation at tyrosine 461 (not the previously described threonine 473) was functionally validated by CGE as required for proliferation.
+Concurrently with ribosome biogenesis changes, drug treatment reduced nucleotide monophosphates (UMP, AMP, GMP) and altered glycolytic flux in sensitive but not resistant lines, implicating oncogenic kinase signaling in metabolic reprogramming converging on anabolic support for ribosome production. HK2 phosphorylation at tyrosine 461 (not the previously described threonine 473) was functionally validated by CGE as required for proliferation [@Kauko2025].
 
 **9. Scope covers ~46% of worldwide cancer mortality.**
-The cancer types studied (breast, prostate, colorectal, lung, CML, rhabdomyosarcoma, Ewing's sarcoma, HNSCC) collectively account for roughly 46% of global cancer mortality, supporting generalizability.
+The cancer types studied (breast, prostate, colorectal, lung, CML, rhabdomyosarcoma, Ewing's sarcoma, HNSCC) collectively account for roughly 46% of global cancer mortality, supporting generalizability [@Kauko2025].
 
 ## Relevance
 

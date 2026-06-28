@@ -219,6 +219,15 @@ The paper does not offer a data-driven definition of "neural genes." It relies o
 
 ## Follow-up
 
+## Related Literature Anchors
+
+This review note sits inside the cancer-neuroscience reading cluster anchored by
+`paper:Mancusi2023`, `paper:Venkatesh2019`, `paper:Hanahan2023`, `paper:Magnon2023`,
+`paper:Hwang2025a`, `paper:Huang2023a`, `paper:Huang2025a`, `paper:Wang2025b`,
+`paper:Wu2025a`, `paper:Kizil2024`, `paper:Pu2025`, `paper:Cortese2020`,
+`paper:Mravec2008`, `paper:Lu2026`, `paper:Fan2024`, `paper:Xiong2023`,
+`paper:Cao2023`, `paper:Kulke2012`, `paper:Ahmed2020`, and `paper:Tan2024`.
+
 1. **Check whether the user's neural-gene list (NKAIN2, KCNIP4, TAFA2, RIT2, CALN1, RBFOX1, LSAMP, SGCZ, OPCML) contains known long-intron genes** — gene body length in kb is the primary null hypothesis for mutation enrichment. Extract gene lengths from Ensembl and compute correlation with rank in the user's neural-gene list.
 2. **Extract OPC-like synaptic gene signatures from Neftel 2019 / Filbin 2018** and use them as a data-driven "neural gene" reference list — compare overlap with the user's top-mutated neural genes to assess whether the mutation enrichment is specifically in cancer-relevant neural signaling genes (`H1`) vs. generic neural-expressed genes (`H4`/`H5`).
 3. **Test NLGN3 mutation frequency** in the cross-study aggregation pipeline — NLGN3 is mechanistically established as a glioma growth factor; if it is recurrently mutated (gain-of-function) across studies this would be strong `H1` support.

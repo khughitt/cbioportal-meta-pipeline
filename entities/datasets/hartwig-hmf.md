@@ -6,6 +6,7 @@ created: '2026-05-31'
 updated: '2026-06-27'
 id: dataset:hartwig-hmf
 source_class: observational
+dataset_class: deposit
 origin: external
 tier: evaluate-next
 license: custom

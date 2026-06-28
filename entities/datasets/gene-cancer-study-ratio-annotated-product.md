@@ -6,6 +6,7 @@ created: '2026-05-02'
 updated: '2026-06-27'
 id: dataset:gene-cancer-study-ratio-annotated-product
 source_class: derived
+dataset_class: deposit
 derived_kind: aggregate
 local_path: /data/packages/cbioportal/pan-cancer/summary/mut/table/gene_cancer_study_ratio_annotated.feather
 ontology_terms:
@@ -50,3 +51,5 @@ frequency, driver carriage, cancer-label context, and cross-sectional mutation
 ordering where sample metadata identifies precursor or invasive state. It does not
 support population prevalence or clinical progression rates without external cohort,
 registry, or screening denominators.
+The main frontmatter-linked consumers are `topic:pre-cancer-prevalence-and-impact` and
+`question:0012-mutation-ordering-cross-sectional-inference`.

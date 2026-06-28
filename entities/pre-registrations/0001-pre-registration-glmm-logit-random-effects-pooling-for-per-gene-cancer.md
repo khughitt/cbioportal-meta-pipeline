@@ -30,6 +30,16 @@ commits_to:
 
 # Pre-registration: GLMM-logit random-effects pooling for per-(gene, cancer) mutation rates
 
+## Related Anchors
+
+This pre-registration commits the project-level test in `spec:research-question` through
+`hypothesis:0002-cross-study-ranking-divergence-is-structured` and
+`topic:cross-study-meta-analysis-cancer-genomics`.
+It is implemented through `task:t077` / `task:t079`, informed by
+`search:0002-cross-study-meta-analysis-stats`, and methodologically anchored by
+`paper:DerSimonian1986`, `paper:Viechtbauer2010`, `paper:Langan2018`, `paper:Stijnen2010`,
+`paper:LinXu2020`, `paper:Nyaga2014`, `paper:Higgins2002`, and `paper:IntHout2016`.
+
 ## Hypotheses Under Test
 
 - **`H1`** (primary, confirmatory — from `specs/research-question.md`):

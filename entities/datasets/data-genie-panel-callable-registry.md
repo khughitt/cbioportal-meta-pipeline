@@ -6,6 +6,7 @@ created: '2026-05-31'
 updated: '2026-06-27'
 id: dataset:data-genie-panel-callable-registry
 source_class: derived
+dataset_class: deposit
 derived_kind: transform
 local_path: /data/packages/cbioportal/pan-cancer/metadata
 related:
@@ -33,3 +34,5 @@ and WES defaults according to the active workflow configuration.
 The GENIE upstream release requires a Synapse account and GENIE Data Use Agreement.
 The generated registry is a local workflow artifact and should not be redistributed in a way that
 violates the upstream GENIE terms.
+This registry derives callable-size inputs from `dataset:aacr-genie` and feeds
+`dataset:gene-cancer-study-ratio-annotated-product`.

@@ -6,6 +6,7 @@ created: '2026-05-30'
 updated: '2026-06-27'
 id: dataset:pcawg
 source_class: observational
+dataset_class: deposit
 tier: evaluate-next
 local_path: /data/raw/cbioportal/pancan_pcawg_2020
 source_refs:
@@ -36,6 +37,11 @@ reference for (a) checking that panel/WES signature calls recover the WGS-define
 (`hypothesis:0010`), and (c) genome-wide topography analysis
 (`topic:signature-topography-genomic-features`). Access is controlled (ICGC DACO for protected
 tiers); treat protected-tier files with the same data-sensitivity posture as GENIE.
+The full related hypothesis/topic set is
+`hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`,
+`hypothesis:0008-cross-study-signature-exposure-reproducibility`,
+`hypothesis:0010-joint-indel-sbs-improves-aetiology-discrimination`, and
+`topic:pan-cancer-signature-catalogs`.
 
 ## Access and Scope
 

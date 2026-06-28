@@ -6,6 +6,7 @@ created: '2026-05-31'
 updated: '2026-06-27'
 id: dataset:data-cbioportal-per-study-mutation-cleanbase
 source_class: derived
+dataset_class: deposit
 derived_kind: transform
 local_path: /data/packages/cbioportal/pan-cancer/studies
 related:
@@ -41,3 +42,5 @@ These packages are intended as reusable clean-base substrates for downstream mut
 signature, and selection analyses.
 They exclude project-specific aggregate products, exploratory branches, and ad hoc notebook
 outputs.
+Their main project-level dataset links are `dataset:cbioportal`, `dataset:tcga-mc3`, and
+`dataset:gene-cancer-study-ratio-annotated-product`.

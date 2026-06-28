@@ -6,6 +6,12 @@ created: '2026-06-07'
 updated: '2026-06-27'
 id: dataset:brainspan
 source_class: observational
+dataset_class: reference
+access:
+  level: public
+  verified: true
+  source_url: https://www.brainspan.org/
+  verification_method: landing-confirmed
 source_refs:
 - paper:Cao2023
 related:
@@ -22,7 +28,7 @@ Transcriptomic atlas spanning human prenatal-to-adult brain development (~8 pcw 
 adulthood, multiple regions). Provides the **fetal-vs-adult brain expression ratio** needed to
 operationalize the oncofetal/developmental test: whether a residual neural-gene enrichment is fetal/
 developmental rather than adult-neural. Also a developmental-stage axis for the label-free
-neural-gene score (`question:0035`).
+neural-gene score (`question:0035-label-free-neural-gene-definition`).
 
 ## Access and Scope
 
@@ -33,6 +39,7 @@ neural-gene score (`question:0035`).
 
 ## Connections to Project
 
-- Required by: `question:0036` (fetal-vs-adult), `question:0035` (developmental axis)
+- Required by: `question:0036-oncofetal-fetal-vs-adult-neural-expression` (fetal-vs-adult),
+  `question:0035-label-free-neural-gene-definition` (developmental axis)
 - Related: `topic:oncofetal-developmental-reprogramming`; complements `dataset:gtex` (adult).
 - Acquisition: tracked as a search/acquire task in `tasks/active.md` (group dataset-acquisition).

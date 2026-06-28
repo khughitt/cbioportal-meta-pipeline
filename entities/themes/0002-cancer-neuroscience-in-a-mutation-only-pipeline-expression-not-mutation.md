@@ -65,8 +65,16 @@ mutation-only pipeline can and cannot say about neuro-oncology.
 ## Current Project Links
 
 - Hypothesis: `hypothesis:0012-neural-gene-enrichment-length-histology-artifact` (null-first); builds on `hypothesis:0003-gene-length-confounds-literature-attention`.
-- Topics: the five `topic:` notes in `related`.
-- Questions: `q032`–`q040`.
+- Topics: `topic:cancer-neuroscience-neural-regulation`, `topic:neuro-immune-crosstalk-cancer`,
+  `topic:perineural-invasion-axon-guidance-genes`, `topic:neuroendocrine-neoplasm-lineage-confound`,
+  and `topic:oncofetal-developmental-reprogramming`.
+- Questions: `question:0032-neural-gene-length-null`, `question:0033-neural-enrichment-cns-exclusion`,
+  `question:0034-neuroendocrine-histology-confound`, `question:0035-label-free-neural-gene-definition`,
+  `question:0036-oncofetal-fetal-vs-adult-neural-expression`,
+  `question:0037-canonical-neural-gene-dnds-selection`,
+  `question:0038-length-correlated-geneset-spurious-enrichment`,
+  `question:0039-stress-hpa-adrenergic-mutational-footprint`, and
+  `question:0040-neuroactive-drug-exposure-treatment-signature`.
 - Method: `method:length-aware-geneset-enrichment`.
 - Plan / tasks: `doc/plans/2026-06-06-neural-gene-enrichment-meta-analysis-plan.md`; group
   `neural-gene-meta-analysis` (t215–t221) + search tasks for label-free neural datasets.

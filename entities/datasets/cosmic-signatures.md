@@ -6,6 +6,7 @@ created: '2026-05-30'
 updated: '2026-06-27'
 id: dataset:cosmic-signatures
 source_class: reference
+dataset_class: deposit
 local_path: /data/raw/cosmic/v99/COSMIC_v3.4_SBS_GRCh38.txt
 source_refs:
 - paper:Alexandrov2020

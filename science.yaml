@@ -40,6 +40,28 @@ aspects:
 - computational-analysis
 - software-development
 - causal-modeling
+prose_lint:
+  anchor_patterns:
+  - "task:"
+  - "pipeline/"
+  - "\\[@"
+  - "data/"
+  - "scripts/"
+  - "paper:"
+  - "question:"
+  - "hypothesis:"
+  - "dataset:"
+  - "method:"
+  - "interpretation:"
+  - "pre-registration:"
+  - "plan:"
+  - "workflow:"
+  - "workflow-run:"
+  - "synthesis:"
+  - "discussion:"
+  - "topic:"
+  - "theme:"
+  - "search:"
 research_question: What is the structure of somatic mutations within and across cancer
   types, and which gene-cancer associations recur across independent cBioPortal studies?
 scope:

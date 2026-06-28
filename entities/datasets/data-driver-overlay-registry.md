@@ -6,6 +6,7 @@ created: '2026-05-31'
 updated: '2026-06-27'
 id: dataset:data-driver-overlay-registry
 source_class: derived
+dataset_class: deposit
 derived_kind: transform
 local_path: /data/packages/cbioportal/pan-cancer/metadata
 source_refs:
@@ -39,3 +40,5 @@ Bailey et al. [@Bailey2018] and the TCGA pathway templates [@SanchezVega2018] de
 supplements; COSMIC CGC requires a COSMIC account and is not a general redistribution asset.
 Generated local overlays should therefore be shared only where the corresponding upstream terms
 permit it.
+This registry connects the upstream `dataset:cosmic` catalogue to the downstream
+`dataset:gene-cancer-study-ratio-annotated-product`.

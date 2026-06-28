@@ -6,6 +6,7 @@ created: '2026-05-30'
 updated: '2026-06-27'
 id: dataset:msk-met
 source_class: observational
+dataset_class: deposit
 local_path: /data/raw/cbioportal/msk_met_2021
 source_refs:
 - paper:Nguyen2022

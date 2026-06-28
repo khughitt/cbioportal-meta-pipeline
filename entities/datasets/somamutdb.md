@@ -6,6 +6,7 @@ created: '2026-05-30'
 updated: '2026-06-27'
 id: dataset:somamutdb
 source_class: reference
+dataset_class: deposit
 local_path: /data/raw/somamutdb
 source_refs:
 - paper:Yaacov2023

@@ -6,6 +6,7 @@ created: '2026-05-30'
 updated: '2026-06-27'
 id: dataset:msk-chord
 source_class: observational
+dataset_class: deposit
 local_path: /data/raw/cbioportal/msk_chord_2024
 source_refs:
 - paper:Jee2024
@@ -19,6 +20,8 @@ related:
 ## Summary
 
 MSK Clinico-Genomic Harmonized Oncologic Real-world Dataset [@Jee2024] — ~25,000 patients pairing MSK-IMPACT tumor sequencing with NLP-harmonized clinical outcomes (treatment, progression, survival).
+It is paired with `dataset:aacr-genie-bpc` as an EHR-rich substrate for
+`hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`.
 
 ## Access and Scope
 

@@ -6,6 +6,7 @@ created: '2026-05-30'
 updated: '2026-06-27'
 id: dataset:aacr-genie-bpc
 source_class: observational
+dataset_class: deposit
 source_refs:
 - paper:AACRGENIEConsortium2017
 related:
@@ -25,7 +26,8 @@ augmented with **PRISSMM-curated clinical data abstracted from the electronic he
 treatment regimens/lines, ICD-O histology + site coding, RECIST + imaging/pathology/med-onc event
 timelines, and outcomes/vital status. It is the richest *public* source of EHR-like coded clinical
 terms co-measured with somatic mutations, and the **EHR-covariate track** for
-`hypothesis:0007`. Limitation: mutations are **targeted-panel** (tens of mutations/sample), so
+`hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`.
+Limitation: mutations are **targeted-panel** (tens of mutations/sample), so
 signatures can only be derived **cohort-pooled / refit**, never per-sample (the binding
 mutation-count constraint, `question:0018`).
 
@@ -41,7 +43,9 @@ mutation-count constraint, `question:0018`).
 
 ## Connections to Project
 
-- Questions/hypotheses it can inform: `hypothesis:0007` (EHR-covariate track),
+- Questions/hypotheses it can inform:
+  `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`
+  (EHR-covariate track),
   `question:0018` (panel signature feasibility constraint).
 - Variables likely available: panel mutations; treatment regimen/line, drug names, ICD-O
   histology + primary site, stage, RECIST response, sites of progression/metastasis, OS/PFS,
@@ -55,4 +59,5 @@ mutation-count constraint, `question:0018`).
 - Sibling/parent: `dataset:aacr-genie` (main registry; BPC is its deeply-phenotyped subset),
   `dataset:msk-chord` (the other NLP/EHR-derived substrate).
 - Signature-grade complement: `dataset:tcga-mc3`, `dataset:tcga-pancanatlas`.
+- Topic link: `topic:signature-decomposition-unmatched-normal`.
 - Scan: `search:0007-ehr-rich-substrates-for-agnostic-signature-association`.

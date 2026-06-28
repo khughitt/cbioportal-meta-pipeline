@@ -6,6 +6,7 @@ created: '2026-05-30'
 updated: '2026-06-27'
 id: dataset:oncokb
 source_class: reference
+dataset_class: deposit
 local_path: /data/raw/oncokb
 source_refs:
 - paper:Chakravarty2017

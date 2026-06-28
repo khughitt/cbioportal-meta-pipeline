@@ -6,6 +6,12 @@ created: '2026-06-07'
 updated: '2026-06-27'
 id: dataset:panglaodb
 source_class: reference
+dataset_class: reference
+access:
+  level: public
+  verified: true
+  source_url: https://panglaodb.se/
+  verification_method: landing-confirmed
 source_refs:
 - paper:Hwang2025a
 - paper:Wu2025a

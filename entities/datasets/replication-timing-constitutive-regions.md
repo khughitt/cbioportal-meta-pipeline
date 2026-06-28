@@ -6,6 +6,7 @@ created: '2026-04-22'
 updated: '2026-06-27'
 id: dataset:replication-timing-constitutive-regions
 source_class: reference
+dataset_class: deposit
 local_path: data/replication_timing_constitutive_bins.feather
 source_refs:
 - paper:Yaacov2023
@@ -19,6 +20,7 @@ related:
 Primary dataset for the first executable `q009` step: public 50 kb human genome bins
 annotated as constitutive early (`CE`), constitutive late (`CL`), developmental (`D`), or
 unclassified (`N/a`).
+It is the dataset anchor for `question:0003-replication-timing-as-gene-level-mutation-rate-confounder`.
 
 ## Source
 

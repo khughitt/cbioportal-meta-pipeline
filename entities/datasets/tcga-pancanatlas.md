@@ -6,6 +6,7 @@ created: '2026-05-30'
 updated: '2026-06-27'
 id: dataset:tcga-pancanatlas
 source_class: derived
+dataset_class: deposit
 derived_kind: aggregate
 tier: use-now
 license: custom
@@ -46,6 +47,8 @@ consumed_by:
 ## Summary
 
 The PanCanAtlas harmonized re-analysis of the full TCGA cohort — uniformly processed MC3 mutations, copy number, expression, and the PanCanAtlas driver and pathway consensus products [@Bailey2018; @SanchezVega2018; @Hoadley2018; @Kandoth2013].
+It is one of the main TCGA substrates for
+`hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`.
 
 ## Access and Scope
 

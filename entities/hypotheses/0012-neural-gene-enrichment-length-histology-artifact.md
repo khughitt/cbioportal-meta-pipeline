@@ -63,6 +63,19 @@ selection (`H1`)**. `H1`-as-selection is the least-supported reading of a *mutat
 should only be entertained if recurrent, clustered, functional mutations in **canonical**
 effectors survive a dN/dS test.
 
+Related anchors for this null-first framing are
+`hypothesis:0003-gene-length-confounds-literature-attention`,
+`hypothesis:0001-non-tumor-signal-contamination`,
+`question:0031-residual-gene-length-signal-mechanism`, `question:0032-neural-gene-length-null`,
+`question:0033-neural-enrichment-cns-exclusion`, `question:0034-neuroendocrine-histology-confound`,
+`question:0035-label-free-neural-gene-definition`,
+`question:0036-oncofetal-fetal-vs-adult-neural-expression`,
+`question:0037-canonical-neural-gene-dnds-selection`,
+`topic:oncofetal-developmental-reprogramming`,
+`topic:lineage-addiction-and-cell-of-origin-driver-specificity`,
+`question:0042-driver-normal-expression-tissue-cell-type-specificity`, and
+`discussion:0008-tissue-cell-type-specificity-of-cancer-drivers`.
+
 ## Proposition Bundle
 
 ### Core Propositions

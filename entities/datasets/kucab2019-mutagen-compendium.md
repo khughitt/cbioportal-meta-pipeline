@@ -6,6 +6,7 @@ created: '2026-05-31'
 updated: '2026-06-27'
 id: dataset:kucab2019-mutagen-compendium
 source_class: reference
+dataset_class: reference
 origin: external
 tier: evaluate-next
 license: CC-BY-4.0
@@ -77,7 +78,7 @@ observational, post-hoc-labelled catalogue.
 
 ## Related
 
-- Hypotheses: `hypothesis:h08-...`
+- Hypotheses: `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`
 - Topics: `topic:pan-cancer-signature-catalogs`, `topic:dna-damage-repair-signature-mechanisms`
 - Datasets: `dataset:cosmic-signatures`, `dataset:normal-tissue-spectra`
 - Papers: `paper:Kucab2019`

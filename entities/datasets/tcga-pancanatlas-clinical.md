@@ -6,6 +6,7 @@ created: '2026-05-31'
 updated: '2026-05-31'
 id: dataset:tcga-pancanatlas-clinical
 source_class: observational
+dataset_class: deposit
 origin: external
 tier: use-now
 license: custom
@@ -87,7 +88,9 @@ realized Arm-B join n is the MC3∩(this table)∩(smoking non-missing) intersec
 
 - Consumed by: `plan:0007-t199-h08-association-core` (WP0 → WP1 covariate join), `task:t199`.
 - Variables used: `number_pack_years_smoked` (continuous), `tobacco_smoking_history` (ordinal
-  indicator) — the Arm-B covariate against SBS4 within LUAD+LUSC.
+indicator) — the Arm-B covariate against SBS4 within LUAD+LUSC.
+The related hypothesis anchor is
+`hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`.
 
 ## Related
 

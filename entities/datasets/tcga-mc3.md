@@ -6,6 +6,7 @@ created: '2026-05-30'
 updated: '2026-05-31'
 id: dataset:tcga-mc3
 source_class: derived
+dataset_class: deposit
 derived_kind: aggregate
 tier: use-now
 license: custom
@@ -42,6 +43,7 @@ consumed_by:
 ## Summary
 
 The Multi-Center Mutation Calling in Multiple Cancers (MC3) dataset [@Ellrott2018] is a single 7-caller consensus somatic MAF across the TCGA cohort (~3.6M variants / ~10,000 samples), ingested by this pipeline as the pseudo-study `tcga_mc3`.
+It is a core substrate for `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`.
 
 ## Access and Scope
 

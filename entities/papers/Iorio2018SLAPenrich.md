@@ -46,7 +46,9 @@ related:
 
 ## Key Contribution
 
-This paper introduces SLAPenrich (Sample-population Level Analysis of Pathway enrichments), a population-level statistical enrichment method that identifies pathways significantly altered across a population of cancer samples — distinguishing it from per-sample enrichment tools. The central application is systematic characterisation of the genomic heterogeneity of cancer hallmark acquisition: across 4,415 TCGA patients and 10 cancer types, the authors map somatic mutation pathway enrichments onto the 10 canonical Hanahan-Weinberg hallmarks, demonstrating that different cancer lineages acquire the same hallmarks through distinct and heterogeneous pathway alterations ("hallmark heterogeneity signatures"). A secondary finding is that enrichments are substantially preserved even after removing known high-confidence cancer driver genes, suggesting that infrequent mutations in hallmark-associated pathways collectively constitute a genuine signal beyond established drivers.
+This paper introduces SLAPenrich (Sample-population Level Analysis of Pathway enrichments), a population-level statistical enrichment method that identifies pathways significantly altered across a population of cancer samples — distinguishing it from per-sample enrichment tools.
+The central application is systematic characterisation of the genomic heterogeneity of cancer hallmark acquisition: across 4,415 TCGA patients and 10 cancer types, the authors map somatic mutation pathway enrichments onto the 10 canonical Hanahan-Weinberg hallmarks, demonstrating that different cancer lineages acquire the same hallmarks through distinct and heterogeneous pathway alterations ("hallmark heterogeneity signatures").
+A secondary finding is that enrichments are substantially preserved even after removing known high-confidence cancer driver genes, suggesting that infrequent mutations in hallmark-associated pathways collectively constitute a genuine signal beyond established drivers [@Iorio2018SLAPenrich].
 
 For this project, SLAPenrich is relevant primarily as the curated pathway→hallmark bridge: its manually curated mapping of 374 Pathway Commons gene-sets onto the 10 canonical hallmarks is the resource one would use to post hoc annotate data-driven mutual-exclusivity modules with hallmark labels — i.e. to ask whether the data's own partition aligns with the canonical human hallmark schema (the label-free module question in `discussion:0007-hallmark-ordering-and-data-driven-modules`).
 
@@ -54,11 +56,15 @@ For this project, SLAPenrich is relevant primarily as the curated pathway→hall
 
 ### Dataset
 
-TCGA somatic mutation data (PANCAN dataset, MAF files) from 10 cancer types: breast invasive carcinoma (BRCA, n=1,132), colon/rectum adenocarcinoma (COREAD, n=489), glioblastoma multiforme (GBM, n=365), head and neck squamous cell carcinoma (HNSC, n=375), kidney renal clear cell carcinoma (KIRC, n=417), lung adenocarcinoma (LUAD, n=388), ovarian serous cystadenocarcinoma (OV, n=316), prostate adenocarcinoma (PRAD, n=242), skin cutaneous melanoma (SKCM, n=369), thyroid carcinoma (THCA, n=322). Total: 4,415 samples.
+TCGA somatic mutation data (PANCAN dataset, MAF files) from 10 cancer types: breast invasive carcinoma (BRCA, n=1,132), colon/rectum adenocarcinoma (COREAD, n=489), glioblastoma multiforme (GBM, n=365), head and neck squamous cell carcinoma (HNSC, n=375), kidney renal clear cell carcinoma (KIRC, n=417), lung adenocarcinoma (LUAD, n=388), ovarian serous cystadenocarcinoma (OV, n=316), prostate adenocarcinoma (PRAD, n=242), skin cutaneous melanoma (SKCM, n=369), thyroid carcinoma (THCA, n=322).
+Total: 4,415 samples [@Iorio2018SLAPenrich].
 
 ### Pathway gene-sets
 
-374 curated pathway gene-sets sourced from Pathway Commons v8 (2016), encompassing 3,915 unique genes. These were manually curated via a computer-aided keyword-matching process and assigned to 10 canonical cancer hallmarks. Of the 374 pathways, 298 (80%) map to exactly one hallmark; the remainder map to 1–2 hallmarks; 99% map to at most 2. The resulting hallmark-tagged collection is referred to as the Hallmark-Mapped Alteration (HMA) pathway set.
+374 curated pathway gene-sets sourced from Pathway Commons v8 (2016), encompassing 3,915 unique genes.
+These were manually curated via a computer-aided keyword-matching process and assigned to 10 canonical cancer hallmarks.
+Of the 374 pathways, 298 (80%) map to exactly one hallmark; the remainder map to 1–2 hallmarks; 99% map to at most 2.
+The resulting hallmark-tagged collection is referred to as the Hallmark-Mapped Alteration (HMA) pathway set [@Iorio2018SLAPenrich].
 
 ### Statistical model (SLAPenrich)
 
@@ -95,11 +101,13 @@ Two summary metrics quantify heterogeneity:
 
 ### Driver-gene filtering sensitivity analysis
 
-To test whether enrichments reflect genuine hallmark biology beyond established cancer genes, the authors re-ran SLAPenrich after removing mutations in high-confidence cancer genes (HCGs — a combined driver list from multiple selection-based methods, analogous to a Bailey-type driver census). On average, 21% of original enrichments were retained after HCG removal (range: 2.1% in GBM to 56.2% in COREAD). The preserved hallmark heterogeneity structure was assessed by comparing CHS-based hallmark signatures with vs. without HCGs via correlation.
+To test whether enrichments reflect genuine hallmark biology beyond established cancer genes, the authors re-ran SLAPenrich after removing mutations in high-confidence cancer genes (HCGs — a combined driver list from multiple selection-based methods, analogous to a Bailey-type driver census).
+On average, 21% of original enrichments were retained after HCG removal (range: 2.1% in GBM to 56.2% in COREAD).
+The preserved hallmark heterogeneity structure was assessed by comparing CHS-based hallmark signatures with vs. without HCGs via correlation [@Iorio2018SLAPenrich].
 
 ### Robustness
 
-SLAPenrich was tested against simulated noise (mutation call sensitivity perturbed from 95% to 50%, false-negative rates varied): median AUROC > 0.995 under sensitivity perturbation and > 0.99 under false-negative variation, indicating robustness to sequencing noise.
+SLAPenrich was tested against simulated noise (mutation call sensitivity perturbed from 95% to 50%, false-negative rates varied): median AUROC > 0.995 under sensitivity perturbation and > 0.99 under false-negative variation, indicating robustness to sequencing noise [@Iorio2018SLAPenrich].
 
 ## Key Findings
 
@@ -115,7 +123,10 @@ The HMA analysis produced a 10-cancer × 10-hallmark CHS matrix ("hallmark heter
 
 ### Enrichment is not simply a function of mutation burden or sample size
 
-CHS per cancer type (median enriched HMA-pathways: range 55 for PRAD to ~200 for BRCA and COREAD) showed only a weak correlation with sample size (R = 0.53, p = 0.11) and was essentially uncorrelated with average mutations per sample (R = 0.16, p = 0.65). SKCM, which has the highest average point mutation count per sample (387.63), has fewer enriched HMA-pathways than half the cancer types — because its high background rate inflates individual p_j values, reducing the signal-to-expected ratio. THCA has the lowest average mutations per sample (15.03) but still yields more enriched pathways than four other cancer types. This decoupling validates that SLAPenrich's per-sample probability normalisation is doing meaningful work.
+CHS per cancer type (median enriched HMA-pathways: range 55 for PRAD to ~200 for BRCA and COREAD) showed only a weak correlation with sample size (R = 0.53, p = 0.11) and was essentially uncorrelated with average mutations per sample (R = 0.16, p = 0.65).
+SKCM, which has the highest average point mutation count per sample (387.63), has fewer enriched HMA-pathways than half the cancer types — because its high background rate inflates individual p_j values, reducing the signal-to-expected ratio.
+THCA has the lowest average mutations per sample (15.03) but still yields more enriched pathways than four other cancer types.
+This decoupling validates that SLAPenrich's per-sample probability normalisation is doing meaningful work [@Iorio2018SLAPenrich].
 
 ### Driver removal preserves hallmark structure
 
@@ -136,11 +147,17 @@ The mutual-exclusivity-aware pathway enrichment, combined with HCG filtering, fl
 
 ### (a) Pathway→hallmark bridge for post hoc annotation of data-driven modules
 
-SLAPenrich's curated HMA gene-set collection (374 Pathway Commons pathways mapped to 10 canonical hallmarks) is the most direct available resource for answering the project's label-free module question: after inferring mutual-exclusivity modules from the cBioPortal mutation data (via DISCOVER/WeSME or `paper:RaphaelVandin2015`'s ILP), one would enrich each data-driven module against the HMA gene-sets to ask whether the module's genes map predominantly to one hallmark or span several. This is the annotate-post-hoc step described in `discussion:0007-hallmark-ordering-and-data-driven-modules`. The mapping is curated by domain experts (computer-aided manual curation), making it a principled reference; however, it is also the human-label dependency the project wants to test (see next point).
+SLAPenrich's curated HMA gene-set collection (374 Pathway Commons pathways mapped to 10 canonical hallmarks) is the most direct available resource for answering the project's label-free module question: after inferring mutual-exclusivity modules from the cBioPortal mutation data (via DISCOVER/WeSME or `paper:RaphaelVandin2015`'s ILP), one would enrich each data-driven module against the HMA gene-sets to ask whether the module's genes map predominantly to one hallmark or span several.
+This is the annotate-post-hoc step described in `discussion:0007-hallmark-ordering-and-data-driven-modules`.
+The mapping is curated by domain experts (computer-aided manual curation), making it a principled reference; however, it is also the human-label dependency the project wants to test (see next point) [@Iorio2018SLAPenrich].
 
 ### (b) The curated hallmark→gene mapping is a dependency, not a ground truth
 
-The hallmark heterogeneity findings in this paper are entirely downstream of the human-assigned pathway→hallmark labels. The 374 pathway→hallmark associations were made by the authors through keyword matching and manual review; they reflect the current expert consensus on which pathways "belong to" which hallmark, which is exactly the partitioning the project wants to validate or challenge from data. If one uses SLAPenrich's HMA labels to annotate data-driven modules, the test of "do the inferred modules recapitulate hallmarks?" is partially circular — the modules can only recapitulate hallmark labels if the gene-to-hallmark mapping is correct. The project should treat the HMA labelling as a testable prior, not as a gold standard: enrich data-driven modules against HMA gene-sets, compute overlap statistics, but also allow modules to span or split hallmarks. A module that perfectly matches one hallmark is evidence the partition is real; a module that straddles two hallmarks is evidence either the module boundary or the hallmark boundary is wrong.
+The hallmark heterogeneity findings in this paper are entirely downstream of the human-assigned pathway→hallmark labels.
+The 374 pathway→hallmark associations were made by the authors through keyword matching and manual review; they reflect the current expert consensus on which pathways "belong to" which hallmark, which is exactly the partitioning the project wants to validate or challenge from data [@Iorio2018SLAPenrich].
+If one uses SLAPenrich's HMA labels to annotate data-driven modules, the test of "do the inferred modules recapitulate hallmarks?" is partially circular — the modules can only recapitulate hallmark labels if the gene-to-hallmark mapping is correct.
+The project should treat the HMA labelling as a testable prior, not as a gold standard: enrich data-driven modules against HMA gene-sets, compute overlap statistics, but also allow modules to span or split hallmarks.
+A module that perfectly matches one hallmark is evidence the partition is real; a module that straddles two hallmarks is evidence either the module boundary or the hallmark boundary is wrong.
 
 ### (c) Relation to Sanchez-Vega pathways already in the pipeline
 
@@ -177,7 +194,10 @@ Because SLAPenrich tests enrichment across a population of samples rather than p
 
 ## Model / Tool Availability
 
-**SLAPenrich R package:** Available on GitHub at https://github.com/saezlab/SLAPenrich. The package includes mutation data preprocessing, pathway curation routines, core enrichment analysis (Poisson-binomial statistics), mutual exclusivity filtering, core-component gene identification, and a visualisation/report framework for exploring enriched pathways. The package is not on Bioconductor (as of the time of publication it was a standalone GitHub repository). The curated 374 HMA pathway gene-sets and hallmark assignments are distributed as part of the package.
+**SLAPenrich R package:** Available on GitHub at https://github.com/saezlab/SLAPenrich.
+The package includes mutation data preprocessing, pathway curation routines, core enrichment analysis (Poisson-binomial statistics), mutual exclusivity filtering, core-component gene identification, and a visualisation/report framework for exploring enriched pathways.
+The package is not on Bioconductor (as of the time of publication it was a standalone GitHub repository).
+The curated 374 HMA pathway gene-sets and hallmark assignments are distributed as part of the package [@Iorio2018SLAPenrich].
 
 ## Follow-up
 

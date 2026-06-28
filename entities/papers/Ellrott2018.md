@@ -9,6 +9,7 @@ id: paper:Ellrott2018
 ontology_terms: []
 source_refs:
 - article:Ellrott2018
+- cite:Ellrott2018
 related:
 - paper:Bailey2018
 - topic:targeted-panel-sequencing-bias
@@ -33,12 +34,12 @@ This MC3 mutation-calling note links paper:Bailey2018 and topic:targeted-panel-s
 MC3 (Multi-Center Mutation Calling in Multiple Cancers) — the canonical TCGA pan-cancer
 somatic MAF produced by combining seven variant callers across ~10,000 tumor/normal exome
 pairs from 33 cancer types. It is the reference call-set that subsequent pan-cancer driver
-and signature analyses (e.g., Bailey2018, PCAWG companion work) compare against.
+and signature analyses (e.g., Bailey2018, PCAWG companion work) compare against [@Ellrott2018].
 
 ## Methods
 
 **Cohort.** 10,510 tumor/normal exome pairs from 33 TCGA cancer types (final whitelist
-11,069 pairs across 10,486 participants), with >400 TB of raw input.
+11,069 pairs across 10,486 participants), with >400 TB of raw input [@Ellrott2018].
 
 **Seven callers, run in parallel.**
 - SNV callers (5): MuTect, MuSE, SomaticSniper, RADIA, VarScan2.

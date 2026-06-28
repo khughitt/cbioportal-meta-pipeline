@@ -9,6 +9,7 @@ id: paper:Bandlamudi2026
 ontology_terms: []
 source_refs:
 - article:Bandlamudi2026
+- cite:Bandlamudi2026
 related:
 - paper:Zehir2017
 - paper:Bailey2018
@@ -40,7 +41,7 @@ on which cancer type it occurs in, not just on the gene/position itself. The aut
 formalize a "canonical vs non-canonical context" distinction and show that ~1/3 of all
 detected drivers fall into non-canonical contexts with measurably different biology
 (later emergence, increased subclonality). They also publish 164 newly significant
-hotspots after rigorous control for gene/position/sample-specific mutation rates.
+hotspots after rigorous control for gene/position/sample-specific mutation rates [@Bandlamudi2026].
 
 This MSK-IMPACT scale-up is interpreted against paper:Zehir2017, paper:Bailey2018, paper:Chakravarty2017, topic:cancer-driver-genes, and topic:pan-cancer-mutation-landscape.
 
@@ -56,7 +57,7 @@ This MSK-IMPACT scale-up is interpreted against paper:Zehir2017, paper:Bailey201
   HLA class I genotypes, somatic HLA class I LOH, and mutation signature assignments.
 - **Hotspot discovery:** mutation-rate-adjusted significance test correcting for gene,
   position, and sample-specific background rates plus biological/technical false-positive
-  sources; yielded 164 newly significant hotspots.
+  sources; yielded 164 newly significant hotspots [@Bandlamudi2026].
 - **What's new vs Zehir2017:** (i) ~5x sample size and broader histology coverage (448 vs
   ~340 subtypes); (ii) explicit canonical/non-canonical context framework; (iii) integrated
   CCF/clonality, HLA LOH, and ancestry-stratified neoantigen analysis layered on top of the
@@ -93,7 +94,7 @@ The paper's "canonical vs non-canonical context" framing is directly applicable:
 cancer heatmaps and clustering outputs implicitly assume drivers are drivers regardless of
 tissue, which Bandlamudi2026 argues is wrong for ~1/3 of events. The 164 new hotspots and
 the published per-sample CCF MAF (620 MB) on Zenodo are concrete external benchmarks our
-gene x cancer outputs should be cross-referenced against.
+gene x cancer outputs should be cross-referenced against [@Bandlamudi2026].
 
 ## Limitations
 

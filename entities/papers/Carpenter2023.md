@@ -34,7 +34,7 @@ related: []
 
 ## Key Contribution
 
-This paper provides the first direct, controlled comparison of the mutagenic activity of APOBEC3A (A3A) and APOBEC3B (A3B) — the two leading candidates for the APOBEC3 mutational signature in human cancer — using a human cell line system with a selectable reporter. The central finding is that both A3A and A3B individually generate the canonical APOBEC3 signature (SBS2 + SBS13) at genome scale, but they do so with distinct tetranucleotide preferences: A3A strongly prefers YTCW motifs (~70%), while A3B shows only a weak YTCW preference (~50%), with a slight enrichment for RTCW. Because most primary breast tumors exhibit intermediate YTCW percentages (50–70%), the data support a model in which both enzymes contribute combinatorially to the observed composite signature in cancer.
+This paper provides the first direct, controlled comparison of the mutagenic activity of APOBEC3A (A3A) and APOBEC3B (A3B) — the two leading candidates for the APOBEC3 mutational signature in human cancer — using a human cell line system with a selectable reporter. The central finding is that both A3A and A3B individually generate the canonical APOBEC3 signature (SBS2 + SBS13) at genome scale, but they do so with distinct tetranucleotide preferences: A3A strongly prefers YTCW motifs (~70%), while A3B shows only a weak YTCW preference (~50%), with a slight enrichment for RTCW. Because most primary breast tumors exhibit intermediate YTCW percentages (50–70%), the data support a model in which both enzymes contribute combinatorially to the observed composite signature in cancer [@Carpenter2023].
 
 ## Methods
 
@@ -42,9 +42,9 @@ This paper provides the first direct, controlled comparison of the mutagenic act
 
 **A3 expression.** MLV-based retroviral constructs driving A3A, A3B, A3H (haplotypes I and II), and catalytic-inactive derivatives (A3A-E72A, A3B-E255A, A3H-II-E56A) under a synthetic MND promoter were transduced into HAP1-TK-M9 cells. Single-copy integration was confirmed by low-MOI transduction and WGS-based site mapping.
 
-**Whole-genome sequencing (WGS).** Independent clonal granddaughter lines were expanded ~1 month post-transduction and subjected to 30x Illumina WGS (NovaSeq 6000, 150×2 bp). Somatic single base substitutions (SBS) were called relative to the HAP1-TK-M9 mother clone's sequence using GATK3 + Mutect2. Signature analysis used COSMIC v3 references, deconstructSigs R package, NMF, and pentanucleotide enrichment scoring. Hairpin substrate biochemistry used purified recombinant A3A and A3B in single-hit kinetic assays on SDHB and NUP93 oligonucleotide substrates.
+**Whole-genome sequencing (WGS).** Independent clonal granddaughter lines were expanded ~1 month post-transduction and subjected to 30x Illumina WGS (NovaSeq 6000, 150×2 bp). Somatic single base substitutions (SBS) were called relative to the HAP1-TK-M9 mother clone's sequence using GATK3 + Mutect2. Signature analysis used COSMIC v3 references, deconstructSigs R package, NMF, and pentanucleotide enrichment scoring. Hairpin substrate biochemistry used purified recombinant A3A and A3B in single-hit kinetic assays on SDHB and NUP93 oligonucleotide substrates [@Carpenter2023].
 
-**Tumor comparison.** 784 ICGC primary breast tumor WGS datasets were clustered based on pentanucleotide C→T/G mutation profiles and compared to the cell-line profiles to assign likely enzymatic sources.
+**Tumor comparison.** 784 ICGC primary breast tumor WGS datasets were clustered based on pentanucleotide C→T/G mutation profiles and compared to the cell-line profiles to assign likely enzymatic sources [@Carpenter2023].
 
 **A3 mRNA.** RNA-seq was used to compare exogenous A3 expression levels in granddaughter clones vs. TCGA breast tumors, CCLE cell lines, and published breast cancer datasets.
 

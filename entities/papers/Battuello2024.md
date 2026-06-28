@@ -24,7 +24,7 @@ related: []
 
 ## Key Contribution
 
-Arbitrary choices in the mutational signature analysis pipeline — NGS workflow (WGS vs. WES vs. targeted panel), fitting algorithm, and COSMIC reference catalogue version — produce statistically different signature exposures in the same samples. Using colorectal cancer (CRC) as a model system (230 cell lines + 152 patients, validated in three independent cohorts), the authors quantify how each variable shifts both mathematical goodness-of-fit and biological utility for stratifying MSI-MMRd vs. MSS-MMRp and POLE-mutant tumours. They also release CoMSCER, an open-source R/Shiny bioinformatics tool that runs multiple algorithms and references in parallel to help researchers identify the most appropriate workflow, and they establish minimum somatic variant thresholds required for reliable signature assignment.
+Arbitrary choices in the mutational signature analysis pipeline — NGS workflow (WGS vs. WES vs. targeted panel), fitting algorithm, and COSMIC reference catalogue version — produce statistically different signature exposures in the same samples. Using colorectal cancer (CRC) as a model system (230 cell lines + 152 patients, validated in three independent cohorts), the authors quantify how each variable shifts both mathematical goodness-of-fit and biological utility for stratifying MSI-MMRd vs. MSS-MMRp and POLE-mutant tumours. They also release CoMSCER, an open-source R/Shiny bioinformatics tool that runs multiple algorithms and references in parallel to help researchers identify the most appropriate workflow, and they establish minimum somatic variant thresholds required for reliable signature assignment [@Battuello2024].
 
 ## Methods
 
@@ -33,9 +33,9 @@ Arbitrary choices in the mutational signature analysis pipeline — NGS workflow
 - Clinical: 152 TCGA-COAD patients (downloaded from GDC).
 - Validation: TCGA-UCEC (483 endometrial cancer, MMR-stratified), TCGA-LUAD/LUSC (35 lung cancer, smoking-stratified), 12 CRC patient-derived organoids (PDOs) treated with colibactin-producing E. coli.
 
-**NGS workflow comparison:** TSO-500 pan-cancer targeted gene panel (523 genes, in silico from WGS), WES, and WGS applied to the same samples; mutational matrices generated with SigProfilerMatrixGenerator v1.1.31.
+**NGS workflow comparison:** TSO-500 pan-cancer targeted gene panel (523 genes, in silico from WGS), WES, and WGS applied to the same samples; mutational matrices generated with SigProfilerMatrixGenerator v1.1.31 [@Battuello2024].
 
-**Algorithm comparison:** Systematic PMC literature review (831 entries → 70 with available installable tools); top 5 most referenced: MutationalPatterns (MP), deconstructSigs (DS), signature.tools.lib (STL), SigProfilerAssignment (SPA), SignatureAnalyzer (SA). All run with standard/author-recommended settings.
+**Algorithm comparison:** Systematic PMC literature review (831 entries → 70 with available installable tools); top 5 most referenced: MutationalPatterns (MP), deconstructSigs (DS), signature.tools.lib (STL), SigProfilerAssignment (SPA), SignatureAnalyzer (SA). All run with standard/author-recommended settings [@Battuello2024].
 
 **Reference catalogue comparison:** COSMIC v2 (30 SBS signatures), COSMIC v3.2 (79 SBS signatures), and a CRC tissue-specific (TS) reference.
 
@@ -43,7 +43,7 @@ Arbitrary choices in the mutational signature analysis pipeline — NGS workflow
 - Mathematical: cosine similarity between original and reconstructed mutational profiles (threshold 0.9).
 - Biological: ΔMMR (median difference in MMR-deficiency signature contribution between MSI-MMRd and MSS-MMRp) and ΔPOLE (median difference in POLE-associated signature contribution between POLE-mutant and wild-type).
 
-**Minimum mutation threshold:** Random sampling (5–95% of mutations per sample, 19 subgroups) to derive the minimum number of somatic variants for reliable cosine similarity.
+**Minimum mutation threshold:** Random sampling (5–95% of mutations per sample, 19 subgroups) to derive the minimum number of somatic variants for reliable cosine similarity [@Battuello2024].
 
 **Genomic region analysis:** Mutational signatures decomposed separately for exonic, intronic, and extragenic regions from WGS.
 
@@ -54,7 +54,7 @@ Arbitrary choices in the mutational signature analysis pipeline — NGS workflow
 ## Key Findings
 
 **NGS workflow:**
-- All three data types (WGS, WES, TSO-500) achieve cosine similarity ≥ 0.9 (mathematical reliability), but differences across workflows are statistically significant (Wilcoxon, p < 2.2e-16).
+- All three data types (WGS, WES, TSO-500) achieve cosine similarity ≥ 0.9 (mathematical reliability), but differences across workflows are statistically significant (Wilcoxon, p < 2.2e-16) [@Battuello2024].
 - Biological utility (ΔMMR) is significantly positive with all three workflows, supporting MSI-MMRd vs. MSS-MMRp stratification. However, ΔMMR is unexpectedly lower with WGS (0.11 WGS < 0.26 WES < 0.32 TSO-500).
 - The WGS deficit is explained by dilution from "flat signatures" (SBS 3-5-8-40-89, uniformly distributed across trinucleotide contexts) enriched in intronic and extragenic regions (flat-signature contribution: ~0% exonic, ~12% intronic, ~36% extragenic in MSI-MMRd lines).
 - Clinical implication: large pan-cancer targeted panels like TSO-500 are feasible for CRC subtype stratification and may outperform WGS for this task.

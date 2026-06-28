@@ -1,6 +1,6 @@
 ---
 type: plan
-title: "h08 within-tissue covariate\u2194H association core (H08a scan)"
+title: "Within-tissue covariate\u2194H association core (H08a scan)"
 status: active
 created: '2026-05-31'
 updated: '2026-05-31'
@@ -18,7 +18,7 @@ related:
 - dataset:tcga-pancanatlas
 ---
 
-# h08 within-tissue covariate↔H association core (H08a scan)
+# Within-tissue covariate↔H association core (H08a scan)
 
 > **Pre-registration-already-exists mode.** Every verdict-bearing criterion — the three
 > confirmatory arms, top-3 rank / positive sign / q<0.05, the 2-of-3 gate, the frozen Arm-C
@@ -36,8 +36,8 @@ related:
 
 Build the H08a positive-control scan: the within-tissue association between each candidate
 covariate and each per-sample COSMIC signature exposure `H`, over the 7 MC3 arm strata, reading
-the committed 2-of-3 rank gate. This is the last of the four h08-run blocking checks
-(`plan:0005-h08-positive-control-scan-analysis-plan` check 4); checks 1–3 (q018 / t197 refit / t198 NMF
+the committed 2-of-3 rank gate. This is the last of the four `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` run-blocking checks
+(`plan:0005-h08-positive-control-scan-analysis-plan` check 4); checks 1–3 (`question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross` / t197 refit / t198 NMF
 modules) are done. No association-layer script exists today — the pre-reg's own "binding
 constraint."
 
@@ -118,13 +118,13 @@ doc/interpretations/
   already per-sample) and per-study clinical `TMB_NONSYNONYMOUS`; MSI from clinical
   `MSI_SENSOR_SCORE` / `MSI_SCORE_MANTIS`; POLE/POLD1 hotspot from the existing
   `detect_polymerase_hotspots.py` on the MC3 MAF; a hypermutator flag from a documented TMB
-  threshold (Campbell 2017 ≥10 mut/Mb, the absolute view already defined in the pipeline).
+  threshold (Campbell et al. [@Campbell2017Hypermutation] ≥10 mut/Mb, the absolute view already defined in the pipeline).
 - **Rejected alternative:** run `annotate_hypermutators` (the canonical composite) for the
-  tcga_mc3 h08 config to emit `samples_annotated.feather`.
+  tcga_mc3 `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` config to emit `samples_annotated.feather`.
 - **Reason:** the composite pulls in MSI normalization, per-cancer GMM, and panel-callable-size
   machinery that targets the cross-study aggregation pipeline; for 7 WES strata it is
   disproportionate, and the four molecular covariates are individually available with clearer
-  provenance. The composite remains the right path **if h08 becomes recurring** (then wire per
+  provenance. The composite remains the right path **if this association scan becomes recurring** (then wire per
   t175) — recorded as the recurring-path alternative, not built now.
 
 ### Key decision 3: smoking covariate from the GDC open-access PanCanAtlas clinical-with-followup file
@@ -211,8 +211,8 @@ doc/interpretations/
   → GerkeLab mirror (both ungated); only then escalate.
 - **Definition of done:** file present + all four verifications logged; a
   `dataset:tcga-pancanatlas-clinical` entity recorded via `/science:find-datasets` with
-  `access.verified: true`, `verification_method`, `source_url`, and a `consumed_by:
-  plan:0007-t199-h08-association-core` backlink.
+  `access.verified: true`, `verification_method`, `source_url`, and a `consumed_by` backlink to
+  this plan entity.
 
 ### WP1 — assemble & freeze the covariate table + denominator (pre-association)
 - **Depends on:** WP0; t197 exposures; t198 module loadings; per-study cBioPortal clinical (on disk).

@@ -9,6 +9,7 @@ id: paper:Chang2016
 ontology_terms: []
 source_refs:
 - article:Chang2016
+- cite:Chang2016
 related:
 - paper:Cerami2012
 - paper:Chakravarty2017
@@ -33,7 +34,7 @@ mutational hotspots independently of gene-level recurrence, and applies it to an
 11,119-tumor pan-cancer cohort to produce a catalog of 470 statistically significant
 hotspots across 275 genes. The work reframes driver discovery away from gene counts
 toward allele-specific recurrence and documents pervasive lineage diversity among
-hotspot alleles.
+hotspot alleles [@Chang2016].
 
 This hotspot-method note connects paper:Cerami2012, paper:Chakravarty2017, topic:hotspot-based-driver-detection, topic:cancer-driver-genes, and topic:mutation-rate-normalization.
 
@@ -54,7 +55,7 @@ the Benjamini–Yekutieli procedure at q < 0.01. Input: 2,007,694 somatic
 coding substitutions from 11,119 tumors across 41 cancer types spanning 9 major
 organ systems, pooled from TCGA, ICGC, and published studies (exome / WGS;
 median 57 mutations per tumor). Code and hotspot calls are released at
-<https://github.com/taylor-lab/hotspots>.
+<https://github.com/taylor-lab/hotspots> [@Chang2016].
 
 ## Key Findings
 
@@ -72,7 +73,7 @@ reprocessing raw reads through an independent pipeline. Experimental validation
 of RAC1 A159V (a long-tail allele) showed PAK1 activation matching or exceeding
 constitutively active RAC1-GTPγS, and greater than the known oncogenic RAC1
 P29S; RAC1 glutamine-61-to-arginine was similarly activating. RRAS2 glutamine-72 is flagged as paralogous to
-KRAS glutamine-61 (q = 8×10⁻¹⁵).
+KRAS glutamine-61 (q = 8×10⁻¹⁵) [@Chang2016].
 
 ## Relevance
 

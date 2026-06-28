@@ -42,7 +42,7 @@ This pathway-progression inference note links paper:Vocht2026 and paper:Schill20
 
 This paper introduces the **Pathway Linear Progression Model (PLPM)** — a unified probabilistic-combinatorial framework that **simultaneously infers** (a) which genes belong to the same "pathway" (i.e., mutually exclusive cancer driver modules) **and** (b) the ordered temporal sequence in which those modules are acquired during tumor progression, using only cross-sectional binary mutation matrices. No pathway labels are required as input; both the partition and the ordering emerge from the data.
 
-The core insight is that two known empirical regularities — *within-pathway mutual exclusivity* (one hit per cell is sufficient to perturb a functional module) and *across-pathway progression order* (later modules tend not to be mutated unless earlier ones already are) — impose jointly testable constraints on a binary mutation matrix. The authors cast recovery of the optimal partition-plus-ordering as a minimum-edit ILP (integer linear program), prove NP-hardness of the exact problem (Theorem 2.1), derive sample-complexity bounds for identifiability under noise-free (Theorem 2.2) and noisy (Theorem 2.3) conditions, and demonstrate feasibility on three real cancer datasets using CPLEX.
+The core insight is that two known empirical regularities — *within-pathway mutual exclusivity* (one hit per cell is sufficient to perturb a functional module) and *across-pathway progression order* (later modules tend not to be mutated unless earlier ones already are) — impose jointly testable constraints on a binary mutation matrix. The authors cast recovery of the optimal partition-plus-ordering as a minimum-edit ILP (integer linear program), prove NP-hardness of the exact problem (Theorem 2.1), derive sample-complexity bounds for identifiability under noise-free (Theorem 2.2) and noisy (Theorem 2.3) conditions, and demonstrate feasibility on three real cancer datasets using CPLEX [@RaphaelVandin2015].
 
 ## Methods
 
@@ -66,15 +66,15 @@ Constraints enforce that each gene belongs to exactly one pathway, each pathway 
 
 ### Complexity and identifiability
 
-**Theorem 2.1 (NP-hardness):** The reconstruction problem is NP-hard even when gene-to-pathway assignment is fixed (only ordering varies), establishing that there is no polynomial algorithm unless P = NP.
+**Theorem 2.1 (NP-hardness):** The reconstruction problem is NP-hard even when gene-to-pathway assignment is fixed (only ordering varies), establishing that there is no polynomial algorithm unless P = NP [@RaphaelVandin2015].
 
-**Theorem 2.2 (error-free sample complexity):** With no data noise and at least m* samples, where m* depends on K, n, and the gene frequencies, the ILP optimal solution uniquely recovers the true partition with high probability.
+**Theorem 2.2 (error-free sample complexity):** With no data noise and at least m* samples, where m* depends on K, n, and the gene frequencies, the ILP optimal solution uniquely recovers the true partition with high probability [@RaphaelVandin2015].
 
-**Theorem 2.3 (noisy sample complexity):** When each entry in M is independently flipped with probability q (false-positive/negative error rate), unique recovery remains possible, but the required sample size m* increases — specifically, the required m grows with q/(1-2q)^2 scaling. This provides a closed-form condition on sample count, number of pathways, and noise rate under which PLPM is identifiable.
+**Theorem 2.3 (noisy sample complexity):** When each entry in M is independently flipped with probability q (false-positive/negative error rate), unique recovery remains possible, but the required sample size m* increases — specifically, the required m grows with q/(1-2q)^2 scaling. This provides a closed-form condition on sample count, number of pathways, and noise rate under which PLPM is identifiable [@RaphaelVandin2015].
 
 ### Algorithm
 
-The ILP is solved with CPLEX v12.3 (default parameters, single CPU). Pathway count K is treated as a user-supplied parameter; model selection across K is done by inspecting the progression score (total flips / mn) as K increases. A bootstrap stability analysis assigns each gene to the pathway it is most frequently assigned to across 100 bootstrap resamples; genes assigned to the same pathway ≥50% of resamples are considered robustly co-assigned.
+The ILP is solved with CPLEX v12.3 (default parameters, single CPU). Pathway count K is treated as a user-supplied parameter; model selection across K is done by inspecting the progression score (total flips / mn) as K increases. A bootstrap stability analysis assigns each gene to the pathway it is most frequently assigned to across 100 bootstrap resamples; genes assigned to the same pathway ≥50% of resamples are considered robustly co-assigned [@RaphaelVandin2015].
 
 ### Implementation note
 
@@ -90,11 +90,11 @@ No public software package was released with this paper. The ILP is described fu
 
 ### Colorectal cancer — Wood et al. 2007 dataset (95 samples, 8 genes)
 
-The inferred 3-stage PLPM places APC in the earliest stage, TP53 and PIK3CA in the middle stage (significantly mutually exclusive; p < 0.008), and KRAS late — consistent with the established APC → TP53/PIK3CA → KRAS colorectal progression model. This is recovered without supplying pathway labels.
+The inferred 3-stage PLPM places APC in the earliest stage, TP53 and PIK3CA in the middle stage (significantly mutually exclusive; p < 0.008), and KRAS late — consistent with the established APC → TP53/PIK3CA → KRAS colorectal progression model. This is recovered without supplying pathway labels [@RaphaelVandin2015].
 
 ### TCGA colorectal cancer (224 samples, 14 genes)
 
-The 5-stage PLPM reproduces the same APC → TP53/PIK3CA → KRAS core ordering. Extended analysis on 43 genes additionally places ATM (a known TP53 interactor) in the TP53/PIK3CA module; Ras/Raf pathway genes (BRAF, KRAS, NRAS) co-cluster (p < 0.05 for SMAD2/SMAD4 co-assignment); SMAD2 and SMAD4 are significantly co-assigned, reflecting their known interaction. Running time: 86 seconds (5 stages, 14 genes, 224 samples); 13,763 seconds for the 43-gene extended model.
+The 5-stage PLPM reproduces the same APC → TP53/PIK3CA → KRAS core ordering. Extended analysis on 43 genes additionally places ATM (a known TP53 interactor) in the TP53/PIK3CA module; Ras/Raf pathway genes (BRAF, KRAS, NRAS) co-cluster (p < 0.05 for SMAD2/SMAD4 co-assignment); SMAD2 and SMAD4 are significantly co-assigned, reflecting their known interaction. Running time: 86 seconds (5 stages, 14 genes, 224 samples); 13,763 seconds for the 43-gene extended model [@RaphaelVandin2015].
 
 ### TCGA glioblastoma multiforme (251 samples, 27 genes, 6 stages)
 
@@ -103,7 +103,7 @@ A six-stage PLPM assigns:
 - Stage 3: PI3K pathway dominates.
 - Stage 4: p53 pathway concentrated.
 
-Bootstrap analysis shows >50% assignment stability for pathway-paired genes, indicating that the ILP solution is not an artifact of the optimization landscape. Running time: 2,488 seconds.
+Bootstrap analysis shows >50% assignment stability for pathway-paired genes, indicating that the ILP solution is not an artifact of the optimization landscape. Running time: 2,488 seconds [@RaphaelVandin2015].
 
 ## Relevance
 

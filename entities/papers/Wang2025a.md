@@ -51,7 +51,7 @@ related:
 
 This hallmark-network tumorigenesis note links topic:co-occurrence-and-mutual-exclusivity.
 
-This paper proposes a whole-genome, data-driven systems biology framework for studying cancer evolution at the level of hallmarks rather than individual genes. The core idea is to coarse-grain the high-dimensional gene regulatory network (GRN) of a cell into a 10-node "hallmark network" — one node per canonical hallmark — and then simulate the dynamics of that network using stochastic differential equations (SDEs) incorporating Ornstein-Uhlenbeck noise. Applied across 15 cancer types from the GRAND database, the framework produces two main results: (1) hallmark-level probability distributions shift significantly between normal and cancerous states (all 10 hallmarks elevated in cancer, p < 0.001 for gastric adenocarcinoma as the representative example), with "Tissue Invasion and Metastasis" showing the largest normal-vs-cancer divergence (Jensen-Shannon divergence 0.692) and "Reprogramming Energy Metabolism" the smallest (JS divergence 0.385); and (2) network topology — specifically inter-hallmark regulatory connectivity as captured by the Dynamic Network Biomarker (DNB) score — undergoes significant reconfiguration **before** overt shifts in individual hallmark levels, providing an early-warning signal of the malignant transition. The topological early-warning lead time is statistically significant for all 10 hallmarks across all 15 cancer types (one-sample Wilcoxon signed-rank test, p < 0.001).
+This paper proposes a whole-genome, data-driven systems biology framework for studying cancer evolution at the level of hallmarks rather than individual genes. The core idea is to coarse-grain the high-dimensional gene regulatory network (GRN) of a cell into a 10-node "hallmark network" — one node per canonical hallmark — and then simulate the dynamics of that network using stochastic differential equations (SDEs) incorporating Ornstein-Uhlenbeck noise. Applied across 15 cancer types from the GRAND database, the framework produces two main results: (1) hallmark-level probability distributions shift significantly between normal and cancerous states (all 10 hallmarks elevated in cancer, p < 0.001 for gastric adenocarcinoma as the representative example), with "Tissue Invasion and Metastasis" showing the largest normal-vs-cancer divergence (Jensen-Shannon divergence 0.692) and "Reprogramming Energy Metabolism" the smallest (JS divergence 0.385); and (2) network topology — specifically inter-hallmark regulatory connectivity as captured by the Dynamic Network Biomarker (DNB) score — undergoes significant reconfiguration **before** overt shifts in individual hallmark levels, providing an early-warning signal of the malignant transition. The topological early-warning lead time is statistically significant for all 10 hallmarks across all 15 cancer types (one-sample Wilcoxon signed-rank test, p < 0.001) [@Wang2025a].
 
 ## Methods
 
@@ -89,15 +89,15 @@ with scaling constant $\alpha = 10^{-4}$. This is passed through a nonlinear act
 
 $$\frac{\mathrm{d}x_i}{\mathrm{d}t} = \lambda_i F(w_i(\mathbf{x}, t)) - e^{\eta_i(t) - \frac{\sigma^2}{2}} x_i$$
 
-where $\lambda_i = 3.8$ is the maximum production rate, $\eta_i(t)$ is an Ornstein-Uhlenbeck noise process with noise intensity $\sigma = 0.1$ and correlation time $\tau = 1.0$, and the stochastic part is integrated by an Euler-Maruyama scheme.
+where $\lambda_i = 3.8$ is the maximum production rate, $\eta_i(t)$ is an Ornstein-Uhlenbeck noise process with noise intensity $\sigma = 0.1$ and correlation time $\tau = 1.0$, and the stochastic part is integrated by an Euler-Maruyama scheme [@Wang2025a].
 
-The time-dependent interaction matrix $V(t)$ interpolates linearly between $V_n$ and $V_c$ via a transition function $f(t)$ randomly selected for each simulation run from four candidates (linear, sigmoidal, exponential, $1 - e^{-at}$), making the ensemble robust to the specific assumed transition shape. Simulation runs from $t = 0$ to $t = 100$: $t = 0$–30 is the normal network phase, $t = 30$–70 is the transition phase, and $t = 70$–100 is the cancer network phase. 10,000 trajectories are generated per cancer type.
+The time-dependent interaction matrix $V(t)$ interpolates linearly between $V_n$ and $V_c$ via a transition function $f(t)$ randomly selected for each simulation run from four candidates (linear, sigmoidal, exponential, $1 - e^{-at}$), making the ensemble robust to the specific assumed transition shape. Simulation runs from $t = 0$ to $t = 100$: $t = 0$–30 is the normal network phase, $t = 30$–70 is the transition phase, and $t = 70$–100 is the cancer network phase. 10,000 trajectories are generated per cancer type [@Wang2025a].
 
 Initial conditions $x_i(0)$ are set at the stationary state of the normal network, obtained by numerically solving the model with $V(t) = V_n$. The stationary value is the average expression level of genes in hallmark $i$ in normal tissue data.
 
 ### Early-warning signal detection (DNB theory)
 
-The Dynamic Network Biomarker (DNB) method is applied to detect the critical transition tipping point. Fifty independent "virtual patient" samples are generated by resampling and aggregating 1,000 trajectories each. The **DIND (Direct Interaction Network-based Divergence) score** — a topology-sensitive variant of the DNB score based on symmetric KL divergence between distributions of adjacent time points — is computed per hallmark node and globally. The tipping point $t_1$ is defined as the first peak in the global DIND score; $t_2$ is the moment the average hallmark level first exceeds 1.2× the normal stationary state. The lead time $\Delta t = t_2 - t_1$ quantifies how far in advance network reconfiguration precedes phenotypic shift.
+The Dynamic Network Biomarker (DNB) method is applied to detect the critical transition tipping point. Fifty independent "virtual patient" samples are generated by resampling and aggregating 1,000 trajectories each. The **DIND (Direct Interaction Network-based Divergence) score** — a topology-sensitive variant of the DNB score based on symmetric KL divergence between distributions of adjacent time points — is computed per hallmark node and globally. The tipping point $t_1$ is defined as the first peak in the global DIND score; $t_2$ is the moment the average hallmark level first exceeds 1.2× the normal stationary state. The lead time $\Delta t = t_2 - t_1$ quantifies how far in advance network reconfiguration precedes phenotypic shift [@Wang2025a].
 
 ### Divergence quantification
 
@@ -111,7 +111,7 @@ Jensen-Shannon (JS) divergence is used to compare normal vs. cancer hallmark lev
 
 ### Potential energy landscape
 
-A potential energy landscape is constructed by projecting the 10,000 × 100 trajectory matrix into 2D PCA space and estimating the density via 2D KDE; $U(x,y) = -\ln(P(x,y))$. This reveals two attractor basins (normal, cancer) and a most probable transition path (Fig. 7).
+A potential energy landscape is constructed by projecting the 10,000 × 100 trajectory matrix into 2D PCA space and estimating the density via 2D KDE; $U(x,y) = -\ln(P(x,y))$. This reveals two attractor basins (normal, cancer) and a most probable transition path (Fig. 7) [@Wang2025a].
 
 ## Key Findings
 

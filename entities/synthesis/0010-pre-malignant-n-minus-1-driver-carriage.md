@@ -47,8 +47,10 @@ and `t157` are both open and unstarted with no execution history to narrate.
 `hypothesis:0006-pre-malignant-n-minus-1-driver-carriage` was formalized on 2026-04-27/28
 as a complement to the sibling hypothesis `hypothesis:0004-mhn-pathway-ordering`, which
 shares `question:0012-mutation-ordering-cross-sectional-inference` as a non-primary link.
-The framing distinguishes h06 from h04 on operational grounds: where h04 requires
-cross-sectional probabilistic inference, h06 uses directly observed pre-malignant versus
+The framing distinguishes `hypothesis:0006-pre-malignant-n-minus-1-driver-carriage` from
+`hypothesis:0004-mhn-pathway-ordering` on operational grounds: where
+`hypothesis:0004-mhn-pathway-ordering` requires cross-sectional probabilistic inference,
+`hypothesis:0006-pre-malignant-n-minus-1-driver-carriage` uses directly observed pre-malignant versus
 invasive sequencing data — a cleaner empirical test where paired cohorts exist. This
 distinction motivated the creation of two gating tasks. `t156` (cBioPortal pre-malignant
 cohort audit) was registered as the blocking prerequisite, with its acceptance criterion
@@ -59,35 +61,40 @@ esophagus → EAC and MDS → AML identified as the most tractable candidate pai
 
 The broader mutation-ordering scaffolding — `t132` (literature review of ordering methods),
 `t135` (MHN fit per histology), and `t152` (MHN simulation calibration) — was filed
-concurrently as part of the h04/h06 ordering work cluster. These tasks provide a fallback
-inference path if h06's direct-observation route is blocked by insufficient pre-malignant
-sample coverage. Neither gating task has started; the hypothesis sits at the boundary
-between ideation and operationalization.
+concurrently as part of the ordering work cluster spanning
+`hypothesis:0004-mhn-pathway-ordering` and
+`hypothesis:0006-pre-malignant-n-minus-1-driver-carriage`. These tasks provide a fallback
+inference path if `hypothesis:0006-pre-malignant-n-minus-1-driver-carriage`'s direct-observation
+route is blocked by insufficient pre-malignant sample coverage. Neither gating task has started;
+the hypothesis sits at the boundary between ideation and operationalization.
 
 ## Research Fronts
 
 **Open tasks:**
 
-- `t156` (P2, proposed) — cBioPortal pre-malignant cohort audit. Gating task for h06.
+- `t156` (P2, proposed) — cBioPortal pre-malignant cohort audit. Gating task for
+  `hypothesis:0006-pre-malignant-n-minus-1-driver-carriage`.
   Enumerates studies with pre-malignant samples, records sub-stage labels, sample sizes,
   assay regime, matched-normal status, and modality availability. Acceptance criterion is
-  a promotion recommendation for h06.
+  a promotion recommendation for `hypothesis:0006-pre-malignant-n-minus-1-driver-carriage`.
 - `t157` (P3, proposed, blocked on `t156`) — First paired driver-overlap analysis on the
   most tractable cancer type (likely Barrett's → EAC or MDS → AML). Computes
   mutation-observable top-25 driver overlap, identifies late-stage residual, and tests
   checkpoint/chromatin enrichment. Restricted to SNV/indels unless CNA modalities are
   explicitly added.
 - `t132` (P2, proposed) — Literature search on mutation-ordering methods. Relevant as
-  fallback if h06's direct paired-cohort route is blocked by insufficient pre-malignant
-  coverage, directing work toward cross-sectional inference under
+  fallback if `hypothesis:0006-pre-malignant-n-minus-1-driver-carriage`'s direct paired-cohort
+  route is blocked by insufficient pre-malignant coverage, directing work toward cross-sectional
+  inference under
   `question:0012-mutation-ordering-cross-sectional-inference`.
 - `t135` (P3, proposed) — MHN fit per histology; provides inferred-ordering results for
-  cross-comparison once h06 direct-observation results exist.
+  cross-comparison once `hypothesis:0006-pre-malignant-n-minus-1-driver-carriage` direct-observation
+  results exist.
 - `t152` (P2, proposed) — MHN simulation calibration; assesses viability of population-
   level ordering inference where pre-malignant cohorts are absent.
 - `t167` (P3, blocked) — PCAWG/ICGC-25K WGS cohort acquisition; would provide an
-  independent chronology benchmark (Gerstung 2020) for validating any h06 late-stage
-  driver claims.
+  independent chronology benchmark from Gerstung et al. [@Gerstung2020] for validating any
+  `hypothesis:0006-pre-malignant-n-minus-1-driver-carriage` late-stage driver claims.
 
 **Key uncertainties:** Pre-malignant cBioPortal coverage is patchy and uncharacterized —
 if `t156` finds fewer than three cancer types with n ≥ 30 pre-malignant samples, P1 is

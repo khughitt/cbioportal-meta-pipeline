@@ -61,7 +61,8 @@ among top-mutated genes *after* controlling for gene length and histology.
 
 ## Connections to Project
 
-- Related hypotheses: h12 (label-free commitment; P1/P4)
+- Related hypotheses: `hypothesis:0012-neural-gene-enrichment-length-histology-artifact`
+  (label-free commitment; P1/P4)
 - Required data or analyses: build neural-enrichment score; logistic/Poisson enrichment of
   top-mutated membership ~ neural_score + log(length) + histology; ROC of score vs canonical
   effectors.

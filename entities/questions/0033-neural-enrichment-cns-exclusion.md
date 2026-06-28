@@ -27,7 +27,7 @@ related:
 
 LSAMP, OPCML, and RBFOX1 are recurrently altered in glioma. If CNS/glioma studies are
 over-represented in the aggregated cohort, they could drive the pan-cancer neural-gene signal.
-This asks whether the enrichment survives removal of CNS cancer types — a direct H4 test
+This asks whether the enrichment survives removal of CNS cancer types — a direct CNS-artifact test
 distinct from the gene-length null.
 
 ## Why It Matters
@@ -51,7 +51,8 @@ distinct from the gene-length null.
 
 ## Connections to Project
 
-- Related hypotheses: h12 (P2), h01
+- Related hypotheses: `hypothesis:0012-neural-gene-enrichment-length-histology-artifact` (P2),
+  `hypothesis:0001-non-tumor-signal-contamination`
 - Required data or analyses: re-run cross-study aggregation with CNS cancer types excluded
   (OncoTree/cancer_type filter); compare neural-label enrichment and per-gene ranks; stratify
   contribution by study.

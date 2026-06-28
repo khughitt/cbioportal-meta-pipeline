@@ -53,7 +53,7 @@ flagging and exclusion materially changes the top-mutated ranking.
 
 ## Connections to Project
 
-- Related hypotheses: h12 (P3)
+- Related hypotheses: `hypothesis:0012-neural-gene-enrichment-length-histology-artifact` (P3)
 - Required data or analyses: enumerate OncoTree codes for NET/NEC (PNET, GINET, SINET, NEC,
   PHEO, MCC, MTC, ACC, etc.) present in pipeline studies; add `is_neuroendocrine_histology`
   flag; recompute ranks with NEN excluded; check MEN1 as positive control.

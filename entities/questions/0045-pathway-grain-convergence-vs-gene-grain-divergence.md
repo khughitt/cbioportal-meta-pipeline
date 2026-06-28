@@ -35,7 +35,7 @@ related:
 
 ## Summary
 
-q042 establishes that many drivers are **cancer-type-restricted at the gene level** (lineage
+`question:0042-driver-normal-expression-tissue-cell-type-specificity` establishes that many drivers are **cancer-type-restricted at the gene level** (lineage
 addiction; IntOGen's 63%-restricted tail). `paper:Kauko2025` reports the complementary fact: diverse
 oncogenes **converge** downstream on a shared growth program (MYC → ribosome biogenesis / translation;
 NOLC1 node). The synthesis question: **does gene-level cancer-type specificity collapse when drivers
@@ -51,13 +51,13 @@ pathway level. The test has two faces:
 
 ## Why It Matters
 
-- It directly tests the **tension between q042 (gene-level divergence) and Kauko2025 (downstream
+- It directly tests the **tension between `question:0042-driver-normal-expression-tissue-cell-type-specificity` (gene-level divergence) and Kauko2025 (downstream
   convergence)**, and tells us at which grain "cancer-type specificity" is actually a real biological
   claim versus an artifact of gene interchangeability.
 - It connects to the **temporal theme**: pathway-grain modules are the natural unit for ordering
-  (`h04` MHN is already pathway-oriented), and within-pathway mutual exclusivity is the association
-  substrate (`topic:co-occurrence-and-mutual-exclusivity`, `t078`) that theme consumes.
-- Risk if unasked: we over-interpret gene-level driver restriction (q042) as tissue-specific *biology*
+  (`hypothesis:0004-mhn-pathway-ordering` is already pathway-oriented), and within-pathway mutual exclusivity is the association
+  substrate (`topic:co-occurrence-and-mutual-exclusivity`, `task:t078`) that theme consumes.
+- Risk if unasked: we over-interpret gene-level driver restriction (`question:0042-driver-normal-expression-tissue-cell-type-specificity`) as tissue-specific *biology*
   when much of it may be *which gene the cell-of-origin makes accessible on a shared pathway* — exactly
   Kauko2025's "divergence at the entry point, convergence downstream."
 
@@ -71,7 +71,7 @@ been testing at the expression/cell-state level:
   at the within-MM cytogenetic-subtype level, but **is** re-anchored to the **cancer-vs-normal axis**
   (the cross-cluster synthesis `report:2026-05-02-convergence-cross-cluster` in
   `~/d/cancer/mechanisms/evolution`; Gatenby 2025 transcriptomic convergence).
-- The lesson MM hands us: **specify the scale before claiming convergence.** Our q045 tests it at the
+- The lesson MM hands us: **specify the scale before claiming convergence.** `question:0045-pathway-grain-convergence-vs-gene-grain-divergence` tests it at the
   cleanest scale we have — **pathway membership of recurrent somatic drivers** — which is the mutation
   analogue of MM's expression-program convergence, and avoids MM's cross-scale-decoupling trap by
   staying at one scale (gene → pathway) end to end.
@@ -80,9 +80,10 @@ been testing at the expression/cell-state level:
 
 - **Have:** the cancer-type × gene mutation matrices (`gene_cancer_study.feather`,
   `gene_cancer_pooled.feather`); OG/TSG roles (`data/cosmic_cgc.tsv`); the co-occurrence /
-  mutual-exclusivity machinery (`t078`).
-- **Need (cheap external):** a gene→pathway map — Reactome / KEGG, or the **Sanchez-Vega 2018 10
-  canonical pathways** (a small curated table, far cheaper than the expression ingest q042 needs).
+  mutual-exclusivity machinery (`task:t078`).
+- **Need (cheap external):** a gene→pathway map — Reactome / KEGG, or the **TCGA pathway analysis**
+  10 canonical pathways [@SanchezVega2018] (a small curated table, far cheaper than the expression ingest
+  `question:0042-driver-normal-expression-tissue-cell-type-specificity` needs).
 - **Test:** aggregate driver hits to pathways per cancer type; compare pathway-grain vs gene-grain
   specificity (e.g. Tau-like spread, or Jaccard sharing across cancer types); within-pathway mutual
   exclusivity per cancer type as the redundancy readout.
@@ -92,19 +93,20 @@ been testing at the expression/cell-state level:
 - **Pathway annotation circularity.** Pathway databases are curated partly *from* cancer genetics;
   "convergence on cancer pathways" can be partly definitional. Use a pathway map not built from cancer
   driver lists where possible, and report sensitivity across map choices.
-- **Gene length / hypermutation** (`h03`, `q047`) inflate within-pathway membership counts; control as
-  in q043.
+- **Gene length / hypermutation** (`hypothesis:0003-gene-length-confounds-literature-attention`,
+  `question:0047-hypermutation-confound-on-driver-tissue-specificity`) inflate within-pathway membership counts; control as
+  in `question:0043-driver-cancer-type-breadth-distribution`.
 - **Mutual exclusivity ≠ pathway redundancy alone.** Exclusivity also arises from synthetic lethality
   and subtype structure; do not read every exclusive pair as "one pathway hit suffices."
 - **Aggregation hides direction.** Pathway grain answers *convergence*, not *order* — keep separate
-  from `h04` ordering (the theme's guardrail: association ≠ order ≠ modules).
+  from `hypothesis:0004-mhn-pathway-ordering` (the theme's guardrail: association ≠ order ≠ modules).
 
 ## Predictions
 
 - The cancer-type × pathway matrix is **substantially more shared** than the gene matrix — gene-level
   restriction partially collapses at pathway grain (Kauko2025 direction).
 - **But not fully:** lineage-factor pathways (e.g. melanocyte/MITF, AR signaling) stay restricted,
-  matching q042's route-1 oncogene subset — convergence is strongest for the **general growth program**
+  matching `question:0042-driver-normal-expression-tissue-cell-type-specificity`'s route-1 oncogene subset — convergence is strongest for the **general growth program**
   (RTK-RAS/PI3K/cell-cycle/MYC), weakest for lineage-identity pathways.
 - Within-pathway mutual exclusivity is detectable for canonical redundant pathways (RTK-RAS) within
   high-N cancer types.
@@ -119,9 +121,9 @@ been testing at the expression/cell-state level:
 
 ## Connections to Project
 
-- **Tension it resolves:** `q042` (gene-level divergence) vs `paper:Kauko2025` (downstream convergence).
-- **Shared substrate:** `topic:co-occurrence-and-mutual-exclusivity` / `t078`, `h04` (pathway ordering),
-  `q043` (the driver roster), `theme:0003-temporal-structure-of-carcinogenesis-order-count-and-timing-of-the`.
+- **Tension it resolves:** `question:0042-driver-normal-expression-tissue-cell-type-specificity` (gene-level divergence) vs `paper:Kauko2025` (downstream convergence).
+- **Shared substrate:** `topic:co-occurrence-and-mutual-exclusivity` / `task:t078`, `hypothesis:0004-mhn-pathway-ordering` (pathway ordering),
+  `question:0043-driver-cancer-type-breadth-distribution` (the driver roster), `theme:0003-temporal-structure-of-carcinogenesis-order-count-and-timing-of-the`.
 - **Cross-project:** mm30 `hypothesis:h4-attractor-convergence`; evolution-project convergence synthesis.
 - **Priority:** **P3** — needs only a small gene→pathway table on top of substrate already on disk;
-  cheapest "new biology" question in the batch after q043.
+  cheapest "new biology" question in the batch after `question:0043-driver-cancer-type-breadth-distribution`.

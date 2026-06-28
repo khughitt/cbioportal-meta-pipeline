@@ -29,20 +29,20 @@ commits_to:
 
 ## Purpose
 
-Resolve `t124` (the q009 fork) by running the per-study aggregate version of the Yaacov 2023 LRR-bias statistic — the only formulation that simultaneously matches (a) the published mechanism and (b) q009's framing as a single-study contamination flag. Three prior pilots (`t110`, `t122`, `t123`) tested per-sample approximations and each failed for a different sparsity reason; this test pools across samples within a study before evaluating LRR enrichment.
+Resolve `task:t124` (the `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` fork) by running the per-study aggregate version of the Yaacov et al. [@Yaacov2023] LRR-bias statistic — the only formulation that simultaneously matches (a) the published mechanism and (b) `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` framing as a single-study contamination flag. Three prior pilots (`task:t110`, `task:t122`, `task:t123`) tested per-sample approximations and each failed for a different sparsity reason; this test pools across samples within a study before evaluating LRR enrichment.
 
 This document is written **before** any implementation begins, so that the test outcomes (pass / retire / defer) are determined by pre-registered thresholds rather than post-hoc rationalization.
 
 ## Hypotheses Under Test
 
-- **H1:** If unmatched-normal contamination contributes detectable SBS1 signal in the
+- **Alternative hypothesis:** If unmatched-normal contamination contributes detectable SBS1 signal in the
   unmatched panel cohort, then the panel cohort's panel-coverage-corrected LRR fraction
   will exceed both the matched-control cohort's interval and the pre-registered 0.45
   threshold.
-- **H0:** The unmatched panel cohort's corrected LRR fraction overlaps the matched-control
+- **Null hypothesis:** The unmatched panel cohort's corrected LRR fraction overlaps the matched-control
   cohort and remains below 0.45 despite adequate effective SBS1 counts.
 - **Power gate:** If effective post-correction SBS1 support is below the pre-registered
-  floor, the test is underpowered and q009 is deferred rather than interpreted as positive
+  floor, the test is underpowered and `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` is deferred rather than interpreted as positive
   or negative evidence.
 
 ## Pre-run power projection
@@ -59,15 +59,15 @@ Computed against the existing `t109/t110` artifacts under `results/signature-brc
 - `tcga_mc3`: with n = 7,582 and an observed LRR fraction near the cancer baseline (~0.40), the binomial 95% half-width is ≈ ±1.1 percentage points.
 - `msk_impact_2017`: with n = 553 and the same baseline, half-width ≈ ±4.1 percentage points.
 
-The Yaacov 2023 normal-vs-cancer LRR delta is approximately **10–20 percentage points** (cancer ~0.40, normal ~0.55–0.65). Both cohorts therefore have nominal power to detect a clean shift; `msk_impact_2017` has uncomfortably narrow margin if the true shift is small (e.g., 5 pp from partial contamination).
+The Yaacov et al. [@Yaacov2023] normal-vs-cancer LRR delta is approximately **10–20 percentage points** (cancer ~0.40, normal ~0.55–0.65). Both cohorts therefore have nominal power to detect a clean shift; `msk_impact_2017` has uncomfortably narrow margin if the true shift is small (e.g., 5 pp from partial contamination).
 
-**Pre-registered power gate:** if pooled SBS1 attribution per study is `n < 500` after the panel-coverage correction is applied (i.e., counts inside CE+CL panel-overlap regions only), the test is declared underpowered before any inferential statistic is computed and `q009` is deferred (revisit-condition: `WGS inputs ingested`).
+**Pre-registered power gate:** if pooled SBS1 attribution per study is `n < 500` after the panel-coverage correction is applied (i.e., counts inside CE+CL panel-overlap regions only), the test is declared underpowered before any inferential statistic is computed and `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` is deferred (revisit-condition: `WGS inputs ingested`).
 
 ## Critical caveat: per-sample fit quality in panel cohort
 
 Per-sample SigProfilerAssignment cosine-similarity quartiles for the BRCA assignment surface:
 
-| Cohort | median cos | Q1 | Q3 | n cos≥0.7 / total | n cos≥0.85 / total |
+| Cohort | median cos | first quartile | third quartile | n cos≥0.7 / total | n cos≥0.85 / total |
 |---|---:|---:|---:|---:|---:|
 | `tcga_mc3` | 0.796 | 0.724 | 0.880 | 633 / 791 (80%) | 268 / 791 (34%) |
 | `msk_impact_2017` | 0.383 | 0.264 | 0.588 | 158 / 1,210 (13%) | 30 / 1,210 (2%) |
@@ -117,7 +117,7 @@ LRR fraction (uncorrected): `f_LRR = n_CL_SBS1 / (n_CL_SBS1 + n_CE_SBS1)`
 
 ### Panel-coverage correction
 
-The Yaacov 2023 cancer baseline (`f_LRR ≈ 0.40` under the null) was derived from WGS, where CE and CL regions are sampled in proportion to their genomic extent (~40% of the genome is constitutive, split CE vs CL). For panel/WES data, the assayed CE-bp and CL-bp counts are not in genome-wide proportions.
+The Yaacov et al. [@Yaacov2023] cancer baseline (`f_LRR ≈ 0.40` under the null) was derived from WGS, where CE and CL regions are sampled in proportion to their genomic extent (~40% of the genome is constitutive, split CE vs CL). For panel/WES data, the assayed CE-bp and CL-bp counts are not in genome-wide proportions.
 
 Compute panel-coverage-corrected mutation density:
 
@@ -138,7 +138,7 @@ Cluster bootstrap by sample (1,000 resamples): resample sample_ids with replacem
 ## Expected Outcomes
 
 The analysis has three allowed outcomes: `pass`, `retire`, or `defer`. A pass would justify
-promoting q009 into an operational contamination-flag follow-up. A retire outcome would close
+promoting `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` into an operational contamination-flag follow-up. A retire outcome would close
 this SBS1-LRR route as negative evidence for the current panel/WES setting. A defer outcome
 would preserve the question but require WGS-scale inputs before retrying.
 
@@ -148,17 +148,17 @@ The test outcome is one of three pre-registered verdicts. Each maps to a concret
 
 | Outcome | Definition | Action |
 |---|---|---|
-| **pass** | For at least one panel cohort (`msk_impact_2017`), the 95% CI for `f_LRR_corrected` lies **strictly above** the matched-cohort (`tcga_mc3`) CI **and** above 0.45 (mid-point between cancer baseline 0.40 and normal baseline 0.55) | Close `t124` as resolved with positive evidence; update `q009` status to `active` with a documented operational threshold; spec the contamination flag as a downstream pipeline rule |
-| **retire** | The 95% CI for `f_LRR_corrected` in the panel cohort overlaps the matched cohort's CI **and** stays below 0.45, and the projected effective `n` is ≥ 500 (i.e., the test was adequately powered) | Close `t124` as resolved with negative evidence; update `q009` status to `retired`; document the retirement reasoning in `doc/interpretations/` and stop further panel/WES SBS1 LRR work |
-| **defer** | The effective `n` post-panel-correction is `< 500`, or the bootstrap CI half-width exceeds ±10 pp on the panel cohort | Close `t124` as resolved with insufficient evidence; update `q009` status to `deferred` with revisit-condition `WGS inputs ingested`; do NOT retire the question |
+| **pass** | For at least one panel cohort (`msk_impact_2017`), the 95% CI for `f_LRR_corrected` lies **strictly above** the matched-cohort (`tcga_mc3`) CI **and** above 0.45 (mid-point between cancer baseline 0.40 and normal baseline 0.55) | Close `t124` as resolved with positive evidence; update `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` status to `active` with a documented operational threshold; spec the contamination flag as a downstream pipeline rule |
+| **retire** | The 95% CI for `f_LRR_corrected` in the panel cohort overlaps the matched cohort's CI **and** stays below 0.45, and the projected effective `n` is ≥ 500 (i.e., the test was adequately powered) | Close `t124` as resolved with negative evidence; update `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` status to `retired`; document the retirement reasoning in `doc/interpretations/` and stop further panel/WES SBS1 LRR work |
+| **defer** | The effective `n` post-panel-correction is `< 500`, or the bootstrap CI half-width exceeds ±10 pp on the panel cohort | Close `t124` as resolved with insufficient evidence; update `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` status to `deferred` with revisit-condition `WGS inputs ingested`; do NOT retire the question |
 
-Outcomes are evaluated per cohort but the q009 verdict is panel-cohort-driven (`tcga_mc3` is the matched control; the contamination signal must be detectable on the unmatched panel cohort to be operationally useful).
+Outcomes are evaluated per cohort but the `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` verdict is panel-cohort-driven (`tcga_mc3` is the matched control; the contamination signal must be detectable on the unmatched panel cohort to be operationally useful).
 
 ## Null Result Plan
 
 A powered null result maps to **retire**: close `t124` as resolved with negative evidence,
-update `q009` to `retired`, and stop further panel/WES SBS1 LRR work. An underpowered or
-too-wide result maps to **defer**: close `t124` as insufficient evidence, update `q009` to
+update `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` to `retired`, and stop further panel/WES SBS1 LRR work. An underpowered or
+too-wide result maps to **defer**: close `t124` as insufficient evidence, update `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` to
 `deferred`, and revisit only when WGS inputs are available.
 
 ## What this test does NOT establish

@@ -28,7 +28,7 @@ related:
 > **dissolves and inverts** it: the candidates fall from the 0.8th to the 82.6th percentile. A
 > tightly span-matched empirical null leaves a **small residual only in the panel-heavy `full` config
 > (p = 0.006)** and **none in the clean WES `pan-cancer` config (p = 0.38)** — the residual points to
-> **panel ascertainment (q016)**, not neural biology. dndscv finds **zero** of the 9 under positive
+> **panel ascertainment (`question:0016-panel-induced-ascertainment`)**, not neural biology. dndscv finds **zero** of the 9 under positive
 > selection in any of 68 cancers.
 >
 > **Correction (2026-06-08, by t218):** the F5 "panel ascertainment" attribution below is **WRONG**.
@@ -40,7 +40,7 @@ related:
 > CNS histology). That cohort carries zero hypermutator samples. The F2/F3/F4 genomic-span conclusions
 > below are unchanged and strengthened. See `interpretation:0042-t218-cns-exclusion-wes-panel`.
 
-- **Task:** `t217` (q032 length null, P1; plan step 3,
+- **Task:** `t217` (`question:0032-neural-gene-length-null` length null, P1; plan step 3,
   `doc/plans/2026-06-06-neural-gene-enrichment-meta-analysis-plan.md`).
 - **Script:** `code/notebooks/t217_genomic_span_cfs_null.py`
 - **Artifacts:** `results/neural-gene-span-null-2026-06-08/` (datapackage.json + 5 resources).
@@ -76,7 +76,7 @@ confirmatory arms:
 candidate median percentile goes from **0.78 %** on raw count (MWU p = 2.1e-7) to **0.067 %** on
 mutations-per-CDS-kb, with **9/9 in the top 100** and hypergeometric p = **1.8e-21**. Because the
 candidates are short proteins (CDS ≈ 0.4–1.2 kb), dividing by coding target makes their per-kb rate
-extraordinary. **The literal `q032` wording — a protein/CDS-length Wilcoxon — would have *failed to
+extraordinary. **The literal `question:0032-neural-gene-length-null` wording — a protein/CDS-length Wilcoxon — would have *failed to
 reject* in the wrong direction.** This is the quantitative confirmation of t215 F4: protein length is
 the wrong yardstick.
 
@@ -97,7 +97,7 @@ mislabels the situation.
 **F4 — No positive selection.** Across 68 cancers, **0/9 candidates are dndscv-significant** at q ≤ 0.05
 in *any* cancer (`min_qglobal` 0.064–0.835; NKAIN2 lowest at 0.064, still NS). This is the passenger /
 structural-instability fingerprint expected of CFS loci, not driver selection — it removes the
-mutational-H1 ("selected neural hijacking") reading for these genes.
+positive-selection ("selected neural hijacking") reading for these genes.
 
 **F5 — Span explains the bulk; a small residual survives only in the panel-heavy config.** Under tight
 k-NN span matching, a *random gene of the same size* already sits at the ~98th raw-count percentile
@@ -108,24 +108,24 @@ residual's *direction across configs is diagnostic*: it appears in the **196-stu
 set and **vanishes in the 13-study WES/WGS `pan-cancer`** set. Real neural selection would survive
 *better* in the cleaner WES data, not worse — so the residual is most consistent with **panel
 ascertainment** (large neural genes such as RBFOX1/LSAMP are disproportionately tiled by targeted
-panels), i.e. `q016`, not biology.
+panels), i.e. `question:0016-panel-induced-ascertainment`, not biology.
 
-## Bearing on h12
+## Bearing on `hypothesis:0012-neural-gene-enrichment-length-histology-artifact`
 
-This is strong confirmatory evidence for **h12** ("apparent neural-gene enrichment is a
+This is strong confirmatory evidence for `hypothesis:0012-neural-gene-enrichment-length-histology-artifact` ("apparent neural-gene enrichment is a
 length/histology artifact"), with the mechanism now pinned: **genomic span / common-fragile-site
 instability + multi-study (panel) pooling**, *not* coding length and *not* selection. On the plan's
-decision tree (`length-normalize → signal gone → H5 confirmed`), the **genomic-span** branch of H5 is
+decision tree (`length-normalize → signal gone → genomic-span/CFS explanation confirmed`), the **genomic-span** branch is
 confirmed as the dominant explanation; the residual is small, config-dependent, and points downstream
-to panel ascertainment rather than to a neural mechanism. It also supports `h03` (gene-size confounds
+to panel ascertainment rather than to a neural mechanism. It also supports `hypothesis:0003-gene-length-confounds-literature-attention` (gene-size confounds
 attention) at the genomic-span, not protein-length, granularity.
 
 ## Decision & redirect
 
-1. **`q032` answered (genomic-span form): the enrichment does not survive locus-size normalization.**
+1. **`question:0032-neural-gene-length-null` answered (genomic-span form): the enrichment does not survive locus-size normalization.**
    Record the answer at the *genomic-span* granularity and note explicitly that the protein/CDS-length
    form of the question is the wrong test (Arm A).
-2. **Carry the small `full`-only residual to `t218` (CNS exclusion, q033) and `q016` (panel
+2. **Carry the small `full`-only residual to `t218` (CNS exclusion, `question:0033-neural-enrichment-cns-exclusion`) and `question:0016-panel-induced-ascertainment` (panel
    ascertainment), not to neural biology.** Because the residual is absent in WES `pan-cancer`, the
    first test is whether it is panel-driven: re-run the span-matched null restricted to WES studies and
    on a panel-membership-stratified basis. CNS exclusion (`t218`) remains warranted as the histology

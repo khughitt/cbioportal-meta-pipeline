@@ -72,7 +72,8 @@ top-100 hypergeometric test.
 by canonical drivers + long passengers (TP53, KRAS, APC, PIK3CA, KMT2D, LRP1B, TTN, ARID1A …); the
 best candidate is RBFOX1 at rank 47/~21,000. The unfiltered mean-ratio top is small-cohort
 lincRNA/antisense noise (hence the ≥20-stratum filter); max-ratio is degenerate (≈1.0 for thousands
-of genes). The literal notes claim — these 9 genes *topping* a view — is **not reproduced**.
+of genes). The literal notes claim — these 9 genes *topping* a view — is **not reproduced**
+(`task:t215`; `results/neural-gene-reproduction-2026-06-08/`).
 
 **F2 — But the candidate set is strongly, significantly enriched in the high tail.** In `full`,
 median candidate percentile is 0.78 % on raw count (MWU p = 2.1e-7) and **0.27 %** on non-driver
@@ -80,7 +81,8 @@ raw count, with **6/9 in the top 100** non-driver genes; `10k` reaches 7/9. So t
 real — the notes are **not spurious**. *Framing:* because the candidate list was lifted from prior
 notes likely derived from these same/related mutation views, these are **descriptive reproduction
 statistics**, not independent discovery p-values; the small hypergeometric/MWU tail probabilities
-quantify "the set sits unusually high", not "the set was discovered at significance p".
+quantify "the set sits unusually high", not "the set was discovered at significance p"
+(`task:t215`; `results/neural-gene-reproduction-2026-06-08/`).
 
 **F3 — The high-tail enrichment is robust across configs; only the extreme top-100 occupancy is
 config-dependent.** The candidate set's MWU enrichment is significant in **all three** configs and
@@ -101,7 +103,8 @@ longer** (NLGN3 848, NTRK2 822, GRIN2A/B ≈1470 aa; pct 81–95 %) yet rank muc
 count (median pct 2.6–30 %, mostly outside the top 100). A protein-length null (the literal wording
 of `q032`/`t217`) would therefore **under-correct**. The operative covariate is **genomic / CDS span
 and common-fragile-site (CFS) status**, not amino-acid length: the candidates (NKAIN2, RBFOX1, LSAMP,
-OPCML, SGCZ, CALN1) are textbook *large genomic loci / CFS* genes with small coding sequences.
+OPCML, SGCZ, CALN1) are textbook *large genomic loci / CFS* genes with small coding sequences
+(`task:t215`; `results/neural-gene-reproduction-2026-06-08/`).
 
 **F5 — The co-top genes are a large-locus/CFS class, only partly neural.** The non-driver top-20
 (`full`) is TTN, CSMD1, EYS, NOTCH3, SYNE1, PCDH15, **RBFOX1**, PRKDC, RYR2, EPHA5, DLG2, PARK2,

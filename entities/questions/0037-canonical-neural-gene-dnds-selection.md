@@ -2,7 +2,7 @@
 type: question
 title: "Do canonical cancer-neuroscience effector genes (NLGN3, ADRB2, NTRK1/2, CHRM3,\
   \ GRIN2A/B, NGF, BDNF) show positive selection (dN/dS) in any cancer type \u2014\
-  \ the only defensible mutational evidence for active neural hijacking (H1)?"
+  \ the only defensible mutational evidence for active neural hijacking?"
 status: active
 created: '2026-06-06'
 updated: '2026-06-06'
@@ -27,7 +27,7 @@ related:
 
 ## Summary
 
-If neural biology drives cancer through *mutation* (H1-as-selection), the signal should appear
+If neural biology drives cancer through *mutation* (positive-selection neural hijacking), the signal should appear
 not in long passenger-prone candidate genes but in the field's mechanistic effectors. This
 asks whether the canonical set — NLGN3, ADAM10, ADRB1/2/3, CHRM1/3, NTRK1/2/3, GRIN2A/2B,
 GRIA, GAD1, NGF, BDNF, NF1 — shows dN/dS>1 / driver-level recurrence in any cancer type,
@@ -36,10 +36,10 @@ which would be the only defensible mutational evidence for active neural hijacki
 ## Why It Matters
 
 - Flips the analysis from "are long neural-labeled genes enriched" (likely artifact) to "are
-  the *mechanistically implicated* genes under selection" (the real H1 test).
+  the *mechanistically implicated* genes under selection" (the real positive-selection test).
 - NF1 is an established tumor suppressor (positive control that the dN/dS path works); NTRK1/2/3
   fusions are known oncogenic events.
-- A negative result cleanly closes mutational-H1; a localized positive result is a real lead.
+- A negative result cleanly closes the mutational positive-selection reading; a localized positive result is a real lead.
 
 ## Current Evidence
 
@@ -51,12 +51,12 @@ which would be the only defensible mutational evidence for active neural hijacki
 ## Thoughts
 
 - Best current interpretation: expect NF1 (loss) to score; most receptors/ligands not under
-  point-mutation selection; therefore mutational-H1 is weak and cancer-type-local at best.
+  point-mutation selection; therefore mutational positive-selection is weak and cancer-type-local at best.
 - Major uncertainty: fusions/CNAs (NTRK, etc.) are outside the current SNV/indel pipeline scope.
 
 ## Connections to Project
 
-- Related hypotheses: h12 (P5)
+- Related hypotheses: `hypothesis:0012-neural-gene-enrichment-length-histology-artifact` (P5)
 - Required data or analyses: run the canonical-effector set through the project's dndscv path
   per cancer type; report q-values; flag NF1 as positive control; note fusion/CNA events as
   out-of-scope but record for follow-up.

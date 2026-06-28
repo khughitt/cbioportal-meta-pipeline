@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build `code/scripts/extract_normal_tissue_spectra.py` + Snakemake rule that emit two reference tables (`data/normal_tissue_spectra.tsv`, `data/normal_tissue_burden.tsv`) from Li2021 + Xu2025 per-variant supplementary data, gating q007 / q008 / q010.
+**Goal:** Build `code/scripts/extract_normal_tissue_spectra.py` + Snakemake rule that emit two reference tables (`data/normal_tissue_spectra.tsv`, `data/normal_tissue_burden.tsv`) from Li2021 + Xu2025 per-variant supplementary data, gating `question:0007-cross-tissue-somatic-mutation-rate-variation-as-null-model` / `question:0008-signature-decomposition-tissue-background-subtraction` / `question:0010-cuplr-style-tof-classifier-for-suspect-normal-samples`.
 
 **Architecture:** Single script decomposed into small testable functions (validator → filter → UBERON join → assay-metadata join → SigProfiler 96-context counts → aggregation → TSV writers). Follows the `process_bailey2018_drivers` pattern: `snakemake` object drives IO, functions are factored out for testability. Two-tier test suite: pure aggregation/validation tests (always run) plus one slow-marked integration test that exercises the real SigProfilerMatrixGenerator trinucleotide lookup.
 
@@ -2332,4 +2332,4 @@ EOF
 
 - [ ] **Step 6: Report outcome**
 
-Summarise in the conversation: (a) row counts emitted, (b) any still-unconfirmed fields in the provenance doc, (c) any tissues that needed UBERON-mapping judgment calls, (d) whether q007 / q008 / q010 are now unblocked, (e) whether any follow-up tasks should be filed (e.g., t109's now-unblocked SigProfiler-pipeline-integration, or a deferred Xu2025-signature-decomposition check if paper Methods surfaces a published decomposition).
+Summarise in the conversation: (a) row counts emitted, (b) any still-unconfirmed fields in the provenance doc, (c) any tissues that needed UBERON-mapping judgment calls, (d) whether `question:0007-cross-tissue-somatic-mutation-rate-variation-as-null-model` / `question:0008-signature-decomposition-tissue-background-subtraction` / `question:0010-cuplr-style-tof-classifier-for-suspect-normal-samples` are now unblocked, (e) whether any follow-up tasks should be filed (e.g., t109's now-unblocked SigProfiler-pipeline-integration, or a deferred Xu2025-signature-decomposition check if paper Methods surfaces a published decomposition).

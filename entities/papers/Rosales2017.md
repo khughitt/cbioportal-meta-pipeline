@@ -42,9 +42,9 @@ signeR applies an empirical Bayesian treatment of Poissonian NMF to mutational s
 
 **Differential Exposure Score (DES).** Kruskal-Wallis test applied to each exposure MCMC sample E^(r) over predefined sample groups; the median of −log(p-values) across samples defines DES. Signatures with DES above a threshold are deemed differentially active.
 
-**Sample Classification.** k-NN applied to each E^(r); majority-vote (>75% agreement) assigns unlabelled samples; ambiguous samples labelled "undefined."
+**Sample Classification.** k-NN applied to each E^(r); majority-vote (>75% agreement) assigns unlabelled samples; ambiguous samples labelled "undefined" [@Rosales2017].
 
-**Data.** 21 breast cancer WGS genomes (Nik-Zainal 2012, Sanger FTP), 183,916 somatic point mutations. 114 gastric cancer TCGA WGS genomes (Bass 2014), 38,157 curated somatic mutations, subsetted to Lauren's classification groups.
+**Data.** 21 breast cancer WGS genomes (Nik-Zainal 2012, Sanger FTP), 183,916 somatic point mutations. 114 gastric cancer TCGA WGS genomes (Bass 2014), 38,157 curated somatic mutations, subsetted to Lauren's classification groups [@Rosales2017].
 
 **Implementation.** R + C++ on Bioconductor (`bioconductor.org/packages/signeR`). Runs on a standard computer. Reads VCF input, produces M matrix, signatures, exposures, and graphics.
 
@@ -57,7 +57,7 @@ signeR applies an empirical Bayesian treatment of Poissonian NMF to mutational s
 
 **Breast cancer (21 genomes):** 5 signatures recovered, matching COSMIC signatures 1, 2, 3, 13, and one unreported. DES with BRCA1/BRCA2 germline status highlights signatures S3 (HRD/BRCA-related) and S5 (APOBEC), consistent with known biology. Leave-one-out classification: 1/21 samples misclassified.
 
-**Gastric cancer (114 genomes):** 4 signatures identified. DES reveals two signatures (COSMIC Sigs 3 and 17) enriched in intestinal-type gastric cancer (better prognosis) vs diffuse type. Posterior classification assigns 65% of samples confidently; among classified, 75% match Lauren's histological label.
+**Gastric cancer (114 genomes):** 4 signatures identified. DES reveals two signatures (COSMIC Sigs 3 and 17) enriched in intestinal-type gastric cancer (better prognosis) vs diffuse type. Posterior classification assigns 65% of samples confidently; among classified, 75% match Lauren's histological label [@Rosales2017].
 
 ## Relevance
 

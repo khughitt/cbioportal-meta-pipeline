@@ -40,9 +40,9 @@ PhyloSignare (PS) is a phylogeny-aware wrapper around existing refitting methods
 2. *Importance score (iS) filtering.* For each candidate signature S, iS is computed as `(f_{S−} − f) / f`, where f is the residual fit of the full model and f_{S−} is the fit when S is excluded. A small iS (~0) indicates the signature adds little explanatory power and is likely spurious; the threshold is iS > 0.02.
 3. *Neighbour-activity test.* In the final step, the selected candidate signatures are evaluated only for branches where they are detected in immediate neighbours, minimising gain/loss artifacts from signature bleeding.
 
-**Benchmarking:** 180 simulated multi-clone phylogenies (5–7 branches, 20–205 mutations/branch) generated from PhySigs datasets; COSMIC v2 signatures randomly drawn via Dirichlet; Gaussian noise (SD = 0.1/0.2/0.3). Refitting methods compared: QP, deconstructSigs, MutationalPatterns, PhySigs, plus PS coupled to each.
+**Benchmarking:** 180 simulated multi-clone phylogenies (5–7 branches, 20–205 mutations/branch) generated from PhySigs datasets; COSMIC v2 signatures randomly drawn via Dirichlet; Gaussian noise (SD = 0.1/0.2/0.3). Refitting methods compared: QP, deconstructSigs, MutationalPatterns, PhySigs, plus PS coupled to each [@Miura2022].
 
-**Empirical data:** 61 NSCLC clone phylogenies from TRACERx (100 non-small cell + 32 squamous samples; filtered to ≥100 variants total and ≥2 tip branches). COSMIC v2 signatures known to be active in lung adenocarcinoma (S1, S2, S4, S5, S6, S13, S17) and squamous cell carcinoma (S1, S2, S4, S5, S6, S13) were provided as the candidate set.
+**Empirical data:** 61 NSCLC clone phylogenies from TRACERx (100 non-small cell + 32 squamous samples; filtered to ≥100 variants total and ≥2 tip branches). COSMIC v2 signatures known to be active in lung adenocarcinoma (S1, S2, S4, S5, S6, S13, S17) and squamous cell carcinoma (S1, S2, S4, S5, S6, S13) were provided as the candidate set [@Miura2022].
 
 ## Key Findings
 

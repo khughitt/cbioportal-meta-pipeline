@@ -1,10 +1,10 @@
 ---
 type: interpretation
-title: "t218: the candidate mutation enrichment is not CNS-driven (q033) and the t217\
+title: "t218: the candidate mutation enrichment is not CNS-driven and the t217\
   \ residual is not panel ascertainment \u2014 it is one cohort's all-region (98.5%-intronic)\
   \ mutation table tiling the candidates' multi-Mb loci; removing it returns them\
   \ to the genomic-span null, closing the candidate-set mutational-count thread of\
-  \ h12"
+  \ the neural-gene artifact hypothesis"
 status: active
 created: '2026-06-08'
 updated: '2026-06-08'
@@ -21,17 +21,20 @@ related:
 
 # Interpretation: t218 — CNS exclusion + WES restriction + panel-membership stratification
 
-> **Verdict (scoped to the candidate-set mutational-count thread of h12): the enrichment is NOT
-> CNS-histology-driven (q033 answered for this thread), and the small t217 residual is NOT panel
+> **Verdict (scoped to the candidate-set mutational-count thread of
+> `hypothesis:0012-neural-gene-enrichment-length-histology-artifact`): the enrichment is NOT
+> CNS-histology-driven (`question:0033-neural-enrichment-cns-exclusion` answered for this thread),
+> and the small t217 residual is NOT panel
 > ascertainment (t217 F5 overturned). The residual lives in the WES/WGS-class studies, is absent in
 > panels, and is driven entirely by ONE cohort (`pog570_bcgsc_2020`) whose mutation table is all-region
 > — 98.5 % of its candidate variant rows are intronic. Dropping it returns the candidates to the
 > genomic-span null (span-matched p 0.0022 → 0.19). That cohort carries zero hypermutator samples and
 > spreads its candidate rows across 568 samples, so the residual is whole-gene-body genomic-span reach,
 > not hypermutators, CNS lineage, panel ascertainment, or selection. With no surviving residual, the
-> candidate-set mutational-count thread of h12 closes on H5/CFS.**
+> candidate-set mutational-count thread of the neural-gene artifact hypothesis closes on
+> genomic-span/CFS.**
 
-- **Task:** `t218` (q033 CNS exclusion, P2; plan step 3).
+- **Task:** `t218` (`question:0033-neural-enrichment-cns-exclusion` CNS exclusion, P2; plan step 3).
 - **Scripts:** `code/notebooks/t218_cns_exclusion_wes_panel.py` (restrictions + LOSO) and
   `code/notebooks/t218b_pog570_driver_forensics.py` (driver variant-class + hypermutator forensic).
 - **Artifacts:** `results/neural-gene-cns-wes-2026-06-08/` — `enrichment_by_restriction.tsv`,
@@ -44,7 +47,8 @@ related:
 
 ## Findings
 
-**F1 — q033 answered (this thread): the enrichment is NOT CNS-driven.** Excluding all 17 CNS/glioma
+**F1 — `question:0033-neural-enrichment-cns-exclusion` answered (this thread): the enrichment is NOT
+CNS-driven.** Excluding all 17 CNS/glioma
 cancer types is inert — candidate median percentile 0.784 → 0.789, span-matched residual p 0.0062 →
 0.0068. Per-candidate CNS contribution is only **9–19 %** (CALN1 highest 18.5 %, RIT2 lowest 9.2 %);
 Glioma is a steady top-4 contributor but never leads — Melanoma, Esophagogastric, Colorectal, NSCLC carry
@@ -87,34 +91,38 @@ intronic. So although `data/study_panels.tsv` labels pog570 **`wes`**, its mutat
 coverage — independent of the assay label. The effect is a property of this cohort's call set, not of
 sequencing chemistry, so we describe it as "all-region / whole-gene-body reach," not "WGS".
 
-## Bearing on h12 — the candidate-set mutational-count thread closes
+## Bearing on the neural-gene artifact hypothesis — the candidate-set mutational-count thread closes
 
 For the candidate set, the plan's decision tree terminates:
 
 ```
 reproduce?            yes  (t215)
-span-normalize        bulk dissolves under genomic span        -> H5 / CFS     (t217)
-CNS-exclude           residual unaffected                       -> NOT H4(CNS)  (t218 F1)
+span-normalize        bulk dissolves under genomic span        -> length/CFS    (t217)
+CNS-exclude           residual unaffected                       -> not CNS histology  (t218 F1)
 residual              = one cohort's all-region (intronic) table -> still H5/CFS, not biology  (t218 F4/F5)
 ```
 
 Combined with t216 (a label-free neural score cannot separate effectors from size-matched CFS loci) and
 t217 (no positive selection; coding-length null fails, genomic-span null succeeds), **the candidate-set
-mutational-count thread of `h12` is confirmed**. This is one thread of h12, not the whole hypothesis: the
-project entities `hypothesis:0012` (proposed) and `question:0033` (active) are intentionally left in their
-prior states — a single mutational-count thread does not by itself flip the hypothesis to *confirmed*; it
-is recorded here as strong supporting evidence with the residual explained. Other h12 threads
+mutational-count thread of `hypothesis:0012-neural-gene-enrichment-length-histology-artifact` is
+confirmed**. This is one thread of the hypothesis, not the whole hypothesis: the project entities
+`hypothesis:0012-neural-gene-enrichment-length-histology-artifact` (proposed) and
+`question:0033-neural-enrichment-cns-exclusion` (active) are intentionally left in their prior states —
+a single mutational-count thread does not by itself flip the hypothesis to *confirmed*; it is recorded
+here as strong supporting evidence with the residual explained. Other hypothesis threads
 (e.g. expression/histology beyond mutation counts) are out of scope for t218.
 
 ## Decision & redirect
 
-1. **Downgrade `t219` (NET exclusion, q034) and `t220` (oncofetal / dN/dS residual interpretation).** The
+1. **Downgrade `t219` (NET exclusion, `question:0034-neuroendocrine-histology-confound`) and `t220`
+   (oncofetal / dN/dS residual interpretation).** The
    plan gated these on a *surviving* residual after CNS exclusion; none survives for the candidate set.
    Keep `t219` only as a quick MEN1-canary NET-exclusion sanity check; `t220` is now low priority.
 2. **Keep `t221` for the proper sample-level hypermutator control.** F3's hypermutator evidence is driver-
    cohort-specific (pog570 has zero hypermutators); a full-config sample-level hypermutator re-aggregation
    across all 91 WES studies is still the clean general check and is `t221`'s job — not pre-empted here.
-3. **Fold the all-region-table finding into `q016` / `theme:0001-assay-regime-panel-wes-wgs-as-a-master-technical-confounder-spanning`.** A cohort whose
+3. **Fold the all-region-table finding into `question:0016-panel-induced-ascertainment` /
+   `theme:0001-assay-regime-panel-wes-wgs-as-a-master-technical-confounder-spanning`.** A cohort whose
    call set includes intronic/all-region variants inflates large-gene counts proportional to genomic span;
    this is a concrete assay-regime / call-set-scope confound for large genes, distinct from panel tiling.
 
@@ -130,5 +138,5 @@ is recorded here as strong supporting evidence with the residual explained. Othe
   estimates are on `full`; pan-cancer is directionally consistent only.
 - **Aggregate vs sample-level hypermutator control.** The hypermutator evidence is the driver cohort's
   zero-hypermutator composition (F3/F5), not a full-config sample-level exclusion — that is `t221`.
-- **Neuroendocrine cancers intentionally retained** (CNS regex excludes them); their exclusion is `t219`/
-  q034, separate from CNS histology.
+- **Neuroendocrine cancers intentionally retained** (CNS regex excludes them); their exclusion is `t219` /
+  `question:0034-neuroendocrine-histology-confound`, separate from CNS histology.

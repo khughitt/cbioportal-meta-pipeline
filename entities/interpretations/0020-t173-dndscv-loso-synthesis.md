@@ -54,7 +54,8 @@ Top-K overlap between the full pan-cancer dNdScv ranking and each completed hold
 
 The `pog570_bcgsc_2020` K=50 value is lower than its K=25 and K=100 values because each K is a
 separate prefix comparison. Adding ranks 26-50 can introduce transient disagreements before
-ranks 51-100 restore more overlap; the K=50 value is still well above the contrast threshold.
+ranks 51-100 restore more overlap; the K=50 value is still well above the contrast threshold
+(`task:t173`).
 
 Reference recovery after the t174 overlay fix:
 
@@ -68,7 +69,7 @@ The original pilot fan-out gate was Jaccard@100 >= 0.5, recorded in
 `doc/interpretations/2026-04-29-t173-dndscv-loso-protocol.md`. The GENIE holdout failed that
 gate with Jaccard@100 = 0.429. The `>= 0.60` contrast threshold for a GENIE-specific disruption
 reading was recorded in `doc/interpretations/2026-04-29-t173-dndscv-loso-pilot.md` before the
-second holdout was run. Both broad non-GENIE controls were above that threshold.
+second holdout was run. Both broad non-GENIE controls were above that threshold (`task:t173`).
 
 ## Interpretation
 
@@ -83,7 +84,7 @@ The GENIE effect is not a collapse of driver signal. In the GENIE holdout, Baile
 K=100 increases from 0.62 to 0.70, the opposite direction from a degraded-driver explanation,
 while CGC tier-1-or-2 recovery only decreases from 0.91 to 0.88. The result is a reshuffling
 among driver-supported genes and candidate driver-like genes, not replacement of drivers by
-obvious passenger noise.
+obvious passenger noise (`task:t173`).
 
 ## Mechanism
 
@@ -106,7 +107,7 @@ smaller: max supported rank delta was 27,531 for `exclude_genie`, versus 2,684 f
 is the largest cancer/build value of `sum_abs_rank_delta_supported`: the sum, over affected
 diagnostic genes supported in that label, of absolute full-vs-holdout pan-cancer rank changes.
 The attribution schema is specified in
-`doc/plans/2026-04-30-t173-genie-dndscv-influence-plan.md`.
+`doc/plans/2026-04-30-t173-genie-dndscv-influence-plan.md` (`task:t173`).
 
 ## Decision
 

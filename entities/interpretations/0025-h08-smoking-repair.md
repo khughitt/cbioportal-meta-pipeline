@@ -13,7 +13,7 @@ related:
 - task:t204
 - hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and
 ---
-# t204 — h08 smoking-arm repair production rerun
+# t204 — hypothesis:0007 smoking-arm repair production rerun
 
 Date: 2026-06-01
 
@@ -39,7 +39,7 @@ The source denominator SHA256 recorded in repair metadata is
 
 ## Primary Read
 
-The repaired primary family replaces `pack_years` with `ever_smoker` in the LUAD+LUSC Arm-B ranked scalar set and fits SBS4 against each testable covariate under the original h08 CLR / count-floor / adjustment machinery.
+The repaired primary family replaces `pack_years` with `ever_smoker` in the LUAD+LUSC Arm-B ranked scalar set and fits SBS4 against each testable covariate under the original agnostic-association CLR / count-floor / adjustment machinery.
 
 | Covariate | n | coef | p | BH-q | Rank / denom |
 |---|---:|---:|---:|---:|---:|

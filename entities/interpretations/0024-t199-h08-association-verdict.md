@@ -14,14 +14,14 @@ related:
 - hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and
 - question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross
 ---
-# t199 — h08 positive-control association scan (H08a verdict)
+# t199 — hypothesis:0007 positive-control association scan (H08a verdict)
 
 Date: 2026-05-31
 
 ## Question
 
 Read the pre-registered H08a positive-control verdict: does the agnostic within-tissue
-covariate↔signature association model (`method:h08-agnostic-association-model`) recover the three
+covariate↔signature association model recover the three
 registered known aetiology→signature pairs on the MC3 WES substrate, under the criteria locked in
 `pre-registration:0003-h08-positive-control-agnostic-association-must-recover-known-signature` (amendment-001)? This is check 4 — the association core —
 of `plan:0005-h08-positive-control-scan-analysis-plan`; checks 1–3 (t196 covariate assembly QA, t197 SBS

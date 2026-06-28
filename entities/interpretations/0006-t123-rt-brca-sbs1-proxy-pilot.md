@@ -74,5 +74,7 @@ So the first coarse SBS1-enriched branch collapses under panel sparsity rather t
 
 Recommended next move:
 
-- do **not** add more pseudocount-based panel/WES burden summaries for q009
-- either stage a true mutation-context / SBS1-attribution implementation or explicitly retire the panel/WES proxy route for q009
+- do **not** add more pseudocount-based panel/WES burden summaries for
+  `question:0009-sbs1-lrr-bias-as-normal-contamination-flag`
+- either stage a true mutation-context / SBS1-attribution implementation or explicitly retire the panel/WES proxy route for
+  `question:0009-sbs1-lrr-bias-as-normal-contamination-flag`

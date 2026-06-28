@@ -14,13 +14,13 @@ related:
 - hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and
 - question:0022-apobec-a3a-a3b-joint-expression-and-mmr-omikli
 ---
-# t200 — h08 within-tissue failure diagnostics
+# t200 — hypothesis:0007 within-tissue failure diagnostics
 
 Date: 2026-06-01
 
 ## Question
 
-Why did the h08 positive-control scan miss the UV→SBS7 and smoking→SBS4 within-tissue gates, and
+Why did the hypothesis:0007 positive-control scan miss the UV→SBS7 and smoking→SBS4 within-tissue gates, and
 does the APOBEC pass survive a direct proliferation-control probe?
 
 This is a diagnostic layer over the frozen t199 artifacts.

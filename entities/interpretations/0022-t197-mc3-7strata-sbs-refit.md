@@ -14,7 +14,7 @@ related:
 - hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and
 - question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross
 ---
-# t197 — full-MC3 per-sample SBS refit across the 7 h08 arm strata
+# t197 — full-MC3 per-sample SBS refit across the 7 hypothesis:0007 arm strata
 
 Date: 2026-05-31
 
@@ -31,7 +31,7 @@ gitignored.
 
 ## Inputs and Provenance
 
-- Substrate: `tcga_mc3` only (MC3 v0.2.8 PUBLIC PASS MAF, Ellrott 2018 — WES, 7-caller
+- Substrate: `tcga_mc3` only (MC3 v0.2.8 PUBLIC PASS MAF [@Ellrott2018] — WES, 7-caller
   consensus, matched-normal by construction). Panels are excluded from per-sample `H` per the
   `question:0018` feasibility verdict.
 - Config: `code/config/config-signature-h08-arms.yml` (COSMIC **v3.4** pinned per the locked

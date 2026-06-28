@@ -21,7 +21,7 @@ prior_interpretations:
 - 2026-04-28-t146-external-validation-cgc
 ---
 
-# q003 RT Residual Regression
+# question:0003 RT Residual Regression
 
 ## Question
 
@@ -110,7 +110,7 @@ driver residuals.
 
 ## Verdict
 
-**Negative for q003 as a TTN explanation.** Constitutive late replication does not explain TTN's
+**Negative for `question:0003-replication-timing-as-gene-level-mutation-rate-confounder` as a TTN explanation.** Constitutive late replication does not explain TTN's
 top-rank persistence in the current full-scale dNdScv output. TTN is RT-unassigned, the
 late-replication coefficient is near zero with a CI crossing zero, and the apparent TTN correction
 comes from length rather than RT.

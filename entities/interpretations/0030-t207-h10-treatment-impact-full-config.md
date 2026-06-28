@@ -61,14 +61,14 @@ The target produced:
 | `/data/packages/cbioportal/full/summary/mut/table/gene_cancer_h10_treatment_impact_ratio.feather` | produced |
 | `/data/packages/cbioportal/full/summary/mut/table/gene_cancer_h10_treatment_impact.datapackage.json` | produced |
 
-The ratio table has 776,686 gene-cancer rows and 51 columns.
+The ratio table at `/data/packages/cbioportal/full/summary/mut/table/gene_cancer_h10_treatment_impact_ratio.feather` has 776,686 gene-cancer rows and 51 columns.
 The impact table has the same row count and 32 columns.
 The manifest records the two summary resources under the `H10` treatment-denominator diagnostic dataset.
 
-The sample-treatment annotation sidecar covers 198 configured studies and 383,477 samples.
+The sample-treatment annotation sidecar at `/data/packages/cbioportal/full/metadata/samples_treatment_exposure_counts.tsv` covers 198 configured studies and 383,477 samples.
 It labels 1,232 samples as broad treatment-exposed, 50 as primary mutagenic-treatment signal, 281 as mutagenic-treatment sensitivity-only, 831 as positive naive or pretreatment, 55,218 as treatment-metadata-unknown, and 326,746 as no-detected-treatment-signal.
 
-The primary mutagenic-treatment study-level label is still only `blca_dfarber_mskcc_2014` with 50 labeled samples.
+In the same treatment-count sidecar at `/data/packages/cbioportal/full/metadata/samples_treatment_exposure_counts.tsv`, the primary mutagenic-treatment study-level label is still only `blca_dfarber_mskcc_2014` with 50 labeled samples.
 The PDX sensitivity-only labels are `pptc_2019` with 261 samples and `sclc_cancercell_gardner_2017` with 20 samples.
 The confirmed naive or pretreatment studies are `lung_nci_2022`, `lusc_cptac_2021`, and `mbl_dkfz_2017`.
 The two previously missing raw studies, `aml_stjude_2024` and `msk_impact_50k_2026`, now build but remain treatment-metadata-unknown in the label layer.
@@ -85,12 +85,12 @@ This separation is essential because the broad and no-detected contrasts have re
 | `delta_broad` | 60,752 | 710,764 | 5,170 | cohort-composition sensitivity, not DNA-damaging-therapy-specific |
 | `delta_mutagenic_primary` | 8,834 | 766,441 | 1,411 | primary label-based mutagenic contrast, but concentrated in bladder because only one whole-study primary label is present |
 
-Among interpretable rows, absolute changes are usually small but not uniformly zero.
+In the ratio impact output at `/data/packages/cbioportal/full/summary/mut/table/gene_cancer_h10_treatment_impact_ratio.feather`, absolute changes among interpretable rows are usually small but not uniformly zero.
 For `delta_no_detected_contrast`, 26,040 rows have absolute delta at least 0.01, 6,240 at least 0.05, and 2,948 at least 0.10; the median absolute delta is 0.0043 and the 95th percentile is 0.0709.
 For `delta_broad`, 13,073 rows have absolute delta at least 0.01, 2,017 at least 0.05, and 866 at least 0.10; the median absolute delta is 0.0035 and the 95th percentile is 0.0325.
 For `delta_mutagenic_primary`, 2,427 rows have absolute delta at least 0.01, 663 at least 0.05, and 176 at least 0.10; the median absolute delta is 0.0041 and the 95th percentile is 0.0774.
 
-The largest interpretable primary mutagenic deltas are all bladder-cancer rows.
+The largest interpretable primary mutagenic deltas in `/data/packages/cbioportal/full/summary/mut/table/gene_cancer_h10_treatment_impact_ratio.feather` are all bladder-cancer rows.
 This is expected from the current label schema rather than surprising biological localization, because `blca_dfarber_mskcc_2014` is the only primary mutagenic whole-study label.
 The top rows include genes such as `INPP5F`, `FOXB1`, `CAMKMT`, `PCSK6`, `CUL2`, `LONP2`, `ULK2`, and `SCAI`, each with `delta_mutagenic_primary` near -0.16 after removing 50 labeled samples.
 These rows show that the denominator can move materially in a specific cancer type, but they are not by themselves evidence that a therapy-signature-shaped mutational process is driving driver-ranking contamination.
@@ -161,7 +161,7 @@ The project can now ask sharper `H10` questions with deterministic label sets, m
 The primary mutagenic-treatment layer has only one whole-study label and no sample-level rules in this run.
 The highest-priority mixed mutagenic cohorts from the t206 audit, including `difg_glass_2019` and `blca_cornell_2016`, are not yet represented as deterministic sample-level mutagenic labels in this first impact table.
 
-`no_detected_treatment_signal` is not the same as confirmed treatment-naive.
+In the t206 audit source `doc/interpretations/2026-06-01-t206-treatment-exposure-audit.md`, `no_detected_treatment_signal` is not the same as confirmed treatment-naive.
 It includes samples from studies where the audit found no treatment signal, plus positive-naive samples, but audit recall over the 109 no-metadata-signal studies remains unmeasured.
 
 The output summarizes frequency-table sensitivity to treatment labels.

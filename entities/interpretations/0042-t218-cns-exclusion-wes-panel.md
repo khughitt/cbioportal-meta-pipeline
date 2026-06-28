@@ -9,6 +9,17 @@ status: active
 created: '2026-06-08'
 updated: '2026-06-28'
 id: interpretation:0042-t218-cns-exclusion-wes-panel
+source_refs:
+- code/notebooks/t218_cns_exclusion_wes_panel.py
+- code/notebooks/t218b_pog570_driver_forensics.py
+- results/neural-gene-cns-wes-2026-06-08/enrichment_by_restriction.tsv
+- results/neural-gene-cns-wes-2026-06-08/candidate_cns_contribution.tsv
+- results/neural-gene-cns-wes-2026-06-08/leave_one_study_out_wes.tsv
+- results/neural-gene-cns-wes-2026-06-08/assay_classification.tsv
+- results/neural-gene-cns-wes-2026-06-08/pog570_candidate_variant_class.tsv
+- results/neural-gene-cns-wes-2026-06-08/pog570_per_candidate_region.tsv
+- results/neural-gene-cns-wes-2026-06-08/pog570_driver_forensics.json
+- data/study_panels.tsv
 related:
 - hypothesis:0012-neural-gene-enrichment-length-histology-artifact
 - question:0033-neural-enrichment-cns-exclusion
@@ -26,7 +37,7 @@ Project links: this interpretation follows
 `interpretation:0041-t217-genomic-span-cfs-null`, with follow-up in `task:t218` and `task:t221`.
 
 > **Verdict (scoped to the candidate-set mutational-count thread of
-> `hypothesis:0012-neural-gene-enrichment-length-histology-artifact`): the enrichment is NOT
+> `hypothesis:0012-neural-gene-enrichment-length-histology-artifact` in `results/neural-gene-cns-wes-2026-06-08/enrichment_by_restriction.tsv`): the enrichment is NOT
 > CNS-histology-driven (`question:0033-neural-enrichment-cns-exclusion` answered for this thread),
 > and the small t217 residual is NOT panel
 > ascertainment (t217 F5 overturned). The residual lives in the WES/WGS-class studies, is absent in
@@ -58,7 +69,7 @@ cancer types is inert — candidate median percentile 0.784 → 0.789, span-matc
 Glioma is a steady top-4 contributor but never leads — Melanoma, Esophagogastric, Colorectal, NSCLC carry
 the counts. The enrichment is diffuse across high-burden epithelial cancers, not a CNS-lineage signal.
 
-**F2 — t217 F5 overturned: the residual is in the WES/WGS-class studies, NOT in panels.** Span-matched
+**F2 — t217 F5 overturned: the residual is in the WES/WGS-class studies, NOT in panels.** In `results/neural-gene-cns-wes-2026-06-08/enrichment_by_restriction.tsv`, span-matched
 residual p = **0.0022** in the 91 WES/WGS-class studies (candidate median 0.25 %) and **0.9996** in the
 105 panel studies (candidates at the **46th** percentile — not enriched). Panels tile each candidate on
 only **1–2 of 167** GENIE panels (0.6–1.2 %), so they barely report these genes. t217 had guessed panel
@@ -66,7 +77,7 @@ ascertainment; the opposite holds. (In `pan-cancer`, restricting to its 7 WES st
 from p = 0.37 to **p = 0.16** — *directionally consistent but non-significant and underpowered at n = 7*;
 the powered evidence is on `full`.)
 
-**F3 — Not span, not replication-timing class, not CNS, and not hypermutators.** The residual survives a
+**F3 — Not span, not replication-timing class, not CNS, and not hypermutators.** In `results/neural-gene-cns-wes-2026-06-08/enrichment_by_restriction.tsv`, the residual survives a
 genomic-span-matched null (the t217 test), a span **+ constitutive-late-replication-class** matched null
 (`p_span_class_matched` = 0.0006 in WES `full`), CNS exclusion (F1), and is not positive selection (t217
 dndscv 0/9). The hypermutator question needs care: the only *aggregate-level* hypermutator arm here is
@@ -79,7 +90,7 @@ re-aggregation across all 91 WES studies is not run here — the `full` aggregat
 that remains the proper job of `t221`, which we keep as a standing control rather than treating as
 pre-empted.)
 
-**F4 — The residual is one cohort's all-region mutation table.** Leave-one-study-out over the 91
+**F4 — The residual is one cohort's all-region mutation table.** In `results/neural-gene-cns-wes-2026-06-08/leave_one_study_out_wes.tsv`, leave-one-study-out over the 91
 WES/WGS-class studies flags exactly **one** study moving candidate median by > 0.1 pct:
 `pog570_bcgsc_2020` (next-largest |Δ| = 0.033). Dropping it (`wes_excl_wgs_driver`) returns the candidates
 to the genomic-span null: candidate median 0.25 % → **1.06 %**, span-matched p 0.0022 → **0.19**,

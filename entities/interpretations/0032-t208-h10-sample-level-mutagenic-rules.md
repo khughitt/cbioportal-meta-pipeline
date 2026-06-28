@@ -42,7 +42,7 @@ The t208 follow-up adds deterministic sample-level primary mutagenic-treatment r
 `difg_glass_2019` via `TMZ_TREATMENT == "Yes"` and `blca_cornell_2016` via `SPECIMEN_COLLECTION_PRE_OR_POST_CHEMO == "post-chemotherapy"`.
 The full `all_h10_treatment_impact` target reruns with those rules and produces updated impact outputs.
 
-This materially improves the primary mutagenic-treatment contrast, but it also exposes a comparator-definition gap.
+This materially improves the primary mutagenic-treatment contrast in `/data/packages/cbioportal/full/summary/mut/table/gene_cancer_h10_treatment_impact_ratio.feather`, but it also exposes a comparator-definition gap.
 It increases labeled primary mutagenic samples from 50 to 280 and expands interpretable `delta_mutagenic_primary` rows from 8,834 to 29,377.
 For DIFG/GLASS, the residual comparator is not cleanly untreated: 161 of the 265 non-TMZ-positive samples have blank `TMZ_TREATMENT`, so they are unknown-not-confirmed-naive rather than explicit TMZ-negative controls.
 The result still does not answer `q027`, because `q027` requires measured therapy-signature-high samples from SBS11/SBS31/SBS35/SBS87 exposure rather than clinical treatment labels.
@@ -65,11 +65,11 @@ The per-study counts sidecar now reports:
 | `blca_cornell_2016` | 72 | 51 | 21 |
 | `difg_glass_2019` | 444 | 179 | 265 |
 
-Across the full annotation table, total primary mutagenic-treatment signal is now 280 samples.
+Across the full annotation table summarized in `/data/packages/cbioportal/full/metadata/samples_treatment_exposure_counts.tsv`, total primary mutagenic-treatment signal is now 280 samples.
 Broad treatment-exposed labels rise to 1,462 samples because primary mutagenic sample-level positives are also broad treatment positives.
 The no-detected-treatment-signal comparator falls from 326,746 to 326,516 samples.
 
-The DIFG/GLASS residual no-detected bucket is mixed.
+The DIFG/GLASS residual no-detected bucket in `/data/packages/cbioportal/full/metadata/samples_treatment_exposure_counts.tsv` is mixed.
 Among 444 samples, `TMZ_TREATMENT` is `Yes` for 179 samples, explicit `No` for 104 samples, and blank for 161 samples.
 The current sample-level rule mechanism only marks positives; it has no sample-level `treatment_metadata_unknown` target.
 As a result, the 161 blank-TMZ samples remain in `no_detected_treatment_signal`.
@@ -81,7 +81,7 @@ Those samples also enter the generic no-detected bucket instead of contributing 
 
 ## Impact Read
 
-The refreshed ratio impact table still has 776,686 rows and 51 columns.
+The refreshed ratio impact table at `/data/packages/cbioportal/full/summary/mut/table/gene_cancer_h10_treatment_impact_ratio.feather` still has 776,686 rows and 51 columns.
 Power improves most in the primary mutagenic contrast:
 
 | Contrast | Interpretable rows | No-contrast rows | Underpowered rows | Read |
@@ -91,20 +91,20 @@ Power improves most in the primary mutagenic contrast:
 | `delta_mutagenic_primary` | 29,377 | 742,757 | 4,552 | now covers bladder plus glioma, not bladder alone |
 | `delta_confirmed_naive_contrast` | 0 | 770,242 | 6,444 | unchanged; confirmed-naive support remains too thin |
 
-For `delta_mutagenic_primary`, interpretable rows now occur in two cancer types:
+For `delta_mutagenic_primary` in `/data/packages/cbioportal/full/summary/mut/table/gene_cancer_h10_treatment_impact_ratio.feather`, interpretable rows now occur in two cancer types:
 17,894 glioma rows and 11,483 bladder-cancer rows.
 This is the expected consequence of adding `difg_glass_2019` and `blca_cornell_2016`.
 
-The largest bladder-cancer effects remain sensitive to single-study and panel-coverage structure.
+The largest bladder-cancer effects in `/data/packages/cbioportal/full/summary/mut/table/gene_cancer_h10_treatment_impact_ratio.feather` remain sensitive to single-study and panel-coverage structure.
 Among interpretable bladder rows, the mean `delta_mutagenic_primary` is -0.0082, with a minimum of -0.1669 and a maximum of 0.0635.
 Some large negative rows remove only the 50 `blca_dfarber_mskcc_2014` samples because those genes are not represented across every bladder panel view.
 Rows where 101 samples are removed reflect both `blca_dfarber_mskcc_2014` and `blca_cornell_2016`.
 
-The glioma effects are smaller.
+The glioma effects in `/data/packages/cbioportal/full/summary/mut/table/gene_cancer_h10_treatment_impact_ratio.feather` are smaller.
 Among interpretable glioma rows, the mean `delta_mutagenic_primary` is 0.00048, with a minimum of -0.0105 and a maximum of 0.0158.
 The top positive glioma deltas include `TMEM178B`, `SLC15A5`, `PITPNC1`, and `CD38`; these should be treated as denominator-sensitivity rows, not as mechanistic treatment-signature hits.
 
-The glioma read also has a specific longitudinal confound.
+The glioma read from `doc/interpretations/2026-06-01-t206-treatment-exposure-audit.md` also has a specific longitudinal confound.
 GLASS is a longitudinal glioma study, and `TMZ_TREATMENT` is entangled with surgical episode and recurrence/progression.
 In the raw clinical table, sample types include 215 primary tumors and 229 recurrence samples.
 The non-`Yes` group is not simply pretreatment primary glioma: among the 161 blank-TMZ samples, 125 are recurrence samples and 36 are primary samples; among the 104 explicit `No` samples, 50 are recurrence samples and 54 are primary samples.
@@ -115,10 +115,10 @@ It should not be interpreted as a clean TMZ causal contrast.
 
 Evidence type: `empirical_data_evidence` for the local full-config cBioPortal/GENIE pipeline output, plus workflow-validation evidence from the forced Snakemake target.
 
-The evidence is strong that deterministic sample-level treatment labels can be joined and propagated through the `H10` denominator machinery on the full configured substrate.
+The evidence from `/data/packages/cbioportal/full/metadata/samples_treatment_exposure_counts.tsv` is strong that deterministic sample-level treatment labels can be joined and propagated through the `H10` denominator machinery on the full configured substrate.
 The label counts match the raw-clinical expectations from the t206 audit: 179 TMZ-positive DIFG samples and 51 post-chemotherapy BLCA Cornell samples.
 
-The evidence is weaker for the `H10` biological proposition.
+The evidence from `/data/packages/cbioportal/full/summary/mut/table/gene_cancer_h10_treatment_impact_ratio.feather` is weaker for the `H10` biological proposition.
 The output shows that treatment labels can change gene-cancer frequency summaries in bladder and glioma, but it does not establish that therapy-induced SBS11/SBS31/SBS35/SBS87 processes are causing the changes.
 Clinical treatment labels, cancer-type composition, panel coverage, treatment timing, recurrence/progression, and mutation burden remain entangled.
 The DIFG/GLASS comparator specifically includes 161 blank-TMZ samples, so the current implementation still has a silent-negative behavior for sample-level unknown treatment status.
@@ -129,7 +129,7 @@ The DIFG/GLASS comparator specifically includes 161 blank-TMZ samples, so the cu
 The project now has both whole-study and deterministic sample-level exposure-label handling for the strongest available mixed mutagenic cohorts.
 `q024` remains partial because treatment-metadata-unknown remains large, sample-level unknowns cannot yet be marked, and audit false-negative recall is still unmeasured.
 
-The most immediate schema follow-up is to extend sample-level rules beyond positive treatment labels.
+The most immediate schema follow-up from `code/scripts/annotate_treatment_exposure.py` is to extend sample-level rules beyond positive treatment labels.
 The rule target vocabulary should support at least sample-level `treatment_metadata_unknown` and `positive_naive_or_pretreatment`.
 That would keep blank DIFG TMZ labels out of an overconfident no-detected comparator and would let the 21 BLCA Cornell pre-chemotherapy samples feed the confirmed-naive sensitivity arm.
 

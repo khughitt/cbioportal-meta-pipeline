@@ -46,6 +46,7 @@ prose_lint:
   - "pipeline/"
   - "\\[@"
   - "data/"
+  - "results/"
   - "scripts/"
   - "paper:"
   - "question:"

@@ -9,6 +9,15 @@ status: active
 created: '2026-06-08'
 updated: '2026-06-28'
 id: interpretation:0044-t221b-standing-controls-panel
+source_refs:
+- code/notebooks/t221b_standing_controls_panel.py
+- results/neural-gene-standing-controls-2026-06-08/intronic_fraction_stratified_residual.tsv
+- results/neural-gene-standing-controls-2026-06-08/per_study_intronic_fraction.tsv
+- results/neural-gene-standing-controls-2026-06-08/cfs_positive_control.tsv
+- results/neural-gene-standing-controls-2026-06-08/germline_dbsnp_control.tsv
+- results/neural-gene-standing-controls-2026-06-08/data_driven_set_sensitivity.tsv
+- results/neural-gene-standing-controls-2026-06-08/data_driven_neural_set.tsv
+- data/gene_replication_timing.feather
 related:
 - hypothesis:0012-neural-gene-enrichment-length-histology-artifact
 - question:0032-neural-gene-length-null
@@ -30,7 +39,7 @@ Project links: this interpretation continues `task:t221` after
 It bears on `hypothesis:0012-neural-gene-enrichment-length-histology-artifact`,
 `question:0032-neural-gene-length-null`, and `question:0016-panel-induced-ascertainment`.
 
-> **Verdict: four independent controls all point the same way, closing the candidate-set mutational-count
+> **Verdict: in `results/neural-gene-standing-controls-2026-06-08/intronic_fraction_stratified_residual.tsv`, four independent controls all point the same way, closing the candidate-set mutational-count
 > thread of `hypothesis:0012-neural-gene-enrichment-length-histology-artifact` with no surviving alternative.** (1) **Intronic-fraction stratification** — the t218/t221a
 > residual is *entirely* a call-set-region-scope artifact: it lives in the 6 "all-region" WES studies
 > (intronic fraction ≥ 0.5; span-matched p **0.0002**) and is **absent** in the 84 exonic-clean studies,
@@ -68,7 +77,7 @@ Stratifying the 91 WES studies by their measured intronic fraction:
 | all-region (intronic ≥ 0.5) | 6 | 0.184 | 7 | **0.0002** |
 | exonic-clean (intronic < 0.5) | 84 | **20.851** | 0 | **0.9942** |
 
-The entire span-matched residual is carried by **6 cohorts whose call set tiles whole gene bodies** —
+In `results/neural-gene-standing-controls-2026-06-08/per_study_intronic_fraction.tsv`, the entire span-matched residual is carried by **6 cohorts whose call set tiles whole gene bodies** —
 `prad_eururol_2017` (0.93 intronic), `stad_oncosg_2018` (0.91), `prostate_dkfz_2018` (0.85),
 `pog570_bcgsc_2020` (0.85), `difg_glass_2019` (0.74), `sclc_cancercell_gardner_2017` (0.52). In the 84
 exonic-clean studies the candidates are **not enriched at all** (20.9th percentile, span-matched p ≈ 1).
@@ -80,12 +89,12 @@ WES/panel assay label (these 6 are all `wes`-labelled).
 
 **F2 — The candidates are statistically indistinguishable from known CFS genes (positive control).**
 On the full WES totals, the 9 candidates and the 27-gene t216 CFS panel behave almost identically:
-candidates median span percentile **99.77**, median count percentile **0.250**, span-matched p 0.0016,
+in `results/neural-gene-standing-controls-2026-06-08/cfs_positive_control.tsv`, candidates median span percentile **99.77**, median count percentile **0.250**, span-matched p 0.0016,
 span+class p 0.0002; CFS panel **99.92**, **0.156**, p 0.000, p 0.000 (23/27 in the top-100). The
 candidates *are* CFS-class loci by every measure — the sharpest single confirmation that the enrichment is
 a fragile-site/large-locus phenomenon.
 
-**F3 — Germline (dbSNP) leak is not the driver.** Across the 90/91 WES studies that record `dbsnp_rs`,
+**F3 — Germline (dbSNP) leak is not the driver.** In `results/neural-gene-standing-controls-2026-06-08/germline_dbsnp_control.tsv`, across the 90/91 WES studies that record `dbsnp_rs`,
 only **12.7 %** of candidate variant rows are dbSNP-catalogued (not germline-dominated). Excluding **every**
 dbSNP-flagged row — a deliberately conservative over-exclusion that also drops rare somatic-but-catalogued
 variants — leaves the residual intact (span-matched p **0.0028 → 0.0004**; candidate median 0.250 → 0.208).
@@ -93,7 +102,7 @@ So leaked common-SNP/germline variants at these large loci do not explain the en
 study-level matched/unmatched-normal split is not available — see caveats — so this is the substrate-derived
 germline control in its place.)
 
-**F4 — The enrichment is not a generic neural-gene property (set sensitivity).** A data-driven neural set —
+**F4 — The enrichment is not a generic neural-gene property (set sensitivity).** In `results/neural-gene-standing-controls-2026-06-08/data_driven_set_sensitivity.tsv`, a data-driven neural set —
 the top-25 genes by t216's label-free `neural_score` *or* by the CNS-structural `cns_score`, candidates and
 effectors excluded — does **not** reproduce the enrichment. Both sets select small, mutation-poor neuronal /
 neuroendocrine genes (PRL, POMC, GH1… by neural_score; SNCB, HPCA, TAGLN3, PACSIN1, SLC1A2… by cns_score):

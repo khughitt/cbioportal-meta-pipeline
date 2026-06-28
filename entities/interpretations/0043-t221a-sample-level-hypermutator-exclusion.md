@@ -8,6 +8,12 @@ status: active
 created: '2026-06-08'
 updated: '2026-06-28'
 id: interpretation:0043-t221a-sample-level-hypermutator-exclusion
+source_refs:
+- code/notebooks/t221a_sample_level_hypermutator_exclusion.py
+- results/neural-gene-hypermutator-2026-06-08/enrichment_inclusive_vs_exclusive.tsv
+- results/neural-gene-hypermutator-2026-06-08/candidate_rows_inclusive_vs_exclusive.tsv
+- results/neural-gene-hypermutator-2026-06-08/per_study_hypermutator_burden.tsv
+- data/gene_replication_timing.feather
 related:
 - hypothesis:0012-neural-gene-enrichment-length-histology-artifact
 - question:0032-neural-gene-length-null
@@ -24,7 +30,7 @@ Project links: this interpretation contributes to
 It follows `interpretation:0041-t217-genomic-span-cfs-null` and
 `interpretation:0042-t218-cns-exclusion-wes-panel`, and it is part of `task:t221`.
 
-> **Verdict: the significant full-WES candidate residual is NOT a hypermutator / TMB sample-composition
+> **Verdict: in `results/neural-gene-hypermutator-2026-06-08/enrichment_inclusive_vs_exclusive.tsv`, the significant full-WES candidate residual is NOT a hypermutator / TMB sample-composition
 > artifact.** Re-aggregating candidate variant counts across all 91 WES/WGS-class `full` studies straight
 > from the per-study `mut_filtered.feather`, then dropping every variant row contributed by an
 > `is_hypermutator` sample (326 hypermutator samples in 23/91 studies; 1,150,599 rows removed), leaves the
@@ -45,7 +51,7 @@ It follows `interpretation:0041-t217-genomic-span-cfs-null` and
 
 ## Why this run was needed
 
-t218 found the t217 genomic-span residual lives in the WES/WGS-class studies (`full` span-matched
+t218 found the t217 genomic-span residual lives in the WES/WGS-class studies in `results/neural-gene-hypermutator-2026-06-08/enrichment_inclusive_vs_exclusive.tsv` (`full` span-matched
 p ≈ 0.0022) and is driven by one cohort (`pog570_bcgsc_2020`). Its hypermutator evidence, however, was
 **driver-cohort-specific** — pog570 carries 0/570 hypermutators — and its only *aggregate* hypermutator
 arm tested an already-non-significant pan-cancer arm. So the question *"does the **significant** full-WES
@@ -54,7 +60,7 @@ studies. t221(a) answers it directly.
 
 ## Implementation note (the load-bearing part)
 
-The wide `gene_cancer_study.feather` count that t217/t218 operate on is a **variant-row count** per
+The wide `gene_cancer_study.feather` count that t217/t218 operate on is a **variant-row count** per `results/neural-gene-hypermutator-2026-06-08/candidate_rows_inclusive_vs_exclusive.tsv`
 (cancer_type, symbol, study) — verified empirically (pog570 NKAIN2 = 4806 wide-table count = 4806 variant
 rows, not the 482 distinct mutated samples) — and there are **no `_exclusive` twins for `full`**. So the
 exclusion cannot read a column; it re-reads each WES study's per-variant table and drops the rows from
@@ -83,7 +89,7 @@ exclusion cannot read a column; it re-reads each WES study's per-variant table a
 
 The residual is unchanged. Removing hypermutators is inert for these genes.
 
-**F2 — Hypermutators contribute mass genome-wide, but not preferentially to the candidates.** 326
+**F2 — Hypermutators contribute mass genome-wide, but not preferentially to the candidates.** In `results/neural-gene-hypermutator-2026-06-08/candidate_rows_inclusive_vs_exclusive.tsv`, 326
 hypermutator samples in 23/91 WES studies account for **1,150,599** dropped variant rows
 (candidate-universe), heavily concentrated in MSI/POLE-rich cohorts — `ucec_tcga_pan_can_atlas_2018` alone
 sheds 518,203 rows (56 % of its rows), `coadread_dfci_2016` 175,809. Yet each **candidate** loses only

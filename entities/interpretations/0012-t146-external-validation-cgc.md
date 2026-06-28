@@ -9,6 +9,8 @@ updated: '2026-06-28'
 id: interpretation:0012-t146-external-validation-cgc
 source_refs:
 - task:t146
+- code/scripts/validate_dndscv_external.py
+- /data/packages/cbioportal/pan-cancer/summary/external-validation/dndscv_external_validation.feather
 date: '2026-04-28'
 related:
 - task:t146
@@ -54,7 +56,7 @@ Outputs at `/data/packages/cbioportal/pan-cancer/summary/external-validation/dnd
 | 250 | 0.77 | 172  | 0.44 | 179 |
 | 500 | 0.59 | 100  | 0.29 | 148 |
 
-All Fisher one-sided p-values < 1e-300 (numerically zero). The top-25 recovers 92% of CGC tier-1 (23/25) and 84% of Bailey (21/25). The top-100 recovers 88% of CGC tier-1 (88/100) — a 299-fold enrichment over chance.
+In `/data/packages/cbioportal/pan-cancer/summary/external-validation/dndscv_external_validation.feather`, all Fisher one-sided p-values < 1e-300 (numerically zero). The top-25 recovers 92% of CGC tier-1 (23/25) and 84% of Bailey (21/25). The top-100 recovers 88% of CGC tier-1 (88/100) — a 299-fold enrichment over chance.
 
 This is a **strong positive result for `hypothesis:0002-cross-study-ranking-divergence-is-structured` P3** (canonical drivers occupy the dNdScv top): the post-fix ranking delivers the canonical-driver core that `hypothesis:0002-cross-study-ranking-divergence-is-structured` predicts, against an external list (CGC) that is largely independent of the project's Bailey et al. [@Bailey2018] overlay.
 
@@ -64,11 +66,11 @@ CGC tier-1 recovery (88%) materially exceeds Bailey recovery (61%) at K=100. Bai
 
 ### F3 — recovery decays past K=100 as expected
 
-Both Bailey and CGC tier-1 recovery curves decay smoothly past K=100, with CGC tier-1 still at 0.59 at K=500 and Bailey at 0.29. The ranking saturates the canonical-driver pool well before K=500: of the 199 Bailey genes, 145 (73%) appear in the top-500; of the 566 CGC tier-1 genes, 293 (52%) appear. This argues that the dNdScv ranking concentrates the canonical-driver signal in the top-200 to top-300 and degrades to long-tail-of-passenger candidates beyond.
+In `/data/packages/cbioportal/pan-cancer/summary/external-validation/dndscv_external_validation.feather`, both Bailey and CGC tier-1 recovery curves decay smoothly past K=100, with CGC tier-1 still at 0.59 at K=500 and Bailey at 0.29. The ranking saturates the canonical-driver pool well before K=500: of the 199 Bailey genes, 145 (73%) appear in the top-500; of the 566 CGC tier-1 genes, 293 (52%) appear. This argues that the dNdScv ranking concentrates the canonical-driver signal in the top-200 to top-300 and degrades to long-tail-of-passenger candidates beyond.
 
 ### F4 — CGC tier-1+2 union does NOT outperform tier-1 alone
 
-CGC tier-1+2 union (727 genes) gives K=100 recovery of 90% vs 88% for tier-1 alone — a marginal +2 percentage points. CGC tier 2 ("emerging cancer drivers without sufficient evidence") adds only 2 genes to the top-100 intersection. dNdScv at this scale does not appear to be discovering a meaningful number of CGC-tier-2-only genes.
+In `/data/packages/cbioportal/pan-cancer/summary/external-validation/dndscv_external_validation.feather`, CGC tier-1+2 union (727 genes) gives K=100 recovery of 90% vs 88% for tier-1 alone — a marginal +2 percentage points. CGC tier 2 ("emerging cancer drivers without sufficient evidence") adds only 2 genes to the top-100 intersection. dNdScv at this scale does not appear to be discovering a meaningful number of CGC-tier-2-only genes.
 
 ## Verdict
 

@@ -43,7 +43,7 @@ MutationalPatterns v3.4.0 is a near-complete rewrite of the R/Bioconductor Mutat
 
 **Signature refitting (known signatures).** `fit_to_signatures` (original least-squares); `fit_to_signatures_strict` (new, iterative backwards selection — each iteration drops the lowest-contributing signature until cosine similarity change per step exceeds `max_delta`); `fit_to_signatures_bootstrapped` (repeated sampling to quantify contribution confidence). Bundled reference matrices include COSMIC v3.1+v3.2, SIGNAL v1, SparseSignatures v1 — loaded via `get_known_signatures`.
 
-**Simulated benchmark.** 300 simulated matrices per condition (200/400/2000/4000 mutations per sample) drawing from the first 30 COSMIC SBS signatures at 4-signature blends, repeated 300 times. Strict refitting outperformed "regular" and "regular_10+" by precision while preserving sensitivity; AUC of 0.925 even at 50 mutations per signature.
+**Simulated benchmark.** 300 simulated matrices per condition (200/400/2000/4000 mutations per sample) drawing from the first 30 COSMIC SBS signatures at 4-signature blends, repeated 300 times. Strict refitting outperformed "regular" and "regular_10+" by precision while preserving sensitivity; AUC of 0.925 even at 50 mutations per signature [@Manders2022].
 
 **Regional analyses.** Mutations split into genomic annotation bins; mutation spectra compared per region via chi-squared test (Monte Carlo) with FDR correction. Unsupervised regional similarity assessed genome-wide using a sliding-window cosine similarity vs. the whole-genome profile (`determine_regional_similarity`).
 
@@ -55,23 +55,23 @@ MutationalPatterns v3.4.0 is a near-complete rewrite of the R/Bioconductor Mutat
 
 ## Key Findings
 
-**Extended context matters.** In 276 HMF melanoma samples, TT[C>T]CT is the dominant substitution (more common than any T[C>T]C context), demonstrating that the extended 5′ base has a large effect on SBS spectrum shape (Fig. 4a).
+**Extended context matters.** In 276 HMF melanoma samples, TT[C>T]CT is the dominant substitution (more common than any T[C>T]C context), demonstrating that the extended 5′ base has a large effect on SBS spectrum shape (Fig. 4a) [@Manders2022].
 
-**Regional spectra are informative.** MSH2 and UNG knockout cells show significantly different mutation spectra in exons vs. the rest of the genome (FDR = 0.0012 for both; chi-squared, Monte Carlo) and between early-, intermediate- and late-replicating DNA (FDR = 0.0012 and 0.0012 respectively). These patterns disappear when downsampled to 227 mutations, underscoring statistical power dependence.
+**Regional spectra are informative.** MSH2 and UNG knockout cells show significantly different mutation spectra in exons vs. the rest of the genome (FDR = 0.0012 for both; chi-squared, Monte Carlo) and between early-, intermediate- and late-replicating DNA (FDR = 0.0012 and 0.0012 respectively). These patterns disappear when downsampled to 227 mutations, underscoring statistical power dependence [@Manders2022].
 
-**Somatic hypermutation regions detectable.** In 217 pediatric B-ALL samples, the package identifies distinct mutational spectra at the VDJ regions on chromosomes 2 and 14, consistent with somatic hypermutation at immunoglobulin loci (Fig. 4c).
+**Somatic hypermutation regions detectable.** In 217 pediatric B-ALL samples, the package identifies distinct mutational spectra at the VDJ regions on chromosomes 2 and 14, consistent with somatic hypermutation at immunoglobulin loci (Fig. 4c) [@Manders2022].
 
-**Strict refitting reduces false positive signatures.** Compared to "regular" and "regular_10+" approaches, `fit_to_signatures_strict` achieves substantially higher precision with comparable recall across all simulated mutation loads. AUC = 0.925 at 50 mutations/signature — practical even for samples with limited mutation counts.
+**Strict refitting reduces false positive signatures.** Compared to "regular" and "regular_10+" approaches, `fit_to_signatures_strict` achieves substantially higher precision with comparable recall across all simulated mutation loads. AUC = 0.925 at 50 mutations/signature — practical even for samples with limited mutation counts [@Manders2022].
 
-**Bootstrapping reveals signature confusion.** In UNG knockouts, SBS30 contribution was negatively correlated with SBS2 across bootstrap iterations (correlation = 0.46 cosine similarity), signalling that the algorithm struggles to disambiguate these two signatures — a finding only visible via bootstrapping.
+**Bootstrapping reveals signature confusion.** In UNG knockouts, SBS30 contribution was negatively correlated with SBS2 across bootstrap iterations (correlation = 0.46 cosine similarity), signalling that the algorithm struggles to disambiguate these two signatures — a finding only visible via bootstrapping [@Manders2022].
 
-**DNA repair knockout profiles recover expected COSMIC signatures.** MSH2 knockouts: SBS5, SBS20, SBS26, SBS44 (all MMR-associated). UNG knockouts: SBS30 (previously NTHL1/oxidative; here attributed to uracil-removal deficiency). XPC knockouts: SBS8 (nucleotide excision repair deficiency). Cosine similarity between original and reconstructed profiles ≥ 0.95 for all knockout types (strict refitting; Fig. 3e).
+**DNA repair knockout profiles recover expected COSMIC signatures.** MSH2 knockouts: SBS5, SBS20, SBS26, SBS44 (all MMR-associated). UNG knockouts: SBS30 (previously NTHL1/oxidative; here attributed to uracil-removal deficiency). XPC knockouts: SBS8 (nucleotide excision repair deficiency). Cosine similarity between original and reconstructed profiles ≥ 0.95 for all knockout types (strict refitting; Fig. 3e) [@Manders2022].
 
 **MSH2 indel signature.** MSH2 knockout shows a markedly elevated indel burden vs. wild type; strict indel refitting assigns ID1, ID2, ID7 — consistent with polymerase slippage and defective mismatch repair (Fig. 5).
 
-**Damaging potential of COSMIC signatures.** SBS10a (POLE) and SBS18 (oxidative stress) are 3.6× and 2.0× more likely than a flat signature to cause stop-gain mutations; SBS1 (clock-like aging) scores 0.81× — much lower damaging potential (Fig. not directly numbered but described p. 14).
+**Damaging potential of COSMIC signatures.** SBS10a (POLE) and SBS18 (oxidative stress) are 3.6× and 2.0× more likely than a flat signature to cause stop-gain mutations; SBS1 (clock-like aging) scores 0.81× — much lower damaging potential (Fig. not directly numbered but described p. 14) [@Manders2022].
 
-**Performance.** `mut_matrix` and `mut_matrix_stranded` re-implemented with O(n) vectorized operations; 3.4× and 2.6× faster than v1.4.3; a 1-million-SBS matrix now computes in ~135 s on a laptop.
+**Performance.** `mut_matrix` and `mut_matrix_stranded` re-implemented with O(n) vectorized operations; 3.4× and 2.6× faster than v1.4.3; a 1-million-SBS matrix now computes in ~135 s on a laptop [@Manders2022].
 
 ## Relevance
 

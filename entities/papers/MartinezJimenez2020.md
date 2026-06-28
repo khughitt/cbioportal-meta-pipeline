@@ -8,6 +8,7 @@ id: paper:MartinezJimenez2020
 ontology_terms: []
 source_refs:
 - paper:MartinezJimenez2020
+- cite:MartinezJimenez2020
 related:
 - paper:Bailey2018
 - topic:cross-study-meta-analysis-cancer-genomics
@@ -36,7 +37,7 @@ driver genes, derived from applying seven complementary selection-signal methods
 tumors across 221 cohorts of 66 cancer types. The pipeline identifies 568 driver genes and
 characterizes each gene's mode of action (activating/oncogene vs. loss-of-function/tumor
 suppressor) and cancer-type specificity, providing the most comprehensive per-tumor-type driver
-roster available from positive-selection evidence alone.
+roster available from positive-selection evidence alone [@MartinezJimenez2020].
 
 This driver-compendium note connects paper:Bailey2018, topic:cross-study-meta-analysis-cancer-genomics, topic:cancer-driver-genes, topic:lineage-addiction-and-cell-of-origin-driver-specificity, question:0042-driver-normal-expression-tissue-cell-type-specificity, and discussion:0008-tissue-cell-type-specificity-of-cancer-drivers.
 
@@ -93,12 +94,12 @@ hits) are removed; (4) known false-positive gene categories blacklisted (long ge
 RYR2, etc.; olfactory receptors from HORDE; non-Tier1 CGC genes lacking CancerMine
 literature support); (5) non-CGC genes with >3 mutations in a single sample are discarded (local
 hypermutation or contamination); (6) genes where >50% of mutations in AID-active lymphoid
-cancer types (AML, NHL, CLL, etc.) match COSMIC Signature 9 are excluded.
+cancer types (AML, NHL, CLL, etc.) match COSMIC Signature 9 are excluded [@MartinezJimenez2020].
 
 Benchmark (32 TCGA WES cohorts): the weighted combination achieves higher CGC-Score than
 any individual method in 23/32 (71%) cohorts and higher than all other combination strategies
 tested in 30/32 (93%) cohorts, while being the least enriched in known non-cancer genes in
-14/43 cohorts and never the most enriched.
+14/43 cohorts and never the most enriched [@MartinezJimenez2020].
 
 ### Mode-of-action (MoA) classification
 
@@ -122,7 +123,7 @@ codons 12-13: 5 nt, 85% of mutations in a colorectal cohort of 496; IDH1 codon 1
 mutations in an AML cohort of 257), reflecting the limited number of gain-of-function positions.
 Tumor suppressor clusters are wider and accumulate a smaller fraction of total mutations (e.g.,
 TP53: 28 nt, 28% of mutations in pilocytic astrocytoma; SPOP: 44 nt, 83% in prostate
-adenocarcinoma).
+adenocarcinoma) [@MartinezJimenez2020].
 
 ## Key Findings
 

@@ -33,7 +33,7 @@ amendments:
     known).
 ---
 
-# Pre-registration: h08 positive control — agnostic association must recover known signature aetiologies unprompted
+# Pre-registration: positive control — agnostic association must recover known signature aetiologies unprompted
 
 **Target class (§0): mixed.**
 
@@ -43,9 +43,9 @@ amendments:
   the committed adjustment set, stratification, or substrate requires an `amendments:` record. It
   produces no `bears_on` edge.
 - **Epistemic portion** — interpret the recovery result as evidence about **H08a** (the
-  positive-control prong of `hypothesis:0007`): does the agnostic method recover textbook
-  exposure→signature links *without being told them*? `commits_to:` is scoped to `hypothesis:0007`
-  only; the other `related:` entries (q018, q019, t177, datasets, discussion) are navigation context
+  positive-control prong of `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`): does the agnostic method recover textbook
+  exposure→signature links *without being told them*? `commits_to:` is scoped to `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`
+  only; the other `related:` entries (`question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross`, `question:0019-does-de-novo-extraction-on-the-aggregated-cohort-surface-factors-not-in`, `task:t177`, datasets, discussion) are navigation context
   and do **not** receive derived `bears_on` edges.
 
 **Execution timing (§0 sub-axis): runnable-now, engineering-gated — NOT data-gated.** The qualifying
@@ -77,7 +77,7 @@ Raw per-arm support counted as **distinct TCGA cases per project** from
 2026-05-30. This map defines the `tcga_mc3` WES substrate's case identity and is the honest
 computable-today **upper bound** on each arm's n. It is deliberately *not* counted from
 `results/poc-2026-04-17/metadata/samples_annotated.feather` — that POC table is dominated by
-`msk_impact_2017` panel samples, which h08 excludes from per-sample signatures, so it is the wrong
+`msk_impact_2017` panel samples, which `method:h08-agnostic-association-model` excludes from per-sample signatures, so it is the wrong
 substrate for this table.
 
 **Two computable-today bounds are recorded.** *Raw distinct cases* is the upper bound from the
@@ -101,7 +101,7 @@ The **post-join n** (signature exposure × covariate, after the signature refit 
 MC3∩RNA-seq intersections), **covariate completeness**, and **base rates** cannot be computed today:
 the per-sample signature refit, the clinical-covariate join, and the expression export are not yet
 materialized as a single joined table on the MC3 substrate. Recording these three numbers per arm
-against the realized join is an **activation precondition** (alongside t177 / q018) — the gate is
+against the realized join is an **activation precondition** (alongside `task:t177` / `question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross`) — the gate is
 **not read until they are filled into this table**. Raw n is comfortably powered for arms A and B
 (textbook effects at n ≈ 470–1,089); arm C's effective n is the one most likely eroded by the
 RNA-seq intersection, consistent with it being the tolerated miss under the 2-of-3 rule.
@@ -134,7 +134,7 @@ Two further textbook links — **MMR/MSI → SBS6/15/26** and **POLE → SBS10**
 (MSI status, POLE hotspot flag) are already pipeline-derived annotations and a hit there is
 corroborating but not load-bearing.
 
-We also expect (Prediction 4 of h08) that the **unconditioned** (tissue-pooled) version of each arm
+We also expect (Prediction 4 of `method:h08-agnostic-association-model`) that the **unconditioned** (tissue-pooled) version of each arm
 will show inflated or sign-distorted associations relative to the within-tissue version — quantifying
 how much of the naive exposure→signature story is tissue collinearity (rival **R1**).
 
@@ -228,7 +228,7 @@ signature, with the **expected (positive) sign**, at **FDR q < 0.05**.
 
 **Arm C aggregation rule (frozen).** The eligible APOBEC-prevalent strata are exactly
 **{BLCA, BRCA, CESC, HNSC, LUAD, LUSC}** — the canonical APOBEC-enriched TCGA tissues (Alexandrov
-2020; Roberts 2013) — frozen here and not expanded or substituted post-hoc. Arm C is evaluated as a
+2020 [@Alexandrov2020]; Roberts et al. [@Roberts2013]) — frozen here and not expanded or substituted post-hoc. Arm C is evaluated as a
 **single pooled within-tissue model** across these six strata (tissue entered as a fixed-effect
 stratifier so the estimand stays within-tissue per `method:h08-agnostic-association-model`), yielding
 **one** rank for APOBEC3A/B mRNA against SBS2/13. The arm passes iff that **pooled** rank ≤ 3 with
@@ -261,13 +261,13 @@ ordering on a `[?]` or `[-]` result is:
 1. **Power / proxy adequacy first.** A miss on arm A or C is more likely a *proxy* failure
    (coarse TCGA anatomic-site labels for UV; steady-state mRNA vs episodic APOBEC activity) or a
    *cohort-overlap* shortfall (MC3 ∩ RNA-seq) than a true method failure. Re-examine effective n and
-   covariate completeness per stratum **before** any belief update on h08.
+   covariate completeness per stratum **before** any belief update on `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`.
 2. **Stratification check.** Re-run the failing arm under the alternative lung pooling (per-histology
    vs LUAD+LUSC) and the alternative APOBEC tissue set, as registered sensitivity variants — these
    are not threshold moves, the rank gate is unchanged.
 3. **Only then** read the verdict against H08a. A genuine `[-]` (0/3, with adequate power and clean
    proxies) is a real refutation that voids the discovery prong; a `[?]` (1/3) recommends repairing
-   proxies / adding the EHR-covariate track (BPC/MSK-CHORD) and re-running, not abandoning h08.
+   proxies / adding the EHR-covariate track (BPC/MSK-CHORD) and re-running, not abandoning `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`.
 
 This is not a pilot — MC3 is full-scale — so a clean null carries real evidential weight, subject to
 the proxy/power triage above.

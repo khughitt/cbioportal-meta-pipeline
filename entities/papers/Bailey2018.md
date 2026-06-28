@@ -7,6 +7,7 @@ updated: '2026-06-28'
 id: paper:Bailey2018
 ontology_terms: []
 source_refs:
+- cite:Bailey2018
 - article:Bailey2018
 related:
 - paper:Ellrott2018
@@ -34,13 +35,13 @@ Produces a PanCanAtlas consensus driver-gene catalog by combining 26 computation
 driver-detection tools applied to the MC3 mutation call-set across 9,423 TCGA tumor exomes
 (33 cancer types). Yields a pan-cancer list of **299 unique driver genes** plus per-cancer-type
 driver rosters and ~3,400 candidate driver missense mutations, serving as a reference driver
-catalog downstream analyses can benchmark against.
+catalog downstream analyses can benchmark against [@Bailey2018].
 
 ## Methods
 
 **Input data.** 9,423 TCGA tumor exomes (~9,079 after filtering) across all 33 cancer types,
 using the MC3 consensus mutation calls (Ellrott2018), which are themselves a 7-caller consensus.
-1,457,702 somatic mutations entered the discovery set.
+1,457,702 somatic mutations entered the discovery set [@Bailey2018].
 
 **26 tools, two phases.** *Phase 1 — gene discovery (8 tools):* frequency/recurrence
 (MuSiC2, MutSig2CV), feature/ratiometric (20/20+, CompositeDriver, OncodriveFML), clustering
@@ -48,20 +49,20 @@ using the MC3 consensus mutation calls (Ellrott2018), which are themselves a 7-c
 validation (18 additional tools):* population-based (SIFT, PolyPhen2, VEST, MutationAssessor),
 cancer-focused (CHASM, CanDrA, fathmm, transFIC), 3D-structure/hotspot (HotSpot3D, HotMAPS,
 3DHotSpots.org, e-Driver3D), network/omics (DriverNet, OncoIMPACT), and clinical-annotation
-(PHIAL, DEPO), plus a novel meta-tool (CTAT).
+(PHIAL, DEPO), plus a novel meta-tool (CTAT) [@Bailey2018].
 
 **Consensus scoring.** Genes receive a weighted sum of tool votes; tools flagged as outliers
 (poor overlap with known cancer genes, deviant p-value distribution, inflated significant-gene
 counts) are down-weighted to 0.5. A gene is called at score ≥ 1.5 (≥2 non-outlier tools, or 3
 with penalty). Genes are assigned **Gold / Silver / Bronze confidence tiers** by consensus
-strength.
+strength [@Bailey2018].
 
 **Per-cancer and pan-cancer.** Each of the 33 cancer types is analyzed independently, and a
 combined PanCancer run catches signals diluted across tissues.
 
 **Validation.** Recovery of published cancer-type gene markers (≥80% in 20 of 31 types);
 Ba/F3 / MCF10A functional assays on 579 candidate missense drivers (85% of the triple-predicted
-set validated).
+set validated) [@Bailey2018].
 
 ## Key Findings
 

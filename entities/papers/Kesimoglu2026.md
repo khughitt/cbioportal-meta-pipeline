@@ -40,7 +40,7 @@ ReDeNovo formalises the **Combined Mutational Signature Inference (CMSI)** probl
 
 **Benchmarks.** 16 synthetic datasets were generated from COSMIC v3.4 ground-truth mixtures with varying Gaussian noise levels (σ = 0 to 30). De novo recovery was assessed by injecting four synthetically designed signatures and by hiding individual COSMIC signatures from the catalogue. Comparators: SigProfilerAssignment v0.2.3, SigProfilerExtractor v1.2.0, MuSiCal, sigLASSO v1.1, CaMuS (run with oracle-known signature counts).
 
-**Biological data.** WGS somatic mutation calls for nine ICGC-PCAWG cancer types (Skin-Melanoma n=107, Breast-AdenoCA n=198, Prostate-AdenoCA n=286, Pancreatic-AdenoCA n=241, Ovary-AdenoCA n=113, Lymph-BNHL n=107, Liver-HCC n=326, Kidney-RCC n=144, CNS-Medulloblastoma n=146). Reference catalogue: COSMIC v3.4 SBS signatures.
+**Biological data.** WGS somatic mutation calls for nine ICGC-PCAWG cancer types (Skin-Melanoma n=107, Breast-AdenoCA n=198, Prostate-AdenoCA n=286, Pancreatic-AdenoCA n=241, Ovary-AdenoCA n=113, Lymph-BNHL n=107, Liver-HCC n=326, Kidney-RCC n=144, CNS-Medulloblastoma n=146). Reference catalogue: COSMIC v3.4 SBS signatures [@Kesimoglu2026].
 
 ## Key Findings
 
@@ -48,11 +48,11 @@ ReDeNovo formalises the **Combined Mutational Signature Inference (CMSI)** probl
 
 **Flat signatures.** SBS3, SBS5, and SBS8 (broad, "flat" spectra) are universally the hardest to estimate accurately; ReDeNovo outperforms other tools on all three at every noise level.
 
-**De novo recovery.** ReDeNovo achieves a de novo signature detection rate (SDR) of 1.000 across all 12 test configurations (four synthetic + eight hidden-COSMIC), versus 0.742 for CaMuS (oracle), 0.750 for SigProfilerExtractor (four configurations only), and 0.175 for MuSiCal. ReDeNovo's average cosine similarity between inferred and ground-truth de novo signatures is 0.918 (vs 0.703 CaMuS, 0.164 MuSiCal). Overall activity RMSE for the de novo scenario: ReDeNovo 130.4, MuSiCal 277.9, SigProfilerExtractor 261.1, CaMuS 305.4.
+**De novo recovery.** ReDeNovo achieves a de novo signature detection rate (SDR) of 1.000 across all 12 test configurations (four synthetic + eight hidden-COSMIC), versus 0.742 for CaMuS (oracle), 0.750 for SigProfilerExtractor (four configurations only), and 0.175 for MuSiCal. ReDeNovo's average cosine similarity between inferred and ground-truth de novo signatures is 0.918 (vs 0.703 CaMuS, 0.164 MuSiCal). Overall activity RMSE for the de novo scenario: ReDeNovo 130.4, MuSiCal 277.9, SigProfilerExtractor 261.1, CaMuS 305.4 [@Kesimoglu2026].
 
 **PCAWG biological validation.** 75 of 83 COSMIC signature–cancer-type assignments are literature-supported. ReDeNovo newly detected SBS39 (unknown etiology, but recently linked to HRD and NHEJ pathways) in breast and kidney cancers — in both cases co-occurring with SBS3 (HRD signature), which provides supporting coherence. MMRd SBS15 was assigned to CNS Medulloblastoma with very low activity, flagged as a potential false positive.
 
-**Novel UV signature (Skin-Melanoma N1).** The single confirmed novel signature is dominated by TCC>TTC C>T mutations. Cross-patient activity correlates strongly with SBS7a (Pearson 0.83, Spearman 0.92) and SBS7b (Pearson 0.86, Spearman 0.93), consistent with UV DNA damage. The authors attribute its distinctness from SBS7a/7b to population heterogeneity in UV-wavelength exposure and protection mechanisms (skin pigmentation, DNA repair efficiency).
+**Novel UV signature (Skin-Melanoma N1).** The single confirmed novel signature is dominated by TCC>TTC C>T mutations. Cross-patient activity correlates strongly with SBS7a (Pearson 0.83, Spearman 0.92) and SBS7b (Pearson 0.86, Spearman 0.93), consistent with UV DNA damage. The authors attribute its distinctness from SBS7a/7b to population heterogeneity in UV-wavelength exposure and protection mechanisms (skin pigmentation, DNA repair efficiency) [@Kesimoglu2026].
 
 ## Relevance
 

@@ -99,7 +99,7 @@ Behavior contract:
   Every sample must resolve via 1, 2, or 3 — anything unresolved raises `ValueError` carrying `(study_id, sample_id, raw_value)`.
 - **For non-panel studies** (`is_panel_study=False`), the function returns `None` for every sample. The resulting `panel_id` column on `samples.feather` is `None`, signaling to downstream consumers that the panel-aware path is bypassed (current scalar-per-cancer denominator behavior preserved).
 
-Reference data citations: Cheng 2015 (PMID 25801821) for IMPACT-341/410, Zehir 2017 (PMID 28481359) for IMPACT-410/468 transition, Bandlamudi 2026 (PMID 41895280) for IMPACT-505. Cited inline in module docstring.
+Reference data citations: [@Cheng2015] for IMPACT-341/410, [@Zehir2017] for the IMPACT-410/468 transition, and [@Bandlamudi2026] for IMPACT-505. Cited inline in module docstring.
 
 ### Component 2 — `code/scripts/convert_to_feather.py` (extension) + Snakemake DAG wiring
 
@@ -262,8 +262,7 @@ This is the scientific deliverable that justifies the work — quantifies the bi
 
 ## References
 
-- Cheng DT et al. 2015. *J Mol Diagn* 17(3):251-264. PMID 25801821. (IMPACT-341/410)
-- Zehir A et al. 2017. *Nat Med* 23(6):703-713. PMID 28481359. (IMPACT-410/468)
-- Bandlamudi C et al. 2026. "Cancer type-specific variation in patterns of driver alterations across 50,000 tumors." *Cancer Cell*. PMID 41895280. (IMPACT-505 50k follow-up)
+- MSK-IMPACT panel-version references: [@Cheng2015] (IMPACT-341/410),
+  [@Zehir2017] (IMPACT-410/468), and [@Bandlamudi2026] (IMPACT-505 50k follow-up).
 - F6 (panel-version drift), `doc/audits/2026-04-13-create-combined-gene-cancer-freq-table-audit.md`.
 - Empirical audit logged in this conversation 2026-04-18; rerun via `uv run python -c "..."` against `/data/raw/cbioportal/msk_*` if reproduction needed.

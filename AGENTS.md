@@ -104,12 +104,12 @@ The canonical outputs of the cross-study aggregation are the **annotated** feath
 `doc/guides/canonical-outputs.md` for the full DAG and which outputs are intermediate vs
 consumer-facing.
 
-- **Bailey 2018 driver overlay** (`code/scripts/annotate_drivers.py`) — adds
+- **Bailey driver overlay** (`code/scripts/annotate_drivers.py`; [@Bailey2018]) — adds
   `bailey2018_driver` boolean + `bailey2018_source` version stamp to both the count table
   (`gene_cancer_study_annotated.feather`) and ratio table (chained into the CH annotation
   output below). Manual prereq: `data/bailey2018_table_s1.xlsx`.
 - **CH-aware annotation** (`code/scripts/annotate_ch.py`, closes audit F3 / F7) — adds
-  `ch_priority_gene` flag (7-gene Bolton 2020 list: DNMT3A, PPM1D, TET2, TP53, ASXL1, CHEK2,
+  `ch_priority_gene` flag (7-gene Bolton list [@Bolton2020]: DNMT3A, PPM1D, TET2, TP53, ASXL1, CHEK2,
   PRPF8) plus `mean_matched` / `mean_unmatched` stratified pooled ratios. Consumes the
   `matched_normal_studies` config list — populate per-run with study IDs known to use
   patient-matched normal sequencing. See `topic:clonal-hematopoiesis-contamination`.
@@ -123,8 +123,8 @@ consumer-facing.
   `hypermutator_reason` (8-category audit trail: `pole_hotspot` / `pold1_hotspot` / `msi_h` /
   `gmm_upper_mode` / `gmm_lower_mode` / `zscore_fallback_high` / `zscore_fallback_low` /
   `tmb_unavailable`), plus three parallel views (`is_hypermutator_absolute` ≥10 mut/Mb
-  Campbell 2017, `is_hypermutator_ultra` ≥100 mut/Mb, `is_hypermutator_relative` per-histology
-  top-20% Samstein 2019). The rule ordering inside the composite is fixed by plan finding #4:
+  [@Campbell2017Hypermutation], `is_hypermutator_ultra` ≥100 mut/Mb, `is_hypermutator_relative` per-histology
+  top-20% [@Samstein2019]). The rule ordering inside the composite is fixed by plan finding #4:
   POLE > POLD1 > MSI-H > GMM > z-score > NaN, so that clinical diagnostic categories win over
   TMB. `create_freq_tables.py` and `create_combined_gene_cancer_freq_table.py` emit paired
   `_inclusive` / `_exclusive` columns keyed on this flag (see
@@ -179,7 +179,7 @@ intermediates.
 ## Alternate data sources
 
 - **MC3 TCGA pan-cancer unified MAF** (`code/scripts/process_mc3.py`, closes audit F2 for the
-  TCGA portion) — ingests the Ellrott 2018 unified 7-caller-consensus MAF as a single
+  TCGA portion) — ingests the unified 7-caller-consensus MAF [@Ellrott2018] as a single
   pseudo-study `tcga_mc3`. 2.9M PASS variants / 9,104 samples / 32 TCGA cancer types in one
   file, replacing heterogeneous per-study cBioPortal TCGA MAFs. **To enable**: add
   `"tcga_mc3"` to the `studies` list in your run config, and add it to
@@ -203,7 +203,8 @@ Some pipeline rules depend on external datasets that cannot be auto-fetched:
 
 Optional (R-dependent):
 
-- **`code/scripts/run_dndscv.R`** runs Martincorena 2017's selection-based driver detection
+- **`code/scripts/run_dndscv.R`** runs the selection-based driver detection method from
+  [@Martincorena2017]
   per study. Requires R + Bioconductor + `devtools::install_github("im3sanger/dndscv")`.
   Output `studies/{id}/mut/dndscv/genes.feather` is not in `rule all` by default — opt in
   by adding to your config or the `all` target list.

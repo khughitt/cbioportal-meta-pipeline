@@ -9,7 +9,7 @@ canonical gene-cancer wide outputs.
 
 **Architecture:** Keep the change inside `create_combined_gene_cancer_freq_table.py`, where the
 per-study wide table already has the denominator frames needed for per-cancer cohort size.
-Use an explicit Lawrence 2014 reference table keyed by cancer labels, and mark unsupported cancer
+Use an explicit saturation reference table [@Lawrence2014] keyed by cancer labels, and mark unsupported cancer
 labels as `no_lawrence_reference` rather than applying an implicit fallback.
 
 **Tech Stack:** Python, pandas, Snakemake, pytest, pyarrow/feather.
@@ -29,7 +29,7 @@ labels as `no_lawrence_reference` rather than applying an implicit fallback.
   outputs.
 - [x] Re-run the targeted pytest test and verify it passes.
 
-### Task 2: Add Lawrence 2014 Saturation Context
+### Task 2: Add Saturation Context
 
 **Files:**
 - Modify: `code/scripts/create_combined_gene_cancer_freq_table.py`

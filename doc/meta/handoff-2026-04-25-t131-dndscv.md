@@ -4,22 +4,22 @@
 
 **Headline question (from `discussion:2026-04-24-gene-length-bias`):** Does
 gene length confound (a) mutation-count rankings of "highly mutated" genes
-and (b) the *literature attention* given to those genes? `q011` formalizes
+and (b) the *literature attention* given to those genes? `question:0011-gene-length-as-literature-attention-confounder` formalizes
 the literature-attention conjecture with a pre-registered partial-slope
 falsifier.
 
-**Empirical kickoff (q011 notebook, `c389837`):** Confirmed raw vs
+**Empirical kickoff (`question:0011-gene-length-as-literature-attention-confounder` notebook, `c389837`):** Confirmed raw vs
 length-adjusted gene rankings are essentially disjoint at the head
 (Spearman ρ = 0.37, Jaccard@100 = 0.015). Length-only adjustment swings
 to the opposite extreme — tiny-protein artifacts (BAGE2, PYY2, DEFB119,
 TMSB4X, SPRR4) dominate the top-100 instead of long-gene passengers.
 Neither raw nor length-only is defensible. Motivated `t131`.
 
-**`t131` deliverable:** dNdScv (Martincorena 2017) selection-based ranking
+**`t131` deliverable:** dNdScv (Martincorena et al. [@Martincorena2017]) selection-based ranking
 as a third axis, joined into the canonical `gene_cancer_study_ratio_annotated.feather`
 and consumed by a per-gene three-way comparison feather + marimo notebook
 that includes a PubTator literature-attention correlation panel (the
-q011 falsifier readout).
+`question:0011-gene-length-as-literature-attention-confounder` falsifier readout).
 
 **Companion follow-up tasks already filed:**
 - `t129` — length × PubMed-mention regression pipeline step
@@ -83,7 +83,7 @@ PoC config: 4 studies (skcm, ucec, brca TCGA + msk_impact_2017),
 
 Three rankings essentially uncorrelated.
 
-**Bailey 2018 driver recovery @ top-N:**
+**Bailey et al. [@Bailey2018] driver recovery @ top-N:**
 
 | Scheme | @10 | @25 | @50 | @100 | @250 | @500 |
 |---|---|---|---|---|---|---|
@@ -94,7 +94,7 @@ Three rankings essentially uncorrelated.
 dNdScv recovers 74/199 Bailey drivers in top-100, 145/199 (73%) in top-500.
 14× better than raw, 12× better than length-adjusted at the head.
 
-**q011 falsifier panel (Spearman vs PubTator log10 mentions):**
+**`question:0011-gene-length-as-literature-attention-confounder` falsifier panel (Spearman vs PubTator log10 mentions):**
 
 | Ranking | ρ_pubtator |
 |---|---|
@@ -104,7 +104,7 @@ dNdScv recovers 74/199 Bailey drivers in top-100, 145/199 (73%) in top-500.
 
 Raw mutation count is most-correlated with literature attention.
 Length adjustment removes the correlation entirely. dNdScv
-intermediate. **Direct empirical support for q011's conjecture**:
+intermediate. **Direct empirical support for `question:0011-gene-length-as-literature-attention-confounder`'s conjecture**:
 gene length confounds the literature-attention axis through the
 mutation-count mediator.
 
@@ -173,7 +173,7 @@ validate the conda path before any external publication of results.
   Removes the per-study refdb-routing complexity entirely. Long-term
   destination flagged during t131 design.
 - **`t129`** (P2) — length × PubMed-mention regression pipeline step.
-  Phase-2 of the q011 program (the t131 PubTator panel is the cheap
+  Phase-2 of the `question:0011-gene-length-as-literature-attention-confounder` program (the t131 PubTator panel is the cheap
   Phase-1 readout; t129 is the formal regression with bootstrap CIs
   and per-subgroup analysis).
 - **`t130`** (P2) — Stoeger & Nunes Amaral 2018 paper summary.
@@ -192,8 +192,8 @@ validate the conda path before any external publication of results.
 
 - Plan: `doc/plans/2026-04-24-t131-dndscv-three-way-comparison-design.md`
 - Discussion: `doc/discussions/2026-04-24-gene-length-bias-in-mutation-rankings-and-literature.md`
-- Question: `doc/questions/q011-gene-length-as-literature-attention-confounder.md`
-- Q011 PoC notebook: `code/notebooks/q011_length_adjustment_topn_comparison.py`
+- Question: `entities/questions/0011-gene-length-as-literature-attention-confounder.md`
+- Question 0011 PoC notebook: `code/notebooks/q011_length_adjustment_topn_comparison.py`
 - T131 notebook: `code/notebooks/t131_three_way_ranking_comparison.py`
 - T131 conda env: `code/envs/dndscv.yml`
 - T131 side config: `code/config/config-pan-cancer-dndscv.yml`

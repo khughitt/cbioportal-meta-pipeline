@@ -1,6 +1,6 @@
 ---
 type: plan
-title: h08 smoking-arm repair production rerun
+title: smoking-arm repair production rerun
 status: active
 created: '2026-06-01'
 updated: '2026-06-01'
@@ -18,7 +18,7 @@ related:
 - task:t203
 ---
 
-# h08 smoking-arm repair production rerun
+# Smoking-arm repair production rerun
 
 ## Goal
 
@@ -37,7 +37,8 @@ It is not a reread of the original H08a gate and does not authorize H08b as conf
 
 ## Approach
 
-Use a repair-specific script that consumes the production t201 covariate table and the frozen h08 exposure table, then writes outputs under `association/repairs/smoking_arm/`.
+Use a repair-specific script that consumes the production t201 covariate table and the frozen
+`hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` exposure table, then writes outputs under `association/repairs/smoking_arm/`.
 Do not change `run_h08_association_scan.py`, `h08_association_grid.feather`, or the t199 denominator manifest in place.
 
 The repaired denominator is a derived manifest, not a replacement manifest.
@@ -110,5 +111,5 @@ They cannot rescue a failed `ever_smoker` primary result.
 
 ## Notes on Plan Scope
 
-Probe-sized on purpose: this is one repaired production read of one positive-control arm, using already-fixed covariates and existing h08 machinery.
+Probe-sized on purpose: this is one repaired production read of one positive-control arm, using already-fixed covariates and existing association-scan machinery.
 Methodological readiness is inherited from the original H08a method and the committed smoking-repair pre-registration; this plan only specifies how to run the repair without contaminating the locked H08a artifacts.

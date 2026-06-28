@@ -1,6 +1,6 @@
 ---
 type: plan
-title: "h08 within-tissue positive-control failure diagnostics (tests 1\u20134)"
+title: "within-tissue positive-control failure diagnostics (tests 1\u20134)"
 status: active
 created: '2026-05-31'
 updated: '2026-06-01'
@@ -13,11 +13,11 @@ related:
 - task:t200
 ---
 
-# h08 within-tissue positive-control failure diagnostics (tests 1–4)
+# Within-tissue positive-control failure diagnostics (tests 1–4)
 
 ## Goal
 
-Diagnose *why* two of the three h08 positive-control arms (UV→SBS7 in SKCM; smoking→SBS4 in lung)
+Diagnose *why* two of the three `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` positive-control arms (UV→SBS7 in SKCM; smoking→SBS4 in lung)
 miss the within-tissue gate, separating three non-exclusive failure modes — covariate **measurement
 noise**, within-tissue **range restriction**, and **fan-in / saturation** (signature has multiple
 upstream causes or is compositionally saturated). Read-only on the committed t199 artifacts. **Does

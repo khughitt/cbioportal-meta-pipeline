@@ -1,6 +1,6 @@
 ---
 type: method
-title: "Agnostic covariate\u2013signature-exposure association model (h08)"
+title: "Agnostic covariate\u2013signature-exposure association model"
 status: active
 created: '2026-05-30'
 updated: '2026-05-31'
@@ -18,9 +18,10 @@ related:
 - topic:signatures-expression-microenvironment
 ---
 
-# Agnostic covariate–signature-exposure association model (h08)
+# Agnostic covariate–signature-exposure association model
 
-A causal-DAG sketch for the agnostic association proposed in `hypothesis:0007`. DAG source:
+A causal-DAG sketch for the agnostic association proposed in
+`hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`. DAG source:
 `models/h08-agnostic-signature-association.dot` (render with
 `dot -Tsvg models/h08-agnostic-signature-association.dot`).
 
@@ -30,8 +31,8 @@ For each (signature, covariate) pair, the target is the **within-tissue associat
 covariate and a signature's per-sample exposure `H`** — *not* its spectrum `W`. We model `H`
 (burden, "how much") separately from `W` (identity, "which process") because selection /
 immunoediting act on `H`, so reading exposure as dose risks reverse causation (see
-`discussion:0004-common-mutational-signatures-known-vs-learned-immune-causes-and`,
-Q2).
+`discussion:0004-common-mutational-signatures-known-vs-learned-immune-causes-and`;
+the concern is burden attribution rather than process attribution).
 
 ## Variables
 
@@ -48,7 +49,8 @@ Q2).
 
 - **Adjustment set:** {tissue, treatment, study/assay, ancestry}; run **within tissue strata**,
   reporting the unconditioned version *only* to quantify how much of a naive association is tissue
-  collinearity (Prediction 4 of h08).
+  collinearity (Prediction 4 of
+  `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`).
 - **The expression→`H` edge is NOT identified by adjustment alone.** It shares a bidirected edge
   with `H` (reverse causation R2: a driver mutation can remodel its own expression module). An
   expression↔signature hit is a **ranked hypothesis**, requiring mediation logic and, where
@@ -56,7 +58,7 @@ Q2).
 
 ## Rival explanations encoded in the DAG
 
-Co-equal, data-adjudicated (1:1 with h08's Alternative Explanations):
+Co-equal, data-adjudicated (1:1 with this hypothesis's Alternative Explanations):
 
 | Rival | DAG mechanism | Discriminating test |
 |---|---|---|
@@ -131,7 +133,8 @@ covariates" discovery claim would be scooped.
 ## Next steps
 
 - Literature gate: `task:t177` — **DONE** (see prior-art section above); H08b scope narrowed accordingly.
-- `science:pre-register` the positive-control + discovery design once `q018` confirms downstream
+- `science:pre-register` the positive-control + discovery design once
+  `question:0018-can-mutational-signature-decomposition-be-added-downstream-of-the-cross` confirms downstream
   signature feasibility + panel adequacy.
 - Two-track substrate plan per `search:0007-ehr-rich-substrates-for-agnostic-signature-association`:
   MC3 (signature-grade + expression) and GENIE BPC / MSK-CHORD (EHR-covariate, pooled signatures).

@@ -23,21 +23,21 @@ source_refs:
 
 ## Analysis Question
 
-Can the existing H08 expression-module substrate produce a coherent exploratory separation between SBS40 and SBS5 within tissue after conditioning on age?
+Can the existing `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` expression-module substrate produce a coherent exploratory separation between SBS40 and SBS5 within tissue after conditioning on age?
 
-This is not a confirmatory H08b analysis.
-Per `discussion:0005-h08b-gate-handling`, H08a remains `[?]`, the repaired smoking-arm read remains `[?]`, and H08b output cannot promote the hypothesis.
+This is not a confirmatory discovery-prong analysis.
+Per `discussion:0005-h08b-gate-handling`, the positive-control prong remains `[?]`, the repaired smoking-arm read remains `[?]`, and discovery-prong output cannot promote the hypothesis.
 
 ## Related Hypotheses / Questions / Tasks
 
 This plan executes `task:t182`.
 It bears on `question:0023-sbs40-vs-sbs5-clocklike-expression-module` and must obey the causal-direction guard in `question:0025-causal-direction-guard-for-expression-signature`.
 
-The result should be read as feasibility evidence for the future H08b design space, not as evidence that an expression module causes SBS40 or SBS5.
+The result should be read as feasibility evidence for the future discovery-prong design space, not as evidence that an expression module causes SBS40 or SBS5.
 
 ## Data Inputs and Provenance
 
-Inputs are all from the existing H08 run bundle under `results/signature-h08-arms-2026-05-31/`.
+Inputs are all from the existing association run bundle under `results/signature-h08-arms-2026-05-31/`.
 
 - `association/h08_covariates.feather`: MC3-overlapping clinical and molecular covariates, including per-arm NMF module loadings.
 - `association/covariate_denominator.json`: active-signature and ranked-covariate manifest.
@@ -71,7 +71,7 @@ The primary outcome is the age-conditioned compositional contrast:
 clr_SBS40_minus_SBS5 = clr(SBS40_collapsed) - clr(SBS5)
 ```
 
-The CLR basis is the stratum's manifest active-signature composition after the H08 collapse rules and the existing pseudocount convention.
+The CLR basis is the stratum's manifest active-signature composition after the active-signature collapse rules and the existing pseudocount convention.
 This contrast is a log-ratio-scale separation read rather than an absolute-burden claim.
 
 Secondary descriptive outcomes are `clr_SBS40` and `clr_SBS5` fit separately.
@@ -104,7 +104,7 @@ There is no pass/fail promotion criterion.
 
 ## Model / Test Assumptions
 
-The prototype uses ordinary least squares, matching the H08 association-layer convention.
+The prototype uses ordinary least squares, matching the association-layer convention.
 The model is descriptive and exploratory.
 
 A cell is estimable only if:

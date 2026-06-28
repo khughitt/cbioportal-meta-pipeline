@@ -50,7 +50,7 @@ validating verdict in `{reproduces, partial}`).
 
 Both comparisons demonstrate the core directional signal the descriptor was designed to
 recover: metastatic rates exceed primary rates for both AR (8.67% vs 0.40%) and ESR1 (12.78%
-vs 0.83%), matching the qualitative Zehir 2017 finding that panel-cohort clinical sequencing
+vs 0.83%), matching the qualitative Zehir et al. [@Zehir2017] finding that panel-cohort clinical sequencing
 captures a stage-enriched population with elevated rates of resistance-associated mutations. The
 `msk_impact_2017` registry rule (`default_is_metastatic = unknown`, resolved at runtime via
 sample-level `SAMPLE_TYPE` fields) correctly placed 323 prostate samples into the metastatic
@@ -60,9 +60,9 @@ as well. The panel coverage check confirmed AR and ESR1 are on the MSK-IMPACT pa
 samples in both cancer-type strata, so no panel-exclusion attrition occurred.
 
 The two `partial` verdicts rather than `reproduces` are explained by stratum-specific rate gaps
-that exceed the 3 pp tolerance. For AR, the observed metastatic rate is 8.67% versus the Zehir
-2017 Fig. 5 baseline of 18.0% — a 9.3 pp shortfall. This is most likely a denominator-frame
-mismatch: Zehir 2017 reports rates for samples with a specific prostate cancer indication
+that exceed the 3 pp tolerance. For AR, the observed metastatic rate is 8.67% versus the Zehir et al.
+[@Zehir2017] Fig. 5 baseline of 18.0% — a 9.3 pp shortfall. This is most likely a denominator-frame
+mismatch: Zehir et al. [@Zehir2017] report rates for samples with a specific prostate cancer indication
 (presumably after pathological confirmation and diagnosis-code filtering), whereas the MSK
 metastatic stratum here uses the broad cancer-type label `Prostate Cancer` and includes any
 sample classified as metastatic in the SAMPLE_TYPE field without additional clinical
@@ -71,7 +71,7 @@ alterations would dilute the observed rate. For ESR1, the metastatic rate (12.78
 matches the Zehir baseline (11.0%, diff = 1.78 pp — within tolerance), but the primary
 BRCA-TCGA rate (0.83%) falls short of the expected 4.0% (diff = 3.17 pp, just over the 3 pp
 threshold). ESR1 mutation in primary breast cancer is genuinely rare, and the TCGA primary
-cohort captures an earlier diagnosis window than the Zehir 2017 clinical sequencing population,
+cohort captures an earlier diagnosis window than the Zehir et al. [@Zehir2017] clinical sequencing population,
 which skews toward hormone-receptor-positive patients with prior endocrine therapy. The net
 effect is a primary-arm rate below the published expectation; this is a real biological and
 cohort-composition difference, not a classification error.

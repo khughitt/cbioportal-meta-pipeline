@@ -1,6 +1,6 @@
 ---
 type: interpretation
-title: "t181 treatment-exposure stratum for h08 \u2014 MC3/TCGA carries no study-level\
+title: "t181 treatment-exposure stratum for covariate-association scan \u2014 MC3/TCGA carries no study-level\
   \ treated confound; 55 patient-level neoadjuvant positives"
 status: active
 created: '2026-06-01'
@@ -14,13 +14,13 @@ related:
 - hypothesis:0009-treatment-induced-signature-frequency-contamination
 - question:0024-treatment-exposed-cohort-chemotherapy-signature
 ---
-# t181 — treatment-exposure stratum for h08
+# t181 — treatment-exposure stratum for covariate-association scan
 
 Date: 2026-06-01
 
 ## Question
 
-Does the H08 covariate substrate carry an explicit treatment-exposure stratum so that treatment-induced signatures can be handled as nuisance context rather than silent batch structure?
+Does the `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` covariate substrate carry an explicit treatment-exposure stratum so that treatment-induced signatures can be handled as nuisance context rather than silent batch structure?
 
 ## What Changed
 
@@ -31,7 +31,7 @@ Does the H08 covariate substrate carry an explicit treatment-exposure stratum so
 - `treatment_exposed_fraction`: audited cohort-level fraction treated.
 - `treatment_exposed`: combined adjustment covariate, equal to the OR of the clinical and study-level flags.
 
-The current H08 run config records `tcga_mc3` as study-level unexposed:
+The current covariate-association run config records `tcga_mc3` as study-level unexposed:
 
 ```yaml
 treatment_exposed_studies: []
@@ -58,8 +58,8 @@ The denominator manifest now records the treatment-exposure rule and the audited
 
 ## Interpretation
 
-This closes the H08-facing part of `question:0024`: the positive-control scan substrate no longer relies on an implicit or missing treatment history field.
+This closes the `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`-facing part of `question:0024-treatment-exposed-cohort-chemotherapy-signature`: the positive-control scan substrate no longer relies on an implicit or missing treatment history field.
 For MC3, there is no study-level treated-cohort confound, but a small patient-level neoadjuvant signal remains available as an adjustment covariate.
 
 This does not yet test `hypothesis:0009`.
-The next H10 step would be a broader cohort audit for non-TCGA cBioPortal studies and a frequency-table exclusion/down-weighting pass keyed on treatment-exposed cohorts or treatment-signature-high samples.
+The next `hypothesis:0009-treatment-induced-signature-frequency-contamination` step would be a broader cohort audit for non-TCGA cBioPortal studies and a frequency-table exclusion/down-weighting pass keyed on treatment-exposed cohorts or treatment-signature-high samples.

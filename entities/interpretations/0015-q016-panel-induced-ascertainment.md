@@ -1,6 +1,6 @@
 ---
 type: interpretation
-title: "q016 panel-induced ascertainment \u2014 combined pan-cancer rankings are WES-dominated,\
+title: "Panel-induced ascertainment \u2014 combined pan-cancer rankings are WES-dominated,\
   \ while panel-only rankings carry a smaller, assay-shaped driver surface"
 status: active
 created: '2026-04-29'
@@ -17,12 +17,12 @@ prior_interpretations:
 - 2026-04-28-t149-loso-replication
 ---
 
-# q016 Panel-Induced Ascertainment
+# Panel-Induced Ascertainment
 
 ## Question
 
 Task `t154` asks whether panel-only, WES-only, and combined mutation rankings differ enough that
-the h03 / q011 literature-attention regression (`t129`) must include assay stratum as a covariate.
+the `hypothesis:0003-gene-length-confounds-literature-attention` / `question:0011-gene-length-as-literature-attention-confounder` literature-attention regression (`t129`) must include assay stratum as a covariate.
 
 ## Method
 
@@ -83,7 +83,7 @@ cohort composition more strongly than the WES-dominated combined ranking.
 
 ### F4 -- Driver recovery is lower in panel-only rankings
 
-Bailey 2018 recovery:
+Bailey driver recovery [@Bailey2018]:
 
 | K | WES | Panel | Combined |
 |---:|---:|---:|---:|
@@ -118,7 +118,7 @@ surface.
 
 ## Verdict
 
-**Supportive for q016.** Panel-induced ascertainment is present. It does not overturn the current
+**Supportive for `question:0016-panel-induced-ascertainment`.** Panel-induced ascertainment is present. It does not overturn the current
 combined pan-cancer ranking because the combined signal is WES-dominated, but the panel-only
 ranking is materially different: lower top-K overlap with WES, smaller denominators, lower Bailey
 recovery, and a distinct attention-rate slope.
@@ -126,7 +126,7 @@ recovery, and a distinct attention-rate slope.
 ## Recommendation
 
 `t129` should include assay stratum explicitly. At minimum, report WES and panel regressions
-separately alongside the combined model. A single combined h03 regression is acceptable as a
+separately alongside the combined model. A single combined literature-attention regression is acceptable as a
 headline only if it is labeled WES-dominated for this run.
 
 For future configs with more panel studies, rerun this script before interpreting any

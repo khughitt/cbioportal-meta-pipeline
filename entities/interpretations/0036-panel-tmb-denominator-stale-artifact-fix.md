@@ -19,7 +19,7 @@ related:
 
 ## What was wrong
 
-The q047 first pass surfaced an anomaly: only Melanoma and Endometrial (the two TCGA WES studies)
+The `question:0047-hypermutation-confound-on-driver-tissue-specificity` first pass surfaced an anomaly: only Melanoma and Endometrial (the two TCGA WES studies)
 had any hypermutators; **Colorectal — the canonical MSI-hypermutator type — had 7/1007**, with a
 median TMB of **0.2 mut/Mb** (impossible; MSS CRC is ~3–5, MSI-H ~30–50). Root-causing it:
 
@@ -49,7 +49,7 @@ fell through to the legacy study-level path → empty `study_panel_map` → `wes
    | `tmb_source` | wes_default ×13,006 | config_override ×10,945 (0.89–1.01 Mb) + wes_default ×2,061 (TCGA WES) |
    | CRC median TMB | 0.2 | **6.7** mut/Mb |
    | CRC hypermutators | 7 | **88** (81 MSI/GMM-upper + 7 POLE) |
-   | testable cancer types (q047) | 2 | **8** (CRC, NSCLC, Bladder, Esophagogastric, Hepatobiliary, Endometrial, Melanoma, cSCC) |
+| testable cancer types (`question:0047-hypermutation-confound-on-driver-tissue-specificity`) | 2 | **8** (CRC, NSCLC, Bladder, Esophagogastric, Hepatobiliary, Endometrial, Melanoma, cSCC) |
 
    Panel cancers now flag sensibly: NSCLC 6.3%, CRC 8.7%, Bladder 7.6%, Hepatobiliary 5.4% (all
    previously 0%); low-TMB types stay ≈0% (Glioma, Pancreatic, RCC, Prostate).
@@ -63,11 +63,11 @@ fell through to the legacy study-level path → empty `study_panel_map` → `wes
 
 ## Downstream impact (corrected)
 
-- **q043:** the hypermutator-exclusive restricted-driver fraction at ≥5% rises from 52.1%
+- **`question:0043-driver-cancer-type-breadth-distribution`:** the hypermutator-exclusive restricted-driver fraction at ≥5% rises from 52.1%
   (inclusive) to **68.1%** (was 60.4% on stale flags) — IntOGen's 63% is now *bracketed*. Breadth
   inflation by hypermutators is larger than the stale run implied (253 drivers lose breadth at ≥2%,
   186 at ≥5%).
-- **q047:** the per-sample driver-share dilution — previously "under-identified on panel data" — is
+- **`question:0047-hypermutation-confound-on-driver-tissue-specificity`:** the per-sample driver-share dilution — previously "under-identified on panel data" — is
   **now clearly detectable** across the 8 testable cancer types (driver share of load drops 0.10–0.22
   in hypermutators; CRC 0.89→0.76, NSCLC 0.93→0.78, cSCC 1.00→0.78). The "CRC under-flagging"
   follow-up is resolved here (it *was* this TMB bug).
@@ -75,6 +75,6 @@ fell through to the legacy study-level path → empty `study_panel_map` → `wes
 ## Not-yet-refreshed (follow-up)
 
 Any other artifact in `poc-2026-04-17` that consumed the old `samples_annotated` hypermutator flags
-(e.g. h08 covariate tables, signature `_exclusive` views, QA reports) may still be stale. The freq
+(e.g. `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and` covariate tables, signature `_exclusive` views, QA reports) may still be stale. The freq
 tables (`gene_cancer_study*`) were regenerated; a broader `snakemake` target sweep on the POC out_dir
 would refresh the rest. Flagged, not silently assumed clean.

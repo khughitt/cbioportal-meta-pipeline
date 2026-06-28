@@ -23,7 +23,7 @@ related:
 # Interpretation: t221(b) — standing-controls panel
 
 > **Verdict: four independent controls all point the same way, closing the candidate-set mutational-count
-> thread of h12 with no surviving alternative.** (1) **Intronic-fraction stratification** — the t218/t221a
+> thread of `hypothesis:0012-neural-gene-enrichment-length-histology-artifact` with no surviving alternative.** (1) **Intronic-fraction stratification** — the t218/t221a
 > residual is *entirely* a call-set-region-scope artifact: it lives in the 6 "all-region" WES studies
 > (intronic fraction ≥ 0.5; span-matched p **0.0002**) and is **absent** in the 84 exonic-clean studies,
 > where the candidates fall to the **20.9th** percentile (p **0.99**). pog570 was merely the largest of a
@@ -51,7 +51,7 @@ related:
 
 ## Findings
 
-**F1 — The residual is entirely an all-region call-set artifact (q016/q032 closed for this thread).**
+**F1 — The residual is entirely an all-region call-set artifact (`question:0016-panel-induced-ascertainment` / `question:0032-neural-gene-length-null` closed for this thread).**
 Stratifying the 91 WES studies by their measured intronic fraction:
 
 | stratum | n studies | candidate median pct | n in top-100 | span-matched p |
@@ -96,7 +96,7 @@ representative neural genes — they are representative **large CNS-structural /
 travels with the CFS panel (F2), not with the neural label (this F4). This is the direct mutation-count
 analogue of t216's expression-level result (a neural score cannot beat a size-matched CFS control).
 
-## Bearing on h12 — the candidate-set thread is closed from four sides
+## Bearing on `hypothesis:0012-neural-gene-enrichment-length-histology-artifact` — the candidate-set thread is closed from four sides
 
 Across the program the candidate-set mutational-count thread now has every non-span explanation tested and
 rejected: not coding length (t217 Arm A), dissolves under genomic span (t217 Arm B / F2 here), no positive
@@ -104,9 +104,11 @@ selection (t217 dndscv 0/9), not CNS histology (t218 F1), not panel ascertainmen
 hypermutators at the sample level (t221a), not germline leak (F3 here), and not a generic neural property
 (F4 here) — while the one surviving residual is fully localised to a 6-study all-region call-set class (F1)
 and the candidates are quantitatively CFS genes (F2). As with t218/t221a, this is recorded as strong
-supporting evidence for the **candidate-set mutational-count thread** of `h12`; `hypothesis:0012` (proposed)
+supporting evidence for the **candidate-set mutational-count thread** of
+`hypothesis:0012-neural-gene-enrichment-length-histology-artifact`; `hypothesis:0012` (proposed)
 and `question:0032` (active) are intentionally left in their prior states — one thread does not flip the
-hypothesis, and other h12 threads (expression/histology beyond mutation counts) are out of scope here.
+hypothesis, and other threads in `hypothesis:0012-neural-gene-enrichment-length-histology-artifact`
+(expression/histology beyond mutation counts) are out of scope here.
 
 ## Decision & redirect
 

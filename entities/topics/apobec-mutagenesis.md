@@ -167,12 +167,12 @@ suppressor genes (KMT2A/C/D, SETD2, ARID2, PBRM1, NCOR1) are disproportionately 
 
 ---
 
-## Implications for h08 and the cross-study signature-aetiology aggregation
+## Implications for `hypothesis:0007` and the cross-study signature-aetiology aggregation
 
 **Positive control expectation.** An agnostic within-tissue mRNA covariate scan for SBS2/SBS13
 exposure must recover APOBEC3A and/or APOBEC3B mRNA as the top-ranked covariates within
 APOBEC-active cancer types (bladder, breast, cervical, lung, HNSC). Failure to do so would
-falsify H08a for the APOBEC arm, indicating either: (a) the covariate feature space lacks A3A/B
+falsify the APOBEC positive-control arm, indicating either: (a) the covariate feature space lacks A3A/B
 expression, (b) within-study expression variance is insufficient, or (c) sample-count-limited
 signature decomposition introduces too much noise. Both papers (paper:MasPonte2020 reporting
 Spearman rho ~0.31–0.45 for A3A/B expression vs omikli burden, and paper:Carpenter2023
@@ -181,11 +181,11 @@ adequate sample size.
 
 **Joint A3A+A3B expression score.** Because A3A and A3B both contribute to SBS2/SBS13 with
 different context biases and possibly different mechanistic weights per cancer type
-(paper:Carpenter2023), H08's association model should test A3A and A3B jointly — either as a
+(paper:Carpenter2023), the association model should test A3A and A3B jointly — either as a
 combined expression score or as parallel predictors — rather than relying on either paralog
 alone. A3A-alone tests may be underpowered in cancers where A3B dominates, and vice versa.
 
-**Counterintuitive MMR covariate.** The h08 agnostic scan should be prepared to encounter MMR
+**Counterintuitive MMR covariate.** The agnostic scan should be prepared to encounter MMR
 pathway genes (MSH2, MSH6, EXO1) positively associated with SBS2/13 burden in MSS-restricted
 analyses (paper:MasPonte2020). This is a genuine mechanistic signal — not a confound — that
 would appear counterintuitive without the omikli framework. It should be flagged as an
@@ -201,7 +201,7 @@ studies. Cross-study meta-analysis of APOBEC signal should stratify or control f
 
 **Sub-signature attribution limitation.** The YTCW/RTCW pentanucleotide distinction between A3A
 and A3B (paper:Carpenter2023) requires WGS-scale mutation counts and cannot be reliably computed
-from the typical per-sample mutation counts in cBioPortal panel-sequencing data. The h08
+from the typical per-sample mutation counts in cBioPortal panel-sequencing data. The signature-association
 pipeline cannot routinely attribute SBS2/13 to A3A vs A3B at the sample level in most studies;
 this fractionation is a potential improvement only for WGS-scale studies (e.g., MC3 TCGA).
 

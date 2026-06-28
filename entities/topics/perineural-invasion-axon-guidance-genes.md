@@ -41,15 +41,15 @@ review: `paper:Lu2026` (PNI mechanisms); per-cancer-type peripheral nerve depend
 The PNI / axon-guidance machinery includes the **large IgCAM / adhesion / guidance genes** that
 structurally resemble the project's candidate list:
 
-- PNI actors named in the literature: **L1CAM, NCAM1, SLIT2, ROBO1/2, SEMA3A/3D, PLXNB1/D1,
+- PNI actors named in the literature: **L1CAM, NCAM1, SLIT2, ROBO1/2, SEMA3A/3D, PLXNB1, PLXND1,
   GDNF/RET, NGF/NTRK1, GAP43** — all large genes.
 - The project's candidates **LSAMP** and **OPCML** are GPI-anchored IgCAMs in the *same family*
   as L1CAM/NCAM1, but `paper:Lu2026` does **not** cite them as PNI actors — they are brain-
   expressed and recurrent in glioma. Their appearance is, per the Lu2026 reviewer, "expected
   under length-proportional background mutation without any selection."
 
-This makes PNI the sharpest setting to disentangle **H1 (selection on guidance genes)** from
-**H5 (length)** and **H4 (CNS)**: PNI is cancer-type-structured (PDAC ~100%, prostate 25–90%,
+This makes PNI the sharpest setting to disentangle **selection on guidance genes** from
+**gene-length artifact** and **CNS-localization artifact**: PNI is cancer-type-structured (PDAC ~100%, prostate 25–90%,
 HNSCC, CRC), so a *genuine* PNI-driven mutation signal would track PNI-prevalent cancer types,
 whereas a length artifact would be flat across types and a CNS artifact would localize to glioma.
 

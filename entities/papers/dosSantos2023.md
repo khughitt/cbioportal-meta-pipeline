@@ -54,7 +54,7 @@ upregulating genes specifically expressed in *other* tissues (ectopic expression
 pattern — downregulation of tissue-specific genes — was observed in 40% of normal tissues
 during healthy ageing, but the cancer version is more pervasive, statistically stronger, and,
 critically, fully independent of patient age. Both the downregulation of tissue-specific genes
-and the activation of tissue-unexpressed genes are associated with worse patient survival.
+and the activation of tissue-unexpressed genes are associated with worse patient survival [@dosSantos2023].
 
 ## Methods
 
@@ -90,7 +90,7 @@ FDR < 0.05.
 
 **Survival.** Expression signatures built from the overlap genes; median-expression cutoff to
 split groups; overall and disease-free survival analyzed on GEPIA2 (Mantel-Cox log-rank test,
-heatmap = log2 hazard ratio; significant at FDR < 0.1).
+heatmap = log2 hazard ratio; significant at FDR < 0.1) [@dosSantos2023].
 
 **Age-stratified analysis.** Top and bottom 30th-percentile age groups within each of 7 cancer
 types that had ≥10 normal controls per age group and no T-stage imbalance between groups
@@ -104,7 +104,7 @@ test; fold changes compared to assess magnitude differences.
 Across most of the 16 TCGA cancer types, tumors show statistically significant enrichment of
 **downregulated Tissue-Specific genes** (FDR < 0.05, Fisher's exact test). Among the
 statistically significant cancers, 20.5% to 51.3% of all tissue-specific genes for that
-tissue are downregulated DEGs:
+tissue are downregulated DEGs [@dosSantos2023]:
 
 - Minimum: THCA (thyroid) — 20.5% of tissue-specific genes downregulated in tumor
 - Maximum: KIRC (clear cell renal) — 51.3% of tissue-specific genes downregulated in tumor
@@ -141,7 +141,7 @@ call "loss of cellular identity" in cancer.
 
 Of 26 GTEx tissues analyzed, approximately **40%** (10 tissues) show significant enrichment of
 downregulated Tissue-Specific genes with age, *without* a corresponding significant result in
-the opposite direction:
+the opposite direction [@dosSantos2023]:
 
 Tissues with age-associated tissue-identity loss: adrenal gland, brain, colon, esophagus,
 lung, muscle, prostate, skin, small intestine, testis.
@@ -175,7 +175,7 @@ KIRC: 210 old-exclusive up-DEGs, 220 down-exclusive), the overlap analysis and f
 comparisons between age groups show no significant difference in direction or magnitude for
 the tissue-specificity signature. Only 5 individual genes show opposite expression patterns
 between age groups across 7 cancers (COX4I2 in HNSC; NR4A2 and NR4A1 in COAD; CYP26A1 and
-FDCSP in BRCA).
+FDCSP in BRCA) [@dosSantos2023].
 
 This age-independence supports the interpretation that loss of cellular identity is a
 *fundamental step in carcinogenesis* rather than a consequence of pre-existing age-related
@@ -206,7 +206,7 @@ Concretely:
 The effect sizes reported (20.5%–51.3% of tissue-specific genes downregulated per cancer,
 with strong ectopic expression of other-tissue genes) are large enough that using tumor
 expression would not merely add noise — it would structurally invert the specificity
-measurement for the genes that matter most.
+measurement for the genes that matter most [@dosSantos2023].
 
 ### Substantive overlap with oncofetal-developmental reprogramming
 

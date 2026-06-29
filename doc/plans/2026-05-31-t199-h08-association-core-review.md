@@ -20,9 +20,10 @@
 
 ## Summary
 
-The plan is the right shape (design-mode, pre-reg-already-exists) and its standout strength is that
-it surfaced three real provenance facts at plan time (smoking absent from cBioPortal clinical, UV
-proxy coarse + 82% metastatic, no `samples_annotated` for this run). But three issues survived,
+The `task:t199` review of `plan:0007-t199-h08-association-core` found the plan is the right shape
+(design-mode, pre-reg-already-exists) and its standout strength is that it surfaced three real
+provenance facts at plan time (smoking absent from cBioPortal clinical, UV proxy coarse + 82%
+metastatic, no `samples_annotated` for this run). But three issues survived,
 verified against the on-disk artifacts during this review: the **pooled Arm-C model cannot carry the
 NMF expression modules** (they are tissue-specific, non-commensurable, and differ in K — SKCM=5,
 BRCA=10) and the **rank statistic itself is never defined**. Because the rank-gate denominator and
@@ -141,11 +142,12 @@ the smoking-source entity (F2) via `/science:find-datasets`, with a verification
 
 ### F7 — [MINOR, Dim 8] Exposure→covariate join dedup rule unstated (verified low-risk)
 
-The exposure key is the **28-char MC3 aliquot** (`TCGA-2F-A9KO-01A-11D-A38G-08`); modules + clinical
-use the **15-char** sample barcode. The join requires slicing to 15 char. **Verified:** SKCM has
-466 exposure rows per signature = 466 distinct 15-char = 466 distinct cases (no collision), and the
-sample-type code (01/06) is *inside* the 15-char key, so the 82%-metastatic clinical aligns correctly
-to the MC3-sequenced sample. Risk is low but the rule is implicit.
+In the `task:t199` review of `plan:0007-t199-h08-association-core`, the exposure key is the
+**28-char MC3 aliquot** (`TCGA-2F-A9KO-01A-11D-A38G-08`); modules + clinical use the **15-char**
+sample barcode. The join requires slicing to 15 char. **Verified:** SKCM has 466 exposure rows per
+signature = 466 distinct 15-char = 466 distinct cases (no collision), and the sample-type code
+(01/06) is *inside* the 15-char key, so the 82%-metastatic clinical aligns correctly to the
+MC3-sequenced sample. Risk is low but the rule is implicit.
 
 **Recommendation.** Assert "one MC3 sample per case, sample-type-aware 15-char key" in WP1 and
 fail loudly if any case retains >1 sample after the collapse (check all 7 arms, not just SKCM).
@@ -154,8 +156,9 @@ fail loudly if any case retains >1 sample after the collapse (check all 7 arms, 
 
 Permutation null: no seed key, no permutation count. Modeling library/version unnamed.
 
-**Recommendation.** Name `h08_permutation_seed` (derive from `random_seed`), fix n_permutations
-(e.g. 1000), and pin the stats library (statsmodels) via uv.lock; record both in the datapackage.
+**Recommendation.** For `plan:0007-t199-h08-association-core`, name `h08_permutation_seed` (derive
+from `random_seed`), fix n_permutations (e.g. 1000), and pin the stats library (statsmodels) via
+uv.lock; record both in the datapackage.
 
 ### F9 — [MINOR, Dim 6] "Base rate" is ill-defined for continuous covariates
 

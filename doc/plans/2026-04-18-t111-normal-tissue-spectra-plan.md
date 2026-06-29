@@ -6,7 +6,7 @@
 
 **Architecture:** Single script decomposed into small testable functions (validator → filter → UBERON join → assay-metadata join → SigProfiler 96-context counts → aggregation → TSV writers). Follows the `process_bailey2018_drivers` pattern: `snakemake` object drives IO, functions are factored out for testability. Two-tier test suite: pure aggregation/validation tests (always run) plus one slow-marked integration test that exercises the real SigProfilerMatrixGenerator trinucleotide lookup.
 
-**Tech Stack:** Python 3.13+, pandas, pyarrow, SigProfilerMatrixGenerator, pytest (pure + slow markers), uv, Snakemake 9.
+**Tech Stack:** For `task:t111`, Python 3.13+, pandas, pyarrow, SigProfilerMatrixGenerator, pytest (pure + slow markers), uv, Snakemake 9.
 
 **Design spec:** `doc/plans/2026-04-18-t111-normal-tissue-spectra-design.md`
 
@@ -1977,7 +1977,7 @@ Expected: all pure tests pass; the `test_end_to_end_with_real_sigprofiler_grch37
 uv run --frozen pytest code/scripts/tests/test_extract_normal_tissue_spectra.py -m slow -v
 ```
 
-Expected: PASS. First run will download the GRCh37 reference bundle (~1.5 GB) — this may take several minutes.
+Expected for `task:t111`: PASS. First run will download the GRCh37 reference bundle (~1.5 GB) — this may take several minutes.
 
 - [ ] **Step 5: Commit**
 
@@ -2146,7 +2146,7 @@ print(f'  pooled snvs_per_mb range: {b[b.aggregation==\"pooled\"].snvs_per_mb.ag
 "
 ```
 
-Expected: rough per-source row counts match design estimates (~250 spectra rows total, ~100 burden rows); pooled `snvs_per_mb` falls in the 0.1–20 mut/Mb range for normal tissue.
+Expected for `task:t111`: rough per-source row counts match design estimates (~250 spectra rows total, ~100 burden rows); pooled `snvs_per_mb` falls in the 0.1–20 mut/Mb range for normal tissue.
 
 - [ ] **Step 4: Write the provenance doc**
 

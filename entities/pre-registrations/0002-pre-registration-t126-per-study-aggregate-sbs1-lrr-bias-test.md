@@ -59,12 +59,12 @@ Computed against the existing `t109/t110` artifacts under `results/signature-brc
 | `tcga_mc3` (BRCA) | 791 | 81,064 | **7,582** | 9.4% |
 | `msk_impact_2017` (BRCA) | 1,210 | 5,041 | **553** | 11.0% |
 
-**Projected 95% CI half-width on observed LRR fraction**, assuming the SBS1 attribution distributes across CE-covered and CL-covered panel territory in proportion to their base-pair extent (panel-coverage-corrected denominator, see §4):
+**Projected 95% CI half-width on observed LRR fraction** for `task:t126`, assuming the SBS1 attribution distributes across CE-covered and CL-covered panel territory in proportion to their base-pair extent (panel-coverage-corrected denominator, see §4):
 
 - `tcga_mc3`: with n = 7,582 and an observed LRR fraction near the cancer baseline (~0.40), the binomial 95% half-width is ≈ ±1.1 percentage points.
 - `msk_impact_2017`: with n = 553 and the same baseline, half-width ≈ ±4.1 percentage points.
 
-The Yaacov et al. [@Yaacov2023] normal-vs-cancer LRR delta is approximately **10–20 percentage points** (cancer ~0.40, normal ~0.55–0.65). Both cohorts therefore have nominal power to detect a clean shift; `msk_impact_2017` has uncomfortably narrow margin if the true shift is small (e.g., 5 pp from partial contamination).
+The Yaacov et al. [@Yaacov2023] normal-vs-cancer LRR delta is approximately **10–20 percentage points** (cancer ~0.40, normal ~0.55–0.65). Both cohorts therefore have nominal power to detect a clean shift; `msk_impact_2017` has uncomfortably narrow margin if the true shift is small (e.g., 5 pp from partial contamination) for `question:0009-sbs1-lrr-bias-as-normal-contamination-flag`.
 
 **Pre-registered power gate:** if pooled SBS1 attribution per study is `n < 500` after the panel-coverage correction is applied (i.e., counts inside CE+CL panel-overlap regions only), the test is declared underpowered before any inferential statistic is computed and `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` is deferred (revisit-condition: `WGS inputs ingested`).
 
@@ -77,7 +77,7 @@ Per-sample SigProfilerAssignment cosine-similarity quartiles for the BRCA assign
 | `tcga_mc3` | 0.796 | 0.724 | 0.880 | 633 / 791 (80%) | 268 / 791 (34%) |
 | `msk_impact_2017` | 0.383 | 0.264 | 0.588 | 158 / 1,210 (13%) | 30 / 1,210 (2%) |
 
-The MSK panel cohort is overwhelmingly poorly fit by the per-cancer-type-restricted COSMIC reference. The aggregate SBS1 count (553) is preserved by NNLS construction — sum of NNLS-decomposed per-sample exposures equals total mutations apportioned. But the *per-sample assignment of which mutations are SBS1* is unreliable for ~87% of MSK samples.
+The MSK panel cohort is overwhelmingly poorly fit by the per-cancer-type-restricted COSMIC reference. The aggregate SBS1 count (553) is preserved by NNLS construction — sum of NNLS-decomposed per-sample exposures equals total mutations apportioned. But the *per-sample assignment of which mutations are SBS1* is unreliable for ~87% of MSK samples (`task:t126`; `results/signature-brca-2026-04-22/`).
 
 **Mitigation:** rather than treat per-sample SBS1 exposure counts as discrete labels, compute per-mutation SBS1 *posterior probability* using the per-sample exposures as a Bayesian prior and the mutation's trinucleotide context as the likelihood (see §3). The aggregate LRR fraction is then a sum of fractional weights, not a count of dichotomized labels. This downweights mutations whose attribution is ambiguous and upweights mutations whose context is strongly SBS1-like (CpG C>T).
 
@@ -138,7 +138,7 @@ For `tcga_mc3` (a WES pseudo-study), `panel_*_bp_overlap` is the exonic CE/CL bp
 
 ### Bootstrap 95% CI
 
-Cluster bootstrap by sample (1,000 resamples): resample sample_ids with replacement within a study, recompute `f_LRR_corrected`. Report 95% percentile CI for the per-study estimate.
+Cluster bootstrap by sample for `task:t126` (1,000 resamples): resample sample_ids with replacement within a study, recompute `f_LRR_corrected`. Report 95% percentile CI for the per-study estimate.
 
 ## Expected Outcomes
 
@@ -154,7 +154,7 @@ The test outcome is one of three pre-registered verdicts. Each maps to a concret
 | Outcome | Definition | Action |
 |---|---|---|
 | **pass** | For at least one panel cohort (`msk_impact_2017`), the 95% CI for `f_LRR_corrected` lies **strictly above** the matched-cohort (`tcga_mc3`) CI **and** above 0.45 (mid-point between cancer baseline 0.40 and normal baseline 0.55) | Close `t124` as resolved with positive evidence; update `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` status to `active` with a documented operational threshold; spec the contamination flag as a downstream pipeline rule |
-| **retire** | The 95% CI for `f_LRR_corrected` in the panel cohort overlaps the matched cohort's CI **and** stays below 0.45, and the projected effective `n` is ≥ 500 (i.e., the test was adequately powered) | Close `t124` as resolved with negative evidence; update `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` status to `retired`; document the retirement reasoning in `doc/interpretations/` and stop further panel/WES SBS1 LRR work |
+| **retire** | The 95% CI for `f_LRR_corrected` in the panel cohort overlaps the matched cohort's CI **and** stays below 0.45, and the projected effective `n` is ≥ 500 (i.e., the test was adequately powered for `question:0009-sbs1-lrr-bias-as-normal-contamination-flag`) | Close `t124` as resolved with negative evidence; update `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` status to `retired`; document the retirement reasoning in `doc/interpretations/` and stop further panel/WES SBS1 LRR work |
 | **defer** | The effective `n` post-panel-correction is `< 500`, or the bootstrap CI half-width exceeds ±10 pp on the panel cohort | Close `t124` as resolved with insufficient evidence; update `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` status to `deferred` with revisit-condition `WGS inputs ingested`; do NOT retire the question |
 
 Outcomes are evaluated per cohort but the `question:0009-sbs1-lrr-bias-as-normal-contamination-flag` verdict is panel-cohort-driven (`tcga_mc3` is the matched control; the contamination signal must be detectable on the unmatched panel cohort to be operationally useful).
@@ -194,4 +194,4 @@ Any deviation from this pre-registration must be recorded in the closing interpr
 - why it was applied,
 - whether it changes the verdict.
 
-Specifically: the verdict thresholds in §6 (the 0.45 mid-point, the ±10 pp CI cap, the n ≥ 500 power floor) must not be moved post-hoc to change the verdict.
+Specifically: the verdict thresholds in §6 (the 0.45 mid-point, the ±10 pp CI cap, the n ≥ 500 power floor) must not be moved post-hoc to change the verdict for `pre-registration:0002-pre-registration-t126-per-study-aggregate-sbs1-lrr-bias-test`.

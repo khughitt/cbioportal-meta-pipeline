@@ -31,7 +31,7 @@ panel/universe artifacts → rule (2) per-cell GAM construction (Python, fan-out
 rule (4) cross-cell aggregation (Python). Sentinel feathers for skipped cells; vendored
 SELECT tarball with no network fallback.
 
-**Tech Stack:** Python 3.13 (pandas, pyarrow, click, rich, scipy.stats for Stouffer +
+**Tech Stack for `task:t078`:** Python 3.13 (pandas, pyarrow, click, rich, scipy.stats for Stouffer +
 BH), R 4.4 (CSOgroup/select v1.6.4, arrow), Snakemake 9, pytest + pyfakefs for Python
 unit tests, conda-forge + bioconda for env. uv for Python deps. No new top-level
 Python deps required (pandas / pyarrow / scipy / click / rich are already present).
@@ -3361,8 +3361,8 @@ Independent of rules (3)/(4) — emits its own headline feather directly.
 **Files:**
 - Create: `code/scripts/run_select_pathway_aggregated.R`
 
-This rule shares 95% of its code with `run_select.R`; we factor the shared logic into a
-small wrapper.
+For `task:t078` rule (5), this rule shares 95% of its code with `run_select.R`; we factor
+the shared logic into a small wrapper.
 
 - [ ] **Step 1: Write the wrapper script**
 

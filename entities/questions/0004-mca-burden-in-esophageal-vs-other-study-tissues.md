@@ -22,7 +22,7 @@ related:
 
 ## Summary
 
-Gao2023 finds that 10% of normal esophagus mucosa samples carry detectable mCAs, predominantly chr9q CNLoH events (137 of 147 esophageal mCAs). These chr9q events likely represent second hits to NOTCH1 (9q34) in normal esophageal clones that are positively selected in morphologically normal tissue without obligate progression to cancer. If any cBioPortal esophageal studies sequenced biopsy specimens with variable tumor purity (or enrolled subjects with high normal-tissue clone burden), chr9q LOH/CNLoH events would appear inflated in aggregate CNA frequency tables relative to their true tumor-intrinsic frequency. The question is whether this is detectable or practically significant in this pipeline's outputs.
+`paper:Gao2023` finds that 10% of normal esophagus mucosa samples carry detectable mCAs, predominantly chr9q CNLoH events (137 of 147 esophageal mCAs). These chr9q events likely represent second hits to NOTCH1 (9q34) in normal esophageal clones that are positively selected in morphologically normal tissue without obligate progression to cancer. If any cBioPortal esophageal studies sequenced biopsy specimens with variable tumor purity (or enrolled subjects with high normal-tissue clone burden), chr9q LOH/CNLoH events would appear inflated in aggregate CNA frequency tables relative to their true tumor-intrinsic frequency. The question is whether this is detectable or practically significant in this pipeline's outputs.
 
 ## Why It Matters
 

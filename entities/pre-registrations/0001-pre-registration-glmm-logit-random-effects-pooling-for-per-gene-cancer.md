@@ -295,7 +295,7 @@ This analysis cannot:
 
 ## Metric Selection Rationale
 
-**Primary metric: pooled log-odds (`β_{g,c}`) with 95% CI and prediction interval.**
+**Primary metric for `task:t077`: pooled log-odds (`β_{g,c}`) with 95% CI and prediction interval.**
 
 Rationale:
 
@@ -336,9 +336,9 @@ choice.
 
 ## Total Comparison Count
 
-Expected cell count based on the full-config run (~2000 gene-level rows in the pipeline
-filter × ~35 cBioPortal cancer types): **~70,000 candidate cells**, reduced by filtering
-to an expected **~10,000-15,000 pooled cells**.
+Expected cell count for `hypothesis:0002-cross-study-ranking-divergence-is-structured` based on the
+full-config run (~2000 gene-level rows in the pipeline filter × ~35 cBioPortal cancer types):
+**~70,000 candidate cells**, reduced by filtering to an expected **~10,000-15,000 pooled cells**.
 
 | Category | Count (est.) | Correction |
 |---|---|---|

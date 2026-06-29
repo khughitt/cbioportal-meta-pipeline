@@ -19,7 +19,7 @@ https://static-content.springer.com/esm/art%3A10.1038%2Fs41586-021-03836-1/Media
 
 **Retrieval date:** 2026-04-19
 
-**File size:** 6.3 MB
+**File size for `paper:Li2021` / `task:t111`:** 6.3 MB
 
 **SHA256:** `6276deb0f16ad45871347ca3e705907384a4d66d0eb40833be18b0a853d837a2`
 
@@ -55,7 +55,7 @@ https://www.biorxiv.org/content/biorxiv/early/2025/01/09/2025.01.07.631808/DC1/e
 
 **Retrieval date:** 2026-04-19
 
-**File size:** 2.3 MB
+**File size for `paper:Xu2025` / `task:t111`:** 2.3 MB
 
 **SHA256:** `16f8e04d7e082e926d7b9e5df3b497499910f97ab8202bd07bf994505a5aaf38`
 
@@ -65,7 +65,7 @@ https://www.biorxiv.org/content/biorxiv/early/2025/01/09/2025.01.07.631808/DC1/e
 - Supplementary Figures S1–S4: figure legends only
 - **NO per-variant mutation call table** (no chrom/pos/ref/alt rows)
 
-**Data availability statement (verbatim from PMC full text):**
+**Data availability statement for `paper:Xu2025` / `task:t111` (verbatim from PMC full text):**
 > "All protected mapped data of 265 GTEx samples have been deposited at the database of Genotypes and Phenotypes (dbGaP) and are publicly available as of the date of publication. The accession number is listed in the key resources table."
 
 **Key resources table entry:**

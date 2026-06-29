@@ -61,7 +61,7 @@ uv run --frozen python code/scripts/audit_treatment_exposed_studies.py \
   --output results/h10-treatment-exposure-audit-2026-06-01.tsv
 ```
 
-The current scaffold finds 167 non-TCGA studies in `config-full.yml`: 11 `flag_exposed`, 42 `review_for_fraction`, 2 `needs_manual_review`, and 112 `do_not_flag`.
+The current `task:t206` scaffold finds 167 non-TCGA studies in `config-full.yml`: 11 `flag_exposed`, 42 `review_for_fraction`, 2 `needs_manual_review`, and 112 `do_not_flag`.
 The review group currently includes 20 metadata-enriched metastatic/advanced studies and 22 studies with treatment-relevant clinical columns but neutral metadata.
 
 ## Required Input Inspection
@@ -126,7 +126,7 @@ Metastatic-only review cohorts should not be mixed into the primary treatment-ex
 ## Power Floor or Resolution Limit
 
 Null impact is interpretable only in cancer types with both enough callable samples and enough exposed/non-exposed contrast.
-If a cancer type has fewer than two contributing studies after exclusion or fewer than 100 callable non-exposed samples for a gene, label unchanged ranks as `underpowered_non_arbitrating`.
+For `task:t206` and `hypothesis:0009-treatment-induced-signature-frequency-contamination`, if a cancer type has fewer than two contributing studies after exclusion or fewer than 100 callable non-exposed samples for a gene, label unchanged ranks as `underpowered_non_arbitrating`.
 
 For rare cancers, the audit may still be useful for provenance but should not arbitrate `H10`.
 The expected high-value strata are cancers with treated and treatment-naive comparators in the same broad cancer family, such as breast, prostate, melanoma, bladder, lung, and colorectal cohorts.

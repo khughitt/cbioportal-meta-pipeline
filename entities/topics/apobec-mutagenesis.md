@@ -74,9 +74,9 @@ formally distinguishes two types of APOBEC3 mutation clusters detectable in WGS 
   with DSB repair (resection-generated ssDNA) rather than MMR. Relatively enriched for A3B-
   like RTCA context.
 
-Omikli accounts for ~66% of all TCW>K mutations pan-cancer; kataegis accounts for effectively
-zero of unclustered TCW>K mutations, and the ~32% remainder (A3-X) is attributed to BER-
-processed lesions or replication-origin-proximal events.
+In paper:MasPonte2020, omikli accounts for ~66% of all TCW>K mutations pan-cancer; kataegis
+accounts for effectively zero of unclustered TCW>K mutations, and the ~32% remainder (A3-X) is
+attributed to BER-processed lesions or replication-origin-proximal events.
 
 **MMR promotes A3 omikli — a counterintuitive coupling.** The key insight from paper:MasPonte2020
 is that functional MMR is required for omikli: repair of replication errors generates ssDNA
@@ -86,12 +86,13 @@ implication for covariate analysis is that higher MMR gene expression (MSH2, MSH
 associate *positively* with SBS2/13 burden within MMR-proficient tumor populations — opposite to
 intuition.
 
-**Functional impact of APOBEC3 mutagenesis.** A3 omikli is disproportionately enriched in
-early-replicating, gene-dense chromatin due to its MMR dependency. This gives APOBEC3 mutations
-the highest functional impact density (FID) of all major mutational processes: ~0.47 oncogenic
-mutations per thousand (OMPK) vs 0.24 for tobacco (SBS4) and 0.19 for UV (SBS7). The mechanism
-is not positive selection but spatial enrichment in coding sequence. Chromatin modifier and tumor
-suppressor genes (KMT2A/C/D, SETD2, ARID2, PBRM1, NCOR1) are disproportionately affected.
+**Functional impact of APOBEC3 mutagenesis.** In paper:MasPonte2020, A3 omikli is
+disproportionately enriched in early-replicating, gene-dense chromatin due to its MMR dependency.
+This gives APOBEC3 mutations the highest functional impact density (FID) of all major mutational
+processes: ~0.47 oncogenic mutations per thousand (OMPK) vs 0.24 for tobacco (SBS4) and 0.19 for UV
+(SBS7). The mechanism is not positive selection but spatial enrichment in coding sequence. Chromatin
+modifier and tumor suppressor genes (KMT2A/C/D, SETD2, ARID2, PBRM1, NCOR1) are disproportionately
+affected.
 
 ---
 

@@ -7,7 +7,7 @@
 
 ## Goal
 
-Treat MSK-IMPACT cohorts as a per-sample mixture of panel versions (IMPACT-341 / 410 / 468 / 505 / IMPACT-HEME-400) rather than a single per-study panel. For genes added in IMPACT-410+ (or IMPACT-468+, IMPACT-505+), restrict the per-(cancer, gene) sample-frequency denominator to samples whose panel actually covers the gene, and key the per-sample TMB denominator on the sample's own panel rather than a study-wide assumption.
+For `task:t070`, treat MSK-IMPACT cohorts as a per-sample mixture of panel versions (IMPACT-341 / 410 / 468 / 505 / IMPACT-HEME-400) rather than a single per-study panel. For genes added in IMPACT-410+ (or IMPACT-468+, IMPACT-505+), restrict the per-(cancer, gene) sample-frequency denominator to samples whose panel actually covers the gene, and key the per-sample TMB denominator on the sample's own panel rather than a study-wide assumption.
 
 ## Problem statement (recap)
 
@@ -138,13 +138,13 @@ panel from PANEL_ALIASES, or remove the study from panel_bearing_studies.")
 
 This catches the case where a panel can be resolved (alias known) and TMB-denominated (Mb override known) but cannot be used for gene-aware aggregation. TMB-only panels are valid; they just must not be used in panel-aware aggregation paths.
 
-Memory note: 25k samples × ≤505 genes per panel ≈ 12M rows max — fine for in-memory pandas.
+Memory note for `task:t070`: 25k samples × ≤505 genes per panel ≈ 12M rows max — fine for in-memory pandas.
 
 No `panel_aware` flag column is emitted; the count columns themselves convey panel-restriction (when `n_samples_inclusive` for a (cancer, gene) row is less than the cohort size for that cancer, restriction was applied).
 
 ### Component 4 — `code/scripts/compute_per_sample_tmb.py` (modified)
 
-Replace the current `panel_id = study_panel_map.get(study_id)` (line 162) with a per-sample lookup against `samples["panel_id"]`. Each sample's TMB denominator becomes `panel_callable_mb[sample.panel_id]`. ~10 lines changed; no new files.
+For `task:t070`, replace the current `panel_id = study_panel_map.get(study_id)` (line 162) with a per-sample lookup against `samples["panel_id"]`. Each sample's TMB denominator becomes `panel_callable_mb[sample.panel_id]`. ~10 lines changed; no new files.
 
 For samples where `panel_id` is `None` (WES studies), behavior is identical to today (falls through to `wes_default_callable_mb`).
 

@@ -130,7 +130,7 @@ exist:
 
 ### Panel-version drift within a single vendor
 
-MSK-IMPACT is itself four panels (341 → 410 → 468 → 505 genes) that accreted
+For `task:t070`, MSK-IMPACT is itself four panels (341 → 410 → 468 → 505 genes) that accreted
 genes across clinical-release cycles:
 
 - 2014–2016: 341-gene panel.

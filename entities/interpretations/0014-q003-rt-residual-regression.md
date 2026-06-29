@@ -57,7 +57,7 @@ Outputs:
 
 ### F1 -- The late-RT coefficient is near zero and the bootstrap CI crosses zero
 
-Model summary over 18,591 fitted genes:
+Model summary for `task:t163` over 18,591 fitted genes:
 
 | Term | Estimate |
 |---|---:|
@@ -65,7 +65,8 @@ Model summary over 18,591 fitted genes:
 | `beta_log_length` | 46.033 |
 | R2 | 0.058 |
 
-Bootstrap for `beta_rt_late_score` with 1,000 resamples:
+Bootstrap for `question:0003-replication-timing-as-gene-level-mutation-rate-confounder` and
+`task:t163` used 1,000 resamples:
 
 | Mean | 2.5% | 97.5% |
 |---:|---:|---:|
@@ -109,7 +110,7 @@ The joined table has:
 | CL | 445 | 0.509 |
 | unassigned | 13,521 | 0.403 |
 
-Only 445 genes receive a constitutive late (`CL`) assignment, and most top dNdScv genes are
+Only 445 genes receive a constitutive late (`CL`) assignment in the `task:t163` join, and most top dNdScv genes are
 `unassigned`. This makes the current gene-level RT map a weak instrument for explaining top-rank
 driver residuals.
 

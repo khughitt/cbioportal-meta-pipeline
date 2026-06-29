@@ -104,7 +104,7 @@ The glioma effects in `/data/packages/cbioportal/full/summary/mut/table/gene_can
 Among interpretable glioma rows, the mean `delta_mutagenic_primary` is 0.00048, with a minimum of -0.0105 and a maximum of 0.0158.
 The top positive glioma deltas include `TMEM178B`, `SLC15A5`, `PITPNC1`, and `CD38`; these should be treated as denominator-sensitivity rows, not as mechanistic treatment-signature hits.
 
-The glioma read from `doc/interpretations/2026-06-01-t206-treatment-exposure-audit.md` also has a specific longitudinal confound.
+The glioma read from `interpretation:0029-t206-treatment-exposure-audit` and `task:t208` also has a specific longitudinal confound.
 GLASS is a longitudinal glioma study, and `TMZ_TREATMENT` is entangled with surgical episode and recurrence/progression.
 In the raw clinical table, sample types include 215 primary tumors and 229 recurrence samples.
 The non-`Yes` group is not simply pretreatment primary glioma: among the 161 blank-TMZ samples, 125 are recurrence samples and 36 are primary samples; among the 104 explicit `No` samples, 50 are recurrence samples and 54 are primary samples.

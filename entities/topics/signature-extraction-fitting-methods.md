@@ -351,9 +351,10 @@ literature and should serve as unconditional pass/fail positive controls for h08
 | SBS2 + SBS13 | APOBEC3A/B (breast, bladder) | paper:Manders2022, paper:Miura2022, paper:Wan2022 |
 | SBS6/SBS15/SBS20/SBS21/SBS26/SBS44 | MMR deficiency / MSI-H | paper:Zou2018, paper:Lee2022, paper:Wan2022, paper:Lee2023a |
 
-Concordance thresholds: expect Kendall tau-b ≥ 0.90 between tools for SBS2/13 and SBS1; expect
-≥ 0.70 for SBS4 and SBS7. Values below these signal either calibration failure or tool-specific
-artefact.
+Concordance thresholds for `method:h08-agnostic-association-model` and
+`hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`: expect
+Kendall tau-b ≥ 0.90 between tools for SBS2/13 and SBS1; expect ≥ 0.70 for SBS4 and SBS7. Values
+below these signal either calibration failure or tool-specific artefact.
 
 SBS3 (HRD/BRCA-deficiency) is **not** a reliable unconditional positive control because of
 systematic over-assignment and low cross-tool concordance (paper:Wu2023; paper:Jin2024). If HRD

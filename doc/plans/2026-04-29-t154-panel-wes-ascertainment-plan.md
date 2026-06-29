@@ -196,7 +196,7 @@ Run the CLI from Task 3.
 
 - [ ] **Step 2: Inspect outputs**
 
-Use a short Python readback to report mixed cancer types, K=100 panel-vs-WES Jaccard, Bailey recovery, and regression slopes.
+For `task:t154`, use a short Python readback to report mixed cancer types, K=100 panel-vs-WES Jaccard, Bailey recovery, and regression slopes.
 
 - [ ] **Step 3: Write interpretation**
 

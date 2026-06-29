@@ -974,7 +974,7 @@ git commit -m "feat: per-study cohort composition rollup with dominance classes"
 
 - [ ] **Step 1: Add the two rules after `rule annotate_hypermutators`**
 
-Locate `rule annotate_hypermutators` near line 748 of `code/workflows/Snakefile`. Immediately after that rule's block, insert:
+For `task:t052`, locate `rule annotate_hypermutators` near line 748 of `code/workflows/Snakefile`. Immediately after that rule's block, insert:
 
 ```python
 rule annotate_cohort_stage:

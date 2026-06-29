@@ -38,7 +38,7 @@ before implementation.
 
 ### Assumption audit — exposure label vs signature-high exclusion (highest priority)
 
-The plan's `related` block and `q027` both name *"excluding therapy-signature-high samples
+The plan's `related` block and `question:0027-does-excluding-treatment-signature-high-samples` both name *"excluding therapy-signature-high samples
 (SBS11/31/35/87)"* as the impact test. But every cohort view in this plan excludes samples by
 **treatment-exposure label** (study-level or sample-level clinical rule), not by measured
 signature exposure. These are different sets:
@@ -114,7 +114,7 @@ ID mismatch.
 **Recommendation:** Add an explicit QA assertion: every sample-level rule row must match a
 canonical `sample_id` after normalization; unmatched raw IDs hard-fail (consistent with the
 plan's "missing clinical columns hard-fail" stance). Note also that `create_freq_tables.py`
-consumes `samples_annotated.feather`, not `samples.feather` (Snakefile:95,115) — WP2/WP3
+consumes `samples_annotated.feather`, not `samples.feather` for `task:t207` (Snakefile:95,115) — WP2/WP3
 should name the same input to keep panel_id and hypermutator flags aligned.
 
 ### Integration — output column names diverge from the canonical builder

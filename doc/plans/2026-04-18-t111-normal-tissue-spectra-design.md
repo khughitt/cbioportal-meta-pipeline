@@ -136,7 +136,7 @@ Long format, TSV, one row per `(source_id, tissue_uberon, aggregation, donor_id)
 | `total_snvs` | int | Sum of SNVs across the 96 contexts in this row |
 | `A[C>A]A` … `T[T>G]T` | float or int | 96 columns, one per SigProfiler-standard trinucleotide context |
 
-Row counts per tissue ≈ `1 (pooled) + 1 (averaged) + n_donors`. With ~50 unique tissues at median 3–4 donors each, expect ~250 rows total.
+For `task:t111`, row counts per tissue ≈ `1 (pooled) + 1 (averaged) + n_donors`. With ~50 unique tissues at median 3–4 donors each, expect ~250 rows total.
 
 Context-column values:
 - integer counts when `value_type=counts` (aggregation ∈ {pooled_counts, per_donor})
@@ -166,7 +166,7 @@ This is the `q007` null-model input.
 
 ### `doc/datasets/normal-tissue-spectra.md`
 
-Companion provenance file (target ≤100 lines): per-tissue n_donors, donor IDs, source figure/table reference, notable exposures (e.g. Li2021 PN2 liver = aristolochic acid, PN9 liver = tobacco), UBERON mapping rationale for non-obvious choices, input-file retrieval URLs + hashes, extraction-run stderr summary.
+Companion provenance file for `task:t111` (target ≤100 lines): per-tissue n_donors, donor IDs, source figure/table reference, notable exposures (e.g. Li2021 PN2 liver = aristolochic acid, PN9 liver = tobacco), UBERON mapping rationale for non-obvious choices, input-file retrieval URLs + hashes, extraction-run stderr summary.
 
 ## Extraction subtleties
 

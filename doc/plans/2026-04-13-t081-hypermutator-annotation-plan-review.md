@@ -111,4 +111,4 @@ The plan is broadly sound in architecture and addresses the core audit findings 
 
 ## Commit Record
 
-This review does not commit changes; it is a standalone assessment document. Implementation should proceed only after addressing the three HIGH findings and confirming the decision criteria (lines 555–559) are achievable with the studies in scope.
+This review does not commit changes; it is a standalone assessment document. Implementation should proceed only after addressing the three HIGH findings and confirming the `task:t081` decision criteria (lines 555–559) are achievable with the studies in scope.

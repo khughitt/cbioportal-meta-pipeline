@@ -23,7 +23,7 @@ panels that close the loop with `question:0011-gene-length-as-literature-attenti
 | Length-adjusted | `mean_adj` = `mean_inclusive / protein_length` | First-order length correction — biased toward tiny proteins (`question:0011-gene-length-as-literature-attention-confounder` notebook empirical result) |
 | Selection-based | dNdScv per-cancer-type `qglobal_cv`, rolled up per gene by min-q across cancer types | Excess of non-synonymous over synonymous mutations relative to trinucleotide-aware background — length-aware by construction |
 
-The empirical result from `code/notebooks/q011_length_adjustment_topn_comparison.py`
+The empirical `task:t131` input result from `code/notebooks/q011_length_adjustment_topn_comparison.py`
 (Spearman ρ = 0.372, Jaccard@100 = 0.015 between raw and length-adjusted)
 established that neither raw counts nor length-only adjustment produces a
 defensible head-of-distribution. The deliverable answers two coupled questions:

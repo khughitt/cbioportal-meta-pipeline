@@ -109,7 +109,7 @@ against the realized join is an **activation precondition** (alongside `task:t17
 (textbook effects at n ≈ 470–1,089); arm C's effective n is the one most likely eroded by the
 RNA-seq intersection, consistent with it being the tolerated miss under the 2-of-3 rule.
 
-**Activation satisfied (2026-05-31, t199 WP4).** The three TBC columns are now filled against the
+**Activation satisfied (2026-05-31, task:t199 WP4).** The three TBC columns are now filled against the
 realized MC3 ∩ signature-refit ∩ covariate join (count-floor-passing primary grid), so the gate is
 read. All three arms cleared their power floor; arm C's RNA-seq intersection eroded less than feared
 (post-join n 1,934, 97.4% complete) and it is in fact the *only* primary pass — the tolerated miss
@@ -132,7 +132,8 @@ sign:
   the two exogenous arms — this is the arm most likely to miss, by design tolerated under the
   2-of-3 rule.
 
-Two further textbook links — **MMR/MSI → SBS6/15/26** and **POLE → SBS10** — are tracked as
+For `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`,
+two further textbook links — **MMR/MSI → SBS6/15/26** and **POLE → SBS10** — are tracked as
 **exploratory secondary positive controls** (not part of the 2-of-3 gate), because their covariates
 (MSI status, POLE hotspot flag) are already pipeline-derived annotations and a hit there is
 corroborating but not load-bearing.
@@ -143,7 +144,7 @@ how much of the naive exposure→signature story is tissue collinearity (rival *
 
 ## Expectations
 
-The interpretive numerical commitment is a **rank-position gate**: within the relevant tissue
+For `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`, the interpretive numerical commitment is a **rank-position gate**: within the relevant tissue
 stratum, the known covariate must rank in the **top 3** of all tested covariates by adjusted effect
 size against its matching signature, with the expected sign, at **FDR q < 0.05**. These rank
 expectations are **literature-backed only** (no prior own-analysis of this exact agnostic pipeline
@@ -217,7 +218,8 @@ status for the retightened arm.
 
 ## Decision Criteria
 
-Three pre-specified **confirmatory arms**. An arm **passes** iff, within its tissue stratum, the
+For `hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`,
+three pre-specified **confirmatory arms**. An arm **passes** iff, within its tissue stratum, the
 known covariate ranks **top-3** among all tested covariates by adjusted effect against its matching
 signature, with the **expected (positive) sign**, at **FDR q < 0.05**.
 

@@ -85,7 +85,8 @@ the wrong yardstick.
 **F2 — A genomic-span / CFS null dissolves and inverts the enrichment.** In `full`, the candidate
 median percentile moves from 0.78 % (raw) to **82.6 %** on mutations-per-genomic-kb (MWU p ≈ 1.0,
 **0/9** in the top 100); in `pan-cancer`, to **98.9 %**. Once mutation count is expressed per unit of
-genomic locus, the candidates are **below-median**, not enriched. The confound is locus size.
+genomic locus, the candidates are **below-median**, not enriched. The confound is locus size
+(`task:t217`; `results/neural-gene-span-null-2026-06-08/`).
 
 **F3 — The candidates are top-1 % genomic loci (the positive confound), though mid-pack proteins.**
 Candidate median genomic span is **1,117 kb vs a 25 kb genome median — the 99.4th percentile**
@@ -94,12 +95,13 @@ Candidate median genomic span is **1,117 kb vs a 25 kb genome median — the 99.
 2/9 (RBFOX1, LSAMP) are in the curated canonical-CFS list. By contrast the canonical neural
 **effectors** sit at only the **74th** span percentile (median 67 kb) — they are *longer proteins* but
 *smaller loci*, which is exactly why they rank lower in raw mutation count and why a length model
-mislabels the situation.
+mislabels the situation (`task:t217`; `results/neural-gene-span-null-2026-06-08/`).
 
 **F4 — No positive selection.** Across 68 cancers, **0/9 candidates are dndscv-significant** at q ≤ 0.05
 in *any* cancer (`min_qglobal` 0.064–0.835; NKAIN2 lowest at 0.064, still NS). This is the passenger /
 structural-instability fingerprint expected of CFS loci, not driver selection — it removes the
-positive-selection ("selected neural hijacking") reading for these genes.
+positive-selection ("selected neural hijacking") reading for these genes
+(`task:t217`; `results/neural-gene-span-null-2026-06-08/`).
 
 **F5 — Span explains the bulk; a small residual survives only in the panel-heavy config.** Under tight
 k-NN span matching, a *random gene of the same size* already sits at the ~98th raw-count percentile

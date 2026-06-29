@@ -51,7 +51,7 @@ The dominant interpretive risks for panel data are documented in the topic stubs
   → CH-driver gene spectrum + therapy-selectivity quantification.
 
 **Reviews:** Chakravarty D, Solit DB. 2021. "Clinical cancer genomic profiling." *Nat Rev Genet*
-22:483–501. PMID 33762738.
+22:483–501. PMID 33762738 [@ChakravartySolit2021].
 
 **Cross-panel normalization / TMB harmonization** (full topic: `cross-panel-normalization-methods`):
 
@@ -74,7 +74,8 @@ The dominant interpretive risks for panel data are documented in the topic stubs
 
 **Data sources:** GENIE per-assay BEDs at Synapse syn24179663 (v9.1) — the only population-scale
 open BED corpus; FoundationOne / Tempus / Caris BEDs are proprietary. MSK-IMPACT panel-version
-gene lists in cBioPortal study definitions (341 → 410 → 468 → 505).
+gene lists in cBioPortal study definitions (341 → 410 → 468 → 505), tracked through
+`topic:targeted-panel-sequencing-bias` and paper:Zehir2017.
 
 ## Audit checklist
 

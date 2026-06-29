@@ -62,7 +62,8 @@ balanced design: the combined ranking is expected to be WES-dominated.
 ### F2 -- Combined top-K is almost identical to WES top-K
 
 At K=100, WES-vs-combined overlap is 97/100 (Jaccard 0.942), and the shared-pair rank Spearman is
-0.999. At K=25, WES-vs-combined overlap is 24/25 (Jaccard 0.923).
+0.999. At K=25, WES-vs-combined overlap is 24/25 (Jaccard 0.923)
+(`task:t154`; `/data/packages/cbioportal/pan-cancer/summary/panel_wes_ascertainment/topk_overlap.feather`).
 
 This is not surprising given the denominators: WES top-100 median `n_total` is 5,654, combined
 top-100 median `n_total` is 6,621, while panel top-100 median `n_total` is only 314.
@@ -96,7 +97,8 @@ Bailey driver recovery [@Bailey2018]:
 | 500 | 0.746 | 0.658 | 0.726 |
 
 CGC tier-1 recovery remains high but also drops in panel-only rankings at broader K:
-K=100 is 1.000 for WES/combined and 0.890 for panel.
+K=100 is 1.000 for WES/combined and 0.890 for panel
+(`task:t154`; `/data/packages/cbioportal/pan-cancer/summary/panel_wes_ascertainment/topk_overlap.feather`).
 
 Interpretation: panel-only high-frequency rankings remain biologically enriched, but the panel
 surface is narrower and less Bailey-concordant than WES at the same K.
@@ -117,7 +119,7 @@ The combined regression is numerically identical to WES because the combined ran
 WES-dominated and covers the same gene universe. The panel regression covers only 465 genes and
 has a much larger mutation-rate slope. This supports including assay stratum in `t129`: otherwise
 the literature-attention model will estimate a WES/global effect and silently ignore the panel
-surface.
+surface (`task:t154`; `/data/packages/cbioportal/pan-cancer/summary/panel_wes_ascertainment/attention_regression.feather`).
 
 ## Verdict
 

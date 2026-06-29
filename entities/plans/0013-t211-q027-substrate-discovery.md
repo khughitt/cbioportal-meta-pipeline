@@ -31,7 +31,7 @@ This task asks a narrower readiness question: is there another configured study 
 
 t210 audited only five cohorts selected from the t206-t209 treatment-label work.
 That was appropriate for a probe, but the t210 interpretation explicitly limits the "no second substrate" conclusion to that planned candidate set.
-The configured project has 198 studies, many of which were not inspected for SBS11/SBS31/SBS35/SBS87 feasibility.
+For `task:t211` and `question:0027-does-excluding-treatment-signature-high-samples`, the configured project has 198 studies, many of which were not inspected for SBS11/SBS31/SBS35/SBS87 feasibility.
 
 The risk is asymmetric.
 Running full per-sample restricted signature assignment across all configured studies is expensive and likely to produce many panel or low-count unevaluable samples.
@@ -134,7 +134,7 @@ The note should state:
 ### Triage before assignment
 
 Chosen: use mutation-count and metadata triage before restricted assignment.
-Rejected: run per-sample therapy-signature assignment for all 198 studies immediately.
+Rejected for `task:t211`: run per-sample therapy-signature assignment for all 198 studies immediately.
 Reason: `q027` assignment is only informative where count-floor and comparator support exist; the cheap gate avoids spending time on obviously unevaluable panel or PDX strata.
 
 ### Metadata can nominate, not decide

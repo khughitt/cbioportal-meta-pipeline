@@ -62,8 +62,8 @@ Top primary contrast rows:
 | BLCA | `module_05` | 343 | +0.452 | 3.78e-02 | 0.451 | weak |
 | BRCA | `module_09` | 176 | +0.572 | 4.51e-02 | 0.451 | weak |
 
-Only the SKCM module survives an exploratory BH q < 0.05 threshold in the primary contrast family.
-The CESC module is suggestive at q < 0.10 but not strong.
+For `task:t182`, only the SKCM module survives an exploratory BH q < 0.05 threshold in the primary contrast family.
+The CESC module is suggestive at q < 0.10 but not strong for `question:0023-sbs40-vs-sbs5-clocklike-expression-module`.
 
 ## Secondary Reads
 

@@ -63,7 +63,7 @@ aggregate target `all_h08_expression_modules`).
 
 **Reproducibility.** All restarts + the final fit are seeded deterministically from
 `random_seed` (=0). The 50 restarts are parallelised across processes with single-threaded BLAS
-(`threadpoolctl`), which makes the result independent of `nmf_n_jobs` — confirmed bit-identical
+(`threadpoolctl`), which makes the `task:t198` result independent of `nmf_n_jobs` — confirmed bit-identical
 cophenetic across n_jobs=4 and n_jobs=8 (0.864316). (An earlier unpinned multi-threaded BLAS run
 gave a marginally different value via non-deterministic reduction order; pinning to one thread is
 both faster here and reproducible.)

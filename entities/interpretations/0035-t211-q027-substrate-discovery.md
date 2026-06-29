@@ -32,7 +32,7 @@ It extends the `task:t210` measured-signature arm through `task:t211`.
 
 **Verdict:** [?] The configured-study discovery audit found no second primary patient `q027` substrate beyond GLASS.
 
-t211 broadened the t210 feasibility search from the five planned treatment-signature candidates to all 198 configured studies in `code/config/config-full.yml`.
+For `task:t211`, the audit broadened the t210 feasibility search from the five planned treatment-signature candidates to all 198 configured studies in `code/config/config-full.yml`.
 The audit produced 684 study/cancer-type strata.
 Only `difg_glass_2019` passed the `q027` discovery gate, so the t210 measured-signature arm remains a one-study GLASS/SBS11 result and remains non-arbitrating for `H10`.
 

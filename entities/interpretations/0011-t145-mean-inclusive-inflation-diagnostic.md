@@ -74,7 +74,7 @@ top-15 genes drop sharply:
 The recomputed top raw gene is `TP53` (`fixed_mean_inclusive = 0.316983`).
 Bailey recovery in the raw top-100 improves from 0 to 1, but common-fragile-site
 and long passenger genes remain prominent. That residual signal is no longer the
-same 65-84% inflation artifact and should be handled as a separate methodology
+same `task:t145` 65-84% inflation artifact and should be handled as a separate methodology
 question about the raw per-gene rollup.
 
 ## Fix Path

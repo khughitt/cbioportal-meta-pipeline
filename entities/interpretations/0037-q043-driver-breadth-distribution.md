@@ -60,7 +60,7 @@ corrected post-TMB-fix flags; see
 pan-cancer" is a statement about a chosen recurrence bar and a hypermutator-handling choice, not an
 intrinsic property.
 
-**2. The hub set reproduces IntOGen.** TP53 is the single broadest driver (breadth 33/57), followed
+**2. The hub set reproduces IntOGen.** For `question:0043-driver-cancer-type-breadth-distribution`, TP53 is the single broadest driver (breadth 33/57), followed
 by PIK3CA, ARID1A, PTEN, RB1, NF1, KRAS, CDKN2A. **8 of IntOGen's 12 cancer-wide drivers** are
 panel-covered here, and all 8 sit at the top of the distribution (median breadth ≈22–24 at the 1–2%
 grade). The 4 missing (KMT2D, KMT2C, LRP1B, FAT4) are not on the MSK-IMPACT panel.

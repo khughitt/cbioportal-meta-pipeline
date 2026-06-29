@@ -162,7 +162,7 @@ The primary mutagenic-treatment layer has only one whole-study label and no samp
 The highest-priority mixed mutagenic cohorts from the t206 audit, including `difg_glass_2019` and `blca_cornell_2016`, are not yet represented as deterministic sample-level mutagenic labels in this first impact table.
 
 In the t206 audit source `doc/interpretations/2026-06-01-t206-treatment-exposure-audit.md`, `no_detected_treatment_signal` is not the same as confirmed treatment-naive.
-It includes samples from studies where the audit found no treatment signal, plus positive-naive samples, but audit recall over the 109 no-metadata-signal studies remains unmeasured.
+It includes samples from studies where the `task:t207` audit found no treatment signal, plus positive-naive samples, but audit recall over the 109 no-metadata-signal studies remains unmeasured.
 
 The output summarizes frequency-table sensitivity to treatment labels.
 It does not condition on measured therapy-signature exposure, trinucleotide-context compatibility, treatment timing, cancer-stage differences, or panel ascertainment beyond the existing per-study frequency machinery.

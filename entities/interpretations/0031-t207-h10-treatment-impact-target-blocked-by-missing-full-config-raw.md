@@ -57,7 +57,7 @@ The missing inputs were the canonical cBioPortal raw files for `aml_stjude_2024`
 /data/raw/cbioportal/aml_stjude_2024/data_clinical_patient.txt
 ```
 
-A direct raw-substrate audit found 198 configured studies and 2 studies with missing required raw files.
+A direct raw-substrate audit for `task:t207` found 198 configured studies and 2 studies with missing required raw files.
 `aml_stjude_2024` lacks `data_mutations.txt`, `data_clinical_sample.txt`, and `data_clinical_patient.txt`.
 `msk_impact_50k_2026` lacks those three files plus `data_gene_panel_matrix.txt`, which is required because it is listed in `panel_bearing_studies`.
 
@@ -80,7 +80,8 @@ That matches the workflow's own caution that cBioPortal re-requests can be block
 
 ## Data Quality Checks
 
-Methodological finding: the configured full run expects 198 studies, but the local raw substrate currently satisfies the required file contract for only 196 of them.
+Methodological finding for `task:t207` and
+`hypothesis:0009-treatment-induced-signature-frequency-contamination`: the configured full run expects 198 studies, but the local raw substrate currently satisfies the required file contract for only 196 of them.
 
 The missing files are not downstream `H10` outputs and not optional QA sidecars.
 They are upstream raw inputs required to build `metadata/samples_annotated.feather` and the per-study mutation feathers that the `H10` views consume.

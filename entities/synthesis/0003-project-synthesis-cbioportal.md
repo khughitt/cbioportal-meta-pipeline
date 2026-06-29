@@ -82,9 +82,10 @@ identified as a *structured* rather than generic perturbation.
 
 The strongest **methodological** assets sit in the signature program. The per-sample SBS-refit
 layer is hardened (COSMIC version-pinned, caller-provenance flagged, count-floored) and has been
-shown to deliver coherent exposures (SKCM SBS7a+b ≈ 0.83; lung SBS4 ≈ 0.28–0.36). On that
-substrate, the one clean positive-control success is APOBEC expression → SBS2/13 (BH-q ≈ 4e-12,
-permutation p = 0.001, robust to cis-mutation and proliferation conditioning).
+shown by `interpretation:0022-t197-mc3-7strata-sbs-refit` to deliver coherent exposures (SKCM
+SBS7a+b ≈ 0.83; lung SBS4 ≈ 0.28–0.36). On that substrate, the one clean positive-control success is
+APOBEC expression → SBS2/13 (BH-q ≈ 4e-12, permutation p = 0.001, robust to cis-mutation and
+proliferation conditioning).
 
 What is **contested or unresolved**: the `h08` positive-control gate is inconclusive, so discovery
 work (H08b) is correctly locked; the residual large-protein (TTN) signal after trinucleotide
@@ -119,9 +120,10 @@ is exactly its batch-covariate substrate) but analysis-empty; t212 is the first 
 has not run.
 
 **`h10` — treatment-induced frequency contamination (active).** A concentrated 2026-06-01 burst built
-an executable exposure-label substrate at full-config scale (383,477 samples), but the measured-
-signature `q027` arm finds only one adequate patient cohort (36 SBS11-high GLASS samples), leaving the
-cross-study biological claim non-arbitrating.
+an executable exposure-label substrate at full-config scale in
+`interpretation:0030-t207-h10-treatment-impact-full-config` (383,477 samples), but the measured-
+signature `q027` arm finds only one adequate patient cohort (36 SBS11-high GLASS samples), leaving
+the cross-study biological claim non-arbitrating.
 
 **`h11` — joint indel+SBS discrimination (active).** Earliest-stage active hypothesis; gated on an
 indel-availability census (t188) that has not started.
@@ -209,6 +211,7 @@ load-bearing connective tissue between the ranking backbone (`q011`, `q014`) and
 (`q020`, `q021`, `q024`) — and a small, coherent orphan population sits off the spine. The standout is a
 **contamination-QC spine** (orphan question `q009` plus four SBS1/LRR diagnostic interpretations) that a
 proposed candidate hypothesis **`h07`** would absorb once WGS inputs are ingested; the test is currently
-structurally unpowered on panel data (MSK-IMPACT covers only ~20.7 kb of late-replicating territory,
-23:1 CE:CL). See `doc/reports/synthesis/_emergent-threads.md` for the full bridge map and orphan
-inventory (**orphan question count: 1**; orphan interpretations: 6).
+structurally unpowered on panel data per `synthesis:0004-emergent-threads-cbioportal` (MSK-IMPACT
+covers only ~20.7 kb of late-replicating territory, 23:1 CE:CL). See
+`doc/reports/synthesis/_emergent-threads.md` for the full bridge map and orphan inventory (**orphan
+question count: 1**; orphan interpretations: 6).

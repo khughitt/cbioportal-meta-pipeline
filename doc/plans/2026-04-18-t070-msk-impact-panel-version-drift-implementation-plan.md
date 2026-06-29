@@ -6,7 +6,7 @@
 
 **Architecture:** A new pure module `resolve_panel_id.py` normalizes the three observed panel-naming conventions and applies a 3-step resolution chain (matrix file → sample-id suffix → study-level fallback). `convert_to_feather.py` ingests the per-sample `data_gene_panel_matrix.txt` and attaches a canonical `panel_id` column to `samples.feather`. Downstream, `compute_per_sample_tmb.py` keys its denominator on per-sample `panel_id`, `create_freq_tables.py` makes its gene-bearing denominators panel-aware, and `create_combined_gene_cancer_freq_table.py` adds sample-weighted callability columns.
 
-**Tech Stack:** Python 3.11+, pandas, pyarrow, snakemake 9, pytest, uv.
+**Tech Stack for `task:t070`:** Python 3.11+, pandas, pyarrow, snakemake 9, pytest, uv.
 
 **Spec:** `doc/plans/2026-04-18-t070-msk-impact-panel-version-drift-design.md`. Read the spec before starting; it defines the contract every task implements.
 
@@ -728,7 +728,7 @@ Expected: FAIL — current implementation uses one denominator per study.
 
 - [ ] **Step 5: Refactor `_lookup_panel_size_for_study` → `_lookup_panel_size_for_sample`**
 
-Replace the existing function (~line 155 onwards) with:
+For `task:t070`, replace the existing function (~line 155 onwards) with:
 
 ```python
 def _lookup_panel_size_for_sample(
@@ -1367,7 +1367,8 @@ print(df['panel_id'].value_counts(dropna=False))
 "
 ```
 
-Expected: ~2,800 `MSK-IMPACT-341` + ~8,100 `MSK-IMPACT-410`. Matches Problem Statement audit table.
+Expected for `task:t070`: ~2,800 `MSK-IMPACT-341` + ~8,100 `MSK-IMPACT-410`. Matches
+Problem Statement audit table.
 
 - [ ] **Step 4: Commit**
 

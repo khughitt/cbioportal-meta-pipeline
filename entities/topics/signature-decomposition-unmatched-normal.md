@@ -71,7 +71,7 @@ This synthesis covers SBS (single-base substitution) signatures only. DBS and ID
 
 **SigProfilerAssignment** (Díaz-Gay et al., Bioinformatics 2023; PMID 38096571) is the current Alexandrov-lab standard. It implements a forward stagewise selection algorithm and NNLS refitting against COSMIC v3.x SBS signatures, and is the first tool that also supports copy-number signatures and probabilistic per-mutation assignment. The tool accepts a "activities" constraint — the analyst can specify which signatures are admissible for a given cancer type (following COSMIC's per-cancer-type signature lists). It does not natively model a normal-tissue prior; the analyst must exclude or constrain normal-tissue signatures manually.
 
-**MuSiCal** (Jin et al., Nature Genetics 2024; PMID 38361034) combines minimum-volume NMF for de novo discovery with hierarchical NNLS refitting for assignment. On the PCAWG cohort, MuSiCal resolves nine indel signatures absent from the prior catalogue and clarifies flat-signature ambiguities (particularly the SBS5/SBS40/SBS8 cluster). Benchmarking (Nat Commun 2024) shows MuSiCal performs best when per-sample mutation counts are high (>1000 mutations); for low-mutation-count samples (panel/WES, <1000 mutations) SigProfilerSingleSample performs better. MuSiCal has no built-in tissue-background correction.
+**MuSiCal** (Jin et al., Nature Genetics 2024; PMID 38361034) combines minimum-volume NMF for de novo discovery with hierarchical NNLS refitting for assignment. On the PCAWG cohort, MuSiCal resolves nine indel signatures absent from the prior catalogue and clarifies flat-signature ambiguities (particularly the SBS5/SBS40/SBS8 cluster). Benchmarking shows MuSiCal performs best when per-sample mutation counts are high (>1000 mutations); for low-mutation-count samples (panel/WES, <1000 mutations) SigProfilerSingleSample performs better [@Jin2024]. MuSiCal has no built-in tissue-background correction.
 
 **SigNet** (bioRxiv 2023) uses a neural network that learns the empirical prior distribution of signature co-occurrences from real tumor data, making it intrinsically aware that, for example, SBS4+SBS2+SBS13 co-occur in lung cancer more often than random. This learned prior helps avoid spurious single-signature assignments. However, SigNet's training data is matched-normal PCAWG, so its prior does not represent unmatched-normal study distributions.
 
@@ -148,7 +148,7 @@ For any cBioPortal study where normal sequencing is unmatched, the decomposition
 
 ### 1. CH gene inflation in tumor-only panels (well-documented)
 
-The best-documented case of unmatched-normal contamination in cancer cohorts is clonal hematopoiesis. Coombs et al. 2018 (CCR; PMID 29866652) and Ptashkin et al. 2018 (JAMA Oncology; PMID 29872864) both quantify this effect in MSK-IMPACT data: ~8% of apparent somatic variants in tumor-only MSK-IMPACT profiling derive from DNMT3A/TET2/ASXL1 CH clones in blood-sourced DNA used without matched normal subtraction. The contamination is asymmetric by gene: DNMT3A accounts for ~64% of CH misattributions. This is the pipeline's existing `ch_priority_gene` flag.
+The best-documented case of unmatched-normal contamination in cancer cohorts is clonal hematopoiesis. Coombs et al. 2018 (CCR; PMID 29866652) and Ptashkin et al. 2018 (JAMA Oncology; PMID 29872864) both quantify this effect in MSK-IMPACT data: ~8% of apparent somatic variants in tumor-only MSK-IMPACT profiling derive from DNMT3A/TET2/ASXL1 CH clones in blood-sourced DNA used without matched normal subtraction. The contamination is asymmetric by gene: DNMT3A accounts for ~64% of CH misattributions [@Coombs2018; @Ptashkin2018]. This is the pipeline's existing `ch_priority_gene` flag.
 
 ### 2. Normal-epithelial driver inflation (partially documented)
 
@@ -198,7 +198,7 @@ Yaacov et al. [@Yaacov2023] showed that SBS1 carries a late-replicating-region (
 
 ### Strategy 4: Tumor purity-aware decomposition
 
-Several tools (PureCN, ABSOLUTE, Sequenza) estimate tumor purity and ploidy from panel or WES data. The purity estimate defines the expected normal-cell fraction contributing mutations to the observed profile. If tumor purity is 70%, then approximately 30% of the observed mutations come from normal cells (assuming the normal-cell contribution is dominated by low-VAF mosaic variants).
+Several tools (PureCN, ABSOLUTE, Sequenza) estimate tumor purity and ploidy from panel or WES data. The purity estimate defines the expected normal-cell fraction contributing mutations to the observed profile. As a conceptual `question:0008-signature-decomposition-tissue-background-subtraction` example, if tumor purity is 70%, then approximately 30% of the observed mutations come from normal cells (assuming the normal-cell contribution is dominated by low-VAF mosaic variants).
 
 Integrating purity estimates into signature decomposition is conceptually straightforward: the normal-cell fraction's signature is expected to be dominated by SBS1/SBS5/SBS18; the tumor fraction carries the cancer-type-specific signatures. The sum of expected contributions, weighted by purity, should match the observed profile.
 
@@ -236,7 +236,7 @@ The most actionable implication: an cBioPortal study showing high SBS1 exposure 
 
 Tissue-of-origin (TOO) classifiers for cancers of unknown primary (CUP) are trained on the same features that distinguish normal-tissue-background signatures from cancer-type-specific signatures.
 
-**CUPLR** (Nguyen, Van Hoeck, Cuppen; Nature Communications 2022; PMID 35817764) classifies 35 cancer subtypes with ~90% precision/recall from 511 features derived from WGS-level mutation patterns, including SBS signatures, relative mutation density (RMD), structural variant type, and driver mutation presence. The RMD feature (the per-megabase mutation density in 1 Mb bins, correlated with chromatin state and replication timing) is especially tissue-discriminative and is largely independent of specific cancer drivers.
+**CUPLR** (Nguyen, Van Hoeck, Cuppen; Nature Communications 2022; PMID 35817764) classifies 35 cancer subtypes with ~90% precision/recall from 511 features derived from WGS-level mutation patterns, including SBS signatures, relative mutation density (RMD), structural variant type, and driver mutation presence [@Nguyen2022CUPLR]. The RMD feature (the per-megabase mutation density in 1 Mb bins, correlated with chromatin state and replication timing) is especially tissue-discriminative and is largely independent of specific cancer drivers.
 
 The potential repurposing for this pipeline: a sample whose signature profile and RMD pattern are more consistent with normal-tissue background (i.e., CUPLR assigns it confidently as the expected tissue type but at a lower confidence than typical matched-normal cases, or assigns it as ambiguous) is a candidate for manual purity inspection. No published study has used CUPLR (or similar classifiers) explicitly to flag abnormal normal-tissue contamination in an existing cohort, but the conceptual path is clear.
 
@@ -248,7 +248,7 @@ A practical alternative: compute the cosine similarity of each sample's 96-trinu
 
 ## Relevance to the cbioportal Pipeline
 
-The pipeline aggregates mutation calls from ~300 studies, many using tumor-only or PoN-based germline filtering. The downstream consequence at the gene×cancer table level is:
+The pipeline aggregates mutation calls from hundreds of studies, many using tumor-only or PoN-based germline filtering. The downstream consequence at the gene×cancer table level is:
 
 1. **Systematic inflation of SBS1/SBS5-attributed mutations per study** when normal cells contaminate the input. Because SBS1/SBS5 are clock-like and drive aging-associated mutation rates, older patient cohorts will show higher background even in matched-normal studies — but in unmatched-normal studies, the background is additive: tumor aging signal + normal-cell aging signal from contaminating normal cells.
 
@@ -306,7 +306,7 @@ The pipeline aggregates mutation calls from ~300 studies, many using tumor-only 
 
 **Feasibility:** Medium-high. Tumor purity data is present in cBioPortal clinical files for some studies (particularly TCGA studies run with ABSOLUTE). Importing it requires extending the `convert_to_feather.py` logic to parse clinical files.
 
-**Expected impact:** Enables purity-stratified analysis of mutation frequency tables. Studies with purity < 0.5 should be interpretable with explicit caveats. Highest-value for esophageal, breast, and lung biopsy-based cohorts.
+**Expected impact:** Enables purity-stratified analysis of mutation frequency tables. Studies with purity < 0.5 should be interpretable with explicit caveats for `question:0008-signature-decomposition-tissue-background-subtraction`. Highest-value for esophageal, breast, and lung biopsy-based cohorts.
 
 ---
 

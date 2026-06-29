@@ -26,10 +26,10 @@ related:
 Most modern cBioPortal cohorts come from **targeted gene panels**, not whole-exome sequencing.
 GENIE alone uses 91 distinct assays at v9.1; MSK-IMPACT itself spans four panel versions
 (341 → 410 → 468 → 505 genes); FoundationOne, Tempus, Caris, Guardant360 use yet other panel
-designs. Naively aggregating mutation counts across these cohorts **systematically over-counts
+designs [@Zehir2017; @Pugh2022]. Naively aggregating mutation counts across these cohorts **systematically over-counts
 genes covered by larger panels and under-counts genes only on smaller panels** — by as much as
 ~10× per gene at the extremes (Bailey-relevant APC region: 532–1,367 bp on small GENIE panels
-vs 8,622–8,936 bp on large hybrid-capture panels per AACR GENIE 2017).
+vs 8,622–8,936 bp on large hybrid-capture panels per AACR GENIE 2017 [@AACRGENIEConsortium2017]).
 
 Cross-study aggregation that ignores panel content is therefore not just noisy — it is
 *biased* toward genes that big panels happen to cover.

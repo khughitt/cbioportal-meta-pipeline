@@ -25,7 +25,7 @@ workflow_run: t126-sbs1-lrr-bias-2026-04-24
 
 **defer** — close `t124`; move `q009` to `deferred` status with revisit-condition `WGS inputs ingested`.
 
-The test reached a pre-registered terminating verdict on its first contact with the data. Both panel-cohort safety gates triggered: `n_sbs1_pooled` below the 500-floor, and bootstrap CI half-width above the 0.10 ceiling. The pre-registration explicitly anticipated this outcome and routed it to `defer` rather than `retire` to preserve the option to revisit when WGS data lands.
+The test reached a pre-registered terminating verdict on its first contact with the data. Both panel-cohort safety gates triggered: `n_sbs1_pooled` below the 500-floor, and bootstrap CI half-width above the 0.10 ceiling. The pre-registration explicitly anticipated this outcome and routed it to `defer` rather than `retire` to preserve the option to revisit when WGS data lands (`task:t126`; `pre-registration:0002-pre-registration-t126-per-study-aggregate-sbs1-lrr-bias-test`).
 
 Project links: this interpretation closes `task:t126` in the context of `task:t124`, `task:t110`,
 and `task:t121`.
@@ -48,19 +48,20 @@ The source papers are `paper:Yaacov2023` and `paper:Alexandrov2020`.
 | `tcga_mc3` (WES) | 2,127.6 | 1,930.4 | 197.2 | 237.6 Mb | 132.3 Mb | 0.155 | [0.135, 0.179] | 0.022 |
 | `msk_impact_2017` (panel) | **176.4** | 170.7 | **5.7** | 475.6 kb | **20.8 kb** | 0.433 | [0.200, 0.587] | **0.194** |
 
-Panel decision-rule check (pre-registered thresholds: midpoint=0.45, n_floor=500, max_ci_halfwidth=0.10):
+Panel decision-rule check (pre-registered thresholds: midpoint=0.45, n_floor=500, max_ci_halfwidth=0.10; `pre-registration:0002-pre-registration-t126-per-study-aggregate-sbs1-lrr-bias-test`):
 
 - `n_sbs1_pooled = 176.4 < 500` → underpowered.
 - `CI half-width = 0.194 > 0.10` → uncalibrated.
 
-Both gates trigger `defer`; the verdict stands regardless of point-estimate location.
+Both gates trigger `defer`; the verdict stands regardless of point-estimate location
+(`task:t126`; `pre-registration:0002-pre-registration-t126-per-study-aggregate-sbs1-lrr-bias-test`).
 
 ## Why the pre-run power projection was wrong
 
-The pre-registration projected `n = 553` SBS1-attributed mutations for `msk_impact_2017` and concluded the test was *just* powered. The actual `n_sbs1_pooled` in the test's measurement domain is **176**. The discrepancy is structural, not a coding error:
+The pre-registration projected `n = 553` SBS1-attributed mutations for `msk_impact_2017` and concluded the test was *just* powered. The actual `n_sbs1_pooled` in the test's measurement domain is **176**. The discrepancy is structural, not a coding error (`task:t126`; `results/t126-sbs1-lrr-bias-2026-04-24/summary/signatures/sbs1_lrr_bias_per_study.feather`):
 
 1. **Pre-reg projection used the raw exposure sum** (SigProfilerAssignment's per-sample SBS1 attribution counts summed across all 1,210 BRCA samples). That total is 553.
-2. **The actual statistic measures only mutations in constitutive RT bins** (the union of t121's CE-labelled and CL-labelled 50kb bins, covering ~620 Mb / ~20% of the genome). 391.5 of the 553 SBS1 posteriors fall in `unassigned` territory — outside any constitutive bin. Only 176.4 land in CE+CL bins.
+2. **The actual statistic measures only mutations in constitutive RT bins** (the union of t121's CE-labelled and CL-labelled 50kb bins, covering ~620 Mb / ~20% of the genome). 391.5 of the 553 SBS1 posteriors fall in `unassigned` territory — outside any constitutive bin. Only 176.4 land in CE+CL bins (`task:t126`; `results/t126-sbs1-lrr-bias-2026-04-24/summary/signatures/sbs1_lrr_bias_per_study.feather`).
 
 This is a real conceptual gap in the pre-registration: the n-floor was set on raw SBS1 attribution (553) without subtracting the unassigned-bin fraction. A more conservative pre-run gate would have projected `n × (constitutive_bin_fraction × panel_overlap_fraction)`, which would have produced ~150 and triggered an immediate `defer` before any code was written.
 
@@ -76,13 +77,14 @@ The MSK-IMPACT panel coverage of constitutive RT bins is structurally hostile to
 
 This is the expected outcome of a panel designed to capture cancer driver genes: drivers cluster in active, gene-dense, early-replicating regions. The mechanism the test was built to detect (LRR-biased SBS1 leakage from normal tissue) requires LRR coverage to be present in the assay — and on MSK-IMPACT it is essentially absent.
 
-For reference, the matched WES cohort sees a much more even split (CE:CL ≈ 1.8:1 by gene-CDS bp), and accordingly produces a comfortably powered estimate (n = 2,128, half-width = 0.022).
+For reference, the matched WES cohort sees a much more even split (CE:CL ≈ 1.8:1 by gene-CDS bp), and accordingly produces a comfortably powered estimate (n = 2,128, half-width = 0.022)
+(`task:t126`; `results/t126-sbs1-lrr-bias-2026-04-24/summary/signatures/sbs1_lrr_bias_per_study.feather`).
 
 ## Anomaly: the matched cohort's f_LRR sits below the Yaacov cancer baseline
 
 `tcga_mc3` returns `f_lrr_corrected = 0.155` with a tight CI [0.135, 0.179]. The published cancer baseline in Yaacov et al. [@Yaacov2023] is approximately 0.40 (LRR-unbiased). The 25-percentage-point gap is large and warrants explanation.
 
-Most likely cause: the gene-CDS approximation used as the WES denominator (sum of `rt_ce_bp` and `rt_cl_bp` across all genes in the t121 map) is not directly comparable to Yaacov's WGS-based whole-genome denominator. Yaacov's denominator is total constitutive-bin extent in the genome (~620 Mb, with CE:CL roughly 1:1.3 by 50kb-bin count). The gene-CDS approximation captures only the gene-body fraction of constitutive bins, and gene density is itself enriched in early-replicating territory. So the WES denominator over-weights CE relative to genome-wide.
+Most likely cause: the gene-CDS approximation used as the WES denominator (sum of `rt_ce_bp` and `rt_cl_bp` across all genes in the t121 map) is not directly comparable to Yaacov's WGS-based whole-genome denominator. Yaacov's denominator is total constitutive-bin extent in the genome (~620 Mb, with CE:CL roughly 1:1.3 by 50kb-bin count). The gene-CDS approximation captures only the gene-body fraction of constitutive bins, and gene density is itself enriched in early-replicating territory. So the WES denominator over-weights CE relative to genome-wide (`task:t126`; `paper:Yaacov2023`).
 
 **This is a real measurement-frame caveat, not an artefact in the test code.** It does not change the `defer` verdict — the matched cohort's CI is well-defined within its own denominator frame, and the panel cohort's failure to power is independent of where the matched baseline sits.
 

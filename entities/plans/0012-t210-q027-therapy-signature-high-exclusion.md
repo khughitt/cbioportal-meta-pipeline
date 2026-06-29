@@ -54,7 +54,7 @@ The initial candidate set should include the `H10` clinical-label positives from
 | `pptc_2019` | PDX caveat | sensitivity-only, not primary patient denominator |
 
 Add other studies only if an explicit feasibility audit shows enough SBS-count-passing samples and a therapy-signature expectation from the t206 audit or raw metadata.
-Do not run a full 198-study signature assignment as the first pass.
+Do not run a full 198-study signature assignment for `task:t210` as the first pass.
 
 ## Inputs
 
@@ -178,7 +178,7 @@ Reason: `q027` specifically asks whether signature-high samples alter frequency 
 ### Probe first, not full-config signature assignment
 
 Chosen: run a scoped candidate-study feasibility pass before any full-config `q027` workflow.
-Rejected: run per-sample SigProfiler assignment across all 198 configured studies immediately.
+Rejected for `task:t210` and `question:0027-does-excluding-treatment-signature-high-samples`: run per-sample SigProfiler assignment across all 198 configured studies immediately.
 Reason: panel samples often have low SBS counts, and the existing full-config `H10` run has no signature substrate; a broad run could consume substantial time while producing mostly unevaluable samples.
 
 ### Absolute exposure threshold as primary

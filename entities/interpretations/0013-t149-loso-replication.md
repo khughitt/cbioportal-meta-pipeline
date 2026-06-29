@@ -54,7 +54,9 @@ Outputs (`/data/packages/cbioportal/pan-cancer/summary/loso/`):
 
 ### F1 — pooled_rate top-N is highly unstable under LOSO
 
-For K=100 inclusive view, **all-cohort median recovery = 0.185** (IQR 0.023–0.495). Min recovery = 0.0; max = 0.86. Spread is 86 percentage points across 10 LOSO iterations.
+In the `task:t149` LOSO outputs, for K=100 inclusive view, **all-cohort median recovery = 0.185**
+(IQR 0.023–0.495). Min recovery = 0.0; max = 0.86. Spread is 86 percentage points across 10 LOSO
+iterations.
 
 Restricting to Bailey et al. [@Bailey2018] drivers does not rescue the instability: **bailey_only K=100 inclusive median recovery = 0.21** (IQR 0.028–0.58, min 0.0, max 0.90). The Bailey restriction modestly improves the upper tail (third quartile 0.58 vs 0.49) but median and min are essentially unchanged.
 
@@ -62,7 +64,7 @@ This is a **negative result for `hypothesis:0002-cross-study-ranking-divergence-
 
 ### F2 — instability concentrates in small / specialty / pediatric studies
 
-Per-study breakdown at K=100 inclusive (all cohort):
+Per-study breakdown at K=100 inclusive (all cohort) from `task:t149`:
 
 | excluded_study | recovery | jaccard | hold_size |
 |---|---:|---:|---:|

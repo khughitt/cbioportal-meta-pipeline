@@ -67,9 +67,11 @@ PASS-bearing sample counts reproduce the pre-reg §1b independently-verified low
 | CESC | 289 | 289 | 151 | 0.671 |
 | HNSC | 507 | 507 | 142 | 0.702 |
 
-All seven match. Across the seven arms, 67.3% of samples clear the matched-normal count floor of
-100 SBS; per-sample reconstruction quality is sound (cosine similarity median 0.909, 53.8% of
-samples ≥0.90, 5th-percentile 0.661 — the low tail tracks the low-count samples, as expected).
+All seven match for `task:t197` and
+`hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and`.
+Across the seven arms, 67.3% of samples clear the matched-normal count floor of 100 SBS;
+per-sample reconstruction quality is sound (cosine similarity median 0.909, 53.8% of samples
+≥0.90, 5th-percentile 0.661 — the low tail tracks the low-count samples, as expected).
 
 ## Positive-control wiring sanity
 

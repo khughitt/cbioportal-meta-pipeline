@@ -165,11 +165,13 @@ remaining confounder beyond length and trinucleotide context.
 
 The P1–P4 proposition structure and its support/dispute evidence are materialized as a DAG at
 `doc/figures/dags/h02-cross-study-ranking-divergence.edges.yaml` (+ `.dot`, auto-rendered PNG),
-built by `t214`. Twelve edges carry the per-proposition evidence with task IDs and concrete numbers:
-the length→ranking confounds (P3), dNdScv→driver-recovery (P1, supported: 62/100 Bailey, 88% CGC),
-the structured divergence (P3, supported: Jaccard@100 = 0.015), the cross-study stability edges (P1/P2,
-tentative pending exhaustive LOO), and the residual-confounder arm (P4) — where the late-replication
-mechanism is recorded as **eliminated** (t163 null coefficient) and CFS as an **unresolved** open edge.
+built by `task:t214` for `hypothesis:0002-cross-study-ranking-divergence-is-structured`.
+Twelve edges carry the per-proposition evidence with task IDs and concrete numbers: the
+length→ranking confounds (P3), dNdScv→driver-recovery (P1, supported: 62/100 Bailey, 88% CGC),
+the structured divergence (P3, supported: Jaccard@100 = 0.015), the cross-study stability edges
+(P1/P2, tentative pending exhaustive LOO), and the residual-confounder arm (P4) — where the
+late-replication mechanism is recorded as **eliminated** (t163 null coefficient) and CFS as an
+**unresolved** open edge.
 
 ## Related Work
 

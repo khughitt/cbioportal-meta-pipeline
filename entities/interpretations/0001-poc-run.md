@@ -82,9 +82,9 @@ UCEC ultra (9.3%) is very close to canonical POLE-UCEC prevalence (~7%). SKCM ab
 
 ### Finding 4 — the **composite GMM-derived `is_hypermutator` flag is biased high for cohorts with uniformly-high TMB or no real bimodality.**
 
-BRCA 92% "hypermutator" and SKCM 96% "hypermutator" are not biologically plausible. Looking at `fit_quality`: BRCA and SKCM were both fit as `bimodal` (100% of samples), and 997/1084 BRCA samples were assigned to `gmm_upper_mode`. The t097 decision table places `gmm_upper_mode → is_hypermutator=True` as rule 4, but that rule assumes the "upper mode" is genuinely the hypermutated tail. When the GMM overfits noise into two components over a unimodal distribution (BRCA) or when the whole distribution is above the canonical threshold (SKCM), the rule breaks.
+In the `task:t100` PoC outputs under `results/poc-2026-04-17/`, BRCA 92% "hypermutator" and SKCM 96% "hypermutator" are not biologically plausible. Looking at `fit_quality`: BRCA and SKCM were both fit as `bimodal` (100% of samples), and 997/1084 BRCA samples were assigned to `gmm_upper_mode`. The t097 decision table places `gmm_upper_mode → is_hypermutator=True` as rule 4, but that rule assumes the "upper mode" is genuinely the hypermutated tail. When the GMM overfits noise into two components over a unimodal distribution (BRCA) or when the whole distribution is above the canonical threshold (SKCM), the rule breaks.
 
-Similarly, `is_hypermutator_relative` (Samstein top-20%) shows 45% for BRCA and 36% for SKCM. The implementation likely promotes tied samples above the 80th-percentile cut-line; needs inspection.
+Similarly, the `task:t100` PoC output shows `is_hypermutator_relative` (Samstein top-20%) at 45% for BRCA and 36% for SKCM. The implementation likely promotes tied samples above the 80th-percentile cut-line; this is tracked as `task:t108`.
 
 **Recommendation for t077 (GLMM-logit pooling) and any downstream analysis**: use `is_hypermutator_absolute` as the primary exclusion flag in the inclusive/exclusive pivot pair until the composite is recalibrated.
 
@@ -178,6 +178,6 @@ that "looked like" an upper-mode hypermutator was not flagged.
 
 ## Bottom line
 
-The annotated pipeline now runs end-to-end on real data, and the hypermutator annotation arc (t092–t099) works for its two primary signals: **POLE detector validates at canonical 7.8% UCEC frequency**, and the **Campbell-absolute flag (≥10 mut/Mb)** gives biologically-plausible hypermutator rates across the 4 PoC cohorts. The composite GMM-driven flag is miscalibrated for homogeneous-high-TMB cohorts (BRCA / SKCM) and needs recalibration before pooled analyses (t077) consume it. Eight latent Snakefile / script bugs were flushed out, confirming that the "the plan claims it works, the tests pass, therefore it works" assumption about t092–t099 was partly wrong — unit tests passed but the pipeline never actually ran.
+The annotated pipeline now runs end-to-end on real data in the `task:t100` PoC outputs under `results/poc-2026-04-17/`, and the hypermutator annotation arc (t092–t099) works for its two primary signals: **POLE detector validates at canonical 7.8% UCEC frequency**, and the **Campbell-absolute flag (≥10 mut/Mb)** gives biologically-plausible hypermutator rates across the 4 PoC cohorts. The composite GMM-driven flag is miscalibrated for homogeneous-high-TMB cohorts (BRCA / SKCM) and needs recalibration before pooled analyses (t077) consume it. Eight latent Snakefile / script bugs were flushed out, confirming that the "the plan claims it works, the tests pass, therefore it works" assumption about t092–t099 was partly wrong — unit tests passed but the pipeline never actually ran.
 
 The pivot recommendation (t070 first → t105 recalibrate → t076 → t077 decomposition → t077 execution) is now grounded in run output rather than speculation.

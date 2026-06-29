@@ -41,7 +41,7 @@ below try to attribute each arm's miss to measurement vs range vs fan-in/saturat
 whether the one pass (APOBEC) is partly a shared-driver (proliferation) confound rather than a direct
 mRNA→deamination link.
 
-Two handles already point the way: (i) the `r1` contrast in the WP2 grid meta — Arm A is null *both*
+For `method:h08-agnostic-association-model`, two handles already point the way: (i) the `r1` contrast in the WP2 grid meta — Arm A is null *both*
 within-tissue and unconditioned (uninformative proxy → measurement), while Arm C is large
 unconditioned and survives conditioning; (ii) LUAD (10/13) out-ranks LUSC (13/13) for pack-years,
 the fingerprint of range restriction (the histology with more never-smokers has more exposure

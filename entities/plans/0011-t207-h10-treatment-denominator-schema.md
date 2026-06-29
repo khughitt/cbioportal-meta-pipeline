@@ -133,7 +133,7 @@ Reason: passaging-acquired mutation calls and mouse-read artifacts can alter the
 
 Chosen approach: name the default comparator `no_detected_treatment_signal` and separately report positive naive/pre-treatment studies.
 Rejected alternative: calling all unflagged studies treatment-naive.
-Reason: the audit recall is unmeasured for the 109 no-metadata-signal studies, and only `lung_nci_2022`, `lusc_cptac_2021`, and `mbl_dkfz_2017` are positively clean.
+Reason for `task:t207`: the audit recall is unmeasured for the 109 no-metadata-signal studies, and only `lung_nci_2022`, `lusc_cptac_2021`, and `mbl_dkfz_2017` are positively clean.
 
 `no_detected_treatment_signal` is a retained cohort, not a second spelling of `mutagenic_treatment_excluded_primary`.
 It contains samples with no positive broad, mutagenic, sensitivity-only, or unknown treatment label, and it folds the positively classified naive/pre-treatment samples into that comparator.

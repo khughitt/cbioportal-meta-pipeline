@@ -116,7 +116,7 @@ Integration tests require at least one study with a documented hypermutator rate
 config. The current `config-10k-genes.yml` contains **no TCGA cohorts** (only 7 pan-cancer /
 metastatic / pediatric studies), so straight TCGA-per-cancer-type validation is unrunnable as
 originally specified. **Resolution (review finding #2):** use `tcga_mc3` as the single TCGA
-surrogate (already documented in `AGENTS.md` "Alternate data sources" — it bundles 32 TCGA
+surrogate (already documented in `AGENTS.md` "Alternate data sources" — `dataset:tcga-mc3` bundles 32 TCGA
 cancer types, 9,104 samples, in one pseudo-study). Add `tcga_mc3` to the studies list for
 validation runs only; it does NOT need to be in the main analysis config.
 
@@ -373,7 +373,7 @@ Evaluated top-to-bottom; first matching row wins; `hypermutator_reason` records 
 | 7 | GMM fit unavailable AND `tmb_zscore_within_cancer < 1.5` | `max(0.0, tmb_zscore / 3.0)` | False | `"zscore_fallback_low"` |
 | 8 | `tmb` is NaN (panel unknown, all-WES-default with no mutations, etc.) | NaN | False | `"tmb_unavailable"` |
 
-Rows 1–3 are **deterministic**: any strong biological signal forces `is_hypermutator = True`
+For `task:t081`, rows 1–3 are **deterministic**: any strong biological signal forces `is_hypermutator = True`
 regardless of TMB. This fixes the F4 inconsistency — validation expectations in Task 5/6 are updated
 accordingly (100%, not ≥95%, for POLE/POLD1/MSI-H concordance).
 

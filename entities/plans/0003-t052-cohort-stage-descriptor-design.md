@@ -198,14 +198,14 @@ For `is_pre_treated`:
 
 Empirically observed in `msk_impact_2017`:
 
-```
-Not Applicable    6130
-Liver             1083
-Lymph Node         907
-...
-```
+| Site label | Count |
+|---|---:|
+| Not Applicable (`task:t052`) | 6130 |
+| Liver | 1083 |
+| Lymph Node | 907 |
+| ... | ... |
 
-Treating non-empty as metastatic would falsely flag 6,130 samples. Sentinel set
+For `task:t052`, treating non-empty as metastatic would falsely flag 6,130 samples. Sentinel set
 (matched after value normalization, see below):
 
 ```python

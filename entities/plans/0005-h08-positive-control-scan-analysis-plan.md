@@ -140,7 +140,7 @@ Expression-matrix QA (`data-expression-bulk-rnaseq-qa`) before NMF:
 
 ## Estimand and Primary Metric
 
-Locked by pre-reg — restated, not re-derived: per (signature, covariate) pair, the **within-tissue
+Locked by `pre-registration:0003-h08-positive-control-agnostic-association-must-recover-known-signature` — restated, not re-derived: per (signature, covariate) pair, the **within-tissue
 association between a covariate and a signature's per-sample exposure `H`** (burden, not spectrum
 `W`). **Primary metric: rank position** of the known covariate among all tested covariates for its
 matching signature within the tissue stratum, with sign and FDR q-value as qualifiers. Pass =

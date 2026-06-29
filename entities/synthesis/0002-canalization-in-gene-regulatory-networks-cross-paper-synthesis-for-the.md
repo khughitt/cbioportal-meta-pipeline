@@ -47,7 +47,7 @@ All eight papers operationalize canalization as a measurable network property �
 
 ### 2. Hub topology and recurrence are linked
 
-Three independent angles converge: Rashid2025 shows hub topology constrains attractors to bistability (predictable cell fates); Harlapur2026 places transcriptional regulators in a dense, feedback-rich middle layer with maximum regulatory reach; Jung2025 shows sparse-network targets are reversibly controllable with high accuracy (~90%). For the cbioportal pipeline this delivers a **shared mechanistic prediction for cross-study driver-gene recurrence**: genes that occupy hub / middle-layer / canalizing-input positions in cancer GRNs should appear as the high-`k_studies` recurrent hits in the meta-analysis, while peripheral genes contribute the diffuse signal that only emerges via cross-study aggregation.
+Three independent angles converge: `paper:Rashid2025` shows hub topology constrains attractors to bistability (predictable cell fates); `paper:Harlapur2026` places transcriptional regulators in a dense, feedback-rich middle layer with maximum regulatory reach; `paper:Jung2025` shows sparse-network targets are reversibly controllable with high accuracy (~90%). For the cbioportal pipeline this delivers a **shared mechanistic prediction for cross-study driver-gene recurrence**: genes that occupy hub / middle-layer / canalizing-input positions in cancer GRNs should appear as the high-`k_studies` recurrent hits in the meta-analysis, while peripheral genes contribute the diffuse signal that only emerges via cross-study aggregation.
 
 ### 3. Coherence gap and the hypermutator interpretation
 
@@ -55,7 +55,7 @@ Bavisetty2025's central counterintuitive result — *attractors are less stable 
 
 ### 4. Loss-of-function ≠ gain-of-function from a network perspective
 
-Rashid2025 shows GoF edge-sign reversals (repressor → activator) collapse multistability more efficiently than LoF edge deletions. Jung2025's ARC framework quantifies the same idea via "phenotype-landscape distortion degree" — high-distortion alterations (e.g., PTEN LoF in their MAPK case study collapsing apoptosis from ~76% → ~0.3%) are the network targets that produce strong, recurrent signals. For the cbioportal aggregation tables, this is **a mechanistic rationale for why hotspot GoF mutations (KRAS G12, TP53 R175H, BRAF V600E) dominate the top-recurrence rows relative to comparably-sized LoF truncation sets**: they distort the phenotype landscape disproportionately for their genomic footprint.
+`paper:Rashid2025` shows GoF edge-sign reversals (repressor → activator) collapse multistability more efficiently than LoF edge deletions. `paper:Jung2025`'s ARC framework quantifies the same idea via "phenotype-landscape distortion degree" — high-distortion alterations (e.g., PTEN LoF in their MAPK case study collapsing apoptosis from ~76% → ~0.3%) are the network targets that produce strong, recurrent signals. For the cbioportal aggregation tables, this is **a mechanistic rationale for why hotspot GoF mutations (KRAS G12, TP53 R175H, BRAF V600E) dominate the top-recurrence rows relative to comparably-sized LoF truncation sets**: they distort the phenotype landscape disproportionately for their genomic footprint.
 
 ### 5. Calibration: closely related phenotypes can dissociate on canalization
 

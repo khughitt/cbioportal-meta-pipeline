@@ -59,7 +59,9 @@ Outputs at `data/normal_tissue_spectra.tsv` (56 rows × 114 cols) and `data/norm
 
 ### Test coverage
 
-29 pure unit tests + 1 slow integration test. All 187 project-suite tests pass. Slow test is deselected by default; invoked with `pytest -m slow` it exercises the real SigProfilerMatrixGenerator trinucleotide lookup against a 9-variant fixture.
+For `task:t111`, 29 pure unit tests + 1 slow integration test. All 187 project-suite tests pass.
+Slow test is deselected by default; invoked with `pytest -m slow` it exercises the real
+SigProfilerMatrixGenerator trinucleotide lookup against a 9-variant fixture.
 
 ### Scope (post Task-0 gate)
 
@@ -77,7 +79,12 @@ The plan — and the initial implementation — both used loop nesting `for sub 
 
 ### Li 2021 encodes indels as `ref="-"` / `alt="-"`
 
-The original input contract's indel filter checked `ref.str.len() != 1 | alt.str.len() != 1`, which passes single-character `-` sentinels through as "SNVs" that would then fail the ACGT check with an unhelpful error. Real data surfaced this on the first production run — 583 rows carried `-` in ref or alt. Filter extended to drop these explicitly. **Recommendation:** indel conventions vary by caller; validate at the first real-data contact, not on synthetic fixtures.
+In `task:t111`, the original input contract's indel filter checked
+`ref.str.len() != 1 | alt.str.len() != 1`, which passes single-character `-` sentinels through as
+"SNVs" that would then fail the ACGT check with an unhelpful error. Real data surfaced this on the
+first production run — 583 rows carried `-` in ref or alt. Filter extended to drop these explicitly.
+**Recommendation:** indel conventions vary by caller; validate at the first real-data contact, not on
+synthetic fixtures.
 
 ### SigProfilerMatrixGenerator 1.3.6 raises bare `Exception`, not `FileNotFoundError`
 
@@ -107,7 +114,11 @@ Pipeline output per-tissue burden:
 | Bronchia | 3,176 | 26 |
 | Pancreas | 2,336 (lowest) | 10 (lowest) |
 
-Pooled `snvs_per_mb` Liver 1.19 / Pancreas 0.20 = 6.0× range. Li 2021 Liver 69 / Pancreas 10 = 6.9× range. Pipeline correctness validated; per-tissue ordering is mostly preserved (Cardia appears higher than expected relative to Stomach in Fig 1b; likely because Cardia has fewer donors/biopsies so pooled totals don't track the per-exome medians — worth flagging if downstream analyses key on the exact ordering).
+In the `task:t111` sanity-check output, pooled `snvs_per_mb` Liver 1.19 / Pancreas 0.20 = 6.0×
+range. Li 2021 Liver 69 / Pancreas 10 = 6.9× range. Pipeline correctness validated; per-tissue
+ordering is mostly preserved (Cardia appears higher than expected relative to Stomach in Fig 1b;
+likely because Cardia has fewer donors/biopsies so pooled totals don't track the per-exome medians —
+worth flagging if downstream analyses key on the exact ordering).
 
 ## Reusable Lessons
 

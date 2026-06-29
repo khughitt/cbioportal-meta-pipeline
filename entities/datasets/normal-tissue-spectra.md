@@ -45,7 +45,9 @@ li2021: 583 indel rows dropped, 0 mitochondrial rows dropped, 10628 within-donor
 Wrote 56 spectra rows to data/normal_tissue_spectra.tsv; 47 burden rows to data/normal_tissue_burden.tsv
 ```
 
-Post-contract SBS SNV counts processed through SigProfilerMatrixGenerator (sum across tissues = 54,977; the remainder of the original 66,188 variant rows were dropped as indels, DBS, or duplicates):
+Post-contract SBS SNV counts for `dataset:normal-tissue-spectra` from `paper:Li2021` processed
+through SigProfilerMatrixGenerator (sum across tissues = 54,977; the remainder of the original
+66,188 variant rows were dropped as indels, DBS, or duplicates):
 
 | tissue | n_donors | pooled SNVs |
 |---|---|---|
@@ -85,7 +87,11 @@ Donor coverage gaps (not every donor has every tissue) explain why counts are 3�
 
 ## SBS-only filtering
 
-The SigProfiler SBS96 matrix is the only output channel. Indels and DBS variants are filtered out. The 2026-04-19 extraction run dropped 583 rows flagged as indels by `validate_input_contract` (length-1 check, plus `-` sentinel used by the Li 2021 supplement for insertions/deletions). DBS variants (reported by SigProfiler as e.g. "21 DINUCs") are enumerated in the pre-matrix summary but not retained in our output — only SBS96 is extracted.
+The SigProfiler SBS96 matrix is the only output channel for `dataset:normal-tissue-spectra`.
+Indels and DBS variants are filtered out. The 2026-04-19 extraction run dropped 583 rows flagged
+as indels by `validate_input_contract` (length-1 check, plus `-` sentinel used by the Li 2021
+supplement for insertions/deletions). DBS variants (reported by SigProfiler as e.g. "21 DINUCs")
+are enumerated in the pre-matrix summary but not retained in our output — only SBS96 is extracted.
 
 ## Replication
 

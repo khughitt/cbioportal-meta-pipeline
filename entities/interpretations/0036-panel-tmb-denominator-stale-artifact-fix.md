@@ -55,7 +55,8 @@ fell through to the legacy study-level path → empty `study_panel_map` → `wes
    | CRC hypermutators | 7 | **88** (81 MSI/GMM-upper + 7 POLE) |
 | testable cancer types (`question:0047-hypermutation-confound-on-driver-tissue-specificity`) | 2 | **8** (CRC, NSCLC, Bladder, Esophagogastric, Hepatobiliary, Endometrial, Melanoma, cSCC) |
 
-   Panel cancers now flag sensibly: NSCLC 6.3%, CRC 8.7%, Bladder 7.6%, Hepatobiliary 5.4% (all
+   In `interpretation:0036-panel-tmb-denominator-stale-artifact-fix` for `question:0047-hypermutation-confound-on-driver-tissue-specificity`,
+   panel cancers now flag sensibly: NSCLC 6.3%, CRC 8.7%, Bladder 7.6%, Hepatobiliary 5.4% (all
    previously 0%); low-TMB types stay ≈0% (Glioma, Pancreatic, RCC, Prostate).
 
 2. **Durable fail-loud guard** (`assert_panel_bearing_resolved` in `compute_per_sample_tmb.py`, with

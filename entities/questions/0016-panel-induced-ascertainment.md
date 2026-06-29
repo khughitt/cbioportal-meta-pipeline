@@ -33,7 +33,7 @@ and `task:t154`.
 
 ## Summary
 
-Targeted sequencing panels (MSK-IMPACT 341/410/468, FoundationOne, GENIE composite) are
+For `question:0016-panel-induced-ascertainment`, targeted sequencing panels (MSK-IMPACT 341/410/468, FoundationOne, GENIE composite) are
 designed around already-known cancer genes. A gene that is well-studied in 2010 is more
 likely to be on a 2015 panel; a gene on a panel is more likely to be reported as mutated
 in 2020 papers; the 2020 papers feed forward to the 2025 panel design. This is a

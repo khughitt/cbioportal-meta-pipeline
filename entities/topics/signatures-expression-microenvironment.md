@@ -63,7 +63,7 @@ aggregation reduces compositional noise and enables robust pan-cancer comparison
 and infiltrating the tumour mass, including immune cells (CD8+ T cells, CD4+ T cells, regulatory
 T cells, NK cells, macrophages, dendritic cells, B cells, plasma cells), stromal cells, and
 extracellular matrix. Cell-type abundances are estimated from bulk RNA-seq by deconvolution
-methods (Kassandra, EPIC, quanTIseq, TIMER 2.0) and serve as a proxy for immune phenotype.
+methods (Kassandra, EPIC, quanTIseq, TIMER 2.0) for `topic:signatures-expression-microenvironment` and serve as a proxy for immune phenotype.
 
 **Compositional data analysis (CoDa).** Because the relative contributions of multiple
 signatures within a sample sum to a fixed total (the total mutation count), simple Pearson or

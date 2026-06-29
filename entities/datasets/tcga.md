@@ -23,7 +23,7 @@ related: []
 
 ## Summary
 
-The Cancer Genome Atlas — multi-platform genomic, transcriptomic, and epigenomic profiling of ~11,000 primary tumors across 33 cancer types with matched normals. The general TCGA cohort cited broadly by methods papers for somatic-mutation discovery.
+`dataset:tcga` is The Cancer Genome Atlas — multi-platform genomic, transcriptomic, and epigenomic profiling of ~11,000 primary tumors across 33 cancer types with matched normals. The general TCGA cohort cited broadly by methods papers for somatic-mutation discovery.
 
 ## Access and Scope
 

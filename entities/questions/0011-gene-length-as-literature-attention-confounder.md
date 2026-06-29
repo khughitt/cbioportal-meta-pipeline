@@ -23,7 +23,7 @@ related:
 ## Evidence Update — 2026-04-26 (full pan-cancer-dndscv run, t131)
 
 The full pan-cancer-dndscv pipeline now produces a Phase-1 PubTator correlation
-panel (n=18,028 genes). Spearman ρ vs `log10(PubTator mention count)`:
+panel for `question:0011-gene-length-as-literature-attention-confounder` (n=18,028 genes). Spearman ρ vs `log10(PubTator mention count)`:
 
 | Ranking | full-run ρ | PoC ρ |
 |---|---|---|

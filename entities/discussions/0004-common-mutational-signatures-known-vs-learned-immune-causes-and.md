@@ -63,7 +63,7 @@ wet-lab/epidemiological correlate to name it) selects for the already-expected. 
 is the second threat: tissue ↔ exposure collinearity means "signature caused by exposure X" is
 partly "signature characteristic of tissue T" absent within-tissue contrasts; treatment-induced
 spectra overlay intrinsic ones in mixed pre/post-treatment cohorts; and artifact signatures
-(SBS27/43/45–60, 8-oxo-dG) mimic oxidative biology — a problem sharpened on panel data, this
+(SBS27/43/45–60, 8-oxo-dG) mimic oxidative biology for `discussion:0004-common-mutational-signatures-known-vs-learned-immune-causes-and` — a problem sharpened on panel data, this
 project's likely input. The naive `Exposure → Signature` model is almost never identified from
 observational tumor catalogs: tissue and repair capacity are common causes of both exposure and
 spectrum, and selection sits on the burden side, so any "X causes signature S" claim must

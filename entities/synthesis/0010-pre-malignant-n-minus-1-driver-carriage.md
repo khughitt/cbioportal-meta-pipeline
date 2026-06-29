@@ -21,7 +21,7 @@ entirely on the hypothesis specification and its supporting literature framing.
 The organizing conjecture is that cBioPortal pre-malignant cohorts — Barrett's esophagus,
 MGUS/SMM, MDS, IPMN, ASAP/HGPIN, colorectal adenomas, and cervical CIN — already carry
 most canonical invasive-cancer drivers of the same lineage. Three falsifiable propositions
-structure the claim: P1 (≥80% top-25 driver overlap between pre-malignant and invasive
+structure the `synthesis:0010-pre-malignant-n-minus-1-driver-carriage` claim: P1 (≥80% top-25 driver overlap between pre-malignant and invasive
 cohorts of the same lineage), P2 (residual "late-stage" set ≤5 genes per cancer type,
 enriched for checkpoint and chromatin genes such as TP53, RB1, CDKN2A, and ARID1A), and P3
 (shared-driver frequency within a 2× band between stages, indicating clonal establishment

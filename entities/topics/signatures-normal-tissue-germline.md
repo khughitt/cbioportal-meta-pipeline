@@ -50,7 +50,7 @@ Somatic mutations accumulate in all human cells throughout life, driven by a com
 
 WGS of single-cell-expanded normal lymphocytes (paper:Machado2022, 717 genomes, 6 donors) establishes quantitative baselines: HSPCs ~16 SNVs/year; naive lymphocytes ~15–22 SNVs/year; memory lymphocytes accumulate substantially more due to differentiation history (memory B +1,034 SNVs, memory T +277 SNVs above HSPC baseline). Accumulation rates 10–80 SNVs/genome/year across normal tissues are reported in review paper:Faienza2025, with tissue-specificity in rate and spectrum well-established.
 
-Variance in mutation burden across cells increases dramatically with differentiation state: within-donor SD in memory B cells (~820 SNVs) far exceeds between-person variation (~60 SNVs). This within-person heterogeneity is relevant to bulk tumour sequencing: the starting mutation burden of the cell of origin is a major contributor to inter-tumour variance even within histologically uniform cohorts.
+For `topic:signatures-normal-tissue-germline`, variance in mutation burden across cells increases dramatically with differentiation state: within-donor SD in memory B cells (~820 SNVs) far exceeds between-person variation (~60 SNVs). This within-person heterogeneity is relevant to bulk tumour sequencing: the starting mutation burden of the cell of origin is a major contributor to inter-tumour variance even within histologically uniform cohorts.
 
 ### Immunological diversification as a structured mutational process
 

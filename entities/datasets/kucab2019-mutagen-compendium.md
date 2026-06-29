@@ -46,7 +46,7 @@ related:
 
 ## Summary
 
-Whole-genome sequencing of 324 isogenic iPSC subclones each exposed to one of **79 known or
+`dataset:kucab2019-mutagen-compendium` contains whole-genome sequencing of 324 isogenic iPSC subclones each exposed to one of **79 known or
 suspected environmental mutagens**, yielding **41 substitution, 6 doublet, and 8 indel reference
 signatures** with *experimentally controlled* aetiology. Because each signature has a known causal
 exposure, this is a ground-truth reference for aetiology anchoring — distinct from COSMIC's

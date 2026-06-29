@@ -31,7 +31,7 @@ after 50, and prior cytotoxic therapy + ionizing radiation strongly enrich for *
 clones.
 
 For our cross-study aggregation, the practical consequence is unambiguous: **mixing
-matched-normal cohorts (MSK-IMPACT) with unmatched-normal cohorts (~52% of GENIE) without a
+matched-normal cohorts (MSK-IMPACT) with unmatched-normal cohorts (~52% of GENIE) without a `topic:clonal-hematopoiesis-contamination`
 CH-aware filter will systematically inflate per-cancer mutation rates for these 7 genes in
 the unmatched arm.**
 

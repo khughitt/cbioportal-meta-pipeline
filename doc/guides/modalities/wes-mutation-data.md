@@ -27,7 +27,7 @@ TCGA MAFs use different callers), **low-purity / contaminated-normal exclusions*
   *Nature* 502:333–339. PMID 24132290.
   → first-generation 12-cancer pan-cancer landscape (pre-MC3).
 
-**Data sources:** MC3 unified MAF at Synapse syn7214402 (controlled-access — all calls + filter
+**Data sources:** `dataset:tcga-mc3` unified MAF at Synapse syn7214402 (controlled-access — all calls + filter
 flags) and the open-access PASS-only MAF (3,600,963 variants from 10,295 tumors).
 
 ## Audit checklist

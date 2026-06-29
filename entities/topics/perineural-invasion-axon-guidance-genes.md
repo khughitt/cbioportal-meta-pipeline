@@ -49,7 +49,7 @@ structurally resemble the project's candidate list:
   under length-proportional background mutation without any selection."
 
 This makes PNI the sharpest setting to disentangle **selection on guidance genes** from
-**gene-length artifact** and **CNS-localization artifact**: PNI is cancer-type-structured (PDAC ~100%, prostate 25–90%,
+**gene-length artifact** and **CNS-localization artifact** for `topic:perineural-invasion-axon-guidance-genes`: PNI is cancer-type-structured (PDAC ~100%, prostate 25–90%,
 HNSCC, CRC), so a *genuine* PNI-driven mutation signal would track PNI-prevalent cancer types,
 whereas a length artifact would be flat across types and a CNS artifact would localize to glioma.
 

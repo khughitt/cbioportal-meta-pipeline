@@ -25,7 +25,7 @@ related:
 
 ## Summary
 
-Pan-Cancer Analysis of Whole Genomes — whole-genome sequencing of ~2,800 tumors across 38 cancer types with consensus somatic SNV/indel/SV/CNV calls; the reference WGS pan-cancer cohort for mutational signatures and non-coding drivers.
+`dataset:pcawg` is the Pan-Cancer Analysis of Whole Genomes — whole-genome sequencing of ~2,800 tumors across 38 cancer types with consensus somatic SNV/indel/SV/CNV calls; the reference WGS pan-cancer cohort for mutational signatures and non-coding drivers.
 
 ## Role for the signature thread
 

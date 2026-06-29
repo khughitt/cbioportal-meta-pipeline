@@ -30,7 +30,7 @@ Project links: this question is a measurement companion to
 
 ## Summary
 
-The project aggregates ~50–100 cBioPortal studies plus AACR GENIE into pan-cancer rankings.
+For `question:0017-cross-study-saturation-curve`, the project aggregates ~50–100 cBioPortal studies plus AACR GENIE into pan-cancer rankings.
 The implicit assumption is that more studies are always better; the empirical question
 is *how many studies are needed before the top-N ranking stabilizes*. A k-study ablation —
 randomly subsample k of the available studies, recompute top-N, repeat — produces a

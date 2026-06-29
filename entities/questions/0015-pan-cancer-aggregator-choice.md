@@ -31,7 +31,7 @@ Project links: this question is tied to
 ## Summary
 
 At full pan-cancer scale, BH-FDR-adjusted q-values for hundreds of genes underflow to
-exactly 0 (829 genes in the t131 run). The current per-gene rollup (`min_qglobal`) cannot
+exactly 0 for `question:0015-pan-cancer-aggregator-choice` (829 genes in the t131 run). The current per-gene rollup (`min_qglobal`) cannot
 distinguish among them; the t144 fix added `n_cancers_significant_q05` as a tiebreaker and
 recovered canonical drivers, but this is one choice among several plausible aggregators.
 The question asks: which aggregator best discriminates among q=0 genes, is most stable

@@ -45,7 +45,7 @@ related:
 
 ## Summary
 
-Whole-genome sequencing of ~5,000+ metastatic tumours with **harmonised consensus somatic calls and
+`dataset:hartwig-hmf` is whole-genome sequencing of ~5,000+ metastatic tumours with **harmonised consensus somatic calls and
 linked treatment history** — the largest uniformly-processed *treatment-annotated* metastatic WGS
 cohort. Its distinguishing feature for this project is the systematic prior-therapy metadata, which
 makes it the ideal substrate for the treatment-induced-signature-contamination hypothesis.

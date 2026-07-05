@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Conducting Meta-Analyses in R with the metafor Package
 status: active
 created: '2026-04-13'

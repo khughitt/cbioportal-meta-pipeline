@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Joint inference of mutational signatures from indels and single-nucleotide
   substitutions reveals prognostic impact of DNA repair deficiencies
 status: active

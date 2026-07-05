@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Universal Patterns of Selection in Cancer and Somatic Tissues
 status: read
 created: '2026-04-13'

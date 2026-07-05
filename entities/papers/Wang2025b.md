@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: 'Hijacking homeostasis: the brain-body neural circuitry in tumor pathogenesis
   and emerging therapeutic frontiers'
 status: active

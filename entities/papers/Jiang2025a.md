@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: The Impact of Variant Calling on Substitution Mutational Signature Inference
 status: active
 created: '2026-05-31'

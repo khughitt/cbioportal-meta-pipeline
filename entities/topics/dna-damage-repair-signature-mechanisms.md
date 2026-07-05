@@ -1,5 +1,5 @@
 ---
-type: topic
+kind: topic
 title: DNA damage/repair mechanisms underlying mutational signatures
 status: active
 created: '2026-05-31'

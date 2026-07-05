@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: Does panel-induced ascertainment confound both mutation-frequency rankings
   and literature-attention measures, creating a rich-get-richer loop?
 status: active

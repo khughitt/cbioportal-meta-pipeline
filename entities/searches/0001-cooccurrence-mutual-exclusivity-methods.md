@@ -1,5 +1,5 @@
 ---
-type: search
+kind: search
 title: Co-occurrence and mutual exclusivity detection methods in cancer somatic mutation
   data
 status: active

@@ -1,5 +1,5 @@
 ---
-type: topic
+kind: topic
 title: Pan-cancer mutational-signature catalogs and reference sets
 status: active
 created: '2026-05-31'

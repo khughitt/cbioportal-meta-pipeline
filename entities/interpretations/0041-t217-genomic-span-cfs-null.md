@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: "t217: neural-gene mutation enrichment is a genomic-span / common-fragile-site\
   \ artifact \u2014 it survives a coding-length null but dissolves under genomic-span\
   \ normalization; a small residual remains only in the panel-heavy full config (panel\

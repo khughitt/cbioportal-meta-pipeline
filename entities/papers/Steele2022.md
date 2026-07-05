@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: An overview of mutational and copy number signatures in human cancer
 status: active
 created: '2026-05-31'

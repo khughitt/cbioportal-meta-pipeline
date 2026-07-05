@@ -1,5 +1,5 @@
 ---
-type: pre-registration
+kind: pre-registration
 title: 'Pre-registration: GLMM-logit random-effects pooling for per-(gene, cancer)
   mutation rates (t077)'
 status: committed

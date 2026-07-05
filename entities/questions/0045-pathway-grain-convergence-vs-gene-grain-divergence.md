@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: "Does the cancer-type specificity of drivers seen at the gene level collapse\
   \ at pathway grain \u2014 i.e. do cancer types converge on shared pathways even\
   \ when they diverge on which gene is hit?"

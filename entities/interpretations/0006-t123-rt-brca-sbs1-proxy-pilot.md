@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: 't123: BRCA SBS1-proxy replication-timing pilot'
 status: active
 created: '2026-04-22'

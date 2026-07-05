@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Unravelling the instability of mutational signatures extraction via archetypal
   analysis
 status: active

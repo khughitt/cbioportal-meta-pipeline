@@ -1,5 +1,5 @@
 ---
-type: plan
+kind: plan
 title: t078 SELECT co-occurrence pipeline implementation plan
 status: draft
 created: '2026-04-25'

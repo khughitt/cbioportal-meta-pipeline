@@ -1,5 +1,5 @@
 ---
-type: topic
+kind: topic
 title: 'Mutational-signature topography: association with replication timing, chromatin,
   and local genomic features'
 status: active

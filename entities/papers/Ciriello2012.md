@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Mutual exclusivity analysis identifies oncogenic network modules
 status: active
 created: '2026-04-13'

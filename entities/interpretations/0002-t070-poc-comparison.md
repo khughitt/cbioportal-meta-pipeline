@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: 't070: PoC pre/post comparison for MSK-IMPACT panel-version drift handling'
 status: active
 created: '2026-04-18'

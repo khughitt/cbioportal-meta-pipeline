@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: Does the GLI1 exon 12 normal-tissue recurrent hotspot inflate GLI1 mutation
   frequencies in our cBioPortal cancer outputs?
 status: active

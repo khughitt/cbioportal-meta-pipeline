@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: "t206 treatment-exposure audit manual review \u2014 167 non-TCGA studies;\
   \ layered broad vs mutagenic-treatment label design"
 status: active

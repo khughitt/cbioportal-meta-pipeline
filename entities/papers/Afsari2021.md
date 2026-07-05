@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Supervised mutational signatures for obesity and other tissue-specific etiological
   factors in cancer
 status: active

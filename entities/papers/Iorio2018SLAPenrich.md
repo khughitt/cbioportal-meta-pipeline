@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Pathway-based dissection of the genomic heterogeneity of cancer hallmarks'
   acquisition with SLAPenrich
 status: active

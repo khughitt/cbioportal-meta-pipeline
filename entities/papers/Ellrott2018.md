@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Scalable Open Science Approach for Mutation Calling of Tumor Exomes Using Multiple
   Genomic Pipelines
 status: summarized

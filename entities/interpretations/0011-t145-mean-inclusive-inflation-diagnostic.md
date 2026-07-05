@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: "t145 mean-inclusive inflation diagnostic \u2014 stale pooled means before\
   \ WES zero-fill caused raw ranking inflation"
 status: active

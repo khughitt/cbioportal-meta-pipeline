@@ -1,5 +1,5 @@
 ---
-type: hypothesis
+kind: hypothesis
 title: Pre-malignant cBioPortal cohorts already carry n-1 of the canonical invasive-cancer
   drivers; residual late-stage drivers are checkpoint-enriched
 status: proposed

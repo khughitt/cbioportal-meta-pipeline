@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Crosstalk between cancer cells and the nervous system
 status: active
 created: '2026-06-06'

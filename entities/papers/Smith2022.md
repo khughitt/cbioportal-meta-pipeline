@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Mitochondrial DNA mutations in ageing and cancer
 status: active
 created: '2026-04-25'

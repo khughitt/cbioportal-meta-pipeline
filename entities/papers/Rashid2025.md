@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Operating principles of interconnected feedback loops driving cell fate transitions
 status: active
 created: '2026-04-25'

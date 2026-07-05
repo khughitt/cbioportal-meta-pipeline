@@ -1,5 +1,5 @@
 ---
-type: topic
+kind: topic
 title: Cross-study harmonization in panel-based cancer genomics (synthesis)
 status: active
 created: '2026-04-13'

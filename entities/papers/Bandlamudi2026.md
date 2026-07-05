@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Cancer type-specific variation in patterns of driver alterations across 50,000
   tumors
 status: abstract-read

@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Neural control of tumor immunity
 status: active
 created: '2026-06-06'

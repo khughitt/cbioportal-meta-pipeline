@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Mutational signatures are jointly shaped by DNA damage and repair
 status: active
 created: '2026-05-31'

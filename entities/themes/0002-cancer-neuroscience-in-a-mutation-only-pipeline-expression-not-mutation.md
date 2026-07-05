@@ -1,5 +1,5 @@
 ---
-type: theme
+kind: theme
 title: "Cancer neuroscience in a mutation-only pipeline \u2014 expression-not-mutation,\
   \ and the confound-first stance"
 status: active

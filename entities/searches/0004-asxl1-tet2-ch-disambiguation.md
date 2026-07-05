@@ -1,5 +1,5 @@
 ---
-type: search
+kind: search
 title: "ASXL1 / TET2 CH-leakage vs bona fide solid-tumor biology \u2014 disambiguation\
   \ literature"
 status: active

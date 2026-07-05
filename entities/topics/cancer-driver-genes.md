@@ -1,5 +1,5 @@
 ---
-type: topic
+kind: topic
 title: 'Cancer driver genes: methods, reference catalogs, and recommendations'
 status: active
 created: '2026-04-13'

@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Comprehensive repertoire of the chromosomal alteration and mutational signatures
   across 16 cancer types
 status: active

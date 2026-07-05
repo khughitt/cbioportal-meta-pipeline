@@ -1,5 +1,5 @@
 ---
-type: topic
+kind: topic
 title: Sex-biased somatic mutation burden and driver landscape across cancer types
 status: active
 created: '2026-06-07'

@@ -1,5 +1,5 @@
 ---
-type: report
+kind: report
 title: "Pipeline review \u2014 t131 dNdScv three-way ranking comparison (design v3)"
 status: active
 created: '2026-04-25'

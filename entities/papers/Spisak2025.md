@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Collateral mutagenesis funnels multiple sources of DNA damage into a ubiquitous
   mutational signature
 status: active

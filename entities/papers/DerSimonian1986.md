@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Meta-analysis in clinical trials
 status: active
 created: '2026-04-21'

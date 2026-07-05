@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: Does de novo extraction on the aggregated cohort surface factors not in COSMIC
   v3.x (novel or immune-related candidate aetiologies)?
 status: active

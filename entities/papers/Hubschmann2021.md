@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Analysis of mutational signatures with yet another package for signature analysis
 status: active
 created: '2026-05-31'

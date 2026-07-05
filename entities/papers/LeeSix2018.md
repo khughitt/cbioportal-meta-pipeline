@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Population dynamics of normal human blood inferred from somatic mutations
 status: active
 created: '2026-04-18'

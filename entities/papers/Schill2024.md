@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Correcting for Observation Bias in Cancer Progression Modeling
 status: active
 created: '2026-04-27'

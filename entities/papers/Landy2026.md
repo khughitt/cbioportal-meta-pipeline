@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: 'bayesNMF: Fast Bayesian Poisson NMF with Automatically Learned Rank Applied
   to Mutational Signatures'
 status: active

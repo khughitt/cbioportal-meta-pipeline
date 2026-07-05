@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Mutational landscape and significance across 12 major cancer types
 status: read
 created: '2026-04-13'

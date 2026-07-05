@@ -1,5 +1,5 @@
 ---
-type: topic
+kind: topic
 title: Pan-cancer mutation landscape
 status: active
 created: '2026-04-13'

@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: IRF4 addiction in multiple myeloma
 status: active
 created: '2026-06-07'

@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: The Age Distribution of Cancer and a Multi-stage Theory of Carcinogenesis
 status: active
 created: '2026-06-07'

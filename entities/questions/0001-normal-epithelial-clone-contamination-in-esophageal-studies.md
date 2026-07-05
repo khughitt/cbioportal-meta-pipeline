@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: Do elevated NOTCH1 rates in cBioPortal esophageal studies reflect normal-epithelial
   clone contamination rather than tumor biology?
 status: active

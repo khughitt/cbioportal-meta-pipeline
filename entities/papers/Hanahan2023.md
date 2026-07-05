@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Cancer hallmarks intersect with neuroscience in the tumor microenvironment
 status: active
 created: '2026-06-06'

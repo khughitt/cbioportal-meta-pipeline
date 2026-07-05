@@ -1,5 +1,5 @@
 ---
-type: discussion
+kind: discussion
 title: "Is there a preferred ordering among the hallmarks of cancer \u2014 and can\
   \ the hallmarks themselves be inferred from data rather than human labels?"
 status: active

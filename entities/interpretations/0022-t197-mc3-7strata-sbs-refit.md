@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: t197 full-MC3 per-sample SBS refit across the 7 h08 arm strata (COSMIC v3.4,
   t178/t179-hardened)
 status: active

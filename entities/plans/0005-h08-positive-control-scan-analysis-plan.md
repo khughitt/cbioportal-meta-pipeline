@@ -1,5 +1,5 @@
 ---
-type: plan
+kind: plan
 title: "Analysis plan \u2014 positive-control scan (H08a recovery gate)"
 status: not-ready
 created: '2026-05-31'

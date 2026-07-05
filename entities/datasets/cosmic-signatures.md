@@ -1,5 +1,5 @@
 ---
-type: dataset
+kind: dataset
 title: COSMIC Mutational Signatures
 status: active
 created: '2026-05-30'

@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: 'MutationalPatterns: the one stop shop for the analysis of mutational processes'
 status: active
 created: '2026-05-31'

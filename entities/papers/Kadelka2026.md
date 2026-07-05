@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: 'Canalization as a stabilizing principle of gene regulatory networks: a discrete
   dynamical systems perspective'
 status: active

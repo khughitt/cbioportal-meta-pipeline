@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Cancer therapy shapes the fitness landscape of clonal hematopoiesis
 status: read
 created: '2026-04-13'

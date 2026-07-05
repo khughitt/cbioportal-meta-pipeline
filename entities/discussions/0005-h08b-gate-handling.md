@@ -1,5 +1,5 @@
 ---
-type: discussion
+kind: discussion
 title: h08b gate handling after inconclusive H08a and smoking repair
 status: active
 created: '2026-06-01'

@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Identifying recurrent mutations in cancer reveals widespread lineage diversity
   and mutational specificity
 status: read

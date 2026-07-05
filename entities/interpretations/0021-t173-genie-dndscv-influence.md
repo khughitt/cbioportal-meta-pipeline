@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: "t173 GENIE dNdScv influence attribution \u2014 GENIE LOSO effect traces to\
   \ broad sample-mix shifts across shared hg19 labels"
 status: active

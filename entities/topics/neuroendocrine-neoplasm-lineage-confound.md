@@ -1,5 +1,5 @@
 ---
-type: topic
+kind: topic
 title: Neuroendocrine neoplasms as a histology confound (distinct from neural regulation
   of cancer)
 status: active

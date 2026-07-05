@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: 'What explains the residual large-gene mutation signal (e.g. TTN at rank 4-5)
   after trinucleotide and replication-timing correction: transcription-coupled repair,
   expression level, chromatin accessibility, or GC content, beyond common fragile

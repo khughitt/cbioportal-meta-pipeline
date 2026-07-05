@@ -1,5 +1,5 @@
 ---
-type: topic
+kind: topic
 title: 'Normal-tissue somatic-mutation atlas: cross-tissue, cross-age background as
   positive knowledge'
 status: active

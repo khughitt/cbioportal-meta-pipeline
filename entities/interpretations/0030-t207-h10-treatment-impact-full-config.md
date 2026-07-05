@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: t207 H10 treatment impact full-config exposure-label pass
 status: active
 created: '2026-06-01'

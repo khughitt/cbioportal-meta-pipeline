@@ -1,5 +1,5 @@
 ---
-type: dataset
+kind: dataset
 title: Generated cBioPortal per-study mutation clean-base substrates
 status: active
 created: '2026-05-31'

@@ -1,5 +1,5 @@
 ---
-type: dataset
+kind: dataset
 title: TCGA PanCanAtlas clinical-with-followup (smoking / pack-years)
 status: active
 created: '2026-05-31'

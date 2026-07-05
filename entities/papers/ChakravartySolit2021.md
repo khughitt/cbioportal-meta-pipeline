@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Clinical cancer genomic profiling
 status: abstract-read
 created: '2026-04-13'

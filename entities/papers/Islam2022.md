@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Uncovering novel mutational signatures by de novo extraction with SigProfilerExtractor
 status: active
 created: '2026-05-31'

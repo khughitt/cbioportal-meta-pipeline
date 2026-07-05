@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: Does neural-gene enrichment persist after excluding CNS/glioma studies from
   the aggregation?
 status: active

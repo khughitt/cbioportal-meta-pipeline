@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: Can a tissue-of-origin classifier (CUPLR or cosine-similarity heuristic) flag
   cBioPortal study samples whose signature profiles are abnormally consistent with
   normal-tissue background?

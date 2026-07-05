@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: 'q047: hypermutation inflates breadth AND dilutes driver-share across 8 cancer
   types (post-TMB-fix)'
 status: active

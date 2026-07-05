@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Cell-of-Origin Patterns Dominate the Molecular Classification of 10,000 Tumors
   from 33 Types of Cancer
 status: read

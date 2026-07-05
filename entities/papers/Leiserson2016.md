@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: A weighted exact test for mutually exclusive mutations in cancer
 status: active
 created: '2026-04-21'

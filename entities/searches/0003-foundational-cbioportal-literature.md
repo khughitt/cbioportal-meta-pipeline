@@ -1,5 +1,5 @@
 ---
-type: search
+kind: search
 title: 'Foundational literature for cBioPortal meta-analysis: dataset papers + cross-cutting
   topics'
 status: active

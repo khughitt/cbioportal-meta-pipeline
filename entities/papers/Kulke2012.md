@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Neuroendocrine Tumors (NCCN Clinical Practice Guidelines in Oncology)
 status: active
 created: '2026-06-06'

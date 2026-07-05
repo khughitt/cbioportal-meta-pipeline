@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: t211 q027 broad therapy-signature substrate discovery
 status: active
 created: '2026-06-01'

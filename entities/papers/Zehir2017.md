@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Mutational landscape of metastatic cancer revealed from prospective clinical
   sequencing of 10,000 patients
 status: read

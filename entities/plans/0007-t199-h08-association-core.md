@@ -1,5 +1,5 @@
 ---
-type: plan
+kind: plan
 title: "Within-tissue covariate\u2194H association core (H08a scan)"
 status: active
 created: '2026-05-31'

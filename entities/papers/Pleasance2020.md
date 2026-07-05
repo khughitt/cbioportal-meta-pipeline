@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Pan-cancer analysis of advanced patient tumors reveals interactions between
   therapy and genomic landscapes
 status: active

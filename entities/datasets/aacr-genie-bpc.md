@@ -1,5 +1,5 @@
 ---
-type: dataset
+kind: dataset
 title: AACR Project GENIE BPC (Biopharma Collaborative, PRISSMM)
 status: candidate
 created: '2026-05-30'

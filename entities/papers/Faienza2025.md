@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Reconstructing the lifelong history of cells and tissues via somatic mutation
   analysis
 status: active

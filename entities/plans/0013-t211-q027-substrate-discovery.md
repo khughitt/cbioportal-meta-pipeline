@@ -1,5 +1,5 @@
 ---
-type: plan
+kind: plan
 title: t211 q027 broad therapy-signature substrate discovery
 status: proposed
 created: '2026-06-01'

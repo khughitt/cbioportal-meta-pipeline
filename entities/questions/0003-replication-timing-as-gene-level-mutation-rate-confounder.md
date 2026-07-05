@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: Does replication timing create systematic gene-level mutation rate inflation
   in cross-study aggregation?
 status: active

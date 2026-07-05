@@ -1,5 +1,5 @@
 ---
-type: topic
+kind: topic
 title: Multistage carcinogenesis and the determinants of differential age of cancer
   onset
 status: active

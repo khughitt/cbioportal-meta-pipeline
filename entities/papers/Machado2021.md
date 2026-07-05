@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Genome-wide mutational signatures of immunological diversification in normal
   lymphocytes
 status: active

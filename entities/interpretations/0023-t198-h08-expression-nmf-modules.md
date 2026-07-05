@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: "t198 expression-module substrate \u2014 per-arm NMF on PanCanAtlas RNA-seq\
   \ with leakage firewall"
 status: active

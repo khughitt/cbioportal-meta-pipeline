@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Unsupervised Identification of Cancer Attractor States through the Lens of
   Embryonic Origin and Cancer Hallmarks
 status: active

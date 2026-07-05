@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Quantifying the Expanding Landscape of Clinical Actionability for Patients
   with Cancer
 status: read

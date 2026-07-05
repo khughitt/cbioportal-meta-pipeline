@@ -1,5 +1,5 @@
 ---
-type: plan
+kind: plan
 title: t210 q027 therapy-signature-high exclusion impact arm
 status: proposed
 created: '2026-06-01'

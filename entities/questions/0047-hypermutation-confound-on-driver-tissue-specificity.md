@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: "Are cell-type-restricted lineage drivers depleted, and broad/pan-cancer drivers\
   \ plus passengers enriched, among hypermutated samples \u2014 confounding any driver\
   \ tissue-specificity test?"

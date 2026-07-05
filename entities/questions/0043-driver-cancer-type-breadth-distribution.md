@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: What is the distribution of cancer-type breadth across drivers in our own aggregated
   cohort, and does it reproduce IntOGen's restricted-vs-pan-cancer split?
 status: active

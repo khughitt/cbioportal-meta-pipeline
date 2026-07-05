@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: "t173 dNdScv LOSO protocol status \u2014 harness and holdout design for the\
   \ decisive replication test"
 status: active

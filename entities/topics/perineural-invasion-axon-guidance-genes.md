@@ -1,5 +1,5 @@
 ---
-type: topic
+kind: topic
 title: "Perineural invasion, peripheral nerve\u2013tumor interaction, and large axon-guidance/adhesion\
   \ genes"
 status: active

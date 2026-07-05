@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: 'Arcsine-based transformations for meta-analysis of proportions: Pros, cons,
   and alternatives'
 status: active

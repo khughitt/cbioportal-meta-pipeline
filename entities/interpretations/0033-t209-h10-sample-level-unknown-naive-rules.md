@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: t209 H10 sample-level unknown and confirmed-naive rule impact
 status: active
 created: '2026-06-01'

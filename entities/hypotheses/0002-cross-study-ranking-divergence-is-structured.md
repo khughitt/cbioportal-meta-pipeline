@@ -1,5 +1,5 @@
 ---
-type: hypothesis
+kind: hypothesis
 title: "Cross-study gene rankings replicate strongly for canonical drivers and weakly\
   \ for length/raw-driven candidates \u2014 divergence between ranking schemes is\
   \ structured, not random"

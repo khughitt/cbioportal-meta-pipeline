@@ -1,5 +1,5 @@
 ---
-type: topic
+kind: topic
 title: Multi-omics cancer analysis
 status: active
 created: '2026-04-13'

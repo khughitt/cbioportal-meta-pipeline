@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: A phylogenetic approach to study the evolution of somatic mutational processes
   in cancer
 status: active

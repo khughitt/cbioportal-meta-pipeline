@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Geographic and age variations in mutational processes in colorectal cancer
 status: active
 created: '2026-05-31'

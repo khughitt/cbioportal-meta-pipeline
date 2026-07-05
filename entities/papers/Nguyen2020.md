@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Pan-cancer landscape of homologous recombination deficiency
 status: active
 created: '2026-05-31'

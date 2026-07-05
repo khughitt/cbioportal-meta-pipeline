@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: A compendium of mutational cancer driver genes
 status: active
 created: '2026-04-21'

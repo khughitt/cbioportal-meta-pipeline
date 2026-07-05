@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: Does the high normal-tissue mCA burden in esophagus mucosa produce detectable
   clone-signal in cBioPortal esophageal study CNA outputs?
 status: active

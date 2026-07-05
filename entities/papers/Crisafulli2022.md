@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Temozolomide Treatment Alters Mismatch Repair and Boosts Mutational Burden
   in Tumor and Blood of Colorectal Cancer Patients
 status: active

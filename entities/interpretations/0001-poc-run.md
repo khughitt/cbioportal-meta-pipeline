@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: First end-to-end PoC run of the annotated pipeline
 status: active
 created: '2026-04-17'

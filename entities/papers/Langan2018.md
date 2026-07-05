@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: A comparison of heterogeneity variance estimators in simulated random-effects
   meta-analyses
 status: active

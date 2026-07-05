@@ -1,5 +1,5 @@
 ---
-type: search
+kind: search
 title: 'TMB follow-up: hypermutator classification + empirical concordance + tooling
   (rescoped t025)'
 status: active

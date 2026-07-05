@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: Does a joint APOBEC3A+APOBEC3B expression score (and intact-MMR expression
   in MSS tumors) predict SBS2/SBS13 burden better than single covariates?
 status: active

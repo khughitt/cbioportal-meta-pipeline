@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: 'Attractors are less stable than their basins: Canalization creates a coherence
   gap in gene regulatory networks'
 status: active

@@ -1,5 +1,5 @@
 ---
-type: dataset
+kind: dataset
 title: The Cancer Genome Atlas (TCGA)
 status: active
 created: '2026-05-30'

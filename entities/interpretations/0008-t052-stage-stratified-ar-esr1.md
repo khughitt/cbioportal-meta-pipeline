@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: 't052: stage-stratified AR + ESR1 rates (Zehir 2017 validation)'
 status: active
 created: '2026-04-25'

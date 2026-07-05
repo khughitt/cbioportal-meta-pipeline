@@ -1,5 +1,5 @@
 ---
-type: modality-guide
+kind: modality-guide
 title: Targeted-panel mutation data
 status: active
 created: '2026-04-14'

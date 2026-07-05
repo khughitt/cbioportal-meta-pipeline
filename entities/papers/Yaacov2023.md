@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Mutational signatures association with replication timing in normal cells reveals
   similarities and differences with matched cancer tissues
 status: active

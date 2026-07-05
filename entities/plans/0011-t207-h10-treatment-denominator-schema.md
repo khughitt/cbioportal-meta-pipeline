@@ -1,5 +1,5 @@
 ---
-type: plan
+kind: plan
 title: H10 treatment-denominator schema and impact pass
 status: active
 created: '2026-06-01'

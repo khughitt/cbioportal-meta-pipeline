@@ -1,5 +1,5 @@
 ---
-type: plan
+kind: plan
 title: "Design: t052 \u2014 per-study cohort-stage descriptor (v2)"
 status: active
 created: '2026-04-24'

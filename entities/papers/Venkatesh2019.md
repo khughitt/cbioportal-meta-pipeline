@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: The neural regulation of cancer
 status: active
 created: '2026-06-06'

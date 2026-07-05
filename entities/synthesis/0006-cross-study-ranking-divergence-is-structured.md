@@ -1,5 +1,5 @@
 ---
-type: synthesis
+kind: synthesis
 title: 'Synthesis: h02-cross-study-ranking-divergence-is-structured'
 status: active
 created: '2026-06-02'

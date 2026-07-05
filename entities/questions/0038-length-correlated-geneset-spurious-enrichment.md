@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: Do length-correlated functional gene categories generically produce spurious
   raw-count enrichment, and should the pipeline ship a length-aware gene-set enrichment
   guard?

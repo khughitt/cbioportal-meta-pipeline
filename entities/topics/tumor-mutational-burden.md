@@ -1,5 +1,5 @@
 ---
-type: topic
+kind: topic
 title: "Tumor mutational burden (TMB) \u2014 definition, measurement, harmonization"
 status: active
 created: '2026-04-13'

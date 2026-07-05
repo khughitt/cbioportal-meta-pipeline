@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: What is the magnitude of normal-tissue SBS1/SBS5 contamination in unmatched-normal
   cBioPortal studies, and can per-tissue background subtraction reduce it?
 status: active

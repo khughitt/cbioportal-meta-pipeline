@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: 'Analysis of mutational signatures in multiple cancer studies: Recent Bayesian
   tools'
 status: active

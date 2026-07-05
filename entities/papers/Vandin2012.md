@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: De novo discovery of mutated driver pathways in cancer
 status: active
 created: '2026-04-13'

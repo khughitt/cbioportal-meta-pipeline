@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Lineage dependency and lineage-survival oncogenes in human cancer
 status: active
 created: '2026-06-07'

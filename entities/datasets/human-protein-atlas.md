@@ -1,5 +1,5 @@
 ---
-type: dataset
+kind: dataset
 title: Human Protein Atlas (tissue specificity)
 status: candidate
 created: '2026-06-07'

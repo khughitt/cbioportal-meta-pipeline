@@ -1,5 +1,5 @@
 ---
-type: topic
+kind: topic
 title: Clonal hematopoiesis contamination in panel-based tumor mutation calls
 status: active
 created: '2026-04-13'

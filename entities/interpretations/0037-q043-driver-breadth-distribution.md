@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: 'q043 first pass: driver cancer-type-breadth distribution on the poc-2026-04-17
   cohort'
 status: active

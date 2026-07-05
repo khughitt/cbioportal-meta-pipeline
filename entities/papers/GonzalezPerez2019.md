@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Local Determinants of the Mutational Landscape of the Human Genome
 status: active
 created: '2026-05-31'

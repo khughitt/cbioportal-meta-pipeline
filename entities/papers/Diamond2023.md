@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Tracking the evolution of therapy-related myeloid neoplasms using chemotherapy
   signatures
 status: active

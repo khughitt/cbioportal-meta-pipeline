@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Assigning mutational signatures to individual samples and individual somatic
   mutations with SigProfilerAssignment
 status: active

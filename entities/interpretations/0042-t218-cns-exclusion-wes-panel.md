@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: "t218: the candidate mutation enrichment is not CNS-driven and the t217\
   \ residual is not panel ascertainment \u2014 it is one cohort's all-region (98.5%-intronic)\
   \ mutation table tiling the candidates' multi-Mb loci; removing it returns them\

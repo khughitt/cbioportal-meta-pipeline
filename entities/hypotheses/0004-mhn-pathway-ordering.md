@@ -1,5 +1,5 @@
 ---
-type: hypothesis
+kind: hypothesis
 title: "MHN pathway-level ordering recovers intrinsic-mutator \u2192 lineage-driver\
   \ \u2192 checkpoint-loss progression"
 status: proposed

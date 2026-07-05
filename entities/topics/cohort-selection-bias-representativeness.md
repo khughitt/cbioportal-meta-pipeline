@@ -1,5 +1,5 @@
 ---
-type: topic
+kind: topic
 title: Cohort selection bias and population representativeness
 status: active
 created: '2026-04-13'

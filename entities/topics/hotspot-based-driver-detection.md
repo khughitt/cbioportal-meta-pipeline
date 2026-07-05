@@ -1,5 +1,5 @@
 ---
-type: topic
+kind: topic
 title: Hotspot-based driver detection (1D residue-level and 3D spatial)
 status: active
 created: '2026-04-13'

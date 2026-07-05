@@ -1,5 +1,5 @@
 ---
-type: topic
+kind: topic
 title: APOBEC mutagenesis and SBS2/SBS13
 status: active
 created: '2026-05-31'

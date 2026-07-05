@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Relating mutational signature exposures to clinical data in cancers via signeR
   2.0
 status: active

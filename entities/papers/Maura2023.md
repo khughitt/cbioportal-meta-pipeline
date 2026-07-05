@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Genomic and immune signatures predict clinical outcome in newly diagnosed multiple
   myeloma treated with immunotherapy regimens
 status: active

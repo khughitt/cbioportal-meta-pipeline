@@ -1,5 +1,5 @@
 ---
-type: meta
+kind: meta
 title: "Bias Audit: cross-study aggregation pipeline (preprocessing \u2192 clustering)"
 status: proposed
 created: '2026-04-13'

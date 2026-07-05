@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: Does excluding therapy-signature-high samples measurably change the pooled
   gene-by-cancer mutation-frequency tables and any cross-study driver ranking?
 status: active

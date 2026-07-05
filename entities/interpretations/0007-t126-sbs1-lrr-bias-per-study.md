@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: 't126: per-study aggregate SBS1 LRR-bias test (BRCA matched vs unmatched)'
 status: active
 created: '2026-04-24'

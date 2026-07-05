@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: "t182 exploratory h08b SBS40-vs-SBS5 expression-module prototype \u2014 suggestive\
   \ SKCM immune-module signal, not confirmatory"
 status: active

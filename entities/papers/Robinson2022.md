@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Inherited MUTYH mutations cause elevated somatic mutation rates and distinctive
   mutational signatures in normal human cells
 status: active

@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Cancer cells co-opt an inter-organ neuroimmune circuit to escape immune surveillance
 status: active
 created: '2026-06-07'

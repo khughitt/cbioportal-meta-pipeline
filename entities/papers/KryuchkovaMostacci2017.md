@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: A benchmark of gene expression tissue-specificity metrics
 status: active
 created: '2026-06-07'

@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Comprehensive whole-genome sequencing reveals origins of mutational signatures
   associated with aging, mismatch repair deficiency and temozolomide chemotherapy
 status: active

@@ -1,5 +1,5 @@
 ---
-type: meta
+kind: meta
 title: 'Feedback to upstream science project: /science:search-literature (2026-04-13)'
 status: active
 created: '2026-04-13'

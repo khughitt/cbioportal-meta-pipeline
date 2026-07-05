@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: How should multi-cancer dNdScv signals be aggregated into a per-gene pan-cancer
   ranking when BH-FDR floors out for hundreds of genes?
 status: active

@@ -1,5 +1,5 @@
 ---
-type: plan
+kind: plan
 title: Hypermutator / TMB annotation pipeline plan
 status: active
 created: '2026-04-13'

@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: A novel independence test for somatic alterations in cancer shows that biology
   drives mutual exclusivity but chance explains most co-occurrence
 status: active

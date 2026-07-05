@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: What minimum per-cancer-type sample size and variant-caller provenance does
   the cross-study cohort need for reliable signature extraction/fitting?
 status: active

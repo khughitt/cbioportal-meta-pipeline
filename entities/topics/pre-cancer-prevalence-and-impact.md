@@ -1,5 +1,5 @@
 ---
-type: topic
+kind: topic
 title: Pre-cancer source fitness in cBioPortal and GENIE
 status: active
 created: '2026-04-27'

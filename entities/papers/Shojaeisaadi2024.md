@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Mutational signature analyses in multi-child families reveal sources of age-related
   increases in human germline mutations
 status: active

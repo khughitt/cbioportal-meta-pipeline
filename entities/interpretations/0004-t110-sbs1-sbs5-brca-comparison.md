@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: 't110: BRCA SBS1/SBS5 matched-vs-unmatched comparison'
 status: active
 created: '2026-04-22'

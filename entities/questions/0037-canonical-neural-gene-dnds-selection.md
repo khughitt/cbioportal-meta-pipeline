@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: "Do canonical cancer-neuroscience effector genes (NLGN3, ADRB2, NTRK1/2, CHRM3,\
   \ GRIN2A/B, NGF, BDNF) show positive selection (dN/dS) in any cancer type \u2014\
   \ the only defensible mutational evidence for active neural hijacking?"

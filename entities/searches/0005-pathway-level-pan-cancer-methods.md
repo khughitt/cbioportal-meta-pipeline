@@ -1,5 +1,5 @@
 ---
-type: search
+kind: search
 title: Pathway-level pan-cancer analysis methods (beyond Sanchez-Vega 2018)
 status: active
 created: '2026-04-14'

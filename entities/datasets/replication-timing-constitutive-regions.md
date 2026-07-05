@@ -1,5 +1,5 @@
 ---
-type: dataset
+kind: dataset
 title: Constitutive replication-timing regions (human hg19 / GRCh37)
 status: active
 created: '2026-04-22'

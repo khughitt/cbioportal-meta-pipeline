@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: 'Mutation and cancer: a model for human carcinogenesis'
 status: active
 created: '2026-06-07'

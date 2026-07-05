@@ -1,5 +1,5 @@
 ---
-type: discussion
+kind: discussion
 title: 'Gene length as a confounder: mutation rankings and literature attention'
 status: active
 created: '2026-04-24'

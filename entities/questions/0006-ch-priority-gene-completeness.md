@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: Is the 7-gene ch_priority_gene list sufficient to flag CH-related driver inflation
   in the cross-study mutation tables?
 status: active

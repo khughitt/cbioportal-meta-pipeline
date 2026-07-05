@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: Do chr1q gains and chr16q losses in cBioPortal breast cancer studies partly
   reflect contaminating normal aneuploid epithelial clones?
 status: active

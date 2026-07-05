@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: The origin of human mutation in light of genomic data
 status: active
 created: '2026-05-31'

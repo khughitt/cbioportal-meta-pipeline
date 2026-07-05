@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Somatic mutant clones colonize the human esophagus with age
 status: active
 created: '2026-04-18'

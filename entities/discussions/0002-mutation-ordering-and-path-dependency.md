@@ -1,5 +1,5 @@
 ---
-type: discussion
+kind: discussion
 title: "Mutation ordering and path dependency \u2014 can we detect A\u2192B asymmetries\
   \ in cBioPortal data?"
 status: active

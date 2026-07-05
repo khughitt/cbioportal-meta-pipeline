@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Pan-cancer analysis of the interplay between mutational signatures and cellular
   signaling
 status: active

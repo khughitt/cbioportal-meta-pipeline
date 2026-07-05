@@ -1,5 +1,5 @@
 ---
-type: pre-registration
+kind: pre-registration
 title: "Smoking-arm repair \u2014 repaired smoking covariate must recover SBS4\
   \ without rereading the locked H08a verdict"
 status: committed

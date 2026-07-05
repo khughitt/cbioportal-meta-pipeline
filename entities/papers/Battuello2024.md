@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Mutational signatures of colorectal cancers according to distinct computational
   workflows
 status: active

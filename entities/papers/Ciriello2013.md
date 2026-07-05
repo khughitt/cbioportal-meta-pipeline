@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Emerging landscape of oncogenic signatures across human cancers
 status: read
 created: '2026-04-13'

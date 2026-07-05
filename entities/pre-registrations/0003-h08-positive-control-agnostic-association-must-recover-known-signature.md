@@ -1,5 +1,5 @@
 ---
-type: pre-registration
+kind: pre-registration
 title: "h08 positive control \u2014 agnostic association must recover known signature\
   \ aetiologies unprompted"
 status: committed

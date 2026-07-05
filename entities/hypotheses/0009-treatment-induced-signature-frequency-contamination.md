@@ -1,5 +1,5 @@
 ---
-type: hypothesis
+kind: hypothesis
 title: Treated/relapsed cohorts inflate apparent gene-by-cancer mutation frequencies
   via iatrogenic mutational signatures
 status: proposed

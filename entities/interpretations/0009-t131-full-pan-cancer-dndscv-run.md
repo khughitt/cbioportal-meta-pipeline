@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: "t131 full pan-cancer-dndscv run \u2014 chain works end-to-end; min-q rollup\
   \ tiebreaker and pooled-mean inflation surface as data-quality bugs"
 status: active

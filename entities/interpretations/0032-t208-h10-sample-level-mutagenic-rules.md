@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: t208 H10 sample-level mutagenic-treatment rule impact
 status: active
 created: '2026-06-01'

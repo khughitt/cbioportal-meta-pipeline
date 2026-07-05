@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: 'MetaMutationalSigs: comparison of mutational signature refitting results made
   easy'
 status: active

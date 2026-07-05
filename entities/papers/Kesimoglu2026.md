@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Combined inference of known and novel mutational signatures with ReDeNovo
 status: active
 created: '2026-05-31'

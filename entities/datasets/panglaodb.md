@@ -1,5 +1,5 @@
 ---
-type: dataset
+kind: dataset
 title: PanglaoDB cell-type marker database
 status: candidate
 created: '2026-06-07'

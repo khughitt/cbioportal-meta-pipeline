@@ -1,5 +1,5 @@
 ---
-type: search
+kind: search
 title: Cross-study meta-analysis statistics for cancer genomics / mutation-frequency
   aggregation
 status: active

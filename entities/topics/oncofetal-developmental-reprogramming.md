@@ -1,5 +1,5 @@
 ---
-type: topic
+kind: topic
 title: Oncofetal / developmental reprogramming as a label-free route to apparent neural-gene
   signal
 status: active

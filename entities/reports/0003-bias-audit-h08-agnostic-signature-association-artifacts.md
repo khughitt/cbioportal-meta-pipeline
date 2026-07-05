@@ -1,5 +1,5 @@
 ---
-type: report
+kind: report
 title: 'Bias Audit: H08 agnostic signature-association artifacts'
 status: proposed
 created: '2026-05-31'

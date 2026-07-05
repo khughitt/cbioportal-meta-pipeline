@@ -1,5 +1,5 @@
 ---
-type: topic
+kind: topic
 title: "Pan-cancer interpretive frames (cell-of-origin vs alterations vs pathways)\
   \ \u2014 synthesis"
 status: active

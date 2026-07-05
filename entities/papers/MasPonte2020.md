@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: DNA mismatch repair promotes APOBEC3-mediated diffuse hypermutation in human
   cancers
 status: active

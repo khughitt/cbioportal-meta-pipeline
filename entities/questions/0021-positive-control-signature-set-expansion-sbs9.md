@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: Should the hypothesis:0007 positive-control signature set be expanded to include SBS9 (germinal-centre)
   and SBS54, and which MMR signatures are the canonical MSI discriminators?
 status: active

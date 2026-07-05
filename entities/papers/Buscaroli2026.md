@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: 'BASCULE: bayesian inference and clustering of mutational signatures leveraging
   biological priors'
 status: active

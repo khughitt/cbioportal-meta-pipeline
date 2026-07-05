@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: "Panel-induced ascertainment \u2014 combined pan-cancer rankings are WES-dominated,\
   \ while panel-only rankings carry a smaller, assay-shaped driver surface"
 status: active

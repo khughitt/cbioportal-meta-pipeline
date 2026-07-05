@@ -1,5 +1,5 @@
 ---
-type: discussion
+kind: discussion
 title: 't124: should question:0009 pursue true SBS1 context/topography or retire the panel/WES
   proxy route?'
 status: active

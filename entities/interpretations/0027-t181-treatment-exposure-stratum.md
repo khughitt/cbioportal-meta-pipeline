@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: "t181 treatment-exposure stratum for covariate-association scan \u2014 MC3/TCGA carries no study-level\
   \ treated confound; 55 patient-level neoadjuvant positives"
 status: active

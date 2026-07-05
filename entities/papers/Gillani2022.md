@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Germline predisposition to pediatric Ewing sarcoma is characterized by inherited
   pathogenic variants in DNA damage repair genes
 status: active

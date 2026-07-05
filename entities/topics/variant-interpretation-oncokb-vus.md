@@ -1,5 +1,5 @@
 ---
-type: topic
+kind: topic
 title: Variant interpretation, OncoKB, and VUS handling
 status: active
 created: '2026-04-13'

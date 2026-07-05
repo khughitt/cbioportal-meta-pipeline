@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: The number of key carcinogenic events can be predicted from cancer incidence
 status: active
 created: '2026-06-07'

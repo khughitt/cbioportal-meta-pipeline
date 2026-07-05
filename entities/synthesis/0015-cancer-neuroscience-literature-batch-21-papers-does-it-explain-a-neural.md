@@ -1,5 +1,5 @@
 ---
-type: synthesis
+kind: synthesis
 title: 'Cancer neuroscience literature batch (21 papers): does it explain a neural-gene
   mutation signal?'
 status: active

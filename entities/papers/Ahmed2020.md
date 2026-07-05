@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Gastrointestinal neuroendocrine tumors in 2020
 status: active
 created: '2026-06-06'

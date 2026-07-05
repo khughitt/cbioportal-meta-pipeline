@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Canalization of the Polygenic Risk for Common Diseases and Traits in the UK
   Biobank Cohort
 status: active

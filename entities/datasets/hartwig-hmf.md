@@ -1,5 +1,5 @@
 ---
-type: dataset
+kind: dataset
 title: Hartwig Medical Foundation (HMF) metastatic pan-cancer WGS
 status: candidate
 created: '2026-05-31'

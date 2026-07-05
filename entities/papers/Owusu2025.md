@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Dissecting DNA-mismatch-repair-driven mutational processes in human cells
 status: active
 created: '2026-05-31'

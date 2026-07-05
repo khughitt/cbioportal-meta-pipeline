@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Meta-analysis of prevalence
 status: active
 created: '2026-04-21'

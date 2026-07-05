@@ -1,5 +1,5 @@
 ---
-type: discussion
+kind: discussion
 title: Why does median age of cancer onset differ across types? Number-of-hits vs
   division rate vs target-cell number
 status: active

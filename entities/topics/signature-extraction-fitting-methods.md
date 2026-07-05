@@ -1,5 +1,5 @@
 ---
-type: topic
+kind: topic
 title: Mutational-signature extraction, fitting, and assignment methods
 status: active
 created: '2026-05-31'

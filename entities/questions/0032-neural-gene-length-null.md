@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: Does the apparent neural-gene enrichment in top-mutated genes survive gene-length
   normalization, or is it a length artifact?
 status: active

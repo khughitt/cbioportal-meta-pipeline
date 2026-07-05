@@ -1,5 +1,5 @@
 ---
-type: hypothesis
+kind: hypothesis
 title: Non-tumor signal contaminates cBioPortal mutation-frequency estimates in identifiable,
   partially correctable ways
 status: proposed

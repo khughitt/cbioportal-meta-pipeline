@@ -1,5 +1,5 @@
 ---
-type: plan
+kind: plan
 title: smoking-arm repair production rerun
 status: active
 created: '2026-06-01'

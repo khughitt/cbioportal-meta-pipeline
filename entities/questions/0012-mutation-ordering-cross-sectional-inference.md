@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: "Can mutation ordering (A\u2192B) be robustly inferred from cross-sectional\
   \ cBioPortal data?"
 status: active

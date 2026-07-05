@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Substitution mutational signatures in whole-genome-sequenced cancers in the
   UK population
 status: active

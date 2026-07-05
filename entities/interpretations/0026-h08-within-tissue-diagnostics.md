@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: "t200 h08 within-tissue failure diagnostics \u2014 APOBEC arm robust; UV/smoking\
   \ failures are proxy-quality, not method"
 status: active

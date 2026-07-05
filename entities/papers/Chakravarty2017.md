@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: 'OncoKB: A Precision Oncology Knowledge Base'
 status: read
 created: '2026-04-13'

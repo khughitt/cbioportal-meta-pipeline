@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: "t221(a): the full-WES neural-gene residual is NOT a hypermutator artifact\
   \ \u2014 a sample-level exclusion across all 91 WES studies (326 hypermutator samples,\
   \ 1.15M variant rows dropped) leaves the genomic-span residual exactly where it\

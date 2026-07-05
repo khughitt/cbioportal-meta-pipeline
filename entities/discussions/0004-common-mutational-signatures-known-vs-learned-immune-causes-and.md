@@ -1,5 +1,5 @@
 ---
-type: discussion
+kind: discussion
 title: 'Common mutational signatures: known vs learned, immune causes, and confounding'
 status: complete
 created: 2026-05-30

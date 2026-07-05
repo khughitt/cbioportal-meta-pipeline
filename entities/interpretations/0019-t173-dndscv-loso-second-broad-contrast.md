@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: "t173 dNdScv LOSO second broad contrast \u2014 additional broad holdout confirming\
   \ structured perturbation"
 status: active

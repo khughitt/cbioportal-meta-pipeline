@@ -1,5 +1,5 @@
 ---
-type: hypothesis
+kind: hypothesis
 title: Joint indel+SBS signature decomposition improves aetiology discrimination beyond
   SBS alone, where indel-call depth permits
 status: proposed

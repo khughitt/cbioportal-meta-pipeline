@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: A mutational signature in gastric cancer suggests therapeutic strategies
 status: active
 created: '2026-05-31'

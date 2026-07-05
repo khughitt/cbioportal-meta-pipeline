@@ -1,5 +1,5 @@
 ---
-type: topic
+kind: topic
 title: Mutational signatures (COSMIC SBS/DBS/ID)
 status: active
 created: '2026-04-13'

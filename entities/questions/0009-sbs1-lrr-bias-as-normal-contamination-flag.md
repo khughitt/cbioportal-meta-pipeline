@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: Can the SBS1 late-replicating-region bias (present in normal tissue, absent
   in cancer) serve as a practical contamination quality flag for cBioPortal studies?
 status: deferred

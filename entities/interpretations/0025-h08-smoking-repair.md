@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: "t204 h08 smoking-arm repair production rerun \u2014 binary ever-smoker recovers\
   \ significant SBS4 association but misses top-3 gate"
 status: active

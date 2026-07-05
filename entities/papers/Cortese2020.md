@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: 'The neuro-immune axis in cancer: Relevance of the peripheral nervous system
   to the disease'
 status: active

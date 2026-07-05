@@ -1,5 +1,5 @@
 ---
-type: plan
+kind: plan
 title: t206 H10 treatment-exposure audit analysis plan
 status: ready-with-caveats
 created: '2026-06-01'

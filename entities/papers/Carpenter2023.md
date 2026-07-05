@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Mutational impact of APOBEC3A and APOBEC3B in a human cell line and comparisons
   to breast cancer
 status: active

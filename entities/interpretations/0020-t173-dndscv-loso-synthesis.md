@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: "t173 dNdScv LOSO synthesis \u2014 dNdScv ranking is LOSO-stable; GENIE removal\
   \ is a structured, not generic, perturbation"
 status: active

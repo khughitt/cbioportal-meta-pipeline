@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: "q003 RT residual regression \u2014 late-replication signal does not explain\
   \ TTN; length adjustment moves TTN but the RT coefficient is null"
 status: active

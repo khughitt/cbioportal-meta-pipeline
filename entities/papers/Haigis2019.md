@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: 'Tissue-specificity in cancer: The rule, not the exception'
 status: active
 created: '2026-06-07'

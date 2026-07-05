@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: 'AACR Project GENIE: Powering Precision Medicine through an International Consortium'
 status: read
 created: '2026-04-13'

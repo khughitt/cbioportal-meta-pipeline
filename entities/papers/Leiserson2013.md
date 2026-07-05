@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Simultaneous Identification of Multiple Driver Pathways in Cancer
 status: active
 created: '2026-04-21'

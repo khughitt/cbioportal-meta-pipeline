@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Systematic identification of cancer driving signaling pathways based on mutual
   exclusivity of genomic alterations
 status: active

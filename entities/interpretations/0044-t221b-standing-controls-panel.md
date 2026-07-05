@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: "t221(b): four standing controls lock down the candidate-set verdict \u2014\
   \ the residual is entirely an all-region call-set artifact (6 studies; gone in 84\
   \ exonic-clean ones), the candidates are statistically indistinguishable from known\

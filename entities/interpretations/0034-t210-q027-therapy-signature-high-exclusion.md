@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: t210 q027 therapy-signature-high exclusion impact arm
 status: active
 created: '2026-06-01'

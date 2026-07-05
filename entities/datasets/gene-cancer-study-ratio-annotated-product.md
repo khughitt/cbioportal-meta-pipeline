@@ -1,5 +1,5 @@
 ---
-type: dataset
+kind: dataset
 title: Canonical annotated gene-cancer study ratio product
 status: active
 created: '2026-05-02'

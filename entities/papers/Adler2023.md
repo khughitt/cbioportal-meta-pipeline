@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Mutational processes of tobacco smoking and APOBEC activity generate protein-truncating
   mutations in cancer genomes
 status: active

@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: "t173 dNdScv LOSO pilot \u2014 first leave-one-study-out holdout result on\
   \ the dNdScv ranking"
 status: active

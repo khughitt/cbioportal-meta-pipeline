@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: Can the Li 2021 body-map tissue-specific normal mutation rates serve as a null
   model for per-tissue background in our pipeline outputs?
 status: active

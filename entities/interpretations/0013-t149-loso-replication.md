@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: "t149 leave-one-study-out replication-rate analysis \u2014 pooled_rate top-N\
   \ is unstable; instability concentrates in small / specialty studies and is not\
   \ rescued by Bailey restriction"

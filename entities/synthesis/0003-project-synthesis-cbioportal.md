@@ -1,5 +1,5 @@
 ---
-type: synthesis
+kind: synthesis
 title: Project synthesis - cbioportal
 status: active
 created: '2026-06-02'

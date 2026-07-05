@@ -1,5 +1,5 @@
 ---
-type: hypothesis
+kind: hypothesis
 title: Healthy somatic-mutation backgrounds vary >2 OoM across tissues; substituting
   a cross-tissue normal null shifts cBioPortal driver-frequency in calibrated, tissue-specific
   ways

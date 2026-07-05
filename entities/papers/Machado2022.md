@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Diverse mutational landscapes in human lymphocytes
 status: active
 created: '2026-05-31'

@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Insertions and Deletions Target Lineage-Defining Genes in Human Cancers
 status: active
 created: '2026-04-13'

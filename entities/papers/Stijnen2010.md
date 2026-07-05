@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Random effects meta-analysis of event outcome in the framework of the generalized
   linear mixed model with applications in sparse data
 status: active

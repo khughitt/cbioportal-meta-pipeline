@@ -1,5 +1,5 @@
 ---
-type: dataset
+kind: dataset
 title: SomaMutDB
 status: active
 created: '2026-05-30'

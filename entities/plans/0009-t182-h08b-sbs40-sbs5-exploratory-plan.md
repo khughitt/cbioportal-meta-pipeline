@@ -1,5 +1,5 @@
 ---
-type: plan
+kind: plan
 title: t182 h08b exploratory SBS40-vs-SBS5 expression-module prototype
 status: ready-with-caveats
 created: '2026-06-01'

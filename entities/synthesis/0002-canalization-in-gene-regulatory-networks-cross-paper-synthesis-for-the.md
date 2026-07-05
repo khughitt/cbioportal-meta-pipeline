@@ -1,5 +1,5 @@
 ---
-type: synthesis
+kind: synthesis
 title: "Canalization in gene regulatory networks \u2014 cross-paper synthesis for\
   \ the cBioPortal meta-analysis"
 status: active

@@ -1,5 +1,5 @@
 ---
-type: dataset
+kind: dataset
 title: GENIE panel coverage and callable-size registry
 status: active
 created: '2026-05-31'

@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: Does gene length confound literature attention independently of mutation count?
 status: active
 created: '2026-04-24'

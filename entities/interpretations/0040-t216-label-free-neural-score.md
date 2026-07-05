@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: "t216: a reproducible label-free neural score confirms the candidates are genuinely\
   \ CNS-specific \u2014 but the score cannot separate neural effectors from large\
   \ CFS loci (AUC 0.47), so high neural expression does not rescue the candidate enrichment\

@@ -1,5 +1,5 @@
 ---
-type: synthesis
+kind: synthesis
 title: 'Synthesis: h04-mhn-pathway-ordering'
 status: active
 created: '2026-06-02'

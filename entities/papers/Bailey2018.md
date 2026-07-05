@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Comprehensive Characterization of Cancer Driver Genes and Mutations
 status: read
 created: '2026-04-13'

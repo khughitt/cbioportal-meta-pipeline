@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: A practical guide for mutational signature analysis in hematological malignancies
 status: active
 created: '2026-05-31'

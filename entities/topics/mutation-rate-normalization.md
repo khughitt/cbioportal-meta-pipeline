@@ -1,5 +1,5 @@
 ---
-type: topic
+kind: topic
 title: Mutation-rate normalization (gene length, context, covariates)
 status: active
 created: '2026-04-13'

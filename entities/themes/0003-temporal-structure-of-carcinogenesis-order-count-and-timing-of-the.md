@@ -1,5 +1,5 @@
 ---
-type: theme
+kind: theme
 title: "Temporal structure of carcinogenesis \u2014 order, count, and timing of the\
   \ events of cancer"
 status: active

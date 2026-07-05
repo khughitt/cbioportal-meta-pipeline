@@ -1,5 +1,5 @@
 ---
-type: synthesis
+kind: synthesis
 title: 'Synthesis: hypothesis:0007 agnostic covariate-association recovers known signature aetiologies'
 status: active
 created: '2026-06-02'

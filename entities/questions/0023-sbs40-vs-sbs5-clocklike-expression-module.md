@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: Can unsupervised co-expression modules distinguish SBS40 from SBS5 clock-like
   activity within-tissue after conditioning on age (the core h08b discovery target)?
 status: active

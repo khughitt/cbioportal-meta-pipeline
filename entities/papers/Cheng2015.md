@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: 'Memorial Sloan Kettering-Integrated Mutation Profiling of Actionable Cancer
   Targets (MSK-IMPACT): A Hybridization Capture-Based Next-Generation Sequencing Clinical
   Assay for Solid Tumor Molecular Oncology'

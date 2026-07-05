@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: What fraction of cBioPortal/MC3 studies carry indel calls at sufficient depth
   for joint SBS+ID signature decomposition?
 status: active

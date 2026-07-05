@@ -1,5 +1,5 @@
 ---
-type: dataset
+kind: dataset
 title: TCGA MC3 unified MAF
 status: active
 created: '2026-05-30'

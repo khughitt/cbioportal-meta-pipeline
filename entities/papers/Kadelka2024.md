@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Canalization reduces the nonlinearity of regulation in biological networks
 status: active
 created: '2026-04-25'

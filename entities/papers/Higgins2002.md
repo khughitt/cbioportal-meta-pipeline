@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Quantifying heterogeneity in a meta-analysis
 status: active
 created: '2026-04-21'

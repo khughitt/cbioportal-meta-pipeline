@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Pan-cancer association of DNA repair deficiencies with whole-genome mutational
   patterns
 status: active

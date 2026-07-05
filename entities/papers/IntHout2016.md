@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Plea for routinely presenting prediction intervals in meta-analysis
 status: active
 created: '2026-04-21'

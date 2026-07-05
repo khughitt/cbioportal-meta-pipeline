@@ -1,5 +1,5 @@
 ---
-type: guide
+kind: guide
 title: Cross-study aggregation
 status: active
 created: '2026-04-13'

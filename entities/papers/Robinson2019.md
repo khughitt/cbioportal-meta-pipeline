@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Modeling clinical and molecular covariates of mutational process activity in
   cancer
 status: active

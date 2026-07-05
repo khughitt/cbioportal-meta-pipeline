@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: Which cBioPortal studies carry treatment-induced signatures (SBS11/SBS31/SBS35/SBS87)
   that must be flagged as a confound stratum before the positive-control scan?
 status: partial

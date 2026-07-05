@@ -1,5 +1,5 @@
 ---
-type: pre-registration
+kind: pre-registration
 title: "Pre-registration: t126 \u2014 per-study aggregate SBS1 LRR-bias test"
 status: committed
 created: '2026-04-24'

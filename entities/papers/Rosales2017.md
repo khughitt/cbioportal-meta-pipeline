@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: 'signeR: an empirical Bayesian approach to mutational signature discovery'
 status: active
 created: '2026-05-31'

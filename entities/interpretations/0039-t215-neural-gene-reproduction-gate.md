@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: "t215: neural-gene mutation-enrichment partially reproduces \u2014 real top-1%\
   \ non-driver enrichment, but a large-locus/CFS class effect, not a neural-specific\
   \ or protein-length one"

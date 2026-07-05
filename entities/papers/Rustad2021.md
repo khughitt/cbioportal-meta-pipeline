@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: 'mmsig: a fitting approach to accurately identify somatic mutational signatures
   in hematological malignancies'
 status: active

@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Variation in cancer risk among tissues can be explained by the number of stem
   cell divisions
 status: active

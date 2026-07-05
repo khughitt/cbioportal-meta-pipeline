@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Therapeutic and prognostic insights from the analysis of cancer mutational
   signatures
 status: active

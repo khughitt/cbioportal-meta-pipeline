@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: "t199 h08 positive-control association scan (H08a verdict) \u2014 inconclusive,\
   \ 1/3 arms pass (APOBEC clean)"
 status: active

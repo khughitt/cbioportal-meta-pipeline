@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Transcriptomic analysis reveals a tissue-specific loss of identity during ageing
   and cancer
 status: active

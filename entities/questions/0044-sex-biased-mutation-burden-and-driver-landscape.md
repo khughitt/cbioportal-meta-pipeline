@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: "Do somatic mutation burden and the driver landscape differ by patient sex\
   \ within cancer type \u2014 and are X-linked escape-from-inactivation tumor suppressors\
   \ male-biased for loss, beyond chance?"

@@ -1,5 +1,5 @@
 ---
-type: topic
+kind: topic
 title: 'Cancer neuroscience: nervous-system regulation of tumors (foundations)'
 status: active
 created: '2026-06-06'

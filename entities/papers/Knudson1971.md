@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: 'Mutation and Cancer: Statistical Study of Retinoblastoma'
 status: active
 created: '2026-06-07'

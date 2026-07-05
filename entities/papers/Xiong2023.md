@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: A brain-tumor neural circuit controls breast cancer progression in mice
 status: active
 created: '2026-06-06'

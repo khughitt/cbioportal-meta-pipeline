@@ -1,5 +1,5 @@
 ---
-type: synthesis
+kind: synthesis
 title: "Somatic mutations in morphologically normal human tissues \u2014 cross-paper\
   \ synthesis"
 status: active

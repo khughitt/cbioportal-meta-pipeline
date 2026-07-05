@@ -1,5 +1,5 @@
 ---
-type: dataset
+kind: dataset
 title: BrainSpan Atlas of the Developing Human Brain
 status: candidate
 created: '2026-06-07'

@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: The genome-wide mutational consequences of DNA hypomethylation
 status: active
 created: '2026-05-31'

@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: Can neuro-active drug exposure (beta-blockers, anti-epileptics, SSRIs) be captured
   as a covariate or contaminant in treatment-signature analysis?
 status: active

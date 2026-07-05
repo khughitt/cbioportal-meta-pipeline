@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: Does per-cancer-type driver complexity track median age at diagnosis in the
   aggregated cohort, once the age->mutation-detection confound is controlled?
 status: active

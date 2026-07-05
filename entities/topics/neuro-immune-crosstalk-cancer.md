@@ -1,5 +1,5 @@
 ---
-type: topic
+kind: topic
 title: Neuro-immune crosstalk in cancer (neural control of tumor immunity)
 status: active
 created: '2026-06-06'

@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Neural Signaling in Cancer
 status: active
 created: '2026-06-06'

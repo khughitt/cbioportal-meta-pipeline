@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: What operationalisable causality guard (mediation, clonal timing, cross-study
   replication) should gate hypothesis:0007b expression-to-signature discovery hits before any
   upstream claim?

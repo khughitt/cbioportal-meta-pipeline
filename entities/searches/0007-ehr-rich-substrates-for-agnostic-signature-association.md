@@ -1,5 +1,5 @@
 ---
-type: search
+kind: search
 title: EHR-rich and clinically-annotated substrates for agnostic mutational-signature
   aetiology association
 status: active

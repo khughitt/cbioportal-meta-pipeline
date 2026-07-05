@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: 'Cancer-nervous system crosstalk: from biological mechanism to therapeutic
   opportunities'
 status: active

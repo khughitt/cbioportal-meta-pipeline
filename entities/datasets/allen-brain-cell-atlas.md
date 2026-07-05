@@ -1,5 +1,5 @@
 ---
-type: dataset
+kind: dataset
 title: Allen Brain Cell Atlas
 status: candidate
 created: '2026-06-07'

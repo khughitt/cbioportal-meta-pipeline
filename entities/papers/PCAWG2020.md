@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Pan-cancer analysis of whole genomes
 status: unread
 created: '2026-04-13'

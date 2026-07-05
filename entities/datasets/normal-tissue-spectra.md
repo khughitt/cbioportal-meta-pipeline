@@ -1,5 +1,5 @@
 ---
-type: dataset
+kind: dataset
 title: Normal-tissue 96-context SBS spectra and burden
 status: active
 created: '2026-04-19'

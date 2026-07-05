@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: A Compendium of Mutational Signatures of Environmental Agents
 status: active
 created: '2026-05-31'

@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: 'Identifying Epistasis in Cancer Genomes: A Delicate Affair'
 status: active
 created: '2026-04-13'

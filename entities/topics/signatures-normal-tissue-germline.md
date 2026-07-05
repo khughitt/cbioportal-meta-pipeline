@@ -1,5 +1,5 @@
 ---
-type: topic
+kind: topic
 title: Mutational signatures in normal tissue and germline determinants
 status: active
 created: '2026-05-31'

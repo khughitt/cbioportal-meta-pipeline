@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: Can mutational-signature decomposition be added downstream of the cross-study
   aggregation, and is panel data adequate for reliable signature inference?
 status: resolved

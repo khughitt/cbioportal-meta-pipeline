@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Diverse oncogenes use common mechanisms to drive growth of major forms of human
   cancer
 status: active

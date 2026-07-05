@@ -1,5 +1,5 @@
 ---
-type: topic
+kind: topic
 title: Co-occurrence and mutual exclusivity of cancer alterations
 status: active
 created: '2026-04-13'

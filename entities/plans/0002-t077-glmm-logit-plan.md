@@ -1,5 +1,5 @@
 ---
-type: plan
+kind: plan
 title: t077 GLMM-logit pooled gene x cancer implementation plan
 status: active
 created: '2026-04-22'

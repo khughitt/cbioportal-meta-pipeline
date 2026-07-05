@@ -1,5 +1,5 @@
 ---
-type: discussion
+kind: discussion
 title: "Are cancer-type-specific drivers genes with tissue/cell-type-restricted normal\
   \ expression \u2014 more than chance?"
 status: active

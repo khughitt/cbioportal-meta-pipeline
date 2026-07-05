@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Comprehensive analysis of mutational signatures reveals distinct patterns and
   molecular processes across 27 pediatric cancers
 status: active

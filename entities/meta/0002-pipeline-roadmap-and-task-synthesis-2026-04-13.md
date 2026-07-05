@@ -1,5 +1,5 @@
 ---
-type: meta
+kind: meta
 title: Pipeline roadmap and task-synthesis (2026-04-13)
 status: active
 created: '2026-04-13'

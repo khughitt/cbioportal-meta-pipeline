@@ -1,5 +1,5 @@
 ---
-type: hypothesis
+kind: hypothesis
 title: Agnostic covariate association recovers known signature aetiologies and surfaces
   novel upstream causes
 status: proposed

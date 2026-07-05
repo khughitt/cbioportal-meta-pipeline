@@ -1,5 +1,5 @@
 ---
-type: search
+kind: search
 title: "Prior agnostic / unsupervised mutational-signature aetiology association (signature-PheWAS,\
   \ signature \xD7 expression, signature \xD7 covariate scans) \u2014 t177"
 status: active

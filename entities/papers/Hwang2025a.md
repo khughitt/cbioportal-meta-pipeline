@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Integrating priorities at the intersection of cancer and neuroscience
 status: active
 created: '2026-06-06'

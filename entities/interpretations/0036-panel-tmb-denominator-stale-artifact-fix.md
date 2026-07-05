@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: Panel TMB denominator was WES-default for all panel samples in poc-2026-04-17
   (stale pre-t070 artifact); fixed + guarded
 status: active

@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: 'Tumour mutational burden: clinical utility, challenges and emerging improvements'
 status: active
 created: '2026-05-31'

@@ -1,5 +1,5 @@
 ---
-type: synthesis
+kind: synthesis
 title: 'Synthesis: h09-cross-study-signature-exposure-reproducibility'
 status: active
 created: '2026-06-02'

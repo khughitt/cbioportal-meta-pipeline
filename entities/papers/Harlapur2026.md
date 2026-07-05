@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Hierarchical organization in sparse gene regulatory networks shapes structural
   coherence and emergent regulatory coordination
 status: active

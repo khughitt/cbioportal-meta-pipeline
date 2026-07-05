@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Oncogenic Signaling Pathways in The Cancer Genome Atlas
 status: read
 created: '2026-04-13'

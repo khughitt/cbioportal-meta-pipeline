@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Toward identification of common DNA repair process in mutational signatures
 status: active
 created: '2026-05-31'

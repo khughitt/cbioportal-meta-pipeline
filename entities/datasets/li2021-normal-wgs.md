@@ -1,5 +1,5 @@
 ---
-type: dataset
+kind: dataset
 title: Li 2021 normal multi-organ WGS cohort
 status: active
 created: '2026-05-30'

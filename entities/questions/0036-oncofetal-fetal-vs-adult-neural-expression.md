@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: "If any neural-gene enrichment survives length+histology correction, is it\
   \ fetal/developmental (oncofetal) rather than adult-neural \u2014 and non-selective\
   \ rather than positively selected?"

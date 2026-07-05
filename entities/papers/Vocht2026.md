@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: 'mhn: a Python package for analyzing cancer progression with Mutual Hazard
   Networks'
 status: active

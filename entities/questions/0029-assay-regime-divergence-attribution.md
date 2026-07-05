@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: How much of cross-study divergence in gene rankings and signature exposures
   is attributable to assay regime (panel vs WES vs WGS), and is that component separable
   from biology?

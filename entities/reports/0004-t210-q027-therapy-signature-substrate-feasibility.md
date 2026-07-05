@@ -1,5 +1,5 @@
 ---
-type: report
+kind: report
 title: t210 q027 therapy-signature substrate feasibility audit
 status: active
 created: '2026-06-01'

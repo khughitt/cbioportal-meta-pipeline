@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: "t146 external validation (partial) \u2014 pan-cancer dNdScv ranking shows\
   \ 88-90% CGC tier-1+2 recovery and 61% Bailey 2018 recovery at K=100; IntOGen +\
   \ Martincorena 2017 pass blocks on t171"

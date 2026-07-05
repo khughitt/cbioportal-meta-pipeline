@@ -1,5 +1,5 @@
 ---
-type: topic
+kind: topic
 title: Cross-panel normalization methods for targeted cancer sequencing
 status: active
 created: '2026-04-13'

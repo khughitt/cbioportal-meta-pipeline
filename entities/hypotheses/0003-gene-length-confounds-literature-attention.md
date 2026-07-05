@@ -1,5 +1,5 @@
 ---
-type: hypothesis
+kind: hypothesis
 title: Gene length confounds biomedical-literature attention beyond mutation-count
   mediation
 status: proposed

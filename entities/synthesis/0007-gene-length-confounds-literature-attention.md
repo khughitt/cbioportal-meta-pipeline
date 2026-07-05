@@ -1,5 +1,5 @@
 ---
-type: synthesis
+kind: synthesis
 title: 'Synthesis: gene-length-confounds-literature-attention'
 status: active
 created: '2026-06-02'

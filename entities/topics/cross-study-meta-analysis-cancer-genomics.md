@@ -1,5 +1,5 @@
 ---
-type: topic
+kind: topic
 title: Cross-study meta-analysis methods (cancer genomics)
 status: active
 created: '2026-04-13'

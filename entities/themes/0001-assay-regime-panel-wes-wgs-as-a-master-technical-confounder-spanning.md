@@ -1,5 +1,5 @@
 ---
-type: theme
+kind: theme
 title: Assay regime (panel / WES / WGS) as a master technical confounder spanning
   mutation-frequency rankings and signature exposures
 status: active

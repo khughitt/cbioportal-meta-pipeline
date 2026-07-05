@@ -1,5 +1,5 @@
 ---
-type: report
+kind: report
 title: Phase 7 source-method read notes for trajectory inference
 status: active
 created: '2026-05-02'

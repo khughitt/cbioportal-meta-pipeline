@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: "t111: normal-tissue spectra extraction pipeline \u2014 infrastructure + validation\
   \ run"
 status: active

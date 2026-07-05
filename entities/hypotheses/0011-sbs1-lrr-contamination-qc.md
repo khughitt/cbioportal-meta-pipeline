@@ -1,5 +1,5 @@
 ---
-type: hypothesis
+kind: hypothesis
 title: A well-powered WGS-based SBS1 late-replicating-region topographic diagnostic
   flags cBioPortal studies with excess normal-tissue contamination, independently
   of tumor-purity proxies

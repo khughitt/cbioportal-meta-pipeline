@@ -1,5 +1,5 @@
 ---
-type: dataset
+kind: dataset
 title: TCGA PanCanAtlas
 status: active
 created: '2026-05-30'

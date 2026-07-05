@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: 'Metaprop: a Stata command to perform meta-analysis of binomial data'
 status: active
 created: '2026-04-13'

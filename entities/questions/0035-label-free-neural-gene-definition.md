@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: Can 'neural genes' be defined purely from data (tissue/developmental expression
   enrichment) rather than human/AI labels, and is that data-driven set enriched among
   top-mutated genes beyond gene length?

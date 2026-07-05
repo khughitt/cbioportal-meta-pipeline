@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: The impact of rare germline variants on human somatic mutation processes
 status: active
 created: '2026-05-31'

@@ -1,5 +1,5 @@
 ---
-type: topic
+kind: topic
 title: Agnostic covariate to mutational-signature-exposure association (signature
   aetiology inference)
 status: active

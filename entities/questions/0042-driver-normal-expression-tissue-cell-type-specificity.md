@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: "Are cancer-type-restricted drivers enriched for cell-type-restricted normal\
   \ expression \u2014 more than length/expression-matched chance \u2014 and do oncogenes\
   \ differ from tumor suppressors?"

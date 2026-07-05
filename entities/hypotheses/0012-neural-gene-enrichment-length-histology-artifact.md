@@ -1,5 +1,5 @@
 ---
-type: hypothesis
+kind: hypothesis
 title: Apparent neural-gene enrichment in top-mutated genes is a length + histology
   artifact, not neural selection
 status: proposed

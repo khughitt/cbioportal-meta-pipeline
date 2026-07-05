@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Somatic mutations and clonal evolution in normal tissues and cancer development
 status: active
 created: '2026-04-18'

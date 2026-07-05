@@ -1,5 +1,5 @@
 ---
-type: topic
+kind: topic
 title: Lineage addiction, cell-of-origin, and the tissue/cell-type specificity of
   cancer drivers
 status: active

@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: "t144 tiebreaker fix \u2014 Bailey driver recovery hits spec exactly; canonical\
   \ drivers lift to top of rank_dndscv"
 status: active

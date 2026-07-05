@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: 'CoMEt: a statistical approach to identify combinations of mutually exclusive
   alterations in cancer'
 status: active

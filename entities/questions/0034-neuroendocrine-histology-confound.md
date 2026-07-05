@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: Do neuroendocrine-neoplasm histologies (OncoTree-flagged) inflate neuroendocrine/neural
   gene ranks, and does excluding them change the result?
 status: active

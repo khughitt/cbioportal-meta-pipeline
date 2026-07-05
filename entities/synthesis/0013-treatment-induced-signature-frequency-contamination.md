@@ -1,5 +1,5 @@
 ---
-type: synthesis
+kind: synthesis
 title: 'Synthesis: h10-treatment-induced-signature-frequency-contamination'
 status: active
 created: '2026-06-02'

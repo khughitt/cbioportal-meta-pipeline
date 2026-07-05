@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: 't122: BRCA gene-level replication-timing pilot'
 status: active
 created: '2026-04-22'

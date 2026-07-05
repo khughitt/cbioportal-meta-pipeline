@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: "How does top-N gene-cancer ranking stability scale with the number of contributing\
   \ studies \u2014 is there a saturation point?"
 status: active

@@ -1,5 +1,5 @@
 ---
-type: plan
+kind: plan
 title: "within-tissue positive-control failure diagnostics (tests 1\u20134)"
 status: active
 created: '2026-05-31'

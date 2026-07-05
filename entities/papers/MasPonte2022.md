@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Spectrum of DNA mismatch repair failures viewed through the lens of cancer
   genomics and implications for therapy
 status: active

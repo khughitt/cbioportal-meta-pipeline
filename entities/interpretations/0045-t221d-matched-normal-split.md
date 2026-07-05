@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: "t221(d): a true study-level matched- vs unmatched-normal split confirms germline\
   \ leak is not the candidate driver \u2014 within call-set-region stratum the residual\
   \ is identical across normal status (all-region matched p 0.0000 vs unmatched 0.0006;\

@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Simultaneous Inference of Cancer Pathways and Tumor Progression from Cross-Sectional
   Mutation Data
 status: active

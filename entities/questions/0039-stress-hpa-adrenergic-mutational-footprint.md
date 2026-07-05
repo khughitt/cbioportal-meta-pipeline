@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: Does chronic adrenergic / glucocorticoid (stress-HPA) signaling leave a detectable
   mutational-signature or TMB footprint, via DNA-repair suppression?
 status: active

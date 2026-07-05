@@ -1,5 +1,5 @@
 ---
-type: method
+kind: method
 title: Length- and histology-aware gene-set enrichment guard for mutation-count rankings
 status: proposed
 created: '2026-06-07'

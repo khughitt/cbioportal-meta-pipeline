@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: What is the leave-one-study-out replication rate of top-N gene-cancer associations
   across cBioPortal?
 status: active

@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Mutational signature SBS8 predominantly arises due to late replication errors
   in cancer
 status: active

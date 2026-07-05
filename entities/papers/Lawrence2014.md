@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Discovery and saturation analysis of cancer genes across 21 tumour types
 status: read
 created: '2026-04-13'

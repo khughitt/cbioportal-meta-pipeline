@@ -1,5 +1,5 @@
 ---
-type: synthesis
+kind: synthesis
 title: 'Synthesis: non-tumor-signal-contamination'
 status: active
 created: '2026-06-02'

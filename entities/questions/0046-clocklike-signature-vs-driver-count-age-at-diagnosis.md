@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: "Does clock-like mutational-signature exposure predict age at diagnosis better\
   \ than driver count \u2014 and does it absorb the driver-count signal q041 looks\
   \ for?"

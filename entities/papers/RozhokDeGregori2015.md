@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: 'Toward an evolutionary model of cancer: Considering the mechanisms that govern
   the fate of somatic mutations'
 status: active

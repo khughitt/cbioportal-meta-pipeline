@@ -1,5 +1,5 @@
 ---
-type: interpretation
+kind: interpretation
 title: "t173 dNdScv LOSO contrastive holdout \u2014 broad single-study removal contrast\
   \ for top-N replication"
 status: active

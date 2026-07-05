@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: Are common-fragile-site (CFS) loci a distinct gene-level confounder class,
   separable from broad replication-timing effects?
 status: active

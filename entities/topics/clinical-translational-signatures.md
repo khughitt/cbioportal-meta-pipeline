@@ -1,5 +1,5 @@
 ---
-type: topic
+kind: topic
 title: Clinical and translational applications of mutational signatures (incl. TMB)
 status: active
 created: '2026-05-31'

@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: 'Neurobiology of cancer: Interactions between nervous, endocrine and immune
   systems as a base for monitoring and modulating the tumorigenesis by the brain'
 status: active

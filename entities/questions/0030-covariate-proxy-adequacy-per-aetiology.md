@@ -1,5 +1,5 @@
 ---
-type: question
+kind: question
 title: What is the minimal covariate-proxy adequacy bar per aetiology, and do expression-derived
   covariates systematically outperform clinical-metadata proxies in the agnostic signature-association
   scan?

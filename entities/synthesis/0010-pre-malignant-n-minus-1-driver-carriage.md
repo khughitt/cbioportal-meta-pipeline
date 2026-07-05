@@ -1,5 +1,5 @@
 ---
-type: synthesis
+kind: synthesis
 title: 'Synthesis: h06-pre-malignant-n-minus-1-driver-carriage'
 status: active
 created: '2026-06-02'

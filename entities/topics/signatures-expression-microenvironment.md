@@ -1,5 +1,5 @@
 ---
-type: topic
+kind: topic
 title: Mutational signatures, gene expression, and the tumour microenvironment
 status: active
 created: '2026-05-31'

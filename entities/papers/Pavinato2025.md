@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: 'Oncogenic competence: balancing mutations, cellular state, and microenvironment'
 status: active
 created: '2026-06-07'

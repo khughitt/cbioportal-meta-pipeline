@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Ovarian cancer mutational processes drive site-specific immune evasion
 status: active
 created: '2026-05-31'

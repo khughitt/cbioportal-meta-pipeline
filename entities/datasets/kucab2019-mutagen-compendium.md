@@ -1,5 +1,5 @@
 ---
-type: dataset
+kind: dataset
 title: Kucab 2019 environmental-mutagen reference signature compendium (iPSC)
 status: candidate
 created: '2026-05-31'

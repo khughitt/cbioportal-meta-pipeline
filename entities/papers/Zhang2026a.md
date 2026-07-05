@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: 'SigFormer: an Attention-Based Framework for Robust Single-Sample Mutational
   Signature Decomposition'
 status: active

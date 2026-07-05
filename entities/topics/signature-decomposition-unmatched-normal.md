@@ -1,5 +1,5 @@
 ---
-type: topic
+kind: topic
 title: Cancer-specific vs tissue-specific mutational-signature decomposition in unmatched-normal
   study contexts
 status: active

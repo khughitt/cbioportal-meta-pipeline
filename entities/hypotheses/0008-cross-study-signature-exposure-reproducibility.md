@@ -1,5 +1,5 @@
 ---
-type: hypothesis
+kind: hypothesis
 title: Per-cancer-type mutational-signature exposures reproduce across independent
   cBioPortal studies, and divergences are explained by technical batch (caller/panel/treatment),
   not biology

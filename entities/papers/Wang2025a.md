@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Data-driven universal insights into tumorigenesis via hallmark networks
 status: active
 created: '2026-06-07'

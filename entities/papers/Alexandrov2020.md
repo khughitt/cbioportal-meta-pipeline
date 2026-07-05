@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: The repertoire of mutational signatures in human cancer
 status: read
 created: '2026-04-13'

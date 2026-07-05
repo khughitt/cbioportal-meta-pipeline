@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: 'The cBio cancer genomics portal: an open platform for exploring multidimensional
   cancer genomics data'
 status: read

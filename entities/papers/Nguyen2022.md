@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Genomic characterization of metastatic patterns from prospective clinical sequencing
   of 25,000 patients
 status: read

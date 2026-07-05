@@ -1,5 +1,5 @@
 ---
-type: synthesis
+kind: synthesis
 title: 'Synthesis: h05-healthy-somatic-background-atlas'
 status: active
 created: '2026-06-02'

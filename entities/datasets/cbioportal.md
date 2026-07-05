@@ -1,5 +1,5 @@
 ---
-type: dataset
+kind: dataset
 title: cBioPortal for Cancer Genomics
 status: active
 created: '2026-05-30'

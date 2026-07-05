@@ -1,5 +1,5 @@
 ---
-type: topic
+kind: topic
 title: Targeted-panel sequencing bias in cross-study cancer genomics
 status: active
 created: '2026-04-13'

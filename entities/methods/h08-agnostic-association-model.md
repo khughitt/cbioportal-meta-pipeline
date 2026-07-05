@@ -1,5 +1,5 @@
 ---
-type: method
+kind: method
 title: "Agnostic covariate\u2013signature-exposure association model"
 status: active
 created: '2026-05-30'

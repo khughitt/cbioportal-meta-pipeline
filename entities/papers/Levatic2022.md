@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Mutational signatures are markers of drug sensitivity of cancer cells
 status: active
 created: '2026-05-31'

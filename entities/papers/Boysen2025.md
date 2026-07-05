@@ -1,5 +1,5 @@
 ---
-type: paper
+kind: paper
 title: Investigating the origins of the mutational signatures in cancer
 status: active
 created: '2026-05-31'

@@ -14,7 +14,6 @@ ontology_terms:
 - translesion synthesis
 - whole-genome sequencing
 - SBS signatures
-datasets: []
 source_refs:
 - cite:Hwang2025
 related: []

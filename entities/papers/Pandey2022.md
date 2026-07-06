@@ -12,7 +12,6 @@ ontology_terms:
 - COSMIC
 - somatic mutation
 - software
-datasets: []
 source_refs:
 - cite:Pandey2022
 related: []

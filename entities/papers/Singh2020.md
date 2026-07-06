@@ -13,7 +13,6 @@ ontology_terms:
 - epigenomics
 - heterochromatin
 - cancer genomics
-datasets: []
 source_refs:
 - cite:Singh2020
 related: []

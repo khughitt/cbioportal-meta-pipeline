@@ -14,7 +14,6 @@ ontology_terms:
 - immune microenvironment
 - DNA damage response
 - treatment-associated mutagenesis
-datasets: []
 source_refs:
 - cite:Pleasance2020
 related: []

@@ -15,7 +15,6 @@ ontology_terms:
 - sympathetic nervous system
 - T cell regulation
 - myeloid suppression
-datasets: []
 source_refs:
 - cite:Kizil2024
 related: []

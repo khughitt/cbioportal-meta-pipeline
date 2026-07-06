@@ -15,7 +15,6 @@ ontology_terms:
 - signature extraction
 - NMF
 - COSMIC
-datasets: []
 source_refs:
 - cite:Degasperi2022
 related:

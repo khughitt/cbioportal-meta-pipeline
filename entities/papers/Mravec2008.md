@@ -15,7 +15,6 @@ ontology_terms:
 - vagus nerve
 - stress hormones
 - psychoneuroimmunology
-datasets: []
 source_refs:
 - cite:Mravec2008
 related:

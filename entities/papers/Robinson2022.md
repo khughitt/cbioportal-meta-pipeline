@@ -15,7 +15,6 @@ ontology_terms:
 - reactive oxygen species
 - SBS18
 - SBS36
-datasets: []
 source_refs:
 - cite:Robinson2022
 related:

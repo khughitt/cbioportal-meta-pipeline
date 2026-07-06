@@ -12,7 +12,6 @@ ontology_terms:
 - pan-cancer analysis
 - signature interactions
 - patient survival
-datasets: []
 source_refs:
 - cite:Hakobyan2024
 related: []

@@ -15,7 +15,6 @@ ontology_terms:
 - clonal dynamics
 - stem cell biology
 - Peto's paradox
-datasets: []
 source_refs:
 - cite:RozhokDeGregori2015
 related:

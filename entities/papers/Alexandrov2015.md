@@ -14,7 +14,6 @@ ontology_terms:
 - BRCA2
 - platinum therapy
 - PARP inhibitors
-datasets: []
 source_refs:
 - cite:Alexandrov2015
 related: []

@@ -14,7 +14,6 @@ ontology_terms:
 - chronic lymphocytic leukemia
 - APOBEC
 - COSMIC
-datasets: []
 source_refs:
 - cite:Rustad2021
 related: []

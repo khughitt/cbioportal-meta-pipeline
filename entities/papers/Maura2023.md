@@ -15,7 +15,6 @@ ontology_terms:
 - single-cell RNA sequencing
 - minimal residual disease
 - immunotherapy
-datasets: []
 source_refs:
 - cite:Maura2023
 related: []

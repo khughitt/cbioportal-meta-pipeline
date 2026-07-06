@@ -12,7 +12,6 @@ ontology_terms:
 - tumor evolution
 - COSMIC signatures
 - somatic mutation
-datasets: []
 source_refs:
 - cite:Miura2022
 related: []

@@ -13,7 +13,6 @@ ontology_terms:
 - housekeeping genes
 - tissue-specific genes
 - benchmarking
-datasets: []
 source_refs:
 - cite:KryuchkovaMostacci2017
 related:

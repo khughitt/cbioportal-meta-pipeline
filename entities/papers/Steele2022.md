@@ -13,7 +13,6 @@ ontology_terms:
 - homologous recombination deficiency
 - chromothripsis
 - cancer genomics
-datasets: []
 source_refs:
 - cite:Steele2022
 related:

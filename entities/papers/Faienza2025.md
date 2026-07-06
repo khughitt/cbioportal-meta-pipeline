@@ -7,7 +7,6 @@ created: '2026-05-31'
 updated: '2026-05-31'
 id: paper:Faienza2025
 ontology_terms: []
-datasets: []
 source_refs:
 - cite:Faienza2025
 related: []

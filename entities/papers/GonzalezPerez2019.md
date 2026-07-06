@@ -16,7 +16,6 @@ ontology_terms:
 - APOBEC
 - UV mutagenesis
 - mismatch repair
-datasets: []
 source_refs:
 - cite:GonzalezPerez2019
 related: []

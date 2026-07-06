@@ -13,7 +13,6 @@ ontology_terms:
 - somatic mutation
 - tumor covariates
 - homologous recombination deficiency
-datasets: []
 source_refs:
 - cite:Robinson2019
 related: []

@@ -13,7 +13,6 @@ ontology_terms:
 - high-grade serous ovarian cancer
 - single-cell RNA sequencing
 - whole-genome sequencing
-datasets: []
 source_refs:
 - cite:VazquezGarcia2022
 related: []

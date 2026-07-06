@@ -14,7 +14,6 @@ ontology_terms:
 - carcinoid syndrome
 - somatostatin receptor
 - neuroendocrine lineage
-datasets: []
 source_refs:
 - cite:Ahmed2020
 related:

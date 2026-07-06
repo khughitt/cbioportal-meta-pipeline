@@ -16,7 +16,6 @@ ontology_terms:
 - signature fitting
 - inter-sample bleeding
 - AID activity
-datasets: []
 source_refs:
 - cite:Maura2019
 related: []

@@ -12,7 +12,6 @@ ontology_terms:
 - MCMC
 - model selection
 - somatic mutation
-datasets: []
 source_refs:
 - cite:Rosales2017
 related:

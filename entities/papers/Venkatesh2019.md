@@ -13,7 +13,6 @@ ontology_terms:
 - synaptic signaling
 - neuroligin-3
 - cancer neuroscience
-datasets: []
 source_refs:
 - cite:Venkatesh2019
 related:

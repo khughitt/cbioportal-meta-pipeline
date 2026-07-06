@@ -14,7 +14,6 @@ ontology_terms:
 - tumor-draining lymph node
 - immune checkpoint blockade
 - head and neck squamous cell carcinoma
-datasets: []
 source_refs:
 - cite:Zhang2025
 related:

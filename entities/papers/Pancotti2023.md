@@ -13,7 +13,6 @@ ontology_terms:
 - archetypal analysis
 - de novo extraction
 - signature stability
-datasets: []
 source_refs:
 - cite:Pancotti2023
 related:

@@ -15,7 +15,6 @@ ontology_terms:
 - tumor innervation
 - enabling characteristic
 - autocrine neuronal circuits
-datasets: []
 source_refs:
 - cite:Hanahan2023
 related:

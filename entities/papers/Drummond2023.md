@@ -13,7 +13,6 @@ ontology_terms:
 - clinical covariates
 - survival analysis
 - microsatellite instability
-datasets: []
 source_refs:
 - cite:Drummond2023
 related:

@@ -13,7 +13,6 @@ ontology_terms:
 - BRCA1
 - BRCA2
 - pan-cancer
-datasets: []
 source_refs:
 - cite:Nguyen2020
 related: []

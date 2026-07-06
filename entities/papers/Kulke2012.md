@@ -14,7 +14,6 @@ ontology_terms:
 - chromogranin a
 - synaptophysin
 - clinical practice guidelines
-datasets: []
 source_refs:
 - cite:Kulke2012
 - cite:Tan2024

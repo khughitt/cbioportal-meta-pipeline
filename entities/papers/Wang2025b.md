@@ -15,7 +15,6 @@ ontology_terms:
 - neuroimmunology
 - homeostasis
 - neuroendocrine signaling
-datasets: []
 source_refs:
 - cite:Wang2025b
 related:

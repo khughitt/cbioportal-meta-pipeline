@@ -18,7 +18,6 @@ ontology_terms:
 - ESR1
 - oncogene amplification
 - cancer type specificity
-datasets: []
 source_refs:
 - cite:Garraway2006
 related:

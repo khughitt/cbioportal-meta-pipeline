@@ -14,7 +14,6 @@ ontology_terms:
 - DNA repair
 - DNA damage
 - somatic mutation
-datasets: []
 source_refs:
 - cite:Spisak2025
 related: []

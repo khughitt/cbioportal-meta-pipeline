@@ -15,7 +15,6 @@ ontology_terms:
 - tumor microenvironment
 - perineural invasion
 - autonomic innervation
-datasets: []
 source_refs:
 - cite:Keough2022
 related:

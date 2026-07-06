@@ -13,7 +13,6 @@ ontology_terms:
 - COSMIC
 - whole-genome sequencing
 - pan-cancer
-datasets: []
 source_refs:
 - cite:Everall2026
 related:

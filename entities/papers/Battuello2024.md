@@ -7,7 +7,6 @@ created: '2026-05-31'
 updated: '2026-05-31'
 id: paper:Battuello2024
 ontology_terms: []
-datasets: []
 source_refs:
 - cite:Battuello2024
 related: []

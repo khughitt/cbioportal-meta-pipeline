@@ -16,7 +16,6 @@ ontology_terms:
 - cancer-related inflammation
 - neurotrophins
 - adrenergic signaling
-datasets: []
 source_refs:
 - cite:Cortese2020
 related: []

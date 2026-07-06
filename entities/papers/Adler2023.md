@@ -14,7 +14,6 @@ ontology_terms:
 - protein truncation
 - tumor suppressor genes
 - pan-cancer
-datasets: []
 source_refs:
 - cite:Adler2023
 related: []

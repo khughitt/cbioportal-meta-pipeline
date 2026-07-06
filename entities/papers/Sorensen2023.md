@@ -13,7 +13,6 @@ ontology_terms:
 - whole-genome sequencing
 - LASSO regression
 - homologous recombination deficiency
-datasets: []
 source_refs:
 - cite:Sorensen2023
 related:

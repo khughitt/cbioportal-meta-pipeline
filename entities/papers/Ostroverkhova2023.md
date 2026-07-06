@@ -6,7 +6,6 @@ created: '2026-05-31'
 updated: '2026-05-31'
 id: paper:Ostroverkhova2023
 ontology_terms: []
-datasets: []
 source_refs:
 - cite:Ostroverkhova2023
 related:

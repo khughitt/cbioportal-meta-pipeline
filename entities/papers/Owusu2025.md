@@ -12,7 +12,6 @@ ontology_terms:
 - CRISPR knockout
 - somatic mutation
 - microsatellite instability
-datasets: []
 source_refs:
 - cite:Owusu2025
 related: []

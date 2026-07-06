@@ -13,7 +13,6 @@ ontology_terms:
 - neoantigen burden
 - pembrolizumab
 - biomarker
-datasets: []
 source_refs:
 - cite:Budczies2024
 related: []

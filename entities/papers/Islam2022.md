@@ -12,7 +12,6 @@ ontology_terms:
 - SigProfilerExtractor
 - COSMIC signatures
 - benchmarking
-datasets: []
 source_refs:
 - cite:Islam2022
 related: []

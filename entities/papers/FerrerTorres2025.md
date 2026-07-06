@@ -14,7 +14,6 @@ ontology_terms:
 - prognostic biomarker
 - ovarian cancer
 - mismatch repair deficiency
-datasets: []
 source_refs:
 - cite:FerrerTorres2025
 related: []

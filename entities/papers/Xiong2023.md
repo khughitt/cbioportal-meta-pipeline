@@ -15,7 +15,6 @@ ontology_terms:
 - norepinephrine
 - cancer-induced anxiety
 - antitumor immunity
-datasets: []
 source_refs:
 - cite:Xiong2023
 related: []

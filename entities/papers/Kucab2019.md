@@ -12,7 +12,6 @@ ontology_terms:
 - DNA repair
 - iPSC
 - whole-genome sequencing
-datasets: []
 source_refs:
 - cite:Kucab2019
 related: []

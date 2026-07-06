@@ -6,7 +6,6 @@ created: '2026-05-31'
 updated: '2026-06-28'
 id: paper:Seplyarskiy2021
 ontology_terms: []
-datasets: []
 source_refs:
 - cite:Seplyarskiy2021
 related: []

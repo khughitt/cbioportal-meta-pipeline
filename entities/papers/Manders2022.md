@@ -14,7 +14,6 @@ ontology_terms:
 - double base substitutions
 - lesion segregation
 - R/Bioconductor
-datasets: []
 source_refs:
 - cite:Manders2022
 related: []

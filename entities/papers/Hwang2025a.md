@@ -15,7 +15,6 @@ ontology_terms:
 - spatial transcriptomics
 - drug repurposing
 - biomarker development
-datasets: []
 source_refs:
 - cite:Hwang2025a
 related:

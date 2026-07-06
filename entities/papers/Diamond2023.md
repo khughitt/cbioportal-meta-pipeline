@@ -12,7 +12,6 @@ ontology_terms:
 - clonal hematopoiesis
 - whole genome sequencing
 - chromothripsis
-datasets: []
 source_refs:
 - cite:Diamond2023
 related: []

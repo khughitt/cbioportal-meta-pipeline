@@ -14,7 +14,6 @@ ontology_terms:
 - SigProfiler
 - whole-genome sequencing
 - Mexican-American cohort
-datasets: []
 source_refs:
 - cite:Shojaeisaadi2024
 related:

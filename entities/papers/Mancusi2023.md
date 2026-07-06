@@ -15,7 +15,6 @@ ontology_terms:
 - tumor microenvironment
 - neural circuit remodeling
 - activity-regulated cancer progression
-datasets: []
 source_refs:
 - cite:Mancusi2023
 related:

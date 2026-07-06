@@ -13,8 +13,6 @@ ontology_terms:
 - unsupervised clustering
 - somatic mutation
 - metastasis
-datasets:
-- dataset:msk-met
 source_refs:
 - cite:Deshpande2026
 related:

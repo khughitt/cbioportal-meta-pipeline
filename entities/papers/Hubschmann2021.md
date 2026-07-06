@@ -12,7 +12,6 @@ ontology_terms:
 - COSMIC
 - PCAWG
 - bioinformatics
-datasets: []
 source_refs:
 - cite:Hubschmann2021
 related: []

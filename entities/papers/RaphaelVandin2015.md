@@ -7,8 +7,6 @@ created: '2026-06-07'
 updated: '2026-06-28'
 id: paper:RaphaelVandin2015
 ontology_terms: []
-datasets:
-- dataset:tcga
 source_refs:
 - cite:RaphaelVandin2015
 related:

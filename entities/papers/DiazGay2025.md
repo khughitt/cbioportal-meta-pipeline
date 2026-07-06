@@ -15,7 +15,6 @@ ontology_terms:
 - ID18
 - geographic variation
 - whole-genome sequencing
-datasets: []
 source_refs:
 - cite:DiazGay2025
 related:

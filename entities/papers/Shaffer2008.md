@@ -17,7 +17,6 @@ ontology_terms:
 - loss-of-function screen
 - gene expression profiling
 - chromatin immunoprecipitation
-datasets: []
 source_refs:
 - cite:Shaffer2008
 related:

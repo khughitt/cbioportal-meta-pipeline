@@ -13,7 +13,6 @@ ontology_terms:
 - Fanconi anemia
 - pediatric cancer
 - case-control study
-datasets: []
 source_refs:
 - cite:Gillani2022
 related: []

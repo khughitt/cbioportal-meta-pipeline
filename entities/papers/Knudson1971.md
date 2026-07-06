@@ -16,7 +16,6 @@ ontology_terms:
 - Poisson statistics
 - hereditary cancer
 - bilateral cancer
-datasets: []
 source_refs:
 - cite:Knudson1971
 related:

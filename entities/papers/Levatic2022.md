@@ -11,7 +11,6 @@ ontology_terms:
 - cancer cell lines
 - DNA repair
 - germline correction
-datasets: []
 source_refs:
 - cite:Levatic2022
 related: []

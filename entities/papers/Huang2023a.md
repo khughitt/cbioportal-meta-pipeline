@@ -14,7 +14,6 @@ ontology_terms:
 - synaptic signaling
 - autonomic nervous system
 - cancer-nervous system crosstalk
-datasets: []
 source_refs:
 - cite:Huang2023a
 - cite:Schmitt2025

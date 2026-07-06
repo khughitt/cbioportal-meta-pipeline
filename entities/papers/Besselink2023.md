@@ -12,7 +12,6 @@ ontology_terms:
 - epigenetics
 - DNMT1
 - CRISPRi
-datasets: []
 source_refs:
 - cite:Besselink2023
 related: []

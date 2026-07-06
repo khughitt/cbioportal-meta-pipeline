@@ -17,7 +17,6 @@ ontology_terms:
 - single base substitution
 - kataegis
 - trinucleotide context
-datasets: []
 source_refs:
 - cite:Carpenter2023
 related: []

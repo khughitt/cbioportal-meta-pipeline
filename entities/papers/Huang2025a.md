@@ -16,7 +16,6 @@ ontology_terms:
 - neuro-immune interactions
 - adrenergic signaling
 - cancer therapeutics
-datasets: []
 source_refs:
 - cite:Huang2025a
 related:

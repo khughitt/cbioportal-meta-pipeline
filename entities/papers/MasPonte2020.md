@@ -15,7 +15,6 @@ ontology_terms:
 - somatic mutation clustering
 - single-stranded DNA
 - cancer genomics
-datasets: []
 source_refs:
 - cite:MasPonte2020
 related:

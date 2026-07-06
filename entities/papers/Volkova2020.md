@@ -13,7 +13,6 @@ ontology_terms:
 - nucleotide excision repair
 - C. elegans
 - somatic mutation
-datasets: []
 source_refs:
 - cite:Volkova2020
 related: []

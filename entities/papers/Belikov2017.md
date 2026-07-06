@@ -14,7 +14,6 @@ ontology_terms:
 - driver mutations
 - cancer epidemiology
 - SEER incidence
-datasets: []
 source_refs:
 - cite:Belikov2017
 related:

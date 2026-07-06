@@ -15,7 +15,6 @@ ontology_terms:
 - COSMIC v3
 - whole-genome sequencing
 - homologous recombination deficiency
-datasets: []
 source_refs:
 - cite:Thatikonda2023
 related: []

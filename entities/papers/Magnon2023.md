@@ -15,7 +15,6 @@ ontology_terms:
 - axonogenesis
 - neuroendocrine regulation
 - pan-cancer
-datasets: []
 source_refs:
 - cite:Magnon2023
 related:

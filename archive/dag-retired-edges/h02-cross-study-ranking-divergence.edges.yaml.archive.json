@@ -1,0 +1,25 @@
+{
+  "archived_at": "2026-07-06T01:28:07Z",
+  "archived_path": "archive/dag-retired-edges/h02-cross-study-ranking-divergence.retired-edge.yaml",
+  "closed_by": [
+    "proposition:gene-length-affects-raw-rank",
+    "proposition:gene-length-affects-lenadj-rank",
+    "proposition:gene-length-affects-dndscv-rank",
+    "proposition:cfs-affects-raw-rank",
+    "proposition:cfs-affects-dndscv-rank",
+    "proposition:rep-timing-affects-dndscv-rank",
+    "proposition:raw-rank-affects-divergence",
+    "proposition:lenadj-rank-affects-divergence",
+    "proposition:divergence-affects-longtail",
+    "proposition:dndscv-rank-affects-drivers",
+    "proposition:drivers-affects-stability",
+    "proposition:longtail-affects-stability"
+  ],
+  "closed_rows": 12,
+  "dag": "h02-cross-study-ranking-divergence",
+  "original_path": "doc/figures/dags/h02-cross-study-ranking-divergence.edges.yaml",
+  "reason": "all-retired-edges-closed",
+  "schema_version": 1,
+  "sha256": "sha256:0e3cde9723def581875876a620b53b81c537d604ba0b24ee2ceef5c4cc8cb9f8",
+  "tool": "science dag archive-retired-edges"
+}

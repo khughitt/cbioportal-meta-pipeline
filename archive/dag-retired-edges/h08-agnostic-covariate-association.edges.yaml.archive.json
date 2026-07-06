@@ -1,0 +1,25 @@
+{
+  "archived_at": "2026-07-06T01:28:07Z",
+  "archived_path": "archive/dag-retired-edges/h08-agnostic-covariate-association.retired-edge.yaml",
+  "closed_by": [
+    "proposition:uv-exposure-affects-h",
+    "proposition:smoking-affects-h",
+    "proposition:apobec3-affects-h",
+    "proposition:apobec3-affects-w",
+    "proposition:mmr-pole-affects-h",
+    "proposition:expr-module-affects-h",
+    "proposition:tissue-affects-h",
+    "proposition:tissue-affects-expr-module",
+    "proposition:treatment-affects-h",
+    "proposition:study-assay-affects-h",
+    "proposition:ancestry-affects-h",
+    "proposition:selection-affects-h"
+  ],
+  "closed_rows": 12,
+  "dag": "h08-agnostic-covariate-association",
+  "original_path": "doc/figures/dags/h08-agnostic-covariate-association.edges.yaml",
+  "reason": "all-retired-edges-closed",
+  "schema_version": 1,
+  "sha256": "sha256:29ed6c9622d78b468a0c69b6cd08bcef8b741ed5351b6ba408ce4cdef27ec934",
+  "tool": "science dag archive-retired-edges"
+}

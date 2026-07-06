@@ -1,0 +1,169 @@
+focal_hypothesis: hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and
+rows:
+- id: proposition:ancestry-affects-h
+  subject: ancestry
+  predicate: affects
+  object: H
+  patch: h08-agnostic-covariate-association
+  polarity: positive
+  claim_layer: structural_claim
+  identification_strength: structural
+  legacy_relation_label: germline confound (controlled)
+  legacy_patch: h08-agnostic-covariate-association
+  legacy_edge_id: 11
+  evidence:
+  - evidence-line:ancestry-affects-h-ev0
+- id: proposition:apobec3-affects-h
+  subject: apobec3
+  predicate: affects
+  object: H
+  patch: h08-agnostic-covariate-association
+  polarity: positive
+  claim_layer: causal_effect
+  identification_strength: observational
+  legacy_relation_label: 'H08a Arm C: APOBEC3 expr -> SBS2/13'
+  legacy_patch: h08-agnostic-covariate-association
+  legacy_edge_id: 3
+  evidence:
+  - evidence-line:apobec3-affects-h-ev0
+  - evidence-line:apobec3-affects-h-ev1
+  - evidence-line:apobec3-affects-h-ev2
+  - evidence-line:apobec3-affects-h-ev3
+- id: proposition:apobec3-affects-w
+  subject: apobec3
+  predicate: affects
+  object: W
+  patch: h08-agnostic-covariate-association
+  polarity: positive
+  claim_layer: structural_claim
+  identification_strength: structural
+  legacy_relation_label: enzyme shapes spectrum
+  legacy_patch: h08-agnostic-covariate-association
+  legacy_edge_id: 4
+  evidence:
+  - evidence-line:apobec3-affects-w-ev0
+- id: proposition:expr-module-affects-h
+  subject: expr_module
+  predicate: affects
+  object: H
+  patch: h08-agnostic-covariate-association
+  polarity: positive
+  claim_layer: causal_effect
+  identification_strength: none
+  legacy_relation_label: H08b candidate upstream (TEST)
+  legacy_patch: h08-agnostic-covariate-association
+  legacy_edge_id: 6
+  evidence:
+  - evidence-line:expr-module-affects-h-ev0
+  - evidence-line:expr-module-affects-h-ev1
+- id: proposition:mmr-pole-affects-h
+  subject: mmr_pole
+  predicate: affects
+  object: H
+  patch: h08-agnostic-covariate-association
+  polarity: positive
+  claim_layer: causal_effect
+  identification_strength: observational
+  legacy_relation_label: 'secondary control: MMR->SBS6/15/26, POLE->SBS10'
+  legacy_patch: h08-agnostic-covariate-association
+  legacy_edge_id: 5
+  evidence:
+  - evidence-line:mmr-pole-affects-h-ev0
+- id: proposition:selection-affects-h
+  subject: selection
+  predicate: affects
+  object: H
+  patch: h08-agnostic-covariate-association
+  polarity: positive
+  claim_layer: structural_claim
+  identification_strength: structural
+  legacy_relation_label: 'R3: selection acts on H not W'
+  legacy_patch: h08-agnostic-covariate-association
+  legacy_edge_id: 12
+  evidence:
+  - evidence-line:selection-affects-h-ev0
+- id: proposition:smoking-affects-h
+  subject: smoking
+  predicate: affects
+  object: H
+  patch: h08-agnostic-covariate-association
+  polarity: positive
+  claim_layer: causal_effect
+  identification_strength: observational
+  legacy_relation_label: 'H08a Arm B: smoking -> SBS4'
+  legacy_patch: h08-agnostic-covariate-association
+  legacy_edge_id: 2
+  evidence:
+  - evidence-line:smoking-affects-h-ev0
+  - evidence-line:smoking-affects-h-ev1
+  - evidence-line:smoking-affects-h-ev2
+- id: proposition:study-assay-affects-h
+  subject: study_assay
+  predicate: affects
+  object: H
+  patch: h08-agnostic-covariate-association
+  polarity: positive
+  claim_layer: structural_claim
+  identification_strength: structural
+  legacy_relation_label: 'R4: batch / assay artifact (controlled)'
+  legacy_patch: h08-agnostic-covariate-association
+  legacy_edge_id: 10
+  evidence:
+  - evidence-line:study-assay-affects-h-ev0
+  - evidence-line:study-assay-affects-h-ev1
+- id: proposition:tissue-affects-expr-module
+  subject: tissue
+  predicate: affects
+  object: expr_module
+  patch: h08-agnostic-covariate-association
+  polarity: positive
+  claim_layer: structural_claim
+  identification_strength: structural
+  legacy_relation_label: 'R1: shared tissue backdoor'
+  legacy_patch: h08-agnostic-covariate-association
+  legacy_edge_id: 8
+  evidence:
+  - evidence-line:tissue-affects-expr-module-ev0
+- id: proposition:tissue-affects-h
+  subject: tissue
+  predicate: affects
+  object: H
+  patch: h08-agnostic-covariate-association
+  polarity: positive
+  claim_layer: causal_effect
+  identification_strength: observational
+  legacy_relation_label: 'R1: tissue collinearity'
+  legacy_patch: h08-agnostic-covariate-association
+  legacy_edge_id: 7
+  evidence:
+  - evidence-line:tissue-affects-h-ev0
+  - evidence-line:tissue-affects-h-ev1
+- id: proposition:treatment-affects-h
+  subject: treatment
+  predicate: affects
+  object: H
+  patch: h08-agnostic-covariate-association
+  polarity: positive
+  claim_layer: structural_claim
+  identification_strength: structural
+  legacy_relation_label: iatrogenic confound (controlled)
+  legacy_patch: h08-agnostic-covariate-association
+  legacy_edge_id: 9
+  evidence:
+  - evidence-line:treatment-affects-h-ev0
+  - evidence-line:treatment-affects-h-ev1
+- id: proposition:uv-exposure-affects-h
+  subject: uv_exposure
+  predicate: affects
+  object: H
+  patch: h08-agnostic-covariate-association
+  polarity: positive
+  claim_layer: causal_effect
+  identification_strength: observational
+  legacy_relation_label: 'H08a Arm A: UV -> SBS7'
+  legacy_patch: h08-agnostic-covariate-association
+  legacy_edge_id: 1
+  evidence:
+  - evidence-line:uv-exposure-affects-h-ev0
+  - evidence-line:uv-exposure-affects-h-ev1
+  - evidence-line:uv-exposure-affects-h-ev2

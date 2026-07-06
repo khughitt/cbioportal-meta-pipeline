@@ -1,0 +1,170 @@
+focal_hypothesis: hypothesis:0002-cross-study-ranking-divergence-is-structured
+rows:
+- id: proposition:cfs-affects-dndscv-rank
+  subject: cfs
+  predicate: affects
+  object: dndscv_rank
+  patch: h02-cross-study-ranking-divergence
+  polarity: positive
+  claim_layer: causal_effect
+  identification_strength: observational
+  legacy_relation_label: residual fragile-site signal
+  legacy_patch: h02-cross-study-ranking-divergence
+  legacy_edge_id: 5
+- id: proposition:cfs-affects-raw-rank
+  subject: cfs
+  predicate: affects
+  object: raw_rank
+  patch: h02-cross-study-ranking-divergence
+  polarity: positive
+  claim_layer: causal_effect
+  identification_strength: observational
+  legacy_relation_label: fragile-site enrichment
+  legacy_patch: h02-cross-study-ranking-divergence
+  legacy_edge_id: 4
+  evidence:
+  - evidence-line:cfs-affects-raw-rank-ev0
+- id: proposition:divergence-affects-longtail
+  subject: divergence
+  predicate: affects
+  object: longtail
+  patch: h02-cross-study-ranking-divergence
+  polarity: positive
+  claim_layer: causal_effect
+  identification_strength: observational
+  legacy_relation_label: divergence localises to the tail
+  legacy_patch: h02-cross-study-ranking-divergence
+  legacy_edge_id: 9
+  evidence:
+  - evidence-line:divergence-affects-longtail-ev0
+  - evidence-line:divergence-affects-longtail-ev1
+- id: proposition:dndscv-rank-affects-drivers
+  subject: dndscv_rank
+  predicate: affects
+  object: drivers
+  patch: h02-cross-study-ranking-divergence
+  polarity: positive
+  claim_layer: causal_effect
+  identification_strength: observational
+  legacy_relation_label: selection recovers drivers (P3/P1)
+  legacy_patch: h02-cross-study-ranking-divergence
+  legacy_edge_id: 10
+  evidence:
+  - evidence-line:dndscv-rank-affects-drivers-ev0
+  - evidence-line:dndscv-rank-affects-drivers-ev1
+  - evidence-line:dndscv-rank-affects-drivers-ev2
+  - evidence-line:dndscv-rank-affects-drivers-ev3
+  - evidence-line:dndscv-rank-affects-drivers-ev4
+- id: proposition:drivers-affects-stability
+  subject: drivers
+  predicate: affects
+  object: stability
+  patch: h02-cross-study-ranking-divergence
+  polarity: positive
+  claim_layer: causal_effect
+  identification_strength: observational
+  legacy_relation_label: drivers replicate (P1)
+  legacy_patch: h02-cross-study-ranking-divergence
+  legacy_edge_id: 11
+  evidence:
+  - evidence-line:drivers-affects-stability-ev0
+- id: proposition:gene-length-affects-dndscv-rank
+  subject: gene_length
+  predicate: affects
+  object: dndscv_rank
+  patch: h02-cross-study-ranking-divergence
+  polarity: positive
+  claim_layer: causal_effect
+  identification_strength: observational
+  legacy_relation_label: residual length signal (P4)
+  legacy_patch: h02-cross-study-ranking-divergence
+  legacy_edge_id: 3
+  evidence:
+  - evidence-line:gene-length-affects-dndscv-rank-ev0
+  - evidence-line:gene-length-affects-dndscv-rank-ev1
+  - evidence-line:gene-length-affects-dndscv-rank-ev2
+- id: proposition:gene-length-affects-lenadj-rank
+  subject: gene_length
+  predicate: affects
+  object: lenadj_rank
+  patch: h02-cross-study-ranking-divergence
+  polarity: positive
+  claim_layer: causal_effect
+  identification_strength: observational
+  legacy_relation_label: naive correction overshoots
+  legacy_patch: h02-cross-study-ranking-divergence
+  legacy_edge_id: 2
+  evidence:
+  - evidence-line:gene-length-affects-lenadj-rank-ev0
+  - evidence-line:gene-length-affects-lenadj-rank-ev1
+- id: proposition:gene-length-affects-raw-rank
+  subject: gene_length
+  predicate: affects
+  object: raw_rank
+  patch: h02-cross-study-ranking-divergence
+  polarity: positive
+  claim_layer: causal_effect
+  identification_strength: observational
+  legacy_relation_label: length inflates raw count
+  legacy_patch: h02-cross-study-ranking-divergence
+  legacy_edge_id: 1
+  evidence:
+  - evidence-line:gene-length-affects-raw-rank-ev0
+  - evidence-line:gene-length-affects-raw-rank-ev1
+  - evidence-line:gene-length-affects-raw-rank-ev2
+- id: proposition:lenadj-rank-affects-divergence
+  subject: lenadj_rank
+  predicate: affects
+  object: divergence
+  patch: h02-cross-study-ranking-divergence
+  polarity: positive
+  claim_layer: causal_effect
+  identification_strength: observational
+  legacy_relation_label: opposite-pole head
+  legacy_patch: h02-cross-study-ranking-divergence
+  legacy_edge_id: 8
+  evidence:
+  - evidence-line:lenadj-rank-affects-divergence-ev0
+  - evidence-line:lenadj-rank-affects-divergence-ev1
+- id: proposition:longtail-affects-stability
+  subject: longtail
+  predicate: affects
+  object: stability
+  patch: h02-cross-study-ranking-divergence
+  polarity: positive
+  claim_layer: causal_effect
+  identification_strength: observational
+  legacy_relation_label: candidates are study-specific (P2)
+  legacy_patch: h02-cross-study-ranking-divergence
+  legacy_edge_id: 12
+  evidence:
+  - evidence-line:longtail-affects-stability-ev0
+  - evidence-line:longtail-affects-stability-ev1
+- id: proposition:raw-rank-affects-divergence
+  subject: raw_rank
+  predicate: affects
+  object: divergence
+  patch: h02-cross-study-ranking-divergence
+  polarity: positive
+  claim_layer: causal_effect
+  identification_strength: observational
+  legacy_relation_label: near-disjoint heads
+  legacy_patch: h02-cross-study-ranking-divergence
+  legacy_edge_id: 7
+  evidence:
+  - evidence-line:raw-rank-affects-divergence-ev0
+  - evidence-line:raw-rank-affects-divergence-ev1
+  - evidence-line:raw-rank-affects-divergence-ev2
+- id: proposition:rep-timing-affects-dndscv-rank
+  subject: rep_timing
+  predicate: affects
+  object: dndscv_rank
+  patch: h02-cross-study-ranking-divergence
+  polarity: positive
+  claim_layer: causal_effect
+  identification_strength: observational
+  legacy_relation_label: late-RT residual (P4) — refuted
+  legacy_patch: h02-cross-study-ranking-divergence
+  legacy_edge_id: 6
+  evidence:
+  - evidence-line:rep-timing-affects-dndscv-rank-ev0

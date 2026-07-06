@@ -33,7 +33,7 @@ stance: supports
 target: proposition:tissue-affects-h
 source: doi:10.1126/science.abl9283
 evidence_type: literature
-belief_eligible: true
+belief_eligible: false
 status: draft
 created: '2026-07-05'
 updated: '2026-07-05'

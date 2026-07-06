@@ -33,7 +33,7 @@ stance: supports
 target: proposition:treatment-affects-h
 source: doi:10.1158/2159-8290.CD-21-1434
 evidence_type: literature
-belief_eligible: true
+belief_eligible: false
 status: draft
 created: '2026-07-05'
 updated: '2026-07-05'

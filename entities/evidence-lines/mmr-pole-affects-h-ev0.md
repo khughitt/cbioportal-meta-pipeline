@@ -33,7 +33,7 @@ stance: supports
 target: proposition:mmr-pole-affects-h
 source: doi:10.1038/s41586-020-1943-3
 evidence_type: literature
-belief_eligible: true
+belief_eligible: false
 status: draft
 created: '2026-07-05'
 updated: '2026-07-05'

@@ -33,7 +33,7 @@ stance: supports
 target: proposition:apobec3-affects-h
 source: doi:10.1371/journal.pgen.1011043
 evidence_type: literature
-belief_eligible: true
+belief_eligible: false
 status: draft
 created: '2026-07-05'
 updated: '2026-07-05'

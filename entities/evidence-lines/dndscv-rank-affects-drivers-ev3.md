@@ -33,7 +33,7 @@ stance: supports
 target: proposition:dndscv-rank-affects-drivers
 source: doi:10.1038/s41586-018-0312-y
 evidence_type: literature
-belief_eligible: true
+belief_eligible: false
 status: draft
 created: '2026-07-05'
 updated: '2026-07-05'

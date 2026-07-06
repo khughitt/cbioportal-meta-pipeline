@@ -9,6 +9,13 @@ source_class: derived
 dataset_class: deposit
 derived_kind: aggregate
 tier: use-now
+provided_capabilities:
+- assay: somatic-variant-calling
+  modality: harmonized-multi-omics
+- assay: gene-expression
+  modality: bulk-rna
+- assay: pathway-driver-annotation
+  modality: consensus-pan-cancer
 license: custom
 update_cadence: static
 accessions:

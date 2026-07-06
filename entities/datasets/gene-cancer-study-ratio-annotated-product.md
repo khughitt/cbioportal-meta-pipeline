@@ -8,6 +8,9 @@ id: dataset:gene-cancer-study-ratio-annotated-product
 source_class: derived
 dataset_class: deposit
 derived_kind: aggregate
+provided_capabilities:
+- assay: mutation-frequency
+  modality: derived-table
 local_path: /data/packages/cbioportal/pan-cancer/summary/mut/table/gene_cancer_study_ratio_annotated.feather
 ontology_terms:
 - somatic mutation

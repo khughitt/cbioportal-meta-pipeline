@@ -7,6 +7,11 @@ updated: '2026-06-27'
 id: dataset:msk-met
 source_class: observational
 dataset_class: deposit
+provided_capabilities:
+- assay: somatic-variant-calling
+  modality: targeted-panel
+- assay: clinical-covariates
+  modality: metastasis-annotation
 local_path: /data/raw/cbioportal/msk_met_2021
 source_refs:
 - paper:Nguyen2022

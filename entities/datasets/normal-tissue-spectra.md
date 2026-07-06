@@ -8,6 +8,9 @@ id: dataset:normal-tissue-spectra
 source_class: derived
 dataset_class: deposit
 derived_kind: aggregate
+provided_capabilities:
+- assay: mutational-signature
+  modality: normal-tissue-derived-sbs96
 local_path: data/normal_tissue_spectra.tsv
 source_refs:
 - paper:Li2021

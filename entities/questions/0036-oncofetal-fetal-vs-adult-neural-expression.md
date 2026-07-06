@@ -14,6 +14,9 @@ ontology_terms:
 - positive selection
 - neural genes
 datasets: []
+required_capabilities:
+- assay: gene-expression
+  modality: developmental-transcriptome
 source_refs:
 - paper:Cao2023
 - paper:Huang2023a

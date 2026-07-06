@@ -9,6 +9,13 @@ source_class: derived
 dataset_class: deposit
 derived_kind: aggregate
 tier: use-now
+provided_capabilities:
+- assay: somatic-variant-calling
+  modality: whole-exome
+- assay: mutational-signature
+  modality: whole-exome
+- assay: indel-signature
+  modality: whole-exome
 license: custom
 update_cadence: static
 accessions:

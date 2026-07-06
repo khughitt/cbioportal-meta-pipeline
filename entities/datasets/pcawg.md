@@ -8,6 +8,13 @@ id: dataset:pcawg
 source_class: observational
 dataset_class: deposit
 tier: evaluate-next
+provided_capabilities:
+- assay: somatic-variant-calling
+  modality: whole-genome
+- assay: mutational-signature
+  modality: whole-genome
+- assay: indel-signature
+  modality: whole-genome
 local_path: /data/raw/cbioportal/pancan_pcawg_2020
 source_refs:
 - paper:PCAWG2020

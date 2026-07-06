@@ -7,6 +7,11 @@ updated: '2026-06-27'
 id: dataset:cbioportal
 source_class: reference
 dataset_class: deposit
+provided_capabilities:
+- assay: somatic-variant-calling
+  modality: multi-study-cancer-genomics
+- assay: clinical-covariates
+  modality: study-clinical
 local_path: /data/raw/cbioportal
 source_refs:
 - paper:Cerami2012

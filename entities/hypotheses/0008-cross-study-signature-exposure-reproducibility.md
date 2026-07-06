@@ -8,6 +8,8 @@ created: '2026-05-31'
 updated: '2026-05-31'
 id: hypothesis:0008-cross-study-signature-exposure-reproducibility
 phase: active
+required_capabilities:
+- assay: mutational-signature
 ontology_terms:
 - mutational signatures
 - somatic mutation

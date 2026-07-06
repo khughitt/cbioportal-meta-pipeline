@@ -7,6 +7,9 @@ updated: '2026-06-27'
 id: dataset:li2021-normal-wgs
 source_class: observational
 dataset_class: deposit
+provided_capabilities:
+- assay: somatic-variant-calling
+  modality: normal-tissue-wgs
 local_path: data/li2021_somatic_mutations.tsv
 source_refs:
 - paper:Li2021

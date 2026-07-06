@@ -16,6 +16,9 @@ ontology_terms:
 datasets:
 - PCAWG
 - SomaMutDB
+required_capabilities:
+- assay: replication-timing
+  modality: genome-bin-annotation
 source_refs:
 - paper:Yaacov2023
 related:

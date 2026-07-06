@@ -9,6 +9,9 @@ source_class: reference
 dataset_class: reference
 origin: external
 tier: evaluate-next
+provided_capabilities:
+- assay: mutational-signature
+  modality: experimental-mutagenesis
 license: CC-BY-4.0
 update_cadence: static
 ontology_terms: []

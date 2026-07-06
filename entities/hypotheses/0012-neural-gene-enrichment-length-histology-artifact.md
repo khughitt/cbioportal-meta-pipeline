@@ -7,6 +7,9 @@ created: '2026-06-06'
 updated: '2026-06-06'
 id: hypothesis:0012-neural-gene-enrichment-length-histology-artifact
 phase: active
+required_capabilities:
+- assay: gene-expression
+- assay: somatic-variant-calling
 source_refs:
 - paper:Mancusi2023
 - paper:Hanahan2023

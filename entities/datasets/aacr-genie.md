@@ -7,6 +7,9 @@ updated: '2026-06-27'
 id: dataset:aacr-genie
 source_class: observational
 dataset_class: deposit
+provided_capabilities:
+- assay: somatic-variant-calling
+  modality: targeted-panel
 local_path: /data/raw/cbioportal/genie
 source_refs:
 - paper:AACRGENIEConsortium2017

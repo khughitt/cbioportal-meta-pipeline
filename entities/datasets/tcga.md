@@ -7,6 +7,15 @@ updated: '2026-06-27'
 id: dataset:tcga
 source_class: observational
 dataset_class: deposit
+provided_capabilities:
+- assay: somatic-variant-calling
+  modality: multi-omics
+- assay: gene-expression
+  modality: bulk-rna
+- assay: copy-number
+  modality: multi-omics
+- assay: methylation
+  modality: multi-omics
 local_path: /data/raw/cbioportal
 source_refs:
 - paper:Kim2017

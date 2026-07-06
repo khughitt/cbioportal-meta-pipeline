@@ -8,6 +8,9 @@ updated: '2026-06-28'
 id: question:0001-normal-epithelial-clone-contamination-in-esophageal-studies
 ontology_terms: []
 datasets: []
+required_capabilities:
+- assay: somatic-variant-calling
+  modality: normal-tissue-wgs
 source_refs:
 - paper:Yoshida2026
 - paper:Martincorena2018

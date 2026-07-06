@@ -7,6 +7,9 @@ updated: '2026-06-27'
 id: dataset:allen-brain-cell-atlas
 source_class: observational
 dataset_class: reference
+provided_capabilities:
+- assay: gene-expression
+  modality: single-cell-rna
 access:
   level: public
   verified: true

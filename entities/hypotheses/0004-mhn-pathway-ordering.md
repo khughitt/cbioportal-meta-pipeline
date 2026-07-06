@@ -7,6 +7,8 @@ created: '2026-04-27'
 updated: '2026-06-28'
 id: hypothesis:0004-mhn-pathway-ordering
 phase: candidate
+required_capabilities:
+- assay: somatic-variant-calling
 source_refs:
 - paper:Vocht2026
 - paper:Schill2024

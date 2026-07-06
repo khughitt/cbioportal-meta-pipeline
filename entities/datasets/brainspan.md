@@ -7,6 +7,11 @@ updated: '2026-06-27'
 id: dataset:brainspan
 source_class: observational
 dataset_class: reference
+provided_capabilities:
+- assay: gene-expression
+  modality: developmental-transcriptome
+- assay: gene-expression
+  modality: bulk-rna
 access:
   level: public
   verified: true

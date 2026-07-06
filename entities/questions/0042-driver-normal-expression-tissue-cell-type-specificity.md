@@ -24,6 +24,10 @@ datasets:
 - "Human Protein Atlas / Tabula Sapiens single-cell (external \u2014 cell-type Tau)"
 - data/uniprotkb_hsapiens_protein_lengths.tsv.gz (length control)
 - data/gene_replication_timing.feather (mutation-rate confound control)
+required_capabilities:
+- assay: gene-expression
+- assay: somatic-variant-calling
+- assay: pathway-driver-annotation
 source_refs:
 - paper:KryuchkovaMostacci2017
 - paper:Garraway2006

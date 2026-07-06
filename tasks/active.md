@@ -971,3 +971,13 @@ Curation batch for local-result numeric-anchor warnings. Current baseline after 
 - created: 2026-06-28
 
 Cleanup batch for smaller numeric-anchor families after t234 upstream parser work. Current baseline after the upstream DOI/identifier fix and the first t235 exact-reference passes: doc/plans 34, doc/meta 9, doc/guides/modalities 2, entities/datasets 7, entities/pre-registrations 15, entities/questions 14, entities/synthesis 11, entities/hypotheses 4, entities/modality-guide 5, entities/discussions 1, and entities/topics 32. For real numeric claims, add nearby anchors or reduce unsupported precision.
+
+## [t241] Score or stage draft evidence-line stubs surfaced by strict validation
+- priority: P2
+- status: proposed
+- aspects: []
+- related: [task:t233]
+- group: science-strict-validation-cleanup
+- created: 2026-07-06
+
+Strict validation still reports evidence.unscored-line for draft evidence-line stubs. Before clearing, review each draft line against its source and either add honest evidence_role/strength metadata or keep it staged belief_eligible:false until curation is complete. Do not assign strength/role mechanically from empty draft bodies.

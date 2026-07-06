@@ -9,6 +9,9 @@ id: question:0007-cross-tissue-somatic-mutation-rate-variation-as-null-model
 ontology_terms: []
 datasets:
 - EGA:EGAD00001007859
+required_capabilities:
+- assay: somatic-variant-calling
+  modality: normal-tissue-wgs
 source_refs:
 - paper:Li2021
 related:

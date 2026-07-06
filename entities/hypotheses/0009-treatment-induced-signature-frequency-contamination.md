@@ -7,6 +7,9 @@ created: '2026-05-31'
 updated: '2026-05-31'
 id: hypothesis:0009-treatment-induced-signature-frequency-contamination
 phase: active
+required_capabilities:
+- assay: mutational-signature
+- assay: clinical-covariates
 ontology_terms:
 - mutational signatures
 - somatic mutation

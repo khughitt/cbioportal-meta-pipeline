@@ -9,6 +9,11 @@ source_class: observational
 dataset_class: deposit
 origin: external
 tier: use-now
+provided_capabilities:
+- assay: clinical-covariates
+  modality: patient-followup
+- assay: exposure-covariates
+  modality: smoking-history
 license: custom
 update_cadence: static
 ontology_terms: []

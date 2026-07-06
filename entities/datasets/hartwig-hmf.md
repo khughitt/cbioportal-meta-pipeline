@@ -9,6 +9,13 @@ source_class: observational
 dataset_class: deposit
 origin: external
 tier: evaluate-next
+provided_capabilities:
+- assay: somatic-variant-calling
+  modality: whole-genome
+- assay: mutational-signature
+  modality: whole-genome
+- assay: clinical-covariates
+  modality: treatment-history
 license: custom
 update_cadence: versioned-releases
 ontology_terms: []

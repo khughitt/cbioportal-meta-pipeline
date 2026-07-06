@@ -14,6 +14,10 @@ ontology_terms:
 - gene set enrichment
 - label-free
 datasets: []
+required_capabilities:
+- assay: gene-expression
+- assay: cell-type-markers
+- assay: protein-expression
 source_refs:
 - paper:Hwang2025a
 - paper:Keough2022

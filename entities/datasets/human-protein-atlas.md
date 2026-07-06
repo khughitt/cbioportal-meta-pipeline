@@ -7,6 +7,11 @@ updated: '2026-06-27'
 id: dataset:human-protein-atlas
 source_class: observational
 dataset_class: reference
+provided_capabilities:
+- assay: gene-expression
+  modality: tissue-atlas
+- assay: protein-expression
+  modality: immunohistochemistry
 access:
   level: public
   verified: true

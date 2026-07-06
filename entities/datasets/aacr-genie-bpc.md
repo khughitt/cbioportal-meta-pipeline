@@ -7,6 +7,11 @@ updated: '2026-06-27'
 id: dataset:aacr-genie-bpc
 source_class: observational
 dataset_class: deposit
+provided_capabilities:
+- assay: somatic-variant-calling
+  modality: targeted-panel
+- assay: clinical-covariates
+  modality: ehr-curated
 source_refs:
 - paper:AACRGENIEConsortium2017
 related:

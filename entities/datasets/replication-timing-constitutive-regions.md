@@ -7,6 +7,9 @@ updated: '2026-06-27'
 id: dataset:replication-timing-constitutive-regions
 source_class: reference
 dataset_class: deposit
+provided_capabilities:
+- assay: replication-timing
+  modality: genome-bin-annotation
 local_path: data/replication_timing_constitutive_bins.feather
 source_refs:
 - paper:Yaacov2023

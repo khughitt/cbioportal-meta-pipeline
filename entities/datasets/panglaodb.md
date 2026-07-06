@@ -7,6 +7,9 @@ updated: '2026-06-27'
 id: dataset:panglaodb
 source_class: reference
 dataset_class: reference
+provided_capabilities:
+- assay: cell-type-markers
+  modality: curated-marker-database
 access:
   level: public
   verified: true

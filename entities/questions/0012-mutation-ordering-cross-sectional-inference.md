@@ -12,6 +12,10 @@ datasets:
 - AACR GENIE panel mutation data
 - Sanchez-Vega 2018 10-pathway annotations
 - PCAWG Gerstung 2020 pan-cancer chronology (external benchmark)
+required_capabilities:
+- assay: somatic-variant-calling
+- assay: mutation-frequency
+- assay: pathway-driver-annotation
 source_refs:
 - paper:Schill2024
 - paper:Vocht2026

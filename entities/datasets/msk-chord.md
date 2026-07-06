@@ -7,6 +7,11 @@ updated: '2026-06-27'
 id: dataset:msk-chord
 source_class: observational
 dataset_class: deposit
+provided_capabilities:
+- assay: somatic-variant-calling
+  modality: targeted-panel
+- assay: clinical-covariates
+  modality: ehr-curated
 local_path: /data/raw/cbioportal/msk_chord_2024
 source_refs:
 - paper:Jee2024

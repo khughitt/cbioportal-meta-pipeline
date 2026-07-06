@@ -7,6 +7,11 @@ updated: '2026-06-27'
 id: dataset:gtex
 source_class: observational
 dataset_class: deposit
+provided_capabilities:
+- assay: gene-expression
+  modality: bulk-rna
+- assay: somatic-variant-calling
+  modality: normal-tissue-wes-wgs
 local_path: /data/raw/gtex
 source_refs:
 - paper:Gao2023

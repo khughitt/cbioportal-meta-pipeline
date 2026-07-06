@@ -10,6 +10,9 @@ ontology_terms: []
 datasets:
 - cBioPortal studies
 - PCAWG
+required_capabilities:
+- assay: replication-timing
+  modality: genome-bin-annotation
 source_refs:
 - paper:Yaacov2023
 - paper:Yoshida2026

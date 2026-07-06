@@ -8,7 +8,7 @@ updated: '2026-06-28'
 id: paper:Suehnholz2024
 ontology_terms: []
 source_refs:
-- article:Suehnholz2024
+- paper:Suehnholz2024
 - cite:Suehnholz2024
 related:
 - paper:Chakravarty2017

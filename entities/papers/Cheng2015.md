@@ -10,7 +10,7 @@ id: paper:Cheng2015
 ontology_terms: []
 source_refs:
 - cite:Cheng2015
-- article:Cheng2015
+- paper:Cheng2015
 related:
 - paper:Zehir2017
 - topic:targeted-panel-sequencing-bias

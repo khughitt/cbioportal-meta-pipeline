@@ -8,7 +8,7 @@ id: paper:Bailey2018
 ontology_terms: []
 source_refs:
 - cite:Bailey2018
-- article:Bailey2018
+- paper:Bailey2018
 related:
 - paper:Ellrott2018
 - topic:cancer-driver-genes

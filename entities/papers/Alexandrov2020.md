@@ -7,7 +7,7 @@ updated: '2026-06-28'
 id: paper:Alexandrov2020
 ontology_terms: []
 source_refs:
-- article:Alexandrov2020
+- paper:Alexandrov2020
 related:
 - paper:Tate2019
 - paper:PCAWG2020

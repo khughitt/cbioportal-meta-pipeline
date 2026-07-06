@@ -8,7 +8,7 @@ updated: '2026-06-28'
 id: paper:Nguyen2022
 ontology_terms: []
 source_refs:
-- article:Nguyen2022
+- paper:Nguyen2022
 - cite:Nguyen2022
 related:
 - paper:Zehir2017

@@ -8,7 +8,7 @@ updated: '2026-06-28'
 id: paper:Bandlamudi2026
 ontology_terms: []
 source_refs:
-- article:Bandlamudi2026
+- paper:Bandlamudi2026
 - cite:Bandlamudi2026
 related:
 - paper:Zehir2017

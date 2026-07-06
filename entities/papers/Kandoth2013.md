@@ -7,7 +7,7 @@ updated: '2026-06-28'
 id: paper:Kandoth2013
 ontology_terms: []
 source_refs:
-- article:Kandoth2013
+- paper:Kandoth2013
 - cite:Kandoth2013
 related:
 - paper:Bailey2018

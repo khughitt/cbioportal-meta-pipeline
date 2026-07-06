@@ -7,7 +7,7 @@ updated: '2026-06-28'
 id: paper:Ciriello2013
 ontology_terms: []
 source_refs:
-- article:Ciriello2013
+- paper:Ciriello2013
 - cite:Ciriello2013
 related:
 - paper:SanchezVega2018

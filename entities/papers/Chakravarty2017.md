@@ -8,7 +8,7 @@ id: paper:Chakravarty2017
 ontology_terms: []
 source_refs:
 - cite:Chakravarty2017
-- article:Chakravarty2017
+- paper:Chakravarty2017
 related:
 - paper:Cerami2012
 - topic:cancer-driver-genes

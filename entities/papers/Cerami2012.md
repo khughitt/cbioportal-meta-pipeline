@@ -8,7 +8,7 @@ updated: '2026-06-28'
 id: paper:Cerami2012
 ontology_terms: []
 source_refs:
-- article:Cerami2012
+- paper:Cerami2012
 - cite:Cerami2012
 related:
 - paper:Gao2013

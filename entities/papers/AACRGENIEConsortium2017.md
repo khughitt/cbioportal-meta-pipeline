@@ -7,7 +7,7 @@ updated: '2026-06-28'
 id: paper:AACRGENIEConsortium2017
 ontology_terms: []
 source_refs:
-- article:AACRGENIEConsortium2017
+- paper:AACRGENIEConsortium2017
 - cite:AACRGENIEConsortium2017
 related:
 - topic:pan-cancer-mutation-landscape

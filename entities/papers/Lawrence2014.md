@@ -7,7 +7,7 @@ updated: '2026-06-28'
 id: paper:Lawrence2014
 ontology_terms: []
 source_refs:
-- article:Lawrence2014
+- paper:Lawrence2014
 - cite:Lawrence2014
 related:
 - paper:Bailey2018

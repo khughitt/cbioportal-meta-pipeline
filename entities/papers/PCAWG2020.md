@@ -7,7 +7,7 @@ updated: '2026-06-28'
 id: paper:PCAWG2020
 ontology_terms: []
 source_refs:
-- article:PCAWG2020
+- paper:PCAWG2020
 - cite:PCAWG2020
 related:
 - paper:Ellrott2018

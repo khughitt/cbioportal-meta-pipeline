@@ -8,7 +8,7 @@ updated: '2026-06-28'
 id: paper:Ellrott2018
 ontology_terms: []
 source_refs:
-- article:Ellrott2018
+- paper:Ellrott2018
 - cite:Ellrott2018
 related:
 - paper:Bailey2018

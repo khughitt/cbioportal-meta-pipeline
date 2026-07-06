@@ -7,7 +7,7 @@ updated: '2026-06-28'
 id: paper:ChakravartySolit2021
 ontology_terms: []
 source_refs:
-- article:ChakravartySolit2021
+- paper:ChakravartySolit2021
 related:
 - paper:Zehir2017
 - paper:AACRGENIEConsortium2017

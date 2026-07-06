@@ -8,7 +8,7 @@ updated: '2026-06-28'
 id: paper:Zehir2017
 ontology_terms: []
 source_refs:
-- article:Zehir2017
+- paper:Zehir2017
 - cite:Zehir2017
 related:
 - topic:pan-cancer-mutation-landscape

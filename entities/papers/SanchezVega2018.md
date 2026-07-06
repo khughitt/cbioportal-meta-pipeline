@@ -7,7 +7,7 @@ updated: '2026-06-28'
 id: paper:SanchezVega2018
 ontology_terms: []
 source_refs:
-- article:SanchezVega2018
+- paper:SanchezVega2018
 - cite:SanchezVega2018
 related:
 - paper:Bailey2018

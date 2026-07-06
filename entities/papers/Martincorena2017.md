@@ -7,7 +7,7 @@ updated: '2026-06-28'
 id: paper:Martincorena2017
 ontology_terms: []
 source_refs:
-- article:Martincorena2017
+- paper:Martincorena2017
 - cite:Martincorena2017
 related:
 - paper:Lawrence2014

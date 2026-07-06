@@ -8,7 +8,7 @@ updated: '2026-06-28'
 id: paper:Chang2016
 ontology_terms: []
 source_refs:
-- article:Chang2016
+- paper:Chang2016
 - cite:Chang2016
 related:
 - paper:Cerami2012

@@ -7,7 +7,7 @@ updated: '2026-06-28'
 id: paper:Bolton2020
 ontology_terms: []
 source_refs:
-- article:Bolton2020
+- paper:Bolton2020
 - cite:Bolton2020
 related:
 - topic:clonal-hematopoiesis-contamination

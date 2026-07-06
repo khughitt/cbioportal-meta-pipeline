@@ -9,7 +9,7 @@ id: paper:Hoadley2018
 ontology_terms: []
 source_refs:
 - cite:Hoadley2018
-- article:Hoadley2018
+- paper:Hoadley2018
 related:
 - paper:Bailey2018
 - paper:Ellrott2018

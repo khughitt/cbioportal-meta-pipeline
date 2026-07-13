@@ -25,7 +25,7 @@ dev = [
 ]
 
 [tool.uv.sources]
-science = { path = "../../../science/science", editable = true }
+science = { git = "https://github.com/khughitt/science.git", subdirectory = "science" }
 
 [tool.pytest.ini_options]
 markers = [

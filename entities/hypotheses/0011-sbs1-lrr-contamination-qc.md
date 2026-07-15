@@ -1,13 +1,10 @@
 ---
 kind: hypothesis
-title: A well-powered WGS-based SBS1 late-replicating-region topographic diagnostic
-  flags cBioPortal studies with excess normal-tissue contamination, independently
-  of tumor-purity proxies
-status: proposed
-created: '2026-06-02'
-updated: '2026-06-28'
+title: A well-powered WGS-based SBS1 late-replicating-region topographic diagnostic flags cBioPortal studies with excess normal-tissue contamination, independently of tumor-purity proxies
+status: draft
+created: "2026-06-02"
+updated: "2026-06-28"
 id: hypothesis:0011-sbs1-lrr-contamination-qc
-phase: candidate
 source_refs:
 - paper:Yaacov2023
 related:

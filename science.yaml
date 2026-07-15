@@ -78,3 +78,4 @@ scope:
 peers:
 - id: cancer-meta
   path: ~/d/cancer/meta
+entity_schema_version: 2

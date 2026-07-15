@@ -1,12 +1,10 @@
 ---
 kind: hypothesis
-title: Pre-malignant cBioPortal cohorts already carry n-1 of the canonical invasive-cancer
-  drivers; residual late-stage drivers are checkpoint-enriched
-status: proposed
-created: '2026-04-27'
-updated: '2026-06-28'
+title: Pre-malignant cBioPortal cohorts already carry n-1 of the canonical invasive-cancer drivers; residual late-stage drivers are checkpoint-enriched
+status: draft
+created: "2026-04-27"
+updated: "2026-06-28"
 id: hypothesis:0006-pre-malignant-n-minus-1-driver-carriage
-phase: candidate
 source_refs:
 - paper:Martincorena2018
 - paper:LeeSix2018

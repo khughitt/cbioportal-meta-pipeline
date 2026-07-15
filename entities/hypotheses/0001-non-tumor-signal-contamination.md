@@ -1,12 +1,10 @@
 ---
 kind: hypothesis
-title: Non-tumor signal contaminates cBioPortal mutation-frequency estimates in identifiable,
-  partially correctable ways
-status: proposed
-created: '2026-04-27'
-updated: '2026-04-27'
+title: Non-tumor signal contaminates cBioPortal mutation-frequency estimates in identifiable, partially correctable ways
+status: active
+created: "2026-04-27"
+updated: "2026-04-27"
 id: hypothesis:0001-non-tumor-signal-contamination
-phase: active
 required_capabilities:
 - assay: mutational-signature
   modality: normal-tissue-derived-sbs96

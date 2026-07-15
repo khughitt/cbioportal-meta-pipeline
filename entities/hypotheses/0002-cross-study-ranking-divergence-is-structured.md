@@ -1,13 +1,10 @@
 ---
 kind: hypothesis
-title: "Cross-study gene rankings replicate strongly for canonical drivers and weakly\
-  \ for length/raw-driven candidates \u2014 divergence between ranking schemes is\
-  \ structured, not random"
-status: proposed
-created: '2026-04-27'
-updated: '2026-06-28'
+title: Cross-study gene rankings replicate strongly for canonical drivers and weakly for length/raw-driven candidates — divergence between ranking schemes is structured, not random
+status: active
+created: "2026-04-27"
+updated: "2026-06-28"
 id: hypothesis:0002-cross-study-ranking-divergence-is-structured
-phase: active
 source_refs:
 - paper:Lawrence2014
 - paper:Bailey2018

@@ -1,12 +1,10 @@
 ---
 kind: hypothesis
-title: Apparent neural-gene enrichment in top-mutated genes is a length + histology
-  artifact, not neural selection
-status: proposed
-created: '2026-06-06'
-updated: '2026-06-06'
+title: Apparent neural-gene enrichment in top-mutated genes is a length + histology artifact, not neural selection
+status: active
+created: "2026-06-06"
+updated: "2026-06-06"
 id: hypothesis:0012-neural-gene-enrichment-length-histology-artifact
-phase: active
 required_capabilities:
 - assay: gene-expression
 - assay: somatic-variant-calling

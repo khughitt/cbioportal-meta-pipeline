@@ -1,13 +1,10 @@
 ---
 kind: hypothesis
-title: Per-cancer-type mutational-signature exposures reproduce across independent
-  cBioPortal studies, and divergences are explained by technical batch (caller/panel/treatment),
-  not biology
-status: proposed
-created: '2026-05-31'
-updated: '2026-05-31'
+title: Per-cancer-type mutational-signature exposures reproduce across independent cBioPortal studies, and divergences are explained by technical batch (caller/panel/treatment), not biology
+status: active
+created: "2026-05-31"
+updated: "2026-05-31"
 id: hypothesis:0008-cross-study-signature-exposure-reproducibility
-phase: active
 required_capabilities:
 - assay: mutational-signature
 ontology_terms:

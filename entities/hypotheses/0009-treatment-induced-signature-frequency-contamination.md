@@ -1,12 +1,10 @@
 ---
 kind: hypothesis
-title: Treated/relapsed cohorts inflate apparent gene-by-cancer mutation frequencies
-  via iatrogenic mutational signatures
-status: proposed
-created: '2026-05-31'
-updated: '2026-05-31'
+title: Treated/relapsed cohorts inflate apparent gene-by-cancer mutation frequencies via iatrogenic mutational signatures
+status: active
+created: "2026-05-31"
+updated: "2026-05-31"
 id: hypothesis:0009-treatment-induced-signature-frequency-contamination
-phase: active
 required_capabilities:
 - assay: mutational-signature
 - assay: clinical-covariates

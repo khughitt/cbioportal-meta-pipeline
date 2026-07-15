@@ -1,12 +1,10 @@
 ---
 kind: hypothesis
-title: "MHN pathway-level ordering recovers intrinsic-mutator \u2192 lineage-driver\
-  \ \u2192 checkpoint-loss progression"
-status: proposed
-created: '2026-04-27'
-updated: '2026-06-28'
+title: MHN pathway-level ordering recovers intrinsic-mutator → lineage-driver → checkpoint-loss progression
+status: draft
+created: "2026-04-27"
+updated: "2026-06-28"
 id: hypothesis:0004-mhn-pathway-ordering
-phase: candidate
 required_capabilities:
 - assay: somatic-variant-calling
 source_refs:

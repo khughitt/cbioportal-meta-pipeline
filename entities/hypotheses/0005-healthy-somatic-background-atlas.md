@@ -1,13 +1,10 @@
 ---
 kind: hypothesis
-title: Healthy somatic-mutation backgrounds vary >2 OoM across tissues; substituting
-  a cross-tissue normal null shifts cBioPortal driver-frequency in calibrated, tissue-specific
-  ways
-status: proposed
-created: '2026-04-27'
-updated: '2026-06-28'
+title: Healthy somatic-mutation backgrounds vary >2 OoM across tissues; substituting a cross-tissue normal null shifts cBioPortal driver-frequency in calibrated, tissue-specific ways
+status: draft
+created: "2026-04-27"
+updated: "2026-06-28"
 id: hypothesis:0005-healthy-somatic-background-atlas
-phase: candidate
 source_refs:
 - paper:Martincorena2018
 - paper:LeeSix2018

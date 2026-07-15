@@ -1,12 +1,10 @@
 ---
 kind: hypothesis
-title: Gene length confounds biomedical-literature attention beyond mutation-count
-  mediation
-status: proposed
-created: '2026-04-27'
-updated: '2026-06-28'
+title: Gene length confounds biomedical-literature attention beyond mutation-count mediation
+status: active
+created: "2026-04-27"
+updated: "2026-06-28"
 id: hypothesis:0003-gene-length-confounds-literature-attention
-phase: active
 source_refs:
 - paper:Lawrence2014
 related:

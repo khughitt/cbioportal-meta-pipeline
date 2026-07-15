@@ -1,12 +1,10 @@
 ---
 kind: hypothesis
-title: Agnostic covariate association recovers known signature aetiologies and surfaces
-  novel upstream causes
-status: proposed
-created: '2026-05-30'
-updated: '2026-05-30'
+title: Agnostic covariate association recovers known signature aetiologies and surfaces novel upstream causes
+status: active
+created: "2026-05-30"
+updated: "2026-05-30"
 id: hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and
-phase: active
 required_capabilities:
 - assay: mutational-signature
 - assay: clinical-covariates

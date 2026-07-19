@@ -57,7 +57,7 @@ The paper identifies design principles governing how interconnected positive fee
 
 This paper directly informs the **canalization** conceptual lens being applied to cBioPortal cross-study mutation patterns. Several connections:
 
-- **spec:research-question** asks which gene-cancer associations recur across independent studies — this paper frames those associations as reflections of attractor states in gene regulatory networks (GRNs). Recurrent driver gene mutations in particular cancer types may mark perturbations that shift cells into an alternative stable state (a distinct "cancer fate"), or may mark genes whose topology (hub vs. serial centrality) constrains which stable states are accessible.
+- **research-question:somatic-mutation-structure** asks which gene-cancer associations recur across independent studies — this paper frames those associations as reflections of attractor states in gene regulatory networks (GRNs). Recurrent driver gene mutations in particular cancer types may mark perturbations that shift cells into an alternative stable state (a distinct "cancer fate"), or may mark genes whose topology (hub vs. serial centrality) constrains which stable states are accessible.
 
 - **Canalization and robustness.** The finding that hub-topology networks are intrinsically bistable (few stable states) while serial/cyclic networks support many alternative states maps cleanly onto canalization: high-centrality hub nodes constrain the phenotypic state space, exactly as Waddington's canalization concept predicts. Genes that function as hub nodes in EMT regulatory networks should be subject to stronger purifying or directional selection pressure — and should appear as high-frequency, recurrent drivers in the pipeline's cross-study aggregation.
 

@@ -6,7 +6,7 @@ created: '2026-04-13'
 updated: '2026-06-28'
 id: meta:0001-bias-audit-cross-study-aggregation-pipeline-preprocessing-clustering
 source_refs:
-- spec:research-question
+- research-question:somatic-mutation-structure
 - topic:cross-study-harmonization
 - search:0002-cross-study-meta-analysis-stats
 - search:0001-cooccurrence-mutual-exclusivity-methods

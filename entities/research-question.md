@@ -1,6 +1,6 @@
 ---
-id: "spec:research-question"
-kind: "spec"
+id: "research-question:somatic-mutation-structure"
+kind: "research-question"
 title: "Structure of somatic mutations within and across cancer types"
 status: active
 created: "2025-02-21"

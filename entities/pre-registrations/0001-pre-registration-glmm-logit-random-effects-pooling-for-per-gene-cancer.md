@@ -12,7 +12,7 @@ related:
 - task:t077
 - task:t079
 - meta:0001-bias-audit-cross-study-aggregation-pipeline-preprocessing-clustering
-- spec:research-question
+- research-question:somatic-mutation-structure
 - hypothesis:0002-cross-study-ranking-divergence-is-structured
 - topic:cross-study-meta-analysis-cancer-genomics
 - search:0002-cross-study-meta-analysis-stats
@@ -32,7 +32,7 @@ commits_to:
 
 ## Related Anchors
 
-This pre-registration commits the project-level test in `spec:research-question` through
+This pre-registration commits the project-level test in `research-question:somatic-mutation-structure` through
 `hypothesis:0002-cross-study-ranking-divergence-is-structured` and
 `topic:cross-study-meta-analysis-cancer-genomics`.
 It is implemented through `task:t077` / `task:t079`, informed by

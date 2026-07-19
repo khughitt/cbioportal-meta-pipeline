@@ -45,7 +45,7 @@ Boolean biological network models are far more approximable by low-order continu
 
 ## Relevance
 
-This paper is primarily conceptual background for `spec:research-question` rather than a direct methodological input, but it provides a formal theoretical grounding for two recurring interpretive challenges in this project:
+This paper is primarily conceptual background for `research-question:somatic-mutation-structure` rather than a direct methodological input, but it provides a formal theoretical grounding for two recurring interpretive challenges in this project:
 
 **Driver-gene robustness and recurrent gene-cancer associations.** The project's core finding is that certain gene-cancer associations recur across many independent cBioPortal studies. Canalization theory offers a mechanistic vocabulary for why: if driver genes are nodes in regulatory networks with high canalizing depth, their mutation status can override many upstream inputs (the defining property of a canalizing variable), making their functional consequences robust to variation in genetic background across cohorts and sequencing panels. Recurrence across heterogeneous studies is then a phenotypic signature of canalization at the network level. This reframes the cross-study aggregation as a test of canalizing robustness: genes whose mutation ratios are consistently elevated across studies are candidates for canalizing inputs in cancer-relevant GRNs.
 

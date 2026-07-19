@@ -115,7 +115,7 @@ PGS-prevalence relationship; larger CF in the unhealthy environment implies deca
 
 ## Relevance
 
-This paper connects to `spec:research-question` indirectly but importantly. The project asks
+This paper connects to `research-question:somatic-mutation-structure` indirectly but importantly. The project asks
 which gene-cancer associations are robust across independent studies — a question that is
 fundamentally about **why some genetic signals replicate and others do not**. Canalization theory
 offers a mechanistic lens: genes embedded in highly canalized (buffered) regulatory networks may

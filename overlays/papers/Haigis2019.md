@@ -1,29 +1,16 @@
 ---
-kind: paper
-title: 'Tissue-specificity in cancer: The rule, not the exception'
-status: active
-created: '2026-06-07'
-updated: '2026-06-28'
 id: paper:Haigis2019
-ontology_terms:
-- tissue specificity
-- cancer driver genes
-- oncogene
-- tumor suppressor
-- cell-of-origin
-- lineage addiction
-- RAS signaling
-- context-dependent oncogenesis
-- tissue context
-- driver gene
-- epigenetic landscape
-- chromatin state
+overlay_of: paper:Haigis2019
+pin_version: "1.1.0"
+status: active
 source_refs:
 - cite:Haigis2019
 related:
 - topic:lineage-addiction-and-cell-of-origin-driver-specificity
 - question:0042-driver-normal-expression-tissue-cell-type-specificity
 - discussion:0008-tissue-cell-type-specificity-of-cancer-drivers
+created: "2026-06-07"
+updated: "2026-06-28"
 ---
 
 # Tissue-specificity in cancer: The rule, not the exception

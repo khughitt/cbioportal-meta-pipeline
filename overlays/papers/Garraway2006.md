@@ -1,23 +1,8 @@
 ---
-kind: paper
-title: Lineage dependency and lineage-survival oncogenes in human cancer
-status: active
-created: '2026-06-07'
-updated: '2026-06-28'
 id: paper:Garraway2006
-ontology_terms:
-- lineage addiction
-- lineage-survival oncogene
-- cancer driver
-- tissue-specific transcription factor
-- cell-of-origin
-- melanoma
-- MITF
-- androgen receptor
-- NKX2-1
-- ESR1
-- oncogene amplification
-- cancer type specificity
+overlay_of: paper:Garraway2006
+pin_version: "1.1.0"
+status: active
 source_refs:
 - cite:Garraway2006
 related:
@@ -26,6 +11,8 @@ related:
 - discussion:0008-tissue-cell-type-specificity-of-cancer-drivers
 - hypothesis:0012-neural-gene-enrichment-length-histology-artifact
 - topic:oncofetal-developmental-reprogramming
+created: "2026-06-07"
+updated: "2026-06-28"
 ---
 
 # Lineage dependency and lineage-survival oncogenes in human cancer

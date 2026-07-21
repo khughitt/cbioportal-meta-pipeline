@@ -1,13 +1,9 @@
 ---
-kind: paper
-title: A compendium of mutational cancer driver genes
-status: active
-created: '2026-04-21'
-updated: '2026-06-28'
 id: paper:MartinezJimenez2020
-ontology_terms: []
+overlay_of: paper:MartinezJimenez2020
+pin_version: "1.1.0"
+status: active
 source_refs:
-- paper:MartinezJimenez2020
 - cite:MartinezJimenez2020
 related:
 - paper:Bailey2018
@@ -16,6 +12,8 @@ related:
 - topic:lineage-addiction-and-cell-of-origin-driver-specificity
 - question:0042-driver-normal-expression-tissue-cell-type-specificity
 - discussion:0008-tissue-cell-type-specificity-of-cancer-drivers
+created: "2026-04-21"
+updated: "2026-06-28"
 ---
 
 # A compendium of mutational cancer driver genes

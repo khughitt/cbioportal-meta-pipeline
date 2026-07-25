@@ -1,11 +1,9 @@
 ---
 kind: question
-title: "Are cancer-type-restricted drivers enriched for cell-type-restricted normal\
-  \ expression \u2014 more than length/expression-matched chance \u2014 and do oncogenes\
-  \ differ from tumor suppressors?"
+title: Are cancer-type-restricted drivers enriched for cell-type-restricted normal expression — more than length/expression-matched chance — and do oncogenes differ from tumor suppressors?
 status: active
-created: '2026-06-07'
-updated: '2026-06-28'
+created: "2026-06-07"
+updated: "2026-06-28"
 id: question:0042-driver-normal-expression-tissue-cell-type-specificity
 ontology_terms:
 - lineage addiction
@@ -15,19 +13,19 @@ ontology_terms:
 - oncogene
 - tumor suppressor
 datasets:
-- "data/cosmic_cgc.tsv (COSMIC Cancer Gene Census v100 \u2014 Role in Cancer, Tissue\
-  \ Type, Tumour Types(Somatic))"
+- data/cosmic_cgc.tsv (COSMIC Cancer Gene Census v100 — Role in Cancer, Tissue Type, Tumour Types(Somatic))
 - data/bailey2018_table_s1.tsv (PanCanAtlas 299-driver consensus + per-cancer rosters)
 - gene_cancer_study_annotated.feather (per-cancer driver overlay)
 - IntOGen / Martinez-Jimenez 2020 per-cancer-type driver compendium (external)
-- "GTEx tissue expression (external \u2014 bulk-tissue Tau)"
-- "Human Protein Atlas / Tabula Sapiens single-cell (external \u2014 cell-type Tau)"
+- GTEx tissue expression (external — bulk-tissue Tau)
+- Human Protein Atlas / Tabula Sapiens single-cell (external — cell-type Tau)
 - data/uniprotkb_hsapiens_protein_lengths.tsv.gz (length control)
 - data/gene_replication_timing.feather (mutation-rate confound control)
 required_capabilities:
-- assay: gene-expression
-- assay: somatic-variant-calling
-- assay: pathway-driver-annotation
+- data_product: data-product:gene-expression
+  qualifiers: {}
+- data_product: data-product:somatic-variant
+  qualifiers: {}
 source_refs:
 - paper:KryuchkovaMostacci2017
 - paper:Garraway2006

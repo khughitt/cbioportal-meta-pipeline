@@ -6,7 +6,8 @@ created: "2026-04-27"
 updated: "2026-06-28"
 id: hypothesis:0004-mhn-pathway-ordering
 required_capabilities:
-- assay: somatic-variant-calling
+- data_product: data-product:somatic-variant
+  qualifiers: {}
 source_refs:
 - paper:Vocht2026
 - paper:Schill2024

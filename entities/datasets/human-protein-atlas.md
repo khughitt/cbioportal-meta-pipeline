@@ -2,16 +2,16 @@
 kind: dataset
 title: Human Protein Atlas (tissue specificity)
 status: candidate
-created: '2026-06-07'
-updated: '2026-06-27'
+created: "2026-06-07"
+updated: "2026-06-27"
 id: dataset:human-protein-atlas
 source_class: observational
 dataset_class: reference
 provided_capabilities:
-- assay: gene-expression
-  modality: tissue-atlas
-- assay: protein-expression
-  modality: immunohistochemistry
+- data_product: data-product:gene-expression-single-cell
+  qualifiers: {}
+- data_product: data-product:proteomics-immunohistochemistry
+  qualifiers: {}
 access:
   level: public
   verified: true

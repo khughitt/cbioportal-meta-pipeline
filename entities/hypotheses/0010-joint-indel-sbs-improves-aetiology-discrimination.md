@@ -6,8 +6,10 @@ created: "2026-05-31"
 updated: "2026-05-31"
 id: hypothesis:0010-joint-indel-sbs-improves-aetiology-discrimination
 required_capabilities:
-- assay: indel-signature
-- assay: somatic-variant-calling
+- data_product: data-product:indel-signature
+  qualifiers: {}
+- data_product: data-product:somatic-variant
+  qualifiers: {}
 ontology_terms:
 - mutational signatures
 - somatic mutation

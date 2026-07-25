@@ -2,16 +2,14 @@
 kind: dataset
 title: MSK-CHORD
 status: active
-created: '2026-05-30'
-updated: '2026-06-27'
+created: "2026-05-30"
+updated: "2026-06-27"
 id: dataset:msk-chord
 source_class: observational
 dataset_class: deposit
 provided_capabilities:
-- assay: somatic-variant-calling
-  modality: targeted-panel
-- assay: clinical-covariates
-  modality: ehr-curated
+- data_product: data-product:somatic-variant-targeted-panel
+  qualifiers: {}
 local_path: /data/raw/cbioportal/msk_chord_2024
 source_refs:
 - paper:Jee2024

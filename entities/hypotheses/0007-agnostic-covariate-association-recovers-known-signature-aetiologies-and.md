@@ -6,9 +6,10 @@ created: "2026-05-30"
 updated: "2026-05-30"
 id: hypothesis:0007-agnostic-covariate-association-recovers-known-signature-aetiologies-and
 required_capabilities:
-- assay: mutational-signature
-- assay: clinical-covariates
-- assay: gene-expression
+- data_product: data-product:mutational-signature
+  qualifiers: {}
+- data_product: data-product:gene-expression
+  qualifiers: {}
 ontology_terms:
 - mutational signatures
 - somatic mutation

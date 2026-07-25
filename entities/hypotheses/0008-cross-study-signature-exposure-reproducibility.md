@@ -6,7 +6,8 @@ created: "2026-05-31"
 updated: "2026-05-31"
 id: hypothesis:0008-cross-study-signature-exposure-reproducibility
 required_capabilities:
-- assay: mutational-signature
+- data_product: data-product:mutational-signature
+  qualifiers: {}
 ontology_terms:
 - mutational signatures
 - somatic mutation

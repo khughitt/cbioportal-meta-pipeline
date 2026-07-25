@@ -1,11 +1,9 @@
 ---
 kind: question
-title: "If any neural-gene enrichment survives length+histology correction, is it\
-  \ fetal/developmental (oncofetal) rather than adult-neural \u2014 and non-selective\
-  \ rather than positively selected?"
+title: If any neural-gene enrichment survives length+histology correction, is it fetal/developmental (oncofetal) rather than adult-neural — and non-selective rather than positively selected?
 status: active
-created: '2026-06-06'
-updated: '2026-06-28'
+created: "2026-06-06"
+updated: "2026-06-28"
 id: question:0036-oncofetal-fetal-vs-adult-neural-expression
 ontology_terms:
 - oncofetal reprogramming
@@ -15,8 +13,8 @@ ontology_terms:
 - neural genes
 datasets: []
 required_capabilities:
-- assay: gene-expression
-  modality: developmental-transcriptome
+- data_product: data-product:gene-expression-bulk-rna
+  qualifiers: {}
 source_refs:
 - paper:Cao2023
 - paper:Huang2023a

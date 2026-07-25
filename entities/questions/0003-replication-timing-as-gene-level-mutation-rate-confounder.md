@@ -1,18 +1,17 @@
 ---
 kind: question
-title: Does replication timing create systematic gene-level mutation rate inflation
-  in cross-study aggregation?
+title: Does replication timing create systematic gene-level mutation rate inflation in cross-study aggregation?
 status: active
-created: '2026-04-18'
-updated: '2026-06-28'
+created: "2026-04-18"
+updated: "2026-06-28"
 id: question:0003-replication-timing-as-gene-level-mutation-rate-confounder
 ontology_terms: []
 datasets:
 - cBioPortal studies
 - PCAWG
 required_capabilities:
-- assay: replication-timing
-  modality: genome-bin-annotation
+- data_product: data-product:replication-timing
+  qualifiers: {}
 source_refs:
 - paper:Yaacov2023
 - paper:Yoshida2026

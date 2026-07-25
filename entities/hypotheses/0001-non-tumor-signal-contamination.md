@@ -6,8 +6,8 @@ created: "2026-04-27"
 updated: "2026-04-27"
 id: hypothesis:0001-non-tumor-signal-contamination
 required_capabilities:
-- assay: mutational-signature
-  modality: normal-tissue-derived-sbs96
+- data_product: data-product:mutational-signature
+  qualifiers: {}
 source_refs:
 - paper:Martincorena2018
 - paper:Yaacov2023

@@ -2,20 +2,20 @@
 kind: dataset
 title: The Cancer Genome Atlas (TCGA)
 status: active
-created: '2026-05-30'
-updated: '2026-06-27'
+created: "2026-05-30"
+updated: "2026-06-27"
 id: dataset:tcga
 source_class: observational
 dataset_class: deposit
 provided_capabilities:
-- assay: somatic-variant-calling
-  modality: multi-omics
-- assay: gene-expression
-  modality: bulk-rna
-- assay: copy-number
-  modality: multi-omics
-- assay: methylation
-  modality: multi-omics
+- data_product: data-product:somatic-variant
+  qualifiers: {}
+- data_product: data-product:gene-expression-bulk-rna
+  qualifiers: {}
+- data_product: data-product:copy-number
+  qualifiers: {}
+- data_product: data-product:dna-methylation
+  qualifiers: {}
 local_path: /data/raw/cbioportal
 source_refs:
 - paper:Kim2017

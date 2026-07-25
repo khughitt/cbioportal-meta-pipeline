@@ -2,16 +2,16 @@
 kind: dataset
 title: Kucab 2019 environmental-mutagen reference signature compendium (iPSC)
 status: candidate
-created: '2026-05-31'
-updated: '2026-06-27'
+created: "2026-05-31"
+updated: "2026-06-27"
 id: dataset:kucab2019-mutagen-compendium
 source_class: reference
 dataset_class: reference
 origin: external
 tier: evaluate-next
 provided_capabilities:
-- assay: mutational-signature
-  modality: experimental-mutagenesis
+- data_product: data-product:mutational-signature
+  qualifiers: {}
 license: CC-BY-4.0
 update_cadence: static
 ontology_terms: []

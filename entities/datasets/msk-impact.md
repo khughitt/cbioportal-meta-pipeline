@@ -2,14 +2,14 @@
 kind: dataset
 title: MSK-IMPACT clinical sequencing cohort
 status: active
-created: '2026-05-30'
-updated: '2026-06-27'
+created: "2026-05-30"
+updated: "2026-06-27"
 id: dataset:msk-impact
 source_class: observational
 dataset_class: deposit
 provided_capabilities:
-- assay: somatic-variant-calling
-  modality: targeted-panel
+- data_product: data-product:somatic-variant-targeted-panel
+  qualifiers: {}
 local_path: /data/raw/cbioportal/msk_impact_2017
 source_refs:
 - paper:Bandlamudi2026

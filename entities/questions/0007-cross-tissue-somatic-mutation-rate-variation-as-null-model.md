@@ -1,17 +1,16 @@
 ---
 kind: question
-title: Can the Li 2021 body-map tissue-specific normal mutation rates serve as a null
-  model for per-tissue background in our pipeline outputs?
+title: Can the Li 2021 body-map tissue-specific normal mutation rates serve as a null model for per-tissue background in our pipeline outputs?
 status: active
-created: '2026-04-18'
-updated: '2026-06-28'
+created: "2026-04-18"
+updated: "2026-06-28"
 id: question:0007-cross-tissue-somatic-mutation-rate-variation-as-null-model
 ontology_terms: []
 datasets:
 - EGA:EGAD00001007859
 required_capabilities:
-- assay: somatic-variant-calling
-  modality: normal-tissue-wgs
+- data_product: data-product:somatic-variant-wgs
+  qualifiers: {}
 source_refs:
 - paper:Li2021
 related:

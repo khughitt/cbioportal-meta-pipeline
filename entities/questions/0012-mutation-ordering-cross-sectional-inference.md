@@ -1,10 +1,9 @@
 ---
 kind: question
-title: "Can mutation ordering (A\u2192B) be robustly inferred from cross-sectional\
-  \ cBioPortal data?"
+title: Can mutation ordering (A→B) be robustly inferred from cross-sectional cBioPortal data?
 status: active
-created: '2026-04-24'
-updated: '2026-06-28'
+created: "2026-04-24"
+updated: "2026-06-28"
 id: question:0012-mutation-ordering-cross-sectional-inference
 ontology_terms: []
 datasets:
@@ -13,9 +12,10 @@ datasets:
 - Sanchez-Vega 2018 10-pathway annotations
 - PCAWG Gerstung 2020 pan-cancer chronology (external benchmark)
 required_capabilities:
-- assay: somatic-variant-calling
-- assay: mutation-frequency
-- assay: pathway-driver-annotation
+- data_product: data-product:somatic-variant
+  qualifiers: {}
+- data_product: data-product:mutation-frequency
+  qualifiers: {}
 source_refs:
 - paper:Schill2024
 - paper:Vocht2026

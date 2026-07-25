@@ -2,14 +2,12 @@
 kind: dataset
 title: PanglaoDB cell-type marker database
 status: candidate
-created: '2026-06-07'
-updated: '2026-06-27'
+created: "2026-06-07"
+updated: "2026-06-27"
 id: dataset:panglaodb
 source_class: reference
 dataset_class: reference
-provided_capabilities:
-- assay: cell-type-markers
-  modality: curated-marker-database
+provided_capabilities: []
 access:
   level: public
   verified: true

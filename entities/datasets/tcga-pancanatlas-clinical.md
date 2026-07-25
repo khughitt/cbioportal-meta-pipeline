@@ -2,18 +2,14 @@
 kind: dataset
 title: TCGA PanCanAtlas clinical-with-followup (smoking / pack-years)
 status: active
-created: '2026-05-31'
-updated: '2026-05-31'
+created: "2026-05-31"
+updated: "2026-05-31"
 id: dataset:tcga-pancanatlas-clinical
 source_class: observational
 dataset_class: deposit
 origin: external
 tier: use-now
-provided_capabilities:
-- assay: clinical-covariates
-  modality: patient-followup
-- assay: exposure-covariates
-  modality: smoking-history
+provided_capabilities: []
 license: custom
 update_cadence: static
 ontology_terms: []

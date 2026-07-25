@@ -2,15 +2,15 @@
 kind: dataset
 title: Normal-tissue 96-context SBS spectra and burden
 status: active
-created: '2026-04-19'
-updated: '2026-06-27'
+created: "2026-04-19"
+updated: "2026-06-27"
 id: dataset:normal-tissue-spectra
 source_class: derived
 dataset_class: deposit
 derived_kind: aggregate
 provided_capabilities:
-- assay: mutational-signature
-  modality: normal-tissue-derived-sbs96
+- data_product: data-product:mutational-signature
+  qualifiers: {}
 local_path: data/normal_tissue_spectra.tsv
 source_refs:
 - paper:Li2021

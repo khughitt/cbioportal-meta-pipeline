@@ -6,8 +6,8 @@ created: "2026-05-31"
 updated: "2026-05-31"
 id: hypothesis:0009-treatment-induced-signature-frequency-contamination
 required_capabilities:
-- assay: mutational-signature
-- assay: clinical-covariates
+- data_product: data-product:mutational-signature
+  qualifiers: {}
 ontology_terms:
 - mutational signatures
 - somatic mutation

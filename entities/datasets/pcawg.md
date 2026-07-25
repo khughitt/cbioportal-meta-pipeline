@@ -2,19 +2,19 @@
 kind: dataset
 title: ICGC/TCGA PCAWG
 status: active
-created: '2026-05-30'
-updated: '2026-06-27'
+created: "2026-05-30"
+updated: "2026-06-27"
 id: dataset:pcawg
 source_class: observational
 dataset_class: deposit
 tier: evaluate-next
 provided_capabilities:
-- assay: somatic-variant-calling
-  modality: whole-genome
-- assay: mutational-signature
-  modality: whole-genome
-- assay: indel-signature
-  modality: whole-genome
+- data_product: data-product:somatic-variant-wgs
+  qualifiers: {}
+- data_product: data-product:mutational-signature
+  qualifiers: {}
+- data_product: data-product:indel-signature
+  qualifiers: {}
 local_path: /data/raw/cbioportal/pancan_pcawg_2020
 source_refs:
 - paper:PCAWG2020

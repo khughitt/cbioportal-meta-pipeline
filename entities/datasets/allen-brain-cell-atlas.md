@@ -2,14 +2,14 @@
 kind: dataset
 title: Allen Brain Cell Atlas
 status: candidate
-created: '2026-06-07'
-updated: '2026-06-27'
+created: "2026-06-07"
+updated: "2026-06-27"
 id: dataset:allen-brain-cell-atlas
 source_class: observational
 dataset_class: reference
 provided_capabilities:
-- assay: gene-expression
-  modality: single-cell-rna
+- data_product: data-product:gene-expression-single-cell
+  qualifiers: {}
 access:
   level: public
   verified: true

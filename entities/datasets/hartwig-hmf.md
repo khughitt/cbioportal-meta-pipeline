@@ -2,20 +2,18 @@
 kind: dataset
 title: Hartwig Medical Foundation (HMF) metastatic pan-cancer WGS
 status: candidate
-created: '2026-05-31'
-updated: '2026-06-27'
+created: "2026-05-31"
+updated: "2026-06-27"
 id: dataset:hartwig-hmf
 source_class: observational
 dataset_class: deposit
 origin: external
 tier: evaluate-next
 provided_capabilities:
-- assay: somatic-variant-calling
-  modality: whole-genome
-- assay: mutational-signature
-  modality: whole-genome
-- assay: clinical-covariates
-  modality: treatment-history
+- data_product: data-product:somatic-variant-wgs
+  qualifiers: {}
+- data_product: data-product:mutational-signature
+  qualifiers: {}
 license: custom
 update_cadence: versioned-releases
 ontology_terms: []
@@ -30,8 +28,7 @@ access:
   last_reviewed: '2026-05-31'
   verified_by: ''
   source_url: https://www.hartwigmedicalfoundation.nl/en/data/data-access-request/
-  credentials_required: Data Access Request + Data Use Agreement (academic/commercial
-    tiers); not downloadable without approval
+  credentials_required: Data Access Request + Data Use Agreement (academic/commercial tiers); not downloadable without approval
   exception:
     mode: ''
     decision_date: ''

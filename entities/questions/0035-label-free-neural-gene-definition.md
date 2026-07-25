@@ -1,11 +1,9 @@
 ---
 kind: question
-title: Can 'neural genes' be defined purely from data (tissue/developmental expression
-  enrichment) rather than human/AI labels, and is that data-driven set enriched among
-  top-mutated genes beyond gene length?
+title: Can 'neural genes' be defined purely from data (tissue/developmental expression enrichment) rather than human/AI labels, and is that data-driven set enriched among top-mutated genes beyond gene length?
 status: active
-created: '2026-06-06'
-updated: '2026-06-28'
+created: "2026-06-06"
+updated: "2026-06-28"
 id: question:0035-label-free-neural-gene-definition
 ontology_terms:
 - tissue specificity
@@ -15,9 +13,10 @@ ontology_terms:
 - label-free
 datasets: []
 required_capabilities:
-- assay: gene-expression
-- assay: cell-type-markers
-- assay: protein-expression
+- data_product: data-product:gene-expression
+  qualifiers: {}
+- data_product: data-product:proteomics
+  qualifiers: {}
 source_refs:
 - paper:Hwang2025a
 - paper:Keough2022

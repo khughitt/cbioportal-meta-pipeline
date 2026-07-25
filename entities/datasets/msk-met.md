@@ -2,16 +2,14 @@
 kind: dataset
 title: MSK-MET
 status: active
-created: '2026-05-30'
-updated: '2026-06-27'
+created: "2026-05-30"
+updated: "2026-06-27"
 id: dataset:msk-met
 source_class: observational
 dataset_class: deposit
 provided_capabilities:
-- assay: somatic-variant-calling
-  modality: targeted-panel
-- assay: clinical-covariates
-  modality: metastasis-annotation
+- data_product: data-product:somatic-variant-targeted-panel
+  qualifiers: {}
 local_path: /data/raw/cbioportal/msk_met_2021
 source_refs:
 - paper:Nguyen2022

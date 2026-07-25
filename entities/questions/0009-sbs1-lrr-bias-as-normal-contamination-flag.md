@@ -1,10 +1,9 @@
 ---
 kind: question
-title: Can the SBS1 late-replicating-region bias (present in normal tissue, absent
-  in cancer) serve as a practical contamination quality flag for cBioPortal studies?
+title: Can the SBS1 late-replicating-region bias (present in normal tissue, absent in cancer) serve as a practical contamination quality flag for cBioPortal studies?
 status: deferred
-created: '2026-04-18'
-updated: '2026-06-28'
+created: "2026-04-18"
+updated: "2026-06-28"
 id: question:0009-sbs1-lrr-bias-as-normal-contamination-flag
 revisit_condition: WGS inputs ingested
 ontology_terms:
@@ -17,8 +16,8 @@ datasets:
 - PCAWG
 - SomaMutDB
 required_capabilities:
-- assay: replication-timing
-  modality: genome-bin-annotation
+- data_product: data-product:replication-timing
+  qualifiers: {}
 source_refs:
 - paper:Yaacov2023
 related:

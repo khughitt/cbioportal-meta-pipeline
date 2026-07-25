@@ -6,8 +6,10 @@ created: "2026-06-06"
 updated: "2026-06-06"
 id: hypothesis:0012-neural-gene-enrichment-length-histology-artifact
 required_capabilities:
-- assay: gene-expression
-- assay: somatic-variant-calling
+- data_product: data-product:gene-expression
+  qualifiers: {}
+- data_product: data-product:somatic-variant
+  qualifiers: {}
 source_refs:
 - paper:Mancusi2023
 - paper:Hanahan2023

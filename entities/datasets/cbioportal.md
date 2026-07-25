@@ -2,16 +2,14 @@
 kind: dataset
 title: cBioPortal for Cancer Genomics
 status: active
-created: '2026-05-30'
-updated: '2026-06-27'
+created: "2026-05-30"
+updated: "2026-06-27"
 id: dataset:cbioportal
 source_class: reference
 dataset_class: deposit
 provided_capabilities:
-- assay: somatic-variant-calling
-  modality: multi-study-cancer-genomics
-- assay: clinical-covariates
-  modality: study-clinical
+- data_product: data-product:somatic-variant
+  qualifiers: {}
 local_path: /data/raw/cbioportal
 source_refs:
 - paper:Cerami2012

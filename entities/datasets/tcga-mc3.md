@@ -2,20 +2,20 @@
 kind: dataset
 title: TCGA MC3 unified MAF
 status: active
-created: '2026-05-30'
-updated: '2026-05-31'
+created: "2026-05-30"
+updated: "2026-05-31"
 id: dataset:tcga-mc3
 source_class: derived
 dataset_class: deposit
 derived_kind: aggregate
 tier: use-now
 provided_capabilities:
-- assay: somatic-variant-calling
-  modality: whole-exome
-- assay: mutational-signature
-  modality: whole-exome
-- assay: indel-signature
-  modality: whole-exome
+- data_product: data-product:somatic-variant-wes
+  qualifiers: {}
+- data_product: data-product:mutational-signature
+  qualifiers: {}
+- data_product: data-product:indel-signature
+  qualifiers: {}
 license: custom
 update_cadence: static
 accessions:

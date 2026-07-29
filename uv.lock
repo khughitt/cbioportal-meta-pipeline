@@ -1702,7 +1702,7 @@ wheels = [
 [[package]]
 name = "science"
 version = "0.5.2"
-source = { git = "https://github.com/khughitt/science.git?subdirectory=science#a87624ea0219577e0ff7e736c72b3cf8ce9530dc" }
+source = { git = "https://github.com/khughitt/science.git?subdirectory=science#ed6b50dcf9b90d64767dd3fafca1fa8f53ddca15" }
 dependencies = [
     { name = "click" },
     { name = "ga4gh-vrs" },
@@ -1724,7 +1724,7 @@ dependencies = [
 [[package]]
 name = "science-model"
 version = "0.1.0"
-source = { git = "https://github.com/khughitt/science.git?subdirectory=science%2Fmodel#a87624ea0219577e0ff7e736c72b3cf8ce9530dc" }
+source = { git = "https://github.com/khughitt/science.git?subdirectory=science%2Fmodel#ed6b50dcf9b90d64767dd3fafca1fa8f53ddca15" }
 dependencies = [
     { name = "jsonschema" },
     { name = "pydantic" },

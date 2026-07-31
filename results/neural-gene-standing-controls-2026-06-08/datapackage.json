@@ -1,0 +1,91 @@
+{
+  "name": "neural-gene-standing-controls-2026-06-08",
+  "title": "t221(b) standing-controls panel for the neural-gene program",
+  "description": "Four standing controls on the `full` WES study set: (1) per-study intronic-fraction covariate + stratified residual, (2) CFS positive-control gene panel, (3) germline-leak (dbSNP) control, (4) data-driven vs hand-labelled neural set. Each recomputes the t217 genomic-span-matched residual. random_seed=0.",
+  "created": "2026-06-08",
+  "sources": [
+    {
+      "name": "gene_cancer_study",
+      "config": "full",
+      "path": "/data/packages/cbioportal/full/summary/mut/table/gene_cancer_study.feather"
+    },
+    {
+      "name": "mut_filtered (per WES study)",
+      "n_studies": 91
+    },
+    {
+      "name": "gene_replication_timing",
+      "path": "data/gene_replication_timing.feather"
+    },
+    {
+      "name": "gene_neural_enrichment (t216)",
+      "path": "results/neural-gene-label-free-2026-06-08/gene_neural_enrichment.feather"
+    }
+  ],
+  "tasks": [
+    "t221"
+  ],
+  "related": [
+    "hypothesis:h12-neural-gene-enrichment-length-histology-artifact",
+    "question:q032-neural-gene-length-null",
+    "interpretation:2026-06-08-t217-genomic-span-cfs-null",
+    "interpretation:2026-06-08-t218-cns-exclusion-wes-panel",
+    "interpretation:2026-06-08-t221a-sample-level-hypermutator-exclusion"
+  ],
+  "resources": [
+    {
+      "name": "intronic_fraction_stratified_residual",
+      "path": "intronic_fraction_stratified_residual.tsv"
+    },
+    {
+      "name": "per_study_intronic_fraction",
+      "path": "per_study_intronic_fraction.tsv"
+    },
+    {
+      "name": "cfs_positive_control",
+      "path": "cfs_positive_control.tsv"
+    },
+    {
+      "name": "germline_dbsnp_control",
+      "path": "germline_dbsnp_control.tsv"
+    },
+    {
+      "name": "data_driven_set_sensitivity",
+      "path": "data_driven_set_sensitivity.tsv"
+    },
+    {
+      "name": "data_driven_neural_set",
+      "path": "data_driven_neural_set.tsv"
+    }
+  ],
+  "parameters": {
+    "random_seed": 0,
+    "n_null_draws": 5000,
+    "wes_gene_threshold": 5000,
+    "all_region_intronic_threshold": 0.5,
+    "data_driven_k": 25,
+    "candidates": [
+      "NKAIN2",
+      "KCNIP4",
+      "FAM19A2",
+      "RIT2",
+      "CALN1",
+      "RBFOX1",
+      "LSAMP",
+      "SGCZ",
+      "OPCML"
+    ]
+  },
+  "runtime": {
+    "n_wes_studies": 91,
+    "n_studies_with_dbsnp": 90,
+    "candidate_dbsnp_frac": 0.1271,
+    "n_all_region_studies": 6,
+    "n_classifiable_intronic": 90,
+    "n_unclassifiable_no_consequence": 1
+  },
+  "caveats": {
+    "matched_normal_split": "config-full.yml carries no matched_normal_studies list, and substrate proxies (sample_id_norm barcode presence) conflate matched-normal with assay type. Section 3 therefore tests germline leak directly via dbSNP membership rather than a study-level matched/unmatched split. Follow-up: populate matched_normal_studies for the full config to enable a true matched-normal stratification.",
+    "dbsnp_excluded_is_conservative": "Excluding all 'rs...' rows over-excludes rare somatic-but-catalogued variants, so it is an upper bound on germline contamination, not a germline-only filter."
+  }
+}

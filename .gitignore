@@ -12,7 +12,10 @@ papers/pdfs/
 /science
 
 # Pipeline outputs / caches (not committed)
-results/
+results/**
+!results/**/
+!results/**/datapackage.json
+!results/.gitkeep
 # models/ holds both regenerable model dumps (ignored) and hand-authored causal-DAG
 # sources (tracked, Science causal-modeling convention). Exclude contents, then
 # re-include the DAGs + docs. Must be `models/*` not `models/`: git won't descend into

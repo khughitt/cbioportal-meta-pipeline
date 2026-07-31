@@ -1,0 +1,29 @@
+{
+  "name": "neural-gene-matched-normal-2026-06-08",
+  "title": "t221(c) evidence-derived matched_normal_studies classification for config-full",
+  "description": "Classifies each full-config study as patient-matched-normal via per-variant normal-barcode patient-stem match (stem_match >= 0.50). High-precision lower bound; matched-by-design cohorts that do not record a per-variant normal barcode (MSK-IMPACT family, tcga_mc3) are reported separately, not auto-added.",
+  "created": "2026-06-08",
+  "tasks": [
+    "t221"
+  ],
+  "related": [
+    "hypothesis:h12-neural-gene-enrichment-length-histology-artifact",
+    "question:q016-panel-induced-ascertainment",
+    "interpretation:2026-06-08-t221b-standing-controls-panel"
+  ],
+  "resources": [
+    {
+      "name": "matched_normal_audit",
+      "path": "matched_normal_audit.tsv"
+    },
+    {
+      "name": "proposed_matched_normal_studies",
+      "path": "proposed_matched_normal_studies.json"
+    }
+  ],
+  "parameters": {
+    "stem_threshold": 0.5,
+    "min_lcp": 4,
+    "lcp_frac": 0.4
+  }
+}

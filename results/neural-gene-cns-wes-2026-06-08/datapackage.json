@@ -1,0 +1,77 @@
+{
+  "name": "neural-gene-cns-wes-2026-06-08",
+  "title": "t218 CNS-exclusion + WES-restriction + panel-membership for neural enrichment",
+  "description": "q033 / h12. Recomputes the candidate mutation enrichment and the t217 genomic-span-matched residual p under baseline / CNS-excluded / WES-only / WES+CNS-excluded / panel-only, to separate panel ascertainment (q016) from CNS histology as the source of the t217 residual. Plus per-candidate CNS contribution, leave-one-study-out, panel membership.",
+  "created": "2026-06-08",
+  "sources": [
+    {
+      "name": "gene_cancer_study",
+      "configs": [
+        "full",
+        "pan-cancer"
+      ]
+    },
+    {
+      "name": "gene_replication_timing",
+      "path": "data/gene_replication_timing.feather"
+    },
+    {
+      "name": "genie_panel_coverage",
+      "path": "/data/packages/cbioportal/pan-cancer/metadata/genie_panel_coverage.feather"
+    }
+  ],
+  "tasks": [
+    "t218"
+  ],
+  "related": [
+    "question:q033-neural-enrichment-cns-exclusion",
+    "question:q016-panel-induced-ascertainment",
+    "hypothesis:h12-neural-gene-enrichment-length-histology-artifact",
+    "interpretation:2026-06-08-t217-genomic-span-cfs-null"
+  ],
+  "resources": [
+    {
+      "name": "enrichment_by_restriction",
+      "path": "enrichment_by_restriction.tsv"
+    },
+    {
+      "name": "candidate_cns_contribution",
+      "path": "candidate_cns_contribution.tsv"
+    },
+    {
+      "name": "leave_one_study_out_wes",
+      "path": "leave_one_study_out_wes.tsv"
+    },
+    {
+      "name": "assay_classification",
+      "path": "assay_classification.tsv"
+    },
+    {
+      "name": "candidate_panel_membership",
+      "path": "candidate_panel_membership.tsv"
+    },
+    {
+      "name": "pog570_driver_forensics",
+      "path": "pog570_*.{tsv,json}",
+      "note": "variant-class + hypermutator forensic on the sole LOSO driver; written by code/notebooks/t218b_pog570_driver_forensics.py"
+    }
+  ],
+  "parameters": {
+    "random_seed": 0,
+    "n_null_draws": 5000,
+    "wes_gene_threshold": 5000,
+    "candidates": [
+      "NKAIN2",
+      "KCNIP4",
+      "FAM19A2",
+      "RIT2",
+      "CALN1",
+      "RBFOX1",
+      "LSAMP",
+      "SGCZ",
+      "OPCML"
+    ],
+    "assay_rule": "study is WES/WGS if it reports mutations across >= wes_gene_threshold distinct genes, else panel/limited (panel_callable_mb is defaulted to 30 Mb here and cannot classify).",
+    "cns_definition": "regex on cancer_type for CNS/glioma histologies, EXCLUDING neuroendocrine (left to t219/q034)."
+  }
+}

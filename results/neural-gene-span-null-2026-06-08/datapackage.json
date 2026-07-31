@@ -1,0 +1,93 @@
+{
+  "name": "neural-gene-span-null-2026-06-08",
+  "title": "t217 genomic-span / CFS null test for neural-gene mutation enrichment",
+  "description": "q032 / h12. Two-armed normalization of the candidate-set mutation enrichment: per-CDS-kb (coding target, length null) vs per-genomic-kb (locus size / CFS null), plus a span-matched empirical null, a candidate-span Wilcoxon, and a dndscv positive-selection check. Shows the confound is genomic span / common-fragile-site, NOT amino-acid/CDS length.",
+  "created": "2026-06-08",
+  "sources": [
+    {
+      "name": "gene_cancer_study",
+      "configs": [
+        "full",
+        "pan-cancer"
+      ],
+      "path": "{config}/.../gene_cancer_study.feather"
+    },
+    {
+      "name": "gene_replication_timing",
+      "path": "data/gene_replication_timing.feather"
+    },
+    {
+      "name": "uniprot_protein_lengths",
+      "path": "data/uniprotkb_hsapiens_protein_lengths.tsv.gz"
+    },
+    {
+      "name": "dndscv_pooled",
+      "path": "/data/packages/cbioportal/pan-cancer/summary/mut/table/dndscv_pooled.feather"
+    }
+  ],
+  "tasks": [
+    "t217"
+  ],
+  "related": [
+    "question:q032-neural-gene-length-null",
+    "hypothesis:h12-neural-gene-enrichment-length-histology-artifact",
+    "interpretation:2026-06-08-t215-neural-gene-reproduction-gate"
+  ],
+  "resources": [
+    {
+      "name": "gene_span_metrics",
+      "path": "gene_span_metrics.feather"
+    },
+    {
+      "name": "enrichment_by_normalization",
+      "path": "enrichment_by_normalization.tsv"
+    },
+    {
+      "name": "span_matched_null",
+      "path": "span_matched_null.tsv"
+    },
+    {
+      "name": "candidate_span_length_contrast",
+      "path": "candidate_span_length_contrast.tsv"
+    },
+    {
+      "name": "span_wilcoxon",
+      "path": "span_wilcoxon.tsv"
+    }
+  ],
+  "parameters": {
+    "random_seed": 0,
+    "n_null_draws": 5000,
+    "topn_occupancy": 100,
+    "candidates": [
+      "NKAIN2",
+      "KCNIP4",
+      "FAM19A2",
+      "RIT2",
+      "CALN1",
+      "RBFOX1",
+      "LSAMP",
+      "SGCZ",
+      "OPCML"
+    ],
+    "effectors": [
+      "NLGN3",
+      "ADRB2",
+      "NTRK1",
+      "NTRK2",
+      "CHRM3",
+      "GRIN2A",
+      "GRIN2B",
+      "NGF",
+      "BDNF"
+    ],
+    "inclusive_study_counts": {
+      "full": 196,
+      "pan-cancer": 13
+    },
+    "cds_kb_definition": "(protein_aa + 1) * 3 / 1000 (UniProt length proxy, incl. stop codon)",
+    "genomic_span_definition": "end - start from data/gene_replication_timing.feather (protein_coding)",
+    "cfs_operationalization": "rt_constitutive_label == 'CL' (constitutively late-replicating) + curated canonical-CFS gene list for cross-validation",
+    "note": "raw counts are not panel-callable-territory normalized; per-genomic-kb uses full gene-body span (couples to q016 panel ascertainment)."
+  }
+}

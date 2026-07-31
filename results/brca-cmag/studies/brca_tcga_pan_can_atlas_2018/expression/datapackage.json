@@ -1,0 +1,41 @@
+{
+  "name": "brca_tcga_pan_can_atlas_2018-expression",
+  "title": "brca_tcga_pan_can_atlas_2018 \u2014 mRNA expression + clinical (cBioPortal export)",
+  "profile": "tabular-data-package",
+  "source_study": "brca_tcga_pan_can_atlas_2018",
+  "source_mrna_file": "data_mrna_seq_v2_rsem.txt",
+  "resources": [
+    {
+      "name": "expression",
+      "path": "expression.parquet",
+      "format": "parquet",
+      "bytes": 67898378,
+      "hash": "sha256:a774628d2370be64b3dd34fd66bb69e73af7c43f522d6e04f9f93c585e2f747f",
+      "shape": {
+        "genes": 20511,
+        "samples": 1082
+      },
+      "missing_cells": 0,
+      "genes_with_missing": 0
+    },
+    {
+      "name": "clinical",
+      "path": "clinical.parquet",
+      "format": "parquet",
+      "bytes": 167920,
+      "hash": "sha256:f381008ff552d324eaf2f7a8d5ad7821d1d0aea4f4f354023523f794b72b264b",
+      "shape": {
+        "rows": 1084,
+        "fields": 57
+      }
+    },
+    {
+      "name": "qa",
+      "path": "qa_report.md",
+      "format": "md",
+      "bytes": 612,
+      "hash": "sha256:983cf18a5c4cae0f7a8eb59a5a0eb323a8733be5e1afa969b2891f76b7505b11",
+      "role": "qa"
+    }
+  ]
+}

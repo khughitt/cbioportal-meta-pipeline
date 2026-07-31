@@ -1,0 +1,81 @@
+{
+  "name": "neural-gene-reproduction-2026-06-08",
+  "title": "t215 neural-gene mutation-enrichment reproduction gate",
+  "description": "Reproduction gate for hypothesis:h12 / question:q032. Characterizes where the 9 candidate neural genes rank in pipeline mutation-frequency views across configs/metrics, with set-level enrichment statistics. Reproduces from gene_cancer_study(_ratio).feather.",
+  "created": "2026-06-08",
+  "sources": [
+    {
+      "config": "full",
+      "path": "/data/packages/cbioportal/full/summary/mut/table/gene_cancer_study{,_ratio}.feather"
+    },
+    {
+      "config": "pan-cancer",
+      "path": "/data/packages/cbioportal/pan-cancer/summary/mut/table/gene_cancer_study{,_ratio}.feather"
+    },
+    {
+      "config": "10k",
+      "path": "/data/packages/cbioportal/10k/summary/mut/table/gene_cancer_study{,_ratio}.feather"
+    }
+  ],
+  "tasks": [
+    "t215"
+  ],
+  "related": [
+    "hypothesis:h12-neural-gene-enrichment-length-histology-artifact",
+    "question:q032-neural-gene-length-null"
+  ],
+  "resources": [
+    {
+      "name": "candidate_ranks",
+      "path": "candidate_ranks.feather"
+    },
+    {
+      "name": "enrichment_stats",
+      "path": "enrichment_stats.tsv"
+    },
+    {
+      "name": "top_genes_by_metric",
+      "path": "top_genes_by_metric.feather"
+    },
+    {
+      "name": "candidate_contributors",
+      "path": "candidate_contributors.tsv"
+    },
+    {
+      "name": "candidate_lengths",
+      "path": "candidate_lengths.tsv"
+    }
+  ],
+  "parameters": {
+    "min_strata": 20,
+    "topn": 50,
+    "candidates": [
+      "NKAIN2",
+      "KCNIP4",
+      "FAM19A2",
+      "RIT2",
+      "CALN1",
+      "RBFOX1",
+      "LSAMP",
+      "SGCZ",
+      "OPCML"
+    ],
+    "effectors": [
+      "NLGN3",
+      "ADRB2",
+      "NTRK1",
+      "NTRK2",
+      "CHRM3",
+      "GRIN2A",
+      "GRIN2B",
+      "NGF",
+      "BDNF"
+    ],
+    "inclusive_study_counts": {
+      "full": 196,
+      "pan-cancer": 13,
+      "10k": 7
+    },
+    "note": "unannotated gene_cancer_study(_ratio) aggregates used; annotated full/10k feathers are not present under /data/packages (annotation adds overlay columns, not counts)."
+  }
+}

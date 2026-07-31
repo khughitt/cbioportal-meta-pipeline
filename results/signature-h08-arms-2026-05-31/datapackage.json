@@ -1,0 +1,385 @@
+{
+  "name": "signature-h08-arms-2026-05-31",
+  "title": "t197 \u2014 full-MC3 per-sample SBS refit across the 7 h08 positive-control arm strata",
+  "description": "COSMIC v3.4 restricted SigProfilerAssignment per-sample refit on tcga_mc3 (WES, matched-normal, 7-caller consensus) for SKCM/LUAD/LUSC/BLCA/BRCA/CESC/HNSC. t178/t179-hardened. Substrate for the h08 H08a association scan.",
+  "created": "2026-05-31",
+  "tasks": [
+    "t197",
+    "t198",
+    "t199",
+    "t204"
+  ],
+  "related": [
+    "hypothesis:h08",
+    "method:h08-agnostic-association-model",
+    "pre-registration:h08-positive-control",
+    "question:q018",
+    "analysis-plan:h08-positive-control-scan"
+  ],
+  "sources": [
+    {
+      "name": "tcga_mc3",
+      "dataset": "MC3 v0.2.8 PUBLIC PASS MAF (Ellrott 2018)",
+      "build": "GRCh37"
+    }
+  ],
+  "config": "code/config/config-signature-h08-arms.yml",
+  "cosmic_version": "3.4",
+  "arm_strata": {
+    "SKCM": 466,
+    "LUAD": 513,
+    "LUSC": 480,
+    "BLCA": 411,
+    "BRCA": 791,
+    "CESC": 289,
+    "HNSC": 507
+  },
+  "resources": [
+    {
+      "name": "restricted_assignment_per_sample",
+      "path": "studies/tcga_mc3/mut/signatures/restricted_assignment_per_sample.feather",
+      "format": "feather",
+      "bytes": 1777866,
+      "md5": "8f3c31a42c6e4b44fd5c6b4094c44ccc"
+    },
+    {
+      "name": "restricted_assignment_per_sample_signature_audit",
+      "path": "studies/tcga_mc3/mut/signatures/restricted_assignment_per_sample.signature_audit.feather",
+      "format": "feather",
+      "bytes": 11786,
+      "md5": "06bdb70030ac2149545f2d17afafb563"
+    },
+    {
+      "name": "restricted_assignment_per_sample_denovo_decision",
+      "path": "studies/tcga_mc3/mut/signatures/restricted_assignment_per_sample.denovo_decision.feather",
+      "format": "feather",
+      "bytes": 4546,
+      "md5": "337bd992549339375496f8e259181d35"
+    },
+    {
+      "name": "expr_modules_SKCM_nmf_gene_modules",
+      "path": "expression_modules/SKCM/nmf_gene_modules.feather",
+      "bytes": 99042,
+      "md5": "27dc7f0bb839cc65ac23bdf8b2719590"
+    },
+    {
+      "name": "expr_modules_SKCM_nmf_sample_loadings",
+      "path": "expression_modules/SKCM/nmf_sample_loadings.feather",
+      "bytes": 24738,
+      "md5": "e653150b9e7acfe37beeb0fb7cef440f"
+    },
+    {
+      "name": "expr_modules_SKCM_cophenetic_curve",
+      "path": "expression_modules/SKCM/cophenetic_curve.feather",
+      "bytes": 3042,
+      "md5": "ca9b00940de4512379a1b149f3fdf75e"
+    },
+    {
+      "name": "expr_modules_SKCM_module_selection",
+      "path": "expression_modules/SKCM/module_selection.json",
+      "bytes": 672,
+      "md5": "8162a75c21bd1c422c09853fd69dd3c3"
+    },
+    {
+      "name": "expr_modules_LUAD_nmf_gene_modules",
+      "path": "expression_modules/LUAD/nmf_gene_modules.feather",
+      "bytes": 98722,
+      "md5": "ca03988918a6d3fde893e7dce4cc151a"
+    },
+    {
+      "name": "expr_modules_LUAD_nmf_sample_loadings",
+      "path": "expression_modules/LUAD/nmf_sample_loadings.feather",
+      "bytes": 27834,
+      "md5": "042772d9879bdf269a534c0b1bc36bea"
+    },
+    {
+      "name": "expr_modules_LUAD_cophenetic_curve",
+      "path": "expression_modules/LUAD/cophenetic_curve.feather",
+      "bytes": 3042,
+      "md5": "bb7f1653ffcc38b533882170495c4a15"
+    },
+    {
+      "name": "expr_modules_LUAD_module_selection",
+      "path": "expression_modules/LUAD/module_selection.json",
+      "bytes": 673,
+      "md5": "3b0f7e07864b925bbab948470fd85bb8"
+    },
+    {
+      "name": "expr_modules_LUSC_nmf_gene_modules",
+      "path": "expression_modules/LUSC/nmf_gene_modules.feather",
+      "bytes": 98474,
+      "md5": "09f33d5695ad4343f729b0c761db0b3d"
+    },
+    {
+      "name": "expr_modules_LUSC_nmf_sample_loadings",
+      "path": "expression_modules/LUSC/nmf_sample_loadings.feather",
+      "bytes": 25938,
+      "md5": "772a7d7afa892062540e9cec014e889e"
+    },
+    {
+      "name": "expr_modules_LUSC_cophenetic_curve",
+      "path": "expression_modules/LUSC/cophenetic_curve.feather",
+      "bytes": 3042,
+      "md5": "8d74a6431490374811fadd8800a78652"
+    },
+    {
+      "name": "expr_modules_LUSC_module_selection",
+      "path": "expression_modules/LUSC/module_selection.json",
+      "bytes": 673,
+      "md5": "ea33d7f625cb176418facdd691ff02bc"
+    },
+    {
+      "name": "expr_modules_BLCA_nmf_gene_modules",
+      "path": "expression_modules/BLCA/nmf_gene_modules.feather",
+      "bytes": 97538,
+      "md5": "e9e6e306e20c000aaadca62b622ecaa0"
+    },
+    {
+      "name": "expr_modules_BLCA_nmf_sample_loadings",
+      "path": "expression_modules/BLCA/nmf_sample_loadings.feather",
+      "bytes": 23314,
+      "md5": "53a54cc9833cb20204a741b7078f78d8"
+    },
+    {
+      "name": "expr_modules_BLCA_cophenetic_curve",
+      "path": "expression_modules/BLCA/cophenetic_curve.feather",
+      "bytes": 3042,
+      "md5": "9301f03cf3ae95b673b14717bd4e6ffa"
+    },
+    {
+      "name": "expr_modules_BLCA_module_selection",
+      "path": "expression_modules/BLCA/module_selection.json",
+      "bytes": 673,
+      "md5": "98278b91e8557beaf5a981d98dc532ad"
+    },
+    {
+      "name": "expr_modules_BRCA_nmf_gene_modules",
+      "path": "expression_modules/BRCA/nmf_gene_modules.feather",
+      "bytes": 169402,
+      "md5": "6855e31ceb539d9a7500baa782d28135"
+    },
+    {
+      "name": "expr_modules_BRCA_nmf_sample_loadings",
+      "path": "expression_modules/BRCA/nmf_sample_loadings.feather",
+      "bytes": 70050,
+      "md5": "e1e45776c270bd98f3f897dd6881443c"
+    },
+    {
+      "name": "expr_modules_BRCA_cophenetic_curve",
+      "path": "expression_modules/BRCA/cophenetic_curve.feather",
+      "bytes": 3042,
+      "md5": "413d54a14cd67affdba9602172c5f9f1"
+    },
+    {
+      "name": "expr_modules_BRCA_module_selection",
+      "path": "expression_modules/BRCA/module_selection.json",
+      "bytes": 675,
+      "md5": "c17f738915527daf90b78a705636b329"
+    },
+    {
+      "name": "expr_modules_CESC_nmf_gene_modules",
+      "path": "expression_modules/CESC/nmf_gene_modules.feather",
+      "bytes": 98210,
+      "md5": "a1654dea1dda053600bc76f521624089"
+    },
+    {
+      "name": "expr_modules_CESC_nmf_sample_loadings",
+      "path": "expression_modules/CESC/nmf_sample_loadings.feather",
+      "bytes": 17074,
+      "md5": "232f8d06cddc5b873d7530b6e12e78e5"
+    },
+    {
+      "name": "expr_modules_CESC_cophenetic_curve",
+      "path": "expression_modules/CESC/cophenetic_curve.feather",
+      "bytes": 3042,
+      "md5": "171a652fbf9fb34155e4b787b2555c33"
+    },
+    {
+      "name": "expr_modules_CESC_module_selection",
+      "path": "expression_modules/CESC/module_selection.json",
+      "bytes": 673,
+      "md5": "1061be31cb6bc121346e3a078b3ffd3a"
+    },
+    {
+      "name": "expr_modules_HNSC_nmf_gene_modules",
+      "path": "expression_modules/HNSC/nmf_gene_modules.feather",
+      "bytes": 96970,
+      "md5": "eef47c1048564a12d6a9cd3d829957dd"
+    },
+    {
+      "name": "expr_modules_HNSC_nmf_sample_loadings",
+      "path": "expression_modules/HNSC/nmf_sample_loadings.feather",
+      "bytes": 27386,
+      "md5": "e03a7b9cf9dce0a1fc825a52875329ba"
+    },
+    {
+      "name": "expr_modules_HNSC_cophenetic_curve",
+      "path": "expression_modules/HNSC/cophenetic_curve.feather",
+      "bytes": 3042,
+      "md5": "b5dd8230f44585573bda8290bac15bec"
+    },
+    {
+      "name": "expr_modules_HNSC_module_selection",
+      "path": "expression_modules/HNSC/module_selection.json",
+      "bytes": 672,
+      "md5": "ebceb6d0f72a76e437baf242eddbf827"
+    },
+    {
+      "name": "h08_covariates",
+      "path": "association/h08_covariates.feather",
+      "format": "feather",
+      "bytes": 484530,
+      "md5": "9d9f50dcb3e377ae3923621369d73039"
+    },
+    {
+      "name": "h08_covariate_denominator",
+      "path": "association/covariate_denominator.json",
+      "format": "json",
+      "bytes": 9494,
+      "md5": "b10f34510aabca476d10e70ad40e3d84"
+    },
+    {
+      "name": "h08_association_grid",
+      "path": "association/h08_association_grid.feather",
+      "format": "feather",
+      "bytes": 36098,
+      "md5": "c4962b98aef4d8cd28fb55ec26b6a079"
+    },
+    {
+      "name": "h08_association_grid_meta",
+      "path": "association/h08_association_grid.meta.json",
+      "format": "json",
+      "bytes": 2373,
+      "md5": "0e5dbf0d80ba957ac9cda9186faadfc0"
+    },
+    {
+      "name": "h08_sensitivity",
+      "path": "association/h08_sensitivity.feather",
+      "format": "feather",
+      "bytes": 6914,
+      "md5": "93e1e08002a4e86a90f1909b53f37837"
+    },
+    {
+      "name": "h08_permutation_null",
+      "path": "association/h08_permutation_null.feather",
+      "format": "feather",
+      "bytes": 5746,
+      "md5": "633a7346fe000e82b5ada25d0df5fb79"
+    },
+    {
+      "name": "h08_lung_pooling",
+      "path": "association/h08_lung_pooling.feather",
+      "format": "feather",
+      "bytes": 4114,
+      "md5": "cc16694dde33cf99e70edc810d257f52"
+    },
+    {
+      "name": "h08_sensitivity_meta",
+      "path": "association/h08_sensitivity.meta.json",
+      "format": "json",
+      "bytes": 3531,
+      "md5": "86b061ae680ee0095198cb4df97dd350"
+    },
+    {
+      "name": "h08_smoking_repair_grid",
+      "path": "association/repairs/smoking_arm/h08_smoking_repair_grid.feather",
+      "format": "feather",
+      "bytes": 6690,
+      "md5": "1fd19dd01d8cfd66eb4692df1d690f60"
+    },
+    {
+      "name": "h08_smoking_repair_sensitivity",
+      "path": "association/repairs/smoking_arm/h08_smoking_repair_sensitivity.feather",
+      "format": "feather",
+      "bytes": 12290,
+      "md5": "258d4e683a30119d615991ae6e653364"
+    },
+    {
+      "name": "h08_smoking_repair_meta",
+      "path": "association/repairs/smoking_arm/h08_smoking_repair.meta.json",
+      "format": "json",
+      "bytes": 1281,
+      "md5": "9b8f1bec32910aca6e416c3db2bcbb3e"
+    }
+  ],
+  "expression_modules": {
+    "unit": "log2(RSEM_V2 + 1)",
+    "substrate": "per-study cBioPortal PanCanAtlas RSEM",
+    "amendment": "pre-registration:h08-positive-control amendment-001",
+    "selected_k": {
+      "SKCM": 5,
+      "LUAD": 5,
+      "LUSC": 5,
+      "BLCA": 5,
+      "BRCA": 10,
+      "CESC": 5,
+      "HNSC": 5
+    },
+    "effective_n": {
+      "SKCM": 437,
+      "LUAD": 504,
+      "LUSC": 461,
+      "BLCA": 405,
+      "BRCA": 783,
+      "CESC": 278,
+      "HNSC": 494
+    }
+  },
+  "association": {
+    "task": "t199",
+    "scripts": [
+      "code/scripts/build_h08_covariates.py",
+      "code/scripts/run_h08_association_scan.py",
+      "code/scripts/run_h08_sensitivity.py"
+    ],
+    "frozen_denominator_sha256": "98bf159feca376e8ecfd150cd8bc0928990644b27db377df106ec86cdfaaac32",
+    "primary_read": "CLR coordinate, within-tissue OLS, ranked by |signed standardized coef|; BH-FDR family size 638; frozen before ranks",
+    "verdict": "H08a [?] inconclusive (1/3 registered arms pass)",
+    "arms": {
+      "A_uv_sun_exposure_ordinal__SBS7__SKCM": {
+        "n": 370,
+        "rank": "10/14",
+        "sign": "-",
+        "q_bh": 0.596,
+        "pass": false
+      },
+      "B_pack_years__SBS4__LUAD+LUSC": {
+        "n": 703,
+        "rank": "6/8",
+        "sign": "+",
+        "q_bh": 0.375,
+        "pass": false
+      },
+      "C_apobec3ab_joint__SBS2_13__APOBEC-six": {
+        "n": 1883,
+        "rank": "1/10",
+        "sign": "+",
+        "q_bh": 4.4e-12,
+        "pass": true,
+        "permutation_p": 0.001,
+        "leakage_guard_rank_excl_apobec3_mutated": 1
+      }
+    },
+    "diagnostics": {
+      "absolute_burden_is_primary_gate": false,
+      "absolute_burden_no_recovery_of_A_or_B": true,
+      "lung_per_histology_no_recovery": true
+    },
+    "interpretation": "doc/interpretations/2026-05-31-t199-h08-association-verdict.md"
+  },
+  "association_repairs": {
+    "smoking_arm": {
+      "task": "t204",
+      "plan": "plan:2026-06-01-h08-smoking-repair-rerun",
+      "pre_registration": "pre-registration:h08-smoking-repair",
+      "artifacts": [
+        "association/repairs/smoking_arm/h08_smoking_repair_grid.feather",
+        "association/repairs/smoking_arm/h08_smoking_repair_sensitivity.feather",
+        "association/repairs/smoking_arm/h08_smoking_repair.meta.json"
+      ],
+      "verdict": "[?] repaired Arm-B inconclusive: ever_smoker positive/q<0.05/n>=700 but rank 5/8",
+      "locked_h08a_unchanged": true,
+      "interpretation": "doc/interpretations/2026-06-01-h08-smoking-repair.md"
+    }
+  }
+}

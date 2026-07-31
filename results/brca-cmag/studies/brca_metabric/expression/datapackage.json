@@ -1,0 +1,41 @@
+{
+  "name": "brca_metabric-expression",
+  "title": "brca_metabric \u2014 mRNA expression + clinical (cBioPortal export)",
+  "profile": "tabular-data-package",
+  "source_study": "brca_metabric",
+  "source_mrna_file": "data_mrna_illumina_microarray.txt",
+  "resources": [
+    {
+      "name": "expression",
+      "path": "expression.parquet",
+      "format": "parquet",
+      "bytes": 238314000,
+      "hash": "sha256:b4675ded8ef6d877cdba578194572708722ae6cf241f763bc89dd87b8a54b6a5",
+      "shape": {
+        "genes": 20385,
+        "samples": 1980
+      },
+      "missing_cells": 16,
+      "genes_with_missing": 11
+    },
+    {
+      "name": "clinical",
+      "path": "clinical.parquet",
+      "format": "parquet",
+      "bytes": 118526,
+      "hash": "sha256:6fe5d02db7b74195cd6c4c044bbc455b7536d3ff5b342b5194c8129c550acbfe",
+      "shape": {
+        "rows": 2509,
+        "fields": 37
+      }
+    },
+    {
+      "name": "qa",
+      "path": "qa_report.md",
+      "format": "md",
+      "bytes": 618,
+      "hash": "sha256:275dedc8559040296f130b6f3864648e07672a4887afb07cc35a19b434d9b194",
+      "role": "qa"
+    }
+  ]
+}

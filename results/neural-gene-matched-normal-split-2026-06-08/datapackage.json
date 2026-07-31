@@ -1,0 +1,76 @@
+{
+  "name": "neural-gene-matched-normal-split-2026-06-08",
+  "title": "t221(d) true study-level matched- vs unmatched-normal split on the WES candidate residual",
+  "description": "Splits the `full` WES study set into patient-matched-normal vs unmatched (tumor-only/pooled) arms using config-full's matched_normal_studies (t221c) and recomputes the t217 genomic-span-matched candidate residual in each, plus a region x normal-status 2x2 to disentangle matched-status from call-set region scope. Closes the t221b-F3 dbSNP-proxy caveat. random_seed=0.",
+  "created": "2026-06-08",
+  "sources": [
+    {
+      "name": "gene_cancer_study",
+      "config": "full",
+      "path": "/data/packages/cbioportal/full/summary/mut/table/gene_cancer_study.feather"
+    },
+    {
+      "name": "gene_replication_timing",
+      "path": "data/gene_replication_timing.feather"
+    },
+    {
+      "name": "per_study_intronic_fraction (t221b)",
+      "path": "results/neural-gene-standing-controls-2026-06-08/per_study_intronic_fraction.tsv"
+    },
+    {
+      "name": "matched_normal_studies (t221c)",
+      "path": "code/config/config-full.yml"
+    }
+  ],
+  "tasks": [
+    "t221"
+  ],
+  "related": [
+    "hypothesis:h12-neural-gene-enrichment-length-histology-artifact",
+    "question:q032-neural-gene-length-null",
+    "question:q016-panel-induced-ascertainment",
+    "interpretation:2026-06-08-t221b-standing-controls-panel"
+  ],
+  "resources": [
+    {
+      "name": "matched_unmatched_primary",
+      "path": "matched_unmatched_primary.tsv"
+    },
+    {
+      "name": "matched_unmatched_by_region",
+      "path": "matched_unmatched_by_region.tsv"
+    },
+    {
+      "name": "candidate_carrier_studies",
+      "path": "candidate_carrier_studies.tsv"
+    }
+  ],
+  "parameters": {
+    "random_seed": 0,
+    "n_null_draws": 5000,
+    "wes_gene_threshold": 5000,
+    "all_region_intronic_threshold": 0.5,
+    "candidates": [
+      "NKAIN2",
+      "KCNIP4",
+      "FAM19A2",
+      "RIT2",
+      "CALN1",
+      "RBFOX1",
+      "LSAMP",
+      "SGCZ",
+      "OPCML"
+    ]
+  },
+  "runtime": {
+    "n_wes_studies": 91,
+    "n_matched": 45,
+    "n_unmatched": 46,
+    "candidate_rows_matched_frac": 0.7589
+  },
+  "caveats": {
+    "region_confound": "The residual lives entirely in the 6 all-region cohorts (t221b-F1), which split 2 matched / 4 unmatched, so the primary matched-vs-unmatched contrast is partly a region-scope contrast; the by-region 2x2 is the de-confounded view (thin power: 2 vs 4 studies in the all-region row).",
+    "matched_list_is_lower_bound": "matched_normal_studies (t221c) is a high-precision evidence-derived lower bound; matched-by-design-but-unrecorded cohorts (MSK-IMPACT family) are panels, excluded from the WES set anyway, so they do not affect this split.",
+    "variant_row_substrate": "Metric is variant-row counts (the t217/t218 substrate the span confound lives in), not sample-level ratios."
+  }
+}

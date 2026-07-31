@@ -1,0 +1,87 @@
+{
+  "name": "neural-gene-label-free-2026-06-08",
+  "title": "t216 label-free neural-enrichment gene score (GTEx)",
+  "description": "Data-driven per-gene neural-enrichment score from GTEx median TPM (q035), with CNS/PNS/neuroendocrine sub-scores and tau. Validated by AUC vs housekeeping (easy) and vs a genomic-span-matched CFS/large-locus null (hard, per t215 redirect). HPA layer deferred.",
+  "created": "2026-06-08",
+  "sources": [
+    {
+      "name": "gtex_median_tpm",
+      "path": "/data/raw/expression-atlas/gtex/E-GTEX-8-query-results.tpms.tsv"
+    },
+    {
+      "name": "gene_replication_timing",
+      "path": "data/gene_replication_timing.feather"
+    }
+  ],
+  "tasks": [
+    "t216"
+  ],
+  "related": [
+    "question:q035-label-free-neural-gene-definition",
+    "hypothesis:h12-neural-gene-enrichment-length-histology-artifact",
+    "interpretation:2026-06-08-t217-genomic-span-cfs-null"
+  ],
+  "resources": [
+    {
+      "name": "gene_neural_enrichment",
+      "path": "gene_neural_enrichment.feather"
+    },
+    {
+      "name": "validation_auc",
+      "path": "validation_auc.tsv"
+    },
+    {
+      "name": "control_gene_scores",
+      "path": "control_gene_scores.tsv"
+    }
+  ],
+  "parameters": {
+    "random_seed": 0,
+    "n_match_draws": 2000,
+    "neural_score": "log2((mean neural TPM + 1)/(mean non-neural TPM + 1))",
+    "cns_tissues": [
+      "amygdala",
+      "anterior cingulate cortex",
+      "caudate nucleus",
+      "cerebellar hemisphere",
+      "cerebellum",
+      "cerebral cortex",
+      "frontal cortex",
+      "hippocampus",
+      "hypothalamus",
+      "nucleus accumbens",
+      "putamen",
+      "substantia nigra"
+    ],
+    "pns_tissues": [
+      "tibial nerve"
+    ],
+    "neuroendocrine_tissues": [
+      "pituitary gland",
+      "adrenal gland"
+    ],
+    "candidates": [
+      "NKAIN2",
+      "KCNIP4",
+      "FAM19A2",
+      "RIT2",
+      "CALN1",
+      "RBFOX1",
+      "LSAMP",
+      "SGCZ",
+      "OPCML"
+    ],
+    "effectors": [
+      "NLGN3",
+      "ADRB2",
+      "NTRK1",
+      "NTRK2",
+      "CHRM3",
+      "GRIN2A",
+      "GRIN2B",
+      "NGF",
+      "BDNF"
+    ],
+    "hpa_status": "NOT AVAILABLE LOCALLY \u2014 deferred sensitivity layer (plan secondary atlas)."
+  }
+}

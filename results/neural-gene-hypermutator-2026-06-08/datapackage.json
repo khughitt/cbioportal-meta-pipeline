@@ -1,0 +1,76 @@
+{
+  "name": "neural-gene-hypermutator-2026-06-08",
+  "title": "t221(a) full-config sample-level hypermutator exclusion for the neural-gene residual",
+  "description": "Re-aggregates candidate (and all-gene) variant-row counts across all 91 WES/WGS-class `full` studies straight from per-study mut_filtered.feather, dropping every row contributed by an is_hypermutator sample, and re-runs the t217 genomic-span-matched residual test. The inclusive arm reproduces the canonical wide table gene-for-gene (asserted) and t218 wes_only; the exclusive arm is the sample-level hypermutator control t218 deferred.",
+  "created": "2026-06-08",
+  "sources": [
+    {
+      "name": "gene_cancer_study",
+      "config": "full",
+      "path": "/data/packages/cbioportal/full/summary/mut/table/gene_cancer_study.feather"
+    },
+    {
+      "name": "samples_annotated",
+      "path": "/data/packages/cbioportal/full/metadata/samples_annotated.feather"
+    },
+    {
+      "name": "mut_filtered (per WES study)",
+      "n_studies": 91
+    },
+    {
+      "name": "gene_replication_timing",
+      "path": "data/gene_replication_timing.feather"
+    }
+  ],
+  "tasks": [
+    "t221"
+  ],
+  "related": [
+    "hypothesis:h12-neural-gene-enrichment-length-histology-artifact",
+    "question:q032-neural-gene-length-null",
+    "interpretation:2026-06-08-t217-genomic-span-cfs-null",
+    "interpretation:2026-06-08-t218-cns-exclusion-wes-panel"
+  ],
+  "resources": [
+    {
+      "name": "enrichment_inclusive_vs_exclusive",
+      "path": "enrichment_inclusive_vs_exclusive.tsv"
+    },
+    {
+      "name": "candidate_rows_inclusive_vs_exclusive",
+      "path": "candidate_rows_inclusive_vs_exclusive.tsv"
+    },
+    {
+      "name": "per_study_hypermutator_burden",
+      "path": "per_study_hypermutator_burden.tsv"
+    }
+  ],
+  "parameters": {
+    "random_seed": 0,
+    "n_null_draws": 5000,
+    "wes_gene_threshold": 5000,
+    "candidates": [
+      "NKAIN2",
+      "KCNIP4",
+      "FAM19A2",
+      "RIT2",
+      "CALN1",
+      "RBFOX1",
+      "LSAMP",
+      "SGCZ",
+      "OPCML"
+    ],
+    "count_semantics": "variant rows per (symbol, study); exclusive drops rows from is_hypermutator samples (unknown status treated as non-hypermutator, mirroring create_freq_tables)."
+  },
+  "validation": {
+    "inclusive_reproduces_wide_table": true,
+    "n_genes_mismatch": 2,
+    "max_abs_row_diff": 2.0,
+    "candidate_mismatches": [],
+    "mismatched_genes": {
+      "IQCA1": 2,
+      "IQCD": 2
+    },
+    "note": "Non-candidate symbol-aliasing residue between the wide-table build and raw per-study mut_filtered (e.g. IQCA1/IQCD, 4 rows in prad_tcga); candidates reproduce exactly."
+  }
+}

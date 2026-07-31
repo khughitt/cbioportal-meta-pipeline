@@ -172,7 +172,7 @@ requires-dist = [
 dev = [
     { name = "diptest", specifier = ">=0.10.0" },
     { name = "pytest", specifier = ">=9.0.3" },
-    { name = "science", git = "https://github.com/khughitt/science.git?subdirectory=science" },
+    { name = "science", git = "https://github.com/khughitt/science.git?subdirectory=science&rev=ba0b0cb0304aff03159ebc37c188839cfd4b1515" },
 ]
 
 [[package]]
@@ -1702,7 +1702,7 @@ wheels = [
 [[package]]
 name = "science"
 version = "0.5.2"
-source = { git = "https://github.com/khughitt/science.git?subdirectory=science#ed6b50dcf9b90d64767dd3fafca1fa8f53ddca15" }
+source = { git = "https://github.com/khughitt/science.git?subdirectory=science&rev=ba0b0cb0304aff03159ebc37c188839cfd4b1515#ba0b0cb0304aff03159ebc37c188839cfd4b1515" }
 dependencies = [
     { name = "click" },
     { name = "ga4gh-vrs" },
@@ -1724,7 +1724,7 @@ dependencies = [
 [[package]]
 name = "science-model"
 version = "0.1.0"
-source = { git = "https://github.com/khughitt/science.git?subdirectory=science%2Fmodel#ed6b50dcf9b90d64767dd3fafca1fa8f53ddca15" }
+source = { git = "https://github.com/khughitt/science.git?subdirectory=science%2Fmodel&rev=ba0b0cb0304aff03159ebc37c188839cfd4b1515#ba0b0cb0304aff03159ebc37c188839cfd4b1515" }
 dependencies = [
     { name = "jsonschema" },
     { name = "pydantic" },

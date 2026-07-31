@@ -211,6 +211,16 @@ Optional (R-dependent):
 
 ## Validation
 
+Use the narrowest lint, dry-run, or smoke-test selection that covers the changed
+workflow while iterating. Before handoff, run the affected checks plus adjacent
+workflow guards. Run the full workflow or application suite only when changes
+affect shared configuration, dependencies, schemas, or cross-cutting behavior;
+touch multiple subsystems; produce unexpected broader effects; prepare a
+release; or when explicitly requested. Run Science structural validation once
+before handoff when Science-managed data, configuration, references, workflows,
+or generated artifacts changed. Do not repeat a passing full run after a
+fast-forward integration when the exact commit and its base are unchanged.
+
 ```bash
 # Science framework validation
 uv run --frozen science validate --verbose

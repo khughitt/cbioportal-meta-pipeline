@@ -25,7 +25,7 @@ dev = [
 ]
 
 [tool.uv.sources]
-science = { git = "https://github.com/khughitt/science.git", subdirectory = "science", rev = "2fc330d0d7b664842dbbad28dcdfc2f3c994f249" }
+science = { git = "https://github.com/khughitt/science.git", subdirectory = "science", rev = "9bf9be13c2c7c67f1a656902509325e17e6d1ce7" }
 
 [tool.pytest.ini_options]
 markers = [
